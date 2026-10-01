@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Mineral Resources Data System (MRDS)</title>
+  <meta name="description" content="MRDS is a collection of reports describing metallic and nonmetallic mineral resources throughout the world. Included are deposit name, location, commodity, deposit description, geologic characteristics, production, reserves, resources, and references. It subsumes the original MRDS and MAS/MILS.  MRDS is large, complex, and somewhat problematic. This service provides a subset of the database comprised of those data fields deemed most useful and which most frequently contain some information, but full reports of most records are available as well. Current status: As of 2011, USGS has ceased systematic updates to MRDS, and is working to create a new database, focused primarily on the conterminous US. For locations outside the United States, MRDS remains the best collection of reports that USGS has available. For locations in Alaska, the Alaska Resource Data File remains the most coherent collection of such reports and is in continuing development. Resource descriptions here include an indication of the overall quantity and diversity of information they contain.  Many records in this database are simple reports of commodity at some location, but some records provide substantial detail of the geological setting and industrial exploitation of the resource.  To help users find these more thorough records, a map interface and search form are provided that rank results by overall quality, records graded A having more information about more aspects of the resource, records graded D having only summary information about the resource.  Records graded B and C are intermediate between these, and records graded E generally lack bibliographic references.">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/common.css"/>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/custom.css"/>
+  <link rel="stylesheet" type="text/css" href="/jquery/jquery-ui.min.css">
+  <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+  <script type="text/javascript" src="/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/jquery/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/jquery/jquery.tablesorter.min.js"></script>
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TKQR8KP');</script>
+  <style>
+    .ml-2 { margin-left: 1.0rem; }
+    .ml-4 { margin-left: 2.0rem; }
+    .mr-4 { margin-right: 2.0rem; }
+    .italic { font-style: italic; }
+    .darkred { color: #660000; }
+    .tt { font-family: monospace; }
+  </style>
+</head>
+<body>
+<!-- USGS header --><header id="navbar" class="header-nav"  role="banner"><div class="tmp-container"><div class="header-search"><a class="logo-header" href="https://www.usgs.gov/" title="Home"><img class="img"  src="/images/logo.png"  alt="Home" /></a></div></div></header>
+<div class="container">
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a class="breadcrumb-link" href="https://www.usgs.gov/energy-and-minerals/mineral-resources-program" title="The USGS Mineral Resources Program (MRP) delivers unbiased science and information to increase understanding of ore formation, undiscovered mineral resource potential, production, consumption, and how minerals interact with the environment.  MRP supports data collection and research on a wide variety of non-fuel mineral resources that are important to the Nation?s economic and national security.">Mineral Resources</a></li>
+  <li><a href="/" title="Interactive maps and downloadable data for regional and global geology, geochemistry, geophysics, and mineral resources; products of the USGS Mineral Resources Program">Online Spatial Data</a></li>
+</ol>
+<h3>Mineral Resources Data System (MRDS)</h3>
+<p>MRDS is a collection of reports describing metallic and nonmetallic mineral resources throughout the world. Included are deposit name, location, commodity, deposit description, geologic characteristics, production, reserves, resources, and references. It subsumes the original MRDS and MAS/MILS.  MRDS is large, complex, and somewhat problematic. This service provides a subset of the database comprised of those data fields deemed most useful and which most frequently contain some information, but full reports of most records are available as well.</p>
+<p>Current status: As of 2011, USGS has ceased systematic updates to MRDS, and is working to create a new database, focused primarily on the conterminous US. For locations outside the United States, MRDS remains the best collection of reports that USGS has available. For locations in Alaska, the Alaska Resource Data File remains the most coherent collection of such reports and is in continuing development.</p>
+<p>Resource descriptions here include an indication of the overall quantity and diversity of information they contain.  Many records in this database are simple reports of commodity at some location, but some records provide substantial detail of the geological setting and industrial exploitation of the resource.  To help users find these more thorough records, a map interface and search form are provided that rank results by overall quality, records graded A having more information about more aspects of the resource, records graded D having only summary information about the resource.  Records graded B and C are intermediate between these, and records graded E generally lack bibliographic references.</p>
+    <div class="panel panel-warning">
+      <div class="panel-heading" data-toggle="collapse" data-target="#view" aria-controls="#view"><h4 class="panel-title">View</h4></div>
+      <div class="panel-body" id="view" aria-expanded="true">
+        <p>Show in a web browser window:</p>
+        <div class="row">
+          <div class="col-sm-4 text-center">
+            <a href="/mrds/map-graded.html"><img src="/mrds/map-graded.png" alt="reduced-size image of the interactive map" title="reduced-size image of the interactive map" class="img-responsive"/><br/>by record quality</a>
+          </div>
+          <div class="col-sm-4 text-center">
+            <a href="/mrds/map-commodity.html"><img src="/mrds/map-commodity-tin.png" alt="reduced-size image of the interactive map" title="reduced-size image of the interactive map" class="img-responsive"/><br/>by commodity</a>
+          </div>
+        </div>
+        <p>Show in your GIS using <abbr title="Open Geospatial Consortium">OGC</abbr> web services:</p>
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th scope="col">Service, version</th>
+      <th scope="col">URL</th>
+      <th scope="col">Capabilities document</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>WMS, version 1.3.0</td>
+      <td class="darkred tt" title="Copy this URL and paste into your GIS application.">https://mrdata.usgs.gov/services/mrds</td>
+      <td><a class="btn btn-xs btn-default" target="blank" title="An XML document indicating the service options available." href="/services/mrds?request=GetCapabilities&amp;service=WMS&amp;version=1.3.0">Capabilities</a></td>
+    </tr>
+    <tr>
+      <td>WFS, version 1.1.0</td>
+      <td class="darkred tt" title="Copy this URL and paste into your GIS application.">https://mrdata.usgs.gov/services/wfs/mrds</td>
+      <td><a class="btn btn-xs btn-default" target="blank" title="An XML document indicating the service options available." href="/services/wfs/mrds?request=GetCapabilities&amp;service=WFS&amp;version=1.1.0">Capabilities</a></td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+    </div>
+    <div class="panel panel-warning">
+      <div class="panel-heading" data-toggle="collapse" data-target="#download" aria-controls="#download"><h4 class="panel-title">Download</h4></div>
+      <div class="panel-body" id="download" aria-expanded="true">
+        <p><a href="/mrds/geo-inventory.php"><b>Download</b> data for geographic areas you choose</a></p>
+        <p><a href="/mrds/find-mrds-graded.php"><b>Search</b> data using a form</a></p>
+        <p><a href="/mrds/fulltext-search.php">Full text search of MRDS records</a>
+        </p>
+        <p>Download options depend on the software you want to use</p>
+        <table class="table table-condensed ml-2 tablesorter" id="table-0">
+          <thead>
+            <tr class="bg-success">
+              <th scope="col">Format</th>
+              <th scope="col">Download</th>
+              <th scope="col">Size</th>
+              <th scope="col">Contents</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CSV (single)</td>
+              <td><a href="mrds-csv.zip">mrds-csv.zip</a></td>
+              <td>23M bytes</td>
+              <td>Flattened</td>
+            </tr>
+            <tr>
+              <td>Shapefile</td>
+              <td><a href="mrds-trim.zip">mrds-trim.zip</a></td>
+              <td>10M bytes</td>
+              <td>Compact</td>
+            </tr>
+            <tr>
+              <td>CSV (multiple)</td>
+              <td><a href="rdbms-tab.zip">rdbms-tab.zip</a></td>
+              <td>20M bytes</td>
+              <td>Compact</td>
+            </tr>
+            <tr>
+              <td>CSV (multiple)</td>
+              <td><a href="rdbms-tab-all.zip">rdbms-tab-all.zip</a></td>
+              <td>118M bytes</td>
+              <td>Comprehensive</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel panel-warning">
+      <div class="panel-heading" data-toggle="collapse" data-target="#documentation" aria-controls="#documentation"><h4 class="panel-title">Documentation</h4></div>
+      <div class="panel-body" id="documentation" aria-expanded="true">
+        <p title="Formally structured documentation of the dataset">Metadata:</p>
+        <div class="ml-2">
+ <a href="/metadata/mrds.html">Outline</a>
+ -  <a href="/metadata/mrds.faq.html">Questions &amp; Answers</a>
+ -  <a href="/metadata/mrds.txt">Plain text</a>
+ -  <a href="/metadata/mrds.xml">XML</a>
+        </div>
+        <p>About the database tables and fields</p>
+        <p class="ml-2"><a href="/mrds/about.php">Flattened: 44 most commonly requested fields, multiple values separated by semicolons</a>
+        </p>
+        <p class="ml-2"><a href="/mrds/compact/dd.php">Compact fields: site name, status, commodity abbreviations, and a URL for full information</a>
+        </p>
+        <p class="ml-2"><a href="/mrds/full/about.php">Comprehensive: All tables and fields.</a>
+        </p>
+        <p class="ml-2"><a href="/mrds/commodity-codes.html">Codes used to specify commodities in the database.</a>
+        </p>
+      </div>
+    </div>
+    <div class="panel panel-warning">
+      <div class="panel-heading" data-toggle="collapse" data-target="#publication" aria-controls="#publication"><h4 class="panel-title">Publication</h4></div>
+      <div class="panel-body" id="publication" aria-expanded="true">
+        <div class="list-group ml-2">
+          <a href="https://pubs.er.usgs.gov/publication/ds20" class="list-group-item">
+            <h5 class="list-group-item-heading">Mineral Resources Data System (MRDS)</h5>
+            <div class="ml-4">Mason, G.T. and Arndt, R.E., 1996, Mineral Resources Data System (MRDS): USGS Data Series 20, https://doi.org/10.3133/ds20.</div>
+          </a>
+          <a href="https://pubs.er.usgs.gov/publication/ds52" class="list-group-item">
+            <h5 class="list-group-item-heading">U.S. Geological Survey mineral databases: MRDS and MAS/MILS</h5>
+            <div class="ml-4">McFaul, E.J., Mason, G.T., Ferguson, W.B., and Lipin, B.R., 2000, U.S. Geological Survey mineral databases; MRDS and MAS/MILS: USGS Data Series 52, https://doi.org/10.3133/ds52.</div>
+          </a>
+          <a href="https://doi.org/10.5066/P9DYLWMP" class="list-group-item">
+            <h5 class="list-group-item-heading">Record quality tables for the Mineral Resources Data System</h5>
+            <div class="ml-4">Schweitzer, P.N., 2019, Record quality tables for the Mineral Resources Data System: U.S. Geological Survey data release, https://doi.org/10.5066/P9DYLWMP.</div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-warning">
+      <div class="panel-heading" data-toggle="collapse" data-target="#topics" aria-controls="#topics"><h4 class="panel-title">Related topics</h4></div>
+      <div class="panel-body" id="terms-23" aria-expanded="true">
+<a href="/catalog/science.php?thcode=2&amp;term=312" title="Scientific study of the formation, location, and use of marketable geologic materials including fuels, metals, minerals, and water.">Economic geology</a>, <a href="/catalog/science.php?thcode=2&amp;term=474" title="Collections of related digital information that are geographically referenced.">Geospatial datasets</a>, <a href="/catalog/science.php?thcode=2&amp;term=1789" title="Online interfaces showing interactive maps and geospatial information">Map interfaces</a>, <a href="/catalog/science.php?thcode=2&amp;term=745" title="Natural occurrences of useful inorganic elements or compounds.">Mineral resources</a>, <a href="/catalog/science.php?thcode=2&amp;term=1794" title="Internet services providing geospatial information that conform to formally defined specifications, for use in GIS and mapping software.">Web map services</a><br/>
+<a href="/catalog/science.php?thcode=3&amp;term=686" title="Areas where masses of naturally occurring mineral material are found, e.g. metal ores or nonmetallic minerals. [Adapted from Glossary of Geology, 4th ed.]">Mineral deposit areas</a>, <a href="/catalog/science.php?thcode=3&amp;term=685" title="Places or areas from which commercial minerals are or were removed by excavation from the Earth. [Adapted from USGS Feature Class Definitions &lt;http://geonames.usgs.gov/domestic/feature_class.htm&gt;]">Mine sites</a><br/>
+<a href="/catalog/science.php?thcode=7&amp;term=17" title="Data file format in which rows appear on separate lines and columns are delimited by some common character such as comma or the tab character, ASCII 9. Typically such a file can be understood by common spreadsheet programs.  Where the column delimiter appears within a cell value, the cell value is enclosed in quotes.  If a quote appears within a cell value, it is typically preceded by the backslash character.">Columnar text</a>, <a href="/catalog/science.php?thcode=7&amp;term=15" title="Data file in a format used by numerous early PC-based database management systems.  Used as a component of shapefiles to hold the attributes of geographic features.">DBF</a>, <a href="/catalog/science.php?thcode=7&amp;term=72" title="Geodatabase packaged in a proprietary format">File geodatabase (Esri)</a>, <a href="/catalog/science.php?thcode=7&amp;term=46" title="Hypertext markup language tables, if written simply and without additional annotation, serve as a data format and can be imported in a number of current applications.">HTML table</a>, <a href="/catalog/science.php?thcode=7&amp;term=44" title="Geospatial data exchange format used by Google Earth.  A form of XML.  Includes KMZ, a KML that has been compressed with zip.">KML</a>, <a href="/catalog/science.php?thcode=7&amp;term=68" title="Open Geospatial Consortium Web Feature Service">OGC WFS</a>, <a href="/catalog/science.php?thcode=7&amp;term=67" title="Open Geospatial Consortium Web Map Service">OGC WMS</a>, <a href="/catalog/science.php?thcode=7&amp;term=61" title="Geodatabase packaged in a Microsoft Access format (.mdb)">Personal geodatabase (Esri)</a>, <a href="/catalog/science.php?thcode=7&amp;term=12" title="Geospatial data format developed by ESRI, Inc. Typically this term refers to three coupled digital files, provided together, in which the geographic information is encoded in two, one whose extension is .shp, the other having extension .shx, and the attribute information is encoded in a third having extension .dbf.">Shapefile</a><br/>
+      </div>
+    </div>
+</div>
+<!-- USGS footer --><footer class="footer"><div class="tmp-container"><div class="footer-doi"><ul class="menu nav"><li class="first leaf menu-links menu-level-1"><a href="https://www.doi.gov/privacy">DOI Privacy Policy</a></li><li class="leaf menu-links menu-level-1"><a href="https://www.usgs.gov/laws/policies_notices.html">Legal</a></li><li class="leaf menu-links menu-level-1"><a href="https://www2.usgs.gov/laws/accessibility.html">Accessibility</a></li><li class="leaf menu-links menu-level-1"><a href="https://www.usgs.gov/sitemap.html">Site Map</a></li><li class="last leaf menu-links menu-level-1"><a href="https://answers.usgs.gov/">Contact USGS</a></li></ul></div><hr/><div class="footer-doi"><ul class="menu nav"><li class="first leaf menu-links menu-level-1"><a href="https://www.doi.gov/">U.S. Department of the Interior</a></li><li class="leaf menu-links menu-level-1"><a href="https://www.doioig.gov/">DOI Inspector General</a></li><li class="leaf menu-links menu-level-1"><a href="https://www.whitehouse.gov/">White House</a></li><li class="leaf menu-links menu-level-1"><a href="https://www.whitehouse.gov/omb/management/egov/">E-gov</a></li><li class="leaf menu-links menu-level-1"><a href="https://www.doi.gov/pmb/eeo/no-fear-act">No Fear Act</a></li><li class="last leaf menu-links menu-level-1"><a href="https://www2.usgs.gov/foia">FOIA</a></li></ul></div><div class="footer-social-links"><ul class="social"><li class="follow">Follow</li><li class="twitter"><a href="https://twitter.com/usgs" target="_blank"><i class="fa fa-twitter-square"><span class="only">Twitter</span></i></a></li><li class="facebook"><a href="https://facebook.com/usgeologicalsurvey" target="_blank"><i class="fa fa-facebook-square"><span class="only">Facebook</span></i></a></li><li class="googleplus"><a href="https://plus.google.com/112624925658443863798/posts" target="_blank"><i class="fa fa-google-plus-square"><span class="only">Google+</span></i></a></li><li class="github"><a href="https://github.com/usgs" target="_blank"><i class="fa fa-github"><span class="only">GitHub</span></i></a></li><li class="flickr"><a href="https://flickr.com/usgeologicalsurvey" target="_blank"><i class="fa fa-flickr"><span class="only">Flickr</span></i></a></li><li class="youtube"><a href="http://youtube.com/usgs" target="_blank"><i class="fa fa-youtube-play"><span class="only">YouTube</span></i></a></li><li class="instagram"><a href="https://instagram.com/usgs" target="_blank"><i class="fa fa-instagram"><span class="only">Instagram</span></i></a></li></ul></div></div></footer><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKQR8KP" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>
+  $(function(){
+    $('#table-0').tablesorter();
+    });
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a43f62c9dedb0bf0',t:'MTc5MDg5ODc5Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

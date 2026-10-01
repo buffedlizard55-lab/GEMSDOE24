@@ -1,0 +1,137 @@
+{
+  "generated_utc": "2026-10-01T23:53:19+00:00",
+  "bbox_wgs84": [
+    -120.0024,
+    37.3641,
+    -116.1415,
+    40.7247
+  ],
+  "purpose": "confound layers for C2S2 accessibility audit (24GEMSDOE); public-domain sources; research use only",
+  "log": [
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_32_roads.zip",
+      "file": "data_external/tiger_ROADS_32.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_32_roads.zip",
+      "file": "data_external/tiger_ROADS_32.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_32_roads.zip",
+      "file": "data_external/tiger_ROADS_32.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_32_rails.zip",
+      "file": "data_external/tiger_RAILS_32.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_32_rails.zip",
+      "file": "data_external/tiger_RAILS_32.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_32_rails.zip",
+      "file": "data_external/tiger_RAILS_32.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_06_roads.zip",
+      "file": "data_external/tiger_ROADS_06.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_06_roads.zip",
+      "file": "data_external/tiger_ROADS_06.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_06_roads.zip",
+      "file": "data_external/tiger_ROADS_06.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_06_rails.zip",
+      "file": "data_external/tiger_RAILS_06.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_06_rails.zip",
+      "file": "data_external/tiger_RAILS_06.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_06_rails.zip",
+      "file": "data_external/tiger_RAILS_06.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://mrdata.usgs.gov/mrds/",
+      "file": "data_external/mrds_landing.html",
+      "bytes": 20434,
+      "sha256": "62235ec04e287d7d0530a981024a24fab571538eb255b12c9a79a9a9d0e55343",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "mrds_links_found": [
+        "mrds-csv.zip",
+        "mrds-trim.zip",
+        "rdbms-tab-all.zip",
+        "rdbms-tab.zip"
+      ]
+    },
+    {
+      "url": "https://mrdata.usgs.gov/mrds/mrds-csv.zip",
+      "file": "data_external/mrds_mrds-csv_zip",
+      "bytes": 25791223,
+      "sha256": "31be4baaa86b082787bc74989146183db21badf7157db39b3f0a6fe0b38a5477",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "url": "https://www.sciencebase.gov/catalog/item/get?ids=657e1d85d34e23d3533209f7",
+      "file": "data_external/geodawn_sciencebase.json",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www.sciencebase.gov/catalog/item/get?ids=657e1d85d34e23d3533209f7",
+      "file": "data_external/geodawn_sciencebase.json",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www.sciencebase.gov/catalog/item/get?ids=657e1d85d34e23d3533209f7",
+      "file": "data_external/geodawn_sciencebase.json",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query?where=FTYPE_%20IN%20%28%27Well%20Constrained%27%2C%27Moderately%20Constrained%27%2C%27Inferred%27%29&geometry=-120.0024,37.3641,-116.1415,40.7247&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=true&f=geojson&resultRecordCount=2000",
+      "file": "data_external/qfaults_v2_in_footprint.geojson",
+      "bytes": 76,
+      "sha256": "80945055b6a4a6bee0ec96a1da4e1ce0e0618b95656ca2aa28130a84bfbd8df8",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "qfaults_features": 0
+    }
+  ]
+}
