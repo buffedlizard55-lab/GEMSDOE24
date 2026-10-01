@@ -1,0 +1,40 @@
+name: fetch-public-layers
+# Runs official public-domain downloads from an unrestricted network and commits
+# the small results to branch `public-layers` so the egress-restricted research
+# sandbox can consume them. Safe to re-run; failures are logged, not fatal.
+on:
+  workflow_dispatch:
+    inputs:
+      fetch_mode:
+        description: "all | tiger_roads_and_rails | mrds | sciencebase_outlines | nbmg_qfaults_confidence"
+        default: all
+  push:
+    paths:
+      - "scripts/ci_fetch_external.py"
+      - ".github/workflows/fetch-public-layers.yml"
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: install deps
+        run: pip install pyshp shapely
+      - name: fetch
+        env:
+          FETCH_MODE: ${{ github.event.inputs.fetch_mode || 'all' }}
+        run: python scripts/ci_fetch_external.py
+      - name: show manifest
+        run: cat data_external/fetch_manifest.json
+      - name: commit to public-layers
+        run: |
+          git config user.name "arena-fetch-bot"
+          git config user.email "bot@arena.ai"
+          git checkout --orphan public-layers 2>/dev/null || git checkout public-layers
+          git rm -rq --cached . 2>/dev/null || true
+          git add -f data_external || true
+          git commit -m "external public-domain fetch $(date -u +%FT%TZ)" || true
+          git push -f origin HEAD:refs/heads/public-layers

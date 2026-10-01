@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+# never commit the reassembled 419 MB competition raster or regenerable caches
+data/training_features.tif
+data/confounds/*.npz
+data/confounds/Paleo_geothermal_final.csv
+data/bridge/manifest.json.bak
+.pytest_cache/
