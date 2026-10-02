@@ -1,15 +1,9 @@
 {
-  "generated_utc": "2026-10-01T23:47:05+00:00",
+  "generated_utc": "2026-10-02T01:50:46+00:00",
   "inputs": {},
   "acq_window": {
-    "semantics": "0 outside GeoDAWN, 1 Area1 (200 m lines), 2 Area2 (400 m lines/4 km ties)",
-    "area1_grid_window_rows_cols": [
-      3058,
-      3548,
-      1632,
-      2302
-    ],
-    "source": "5GEMSDOE/data/reconstructed/provenance.json (source grid transforms); re-derived here from UTM window math"
+    "semantics": "0 outside fp, 1 Area1 polygon (200 m lines), 2 Area2 polygon (400 m/4 km), 3 inside fp but outside both official outlines",
+    "source": "ScienceBase official outline shapefiles (GeoDAWN_area1/2_outline.zip, 1.19/1.50 KB, item 657e1d85d34e23d3533209f7) fetched via public-layers CI; Area1 bbox cross-checks 5GEMSDOE reconstruction within 200 m"
   },
   "acq_block": {
     "n_boundaries_detected": 0,
@@ -28,18 +22,32 @@
     "probes": 3800
   },
   "d_road_px": {
-    "status": "absent in this sandbox (hosts unreachable; see irregularities I-01); run scripts/fetch_field_access_layers.py"
+    "source": "/home/user/GEMSDOE24/data/confounds/d_road_px.tif",
+    "status": "operator-provided official vector distance"
   },
   "d_claim_px": {
-    "status": "absent in this sandbox (hosts unreachable; see irregularities I-01); run scripts/fetch_field_access_layers.py"
+    "source": "/home/user/GEMSDOE24/data/confounds/d_claim_px.tif",
+    "status": "operator-provided official vector distance"
+  },
+  "d_wc_px": {
+    "source": "/home/user/GEMSDOE24/data/confounds/d_wc_px.tif",
+    "status": "operator-provided official vector distance"
+  },
+  "d_inf_px": {
+    "source": "/home/user/GEMSDOE24/data/confounds/d_inf_px.tif",
+    "status": "operator-provided official vector distance"
   },
   "output": "data/confounds/confounds.npz",
   "feature_list": [
     "acq_block",
     "acq_window",
+    "d_claim_px",
+    "d_inf_px",
     "d_probe_px",
+    "d_road_px",
     "d_sinter_px",
     "d_vent_px",
+    "d_wc_px",
     "d_well_px",
     "lidar_cov"
   ]
