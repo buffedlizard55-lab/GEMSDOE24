@@ -16,3 +16,9 @@ data/catalogue_ext/
 data/lidar_inv/
 data/bridge/example_submission.tif
 data/confounds/*.tif
+
+# Regenerable research downloads (never commit raw bulk inputs)
+data/research/
+data/raw/
+data/access/
+data/prepared/
