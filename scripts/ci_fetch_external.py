@@ -181,6 +181,7 @@ def nbmg_qfaults_confidence() -> None:
             "geometryType": "esriGeometryEnvelope", "inSR": "4326",
             "spatialRel": "esriSpatialRelIntersects", "outFields": "*",
             "returnGeometry": "true", "f": "json",
+            "maxAllowableOffset": "200",
         })
         dest = OUT / f"_nbmg_tile_{depth}_{len(seen)}.json"
         if not fetch(base + "?" + q, dest, tries=2):
@@ -192,7 +193,8 @@ def nbmg_qfaults_confidence() -> None:
             return False
         feats = d.get("features", [])
         for f in feats:
-            oid = f.get("attributes", {}).get("OBJECTID") or f.get("attributes", {}).get("OBJECTID_", 0)
+            at = f.get("attributes", {})
+            oid = at.get("FID", at.get("OBJECTID", -len(seen)))
             seen[int(oid)] = f
         trunc = d.get("exceededTransferLimit", False) or len(feats) >= 500
         if trunc:
@@ -210,7 +212,7 @@ def nbmg_qfaults_confidence() -> None:
                     "census_check": "region-wide FTYPE_ counts on 2026-10-01: WC 12048 (https://web2.nbmg.unr.edu/.../MapServer/0/query?where=FTYPE_%20=%20%27Well%20Constrained%27&returnCountOnly=true&f=json)"}}
     outp = OUT / "qfaults_v2_in_footprint.json"
     outp.write_text(json.dumps(geo))
-    log({"derived": str(outp), "bytes": outp.stat().st_size, "sha256": sha256(outp.read_bytes()), "n": len(seen)})
+    log({"derived": str(outp), "bytes": outp.stat().st_size, "sha256": sha256(outp.read_bytes()), "n": len(seen), "geometry_crs": "NAD83 Albers central_meridian -117 (server native)"})
 
 
 def main() -> None:
