@@ -34,7 +34,7 @@ jobs:
           git config user.email "bot@arena.ai"
           git add -f data_external
           git commit -qm "ci-fetch artifacts $(date -u +%FT%TZ)" || true
-          git push -f origin HEAD:${{ github.ref_name }}
+          git push -f origin HEAD:refs/heads/"$GITHUB_REF_NAME"
 
       - name: report
         if: always()
