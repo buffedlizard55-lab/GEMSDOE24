@@ -70,7 +70,7 @@ def main() -> None:
             raise ValueError("Unexpected BLM layer; no substitute used")
         fields = {f["name"] for f in meta["fields"]}
         oid = meta.get("objectIdField") or next(f["name"] for f in meta["fields"] if f["type"] == "esriFieldTypeOID")
-        params = {"f": "json", "where": "QLTY <> '25'", "geometry": ",".join(map(str, BOX)),
+        params = {"f": "json", "where": "1=1", "geometry": ",".join(map(str, BOX)),
                   "geometryType": "esriGeometryEnvelope", "inSR": "4326", "spatialRel": "esriSpatialRelIntersects"}
         def url(extra):
             return BLM + "/query?" + urllib.parse.urlencode({**params, **extra})
@@ -82,14 +82,14 @@ def main() -> None:
             raise ValueError("No closed claims returned in buffered study bbox")
         wanted = [f for f in (oid, "CSE_DISP", "QLTY", "CSE_TYPE_NR") if f in fields]
         def page(offset):
-            # IDs are already spatially filtered. POST the read-only query so
-            # there is neither a long-URL failure nor an expensive repeat of
-            # the full spatial selection for every page.
-            params_page = {"f":"json", "objectIds":",".join(map(str,object_ids[offset:offset+1000])),
+            # IDs are already spatially filtered; only fetch their geometry.
+            # Keep the previously successful 500-ID GET page size, but refit
+            # acquisition cost with parallel requests and geometry deduplication.
+            params_page = {"f":"json", "objectIds":",".join(map(str,object_ids[offset:offset+500])),
                     "outFields":",".join(wanted), "returnGeometry":"true", "outSR":"32611",
-                    "maxAllowableOffset":"25", "resultRecordCount":"1000"}
-            name = f"claims_page_{offset//1000:04}.json"
-            result = json.loads(fetch(BLM + "/query", name, post=params_page))
+                    "maxAllowableOffset":"25", "resultRecordCount":"500"}
+            name = f"claims_page_{offset//500:04}.json"
+            result = json.loads(fetch(BLM + "/query?" + urllib.parse.urlencode(params_page), name))
             if result.get("error") or result.get("exceededTransferLimit"):
                 raise ValueError(result.get("error") or "Incomplete BLM page")
             if result.get("spatialReference", {}).get("wkid") != 32611:
@@ -99,7 +99,7 @@ def main() -> None:
         seen, geoms = set(), {}
         quality, dispositions = Counter(), Counter()
         with ThreadPoolExecutor(max_workers=8) as ex:
-            for features in ex.map(page, range(0,len(object_ids),1000)):
+            for features in ex.map(page, range(0,len(object_ids),500)):
                 for f in features:
                     attrs = f["attributes"]; identifier = attrs[oid]
                     if identifier in seen:
@@ -115,7 +115,7 @@ def main() -> None:
             raise ValueError("BLM case-ID completeness check failed; live service may have changed")
         result = {"source":BLM,"spatialReference":{"wkid":32611},"features":list(geoms.values()),
                   "count_expected":len(object_ids),"count_received":len(seen),"unique_geometry_count":len(geoms),
-                  "server_filter":"QLTY <> '25' (exclude county-only geocodes)",
+                  "server_filter":"1=1; geometry quality is filtered only during derivation",
                   "quality_case_counts":dict(quality),"disposition_case_counts":dict(dispositions),
                   "precision_warning":"Deduplicated PLSS legal-land polygons, NOT surveyed claim boundaries; missing geometries are not imputed"}
         p = out / "blm_closed_claims.json"
