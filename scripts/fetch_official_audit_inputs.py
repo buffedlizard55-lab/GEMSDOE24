@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import io
 import json
@@ -68,7 +69,7 @@ def main() -> None:
             raise ValueError("Unexpected BLM layer; no substitute used")
         fields = {f["name"] for f in meta["fields"]}
         oid = meta.get("objectIdField") or next(f["name"] for f in meta["fields"] if f["type"] == "esriFieldTypeOID")
-        params = {"f": "json", "where": "1=1", "geometry": ",".join(map(str, BOX)),
+        params = {"f": "json", "where": "QLTY <> 25", "geometry": ",".join(map(str, BOX)),
                   "geometryType": "esriGeometryEnvelope", "inSR": "4326", "spatialRel": "esriSpatialRelIntersects"}
         def url(extra):
             return BLM + "/query?" + urllib.parse.urlencode({**params, **extra})
@@ -78,26 +79,45 @@ def main() -> None:
         object_ids = sorted(ids.get("objectIds") or [])
         if not object_ids:
             raise ValueError("No closed claims returned in buffered study bbox")
-        features = []
-        wanted = [f for f in (oid, "CSE_DISP", "QLTY", "CSE_TYPE_NR", "Created", "Modified") if f in fields]
-        for i in range(0, len(object_ids), 500):
-            extra = {"objectIds": ",".join(map(str, object_ids[i:i+500])), "outFields": ",".join(wanted),
-                     "returnGeometry": "true", "outSR": "32611", "maxAllowableOffset": "25"}
-            name = f"claims_page_{i//500:04}.json"
-            page = json.loads(fetch(url(extra), name))
-            if page.get("error") or page.get("exceededTransferLimit"):
-                raise ValueError(f"Incomplete BLM query: {name}")
-            features.extend(page.get("features", []))
-            (out / name).unlink()  # Small assembled dataset is the deliverable.
-        got = {f["attributes"][oid] for f in features}
-        if got != set(object_ids) or len(features) != len(got):
-            raise ValueError("BLM ID completeness/uniqueness check failed")
-        result = {"source": BLM, "spatialReference": {"wkid": 32611}, "features": features,
-                  "count_expected": len(object_ids), "count_received": len(features),
-                  "precision_warning": "PLSS legal-land representation, NOT surveyed claim boundaries; some cases have no geometry or county-only geocodes"}
-        (out / "blm_closed_claims.json").write_text(json.dumps(result, separators=(",", ":")))
-        receipt["claims"] = {"count": len(features), "quality_counts": dict(Counter(str(f["attributes"].get("QLTY")) for f in features)),
-                              "disposition_counts": dict(Counter(str(f["attributes"].get("CSE_DISP")) for f in features))}
+        wanted = [f for f in (oid, "CSE_DISP", "QLTY", "CSE_TYPE_NR") if f in fields]
+        def page(offset):
+            extra = {"outFields": ",".join(wanted), "returnGeometry": "true", "outSR": "32611",
+                     "maxAllowableOffset": "25", "resultOffset": offset,
+                     "resultRecordCount": "2000", "orderByFields": oid + " ASC"}
+            name = f"claims_page_{offset//2000:04}.json"
+            result = json.loads(fetch(url(extra), name))
+            if result.get("error"):
+                raise ValueError(result["error"])
+            if result.get("spatialReference", {}).get("wkid") != 32611:
+                raise ValueError("BLM did not return requested UTM 11N coordinates")
+            (out / name).unlink()
+            return result.get("features", [])
+        seen, geoms = set(), {}
+        quality, dispositions = Counter(), Counter()
+        with ThreadPoolExecutor(max_workers=8) as ex:
+            for features in ex.map(page, range(0,len(object_ids),2000)):
+                for f in features:
+                    attrs = f["attributes"]; identifier = attrs[oid]
+                    if identifier in seen:
+                        raise ValueError("Duplicate BLM object ID across pages")
+                    seen.add(identifier)
+                    quality[str(attrs.get("QLTY"))] += 1
+                    dispositions[str(attrs.get("CSE_DISP"))] += 1
+                    if f.get("geometry"):
+                        key = hashlib.sha256(json.dumps(f["geometry"],sort_keys=True).encode()).hexdigest()
+                        geoms.setdefault(key,f)
+                print("BLM cases received",len(seen),"/",len(object_ids),flush=True)
+        if seen != set(object_ids):
+            raise ValueError("BLM case-ID completeness check failed; live service may have changed")
+        result = {"source":BLM,"spatialReference":{"wkid":32611},"features":list(geoms.values()),
+                  "count_expected":len(object_ids),"count_received":len(seen),"unique_geometry_count":len(geoms),
+                  "server_filter":"QLTY <> 25 (exclude county-only geocodes)",
+                  "quality_case_counts":dict(quality),"disposition_case_counts":dict(dispositions),
+                  "precision_warning":"Deduplicated PLSS legal-land polygons, NOT surveyed claim boundaries; missing geometries are not imputed"}
+        p = out / "blm_closed_claims.json"
+        p.write_text(json.dumps(result,separators=(",",":")))
+        receipt["claims"] = {"count":len(seen),"unique_geometries":len(geoms),"quality_counts":dict(quality),
+                             "disposition_counts":dict(dispositions),"assembled_sha256":hashlib.sha256(p.read_bytes()).hexdigest()}
 
     def geodawn() -> None:
         item = json.loads(fetch(SB, "geodawn_item.json"))
