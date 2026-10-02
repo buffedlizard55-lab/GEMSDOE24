@@ -137,10 +137,8 @@ def sciencebase_outlines() -> None:
     if not fetch("https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7", page):
         return
     txt = page.read_text(errors="ignore")
-    pairs = re.findall(r'href="(https://www\.sciencebase\.gov/catalog/file/get/[^"]+)"[^>]*>([^<]+)</a>', txt)
-    if not pairs:
-        pairs = re.findall(r'"name"\s*:\s*"([^"]+\.zip)"[^}]*?"url"\s*:\s*"(https://www\.sciencebase\.gov/catalog/file/get/[^"]+)"', txt)
-        pairs = [(u, n) for n, u in pairs]
+    pairs = re.findall(r'data-url="(/catalog/file/get/[^"]+)"[^>]*>([^<]+)</span>', txt)
+    pairs = [("https://www.sciencebase.gov" + u, n) for u, n in pairs]
     log({"sb_links": [p[1] for p in pairs][:60]})
     for url, name in pairs:
         if "outline" in name.lower():
@@ -171,38 +169,48 @@ def _shp_zip_to_clipped(raw: Path, label: str) -> None:
 
 # --------------------------------------------------------------------------- Qfaults confidence
 def nbmg_qfaults_confidence() -> None:
+    """Server does not support pagination; the bbox envelope is tiled
+    recursively until no tile is truncated (exceededTransferLimit)."""
     where = "FTYPE_ IN ('Well Constrained','Moderately Constrained','Inferred')"
     base = "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query"
-    offset, all_feats = 0, []
-    while True:
+    seen: dict[int, dict] = {}
+
+    def query_tile(w, s, e, n, depth=0) -> bool:
         q = urllib.parse.urlencode({
-            "where": where,
-            "geometry": f"{BOX[0]},{BOX[1]},{BOX[2]},{BOX[3]}",
+            "where": where, "geometry": f"{w},{s},{e},{n}",
             "geometryType": "esriGeometryEnvelope", "inSR": "4326",
             "spatialRel": "esriSpatialRelIntersects", "outFields": "*",
             "returnGeometry": "true", "f": "json",
-            "resultRecordCount": "500", "resultOffset": str(offset),
         })
-        dest = OUT / f"_nbmg_page_{offset}.json"
+        dest = OUT / f"_nbmg_tile_{depth}_{len(seen)}.json"
         if not fetch(base + "?" + q, dest, tries=2):
-            break
+            return False
         d = json.loads(dest.read_text())
+        dest.unlink(missing_ok=True)
         if "error" in d:
             log({"nbmg_error": d["error"].get("message", "")[:180]})
-            break
-        fs = d.get("features", [])
-        all_feats.extend(fs)
-        dest.unlink(missing_ok=True)
-        if not d.get("exceededTransferLimit") and len(fs) < 500:
-            break
-        offset += 500
-        if offset > 40000:
-            break
-    geo = {"type": "FeatureCollection", "features": all_feats,
-           "meta": {"source": base, "where": where, "bbox": list(BOX)}}
+            return False
+        feats = d.get("features", [])
+        for f in feats:
+            oid = f.get("attributes", {}).get("OBJECTID") or f.get("attributes", {}).get("OBJECTID_", 0)
+            seen[int(oid)] = f
+        trunc = d.get("exceededTransferLimit", False) or len(feats) >= 500
+        if trunc:
+            if depth >= 7:
+                log({"nbmg_tile_giveup": [w, s, e, n]})
+                return True
+            mw, mn = (w + e) / 2, (s + n) / 2
+            for tile in ((w, s, mw, mn), (mw, s, e, mn), (w, mn, mw, n), (mw, mn, e, n)):
+                query_tile(*tile, depth + 1)
+        return True
+
+    query_tile(*BOX)
+    geo = {"type": "FeatureCollection", "features": list(seen.values()),
+           "meta": {"source": base, "where": where, "bbox": list(BOX),
+                    "census_check": "region-wide FTYPE_ counts on 2026-10-01: WC 12048 (https://web2.nbmg.unr.edu/.../MapServer/0/query?where=FTYPE_%20=%20%27Well%20Constrained%27&returnCountOnly=true&f=json)"}}
     outp = OUT / "qfaults_v2_in_footprint.json"
     outp.write_text(json.dumps(geo))
-    log({"derived": str(outp), "bytes": outp.stat().st_size, "sha256": sha256(outp.read_bytes()), "n": len(all_feats)})
+    log({"derived": str(outp), "bytes": outp.stat().st_size, "sha256": sha256(outp.read_bytes()), "n": len(seen)})
 
 
 def main() -> None:
