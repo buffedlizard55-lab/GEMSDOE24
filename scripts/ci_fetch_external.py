@@ -1,4 +1,4 @@
-"""CI fetcher: download official public-domain layers that document *field
+"""CI fetcher v3: download official public-domain layers that document *field
 accessibility* and *acquisition geometry* for the C2S2 audit, then commit the
 results to the orphan branch ``public-layers`` so egress-restricted research
 sandboxes (github.com only) can consume them.
