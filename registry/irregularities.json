@@ -211,6 +211,20 @@
       "status": "fixed",
       "issue": "The inherited website workflow ran scripts/refresh_source_feed.py on every push to main and every 6 hours; it fetched the DrivenData leaderboard and two forum threads automatically. DrivenData's Terms of Use prohibit any robot/automatic device accessing the site 'for any purpose, including monitoring', and the prize rules bind competitors to those terms (disqualification risk).",
       "resolution": "The script now refuses drivendata.org hosts (gems tests enforce it); the only automatic request is the USGS ScienceBase JSON API. Leaderboard/forum rows are human-read snapshots (`--leaderboard-file`). At least one past push-triggered run (2026-10-02 09:57 UTC on main) did fetch those pages; the owner should decide whether any notice to the organizers is appropriate. The agent's own page reads in this session were one-off and user-directed."
+    },
+    {
+      "id": "IR-PARALLEL-SESSION-PR7",
+      "severity": "high",
+      "status": "open",
+      "issue": "At 2026-10-02 17:37 UTC (3.5 minutes after PR #6 merged) a second Arena session of the same account opened PR #7 'Verify buffered road sources and test H24-3A' from branch arena/01a0fd2e-gemsdoe24. It was built on the pre-merge base a2b4444 and has not seen PRs #5/#6. Observed at 17:40 UTC: head aaaba1f8, 9 commits ahead of and 21 behind main, mergeable=CONFLICTING (DIRTY). A read-only dry-run merge conflicts in 20 paths (README.md, docs/*.html, scripts/build_site.py, scripts/run_geology_audit.py, the road raster and receipt, evidence/*, three workflows). Its first-screen download is the reference H19-5, not the dotted candidate; it audits road and claims only and treats the four blocks as unavailable.",
+      "resolution": "Do not merge PR #7 as it stands and do not resolve its conflicts in favour of its side. Rebase onto main keeping main's README/site/audit/compliance files; port only its new work (scale_space.py, run_h24_3a_experiment.py, tests, h24_3a_experiment.json, the S1750-excluding road policy with a regenerated raster, its v3 audit as an additional record beside v2). Cross-checks (H19 inputs byte-identical, as-emitted DTI identical, claim AUCs bit-identical), the H24-3A result as reported (not promoted; not reproduced here) and the plan: knowledge/08_parallel_session_pr7_2026-10-02.md. This session did not touch that branch."
+    },
+    {
+      "id": "IR-ROAD-S1750",
+      "severity": "low",
+      "status": "open_immaterial_measured",
+      "issue": "The official Census road raster merged to main (raster sha256 e5350423..., 1,141,630 seed px) includes 183 features of MTFCC S1750, which the 2023 TIGER/Line Technical Documentation Appendix E defines only as 'Internal U.S. Census Bureau use'. It also contains walkways, stairways, alleys, parking-lot roads, bike and bridle paths (all 'Road/Path Features'), so the label 'road/vehicular-trail' was too narrow.",
+      "resolution": "Measured against the parallel session's S1750-free raster (sha256 459af5cf..., 1,141,492 seed px): same grid; 56 of 5,167,373 finite pixels differ (0.0011 %), 11 by more than 100 m, maximum 300 m, none above 500 m. Descriptive single-feature road-distance AUCs agree within 1.7e-4 (claims bit-identical). The classifier audit was not re-run on the S1750-free raster. Fix when reconciling PR #7: explicit MTFCC allowlist in scripts/fetch_official_roads.py plus a regenerated raster and receipt from the official CI run (changing the script alone would leave the committed receipt inconsistent)."
     }
   ]
 }
