@@ -85,8 +85,10 @@ def _main():
     (OUT / "tiger_road_fetch_failure.json").unlink(missing_ok=True)
     raw, county_receipt = fetch(BASE + "/COUNTY/tl_2024_us_county.zip")
     r, crs = reader(raw)
-    if not crs.equals(CRS.from_epsg(4269)):
-        raise SystemExit("Unexpected Census county CRS; no silent assumption")
+    if not crs.is_geographic or "1983" not in crs.datum.name:
+        raise SystemExit(
+            f"Unexpected Census county CRS: {crs.to_string()} / {crs.datum.name}; expected geographic NAD83"
+        )
     fields = [f[0] for f in r.fields[1:]]
     fips = sorted(
         {
