@@ -1,7 +1,0 @@
-{
-  "generated_utc": "2026-10-02T15:35:46.316114+00:00",
-  "stage": "unhandled_source_or_derivation_error",
-  "exception_type": "SystemExit",
-  "error": "Unexpected Census county CRS; no silent assumption",
-  "tls_verification_disabled": false
-}

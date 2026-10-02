@@ -34,6 +34,24 @@ BOX = (-120.5, 37.0, -115.9, 41.0)
 PAD = 200
 TF = rasterio.transform.Affine(100, 0, 243350, 0, -100, 4508550)
 BASE = "https://www2.census.gov/geo/tiger/TIGER2024"
+ROAD_PATH_MTFCC = frozenset(
+    {
+        "S1100",
+        "S1200",
+        "S1400",
+        "S1500",
+        "S1630",
+        "S1640",
+        "S1710",
+        "S1720",
+        "S1730",
+        "S1740",
+        "S1780",
+        "S1810",
+        "S1820",
+        "S1830",
+    }
+)
 
 
 def fetch(url):
@@ -106,6 +124,8 @@ def _main():
         "seed_grid_buffer_m": 20000,
         "counties": fips,
         "county_download": county_receipt,
+        "county_source_crs": crs.to_string(),
+        "county_source_epsg": crs.to_epsg(),
         "assets": [],
         "geometry_counts": {},
         "mtfcc_counts": {},
@@ -116,7 +136,7 @@ def _main():
 
     from collections import Counter
 
-    counts = Counter()
+    counts, excluded_counts = Counter(), Counter()
     with ThreadPoolExecutor(max_workers=4) as ex:
         for code, (raw, entry) in ex.map(county, fips):
             rr, source_crs = reader(raw)
@@ -129,7 +149,8 @@ def _main():
                     continue
                 attrs = dict(zip(fields, sr.record))
                 mtfcc = str(attrs.get("MTFCC", ""))
-                if not mtfcc.startswith("S"):
+                if mtfcc not in ROAD_PATH_MTFCC:
+                    excluded_counts[mtfcc] += 1
                     continue
                 counts[mtfcc] += 1
                 geom = mapping(transform(projector.transform, shape(sr.shape.__geo_interface__)))
@@ -170,9 +191,11 @@ def _main():
         file=str(dst.relative_to(ROOT)),
         sha256=hashlib.sha256(dst.read_bytes()).hexdigest(),
         mtfcc_counts=dict(counts),
+        mtfcc_excluded_counts=dict(excluded_counts),
+        mtfcc_policy="Census 2024 MTFCC Road/Path feature codes only; S1750 and unknown/non-road classes excluded",
         seed_pixels=int(seeds.sum()),
         complete_county_check=True,
-        limitation="Nearest Census road/vehicular-trail segment on a 100 m raster; not a complete pedestrian-path or travel-time model",
+        limitation="TIGER local/private/service roads, vehicular trails, pedestrian/bike/bridle paths and selected access ways; not a complete hiking-path or travel-time model",
     )
     (OUT / "tiger_road_receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
     print(json.dumps({k: v for k, v in receipt.items() if k not in ("assets",)}, indent=2))

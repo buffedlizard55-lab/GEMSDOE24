@@ -45,7 +45,7 @@ jobs:
           git config user.name 'GEMS official-source audit'
           git config user.email 'gems-audit@users.noreply.github.com'
           git pull --ff-only origin arena/01a0fd2e-gemsdoe24
-          git add -A -- data/external/audit_sources/tiger_road_*
+          git add -A -- 'data/external/audit_sources/tiger_road_*'
           if ! git diff --cached --quiet; then
             git commit -m 'Add official buffered Census road/trail distance bridge'
             git push origin arena/01a0fd2e-gemsdoe24

@@ -1,0 +1,12 @@
+{
+  "generated_utc": "2026-10-02T15:35:46.316114+00:00",
+  "status": "superseded_by_successful_official_road_acquisition",
+  "source_url": "https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip",
+  "initial_error": "Unexpected Census county CRS; no silent assumption",
+  "tls_verification_disabled": false,
+  "resolution": "The initial pyproj CRS.equals(EPSG:4269) assertion was too strict for the Census county .prj. It was replaced by explicit geographic-CRS and NAD83 datum checks; the subsequent official-source workflow completed and wrote the road receipt below.",
+  "superseded_by": {
+    "file": "data/external/audit_sources/tiger_road_receipt.json",
+    "sha256": "e5350423508968fa2d32b0a6ae0d3fb4ae3ea645e3b8736f0c8e7ad9ff2f2988"
+  }
+}

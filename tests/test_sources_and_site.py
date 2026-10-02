@@ -107,6 +107,8 @@ def test_official_roads_select_a_buffer_not_the_legacy_tight_bbox():
     assert module.intersects([-120.1, 40.73, -119.9, 40.9])
     assert not module.intersects([0, 0, 1, 1])
     assert module.PAD == 200
+    assert {"S1400", "S1500", "S1710", "S1820", "S1830"} <= module.ROAD_PATH_MTFCC
+    assert "S1750" not in module.ROAD_PATH_MTFCC
 
 
 def test_official_roads_retries_tls_failures_and_writes_bounded_receipt(tmp_path, monkeypatch):
