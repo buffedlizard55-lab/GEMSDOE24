@@ -13,12 +13,14 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+import numpy as np
 import rasterio
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from gems import footprint, paths, submission  # noqa: E402
-from gems.promotion import require_candidate_evidence  # noqa: E402
+from gems.promotion import require_candidate_evidence, require_postprocess_evidence  # noqa: E402
+from gems.thinning import dot_thin  # noqa: E402
 from gems.validator import sha256_file  # noqa: E402
 
 TEMPLATE = ROOT / "data/bridge/sample_submission.tif"
@@ -30,6 +32,30 @@ def main():
     ap.add_argument("source", type=Path)
     ap.add_argument("--hyp", default="h24-2a")
     ap.add_argument("--mirror-of", choices=["h19-5"], default=None)
+    ap.add_argument(
+        "--postprocess-of",
+        choices=["h19-5"],
+        default=None,
+        help="label-free dot-thinning of the pinned H19-5 reference (new evidence rule)",
+    )
+    ap.add_argument("--validation", type=Path, default=ROOT / "evidence/dotting_validation.json")
+    ap.add_argument(
+        "--spacing",
+        type=float,
+        default=None,
+        help="dot_thin min distance (px); default = validation selected_d",
+    )
+    ap.add_argument(
+        "--role",
+        choices=["primary", "alternate"],
+        default="primary",
+        help="primary -> docs/data/download.json, alternate -> docs/data/alternate_download.json",
+    )
+    ap.add_argument(
+        "--candidate-label",
+        default="candidate",
+        help="key of this raster in the accessibility audit references",
+    )
     ap.add_argument("--summary", default="")
     ap.add_argument("--gate-file", type=Path, default=ROOT / "evidence/h24_2_experiment.json")
     ap.add_argument(
@@ -47,6 +73,38 @@ def main():
             "passed": False,
             "reason": "Reference only; renaming does not create a new prediction or justify another slot",
         }
+    elif args.postprocess_of:
+        validation = json.loads(args.validation.read_text())
+        ref_path = next((ROOT / "inputs").glob("*h19-5*-nan.tif"))
+        if sha256_file(ref_path) != H19_5_SHA:
+            raise SystemExit("Pinned H19-5 reference differs from its recorded SHA-256")
+        fp0 = footprint.load_footprint()
+        known0 = footprint.load_band(ROOT / "data/bridge/existing_faults.tif") > 0
+        with rasterio.open(ref_path) as d:
+            ref_arr = d.read(1)
+        with rasterio.open(source) as d:
+            cand_arr = d.read(1)
+        spacing = (
+            args.spacing
+            if args.spacing is not None
+            else validation["selection_and_gates"]["selected_d"]
+        )
+        expected = dot_thin((ref_arr > 0) & fp0 & ~known0, spacing)
+        recomputed = bool(
+            np.array_equal((cand_arr > 0) & fp0, expected) and np.isin(cand_arr[fp0], [0, 1]).all()
+        )
+        try:
+            gate = require_postprocess_evidence(
+                H19_5_SHA,
+                digest,
+                recomputed,
+                validation,
+                json.loads(args.audit_file.read_text()),
+                candidate_label=args.candidate_label,
+            )
+        except (OSError, ValueError, KeyError) as exc:
+            raise SystemExit(str(exc)) from exc
+        gate["transform"] = {"name": "dot_thin", "min_dist_px": spacing, "reference": "h19-5"}
     else:
         try:
             gate = require_candidate_evidence(
@@ -68,6 +126,8 @@ def main():
     cid = submission.scored_content_id(arr, fp, known)
     date = datetime.now(timezone.utc).strftime("%Y%m%d")
     hyp = "reference-h19-5" if args.mirror_of else args.hyp
+    if args.postprocess_of and args.hyp == "h24-2a":
+        hyp = f"h25-1-dotted-h19-5-d{spacing:g}"
     dl = paths.DOWNLOADS_DIR
     dl.mkdir(parents=True, exist_ok=True)
     primary = dl / submission.make_filename("gems24", hyp, date, cid, "nan")
@@ -83,10 +143,15 @@ def main():
     with rasterio.open(primary) as d:
         if submission.scored_content_id(d.read(1), fp, known) != cid:
             raise SystemExit("Packaging changed scored predictions")
+    default_summary = (
+        "H19-5 dot-thinned (label-free subset); paired spatial-holdout gains on sparse truths; unscored"
+        if args.postprocess_of
+        else "Held-out candidate with matched training-only nuisance removal and exact-raster re-audit"
+    )
     summary = args.summary or (
         "H19-5 reference; original DTI 0.1922 reported by owner. Not a new prediction; do not spend a repeat slot."
         if args.mirror_of
-        else "Held-out candidate with matched training-only nuisance removal and exact-raster re-audit"
+        else default_summary
     )
     note = submission.make_note(hyp, summary, cid, reference=bool(args.mirror_of))
     note_path = dl / ("note-" + primary.stem + ".txt")
@@ -125,13 +190,32 @@ def main():
         "live_dti": None,
         "original_reported_dti": 0.1922 if args.mirror_of else None,
         "score_evidence": "owner report" if args.mirror_of else None,
-        "recommended_for_new_slot": not bool(args.mirror_of),
+        "recommended_for_new_slot": (
+            gate.get("slot_recommendation") == "eligible"
+            if args.postprocess_of
+            else not bool(args.mirror_of)
+        ),
+        "slot_recommendation": gate.get("slot_recommendation") if args.postprocess_of else None,
+        "postprocess_of": args.postprocess_of,
+        "strict_owner_audit_gate_passed": gate.get("strict_owner_audit_gate_passed"),
+        "validation_file": str(args.validation.resolve().relative_to(ROOT))
+        if args.postprocess_of
+        else None,
         "slot_spent": False,
+        "role": None if args.mirror_of else args.role,
+        "pixel_count": int((arr[fp] > 0).sum()),
         "note": note,
     }
     reg["submissions"].append(row)
     paths.REGISTRY_PATH.write_text(json.dumps(reg, indent=2) + "\n")
-    (ROOT / "docs/data/download.json").write_text(json.dumps(row, indent=2) + "\n")
+    target = (
+        "reference_download.json"
+        if args.mirror_of
+        else "alternate_download.json"
+        if args.role == "alternate"
+        else "download.json"
+    )
+    (ROOT / "docs/data" / target).write_text(json.dumps(row, indent=2) + "\n")
     print(json.dumps(row, indent=2))
 
 

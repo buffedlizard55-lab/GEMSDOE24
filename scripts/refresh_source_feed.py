@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""Refresh official-source snapshots on hosted CI; never fabricate a live score.
+"""Refresh the source feed WITHOUT touching drivendata.org; never fabricate a live score.
 
-Failure retains a clearly marked last verified snapshot. This script performs
-anonymous read-only HTTP requests, with TLS verification and bounded timeouts.
-It does not write Git branches or submit predictions.
+DrivenData's Terms of Use (https://www.drivendata.org/termsofuse/) prohibit using "any robot, spider or other
+automatic device, process or means to access the Website for any purpose, including monitoring or copying", and
+the prize rules bind competitors to them. So this script NEVER requests a drivendata.org host (leaderboard, forum,
+data pages). Leaderboard rows are HUMAN-READ snapshots: a person saves the page and runs
+``--leaderboard-file``; nothing is fetched. The only automatic request is the USGS ScienceBase JSON API (an
+interface intended for programmatic use) to detect changes to the GeoDAWN release. TLS verified, bounded timeouts,
+no Git writes, no submissions.
 """
 
 from __future__ import annotations
@@ -14,22 +18,17 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
-LEADERBOARD = "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"
-TOPICS = [
-    (
-        "https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516.json",
-        "Known-pixel masking discussion",
-    ),
-    (
-        "https://community.drivendata.org/t/how-were-the-new-test-faults-identified-data-sources-and-fault-types/11527.json",
-        "Hidden test-source discussion",
-    ),
-]
+SCIENCEBASE_ITEM = "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7?format=json"
+FORBIDDEN_HOSTS = ("drivendata.org",)
+LEADERBOARD_URL = (
+    "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"  # link only
+)
 
 
 def parse_leaderboard(html):
@@ -67,11 +66,46 @@ def parse_leaderboard(html):
     return leader, rows
 
 
+def assert_allowed(url: str) -> str:
+    """Refuse any automatic request to a forbidden host (DrivenData Terms of Use)."""
+    host = urlparse(url).hostname or ""
+    if any(host == h or host.endswith("." + h) for h in FORBIDDEN_HOSTS):
+        raise ValueError(f"automatic access to {host} is not permitted by its Terms of Use")
+    return url
+
+
+def ingest_leaderboard_file(data: dict, path: Path, now: str, reader: str) -> dict:
+    """Update the snapshot from a leaderboard page a HUMAN saved; no network request."""
+    leader, rows = parse_leaderboard(Path(path).read_text(errors="replace"))
+    data.update(
+        status="human_read_snapshot",
+        last_success_utc=now,
+        verification_method=f"leaderboard page saved and supplied by {reader}; parsed with rank/score validation; not fetched by this script",
+        leaderboard={**leader, "url": LEADERBOARD_URL, "account_artifact_mapping_verified": False},
+        leaderboard_rows=rows[:60],
+    )
+    data["updates"] = [
+        u
+        for u in data.get("updates", [])
+        if not str(u.get("title", "")).startswith("Official leader")
+    ] + [
+        {
+            "title": f"Official leader snapshot: {leader['participant']} {leader['best_score']:.4f}",
+            "kind": f"Human-read leaderboard snapshot ({reader}); not a permanent result",
+            "checked_utc": now,
+            "url": LEADERBOARD_URL,
+        }
+    ]
+    return data
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--offline", action="store_true", help="validate the existing local snapshot only"
     )
+    ap.add_argument("--leaderboard-file", type=Path, help="leaderboard HTML/text a human saved")
+    ap.add_argument("--reader", default="owner", help="who read the leaderboard page")
     args = ap.parse_args()
     path = ROOT / "docs/data/source_health.json"
     old = json.loads(path.read_text())
@@ -82,56 +116,41 @@ def main():
         print("Offline snapshot valid; no fresh network check or deployment claimed")
         return
     now = datetime.now(timezone.utc).isoformat()
-    data = {**old, "checked_utc": now, "errors": [], "updates": []}
-    session = requests.Session()
-    session.headers["User-Agent"] = "GEMS-source-health/2.0"
+    data = {**old, "errors": []}
+    data["updates"] = [
+        u for u in old.get("updates", []) if "sciencebase" not in str(u.get("url", ""))
+    ]
+    if args.leaderboard_file:
+        data["checked_utc"] = now
+        data = ingest_leaderboard_file(data, args.leaderboard_file, now, args.reader)
     try:
-        response = session.get(LEADERBOARD, timeout=30)
+        session = requests.Session()
+        session.headers["User-Agent"] = "GEMS-source-health/3.0 (USGS ScienceBase JSON API)"
+        response = session.get(assert_allowed(SCIENCEBASE_ITEM), timeout=30)
         response.raise_for_status()
-        if len(response.content) > 5_000_000:
-            raise ValueError("Unexpectedly large leaderboard response")
-        leader, rows = parse_leaderboard(response.text)
-        data.update(
-            status="verified",
-            last_success_utc=now,
-            verification_method="anonymous HTTPS with parsed rank/score validation",
-            leaderboard={**leader, "url": LEADERBOARD, "account_artifact_mapping_verified": False},
-            leaderboard_rows=rows,
-            leaderboard_html_sha256=hashlib.sha256(response.content).hexdigest(),
-        )
+        obj = response.json()
+        if not obj.get("id") or "GeoDAWN" not in str(obj.get("title", "")):
+            raise ValueError("Not the GeoDAWN ScienceBase item")
         data["updates"].append(
             {
-                "title": f"Official leader snapshot: {leader['participant']} {leader['best_score']:.4f}",
-                "kind": "Official leaderboard HTTPS snapshot",
+                "title": f"GeoDAWN release (USGS ScienceBase) last updated {obj.get('provenance', {}).get('lastUpdated', 'unknown')}",
+                "kind": "Official USGS ScienceBase JSON API (automatic check)",
                 "checked_utc": now,
-                "url": LEADERBOARD,
+                "url": SCIENCEBASE_ITEM.split("?")[0],
+                "response_sha256": hashlib.sha256(response.content).hexdigest(),
             }
         )
+        data["checked_utc"] = now
+        if data.get("status") not in ("human_read_snapshot",):
+            data["status"] = "manual_source_read"
+        data["automatic_checks_utc"] = now
     except (requests.RequestException, ValueError) as exc:
-        data["status"] = "stale"
-        data["errors"].append({"source": LEADERBOARD, "error": str(exc)[:250]})
-        data["updates"] = old.get("updates", [])
-    for url, title in TOPICS:
-        try:
-            response = session.get(url, timeout=30)
-            response.raise_for_status()
-            obj = response.json()
-            if not obj.get("id") or not obj.get("post_stream"):
-                raise ValueError("Not a public Discourse topic response")
-            data["updates"].append(
-                {
-                    "title": obj.get("title") or title,
-                    "kind": "Forum discussion; not every participant is organizer staff",
-                    "checked_utc": now,
-                    "last_post_utc": obj.get("last_posted_at"),
-                    "url": url[:-5],
-                    "response_sha256": hashlib.sha256(response.content).hexdigest(),
-                }
-            )
-        except (requests.RequestException, ValueError) as exc:
-            data["errors"].append({"source": url, "error": str(exc)[:250]})
+        data["errors"].append({"source": SCIENCEBASE_ITEM.split("?")[0], "error": str(exc)[:250]})
+    data["drivendata_automation"] = (
+        "none: drivendata.org is never requested by scheduled or CI jobs"
+    )
     path.write_text(json.dumps(data, indent=2) + "\n")
-    print(json.dumps({"status": data["status"], "errors": data["errors"]}, indent=2))
+    print(json.dumps({"status": data.get("status"), "errors": data["errors"]}, indent=2))
 
 
 if __name__ == "__main__":

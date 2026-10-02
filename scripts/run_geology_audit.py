@@ -33,6 +33,16 @@ def main() -> None:
     ap.add_argument("--shifts", type=int, default=99)
     ap.add_argument("--samples", type=int, default=12000)
     ap.add_argument("--candidate", type=Path)
+    ap.add_argument(
+        "--candidate-alt", type=Path, help="second candidate audited in the same family-wise run"
+    )
+    ap.add_argument(
+        "--extra",
+        action="append",
+        default=[],
+        metavar="LABEL=PATH",
+        help="additional reference raster audited in the same family-wise run (repeatable)",
+    )
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
     if args.permutations < 199 or args.shifts < 99:
@@ -55,6 +65,13 @@ def main() -> None:
     refs += [(tag, next((ROOT / "inputs").glob(f"*{tag}*-nan.tif"))) for tag in ("h19-4", "h19-5")]
     if args.candidate:
         refs.append(("candidate", args.candidate.resolve()))
+    if args.candidate_alt:
+        refs.append(("candidate_alt", args.candidate_alt.resolve()))
+    for item in args.extra:
+        label, sep, extra_path = item.partition("=")
+        if not sep or not label or not extra_path:
+            raise SystemExit("--extra expects LABEL=PATH")
+        refs.append((label, Path(extra_path).resolve()))
     protocol = {
         "version": 2,
         "labels_first": True,
@@ -91,6 +108,8 @@ def main() -> None:
         "source_provenance": prov,
         "references": {},
         "full_requested_audit_complete": prov["full_requested_audit_available"],
+        "block_boundary_status": prov.get("block_boundary_status", "missing"),
+        "blocks_official_coordinates": prov.get("blocks_official_coordinates", False),
         "interpretation": "Association test; not causal proof and not a certification of fault discovery. Missing inputs are never replaced by geological proxies.",
     }
     for label, p in refs:

@@ -2,21 +2,189 @@
   "schema_version": 1,
   "review_date_utc": "2026-10-02",
   "facts": [
-    {"id":"DD-SPEC","name":"Organizer problem and metric","kind":"Official source read","url":"https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/","verified":"Float32 single-band confidence raster; UTM11N; 100 m; [0,1]; 300 m triangular DTI, alpha .2 / beta .8","limit":"Local catalogue simulations do not reveal hidden test faults."},
-    {"id":"DD-MASK","name":"Exact known-pixel masking","kind":"Organizer staff clarification","url":"https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4","verified":"Known pixels are neutral; near-known predictions can be penalized; new truth may be within 300 m of known traces.","limit":"Do not erase a 300 m buffer or allow known predictions to credit adjacent new truth."},
-    {"id":"DD-TEST","name":"Hidden test-source disclosure","kind":"Organizer staff clarification","url":"https://community.drivendata.org/t/how-were-the-new-test-faults-identified-data-sources-and-fault-types/11527/7","verified":"Fault types/source coverage are not disclosed; expert assessment matters.","limit":"Do not assume all test faults are quaternary scarps or geothermal conduits."},
-    {"id":"DD-LB","name":"Leaderboard snapshot","kind":"Official source read","url":"https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/","verified":"2026-10-02: DARD 0.3195; smrtdoog5 0.1922. See timestamped feed for later verified snapshots.","limit":"No independent artifact-to-account-score mapping; a snapshot is not permanent."},
-    {"id":"C2ST","name":"Lopez-Paz & Oquab, ICLR 2017","kind":"Primary research paper","url":"https://arxiv.org/abs/1610.06545","verified":"Classifier trained separately from held-out two-sample evaluation; original statistic is accuracy.","limit":"Our AUC/refitted spatial adaptation assumes exchangeability; association is not causation."},
-    {"id":"USGS-GD","name":"GeoDAWN official release","kind":"Official bytes and receipts","url":"https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7","verified":"Report, ReadMe, metadata, extent and flight-path inventories downloaded and hashed.","limit":"Area1/Area2 and the single whole-survey extent are not the four operational block polygons."},
-    {"id":"USGS-REPORT","name":"GeoDAWN contractor report","kind":"Official source read / preserved PDF","url":"https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7?f=__disk__2b%2F67%2Fb4%2F2b67b4e0d88525acc1ae32cf17b8fd001395bf52","verified":"Winnemucca, Fallon, Hawthorne and Tonopah; two resolution/drape regimes; Tonopah helicopter acquisition.","limit":"Figure3 names blocks, but verified numeric boundaries remain unavailable; nearest airport is not membership."},
-    {"id":"BLM-CLOSED","name":"BLM closed mining claims","kind":"Official anonymous download / derived raster","url":"https://gis.blm.gov/nlsdb/rest/services/Mining_Claims/MiningClaims/MapServer/2?f=pjson","verified":"702,794 case IDs checked; 197,346 unique quality-filtered legal-land geometries; 20 km seed buffer.","limit":"PLSS approximations, not stakes/workings. Numeric <=10 quality policy is ours, not a claim of perfect precision."},
-    {"id":"CENSUS","name":"TIGER/Line 2024 roads","kind":"Official definition; owner-mirror bytes currently used","url":"https://www2.census.gov/geo/tiger/TIGER2024/ROADS/","verified":"Real road/vehicular-trail geometries and pinned mirror integrity; S codes used, rails excluded.","limit":"Legacy mirror was clipped tightly to a geographic window: nearest-road certification at boundaries is incomplete. Official buffered acquisition is implemented but not run without GitHub reconnection."},
-    {"id":"MTFCC","name":"Census road/trail code metadata","kind":"Official source read","url":"https://meta.geo.census.gov/data/existing/decennial/GEO/GPMB/TIGERline/Archived_19110/tl_2021_roads.shp.ea.iso.xml","verified":"S1400 local/neighborhood/rural road; S1500 vehicular 4WD trail; R1011 rail is not a road.","limit":"Census roads are not a complete hiking-path or travel-time model."},
-    {"id":"MRDS","name":"USGS MRDS","kind":"Official source read","url":"https://mrdata.usgs.gov/mrds/","verified":"Mineral occurrences; not mining-claim geometries; updates ceased in 2011.","limit":"Explicitly excluded from the nuisance-only audit."},
-    {"id":"INGENIOUS","name":"INGENIOUS/GDR layer conventions","kind":"Official source read","url":"https://gdr.openei.org/submissions/1391","verified":"TC means thermal conductivity; earthquake-density aliases require attention to original definitions.","limit":"Ambiguous inherited aliases are excluded; owner bridge integrity does not certify every band name."},
-    {"id":"PFA-2015","name":"Faulds & Hinz geothermal structural study","kind":"Primary official-hosted research","url":"https://www.osti.gov/servlets/purl/1724082","verified":"Steps, terminations and intersections matter in the characterized geothermal-system population; blind systems occur.","limit":"Not pixel-fault prevalence, a competition prior or proof of ring faults."},
-    {"id":"PFA-2020","name":"Great Basin play-fairway analysis","kind":"Primary official-hosted research","url":"https://www.osti.gov/servlets/purl/1724109","verified":"Integrated structure/thermal evidence; outflow can be displaced from upflow; field confirmation is needed.","limit":"A thermal anomaly does not uniquely locate an omitted fault."},
-    {"id":"3DEP","name":"USGS 3DEP data tools","kind":"Official availability source","url":"https://www.usgs.gov/3d-elevation-program/data-tools","verified":"Free official elevation-data source for a future drainage-offset hypothesis.","limit":"Complete raw coverage/byte receipts remain deferred; no claimed tested drainage-offset model."},
-    {"id":"RULES","name":"Prize rules","kind":"Official source read","url":"https://docs.nlr.gov/docs/fy26osti/96647.pdf","verified":"Submission limits, final selection, licensed external-data and AI/code/narrative disclosure requirements.","limit":"Do not evade quotas via repos/accounts; rules/platform deadline discrepancy requires organizer confirmation."}
+    {
+      "id": "DD-SPEC",
+      "name": "Organizer problem and metric",
+      "kind": "Official source read",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+      "verified": "Float32 single-band confidence raster; UTM11N; 100 m; [0,1]; 300 m triangular DTI, alpha .2 / beta .8",
+      "limit": "Local catalogue simulations do not reveal hidden test faults."
+    },
+    {
+      "id": "DD-MASK",
+      "name": "Exact known-pixel masking",
+      "kind": "Organizer staff clarification (2026-09-16 and 2026-09-21)",
+      "url": "https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4",
+      "verified": "Staff: the mask is pixel-exact and identical to the provided training labels; a predicted pixel near a known trace but far from NEW truth is fully penalized (no buffer); a new-truth pixel CAN lie within 300 m of a known trace ('corrections or modifications to existing fault traces'); the same masking applies in the final re-evaluation.",
+      "limit": "Known pixels are neutral. Owner-reported scores corroborate this: 8GEMSDOE Hedge-v2 (all 60,988 catalogue pixels added as predictions) = GEMSDOE ens12 (0.1563 both)."
+    },
+    {
+      "id": "DD-TEST",
+      "name": "Hidden test-source disclosure",
+      "kind": "Organizer staff clarification",
+      "url": "https://community.drivendata.org/t/how-were-the-new-test-faults-identified-data-sources-and-fault-types/11527/7",
+      "verified": "Fault types/source coverage are not disclosed; expert assessment matters.",
+      "limit": "Do not assume all test faults are quaternary scarps or geothermal conduits."
+    },
+    {
+      "id": "DD-LB",
+      "name": "Leaderboard snapshot",
+      "kind": "Official page read (2026-10-02)",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+      "verified": "#1 DARD 0.3195 (12 submissions); #2 alexoktaba 0.3042; #3 Batik Shirt Brothers 0.2998; #4 xiaofanhu 0.2941; #5 joeyfezster 0.2919; #26 smrtdoog5 0.1922; #28 SDCF9 0.1894. The 0.3049 in the owner's brief is a stale snapshot.",
+      "limit": "A snapshot is not permanent and no artifact-to-account mapping is verified. Two rows equal to the owner's 0.1922/0.1894 are NOT proof of ownership."
+    },
+    {
+      "id": "C2ST",
+      "name": "Lopez-Paz & Oquab, ICLR 2017",
+      "kind": "Primary research paper",
+      "url": "https://arxiv.org/abs/1610.06545",
+      "verified": "Classifier trained separately from held-out two-sample evaluation; original statistic is accuracy.",
+      "limit": "Our AUC/refitted spatial adaptation assumes exchangeability; association is not causation."
+    },
+    {
+      "id": "USGS-GD",
+      "name": "GeoDAWN official release",
+      "kind": "Official USGS release (ScienceBase) read 2026-10-02",
+      "url": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
+      "verified": "Summary text: the survey 'was divided into four separate acquisition blocks (from north to south: Winnemucca, Fallon, Hawthorne, and Tonopah; Figure 1)'; Area 1 and Area 2 are two overlapping survey specifications (Area 1 over Clayton Valley, inside the Tonopah block).",
+      "limit": "Block boundaries exist only as dashed lines in Figure 1; no coordinates are published. This repository's block raster is DERIVED from the figure (see audited derivation), not official coordinates."
+    },
+    {
+      "id": "USGS-REPORT",
+      "name": "GeoDAWN contractor report",
+      "kind": "Official source read / preserved PDF",
+      "url": "https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7?f=__disk__2b%2F67%2Fb4%2F2b67b4e0d88525acc1ae32cf17b8fd001395bf52",
+      "verified": "Winnemucca, Fallon, Hawthorne and Tonopah; two resolution/drape regimes; Tonopah helicopter acquisition.",
+      "limit": "Figure3 names blocks, but verified numeric boundaries remain unavailable; nearest airport is not membership."
+    },
+    {
+      "id": "BLM-CLOSED",
+      "name": "BLM closed mining claims",
+      "kind": "Official anonymous download / derived raster",
+      "url": "https://gis.blm.gov/nlsdb/rest/services/Mining_Claims/MiningClaims/MapServer/2?f=pjson",
+      "verified": "702,794 case IDs checked; 197,346 unique quality-filtered legal-land geometries; 20 km seed buffer.",
+      "limit": "PLSS approximations, not stakes/workings. Numeric <=10 quality policy is ours, not a claim of perfect precision."
+    },
+    {
+      "id": "CENSUS",
+      "name": "TIGER/Line 2024 roads",
+      "kind": "Official definition; owner-mirror bytes currently used",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/",
+      "verified": "Real road/vehicular-trail geometries and pinned mirror integrity; S codes used, rails excluded.",
+      "limit": "Legacy mirror was clipped tightly to a geographic window: nearest-road certification at boundaries is incomplete. Official buffered acquisition is implemented but not run without GitHub reconnection."
+    },
+    {
+      "id": "MTFCC",
+      "name": "Census road/trail code metadata",
+      "kind": "Official source read",
+      "url": "https://meta.geo.census.gov/data/existing/decennial/GEO/GPMB/TIGERline/Archived_19110/tl_2021_roads.shp.ea.iso.xml",
+      "verified": "S1400 local/neighborhood/rural road; S1500 vehicular 4WD trail; R1011 rail is not a road.",
+      "limit": "Census roads are not a complete hiking-path or travel-time model."
+    },
+    {
+      "id": "MRDS",
+      "name": "USGS MRDS",
+      "kind": "Official source read",
+      "url": "https://mrdata.usgs.gov/mrds/",
+      "verified": "Mineral occurrences; not mining-claim geometries; updates ceased in 2011.",
+      "limit": "Explicitly excluded from the nuisance-only audit."
+    },
+    {
+      "id": "INGENIOUS",
+      "name": "INGENIOUS/GDR layer conventions",
+      "kind": "Official source read",
+      "url": "https://gdr.openei.org/submissions/1391",
+      "verified": "TC means thermal conductivity; earthquake-density aliases require attention to original definitions.",
+      "limit": "Ambiguous inherited aliases are excluded; owner bridge integrity does not certify every band name."
+    },
+    {
+      "id": "PFA-2015",
+      "name": "Faulds & Hinz geothermal structural study",
+      "kind": "Primary official-hosted research",
+      "url": "https://www.osti.gov/servlets/purl/1724082",
+      "verified": "Steps, terminations and intersections matter in the characterized geothermal-system population; blind systems occur.",
+      "limit": "Not pixel-fault prevalence, a competition prior or proof of ring faults."
+    },
+    {
+      "id": "PFA-2020",
+      "name": "Great Basin play-fairway analysis",
+      "kind": "Primary official-hosted research",
+      "url": "https://www.osti.gov/servlets/purl/1724109",
+      "verified": "Integrated structure/thermal evidence; outflow can be displaced from upflow; field confirmation is needed.",
+      "limit": "A thermal anomaly does not uniquely locate an omitted fault."
+    },
+    {
+      "id": "3DEP",
+      "name": "USGS 3DEP data tools",
+      "kind": "Official availability source",
+      "url": "https://www.usgs.gov/3d-elevation-program/data-tools",
+      "verified": "Free official elevation-data source for a future drainage-offset hypothesis.",
+      "limit": "Complete raw coverage/byte receipts remain deferred; no claimed tested drainage-offset model."
+    },
+    {
+      "id": "RULES",
+      "name": "Prize rules",
+      "kind": "Official source read",
+      "url": "https://docs.nlr.gov/docs/fy26osti/96647.pdf",
+      "verified": "Submission limits, final selection, licensed external-data and AI/code/narrative disclosure requirements.",
+      "limit": "Do not evade quotas via repos/accounts; rules/platform deadline discrepancy requires organizer confirmation."
+    },
+    {
+      "name": "GeoDAWN contractor report (block bases)",
+      "kind": "Official report preserved in data/external/audit_sources",
+      "url": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
+      "verified": "Figure 3 'The Four GeoDAWN Acquisition Blocks'; base stations (UTM): Winnemucca 432658E 4528343N, Fallon 349803E 4373452N, Hawthorne 357908E 4266948N, Tonopah 491299E 4213070N; tie lines extend >= 2 km into the adjacent block.",
+      "limit": "Base stations are not block boundaries. Membership within ~2 km of a seam is inherently ambiguous."
+    },
+    {
+      "name": "TIGER/Line 2024 roads (official buffered run)",
+      "kind": "Official anonymous download via GitHub Actions; receipt committed",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/",
+      "verified": "Whole county files for the buffered window, complete_county_check=true, 1,141,630 seed pixels (data/external/audit_sources/tiger_road_receipt.json). Supersedes the tightly clipped owner mirror.",
+      "limit": "Nearest Census road/vehicular-trail segment on a 100 m raster; not a complete pedestrian-path or travel-time model."
+    },
+    {
+      "name": "Prize rules: submissions, selection, AI disclosure",
+      "kind": "Official rules PDF read 2026-10-02",
+      "url": "https://docs.nlr.gov/docs/fy26osti/96647.pdf",
+      "verified": "Section 3.2: up to three submissions per week; generative-AI use allowed but must be disclosed in the narrative. Section 3.4: one final submission per entity, chosen without knowing private scores. Prize pool: Phase 1 $50,000 (top five $10,000 each), Phase 2 $250,000 ($100k/$70k/$40k/$25k/$15k).",
+      "limit": "Another account or repository is not a quota reset; confirm account compliance with the organizers."
+    },
+    {
+      "name": "Competition end date vs rules deadline",
+      "kind": "Official page and rules compared",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/",
+      "verified": "Competition page: 'Dec. 3, 2026, 11:59 p.m. UTC'. Rules A.1: 'by 5:00 p.m. ET on the prize submission deadline date'.",
+      "limit": "Different time conventions on the same date; organizer confirmation needed (gemsprize@nlr.gov per the competition page)."
+    },
+    {
+      "name": "Pooled score, hand labels, new-fault definition",
+      "kind": "Organizer staff clarifications (2026-09-23 / 2026-10-01)",
+      "url": "https://community.drivendata.org/t/leaderboard-aggregation-pooled-over-public-test-pixels-or-mean-of-per-chunk-scores/11550",
+      "verified": "Public and private scores pool all pixels in the subset into ONE Tversky index; the final re-evaluation uses the entire GeoDAWN area. 'New fault' = any fault pixel not already captured by USGS/INGENIOUS, incl. newly mapped geometry of an existing system (thread 11536). Hand-labelling is permitted if labels are saved and available on request (thread 11543).",
+      "limit": "Chunking/subset sizes are not disclosed, so the public-subset truth density is inferred, not known."
+    },
+    {
+      "name": "Qfaults positional accuracy (Hermant et al. 2025)",
+      "kind": "Peer-reviewed workshop paper cited on the organizers' About page",
+      "url": "https://pangea.stanford.edu/ERE/db/GeoConf/papers/SGW/2025/Hermant.pdf",
+      "verified": "Figure 2 caption: in north-central Nevada the distance between USGS Quaternary faults and the authors' expert/lidar fault labels 'can be up to 400 m'; USGS mapping is 'occasionally imprecise at small scale'.",
+      "limit": "One study area. It supports 'corrections within a few hundred metres exist'; it does not give their prevalence in the hidden set."
+    },
+    {
+      "name": "INGENIOUS Qfaults map-scale attribute",
+      "kind": "Owner CI receipt derived from GDR submission 1391",
+      "url": "https://gdr.openei.org/submissions/1391",
+      "verified": "data/external/gdr_qfaults_traces.csv: 1,126 in-footprint traces, 1:100,000 (18.1% of length) and 1:250,000 (81.9%). Nominal 0.5 mm map accuracy is 50 m and 125 m respectively.",
+      "limit": "Per-pixel map-scale raster is not yet built, so the correction-corridor hypothesis that would use it is unvalidated. The NSHM23 fault-section database (1,017 simplified Quaternary-active sections compiled from the USGS Quaternary Fault Database) and NBMG's free 1:500,000 geologic-map fault data were read at description level only; neither is a new expert-mapped fault layer, so neither was pursued."
+    },
+    {
+      "name": "DrivenData Terms of Use: no automatic access",
+      "kind": "Official terms read 2026-10-02",
+      "url": "https://www.drivendata.org/termsofuse/",
+      "verified": "Prohibited: \"Use any robot, spider or other automatic device, process or means to access the Website for any purpose, including monitoring or copying any of the material on the Website.\" The prize rules make the Terms binding on competitors (rules A.1).",
+      "limit": "The previous scheduled feed fetched the leaderboard/forum automatically; it no longer does. Agent page-reading during this user-directed session was one-off, not monitoring; the owner should re-verify quoted leaderboard figures by hand."
+    }
   ]
 }

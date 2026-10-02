@@ -2,26 +2,215 @@
   "schema_version": 2,
   "review_date_utc": "2026-10-02",
   "issues": [
-    {"id":"IR-C2-CITATION","severity":"medium","status":"fixed","issue":"Inherited arXiv 1610.06539 is not the Lopez-Paz/Oquab C2ST paper.","resolution":"Correct 1610.06545, accuracy-versus-AUC adaptation and spatial exchangeability caveats recorded."},
-    {"id":"IR-GEO-PROXIES","severity":"critical","status":"fixed","issue":"Geothermal sites and fault-confidence/label distances contaminated a supposedly nuisance-only audit.","resolution":"Active whitelist only permits road/claim/acquisition families; legacy scripts/reports retired and preserved for traceability."},
-    {"id":"IR-MRDS-CLAIMS","severity":"critical","status":"fixed","issue":"MRDS mineral occurrences were labelled historic mining claims.","resolution":"Official BLM closed claims used: complete IDs checked, quality prefixes parsed, multiple shells/holes respected, 20 km buffer retained."},
-    {"id":"IR-BLOCKS","severity":"critical","status":"blocked","issue":"Two survey areas, an inferred seam or a constant raster cannot stand in for four operational GeoDAWN blocks.","resolution":"Official report/metadata/extent/flight inventories reviewed; coordinate-verified four-block membership remains absent. Full audit cannot pass."},
-    {"id":"IR-AREA-PRIORITY","severity":"high","status":"fixed","issue":"Area2 could overwrite the finer overlapping Area1.","resolution":"Area1 priority implemented and regression-tested."},
-    {"id":"IR-ROAD-WINDOW","severity":"high","status":"blocked","issue":"The inherited road mirror is clipped tightly to (-120.0024,37.3641,-116.1415,40.7247). A 20 km seed grid does not recover missing external road geometries.","resolution":"New anonymous official county-ZIP acquisition with buffered window is implemented, but push/authentication failure prevented its CI run. Current road diagnostics/residualized experiment remain explicitly provisional; nearest-road boundary coverage is not certified."},
-    {"id":"IR-KNOWN-CREDIT","severity":"critical","status":"fixed","issue":"Masked known predictions could earn TP credit on adjacent new truth; catalogue truth masking was inconsistent.","resolution":"Both exact and binary DTI now mask predictions and truth regardless of legacy flag. Adjacent-new-truth and randomized parity tests pass."},
-    {"id":"IR-BINARY-GATE","severity":"critical","status":"fixed","issue":"Re-thinning/re-ranking binary submissions, zero-budget -0 slicing and arbitrary zero backfill invalidated inherited promotion claims.","resolution":"True four-arm refitting, as-emitted historical diagnostics, deterministic positive-only top budgets and explicit current-best reconstruction veto."},
-    {"id":"IR-NMS-HALOS","severity":"high","status":"fixed","issue":"Zero-padded quadrants or zeroing catalogue pixels before NMS could create artificial boundary/flank ridges.","resolution":"Complete predicted halos and valid-support erosion; catalogue exclusion only after NMS; boundary tests pass."},
-    {"id":"IR-DEGENERATE-SHIFT","severity":"high","status":"fixed_with_disclosed_design_update","issue":"An exact-candidate torus shift produced a single-class held-out fold, for which AUC is undefined.","resolution":"Geometry/cohort support only determines retry; no statistic-based exclusion. Every rejected draw is recorded; retries bounded; 99 valid shifts required. Shift inference is conditional and diagnostic, not an exact spatial null. Grouped primary remains unchanged."},
-    {"id":"IR-CURRENT-BEST","severity":"critical","status":"blocked","issue":"Original H19 OOF caches and source-to-artifact reconstruction are unavailable.","resolution":"Current H19 output diagnostics are scored as emitted and used only as a conservative veto. No certified win over the original current-best holdout or new public score is claimed."},
-    {"id":"IR-INDEPENDENCE","severity":"high","status":"corrected_interpretation","issue":"H19 comments call four heavily shared-input lines independent and contain old budget-only descriptions alongside changed weight code.","resolution":"Actual reviewed coefficients and shared terrain inputs documented; measured Jaccard .777234. Score differences and code coefficients are not causal ablations."},
-    {"id":"IR-ARC-SPECIFICITY","severity":"medium","status":"disclosed","issue":"Annular coherence can respond to intrusion rims, erosion and locally tangent sharp contacts; it is not unique to ring faults.","resolution":"Synthetic specificity-limit test added; first feature/run retained unchanged. No discovery or angular-coverage correction is silently claimed after observing folds."},
-    {"id":"IR-PRE-REG-DETAIL","severity":"medium","status":"disclosed","issue":"The initial preregistration fixes transforms/splits/budget/gates but does not enumerate every numeric HGB/residualizer setting.","resolution":"Settings were fixed in implementation before first fit and no outer-fold search occurred; preregistration completeness is not overstated or retroactively rewritten."},
-    {"id":"IR-BAND-PROVENANCE","severity":"high","status":"disclosed","issue":"Owner-mirror integrity does not independently authenticate organizer bytes or every original band alias.","resolution":"Full hashes/provenance caveat retained; ambiguous tc/earthquake aliases excluded. Do not claim all physical semantics independently verified."},
-    {"id":"IR-GEODAWN-METADATA","severity":"medium","status":"unresolved_official_irregularity","issue":"Official metadata has <class 'str'> placeholders, a Winnemucca title for a full-survey extent, and 151799 line-km versus 149030 in the contractor report.","resolution":"Different accounting is possible but unverified; no boundaries or calibration inferred from the discrepancies."},
-    {"id":"IR-SUBMISSION-RANGE","severity":"critical","status":"fixed_locally","issue":"Portal [0,1] rejection and weak source/grid/content-ID/ZIP checks.","resolution":"Finite [0,1] in-footprint writer; strict organizer-grid validation; full source checksum; soft-float32 content identity; one flat TIFF ZIP and separate <=200-character note. Reference and fallback both checked; portal upload itself not tested."},
-    {"id":"IR-SCORE-IDENTITY","severity":"high","status":"disclosed","issue":"Owner artifact reports, stale site claims and public account bests could be conflated.","resolution":"0.1922 original reference is owner-reported; official leader .3195 is timestamped; unknown scores remain unknown; no artifact-linked official receipt invented."},
-    {"id":"IR-GITHUB-AUTH","severity":"high","status":"blocked","issue":"gh REST/GraphQL returned 401 and git push lacked usable credentials.","resolution":"GitHub reconnection in Arena requested, without requesting secrets. Work saved locally on the fixed session branch. No PR, merge, buffered-road CI run or public deployment claimed."},
-    {"id":"IR-PROMPT-ARCHIVE","severity":"medium","status":"disclosed_context_limit","issue":"Full uncondensed original chat text was unavailable in the continuation.","resolution":"Inherited quoted owner charter retained verbatim and all available active constraints expanded in README; no claim to reproduce unseen text word for word."},
-    {"id":"IR-DEADLINE","severity":"medium","status":"organizer_confirmation_needed","issue":"Rules and platform present different deadline time conventions.","resolution":"Latest organizer guidance must be confirmed; no assumed conversion or cutoff is stated."}
+    {
+      "id": "IR-C2-CITATION",
+      "severity": "medium",
+      "status": "fixed",
+      "issue": "Inherited arXiv 1610.06539 is not the Lopez-Paz/Oquab C2ST paper.",
+      "resolution": "Correct 1610.06545, accuracy-versus-AUC adaptation and spatial exchangeability caveats recorded."
+    },
+    {
+      "id": "IR-GEO-PROXIES",
+      "severity": "critical",
+      "status": "fixed",
+      "issue": "Geothermal sites and fault-confidence/label distances contaminated a supposedly nuisance-only audit.",
+      "resolution": "Active whitelist only permits road/claim/acquisition families; legacy scripts/reports retired and preserved for traceability."
+    },
+    {
+      "id": "IR-MRDS-CLAIMS",
+      "severity": "critical",
+      "status": "fixed",
+      "issue": "MRDS mineral occurrences were labelled historic mining claims.",
+      "resolution": "Official BLM closed claims used: complete IDs checked, quality prefixes parsed, multiple shells/holes respected, 20 km buffer retained."
+    },
+    {
+      "id": "IR-BLOCKS",
+      "severity": "critical",
+      "status": "derived_audited_not_official_coordinates",
+      "issue": "Two survey areas, an inferred seam or a constant raster cannot stand in for four operational GeoDAWN blocks.",
+      "resolution": "Four blocks are DERIVED from the official figure (scripts/derive_acquisition_blocks.py) and audited against the published line-km (per-block +0.8 %, +3.4 %, -2.1 %, +1.1 %; total +1.2 %). An independent digitization from the figure latitude ticks (40.00, 38.99, 38.08 N) agrees within ~5 km (northern seam) and ~1-2 km (southern seams). Official coordinates are NOT published; membership within ~2 km of a seam is ambiguous (tie lines overlap). Official flight-number mapping needs the S3-hosted profile archives (anonymous GET 403)."
+    },
+    {
+      "id": "IR-AREA-PRIORITY",
+      "severity": "high",
+      "status": "fixed",
+      "issue": "Area2 could overwrite the finer overlapping Area1.",
+      "resolution": "Area1 priority implemented and regression-tested."
+    },
+    {
+      "id": "IR-ROAD-WINDOW",
+      "severity": "high",
+      "status": "fixed",
+      "issue": "The inherited road mirror is clipped tightly to (-120.0024,37.3641,-116.1415,40.7247). A 20 km seed grid does not recover missing external road geometries.",
+      "resolution": "Official whole-county Census run succeeded in CI (32 counties, 1,141,630 seed pixels, complete_county_check=true; raster SHA matches data/external/audit_sources/tiger_road_receipt.json). Root cause of the earlier CI failure: strict CRS.equals on the ESRI WKT (axis order), fixed with an authority-code check."
+    },
+    {
+      "id": "IR-KNOWN-CREDIT",
+      "severity": "critical",
+      "status": "fixed",
+      "issue": "Masked known predictions could earn TP credit on adjacent new truth; catalogue truth masking was inconsistent.",
+      "resolution": "Both exact and binary DTI now mask predictions and truth regardless of legacy flag. Adjacent-new-truth and randomized parity tests pass."
+    },
+    {
+      "id": "IR-BINARY-GATE",
+      "severity": "critical",
+      "status": "fixed",
+      "issue": "Re-thinning/re-ranking binary submissions, zero-budget -0 slicing and arbitrary zero backfill invalidated inherited promotion claims.",
+      "resolution": "True four-arm refitting, as-emitted historical diagnostics, deterministic positive-only top budgets and explicit current-best reconstruction veto."
+    },
+    {
+      "id": "IR-NMS-HALOS",
+      "severity": "high",
+      "status": "fixed",
+      "issue": "Zero-padded quadrants or zeroing catalogue pixels before NMS could create artificial boundary/flank ridges.",
+      "resolution": "Complete predicted halos and valid-support erosion; catalogue exclusion only after NMS; boundary tests pass."
+    },
+    {
+      "id": "IR-DEGENERATE-SHIFT",
+      "severity": "high",
+      "status": "fixed_with_disclosed_design_update",
+      "issue": "An exact-candidate torus shift produced a single-class held-out fold, for which AUC is undefined.",
+      "resolution": "Geometry/cohort support only determines retry; no statistic-based exclusion. Every rejected draw is recorded; retries bounded; 99 valid shifts required. Shift inference is conditional and diagnostic, not an exact spatial null. Grouped primary remains unchanged."
+    },
+    {
+      "id": "IR-CURRENT-BEST",
+      "severity": "critical",
+      "status": "blocked",
+      "issue": "Original H19 OOF caches and source-to-artifact reconstruction are unavailable.",
+      "resolution": "Original H19 OOF caches remain unavailable, so no certified win over the original 0.21413/0.08667 is claimed. Paired comparisons use the SAME as-emitted harness for baseline and candidate (shared leak cancels); see IR-H19-HARNESS-LEAK."
+    },
+    {
+      "id": "IR-INDEPENDENCE",
+      "severity": "high",
+      "status": "corrected_interpretation",
+      "issue": "H19 comments call four heavily shared-input lines independent and contain old budget-only descriptions alongside changed weight code.",
+      "resolution": "Actual reviewed coefficients and shared terrain inputs documented; measured Jaccard .777234. Score differences and code coefficients are not causal ablations."
+    },
+    {
+      "id": "IR-ARC-SPECIFICITY",
+      "severity": "medium",
+      "status": "disclosed",
+      "issue": "Annular coherence can respond to intrusion rims, erosion and locally tangent sharp contacts; it is not unique to ring faults.",
+      "resolution": "Synthetic specificity-limit test added; first feature/run retained unchanged. No discovery or angular-coverage correction is silently claimed after observing folds."
+    },
+    {
+      "id": "IR-PRE-REG-DETAIL",
+      "severity": "medium",
+      "status": "disclosed",
+      "issue": "The initial preregistration fixes transforms/splits/budget/gates but does not enumerate every numeric HGB/residualizer setting.",
+      "resolution": "Settings were fixed in implementation before first fit and no outer-fold search occurred; preregistration completeness is not overstated or retroactively rewritten."
+    },
+    {
+      "id": "IR-BAND-PROVENANCE",
+      "severity": "high",
+      "status": "disclosed",
+      "issue": "Owner-mirror integrity does not independently authenticate organizer bytes or every original band alias.",
+      "resolution": "Full hashes/provenance caveat retained; ambiguous tc/earthquake aliases excluded. Do not claim all physical semantics independently verified."
+    },
+    {
+      "id": "IR-GEODAWN-METADATA",
+      "severity": "medium",
+      "status": "unresolved_official_irregularity",
+      "issue": "Official metadata has <class 'str'> placeholders, a Winnemucca title for a full-survey extent, and 151799 line-km versus 149030 in the contractor report.",
+      "resolution": "Different accounting is possible but unverified; no boundaries or calibration inferred from the discrepancies."
+    },
+    {
+      "id": "IR-SUBMISSION-RANGE",
+      "severity": "critical",
+      "status": "fixed_locally_cause_unknown",
+      "issue": "Portal [0,1] rejection and weak source/grid/content-ID/ZIP checks.",
+      "resolution": "Strict writer (finite [0,1] inside, NaN or zeros outside, template profile). Forensics over 148 owner rasters (evidence/format_forensics.json): none has an in-footprint value outside [0,1]; only three early 5GEMSDOE files have NaN inside; blank-score files are format-identical to scored ones; 12GEMSDOE scored identically with both outside conventions. The cause of the original portal message is NOT established."
+    },
+    {
+      "id": "IR-SCORE-IDENTITY",
+      "severity": "high",
+      "status": "disclosed",
+      "issue": "Owner artifact reports, stale site claims and public account bests could be conflated.",
+      "resolution": "0.1922 original reference is owner-reported; official leader .3195 is timestamped; unknown scores remain unknown; no artifact-linked official receipt invented."
+    },
+    {
+      "id": "IR-GITHUB-AUTH",
+      "severity": "high",
+      "status": "resolved",
+      "issue": "gh REST/GraphQL returned 401 and git push lacked usable credentials.",
+      "resolution": "2026-10-02: gh is authenticated (bot); push, workflow runs and PR listing all work. The earlier 401/blocked state no longer applies. PR/merge are still claimed only with their returned URL/status."
+    },
+    {
+      "id": "IR-PROMPT-ARCHIVE",
+      "severity": "medium",
+      "status": "mitigated",
+      "issue": "Full uncondensed original chat text was unavailable in the continuation.",
+      "resolution": "knowledge/owner_brief_verbatim.md: Part A = wording preserved by earlier sessions; Part B = the shared brief stored verbatim by sibling session 22GEMSDOE (commit 96481093a7f7). Exact 24GEMSDOE message wording is still not available; embedded in README."
+    },
+    {
+      "id": "IR-DEADLINE",
+      "severity": "medium",
+      "status": "organizer_confirmation_needed",
+      "issue": "Competition page: \"Dec. 3, 2026, 11:59 p.m. UTC\"; rules A.1: \"5:00 p.m. ET on the prize submission deadline date\".",
+      "resolution": "Different time conventions for the same date; confirm with the organizers (gemsprize@nlr.gov). No conversion is assumed."
+    },
+    {
+      "id": "IR-SESSION-BRANCH-DIVERGENCE",
+      "severity": "high",
+      "status": "fixed",
+      "issue": "The remote session branch already held 12 commits (dotted-H19 validation, official road run, derived blocks, score ledger) that the freshly created checkout did not contain; a plain push would have been rejected or, if forced, destroyed them.",
+      "resolution": "Fetched, merged (no force-push), re-ran tests (92 pass), reproduced the earlier candidate byte-for-byte (SHA-256 91eae1ca...). AGENTS.md now makes `git fetch origin` the first command of every session."
+    },
+    {
+      "id": "IR-SAMPLE-TEMPLATE-CONTENT",
+      "severity": "medium",
+      "status": "disclosed",
+      "issue": "The owner-supplied example/sample submission (SHA-256 2176d08e...) has 60,988 pixels equal to 1.0 exactly at the labelled fault pixels; the organizers' page says the sample \"predicts total fault absence\". Staff (2026-09-16) said they may change the description.",
+      "resolution": "Used only as a grid/footprint template (CRS, shape, transform, finite mask). Its values are never used as predictions."
+    },
+    {
+      "id": "IR-GATE-REGIME",
+      "severity": "high",
+      "status": "disclosed",
+      "issue": "The legacy promotion gate requires the DENSE catalogue holdout (truth density ~1.18 % of cells) to improve. The blind-lattice calibration puts hidden truth at ~0.24 %. For the one independent pair with known scores (h25 -> h28) the harness dense ratio was 0.77 (wrong sign) while the owner-reported score rose 44 %; the sparse ratio was 1.08 (right sign, conservative).",
+      "resolution": "Emission/thinning is judged on the density-matched sparse simulation first, with the legacy gate reported unchanged. A candidate that fails only the dense criterion is labelled owner_decision_required, never auto-promoted."
+    },
+    {
+      "id": "IR-H19-HARNESS-LEAK",
+      "severity": "medium",
+      "status": "disclosed",
+      "issue": "H19 emissions masked ALL catalogue pixels, including pixels the holdout withholds, so as-emitted holdout DTI is inflated and not comparable with the original OOF numbers.",
+      "resolution": "Only paired comparisons (same harness, same leak) are used for decisions; absolute DTI is never quoted as a forecast."
+    },
+    {
+      "id": "IR-BRIEF-ONLY-SCORES",
+      "severity": "high",
+      "status": "unconfirmed",
+      "issue": "H28 0.1839 and the 13GEMSDOE lattice 0.0904 appear only in the 2026-10-02 brief; the older GEMSDOE21 snapshot shows them blank. The truth-density calibration and the dotting natural experiment rest on them.",
+      "resolution": "Flagged task_statement_only in registry/live_scores.json. Internal consistency: the lattice-derived density lies inside GEMSDOE10's independent 0.13-0.6 % bound and predicts the h25->h28 direction. The owner should re-check the submissions page."
+    },
+    {
+      "id": "IR-MULTI-ACCOUNT",
+      "severity": "medium",
+      "status": "caution",
+      "issue": "Leaderboard rows #26 smrtdoog5 (0.1922) and #28 SDCF9 (0.1894) equal the owner-reported H19-5/H19-4 scores; ownership is unverified. The rules allow three submissions per week per entity and one final submission per entity.",
+      "resolution": "No inference about account ownership is made. Confirm any multi-account use complies with the rules/terms before relying on it; another repository or account is not a quota reset."
+    },
+    {
+      "id": "IR-OPERATOR-INFERIOR",
+      "severity": "low",
+      "status": "negative_result",
+      "issue": "My greedy facility-location kernel cover was inferior to the earlier session's geodesic Poisson-disk dot_thin at equal pixel count in both the sparse and dense regimes.",
+      "resolution": "Kept in the repository as a recorded control (src/gems/emission.py); the delivered files use dot_thin. The comparison was frozen before it was run."
+    },
+    {
+      "id": "IR-FEED-SCHEDULE",
+      "severity": "medium",
+      "status": "open",
+      "issue": "website.yml has a 6-hourly schedule, but only the push-triggered run had been observed. The committed source_health.json is a dated snapshot; the deployed site was built by the runner from main.",
+      "resolution": "Check the Actions tab for a scheduled run after merge; until then treat the feed timestamp as authoritative."
+    },
+    {
+      "id": "IR-DRIVENDATA-AUTOMATION",
+      "severity": "high",
+      "status": "fixed",
+      "issue": "The inherited website workflow ran scripts/refresh_source_feed.py on every push to main and every 6 hours; it fetched the DrivenData leaderboard and two forum threads automatically. DrivenData's Terms of Use prohibit any robot/automatic device accessing the site 'for any purpose, including monitoring', and the prize rules bind competitors to those terms (disqualification risk).",
+      "resolution": "The script now refuses drivendata.org hosts (gems tests enforce it); the only automatic request is the USGS ScienceBase JSON API. Leaderboard/forum rows are human-read snapshots (`--leaderboard-file`). At least one past push-triggered run (2026-10-02 09:57 UTC on main) did fetch those pages; the owner should decide whether any notice to the organizers is appropriate. The agent's own page reads in this session were one-off and user-directed."
+    }
   ]
 }

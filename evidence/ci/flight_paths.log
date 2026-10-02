@@ -1,0 +1,6 @@
+exit_code=0
+record {"name": "area1_flight_path.zip", "size": 33672176, "checksum": {"value": "6e1b05a0fde7ef66682712aba7b95fd8", "type": "MD5"}, "url": "https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7?f=__disk__28%2Fdc%2F23%2F28dc23c2391a95be2dfe6c810319024a17d1f08c"}
+record {"name": "area2_flight_path.zip", "size": 305715436, "checksum": {"value": "49c20675500f4a0673e6558323336e6d", "type": "MD5"}, "url": "https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7?f=__disk__04%2F95%2Fb6%2F0495b6fc60498a20f8fbfcba7c01c294d623a5b8"}
+{"area": "a1", "file": "area1_flight_path.zip", "bytes": 33672176, "md5": "6e1b05a0fde7ef66682712aba7b95fd8", "sha256": "6a59eff9c0e99cce7009a8fb1c46d2827f82ae0ac8bc2b9728a195c97be2c0b8", "lines": 280, "km": 13320.537639140064, "seconds": 1.0}
+{"area": "a2", "file": "area2_flight_path.zip", "bytes": 305715436, "md5": "49c20675500f4a0673e6558323336e6d", "sha256": "d8af84421f2b692e7da5cfc54d43032d4fbfad25f0e2f4d978a8e540759e845c", "lines": 2842, "km": 151030.37996506787, "seconds": 9.1}
+{"generated_utc": "2026-10-02T11:29:57.673112+00:00", "item": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7?format=json", "total_km": 164350.91760420793, "lines": 3122, "sample_rows": 330254}

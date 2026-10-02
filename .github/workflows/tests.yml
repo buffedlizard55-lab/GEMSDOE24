@@ -1,7 +1,7 @@
 name: Reliability checks
 on:
   push:
-    branches: ['arena/01a0fa76-gemsdoe24', main]
+    branches: ['arena/**', main]
   pull_request:
     branches: [main]
 permissions:

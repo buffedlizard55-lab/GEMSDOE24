@@ -1,0 +1,1 @@
+24GEMSDOE h25-1-dotted-h19-5-d2.8 | H19-5 dot-thinned sparser (44k px). Sparse +42%, dense -0.003. Unscored; dense regime + audit = owner decision | id e56ea318af89 | not yet live-scored

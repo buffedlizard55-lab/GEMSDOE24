@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-02T03:28:21.806809+00:00",
+  "generated_utc": "2026-10-02T16:24:46.161026+00:00",
   "hypothesis": "H24-2A radial-gradient arc coherence",
   "preregistration": "knowledge/02_preregistered_2026-10-02.md",
   "protocol": {
@@ -75,12 +75,13 @@
   "nuisance_names": [
     "road_m",
     "claim_m",
-    "area1"
+    "block_1",
+    "block_2",
+    "block_3",
+    "block_4"
   ],
-  "access_inputs_complete": false,
-  "missing_required": [
-    "verified geographic boundaries of the four acquisition blocks"
-  ],
+  "access_inputs_complete": true,
+  "missing_required": [],
   "folds": [
     {
       "name": "NW",
@@ -377,43 +378,43 @@
       ]
     },
     "physics_residualized": {
-      "mean_dense_dti": 0.15245373324940917,
-      "mean_sparse_dti": 0.05775359865645139,
+      "mean_dense_dti": 0.13537853154290408,
+      "mean_sparse_dti": 0.055526831514131125,
       "fold_dense": [
-        0.14576218009446204,
-        0.1841109619363558,
-        0.12395634556919802,
-        0.15598544539762085
+        0.12804209012170048,
+        0.14036892066111975,
+        0.1020134582207567,
+        0.17108965716803937
       ],
       "fold_sparse": [
-        0.0588279985521592,
-        0.06570447571276443,
-        0.04866853793183466,
-        0.05781338242904726
+        0.05299796039790974,
+        0.04602541658301287,
+        0.04349396210380938,
+        0.07958998697179252
       ],
       "details": [
         {
           "fold": "NW",
           "dense": {
-            "TP_w": 2002.109905770717,
-            "FP_w": 26015.16647890812,
-            "FN_w": 8162.890094229283,
+            "TP_w": 1760.1487072881546,
+            "FP_w": 26313.058693589835,
+            "FN_w": 8404.851292711846,
             "n_truth": 10165,
             "n_emitted": 28291,
-            "dti": 0.14576218009446204,
-            "coverage": 0.19696113190071
+            "dti": 0.12804209012170048,
+            "coverage": 0.1731577675640093
           },
           "sparse": {
-            "TP_w": 425.21239919639225,
-            "FP_w": 27227.095758108968,
-            "FN_w": 1696.7876008036078,
+            "TP_w": 384.28524384739546,
+            "FP_w": 27382.434839423207,
+            "FN_w": 1737.7147561526044,
             "n_truth": 2122,
-            "n_emitted": 27754,
-            "dti": 0.0588279985521592,
-            "coverage": 0.2003828459926448
+            "n_emitted": 27842,
+            "dti": 0.05299796039790974,
+            "coverage": 0.18109577938143048
           },
           "selection": {
-            "eligible_ridges": 269063,
+            "eligible_ridges": 259293,
             "selected": 28291,
             "requested": 28291,
             "zero_score_padding": 0
@@ -422,25 +423,25 @@
         {
           "fold": "NE_LidarGapHeavy",
           "dense": {
-            "TP_w": 3111.403526455222,
-            "FP_w": 31342.64845570684,
-            "FN_w": 9399.596473544778,
+            "TP_w": 2375.538855002447,
+            "FP_w": 32198.15442780987,
+            "FN_w": 10135.461144997553,
             "n_truth": 12511,
             "n_emitted": 34979,
-            "dti": 0.1841109619363558,
-            "coverage": 0.248693431896349
+            "dti": 0.14036892066111975,
+            "coverage": 0.18987601750479152
           },
           "sparse": {
-            "TP_w": 570.1703511725618,
-            "FP_w": 33270.83359268085,
-            "FN_w": 1816.8296488274382,
+            "TP_w": 401.84045433406044,
+            "FP_w": 33704.34935671154,
+            "FN_w": 1985.1595456659395,
             "n_truth": 2387,
-            "n_emitted": 33930,
-            "dti": 0.06570447571276443,
-            "coverage": 0.2388648308221876
+            "n_emitted": 34202,
+            "dti": 0.04602541658301287,
+            "coverage": 0.16834539352076264
           },
           "selection": {
-            "eligible_ridges": 333514,
+            "eligible_ridges": 317295,
             "selected": 34979,
             "requested": 34979,
             "zero_score_padding": 0
@@ -449,25 +450,25 @@
         {
           "fold": "SW",
           "dense": {
-            "TP_w": 2898.1432653409406,
-            "FP_w": 31867.62775817921,
-            "FN_w": 17635.85673465906,
+            "TP_w": 2389.748576519568,
+            "FP_w": 32603.33508506751,
+            "FN_w": 18144.251423480433,
             "n_truth": 20534,
             "n_emitted": 35001,
-            "dti": 0.12395634556919802,
-            "coverage": 0.141138758417305
+            "dti": 0.1020134582207567,
+            "coverage": 0.11638008067203506
           },
           "sparse": {
-            "TP_w": 474.08727664089633,
-            "FP_w": 33623.63687106597,
-            "FN_w": 3177.9127233591034,
+            "TP_w": 426.15135767907344,
+            "FP_w": 33955.563198286836,
+            "FN_w": 3225.8486423209265,
             "n_truth": 3652,
-            "n_emitted": 34150,
-            "dti": 0.04866853793183466,
-            "coverage": 0.12981579316563427
+            "n_emitted": 34395,
+            "dti": 0.04349396210380938,
+            "coverage": 0.1166898569767452
           },
           "selection": {
-            "eligible_ridges": 341450,
+            "eligible_ridges": 337707,
             "selected": 35001,
             "requested": 35001,
             "zero_score_padding": 0
@@ -476,25 +477,25 @@
         {
           "fold": "SE",
           "dense": {
-            "TP_w": 3105.6982756409093,
-            "FP_w": 25333.201095406417,
-            "FN_w": 14672.301724359091,
+            "TP_w": 3403.5844180797476,
+            "FP_w": 24952.27572029598,
+            "FN_w": 14374.415581920253,
             "n_truth": 17778,
             "n_emitted": 28329,
-            "dti": 0.15598544539762085,
-            "coverage": 0.1746933443379969
+            "dti": 0.17108965716803937,
+            "coverage": 0.19144923040160577
           },
           "sparse": {
-            "TP_w": 470.03666179151696,
-            "FP_w": 26945.162250726564,
-            "FN_w": 2838.963338208483,
+            "TP_w": 643.9224971514727,
+            "FP_w": 26572.559130451144,
+            "FN_w": 2665.0775028485273,
             "n_truth": 3309,
-            "n_emitted": 27418,
-            "dti": 0.05781338242904726,
-            "coverage": 0.14204794856195738
+            "n_emitted": 27236,
+            "dti": 0.07958998697179252,
+            "coverage": 0.19459730950482707
           },
           "selection": {
-            "eligible_ridges": 255516,
+            "eligible_ridges": 267162,
             "selected": 28329,
             "requested": 28329,
             "zero_score_padding": 0
@@ -503,43 +504,43 @@
       ]
     },
     "physics_arc_residualized": {
-      "mean_dense_dti": 0.15568347926499732,
-      "mean_sparse_dti": 0.06321359018897861,
+      "mean_dense_dti": 0.14292334371886356,
+      "mean_sparse_dti": 0.05821949259091474,
       "fold_dense": [
-        0.15191989434986317,
-        0.18602508151330568,
-        0.1236911402198667,
-        0.16109780097695364
+        0.1334265339485576,
+        0.14849085707434484,
+        0.11062090194018011,
+        0.17915508191237173
       ],
       "fold_sparse": [
-        0.062463925123251045,
-        0.07350929952315956,
-        0.04978350909578228,
-        0.06709762701372159
+        0.05494160635488895,
+        0.04851794994295381,
+        0.048867991910807734,
+        0.08055042215500846
       ],
       "details": [
         {
           "fold": "NW",
           "dense": {
-            "TP_w": 2084.656028475578,
-            "FP_w": 25865.713843805188,
-            "FN_w": 8080.343971524422,
+            "TP_w": 1834.4619050291415,
+            "FP_w": 26249.806971919752,
+            "FN_w": 8330.538094970858,
             "n_truth": 10165,
             "n_emitted": 28291,
-            "dti": 0.15191989434986317,
-            "coverage": 0.20508175390807457
+            "dti": 0.1334265339485576,
+            "coverage": 0.18046846089809557
           },
           "sparse": {
-            "TP_w": 450.9927163456862,
-            "FP_w": 27161.26158640274,
-            "FN_w": 1671.0072836543138,
+            "TP_w": 398.2932760260129,
+            "FP_w": 27360.669858596353,
+            "FN_w": 1723.7067239739872,
             "n_truth": 2122,
-            "n_emitted": 27722,
-            "dti": 0.062463925123251045,
-            "coverage": 0.21253191156724136
+            "n_emitted": 27819,
+            "dti": 0.05494160635488895,
+            "coverage": 0.187697114055614
           },
           "selection": {
-            "eligible_ridges": 268577,
+            "eligible_ridges": 261564,
             "selected": 28291,
             "requested": 28291,
             "zero_score_padding": 0
@@ -548,25 +549,25 @@
         {
           "fold": "NE_LidarGapHeavy",
           "dense": {
-            "TP_w": 3143.914156755777,
-            "FP_w": 31314.512375235892,
-            "FN_w": 9367.085843244222,
+            "TP_w": 2512.336792671903,
+            "FP_w": 32039.336037177927,
+            "FN_w": 9998.663207328096,
             "n_truth": 12511,
             "n_emitted": 34979,
-            "dti": 0.18602508151330568,
-            "coverage": 0.25129199558434795
+            "dti": 0.14849085707434484,
+            "coverage": 0.20081023041099055
           },
           "sparse": {
-            "TP_w": 638.3631050450911,
-            "FP_w": 33234.20471281446,
-            "FN_w": 1748.636894954909,
+            "TP_w": 422.8375285972262,
+            "FP_w": 33604.5329363066,
+            "FN_w": 1964.162471402774,
             "n_truth": 2387,
-            "n_emitted": 33970,
-            "dti": 0.07350929952315956,
-            "coverage": 0.26743322373066236
+            "n_emitted": 34133,
+            "dti": 0.04851794994295381,
+            "coverage": 0.1771418217835049
           },
           "selection": {
-            "eligible_ridges": 339170,
+            "eligible_ridges": 319094,
             "selected": 34979,
             "requested": 34979,
             "zero_score_padding": 0
@@ -575,25 +576,25 @@
         {
           "fold": "SW",
           "dense": {
-            "TP_w": 2892.9534372052453,
-            "FP_w": 31913.676085431453,
-            "FN_w": 17641.046562794756,
+            "TP_w": 2593.1314030929366,
+            "FP_w": 32478.889757507823,
+            "FN_w": 17940.868596907065,
             "n_truth": 20534,
             "n_emitted": 35001,
-            "dti": 0.1236911402198667,
-            "coverage": 0.14088601525300698
+            "dti": 0.11062090194018011,
+            "coverage": 0.1262847668789781
           },
           "sparse": {
-            "TP_w": 484.86800785425913,
-            "FP_w": 33604.7847546706,
-            "FN_w": 3167.1319921457407,
+            "TP_w": 478.42635455571155,
+            "FP_w": 33864.465204896216,
+            "FN_w": 3173.5736454442886,
             "n_truth": 3652,
-            "n_emitted": 34147,
-            "dti": 0.04978350909578228,
-            "coverage": 0.132767800617267
+            "n_emitted": 34351,
+            "dti": 0.048867991910807734,
+            "coverage": 0.13100393060123536
           },
           "selection": {
-            "eligible_ridges": 345420,
+            "eligible_ridges": 343823,
             "selected": 35001,
             "requested": 35001,
             "zero_score_padding": 0
@@ -602,25 +603,25 @@
         {
           "fold": "SE",
           "dense": {
-            "TP_w": 3205.7705890444004,
-            "FP_w": 25179.881445538675,
-            "FN_w": 14572.229410955599,
+            "TP_w": 3566.304104376373,
+            "FP_w": 24852.89719592519,
+            "FN_w": 14211.695895623627,
             "n_truth": 17778,
             "n_emitted": 28329,
-            "dti": 0.16109780097695364,
-            "coverage": 0.18032234160447747
+            "dti": 0.17915508191237173,
+            "coverage": 0.20060209834494167
           },
           "sparse": {
-            "TP_w": 544.7407944889048,
-            "FP_w": 26812.408227815165,
-            "FN_w": 2764.2592055110954,
+            "TP_w": 651.0784163341413,
+            "FP_w": 26527.260758274606,
+            "FN_w": 2657.9215836658586,
             "n_truth": 3309,
-            "n_emitted": 27365,
-            "dti": 0.06709762701372159,
-            "coverage": 0.16462399349921572
+            "n_emitted": 27202,
+            "dti": 0.08055042215500846,
+            "coverage": 0.1967598719655912
           },
           "selection": {
-            "eligible_ridges": 256864,
+            "eligible_ridges": 265218,
             "selected": 28329,
             "requested": 28329,
             "zero_score_padding": 0
@@ -838,21 +839,21 @@
   "submission_slot_spent": false,
   "paired_gate": {
     "physics_raw": {
-      "passed": true,
+      "passed": false,
       "rules": {
         "reported_means_match_four_fold_scores": true,
-        "mean_dense_improves": true,
-        "mean_sparse_improves": true,
-        "sparse_fold_wins_ge_3_of_4": true,
-        "no_fold_loses_more_than_0_01": true
+        "mean_dense_improves": false,
+        "mean_sparse_improves": false,
+        "sparse_fold_wins_ge_3_of_4": false,
+        "no_fold_loses_more_than_0_01": false
       },
-      "sparse_fold_wins": 3,
-      "dense_fold_wins": 2,
-      "worst_fold_delta_dense": -0.00383,
-      "worst_fold_delta_sparse": -0.00053,
-      "delta_mean_dense": 0.00399,
-      "delta_mean_sparse": 0.00479,
-      "minimum_effect_passed": true
+      "sparse_fold_wins": 2,
+      "dense_fold_wins": 1,
+      "worst_fold_delta_dense": -0.02974,
+      "worst_fold_delta_sparse": -0.01279,
+      "delta_mean_dense": -0.00877,
+      "delta_mean_sparse": -0.00021,
+      "minimum_effect_passed": false
     },
     "physics_residualized": {
       "passed": true,
@@ -864,11 +865,11 @@
         "no_fold_loses_more_than_0_01": true
       },
       "sparse_fold_wins": 4,
-      "dense_fold_wins": 3,
-      "worst_fold_delta_dense": -0.00027,
-      "worst_fold_delta_sparse": 0.00111,
-      "delta_mean_dense": 0.00323,
-      "delta_mean_sparse": 0.00546,
+      "dense_fold_wins": 4,
+      "worst_fold_delta_dense": 0.00538,
+      "worst_fold_delta_sparse": 0.00096,
+      "delta_mean_dense": 0.00754,
+      "delta_mean_sparse": 0.00269,
       "minimum_effect_passed": true
     }
   },
@@ -882,12 +883,12 @@
         "sparse_fold_wins_ge_3_of_4": false,
         "no_fold_loses_more_than_0_01": false
       },
-      "sparse_fold_wins": 1,
+      "sparse_fold_wins": 0,
       "dense_fold_wins": 0,
-      "worst_fold_delta_dense": -0.03447,
-      "worst_fold_delta_sparse": -0.01876,
-      "delta_mean_dense": -0.01475,
-      "delta_mean_sparse": -0.00529
+      "worst_fold_delta_dense": -0.04551,
+      "worst_fold_delta_sparse": -0.01583,
+      "delta_mean_dense": -0.02751,
+      "delta_mean_sparse": -0.01028
     },
     "h19-5": {
       "passed": false,
@@ -898,16 +899,16 @@
         "sparse_fold_wins_ge_3_of_4": false,
         "no_fold_loses_more_than_0_01": false
       },
-      "sparse_fold_wins": 1,
-      "dense_fold_wins": 1,
-      "worst_fold_delta_dense": -0.03195,
-      "worst_fold_delta_sparse": -0.01798,
-      "delta_mean_dense": -0.01376,
-      "delta_mean_sparse": -0.00492
+      "sparse_fold_wins": 0,
+      "dense_fold_wins": 0,
+      "worst_fold_delta_dense": -0.04864,
+      "worst_fold_delta_sparse": -0.01569,
+      "delta_mean_dense": -0.02652,
+      "delta_mean_sparse": -0.00991
     }
   },
   "decision": {
-    "candidate_beats_paired_baselines": true,
+    "candidate_beats_paired_baselines": false,
     "candidate_beats_historical_diagnostics": false,
     "original_h19_holdout_reproduced": false,
     "promoted": false,
@@ -915,12 +916,12 @@
   },
   "experimental_raster": {
     "path": "out/h24-2a-residualized-experimental.tif",
-    "sha256": "4945c83d6f09c8376963e32d5c36f65009122fd50d26473eda185e3674677589",
+    "sha256": "80d996001849647235c407bbdb4cfbf66b392b8cacb17f3c4507adbba20688d6",
     "positive_pixels": 126600,
     "format_checks": {
       "file": "h24-2a-residualized-experimental.tif",
-      "bytes": 1716712,
-      "sha256": "4945c83d6f09c8376963e32d5c36f65009122fd50d26473eda185e3674677589",
+      "bytes": 1716530,
+      "sha256": "80d996001849647235c407bbdb4cfbf66b392b8cacb17f3c4507adbba20688d6",
       "format_valid": true,
       "ok_to_upload": true,
       "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
@@ -1003,26 +1004,6 @@
     },
     "recommended_to_upload": false
   },
-  "seconds": 1021.9261701107025,
-  "complete_run": true,
-  "data_quality_review": {
-    "legacy_road_source_window_verified": false,
-    "legacy_road_clip_box_wgs84": [
-      -120.0024,
-      37.3641,
-      -116.1415,
-      40.7247
-    ],
-    "discovered_during_pass": 2,
-    "effect_on_interpretation": "Results are provisional under the clipped-road proxy; they do not certify actual nearest-road distance at the boundary.",
-    "corrective_workflow": ".github/workflows/buffered-roads.yml",
-    "corrective_workflow_executed": false,
-    "blocker": "GitHub authentication and push failure; no official buffered-road raster exists yet",
-    "statistic_tuning": false
-  },
-  "retained_experimental_artifacts": {
-    "prediction": "evidence/experiments/h24-2a-clipped-road-v1/prediction-4945c83d6f09.tif",
-    "model": "evidence/experiments/h24-2a-clipped-road-v1/detector.joblib",
-    "recommended_to_upload": false
-  }
+  "seconds": 143.6893825531006,
+  "complete_run": true
 }

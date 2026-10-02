@@ -1,0 +1,82 @@
+{
+  "preregistration": "knowledge/04_preregistered_emission_2026-10-02.md (sections 5-6)",
+  "protocol": {
+    "transform_reads_labels_or_scores": false,
+    "operator": "gems.thinning.dot_thin on H19-5 with catalogue pixels removed first",
+    "selection_draw_offsets": [
+      0,
+      29
+    ],
+    "confirmation_draw_offsets": [
+      30,
+      59
+    ],
+    "selection_rule": "legacy holdout.gate on selection draws, highest model-extrapolated public score, confirmed on disjoint draws"
+  },
+  "sources": {
+    "h19_5": {
+      "path": "inputs/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+      "sha256": "ec1f9b56b83ce33cad781ceb9f104b18fb4f2ff785263a4e89616af4aabdee8d"
+    }
+  },
+  "selection_and_gates": {
+    "selected_d": 1.5,
+    "eligible": true,
+    "eligible_on_selection_draws_ranked": [
+      "D1.5",
+      "K0.550",
+      "K0.600"
+    ],
+    "legacy_gate_selection": {
+      "passed": true,
+      "rules": {
+        "reported_means_match_four_fold_scores": true,
+        "mean_dense_improves": true,
+        "mean_sparse_improves": true,
+        "sparse_fold_wins_ge_3_of_4": true,
+        "no_fold_loses_more_than_0_01": true
+      },
+      "sparse_fold_wins": 4,
+      "dense_fold_wins": 4,
+      "worst_fold_delta_dense": 0.00016,
+      "worst_fold_delta_sparse": 0.01802,
+      "delta_mean_dense": 0.00701,
+      "delta_mean_sparse": 0.02525
+    },
+    "legacy_gate_confirmation": {
+      "passed": true,
+      "rules": {
+        "reported_means_match_four_fold_scores": true,
+        "mean_dense_improves": true,
+        "mean_sparse_improves": true,
+        "sparse_fold_wins_ge_3_of_4": true,
+        "no_fold_loses_more_than_0_01": true
+      },
+      "sparse_fold_wins": 4,
+      "dense_fold_wins": 4,
+      "worst_fold_delta_dense": 0.00016,
+      "worst_fold_delta_sparse": 0.01824,
+      "delta_mean_dense": 0.00701,
+      "delta_mean_sparse": 0.0255
+    },
+    "selection_summary": {
+      "mean_dense_dti": 0.17645,
+      "mean_sparse_dti": 0.09624,
+      "paired_sparse_gain_rel": 0.35565893462864495,
+      "model_public_score": 0.25484516853553785
+    },
+    "confirmation_summary": {
+      "mean_dense_dti": 0.17645,
+      "mean_sparse_dti": 0.09777,
+      "paired_sparse_gain_rel": 0.3528889593527653,
+      "model_public_score": 0.2545145028051745
+    }
+  },
+  "candidate": {
+    "path": "out/h25-1-dotthin-d1.5-h19-5.tif",
+    "sha256": "68d0e2e4fcc594f9a23f56c44b885fee733d026d39be55e18ad2a07289525310",
+    "positive_pixels": 60069,
+    "pixel_fraction_of_h19_5": 0.4959011318324789
+  },
+  "slot_spent": false
+}

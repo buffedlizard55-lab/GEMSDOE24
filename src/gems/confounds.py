@@ -31,6 +31,8 @@ from .paths import DATA_DIR, ROOT
 from .validator import sha256_file
 
 CONF = DATA_DIR / "access"
+DERIVED_BLOCKS = DATA_DIR / "external/audit_sources/acquisition_block_id_100m.tif"
+DERIVED_BLOCKS_RECEIPT = DATA_DIR / "external/audit_sources/acquisition_blocks_receipt.json"
 
 
 def distance_to_seeds(seeds: np.ndarray, fp: np.ndarray, *, padding: int = 0) -> np.ndarray:
@@ -269,10 +271,55 @@ def build_all(out_dir: Path | None = None, *, force: bool = False) -> dict:
             "url": d["source_url"],
             "sha256": sha256_file(block_path),
         }
+    elif DERIVED_BLOCKS.exists() and DERIVED_BLOCKS_RECEIPT.exists():
+        # Not official coordinates. Accepted only with an explicit derived status, an intact raster
+        # and a passed line-km audit against the four published block totals (src/gems/acquisition.py).
+        r = json.loads(DERIVED_BLOCKS_RECEIPT.read_text())
+        audit = (
+            r.get("line_km_audit", {}).get(r.get("primary_audit_variant", ""), {}).get("audit", {})
+        )
+        if (
+            r.get("status") != "derived_audited"
+            or r.get("official_coordinates") is not False
+            or audit.get("passed") is not True
+            or sha256_file(DERIVED_BLOCKS) != r.get("raster", {}).get("sha256")
+        ):
+            raise ValueError("Derived acquisition blocks failed status/audit/integrity checks")
+        with rasterio.open(DERIVED_BLOCKS) as d:
+            if (
+                d.shape != fp.shape
+                or d.crs is None
+                or d.crs.to_epsg() != 32611
+                or d.transform != footprint.TRANSFORM
+            ):
+                raise ValueError("Derived block grid mismatch")
+            block = d.read(1)
+        if set(np.unique(block[fp]).tolist()) != {1, 2, 3, 4}:
+            raise ValueError(
+                "Derived blocks must assign every footprint pixel to one of four blocks"
+            )
+        for b in (1, 2, 3, 4):
+            feats[f"block_{b}"] = (block == b).astype(np.uint8)
+        prov["features"]["acquisition_blocks"] = {
+            "status": "derived_audited",
+            "official_coordinates": False,
+            "sha256": sha256_file(DERIVED_BLOCKS),
+            "source": r.get("source"),
+            "line_km_audit": audit,
+            "limitations": r.get("limitations"),
+        }
     else:
         prov["missing_required"].append(
             "verified geographic boundaries of the four acquisition blocks"
         )
+    prov["blocks_official_coordinates"] = block_path.exists()
+    prov["block_boundary_status"] = (
+        "verified_official_coordinates"
+        if block_path.exists()
+        else "derived_audited_not_official_coordinates"
+        if "acquisition_blocks" in prov["features"]
+        else "missing"
+    )
     prov["full_requested_audit_available"] = not prov["missing_required"]
     prov["feature_names"] = sorted(feats)
     prov["distance_units"] = "metres on a 100 m seed raster; boundary/PLSS uncertainty retained"

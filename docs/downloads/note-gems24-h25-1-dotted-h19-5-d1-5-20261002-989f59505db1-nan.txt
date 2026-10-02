@@ -1,0 +1,1 @@
+24GEMSDOE h25-1-dotted-h19-5-d1.5 | H19-5 dot-thinned (60k px). Holdout sparse +36%, dense +0.007. Unscored; accessibility audit = owner decision | id 989f59505db1 | not yet live-scored

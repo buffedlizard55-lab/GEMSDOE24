@@ -1,11 +1,6 @@
 name: Official audit inputs
 on:
   workflow_dispatch:
-  push:
-    branches: ['arena/01a0fa76-gemsdoe24']
-    paths:
-      - 'scripts/fetch_official_audit_inputs.py'
-      - '.github/workflows/fetch-public-layers.yml'
 permissions:
   contents: read
 jobs:

@@ -159,3 +159,77 @@ def test_audit_of_different_file_or_no_training_mitigation_cannot_authorize_new_
         require_candidate_evidence("abc", exp, audit)
     with pytest.raises(ValueError):
         require_candidate_evidence("abc", {}, {})
+
+
+def _post_inputs(strict=False, cand_auc=0.55, ref_auc=0.556, gates_ok=True):
+    validation = {
+        "sources": {"h19_5": {"sha256": "ref"}},
+        "protocol": {"transform_reads_labels_or_scores": False},
+        "selection_and_gates": {"eligible": gates_ok},
+        "candidate": {"sha256": "cand"},
+    }
+    audit = {
+        "complete_run": True,
+        "full_requested_audit_complete": True,
+        "protocol": {"labels_first": True},
+        "references": {
+            "candidate": {
+                "sha256": "cand",
+                "primary": {"observed_auc": cand_auc},
+                "full_requested_audit_gate_passed": strict,
+            },
+            "h19-5": {"primary": {"observed_auc": ref_auc}},
+        },
+    }
+    return validation, audit
+
+
+def test_postprocess_requires_exact_recomputation_and_all_gates():
+    from gems.promotion import require_postprocess_evidence
+
+    v, a = _post_inputs()
+    with pytest.raises(ValueError, match="exact_deterministic_recomputation"):
+        require_postprocess_evidence("ref", "cand", False, v, a)
+    v, a = _post_inputs(gates_ok=False)
+    with pytest.raises(ValueError, match="paired_gates"):
+        require_postprocess_evidence("ref", "cand", True, v, a)
+    v, a = _post_inputs()
+    with pytest.raises(ValueError, match="reference_is_the_pinned"):
+        require_postprocess_evidence("other", "cand", True, v, a)
+    a["references"]["candidate"]["sha256"] = "different"
+    with pytest.raises(ValueError, match="same_exact_candidate_audited"):
+        require_postprocess_evidence("ref", "cand", True, v, a)
+
+
+def test_postprocess_never_rewrites_the_owner_strict_gate():
+    from gems.promotion import require_postprocess_evidence
+
+    v, a = _post_inputs(strict=False, cand_auc=0.553, ref_auc=0.556)
+    out = require_postprocess_evidence("ref", "cand", True, v, a)
+    assert out["strict_owner_audit_gate_passed"] is False
+    assert out["slot_recommendation"] == "owner_decision_required"
+    v, a = _post_inputs(strict=False, cand_auc=0.60, ref_auc=0.556)
+    assert (
+        require_postprocess_evidence("ref", "cand", True, v, a)["slot_recommendation"]
+        == "not_recommended"
+    )
+    v, a = _post_inputs(strict=True, cand_auc=0.52, ref_auc=0.556)
+    assert (
+        require_postprocess_evidence("ref", "cand", True, v, a)["slot_recommendation"] == "eligible"
+    )
+
+
+def test_postprocess_audit_label_selects_the_right_reference_entry():
+    from gems.promotion import require_postprocess_evidence
+
+    v, a = _post_inputs(strict=False, cand_auc=0.553, ref_auc=0.556)
+    a["references"]["candidate_alt"] = {
+        "sha256": "alt",
+        "primary": {"observed_auc": 0.60},
+        "full_requested_audit_gate_passed": False,
+    }
+    v["candidate"]["sha256"] = "alt"
+    out = require_postprocess_evidence("ref", "alt", True, v, a, candidate_label="candidate_alt")
+    assert out["slot_recommendation"] == "not_recommended"  # judged on ITS audit, not the primary's
+    with pytest.raises(ValueError, match="same_exact_candidate_audited"):
+        require_postprocess_evidence("ref", "alt", True, v, a)  # default label points at "cand"

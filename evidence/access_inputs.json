@@ -1,61 +1,336 @@
 {
-  "generated_utc": "2026-10-02T04:35:02.468034+00:00",
+  "generated_utc": "2026-10-02T16:03:26.243592+00:00",
   "features": {
     "road_m": {
-      "source_window_verified": false,
-      "mirror_clip_box_wgs84": [
-        -120.0024,
-        37.3641,
-        -116.1415,
-        40.7247
+      "generated_utc": "2026-10-02T11:30:01.458805+00:00",
+      "source_bbox_wgs84": [
+        -120.5,
+        37.0,
+        -115.9,
+        41.0
       ],
-      "source": "Census TIGER/Line 2024 ROADS, NAD83",
-      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/",
-      "n_geometries": 78440,
-      "mtfcc_counts": {
-        "S1400": 69874,
-        "S1740": 2760,
-        "S1500": 3981,
-        "S1750": 123,
-        "S1200": 641,
-        "S1710": 75,
-        "S1640": 109,
-        "S1780": 60,
-        "S1820": 28,
-        "S1630": 568,
-        "S1100": 43,
-        "S1730": 177,
-        "S1720": 1
-      },
-      "seed_pixels": 905068,
+      "source_window_verified": true,
       "seed_grid_buffer_m": 20000,
-      "files": {
-        "tiger_ROADS_06003_clipped.geojson": "be64683611fc8a1968aae594195b98364af8dda1b7d17929065eb1f2fd367574",
-        "tiger_ROADS_06017_clipped.geojson": "1c5a278d1606bf1929e29dda19939ae9b46996f7d0987e8900b3a5ff8e191a1e",
-        "tiger_ROADS_06019_clipped.geojson": "2d44a434fe8e89448d4a2ed92622930b9a7f5afd6c5d0447b1b965df521b3c52",
-        "tiger_ROADS_06027_clipped.geojson": "d2466c6c4506e7c6e0bf0ef26297e19dcab742d6c83703d3009b36ba29cb3d70",
-        "tiger_ROADS_06035_clipped.geojson": "c91181f663a6452345300294f9c0c3b06439785e8f4325bbfe88cc9015550b89",
-        "tiger_ROADS_06039_clipped.geojson": "94f5db547b0f29baaea27a134918697b47b6a6f4a1966141de43471b7d404e6d",
-        "tiger_ROADS_06043_clipped.geojson": "6f885bb5a12cd8f7e363324fecf23af39aa19ed4aa207fb44b610c30f596ea4f",
-        "tiger_ROADS_06051_clipped.geojson": "85f7b0da5ba98225765c954e74a58d0275b89f2af8dc74ca9aabf6c1dd4a48c7",
-        "tiger_ROADS_06091_clipped.geojson": "3735c6be7eb6076b36c13c2b665249ee2377c5c08f7a6e658a17b8c9e70801fa",
-        "tiger_ROADS_06109_clipped.geojson": "ef76125a1efcb3e1cf2531347b90f9bfcb90dabb2efe077e03c41e14dbec0f1c",
-        "tiger_ROADS_32001_clipped.geojson": "71a2349b4988fdb1df72e8231c8075815a09e53d633bc02d02e859a4c0c88ace",
-        "tiger_ROADS_32005_clipped.geojson": "75c11eb6fde7f711788021444b1fe51512d8878974555bba15676951287188db",
-        "tiger_ROADS_32007_clipped.geojson": "a65ae51b183fa08d0293fbec04472144d4113ba56368ec7cdc8bcd234d096c6a",
-        "tiger_ROADS_32009_clipped.geojson": "6c9cf2912643bf33f40b9b8af3e3b067330cab545dea4c5f008aed97db9ab753",
-        "tiger_ROADS_32011_clipped.geojson": "3e9fb494beba5c3e45e71de5f09ff904bacee35856cf052ed870214b009febcc",
-        "tiger_ROADS_32013_clipped.geojson": "c0a57a6ab15b1be5f5a9bcf502bef0087c271f089358b5ea65f83f5abff17061",
-        "tiger_ROADS_32015_clipped.geojson": "214749174160e4acadfd190461b827cc8b9e903888a84170aaff8b98e420c7db",
-        "tiger_ROADS_32019_clipped.geojson": "c9c2f5938b375ce3549dee338eb7495cb3a0244c2d8e8d1464050bc3f6ca3cd2",
-        "tiger_ROADS_32021_clipped.geojson": "a10a5012bffb86f0e1f8a8d1832909a5a8142b1574f2f10ebf267a0a9eacc092",
-        "tiger_ROADS_32023_clipped.geojson": "8380f4866bce6f456330c34771a6acf0779e596b3df0d0a58c5d285fe9504961",
-        "tiger_ROADS_32027_clipped.geojson": "c3af3d73da791a0ccadcb6b6dc6311a84beb5abd3333d739907597f3e999edae",
-        "tiger_ROADS_32029_clipped.geojson": "77b3121d43b16d71ebcea9b130c7e74dea389cd8ebab24315c7008db373dac28",
-        "tiger_ROADS_32031_clipped.geojson": "644b5b977bf422dac57fd5cde503e27a206ed8c63375fcdfd229eca6363ace51",
-        "tiger_ROADS_32510_clipped.geojson": "330a2355a2dd8cda90fbc34a0392a4457934a675eff43d63fc98f2984ae3e3de"
+      "counties": [
+        "06003",
+        "06005",
+        "06009",
+        "06017",
+        "06019",
+        "06027",
+        "06035",
+        "06039",
+        "06043",
+        "06047",
+        "06051",
+        "06057",
+        "06061",
+        "06063",
+        "06091",
+        "06099",
+        "06109",
+        "32001",
+        "32005",
+        "32007",
+        "32009",
+        "32011",
+        "32013",
+        "32015",
+        "32019",
+        "32021",
+        "32023",
+        "32027",
+        "32029",
+        "32031",
+        "32033",
+        "32510"
+      ],
+      "county_download": {
+        "url": "https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip",
+        "bytes": 83913260,
+        "sha256": "04e668d3502757c837c13444730547cd967f28a2c49aeffb873d1792ab2cb97b"
       },
-      "limitations": "Census roads/vehicular and available pedestrian trails; not a complete hiking-trail inventory. 100 m rasterization."
+      "assets": [
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06003_roads.zip",
+          "bytes": 264560,
+          "sha256": "015f25b4115d11ef20bda822b43280c43a84905c61ca671a96c631063963039f",
+          "county": "06003",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06005_roads.zip",
+          "bytes": 1231761,
+          "sha256": "f583e7ebd2d55cae0a3274aedbd1acfaf63bc4386b2fe7a6f15a9b0a7fa83e65",
+          "county": "06005",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06009_roads.zip",
+          "bytes": 2793367,
+          "sha256": "cbbbe59a1092f4abe7c9342cf09bd4046a81d6f8734337524c9031b8e03225d7",
+          "county": "06009",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06017_roads.zip",
+          "bytes": 5115037,
+          "sha256": "d15844dd9979c0eb8577bc026294514954c520e7647e101f527debdcdd8beee8",
+          "county": "06017",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06019_roads.zip",
+          "bytes": 5496210,
+          "sha256": "e62cc564a09ef796e13f5ee27301401afba9dd88a67c51db2f0e0fbd3714c742",
+          "county": "06019",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06027_roads.zip",
+          "bytes": 3770915,
+          "sha256": "fe7d1b52c303f7a8348328afa6fedfab9fc22685cfe36fc575846beb6297f050",
+          "county": "06027",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06035_roads.zip",
+          "bytes": 5021322,
+          "sha256": "9ed8ca7f53eacd35ddff587e2bf7ea2f9ac2096b61f9016aa3a49c09c6eeb6c5",
+          "county": "06035",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06039_roads.zip",
+          "bytes": 2488330,
+          "sha256": "a54c88a28227a6bfb1f3c731dc05ed2a64a52f56c8d1d8d7916dd9677bfdaea5",
+          "county": "06039",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06043_roads.zip",
+          "bytes": 2361487,
+          "sha256": "487cf2c7b2df78b36e62adb84e5025cee6bf5d4f90a6b9b1ceec09ddecc24948",
+          "county": "06043",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06047_roads.zip",
+          "bytes": 1878211,
+          "sha256": "e19943a5307becfe4f1ab2999dc8911909f0941c08e599687e6505f3987eabea",
+          "county": "06047",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06051_roads.zip",
+          "bytes": 2180938,
+          "sha256": "dc66809be1f487d8bfc6793807656eac3042881aaa5aea4118f578ad8bc44f19",
+          "county": "06051",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06057_roads.zip",
+          "bytes": 3869729,
+          "sha256": "fd2cce9bf967ab51d89991862fc9d80dc0298feed3df7ee3009e2959a1315273",
+          "county": "06057",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06061_roads.zip",
+          "bytes": 4481405,
+          "sha256": "c0d8ea149eadee4990c2db759590c9a8bf5567aa4e2ed930ffa37f9858a4e8b9",
+          "county": "06061",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06063_roads.zip",
+          "bytes": 5399108,
+          "sha256": "e06b66256c015d3ed6d336c6e25a605bf607f3eea3d155eb626ce11936671fe8",
+          "county": "06063",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06091_roads.zip",
+          "bytes": 2551420,
+          "sha256": "9536e03340c816166ff3c35f487014dac8ba1b7261efe5b4e4ab191d4a863b58",
+          "county": "06091",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06099_roads.zip",
+          "bytes": 1207846,
+          "sha256": "6ee8dba85fa595b258d4156255d85415aa7d2d16391a18bde5d905cd3effb32d",
+          "county": "06099",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06109_roads.zip",
+          "bytes": 3405916,
+          "sha256": "4db6920eac371a3199f8bdbeb77d4d33443a06b879251901d633d5a50fc7370f",
+          "county": "06109",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32001_roads.zip",
+          "bytes": 2612850,
+          "sha256": "95f33e6c9fa1270c5f177edce043b32b1ad822eb99c6bd3e544c39b39e012bee",
+          "county": "32001",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32005_roads.zip",
+          "bytes": 900681,
+          "sha256": "6ff9518e8a1f43bbb2b589aef33db2febbf7777e912a623d7bfb378ab187084b",
+          "county": "32005",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32007_roads.zip",
+          "bytes": 9878811,
+          "sha256": "32c31d5b45e34f1f30c092445fbefbe30f8a3de627129e6e454888c01fdd437c",
+          "county": "32007",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32009_roads.zip",
+          "bytes": 1738365,
+          "sha256": "5493412f9698e4f94fede706146d4c14424ecc7659b84c3efbace6720ad8324b",
+          "county": "32009",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32011_roads.zip",
+          "bytes": 1863225,
+          "sha256": "8ef69daeb2fbb49d2570d229ba285cecdd53c2ef027115d4c05535eecc1f37cf",
+          "county": "32011",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32013_roads.zip",
+          "bytes": 5791363,
+          "sha256": "d27884edf6e39e1602d06991923741ba859816d4da1a88dae778f7de752447aa",
+          "county": "32013",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32015_roads.zip",
+          "bytes": 2357550,
+          "sha256": "8495f83231376fab80555813e89c6497b273b8eebd2e4ca6d47168457a0416db",
+          "county": "32015",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32019_roads.zip",
+          "bytes": 2259645,
+          "sha256": "32e86fe26301c4cc279fcd4d010d7f3f430892650e97f8c9b5677238aed287f5",
+          "county": "32019",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32021_roads.zip",
+          "bytes": 1525475,
+          "sha256": "31bc35d3ca0f2fdd4d739d3f75bda98c34846edcc2d772c63bdfa961599e8b0d",
+          "county": "32021",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32023_roads.zip",
+          "bytes": 6371680,
+          "sha256": "9b1136f7d4194d91ce63c4cc1b4bf950cf2c947da7253769121e571ed9482f15",
+          "county": "32023",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32027_roads.zip",
+          "bytes": 1627573,
+          "sha256": "1c425803f65de8a99d4a942b4639ca2cbd97d566d4f6a21e4fedb3e75f0dea17",
+          "county": "32027",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32029_roads.zip",
+          "bytes": 505940,
+          "sha256": "41dcee568542e810fb9a0b7449dcf336bc095a3ddd0939562783eaa7f1ff0cf0",
+          "county": "32029",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32031_roads.zip",
+          "bytes": 3189748,
+          "sha256": "b01672cade64ec3722277bb2fce08029259d69d4fcf85fd51908cb6c754bb7a4",
+          "county": "32031",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32033_roads.zip",
+          "bytes": 5456097,
+          "sha256": "2c9edbc39d4a2f70fe38532430b18a0067a0ba1a54c8bd8d0ceee9e18777ab29",
+          "county": "32033",
+          "source_crs": "EPSG:4269"
+        },
+        {
+          "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32510_roads.zip",
+          "bytes": 344656,
+          "sha256": "592683a9b593d48f79a4a1bfcb3d42a4e582ada69349e075aa6dcc3ba4432722",
+          "county": "32510",
+          "source_crs": "EPSG:4269"
+        }
+      ],
+      "geometry_counts": {
+        "06003": 861,
+        "06005": 341,
+        "06009": 4307,
+        "06017": 2381,
+        "06019": 2028,
+        "06027": 3475,
+        "06035": 3217,
+        "06039": 6131,
+        "06043": 5416,
+        "06047": 2443,
+        "06051": 6233,
+        "06057": 2005,
+        "06061": 2183,
+        "06063": 1886,
+        "06091": 1635,
+        "06099": 31,
+        "06109": 7949,
+        "32001": 5729,
+        "32005": 3882,
+        "32007": 774,
+        "32009": 3590,
+        "32011": 3722,
+        "32013": 3752,
+        "32015": 5520,
+        "32019": 6234,
+        "32021": 5538,
+        "32023": 11273,
+        "32027": 6657,
+        "32029": 1946,
+        "32031": 14973,
+        "32033": 13,
+        "32510": 2024
+      },
+      "mtfcc_counts": {
+        "S1400": 112953,
+        "S1740": 6542,
+        "S1500": 5791,
+        "S1750": 183,
+        "S1200": 981,
+        "S1710": 120,
+        "S1640": 157,
+        "S1780": 118,
+        "S1630": 936,
+        "S1820": 41,
+        "S1100": 63,
+        "S1830": 2,
+        "S1730": 260,
+        "S1720": 2
+      },
+      "file": "data/external/audit_sources/tiger_road_distance_m.tif",
+      "sha256": "e5350423508968fa2d32b0a6ae0d3fb4ae3ea645e3b8736f0c8e7ad9ff2f2988",
+      "seed_pixels": 1141630,
+      "complete_county_check": true,
+      "limitation": "Nearest Census road/vehicular-trail segment on a 100 m raster; not a complete pedestrian-path or travel-time model"
     },
     "claim_m": {
       "file": "data/external/audit_sources/blm_closed_claim_distance_m.tif",
@@ -108,21 +383,78 @@
         "2": 4926035
       },
       "not_four_blocks": true
+    },
+    "acquisition_blocks": {
+      "status": "derived_audited",
+      "official_coordinates": false,
+      "sha256": "2c0785c4b3ec46c734d1be7a7aedbb3e816201100ab358033a3af074418c894a",
+      "source": {
+        "report_figure": "Figure 3, The Four GeoDAWN Acquisition Blocks (report page 5 of the PDF)",
+        "figure_sha256": "3c8355d317f5ebec65bbf8846c34ff4e69f90b45b7e10ae73486d31ac8615082",
+        "extent_polygon": "GeoDAWN_data_extent.zip (official)",
+        "report": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
+        "doi": "10.5066/P93LGLVQ"
+      },
+      "line_km_audit": {
+        "blocks": {
+          "Winnemucca": {
+            "official_km": 62530.0,
+            "derived_km": 63045.120229336986,
+            "relative_difference": 0.008237969444058635,
+            "within_tolerance": true
+          },
+          "Fallon": {
+            "official_km": 43500.0,
+            "derived_km": 44972.186939920364,
+            "relative_difference": 0.03384337792920378,
+            "within_tolerance": true
+          },
+          "Hawthorne": {
+            "official_km": 21400.0,
+            "derived_km": 20942.19628985341,
+            "relative_difference": -0.021392696735821892,
+            "within_tolerance": true
+          },
+          "Tonopah": {
+            "official_km": 21600.0,
+            "derived_km": 21833.189537691072,
+            "relative_difference": 0.01079581193014234,
+            "within_tolerance": true
+          }
+        },
+        "total": {
+          "official_km": 149030.0,
+          "derived_km": 150792.69299680184,
+          "relative_difference": 0.011827772910164569,
+          "within_tolerance": true
+        },
+        "tolerance_per_block": 0.08,
+        "tolerance_total": 0.05,
+        "passed": true
+      },
+      "limitations": [
+        "Boundaries are read from a figure, not published coordinates; edge uncertainty is a few km.",
+        "Tie lines extend at least 2 km into adjacent blocks (report), so membership within ~2 km of a boundary is inherently ambiguous.",
+        "Official flight-number to block mapping exists (report) but the profile CSV archives are S3-hosted and not anonymously downloadable."
+      ]
     }
   },
-  "missing_required": [
-    "buffered nearest-road coverage (legacy mirror was clipped tightly)",
-    "verified geographic boundaries of the four acquisition blocks"
-  ],
+  "missing_required": [],
   "excluded": [
     "MRDS (mineral occurrences, not claims)",
     "label geometry/FTYPE distances",
     "wells/probes/sinter/vents",
     "label-derived block seams"
   ],
-  "full_requested_audit_available": false,
+  "blocks_official_coordinates": false,
+  "block_boundary_status": "derived_audited_not_official_coordinates",
+  "full_requested_audit_available": true,
   "feature_names": [
     "area1",
+    "block_1",
+    "block_2",
+    "block_3",
+    "block_4",
     "claim_m",
     "road_m"
   ],
