@@ -1,0 +1,199 @@
+{
+  "generated_utc": "2026-10-02T11:38:32.963293+00:00",
+  "status": "derived_audited",
+  "label_free": true,
+  "official_coordinates": false,
+  "source": {
+    "report_figure": "Figure 3, The Four GeoDAWN Acquisition Blocks (report page 5 of the PDF)",
+    "figure_sha256": "3c8355d317f5ebec65bbf8846c34ff4e69f90b45b7e10ae73486d31ac8615082",
+    "extent_polygon": "GeoDAWN_data_extent.zip (official)",
+    "report": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
+    "doi": "10.5066/P93LGLVQ"
+  },
+  "georeference": {
+    "a": 341.5213765295246,
+    "b": -344.8810353268084,
+    "c": 32049.321409783715,
+    "d": 14127.020057183016,
+    "lat0_rad": 0.6879841898973912,
+    "mean_chamfer_residual_px": 4.903156143829334,
+    "px_per_km_east": 3.067924690347868,
+    "px_per_km_north": 3.0981048807654368
+  },
+  "polygons_utm_11n": {
+    "blue": [
+      [
+        242555.57989493536,
+        4431546.033877554
+      ],
+      [
+        431341.2447991988,
+        4431228.146643394
+      ],
+      [
+        431834.3102538292,
+        4316078.892103266
+      ],
+      [
+        239897.43435606782,
+        4318058.720727971
+      ]
+    ],
+    "green": [
+      [
+        327801.26481416705,
+        4317408.849449256
+      ],
+      [
+        465922.3578023295,
+        4318080.135322334
+      ],
+      [
+        467335.3808784912,
+        4217285.475330531
+      ],
+      [
+        325791.13876945846,
+        4215611.0027830945
+      ]
+    ],
+    "white": [
+      [
+        255279.8042721052,
+        4511706.119348331
+      ],
+      [
+        572171.3247241124,
+        4510415.889762345
+      ],
+      [
+        572121.8727953127,
+        4433927.756777601
+      ],
+      [
+        256467.47499203877,
+        4436243.142076866
+      ]
+    ]
+  },
+  "tonopah_rule": "footprint south of the Hawthorne rectangle's base line (northing 4216448 m)",
+  "pixels_per_block": {
+    "Winnemucca": 2274909,
+    "Fallon": 1580860,
+    "Hawthorne": 760235,
+    "Tonopah": 551369
+  },
+  "gap_pixels_assigned_to_nearest_block": 118986,
+  "connected_components_per_block": {
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1
+  },
+  "line_km_audit": {
+    "a1_plus_a2_all": {
+      "derived_km_by_block": {
+        "Winnemucca": 63045.120229336986,
+        "Fallon": 44972.186939920364,
+        "Hawthorne": 20942.19628985341,
+        "Tonopah": 35052.13721146311
+      },
+      "audit": {
+        "blocks": {
+          "Winnemucca": {
+            "official_km": 62530.0,
+            "derived_km": 63045.120229336986,
+            "relative_difference": 0.008237969444058635,
+            "within_tolerance": true
+          },
+          "Fallon": {
+            "official_km": 43500.0,
+            "derived_km": 44972.186939920364,
+            "relative_difference": 0.03384337792920378,
+            "within_tolerance": true
+          },
+          "Hawthorne": {
+            "official_km": 21400.0,
+            "derived_km": 20942.19628985341,
+            "relative_difference": -0.021392696735821892,
+            "within_tolerance": true
+          },
+          "Tonopah": {
+            "official_km": 21600.0,
+            "derived_km": 35052.13721146311,
+            "relative_difference": 0.6227841301603292,
+            "within_tolerance": false
+          }
+        },
+        "total": {
+          "official_km": 149030.0,
+          "derived_km": 164011.64067057386,
+          "relative_difference": 0.10052768349039698,
+          "within_tolerance": false
+        },
+        "tolerance_per_block": 0.08,
+        "tolerance_total": 0.05,
+        "passed": false
+      }
+    },
+    "a1_plus_a2_outside_area1": {
+      "derived_km_by_block": {
+        "Winnemucca": 63045.120229336986,
+        "Fallon": 44972.186939920364,
+        "Hawthorne": 20942.19628985341,
+        "Tonopah": 21833.189537691072
+      },
+      "audit": {
+        "blocks": {
+          "Winnemucca": {
+            "official_km": 62530.0,
+            "derived_km": 63045.120229336986,
+            "relative_difference": 0.008237969444058635,
+            "within_tolerance": true
+          },
+          "Fallon": {
+            "official_km": 43500.0,
+            "derived_km": 44972.186939920364,
+            "relative_difference": 0.03384337792920378,
+            "within_tolerance": true
+          },
+          "Hawthorne": {
+            "official_km": 21400.0,
+            "derived_km": 20942.19628985341,
+            "relative_difference": -0.021392696735821892,
+            "within_tolerance": true
+          },
+          "Tonopah": {
+            "official_km": 21600.0,
+            "derived_km": 21833.189537691072,
+            "relative_difference": 0.01079581193014234,
+            "within_tolerance": true
+          }
+        },
+        "total": {
+          "official_km": 149030.0,
+          "derived_km": 150792.69299680184,
+          "relative_difference": 0.011827772910164569,
+          "within_tolerance": true
+        },
+        "tolerance_per_block": 0.08,
+        "tolerance_total": 0.05,
+        "passed": true
+      }
+    }
+  },
+  "primary_audit_variant": "a1_plus_a2_outside_area1",
+  "audit_tolerances_fixed_before_derivation": {
+    "per_block": 0.08,
+    "total": 0.05
+  },
+  "limitations": [
+    "Boundaries are read from a figure, not published coordinates; edge uncertainty is a few km.",
+    "Tie lines extend at least 2 km into adjacent blocks (report), so membership within ~2 km of a boundary is inherently ambiguous.",
+    "Official flight-number to block mapping exists (report) but the profile CSV archives are S3-hosted and not anonymously downloadable."
+  ],
+  "raster": {
+    "path": "data/external/audit_sources/acquisition_block_id_100m.tif",
+    "sha256": "2c0785c4b3ec46c734d1be7a7aedbb3e816201100ab358033a3af074418c894a"
+  }
+}
