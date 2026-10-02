@@ -1,0 +1,10 @@
+exit_code=1
+downloaded 22103_spec_a1_csv.zip 4255 3s
+FATAL AttributeError: 'NoneType' object has no attribute 'get'
+Traceback (most recent call last):
+  File "/home/runner/work/GEMSDOE24/GEMSDOE24/scripts/extract_geodawn_profiles.py", line 352, in <module>
+    main()
+  File "/home/runner/work/GEMSDOE24/GEMSDOE24/scripts/extract_geodawn_profiles.py", line 308, in main
+    jobs.append((area, dest, rec.get("checksum", {}).get("value"), rec))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
