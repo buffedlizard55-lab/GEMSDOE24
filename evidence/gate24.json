@@ -1,0 +1,129 @@
+{
+  "generated_utc": "2026-10-02T02:05:28+00:00",
+  "protocol": {
+    "module": "gems.holdout",
+    "budget": 0.025,
+    "note": "quadrant folds; within fold 20% of components held as 'new'; emission = per-quadrant top-budget"
+  },
+  "results": {
+    "h19-4-raw": {
+      "mean_dense_dti": 0.16977,
+      "mean_sparse_dti": 0.06731,
+      "fold_dense": [
+        0.1675,
+        0.19232,
+        0.12386,
+        0.19538
+      ],
+      "fold_sparse": [
+        0.06949,
+        0.06304,
+        0.05393,
+        0.08277
+      ]
+    },
+    "h19-4-resid": {
+      "mean_dense_dti": 0.16984,
+      "mean_sparse_dti": 0.06731,
+      "fold_dense": [
+        0.16789,
+        0.19232,
+        0.12366,
+        0.1955
+      ],
+      "fold_sparse": [
+        0.06943,
+        0.06345,
+        0.05348,
+        0.0829
+      ]
+    },
+    "h19-5-raw": {
+      "mean_dense_dti": 0.16739,
+      "mean_sparse_dti": 0.06609,
+      "fold_dense": [
+        0.16445,
+        0.19297,
+        0.12143,
+        0.19069
+      ],
+      "fold_sparse": [
+        0.06802,
+        0.06249,
+        0.05285,
+        0.081
+      ]
+    },
+    "h19-5-resid": {
+      "mean_dense_dti": 0.16809,
+      "mean_sparse_dti": 0.06644,
+      "fold_dense": [
+        0.16611,
+        0.19413,
+        0.12143,
+        0.19069
+      ],
+      "fold_sparse": [
+        0.06848,
+        0.06341,
+        0.05285,
+        0.081
+      ]
+    },
+    "h16-1-raw": {
+      "mean_dense_dti": 0.16887,
+      "mean_sparse_dti": 0.06687,
+      "fold_dense": [
+        0.16643,
+        0.1909,
+        0.12421,
+        0.19396
+      ],
+      "fold_sparse": [
+        0.06892,
+        0.06224,
+        0.05358,
+        0.08273
+      ]
+    },
+    "h16-1-resid": {
+      "mean_dense_dti": 0.16867,
+      "mean_sparse_dti": 0.06663,
+      "fold_dense": [
+        0.16677,
+        0.1912,
+        0.12286,
+        0.19383
+      ],
+      "fold_sparse": [
+        0.0689,
+        0.06201,
+        0.05287,
+        0.08274
+      ]
+    }
+  },
+  "decision": {
+    "h19-4": {
+      "beats_h19-4-raw_dense": true,
+      "beats_h19-4-raw_sparse": false,
+      "delta_dense": 7e-05,
+      "delta_sparse": 0.0,
+      "worst_fold_dense": -0.0002
+    },
+    "h19-5": {
+      "beats_h19-4-raw_dense": false,
+      "beats_h19-4-raw_sparse": false,
+      "delta_dense": -0.00168,
+      "delta_sparse": -0.00087,
+      "worst_fold_dense": -0.00243
+    },
+    "h16-1": {
+      "beats_h19-4-raw_dense": false,
+      "beats_h19-4-raw_sparse": false,
+      "delta_dense": -0.0011,
+      "delta_sparse": -0.00068,
+      "worst_fold_dense": -0.001
+    }
+  }
+}

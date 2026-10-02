@@ -1,0 +1,46 @@
+{
+  "generated_utc": "2026-10-01T23:47:05+00:00",
+  "inputs": {},
+  "acq_window": {
+    "semantics": "0 outside GeoDAWN, 1 Area1 (200 m lines), 2 Area2 (400 m lines/4 km ties)",
+    "area1_grid_window_rows_cols": [
+      3058,
+      3548,
+      1632,
+      2302
+    ],
+    "source": "5GEMSDOE/data/reconstructed/provenance.json (source grid transforms); re-derived here from UTM window math"
+  },
+  "acq_block": {
+    "n_boundaries_detected": 0,
+    "boundary_cols": [],
+    "semantics": "empirically measured N-S block seams (0=outside footprint); GeoDAWN ReadMe describes four blocks (inherited claim, see sources.json)",
+    "method": "evidence/acq_block_audit.json"
+  },
+  "lidar_cov": {
+    "semantics": "1 where the 1 m lidar scarp product is valid (7GEMSDOE valid band 12)",
+    "coverage_frac_in_fp": 0.7537
+  },
+  "point_sets": {
+    "wellsprings": 27092,
+    "vents": 21,
+    "sinter_points": 709,
+    "probes": 3800
+  },
+  "d_road_px": {
+    "status": "absent in this sandbox (hosts unreachable; see irregularities I-01); run scripts/fetch_field_access_layers.py"
+  },
+  "d_claim_px": {
+    "status": "absent in this sandbox (hosts unreachable; see irregularities I-01); run scripts/fetch_field_access_layers.py"
+  },
+  "output": "data/confounds/confounds.npz",
+  "feature_list": [
+    "acq_block",
+    "acq_window",
+    "d_probe_px",
+    "d_sinter_px",
+    "d_vent_px",
+    "d_well_px",
+    "lidar_cov"
+  ]
+}

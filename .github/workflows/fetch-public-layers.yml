@@ -1,0 +1,38 @@
+name: fetch-public-layers
+# Runs official public-domain downloads from an unrestricted network and commits
+# the small results to branch `public-layers` so the egress-restricted research
+# sandbox can consume them. Safe to re-run; failures are logged, not fatal.
+on:
+  workflow_dispatch:
+    inputs:
+      fetch_mode:
+        description: "all | tiger_roads_and_rails | mrds | sciencebase_outlines | nbmg_qfaults_confidence"
+        default: all
+  push:
+    paths:
+      - "scripts/ci_fetch_external.py"
+      - ".github/workflows/fetch-public-layers.yml"
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: install deps
+        run: pip install pyshp shapely
+      - name: fetch
+        env:
+          FETCH_MODE: ${{ github.event.inputs.fetch_mode || 'all' }}
+        run: python scripts/ci_fetch_external.py
+      - name: upload to public-layers via API
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: /usr/bin/python3 scripts/ci_push_artifacts_api.py
+
+      - name: report
+        if: always()
+        run: cat data_external/fetch_manifest.json
