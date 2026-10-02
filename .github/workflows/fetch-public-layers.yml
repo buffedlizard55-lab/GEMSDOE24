@@ -1,38 +1,29 @@
-name: fetch-public-layers
-# Runs official public-domain downloads from an unrestricted network and commits
-# the small results to branch `public-layers` so the egress-restricted research
-# sandbox can consume them. Safe to re-run; failures are logged, not fatal.
+name: Official audit inputs
 on:
   workflow_dispatch:
-    inputs:
-      fetch_mode:
-        description: "all | tiger_roads_and_rails | mrds | sciencebase_outlines | nbmg_qfaults_confidence"
-        default: all
   push:
+    branches: ['arena/01a0fa76-gemsdoe24']
     paths:
-      - "scripts/ci_fetch_external.py"
-      - ".github/workflows/fetch-public-layers.yml"
+      - 'scripts/fetch_official_audit_inputs.py'
+      - '.github/workflows/fetch-public-layers.yml'
+permissions:
+  contents: read
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
-      - name: install deps
-        run: pip install pyshp shapely
-      - name: fetch
-        env:
-          FETCH_MODE: ${{ github.event.inputs.fetch_mode || 'all' }}
-        run: python scripts/ci_fetch_external.py
-      - name: upload to public-layers via API
+        with:
+          python-version: '3.11'
+      - run: pip install pyshp pypdf
+      - name: Fetch anonymous BLM claims and USGS acquisition metadata
+        run: python scripts/fetch_official_audit_inputs.py --flight-paths --out data/raw/official_audit
+      - name: Retain receipts including any failed requests
         if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: /usr/bin/python3 scripts/ci_push_artifacts_api.py
-
-      - name: report
-        if: always()
-        run: cat data_external/fetch_manifest.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-audit-inputs
+          path: data/raw/official_audit/
+          retention-days: 30

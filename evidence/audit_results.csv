@@ -1,0 +1,5 @@
+reference,auc,holm_p,margin_null_p95,available_family_association,full_required_audit_passed
+labels,0.5283302447479383,0.02,0.008041280219454272,False,False
+h19-4,0.5659638836524263,0.02,0.04602330762862061,True,False
+h19-5,0.5645915969139712,0.02,0.04740011850590342,True,False
+candidate,0.534765355671953,0.02,0.015669837050611424,False,False

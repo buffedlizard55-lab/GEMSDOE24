@@ -13,6 +13,7 @@ Every "expected" value below was itself transcribed from the sibling repository
 19GEMSDOE/evidence/data_verification.json (a prior session's measured record); a
 mismatch is reported, never silently tolerated.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -42,8 +43,7 @@ EXPECTED_SHA = {
 }
 # H19-4 / H19-4-allfinite SHA-256 published by 19GEMSDOE/docs/index.html
 EXPECTED_SHA_SUBS = {
-    "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif":
-        "89109a3bd2cd3b12e7a0f388113c519843acfc9c4f46825affefc3e63dd99b22",
+    "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif": "89109a3bd2cd3b12e7a0f388113c519843acfc9c4f46825affefc3e63dd99b22",
 }
 
 
@@ -66,7 +66,6 @@ def raster_info(p: Path) -> dict:
         }
         band1 = s.read(1, masked=False).astype(np.float32)
     fp = load_footprint()
-    finite = np.isfinite(band1)
     info["sha256"] = sha256(p)
     info["bytes"] = p.stat().st_size
     if band1.shape == fp.shape:
@@ -140,7 +139,9 @@ def main() -> None:
             "xor": int(np.logical_xor(lab, exf)[fp].sum()),
         }
         if int(np.logical_xor(lab, exf)[fp].sum()) != 0:
-            report["anomalies"].append("labels.tif != existing_faults.tif on footprint (expected identical: catalogue)")
+            report["anomalies"].append(
+                "labels.tif != existing_faults.tif on footprint (expected identical: catalogue)"
+            )
     if "labels.tif" in rasters and "sample_submission.tif" in rasters:
         lab = rasters["labels.tif"] > 0
         ss = rasters["sample_submission.tif"]
@@ -152,7 +153,9 @@ def main() -> None:
     for p in Path(ROOT / "inputs").glob("*-nan.tif"):
         a = rasters[p.name]
         inside = a[fp]
-        ok = bool(np.isfinite(inside).all() and np.nanmin(inside) >= 0.0 and np.nanmax(inside) <= 1.0)
+        ok = bool(
+            np.isfinite(inside).all() and np.nanmin(inside) >= 0.0 and np.nanmax(inside) <= 1.0
+        )
         report["identity_checks"][f"range_ok[{p.name}]"] = {
             "min": float(np.nanmin(inside)),
             "max": float(np.nanmax(inside)),
@@ -160,7 +163,9 @@ def main() -> None:
             "pass": ok,
         }
         if not ok:
-            report["anomalies"].append(f"{p.name}: values outside [0,1] or non-finite inside footprint")
+            report["anomalies"].append(
+                f"{p.name}: values outside [0,1] or non-finite inside footprint"
+            )
 
     out = ROOT / "evidence" / "data_verification.json"
     out.write_text(json.dumps(report, indent=2) + "\n")
@@ -168,17 +173,24 @@ def main() -> None:
     manifest = {
         "generated_utc": report["generated_utc"],
         "note": "Small bridge + external assets committed for reproducibility. "
-                "Competition originals: https://www.drivendata.org/competitions/306/competition-doe-gems/data/ "
-                "(login required). External sources documented in registry/sources.json.",
+        "Competition originals: https://www.drivendata.org/competitions/306/competition-doe-gems/data/ "
+        "(login required). External sources documented in registry/sources.json.",
         "files": {
             k: {"sha256": v["sha256"], "bytes": v["bytes"]} for k, v in report["files"].items()
         },
     }
     (ROOT / "data" / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(json.dumps({"anomalies": report["anomalies"],
-                      "footprint": report["footprint"],
-                      "labels": report["identity_checks"].get("labels_eq_existing_faults_on_footprint"),
-                      "sample": report["identity_checks"].get("sample_submission_is_known_faults")}, indent=1))
+    print(
+        json.dumps(
+            {
+                "anomalies": report["anomalies"],
+                "footprint": report["footprint"],
+                "labels": report["identity_checks"].get("labels_eq_existing_faults_on_footprint"),
+                "sample": report["identity_checks"].get("sample_submission_is_known_faults"),
+            },
+            indent=1,
+        )
+    )
 
 
 if __name__ == "__main__":

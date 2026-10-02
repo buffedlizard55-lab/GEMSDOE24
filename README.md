@@ -1,16 +1,132 @@
-# 24GEMSDOE — DOE GEMS / DrivenData #306 (geothermal fault prediction)
+# GEMS DOE 24 — evidence before a leaderboard slot
 
-**Mission: finish top of the leaderboard on scientific leverage, not luck.**
-Two rules govern every decision in this repo:
+**Goal: maximize the chance of winning DOE GEMS / DrivenData #306 through sound
+geological inference, reproducible experiments and honest validation.** A goal
+is not a score forecast or a guarantee of winning.
 
-> **Maximize P(Win).** Every hour is spent on the action with the highest
-> expected reduction in regret — not the most comfortable one.
-> **Own the Outcome.** No hand-offs, no "upstream problem" excuses. Data
-> blockers get solved with tooling; dead ends get verified, not assumed.
+> **Maximize P(Win).** Prefer verified scientific leverage over cosmetic model
+> changes, submission fishing or comfortable busywork.
+>
+> **Own the Outcome.** Resolve data placement and engineering blockers
+> autonomously; report negative results and genuine remaining constraints rather
+> than passing an unavailable source off as a completed experiment.
 
----
+[Project site](https://buffedlizard55-lab.github.io/GEMSDOE24/index.html) ·
+[Submission/executive guide](docs/executive-summary.html) ·
+[Preregistered hypotheses](knowledge/02_preregistered_2026-10-02.md) ·
+[Source review](knowledge/03_verified_sources_2026-10-02.md)
 
-## The standing starting point (owner's prompt — treated as the charter each session)
+## Current decision
+
+<!-- STATUS:START -->
+**No new slot-eligible candidate; no slot consumed.** H19-5 remains a
+format-validated reference with owner-reported original public DTI **0.1922**.
+The official leader snapshot is **0.3195** (2026-10-02; not an artifact-linked
+score for this repo).
+
+Fresh physics → arc+residualized local dense/sparse DTI:
+**0.15169 / 0.05843 →
+0.15568 / 0.06321**.
+These gains are below H19-4/H19-5 as-emitted diagnostics; original current-best
+OOF reconstruction is absent. They do not predict a new leaderboard score.
+
+The full requested audit is **BLOCKED**: four-block geography is unverified and
+legacy road clipping leaves boundary coverage uncertified. Official buffered
+road acquisition is implemented but its workflow could not run after GitHub
+authentication/push failed. Claim distances are official, quality-filtered and
+buffered. Exact experimental-raster audit complete: **True**
+(provisional available inputs, never a full-source pass).
+
+Reference: [`gems24-reference-h19-5-20261002-80d47e1ab2ee-nan.tif`](docs/downloads/gems24-reference-h19-5-20261002-80d47e1ab2ee-nan.tif).
+Public PR/merge/deployment are **not claimed**; GitHub reconnection is required.
+<!-- STATUS:END -->
+
+## Standing session charter — read this at the start of every session
+
+This section preserves **all active requirements available in this session's
+context**, including corrections and scope decisions. The inherited owner's
+original quoted charter is also reproduced below. The complete uncondensed
+original chat was unavailable in this continuation; do not misrepresent this
+record as a verbatim copy of unseen text.
+
+1. Review this repository and the group's websites/source code; resume genuine
+   next steps from earlier sessions before proposing duplicate work. Work
+   autonomously without asking for data placement, feature preparation or
+   routine design decisions. Download/restore into `data/`, prepare, train,
+   predict and validate as far as verified inputs and permissions permit.
+2. Aim to finish at the top of the leaderboard using PhD-level scientific
+   judgment. Verify factual assertions against **official, trusted sources**,
+   link them for manual review, collect auditable data/source/knowledge tables
+   for subsequent projects, and flag irregularities. Never fabricate scores,
+   access, causal discovery, source availability or completion.
+3. Study why H19-4 and H19-5 are the group's highest **owner-reported** results:
+   `gems19-h19-4-multi-line-physical-corroboration-20261001-691e4dfa-nan`
+   **0.1894**, and
+   `gems19-h19-5-openness-thermal-corroboration-20261001-e27054cf-nan`
+   **0.1922**. H19-5 already exceeds 0.1894. The owner's leader snapshot 0.3049
+   and the inherited site snapshot 0.3168 are historical, not current facts.
+   Do not infer the score of a particular file from a public account's score
+   without an artifact-linked organizer receipt.
+4. Before implementing a new detector, write **3–5 genuinely unimplemented
+   hypotheses relative to the reviewed work**. Each must name the precise
+   layers, physical transform/signature, missing-fault rationale, distinction
+   from reviewed methods, expected DTI benefit and implementation cost. Rank
+   them. If external data are needed, name a free official source and verify
+   practical availability; otherwise explicitly defer that hypothesis. Novelty
+   is not a claim about unseen competitors' work.
+5. Run a classifier two-sample audit motivated by **Lopez-Paz & Oquab, ICLR
+   2017**. Distinguish pixels near mapped faults from far pixels using **only**
+   road/trail distance, historic mining-claim distance and categorical membership
+   of the **four GeoDAWN operational acquisition blocks**. No geothermal wells,
+   sinter, vents, probes, mineral-occurrence substitutions, fault-distance
+   features, mapped-fault confidence, or label-derived seams may enter this
+   nuisance-only test.
+6. Audit **training labels first**, then each relevant prediction raster, and
+   the **exact final candidate** before any slot. Refit classifiers for null
+   replicates and use spatial separation, effect-size safeguards and declared
+   multiplicity control. If meaningful association appears, remove/residualize
+   measured confounds on **training-region pixels only**, refit the detector and
+   re-evaluate. A spatial holdout from the same catalogue is not sufficient by
+   itself to certify robustness to the mapping process.
+7. Scientific correction to the owner's premise: C2ST detects **distributional
+   association**, not its cause. Roads/claims can themselves correlate with
+   geology; non-rejection does not prove absence of bias. This implementation
+   explicitly adapts the paper's held-out accuracy statistic to a prespecified
+   AUC with refitted spatial randomizations. Block exchangeability is assumed;
+   torus shifts on a nonstationary, irregular footprint are sensitivity
+   diagnostics, not an exact spatial null.
+8. **Never spend a weekly slot unless the candidate beats the CURRENT comparable
+   spatially blocked holdout best.** Validate the top hypothesis on the frozen
+   protocol, require paired true retraining gains and the exact-raster bias
+   audit, and never treat re-ranking an already-binary submission as retraining.
+   Missing original H19 OOF reconstruction or a required source blocks
+   certification; an arbitrary easier baseline is not enough.
+9. Submission: a **single-band float32 GeoTIFF**, matching the template's CRS,
+   shape and geotransform, with **finite [0,1] values inside** and NaN outside the
+   official footprint. Fix the owner's rejection, “Predicted values must be in
+   range [0, 1]”. Give every artifact a unique name/content identifier, an
+   obvious **one-click `.tif` download at the beginning of the site**, a separate
+   short submission comment and a dedicated executive-summary/instructions
+   subpage. Format validity does not authorize a scientific promotion. A
+   zeros-outside fallback is separately labelled, not silently substituted for
+   the official NaN convention.
+10. Clean up GitHub Pages and implement a timestamped automated source feed.
+    Distinguish owner reports, team-authored claims, official snapshots, computed
+    diagnostics and hypotheses. Unknown scores, including unreported 22/23
+    results, remain unknown. Never republish a renamed reference as a new win.
+11. Review in **three passes**: (i) implement and verify against sources;
+    (ii) find and fix bugs, assumptions and edge cases;
+    (iii) recheck this original acceptance scope, reliability and code. Keep the
+    review record and limitations. Open a PR from the session branch and merge
+    through GitHub if the configured connection permits it; never silently claim
+    a merge or a public deployment that did not occur.
+12. Arena's **Maximize P(Win)** and **Own the Outcome** remain focal. Follow the
+    session's fixed Arena branch, never create/write an orphan data branch, never
+    ask for GitHub credentials, and preserve large regenerable datasets outside
+    Git. If GitHub authentication fails, the platform connection needs
+    reconnection; this is not permission to forge a merge or bypass authentication.
+
+### Inherited quoted owner prompt
 
 > Review the repo; ensure an easy one-click downloadable submission tif exists
 > as the prompt describes; read the entire prompt. Formally test whether the
@@ -49,81 +165,159 @@ Two rules govern every decision in this repo:
 > review; flag irregularities; no hallucinations; 3 passes; finish by opening
 > and merging a PR to main, stating remaining work and limitations.
 
-## What this repo adds over siblings (24's edge)
+The causal and acquisition-spacing statements in that quote are **the request,
+not verified conclusions**. Official evidence distinguishes two survey-resolution
+areas from four operational blocks; see the source review.
 
-1. **Full 19-band feature stack assembled from SHA-pinned parts**
-   (`data/training_features.tif`, 419 MB, verified) → `src/gems/geofeatures.py`
-   quantizes it plus derived det_elev transforms (openness, anisotropy, slope)
-   into `data/geofeat/featstack_u16.npy` — every model here sees real physics,
-   not a 3-band proxy.
-2. **CI-as-proxy data pipeline** (`scripts/ci_fetch_external.py` +
-   `.github/workflows/fetch-public-layers.yml`): official public-domain layers
-   the sandbox cannot reach (Census TIGER roads/rails, USGS MRDS claims,
-   ScienceBase GeoDAWN outlines, NBMG Qfaults `FTYPE_` confidences) are fetched
-   from an unrestricted runner and committed to branch `public-layers`.
-3. **The accessibility audit itself** (`scripts/run_geology_audit.py`):
-   confounds-only / geology-only / geology+confounds C2S2 tests against both the
-   catalogue labels and our own emission rasters, with permutation + torus-shift
-   nulls → `evidence/geoaudit.json`.
-4. **Residualized emission surfaces** with the within-stratum rank reweighting,
-   gated on the new-fault holdout against h19-4-as-emitted **before** any
-   submission slot is spent.
+## Reproduce the active pipeline
 
-## Repo map
+Python 3.11; CPU-only. Install the recorded package versions:
 
-| Path | What |
+```bash
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/pip install --no-deps -e .
+.venv/bin/python -m pytest -q
+.venv/bin/ruff check src scripts tests
+```
+
+Data placement is autonomous and hash-pinned; no manual Dropbox download is
+needed. The 419 MB raster and 592 MiB derived matrix remain ignored:
+
+```bash
+.venv/bin/python scripts/restore_data.py --roads
+.venv/bin/python scripts/prepare_data.py
+.venv/bin/python scripts/build_confounds.py --force
+.venv/bin/python scripts/run_geology_audit.py
+```
+
+If and only if the four operational blocks remain unavailable, the following
+**explicitly exploratory** command records that limitation and keeps promotion
+blocked. It does not waive the owner's no-slot requirement:
+
+```bash
+.venv/bin/python scripts/run_h24_2_experiment.py --allow-partial-audit-inputs
+.venv/bin/python scripts/run_geology_audit.py \
+  --candidate out/h24-2a-residualized-experimental.tif
+.venv/bin/python scripts/build_site.py
+```
+
+`out/` contains the reproducible experimental raster and serialized detector;
+these are not advertised as a winning submission. Packaging a new candidate
+fails closed unless the matched current-best holdout, training-only intervention,
+complete required-family audit and exact file identity all pass:
+
+```bash
+.venv/bin/python scripts/build_submission24.py \
+  out/h24-2a-residualized-experimental.tif --hyp h24-2a
+```
+
+The reference-only bypass verifies the **full pinned H19-5 source hash**, not an
+arbitrary `--mirror-of` string. Its comment explicitly says no new score:
+
+```bash
+.venv/bin/python scripts/build_submission24.py \
+  inputs/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif \
+  --mirror-of h19-5
+```
+
+The exact source basename is discoverable with `ls inputs/*h19-5*-nan.tif`.
+Nothing in these commands submits to DrivenData or spends a slot.
+
+## What is verified, and what is not
+
+- **Integrity:** the restored owner bridge is pinned to its original hashes,
+  including training raster `4371c82e…`, labels `7ba308cc…` and template
+  `2176d08e…`. This proves mirror consistency, **not independent organizer
+  authentication** of every original byte or band description. Ambiguous
+  thermal-conductivity/earthquake aliases are excluded from the new detector.
+- **Preparation:** 5,167,373 footprint rows × 30 float32 descriptors; 27 base
+  physical/LiDAR columns and three fixed annular descriptors. No training label
+  is an input to the arc transform. Global unlabelled physical context and
+  normalization are transductive; fitted model/nuisance scaling is training-only.
+- **Access data:** real TIGER road/vehicular-trail geometries and BLM **closed
+  mining claims**, not MRDS. Claims are PLSS legal-land approximations, not exact
+  stake locations or historic workings. Quality prefixes are parsed, unknown/
+  degraded records and implausibly broad polygons excluded; 20 km padded seed
+  grids preserve source geometry outside the output rectangle, but the inherited
+  road mirror was itself tightly clipped: actual nearest-road certification at
+  that source boundary remains incomplete. Official buffered road acquisition
+  is implemented and blocked by GitHub authentication; this is not a source pass.
+- **Acquisition:** Area 1 has priority in the Area 1/2 overlap. Those are **not
+  the four operational blocks**. The official report identifies Winnemucca,
+  Fallon, Hawthorne and Tonopah, but the fetched geographic extent/flight-path
+  inventories do not provide independently verified four-block polygons.
+- **Audit:** 199 grouped refitted randomizations, 99 shifts, four spatial folds
+  with purged 10 km groups and 1.5 km collars; Holm correction and AUC/effect
+  thresholds. Results with Area 1/2 only are labelled provisional and cannot
+  pass the required full audit.
+- **Experiment:** physics / physics+arc × raw / nuisance-residualized; identical
+  splits and frozen detector settings. Four quadrants, whole-component
+  supervised exclusion, fixed 2.45% maximum ridge budget, no zero padding.
+  Score surfaces include complete NMS halos; catalogue masking occurs **after**
+  NMS. Dense and 20%-component sparse truth are simulations using the incomplete
+  provided catalogue, not hidden new-fault ground truth.
+- **Current-best comparison:** H19 outputs are scored **as emitted** as a
+  conservative diagnostic veto. The original H19 OOF caches are absent; these
+  diagnostics do not reconstruct the original 0.21413 / 0.08667 claims or certify
+  a same-protocol win over the current-best model.
+- **Format:** full grid/CRS/dtype/range and pixel-content checks; exact and binary
+  DTI both exclude known predictions and known truth. ZIP is one flat `.tif`;
+  note is separate. Float32 content hashes distinguish soft probabilities, not
+  just thresholded support. A green format check is **not** a green promotion.
+
+## Evidence and repository map
+
+| Path | Role |
 |---|---|
-| `src/gems/` | metric (exact DTI), footprint, confounds, c2s2, geofeatures, submission, validator, holdout gate |
-| `scripts/` | verify_data, assemble_features, build_confounds, build_geofeat, run_geology_audit, ci_fetch_external, ci_push_artifacts_api |
-| `data/` | bridge (labels/existing/sample_submission), training_features.tif, geofeat/, confounds/, external/, dem10/, catalogue_ext/ |
-| `docs/` | the Pages site: executive summary, one-click submission download |
-| `registry/submissions.json` | every submission this group ever made, with hashes |
-| `evidence/` | machine-readable audit outputs (verify line by line here) |
+| `src/gems/` | exact/binary DTI, safe ridge selection, physical descriptors, strict nuisance inputs, spatial C2ST, training-only residualization, packaging and promotion |
+| `scripts/restore_data.py`, `prepare_data.py` | reproducible large-input restoration and preparation |
+| `scripts/run_geology_audit.py` | labels first, individual references, then the exact candidate; source/code/environment fingerprints |
+| `scripts/run_h24_2_experiment.py` | paired fresh spatial refits and blocked promotion decision |
+| `evidence/data_restore.json`, `data_preparation.json` | full input and matrix hashes; provenance caveats |
+| `evidence/group_review.json` | all 21 supplied project source pages, pinned commits and consulted files |
+| `evidence/access_inputs.json`, `accessibility_audit_v2.json` | actual nuisance families, missing inputs, refitted nulls and effect gates |
+| `evidence/h24_2_experiment.json` | all four arms/folds, historical diagnostics, exact experimental-raster receipt |
+| `evidence/review_passes.json`, `registry/irregularities.json` | three-pass review, failures and remaining limitations |
+| `data/external/audit_sources/` | small official USGS documents, buffered BLM distance bridge and source receipts; raw bulk is external |
+| `docs/` | clean site, executive instructions, one-click reference and timestamped source feed |
+| `knowledge/` | standing charter, ranked hypotheses, verified sources and interpretation |
+| `evidence/archive/`, `archive/legacy/` | superseded reports/code, clearly invalid for promotion; never silently reused |
 
-## Rules that bind us (from the organizers)
+## Publication and automation
 
-* Metric `DTI(0.2, 0.8)`, credit kernel `k(d)=max(1−d/300, 0)`; submission =
-  single-band float32 GeoTIFF, EPSG:32611, 100 m, values in **[0, 1]**, nulls
-  outside footprint. ("Predicted values must be in range [0, 1]" — every tif
-  here is built by `gems/submission.py::write_submission`, which asserts the
-  range, the grid, and the CRIS, and names each file uniquely.)
-* Known USGS/INGENIOUS fault pixels are masked from scoring (staff, forum
-  11516/11527) — so only *new* faults earn, and our gate mirrors that exactly.
-* Final round re-scores ONE submission against an expanded expert-catalogued
-  test set. A slot spent is data the whole group can't get back this week —
-  hence the holdout gate rule: **no idea reaches the leaderboard until it beats
-  the current best (0.1922 / h19-5) on the spatially-blocked new-fault holdout.**
+- The official-source fetch workflow is read-only. The small audit bridge uses
+  ordinary Git **only on the fixed session branch**; no `public-layers` branch is
+  created or updated. Actions' blob host was unreachable from the sandbox, so
+  only small derived evidence was bridged; original bulk remains external.
+- The website workflow builds a Pages artifact, refreshes official-source
+  snapshots on a schedule and never commits generated feed updates to main.
+  Publication requires a successful merge/deployment and valid GitHub access.
+  A local/live Arena preview is not evidence of a public Pages deployment.
+- Reconnect GitHub in Arena if authentication returns 401; never provide tokens,
+  passwords or 2FA codes in chat. Do not claim a PR/merge succeeded without its
+  returned URL/status.
+- Follow organizer limits and current rules on licensed external data, source
+  disclosure, AI disclosure and final submission selection. Confirm the
+  rules/platform deadline discrepancy through the organizer rather than guessing.
 
-## Status (updated 2026-10-02, all numbers machine-generated — see site)
+## Next actions that matter
 
-* Data: **complete & hash-verified** — competition layers (features sha256
-  `4371c82e…` re-verified after this workspace was rebuilt from the pushed
-  branch), GeoDAWN radiometrics, lidar scarp product, plus — fetched via the
-  `public-layers` CI-as-proxy branch — TIGER2024 ROADS (22 counties),
-  MRDS claims, the **official ScienceBase GeoDAWN Area-1/2 outline polygons**
-  (now driving `acq_window`), and 1,179 INGENIOUS Qfaults traces with `FTYPE_`
-  confidence (739 WC / 351 MC / 89 Inf — matches the published census).
-* **Audit verdict** (`evidence/geoaudit.json`): accessibility-confounding of
-  the catalogue is **not confirmed** beyond a torus-shift null with purely
-  non-geological features (labels V1-clean AUC 0.570, shift margin −0.060,
-  p=0.44); the apparent 0.956 was the catalogue self-predicting through a
-  fault-distance feature (leave-one-out collapses to 0.495). Geology-only
-  separates near/far better than access (0.684). Our emission is not more
-  access-structured than the catalogue (0.611 vs 0.570) → the mapping-process
-  overfitting kill-rule did **not** fire. Emission-level residualization
-  gate-tested (±0.0007): guardrail, not a lever.
-* **H24-1 (confidence-contrast prior)**: gate-tested, **not promoted**
-  (`evidence/h24_1_gate.json`); H24-2..5 pre-registered in
-  `knowledge/01_hypotheses_2026-10-01.md` — each gates before any slot.
-* Best live: h19-5 0.1922, h19-4 0.1894 (registry); leader 0.3168.
-* One-click download: `docs/downloads/gems24-h24-0-mirror-h19-5-group-best-…tif`
-  (byte-identical mirror of the group best; content id `e27054cf` matches 19's
-  registry; `check_variants` green: [0,1] range, grid, CRS — the fix for the
-  "Predicted values must be in range [0, 1]" rejection, plus an `allfinite`
-  twin and a short DrivenData note per upload).
-* Limitations: sandbox egress whitelist forces the CI-proxy route; TIGER2024
-  folds rails/trails into ROADS (S1400/S1500 — no separate RAILS layer, 404s
-  logged); the four contractor acquisition *blocks* remain seam-approximated
-  (outlines give Area1/Area2 only); 8–41-null p-values are resolution-limited
-  (p ≥ 1/(n+1)); 100 m grid under-resolves sub-km access structure;
-  `labels` may themselves be incomplete by the organizers' own words.
+1. Reconnect GitHub and run the implemented official buffered-road acquisition;
+   then audit labels first and refit all arms on the corrected source. The
+   clipped-road version is explicitly provisional. Obtain coordinate-verified operational block boundaries (or an authoritative
+   source-to-block flight-line mapping with a declared, audited derivation).
+   Never infer them from the labels, a constant raster or nearest base station.
+2. Reconstruct the current H19 spatial OOF reference under the **same** masked
+   metric/split protocol; record input/code hashes and disclose transductive
+   steps. Do not promote against only a weaker freshly invented baseline.
+3. Use the first experiment's negative/positive results as evidence, not a
+   hindsight hyperparameter search. Test preregistered common-resolution contact
+   persistence or directional variograms next; raw drainage-offset work remains
+   deferred until 3DEP coverage is byte-verified.
+4. Obtain independent fault/expert validation before claiming discovery. A
+   contact, scarp, intrusion rim, road cut and mapped fault can be equifinal in
+   these fields. The private leaderboard and Phase 2 expert assessment are not
+   available local truth.
+5. Complete the authenticated PR/merge and Pages checks if the connection permits;
+   then verify the public `.tif` HTTP link, not merely the repository file.

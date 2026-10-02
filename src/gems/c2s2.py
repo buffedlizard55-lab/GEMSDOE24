@@ -1,122 +1,34 @@
-"""Classifier two-sample test (C2S2) for distribution shift between pixel sets.
+"""Classifier two-sample testing (C2ST), adapted to a spatial pixel population.
 
-Formalism follows Lopez-Paz & Oquab, "The Classifier Two-Sample Test", ICLR 2017
-(arXiv:1610.06539, https://arxiv.org/abs/1610.06539): draw two samples P and Q,
-train a probabilistic classifier to discriminate them, and use its held-out
-accuracy (here: cross-validated AUC) as the test statistic. P = Q iff the
-classifier cannot beat the null distribution obtained by relabelling a sample
-drawn from a single distribution. We obtain the null by two mechanisms:
+Lopez-Paz & Oquab, *Revisiting Classifier Two-Sample Tests*, ICLR 2017:
+https://arxiv.org/abs/1610.06545 . The previous arXiv id 1610.06539 was wrong.
+The paper uses held-out accuracy. We use a prespecified held-out AUC statistic
+and refit the identical classifier for every randomization.
 
-  * ``perm``  — i.i.d. relabelling of the sampled pixels (permutation test);
-  * ``shift`` — torus-shift the *fault mask* itself by a random offset and
-    re-derive near/far sets, preserving spatial autocorrelation of both classes
-    while breaking the true P/Q alignment (a stricter null for spatial data;
-    cf. Dutkiewicz et al. 2023 permutation schemes for spatial point patterns,
-    https://doi.org/10.1111/ecog.06258 - methods framing only).
-
-In this project the test answers one question: can *non-geological* covariates
-(acquisition window/block, lidar coverage, distance to field-work points,
-optionally roads and mining claims) tell "near mapped fault" pixels apart from
-"far" ones? If yes on the training labels, the catalogue's shape is confounded
-by field accessibility; if yes on a *predicted* raster, that raster's gain is
-partly mapping-process overfitting, which a same-catalogue spatial holdout
-cannot catch.
+A classifier detecting a distributional association does NOT establish its
+cause; geological, economic and topographic selection remain alternatives.
+A non-rejection is NOT proof of equal distributions or absence of bias.
+Grouped label swaps require block exchangeability; a torus shift on an irregular
+nonstationary footprint is a sensitivity diagnostic, not an exact spatial test.
 """
+
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass, field
 from typing import Callable
 
 import numpy as np
 from scipy.ndimage import distance_transform_edt
 from sklearn.ensemble import HistGradientBoostingClassifier
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
-from sklearn.preprocessing import StandardScaler
+from threadpoolctl import threadpool_limits
 
 
-# --------------------------------------------------------------------------- datasets
-def near_far_masks(reference: np.ndarray, near_px: int = 3, far_px: int = 9) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Return (near, far, dist) for a binary or continuous reference raster.
-
-    near = distance to positive reference pixels <= near_px (the metric kernel R
-    at 100 m: a prediction there could earn TP credit from a catalogue-class
-    trace); far = distance >= far_px (>=300 m off every mapped trace).
-    """
-    pos = np.asarray(reference) > 0
-    if not pos.any():
-        raise ValueError("reference raster has no positive pixels")
-    d = distance_transform_edt(~pos)
-    near = d <= near_px
-    far = d >= far_px
-    return near, far, d
+class MissingClassError(ValueError):
+    """A spatial cohort is not evaluable; never substitute chance AUC."""
 
 
-def build_matrix(feats: dict[str, np.ndarray], near: np.ndarray, far_pool: np.ndarray, fold: np.ndarray,
-                 footprint: np.ndarray, n_per_class: int, seed: int) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict]:
-    """Sub-sample balanced near/far pixels; return X, y, fold-id, info."""
-    rng = np.random.default_rng(seed)
-    ys, xs = np.nonzero(near & footprint)
-    n_near = min(n_per_class, len(ys))
-    sel = rng.choice(len(ys), size=n_near, replace=False) if len(ys) > n_near else np.arange(len(ys))
-    rows_n, cols_n = ys[sel], xs[sel]
-    ys, xs = np.nonzero(far_pool & footprint)
-    n_far = min(n_per_class, len(ys))
-    sel = rng.choice(len(ys), size=n_far, replace=False) if len(ys) > n_far else np.arange(len(ys))
-    rows_f, cols_f = ys[sel], xs[sel]
-    rows = np.concatenate([rows_n, rows_f])
-    cols = np.concatenate([cols_n, cols_f])
-    y = np.concatenate([np.ones(len(rows_n), dtype=np.int8), np.zeros(len(rows_f), dtype=np.int8)])
-    f = fold[rows, cols].astype(np.int8)
-    X = np.stack([np.asarray(feats[k], dtype=np.float32)[rows, cols] for k in sorted(feats)], axis=1)
-    info = {"feature_names": sorted(feats), "n_near": int(len(rows_n)), "n_far": int(len(rows_f)),
-            "n_near_total": int((near & footprint).sum()), "n_far_total": int((far_pool & footprint).sum())}
-    return X, y, f, info
-
-
-# --------------------------------------------------------------------------- models
-def make_model(kind: str, seed: int = 0) -> Callable[[np.ndarray, np.ndarray], object]:
-    if kind == "logit":
-        def fit(X, y):
-            sc = StandardScaler().fit(X)
-            m = LogisticRegression(max_iter=400, C=0.5)
-            m.fit(sc.transform(X), y)
-            return ("sc", sc, m)
-        return fit
-    if kind == "hgb":
-        def fit(X, y):
-            m = HistGradientBoostingClassifier(
-                max_iter=60, learning_rate=0.1, max_leaf_nodes=15,
-                l2_regularization=1.0, early_stopping=False, random_state=seed,
-            )
-            m.fit(X, y)
-            return ("m", m)
-        return fit
-    raise ValueError(kind)
-
-
-def _predict(model, X, kind):
-    if kind == "logit":
-        _, sc, m = model
-        return m.predict_proba(sc.transform(X))[:, 1]
-    return model[1].predict_proba(X)[:, 1]
-
-
-def spatial_cv_auc(fit, X, y, fold, kind) -> tuple[float, list[float]]:
-    aucs = []
-    for f in np.unique(fold[fold >= 0]):
-        tr, te = (fold != f) & (fold >= 0), fold == f
-        if te.sum() < 50 or len(np.unique(y[tr])) < 2:
-            aucs.append(float("nan"))
-            continue
-        m = fit(X[tr], y[tr])
-        p = _predict(m, X[te], kind)
-        aucs.append(float(roc_auc_score(y[te], p)))
-    mean = float(np.nanmean(aucs)) if len(aucs) else float("nan")
-    return mean, [round(a, 5) for a in aucs]
-
-
-# --------------------------------------------------------------------------- the test
 @dataclass
 class C2S2Result:
     surface: str
@@ -133,82 +45,233 @@ class C2S2Result:
     info: dict = field(default_factory=dict)
 
     def as_dict(self) -> dict:
-        return {k: (round(v, 5) if isinstance(v, float) else v) for k, v in self.__dict__.items()}
+        # Keep unrounded values in evidence; rounding is presentation-only.
+        return dict(self.__dict__)
+
+
+def near_far_masks(reference: np.ndarray, near_px: float = 3, far_px: float = 9):
+    """NEAR <=300 m, FAR >=900 m on the 100 m grid; intermediate pixels excluded."""
+    ref = np.asarray(reference)
+    if ref.ndim != 2 or not (0 <= near_px < far_px):
+        raise ValueError("2D reference and 0<=near<far required")
+    pos = np.isfinite(ref) & (ref > 0)
+    if not pos.any():
+        raise ValueError("reference raster has no positive pixels")
+    d = distance_transform_edt(~pos)
+    return d <= near_px, d >= far_px, d
+
+
+def build_matrix(feats, near, far_pool, fold, footprint, n_per_class, seed):
+    if not feats or n_per_class < 10:
+        raise ValueError("Features and at least 10 pixels per class are required")
+    shape = footprint.shape
+    if any(np.asarray(a).shape != shape for a in (near, far_pool, fold, *feats.values())):
+        raise ValueError("All feature/reference/fold grids must match")
+    valid = footprint & (fold >= 0)
+    for a in feats.values():
+        valid &= np.isfinite(a)
+    pools = [np.flatnonzero(near & valid), np.flatnonzero(far_pool & valid)]
+    n = min(n_per_class, *(len(p) for p in pools))
+    if n < 10:
+        raise ValueError("Insufficient finite near/far samples; no proxy/padding used")
+    rng = np.random.default_rng(seed)
+    rows = np.concatenate([rng.choice(p, size=n, replace=False) for p in pools])
+    y = np.repeat([1, 0], n).astype(np.int8)
+    X = np.column_stack([np.asarray(feats[k]).ravel()[rows] for k in sorted(feats)]).astype(
+        np.float32
+    )
+    f = fold.ravel()[rows].astype(np.int8)
+    yy, xx = np.unravel_index(rows, shape)
+    block = (yy // 100) * ((shape[1] + 99) // 100) + xx // 100
+    info = {
+        "feature_names": sorted(feats),
+        "n_near": n,
+        "n_far": n,
+        "n_near_total": len(pools[0]),
+        "n_far_total": len(pools[1]),
+        "rows": rows,
+        "spatial_blocks": block,
+    }
+    return X, y, f, info
+
+
+def make_model(kind: str = "hgb", seed: int = 0):
+    if kind != "hgb":
+        raise ValueError("Audited implementation fixes model_kind=hgb; no post-hoc model selection")
+
+    def fit(X, y):
+        return HistGradientBoostingClassifier(
+            max_iter=25,
+            learning_rate=0.1,
+            max_leaf_nodes=7,
+            l2_regularization=5.0,
+            early_stopping=False,
+            random_state=seed,
+        ).fit(X, y)
+
+    return fit
+
+
+def spatial_cv_auc(fit, X, y, fold, kind="hgb", *, groups=None, purge_groups=None):
+    aucs = []
+    for f_id in np.unique(fold[fold >= 0]):
+        tr, te = (fold != f_id) & (fold >= 0), fold == f_id
+        if purge_groups is not None:
+            tr &= ~np.isin(groups, purge_groups[int(f_id)])
+        if tr.sum() < 10 or te.sum() < 10 or len(np.unique(y[tr])) < 2 or len(np.unique(y[te])) < 2:
+            raise MissingClassError(f"Fold {f_id} lacks both classes after spatial purging")
+        m = fit(X[tr], y[tr])
+        aucs.append(float(roc_auc_score(y[te], m.predict_proba(X[te])[:, 1])))
+    if len(aucs) < 2:
+        raise ValueError("At least two held-out spatial folds required")
+    return float(np.mean(aucs)), aucs
+
+
+def holm_adjust(p_values: list[float]) -> list[float]:
+    """Holm family-wise adjustment, preserving original hypothesis order."""
+    p = np.asarray(p_values, float)
+    if p.ndim != 1 or np.any(~np.isfinite(p)) or np.any((p < 0) | (p > 1)):
+        raise ValueError("Invalid p values")
+    order = np.argsort(p)
+    adj = np.minimum(1, np.maximum.accumulate((len(p) - np.arange(len(p))) * p[order]))
+    out = np.empty(len(p))
+    out[order] = adj
+    return out.tolist()
 
 
 def c2s2_test(
-    surface_name: str,
-    reference: np.ndarray,
-    feats: dict[str, np.ndarray],
-    fold: np.ndarray,
-    footprint: np.ndarray,
+    surface_name,
+    reference,
+    feats,
+    fold,
+    footprint,
     *,
-    model_kind: str = "hgb",
-    n_per_class: int = 120_000,
-    n_null: int = 41,
-    seed: int = 20261001,
-    null_mode: str = "perm",
-    shift_fn: Callable[[int, int], np.ndarray] | None = None,
-) -> C2S2Result:
-    """Run the C2S2 statistic + permutation null.
-
-    ``shift_fn(dy,dx)`` must return the reference *class mask* translated on the
-    grid (torus). When provided with ``null_mode='shift'``, the null is built by
-    re-deriving the near set from shifted masks (spatially structured null).
-    """
+    model_kind="hgb",
+    n_per_class=12000,
+    n_null=199,
+    seed=20261002,
+    null_mode="grouped",
+    shift_fn: Callable | None = None,
+    purge_groups=None,
+):
+    if n_null < 1:
+        raise ValueError("At least one refitted null replicate required")
     rng = np.random.default_rng(seed)
-    near, far, _d = near_far_masks(reference)
-    fit = make_model(model_kind, seed)
-    X, y, f, info = build_matrix(feats, near, far, fold, footprint, n_per_class, seed)
-    obs, folds = spatial_cv_auc(fit, X, y, f, model_kind)
-
-    nulls: list[float] = []
-    if null_mode == "perm":
-        for b in range(n_null):
-            yp = y.copy()
-            rng.shuffle(yp)
-            a, _ = spatial_cv_auc(fit, X, yp, f, model_kind)
-            nulls.append(a)
-    elif null_mode == "shift":
-        if shift_fn is None:
-            raise ValueError("shift null needs shift_fn")
-        for b in range(n_null):
-            dy = int(rng.integers(-(footprint.shape[0] // 4), footprint.shape[0] // 4 + 1))
-            dx = int(rng.integers(-(footprint.shape[1] // 4), footprint.shape[1] // 4 + 1))
-            ref_s = shift_fn(dy, dx)
-            near_s, far_s, _ = near_far_masks(ref_s)
-            Xs, ys_, fs_, _ = build_matrix(feats, near_s, far_s, fold, footprint, n_per_class, seed + 1000 + b)
-            a, _ = spatial_cv_auc(fit, Xs, ys_, fs_, model_kind)
-            nulls.append(a)
-    else:
-        raise ValueError(null_mode)
-
-    nulls_arr = np.asarray(nulls, dtype=np.float64)
-    p95 = float(np.quantile(nulls_arr, 0.95))
-    p = (1.0 + float(np.sum(nulls_arr >= obs))) / (1.0 + len(nulls_arr))
-    return C2S2Result(
-        surface=surface_name, model=model_kind, observed_auc=obs, fold_aucs=folds,
-        null_kind=null_mode, n_null=len(nulls_arr),
-        null_auc_mean=float(nulls_arr.mean()), null_auc_p95=p95, null_auc_max=float(nulls_arr.max()),
-        margin_vs_p95=obs - p95, p_value=p, info={**info, "null_aucs": [round(a, 5) for a in nulls]},
-    )
-
-
-def drop_one_feature_auc(surface_name: str, reference: np.ndarray, feats: dict[str, np.ndarray], fold: np.ndarray,
-                         footprint: np.ndarray, model_kind: str, n_per_class: int, seed: int) -> dict:
-    """Univariate AUC per feature and leave-one-out ΔAUC of the full test."""
-    out: dict = {"single_feature_auc": {}, "leave_one_out_delta_auc": {}}
     near, far, _ = near_far_masks(reference)
     fit = make_model(model_kind, seed)
-    full_auc, _ = spatial_cv_auc(fit, *build_matrix(feats, near, far, fold, footprint, n_per_class, seed)[:3], model_kind)
-    for k in sorted(feats):
-        sub = {k: feats[k]}
-        X, y, f, _ = build_matrix(sub, near, far, fold, footprint, n_per_class, seed)
-        a, _ = spatial_cv_auc(fit, X, y, f, model_kind)
-        out["single_feature_auc"][k] = round(a, 5)
-    for k in sorted(feats):
-        sub = {kk: v for kk, v in feats.items() if kk != k}
-        X, y, f, _ = build_matrix(sub, near, far, fold, footprint, n_per_class, seed)
-        a, _ = spatial_cv_auc(fit, X, y, f, model_kind)
-        out["leave_one_out_delta_auc"][k] = round(full_auc - a, 5)
-    return out
+    X, y, f, info = build_matrix(feats, near, far, fold, footprint, n_per_class, seed)
+    groups = info.pop("spatial_blocks")
+    info.pop("rows")
+    unique_groups, inverse = np.unique(groups, return_inverse=True)
+    info.update(
+        seed=seed,
+        block_size_m=10000,
+        n_spatial_blocks=len(unique_groups),
+        near_m=300,
+        far_m=900,
+        statistic="unweighted mean of per-fold ROC AUC",
+        null_resolution=1 / (n_null + 1),
+        refit_every_null=True,
+        model_params={"max_iter": 25, "max_leaf_nodes": 7, "l2_regularization": 5.0},
+        null_assumption="10 km block class-label exchangeability"
+        if null_mode == "grouped"
+        else "spatial shifts are a nonstationarity sensitivity diagnostic"
+        if null_mode == "shift"
+        else "iid pixel exchangeability (diagnostic only)",
+    )
+    kwargs = {"groups": groups, "purge_groups": purge_groups}
+    nulls = []
+    rejected_shifts = Counter()
+    shift_draws = []
+    with threadpool_limits(limits=2):
+        observed, folds = spatial_cv_auc(fit, X, y, f, model_kind, **kwargs)
+        for b in range(n_null):
+            if null_mode == "grouped":
+                flips = rng.integers(0, 2, size=len(unique_groups))
+                yp = y ^ flips[inverse].astype(np.int8)
+                a, _ = spatial_cv_auc(fit, X, yp, f, model_kind, **kwargs)
+            elif null_mode == "perm":
+                a, _ = spatial_cv_auc(fit, X, rng.permutation(y), f, model_kind, **kwargs)
+            elif null_mode == "shift":
+                if shift_fn is None:
+                    raise ValueError("shift null requires an explicit geometry shift function")
+                # A shift with a single-class held-out cohort has no AUC. Use
+                # geometry/cohort support ONLY (never score) to condition this
+                # diagnostic. Record every rejected draw and cap retries; the
+                # grouped primary null is unchanged and remains fail-closed.
+                for attempt in range(20):
+                    while True:
+                        dy = int(
+                            rng.integers(
+                                -max(10, footprint.shape[0] // 4),
+                                max(10, footprint.shape[0] // 4) + 1,
+                            )
+                        )
+                        dx = int(
+                            rng.integers(
+                                -max(10, footprint.shape[1] // 4),
+                                max(10, footprint.shape[1] // 4) + 1,
+                            )
+                        )
+                        if np.hypot(dy, dx) >= 10:
+                            break
+                    draw = {"dy_px": dy, "dx_px": dx, "replicate": b, "valid": False}
+                    shift_draws.append(draw)
+                    try:
+                        ns, fs, _ = near_far_masks(shift_fn(dy, dx))
+                        Xs, ys, ff, inf = build_matrix(
+                            feats,
+                            ns,
+                            fs,
+                            fold,
+                            footprint,
+                            n_per_class,
+                            seed + 1000 + len(shift_draws) - 1,
+                        )
+                        a, _ = spatial_cv_auc(
+                            fit,
+                            Xs,
+                            ys,
+                            ff,
+                            model_kind,
+                            groups=inf["spatial_blocks"],
+                            purge_groups=purge_groups,
+                        )
+                    except MissingClassError as exc:
+                        rejected_shifts[str(exc)] += 1
+                        draw["reason"] = str(exc)
+                        continue
+                    draw["valid"] = True
+                    break
+                else:
+                    raise ValueError(
+                        "Could not obtain evaluable shift cohorts in 20 geometry-only attempts; diagnostic incomplete"
+                    )
+            else:
+                raise ValueError(null_mode)
+            nulls.append(a)
+    na = np.asarray(nulls)
+    p95 = float(np.quantile(na, 0.95))
+    p_value = float((1 + np.count_nonzero(na >= observed)) / (len(na) + 1))
+    info["null_aucs"] = nulls
+    if null_mode == "shift":
+        info["shift_draws"] = shift_draws
+        info["rejected_single_class_shifts"] = dict(rejected_shifts)
+        info["conditional_geometry_design"] = (
+            "99 or requested valid shifts; single-class fold draws excluded on support only, never AUC; diagnostic not an exact spatial test"
+        )
+        info["valid_shift_count"] = len(nulls)
+    return C2S2Result(
+        surface_name,
+        model_kind,
+        observed,
+        folds,
+        null_mode,
+        len(na),
+        float(na.mean()),
+        p95,
+        float(na.max()),
+        observed - p95,
+        p_value,
+        info,
+    )

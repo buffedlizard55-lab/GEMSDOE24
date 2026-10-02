@@ -1,0 +1,180 @@
+,0
+survey_name,GeoDAWN - Winnemucca Block
+survey_summary,"This survey was flown by EDCON-PRJ, Inc. as a sub-contractor to NV5 Geospatial under USGS Contract GPSC3 G16PC00016  and Task Order 140G0221F0024 NV Westcentral Geophysical 2020 D21. 
+The GeoDAWN Project consists of high-resolution aeromagnetic and radiometric data designed to image the subsurface geology and structure of  a large portion of northern and western Nevada. These data are intended for rigorous modeling and interpretation of the geology and structure in this region and will be used to evaluate the potential for undiscovered resources and will contribute to USGS and DOE-related mineral and geothermal resource assessments of the region. "
+contractor_company,NV5 Geospatial/EDCON-PRJ
+contractor_project_number,37339.C1/22103
+Client,USGS/DOE
+survey_source,EDCON-PRJ Raw Data
+survey_type,Mag/Rad
+survey_comment,"This dataset includes raw and processed magnetic and radiometric data acquired and processed by EDCON-PRJ, Inc., 6900 W. Jefferson Ave. # 150, Lakewood Colorado 80235"
+traverse_line_spacing_meters,Area 1: 200m  Area 2: 400m
+traverse_line_direction_degCCW_fromN,90
+tie_line_spacing_meters,Area 1: 2000m   Area 2: 4000m
+tie_line_direction_degCCW_fromN,180
+mean_terrain_clearance_meters,Area 1: 100m/150m  Area 2: 150m/200m
+final_line_kilometers,"151,799"
+traverse_line_numbers,10 to 8870
+traverse_line_identifier,L
+tie_line_numbers,"10015 to 10295 (area 1) 30010 to 30830 (area 2, plus all of area 1)"
+tie_line_identifier,T
+repeat_line_numbers,NA
+pre_zero_line_numbers,NA
+post_zero_line_numbers,NA
+acquisition_start_date,20211101
+acquisition_end_date,20221120
+delivery_date,20230104
+deliverable_content,"survey information (and readme file), raw and processed data (databases), gridded magnetic and radiometric data (grids), acquisition and processing report"
+deliverable_contact_main,Michael Hobbs 
+deliverable_contact_alt_0,mhobbs@edcon-prj.com
+deliverable_contact_alt_1,info@edcon-prj.com
+history_0,Contract Signed
+history_date_0,20210322
+history_1,Mobilization to Winnemucca NV
+history_date_1,20211029
+history_2,Calibrations and Equipment Testing Begins
+history_date_2,20211031
+history_3,Data Acquisition Begins
+history_date_3,20211101
+history_4,Data Acquisition Complete
+history_date_4,20221120
+history_5,"Magnetic Data Processing Complete, Initial Data Delivery"
+history_date_5,<class 'str'>
+history_6,"Radiometric Data Processing Complete, Initial Data Delivery"
+history_date_6,<class 'str'>
+history_7,<class 'str'>
+history_date_7,<class 'str'>
+history_8,<class 'str'>
+history_date_8,<class 'str'>
+history_9,<class 'str'>
+history_date_9,<class 'str'>
+history_10,<class 'str'>
+history_date_10,<class 'str'>
+lat_WGS84dd_min,37.36233
+lat_WGS84dd_max,40.72875
+long_WGS84dd_min,-120.00345
+long_WGS84dd_max,-116.14037
+states,Nevada and California
+counties,"Nevada: Washoe, Pershing, Lander, Eureka, Humbolt, Churchill, Storey, Lyon, Nye, Mineral, Esmeralda  California:  Mono, Inyo"
+major_cities,"Lovelock, Battle Mountain, Fallon, Hawthorne"
+qa_description,Daily quality control of raw radiometric and magnetic data was performed by the contractor and is described in the contractor report. 
+qa_logic,"Data were reviewed for magnetic and radiometric resolution, noise levels, completeness, and spatial accuracy."
+qa_completeness,Dataset is considered complete.
+positional_accuracy,"Positional Accuracy was accomplished using dual frequency, SBAS enabled geodetic-quality PwrPak7 Receivers.  Post-flight Precise Point Positioning corrections were applied."
+coordsys_description,UTM Zone 11 /WGS84
+projection,Universal Transverse Mercator
+utm_zone_N,11
+esri_epsg_wkt,NA
+max_X_utm,572601.5
+min_X_utm,243200
+max_Y_utm,4508651.6
+min_Y_utm,4135378.1
+transform_sfctrmr,0.9996
+transform_longcm,-117
+transform_latprjo,0
+transform_feast,"500,000"
+transform_fnorth,0
+plance,Coordinate Pair
+absres,1
+ordres,1
+unit,meter
+horiz_datum,WGS84
+ellipsoid,WGS84
+semiaxis,6378137
+flattening,298.2572236
+shpfile_survey_bounds_pg," GeoDAWN_Area1_FINAL_Outline.shp,   GeoDAWN_Area2_FINAL_Outline.shp"
+shpfile_survey_bounds_date,20210416
+shpfile_survey_bounds_description,Polygon Shapefile of the Area 1 and Area 2 Boundaries
+shpfile_survey_bounds_FIDnumber_min,<class 'str'>
+shpfile_survey_bounds_FIDnumber_max,<class 'str'>
+shpfile_survey_flightlines_ln,"area1_flight_path.zip, area2_flight_path.zip"
+shpfile_survey_flightlines_date,20230113
+shpfile_survey_flightlines_description,Line shapefile of the locations of the airborne geophysical survey flightlines
+shpfile_survey_flightlines_FIDnumber_min,0
+shpfile_survey_flightlines_FIDnumber_max,0
+deliverable_package_name,140G0221F0024_NV_WestCentral_Geophysical_2020_D21_final_data
+deliverable_package_descr,"Digital databases, grids, shapefiles, and report for the GeoDAWN Airborne Survey"
+deliverable_package_contents,Deliverables as listed in the Contractor's Report
+deliverable_package_size_inMB,"12,755 MB"
+pdf_report_name,Data Acquisition and Processing of the GeoDAWN Aeromagnetic and Radiometric Survey Task Order No. 140G0221F0024 NV_WestCentral_Geophysical_2020_D21 
+pdf_report_descr,"Contractor's report from NV5 Geospatial/EDCON-PRJ. This report describes the survey parameters, field operations, and quality control procedures used to produce the magnetic and radiometric data."
+pdf_report_size_inMB,8.306 MB
+tech_useage_requirements,Part or all of this report is presented in Portable Document Format (PDF); the latest version of Adobe Acrobat Reader or similar software is required to view it.
+survey_data_info,Survey data is described in the Contractor's Report
+survey_data_info_date,20230104
+magnetic_processingSteps,Magnetic Processing Steps are described in the Contractor's Report.
+magnetic_processingSteps_date,20230104
+radiometric_processingSteps,Radiometric Data Processing is described in the Contractor's Report.
+radiometric_processingSteps_date,20230104
+aircraft_0,Cessna 180 Reg. N-8814X
+aircraft_0_magnetometer,Geometrics G-823A Cesium Vapor Split Beam
+aircraft_0_magnetometer_installation,"3.0 meter tail stinger, composite"
+aircraft_0_magnetometer_orientation,Vertical
+aircraft_0_magnetometer_resolution,.0002 nT at 10 Hz
+aircraft_0_magnetometer_sample_rate,10 Hz
+aircraft_0_spectrometer_system,Nuvia Dynamics AGRS
+aircraft_0_spectrometer_installation,Cabin
+aircraft_0_spectrometer_sample_rate,1 Hz
+aircraft_0_spectrometer_TC_win_keV,410-2810
+aircraft_0_spectrometer_K_win_keV,1370-1570
+aircraft_0_spectrometer_U_win_keV,1660-1860
+aircraft_0_spectrometer_Th_win_keV,2410-2810
+aircraft_0_spectrometer_Cosmic_win_keV,>=3000
+aircraft_0_radar_altimeter_system,FreeFlight Systems TRA 3000
+aircraft_0_radar_altimeter_sample_rate,10 Hz
+aircraft_0_laser_altimeter_system,NA
+aircraft_0_laser_altimeter_sample_rate,NA
+aircraft_0_navigation_system,AgNav Platinum LiAV
+aircraft_0_navigation_sample_rate,10 Hz
+aircraft_0_navigation_accuracy,1.0 meter
+aircraft_0_magentometer_acquisition_system,Geometrics MagLog 
+aircraft_0_base_magnetometer,Geometrics G-858 Cesium Vapor
+aircraft_0_base_magnetometer_sample_rate,1 Hz
+aircraft_1_,Cessna 206 Turbo Reg. N-288TB
+aircraft_1_magnetometer,Geometrics G-823A Cesium Vapor Split Beam
+aircraft_1_magnetometer_installation,"3.5 meter tail stinger, fiberglass"
+aircraft_1_magnetometer_orientation,Vertical
+aircraft_1_magnetometer_resolution,.0002 nT at 10 Hz
+aircraft_1_magnetometer_sample_rate,10 Hz
+aircraft_1_spectrometer_system,Nuvia Dynamics AGRS
+aircraft_1_spectrometer_installation,Cabin
+aircraft_1_spectrometer_sample_rate,1 Hz
+aircraft_1_spectrometer_TC_win_keV,410-2810
+aircraft_1_spectrometer_K_win_keV,1370-1570
+aircraft_1_spectrometer_U_win_keV,1660-1860
+aircraft_1_spectrometer_Th_win_keV,2410-2810
+aircraft_1_spectrometer_Cosmic_win_keV,>=3000
+aircraft_1_radar_altimeter_system,FreeFlight Systems TRA 3000
+aircraft_1_radar_altimeter_sample_rate,10 Hz
+aircraft_1_laser_altimeter_system,NA
+aircraft_1_laser_altimeter_sample_rate,NA
+aircraft_1_navigation_system,AgNav Platinum LiAV
+aircraft_1_navigation_sample_rate,10 Hz
+aircraft_1_navigation_accuracy,1.0 meter
+aircraft_1_magentometer_acquisition_system,Geometrics MagLog 
+aircraft_1_base_magnetometer,Geometrics G-858 Cesium Vapor
+aircraft_1_base_magnetometer_sample_rate,1 Hz
+aircraft_2,Bell 206 Jet Ranger Helicopter
+aircraft_2_magnetometer,Scintrex CS-3
+aircraft_2_magnetometer_installation,"3.5 meter tail stinger, fiberglass"
+aircraft_2_magnetometer_orientation,Vertical
+aircraft_2_magnetometer_resolution,.0006 nT at 10 Hz
+aircraft_2_magnetometer_sample_rate,10 Hz
+aircraft_2_spectrometer_system,Nuvia Dynamics AGRS
+aircraft_2_spectrometer_installation,Cabin
+aircraft_2_spectrometer_sample_rate,1 Hz
+aircraft_2_spectrometer_TC_win_keV,410-2810
+aircraft_2_spectrometer_K_win_keV,1370-1570
+aircraft_2_spectrometer_U_win_keV,1660-1860
+aircraft_2_spectrometer_Th_win_keV,2410-2810
+aircraft_2_spectrometer_Cosmic_win_keV,>=3000
+aircraft_2_radar_altimeter_system,FreeFlight Systems TRA 3000
+aircraft_2_radar_altimeter_sample_rate,10 Hz
+aircraft_2_laser_altimeter_system,NA
+aircraft_2_laser_altimeter_sample_rate,NA
+aircraft_2_navigation_system,Nuvia Dynamics AGIS
+aircraft_2_navigation_sample_rate,10 Hz
+aircraft_2_navigation_accuracy,1.0 meter
+aircraft_2_magentometer_acquisition_system,Nuvia Dynamics AGIS
+aircraft_2_base_magnetometer,Gem Systems GSM-19T
+aircraft_2_base_magnetometer_sample_rate,1 Hz

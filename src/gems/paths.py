@@ -5,6 +5,7 @@ Large rasters are never committed. Point ``GEMS_DATA_DIR`` at the folder that ho
 ``scripts/download_competition_data.sh``). ``GEMS_GROUP_DIR`` is a cache for the group's
 historic submission GeoTIFFs fetched from GitHub by ``scripts/forensic_audit.py``.
 """
+
 from __future__ import annotations
 
 import os

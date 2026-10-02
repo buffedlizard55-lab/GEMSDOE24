@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "review_date_utc": "2026-10-02",
+  "summary": "Three passes completed with explicit blocked acceptance items; no full-audit, new-score, PR/merge or public-deployment success is fabricated.",
+  "passes": [
+    {
+      "pass": 1,
+      "purpose": "Implement and verify sources/data/train/predict/validate",
+      "status": "completed_with_source_limits",
+      "checks": [
+        "Pinned 419 MB owner feature bridge restored and checked; 592 MiB, 5167373x30 descriptor matrix prepared.",
+        "All 21 supplied project source pages reviewed; selected H19/H16/H13 code and registries pinned.",
+        "Four ranked physical hypotheses written before new detector implementation.",
+        "Official BLM/USGS bytes fetched anonymously on CI; full claim IDs checked; quality-filtered 20 km claim-distance raster retained.",
+        "Training labels audited before detector fits; individual H19 predictions tested separately.",
+        "16 fresh paired spatial detector refits completed; full-region experimental raster produced and retained.",
+        "Exact experimental raster audited; four-reference Holm family calculated. All statistics remain provisional available-input diagnostics."
+      ],
+      "blocked": [
+        "Coordinate-verified operational acquisition blocks absent.",
+        "Original current-best H19 OOF reconstruction absent.",
+        "Owner feature/band mirror is integrity-checked, not independently organizer-authenticated."
+      ]
+    },
+    {
+      "pass": 2,
+      "purpose": "Fix assumptions, bugs and edge cases",
+      "status": "completed_with_blocked_road_data_correction",
+      "checks": [
+        "Known prediction/truth masking and adjacent-new-truth TP neutrality tested in both DTI implementations.",
+        "Empty components/quadrants, zero budgets, zero-score backfill and deterministic tie behavior checked.",
+        "NMS uses complete predicted halos and catalogue exclusion only after thinning; padding silhouettes rejected.",
+        "Esri multiple shells/holes, verbose quality prefixes, real nonempty distance seeds and Area1 priority tested.",
+        "Training-only median/scaling/splines/residualization and refitting every null/fold tested.",
+        "Undefined single-class shift AUC fixed with bounded geometry-only retries and recorded rejected draws; no score-based exclusions. Candidate required one rejection before 99 valid shifts.",
+        "Strict source/grid/range/soft-content-ID/flat-ZIP/comment/promotion checks verified; rejected candidate cannot be packaged as eligible.",
+        "Legacy executable wrappers fail closed; misleading reports preserved under archive.",
+        "Actual road-mirror source clipping discovered: padded raster alone cannot certify missing outside-window roads. Official buffered acquisition implemented, but not executed after auth/push failure."
+      ],
+      "tests": "55 pytest tests pass; Ruff check and format check pass; JavaScript syntax check passes; editable package build succeeds.",
+      "blocked": [
+        "Buffered official road-source correction requires a successful authenticated workflow trigger; nearest-road boundary certification remains incomplete.",
+        "No real browser engine was installed; DOM/link/HTTP checks do not claim clipboard/browser interaction testing."
+      ]
+    },
+    {
+      "pass": 3,
+      "purpose": "Recheck owner scope, reliability and publication claims",
+      "status": "completed_with_explicit_unfulfilled_acceptance_items",
+      "checks": [
+        "README preserves inherited quoted charter and expands every active available requirement; original uncondensed missing text is not invented.",
+        "Local paired gains, historical diagnostics, owner-reported 0.1922 and official 0.3195 snapshot remain separate.",
+        "Candidate is not promoted despite passing weaker paired-baseline gains; no weekly slot spent.",
+        "Exact-candidate AUC 0.534765 is below effect threshold; full requested source audit still blocked, not a pass.",
+        "First-screen uniquely named direct .tif reference, separate <=200-character note, checksum/range receipts and executive submission subpage delivered.",
+        "61 internal resource links resolve; primary TIFF served HTTP 200 in the local preview and matches full pinned SHA-256.",
+        "Scheduled anonymous source-feed/Pages artifact workflow implemented; stale/unknown snapshots marked rather than fabricated.",
+        "All changes remain on the fixed Arena session branch; no other branch created or pushed."
+      ],
+      "unfulfilled": [
+        "No independently verified full four-operational-block audit.",
+        "No corrected fully buffered official road raster/external-source retraining yet.",
+        "No reproduced current-best original OOF baseline and no verified new public score or leader-beater.",
+        "GitHub REST/GraphQL 401 and push failure prevent PR/merge/public deployment; reconnection requested without asking for secrets.",
+        "Complete uncondensed original prompt text was not available; available charter/requirements are preserved, not falsely called a verbatim unseen transcript."
+      ]
+    }
+  ],
+  "new_submission_slot_spent": false,
+  "recommended_new_candidate": false,
+  "public_deployment_verified": false
+}

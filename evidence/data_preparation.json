@@ -1,0 +1,51 @@
+{
+  "names": [
+    "rtp",
+    "tmi_hg",
+    "tmi_vg",
+    "iso_grav_anom",
+    "iso_grav_anom_hg",
+    "iso_grav_anom_vg",
+    "det_elev",
+    "det_elev_slope",
+    "tmi",
+    "cond_surf",
+    "depth_to_base_surf",
+    "geod_dilaterate",
+    "geod_shearrate",
+    "lidar_1",
+    "lidar_2",
+    "lidar_3",
+    "lidar_4",
+    "lidar_5",
+    "lidar_6",
+    "lidar_7",
+    "lidar_8",
+    "lidar_9",
+    "lidar_10",
+    "lidar_cos2strike",
+    "lidar_sin2strike",
+    "det_local_relief",
+    "det_gradient",
+    "arc_rtp",
+    "arc_det_elev",
+    "arc_agreement"
+  ],
+  "base_count": 27,
+  "shape": [
+    5167373,
+    30
+  ],
+  "arc_radii_px": [
+    6,
+    12,
+    24
+  ],
+  "sha256": "a4ca25b2a18f6f6637f0247367cc6235a1366eb8475f77b18cd0285e62232dc8",
+  "inputs": {
+    "data/bridge/sample_submission.tif": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "data/training_features.tif": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+    "data/external/lidar_scarp_features_u8.tif": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568"
+  },
+  "note": "Band names follow owner bridge order. Ambiguous tc/earthquake description aliases are deliberately excluded. Features are not calibrated fault probabilities."
+}

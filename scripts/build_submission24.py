@@ -1,96 +1,138 @@
-#!/usr/bin/env python
-"""Build the 24GEMSDOE submission bundle from a chosen (gate-passed) raster.
+#!/usr/bin/env python3
+"""Package a slot-eligible candidate OR the exact known H19-5 reference.
 
-Emits into docs/downloads/ (served by GitHub Pages):
-  gems24-<hyp>-<date>-<cid>-nan.tif        primary upload (NaN outside footprint)
-  gems24-<hyp>-<date>-<cid>-allfinite.tif  fallback if the portal rejects NaN
-  <same>.zip                                single-file zip, tif + note
-  note-<stem>.txt                           short DrivenData note (<=200 chars)
-  checks-<stem>.json                        check_variants() output, both files
-Appends a registry/submissions.json entry with the DTI *holdout gate* result
-from evidence/geoaudit.json when present (never invents live scores).
-Usage: build_submission24.py <source.tif> --hyp h24-1-access-residualized [--mirror-of gems19-h19-5...]
+Format validation never replaces scientific gates. ZIP contains ONE .tif; the
+<=200-character comment is a separate file. No portal uploads are performed.
 """
+
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-import numpy as np
 import rasterio
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from gems import footprint, paths, submission  # noqa: E402
+from gems.promotion import require_candidate_evidence  # noqa: E402
+from gems.validator import sha256_file  # noqa: E402
 
-TEMPLATE = paths.DATA_DIR / "bridge" / "sample_submission.tif"
-
-
-def content_id(arr: np.ndarray, fp: np.ndarray, known: np.ndarray) -> str:
-    # group convention (identical to 19GEMSDOE): content + mask hash, 8 hex
-    return submission.scored_content_id(arr, fp.astype(bool), known.astype(bool))
+TEMPLATE = ROOT / "data/bridge/sample_submission.tif"
+H19_5_SHA = "ec1f9b56b83ce33cad781ceb9f104b18fb4f2ff785263a4e89616af4aabdee8d"
 
 
-def main() -> None:
+def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("source")
-    ap.add_argument("--hyp", default="h24-1-access-residualized")
-    ap.add_argument("--mirror-of", default="")
+    ap.add_argument("source", type=Path)
+    ap.add_argument("--hyp", default="h24-2a")
+    ap.add_argument("--mirror-of", choices=["h19-5"], default=None)
     ap.add_argument("--summary", default="")
+    ap.add_argument("--gate-file", type=Path, default=ROOT / "evidence/h24_2_experiment.json")
+    ap.add_argument(
+        "--audit-file", type=Path, default=ROOT / "evidence/accessibility_audit_v2.json"
+    )
     args = ap.parse_args()
-    src = Path(args.source)
-    if not src.is_absolute():
-        src = ROOT / src
-    with rasterio.open(src) as d:
-        arr = d.read(1).astype(np.float32)
-        crs_ok = d.crs is None or str(d.crs).upper().replace("EPSG::", "EPSG:") == "EPSG:32611"
-    if not crs_ok:
-        raise SystemExit(f"refusing to build: unexpected CRS {d.crs}")
+    source = args.source.resolve()
+    digest = sha256_file(source)
+    if args.mirror_of:
+        if digest != H19_5_SHA:
+            raise SystemExit(
+                "Reference bypass is allowed ONLY for the pinned H19-5 artifact, not an arbitrary raster"
+            )
+        gate = {
+            "passed": False,
+            "reason": "Reference only; renaming does not create a new prediction or justify another slot",
+        }
+    else:
+        try:
+            gate = require_candidate_evidence(
+                digest,
+                json.loads(args.gate_file.read_text()),
+                json.loads(args.audit_file.read_text()),
+            )
+        except (OSError, ValueError, KeyError) as exc:
+            raise SystemExit(str(exc)) from exc
+    source_checks = submission.check_variants(source, TEMPLATE)
+    if not source_checks["format_valid"]:
+        raise SystemExit(
+            "Source raster format failed: " + ", ".join(source_checks["hard_failures"])
+        )
+    with rasterio.open(source) as d:
+        arr = d.read(1)
     fp = footprint.load_footprint()
-    known = footprint.load_band(paths.DATA_DIR / "bridge" / "existing_faults.tif") > 0
-    cid = content_id(np.nan_to_num(arr), fp, known)
+    known = footprint.load_band(ROOT / "data/bridge/existing_faults.tif") > 0
+    cid = submission.scored_content_id(arr, fp, known)
     date = datetime.now(timezone.utc).strftime("%Y%m%d")
+    hyp = "reference-h19-5" if args.mirror_of else args.hyp
     dl = paths.DOWNLOADS_DIR
     dl.mkdir(parents=True, exist_ok=True)
-    out_nan = dl / submission.make_filename("gems24", args.hyp, date, cid, "nan")
-    out_all = dl / submission.make_filename("gems24", args.hyp, date, cid, "allfinite")
-    submission.write_submission(np.nan_to_num(arr, nan=0.0), TEMPLATE, out_nan, outside="nan")
-    submission.write_submission(np.nan_to_num(arr, nan=0.0), TEMPLATE, out_all, outside="zero")
-    checks = {"nan": submission.check_variants(out_nan, TEMPLATE),
-              "allfinite": submission.check_variants(out_all, TEMPLATE)}
-    for v in checks.values():
-        if not v.get("ok_to_upload", False):
-            raise SystemExit(f"variant check failed: {v['hard_failures']}")
-    summary = args.summary or (f"{args.hyp}: emission from {src.name[:44]}"
-                               + (f"; mirrors {args.mirror_of}" if args.mirror_of else ""))
-    note = submission.make_note(args.hyp, summary, cid)
-    (dl / f"note-{out_nan.stem}.txt").write_text(note + "\n")
-    zp = submission.zip_single(out_nan, dl / (out_nan.stem + ".zip"))
-    j = dl / f"checks-{out_nan.stem}.json"
-    j.write_text(json.dumps({"checks": checks, "note": note, "source": str(src),
-                               "mirror_of": args.mirror_of}, indent=2))
-    gate = {}
-    g24 = paths.EVIDENCE_DIR / "gate24.json"
-    if g24.exists():
-        gate = {k: v.get("mean_dense_dti") for k, v in json.loads(g24.read_text())["results"].items()}
-    reg_p = paths.REGISTRY_PATH
-    reg = json.loads(reg_p.read_text()) if reg_p.exists() else {"submissions": []}
-    reg["submissions"] = [s for s in reg.get("submissions", []) if s.get("file") != out_nan.name]
-    reg["submissions"].append({
-        "family": "gems24", "hypothesis": args.hyp, "content_id": cid, "date": date,
-        "file": out_nan.name, "zip": zp.name, "sha256": hashlib.sha256(out_nan.read_bytes()).hexdigest()[:16],
-        "holdout_gate_dti": gate, "mirror_of": args.mirror_of,
-        "live_dti": None, "slot_spent": False,
+    primary = dl / submission.make_filename("gems24", hyp, date, cid, "nan")
+    fallback = dl / submission.make_filename("gems24", hyp, date, cid, "allfinite")
+    submission.write_submission(arr, TEMPLATE, primary, outside="nan")
+    submission.write_submission(arr, TEMPLATE, fallback, outside="zero")
+    checks = {
+        "nan": submission.check_variants(primary, TEMPLATE),
+        "allfinite": submission.check_variants(fallback, TEMPLATE),
+    }
+    if not all(c["format_valid"] for c in checks.values()):
+        raise SystemExit("Packaged raster failed range/grid/band validation")
+    with rasterio.open(primary) as d:
+        if submission.scored_content_id(d.read(1), fp, known) != cid:
+            raise SystemExit("Packaging changed scored predictions")
+    summary = args.summary or (
+        "H19-5 reference; original DTI 0.1922 reported by owner. Not a new prediction; do not spend a repeat slot."
+        if args.mirror_of
+        else "Held-out candidate with matched training-only nuisance removal and exact-raster re-audit"
+    )
+    note = submission.make_note(hyp, summary, cid, reference=bool(args.mirror_of))
+    note_path = dl / ("note-" + primary.stem + ".txt")
+    note_path.write_text(note + "\n")
+    archive = submission.zip_single(primary)
+    receipt = {
+        "checks": checks,
         "note": note,
-    })
-    reg_p.parent.mkdir(parents=True, exist_ok=True)
-    reg_p.write_text(json.dumps(reg, indent=2) + "\n")
-    print(json.dumps({"tif": str(out_nan.relative_to(ROOT)), "zip": str(zp.relative_to(ROOT)),
-                       "note": note, "gate": gate, "checks_ok": all(c.get("ok_to_upload") for c in checks.values())}, indent=2))
+        "source": str(source.relative_to(ROOT)),
+        "source_sha256": digest,
+        "mirror_of": args.mirror_of,
+        "promotion_gate": gate,
+        "same_scored_content_verified": True,
+    }
+    checks_path = dl / ("checks-" + primary.stem + ".json")
+    checks_path.write_text(json.dumps(receipt, indent=2) + "\n")
+    reg = (
+        json.loads(paths.REGISTRY_PATH.read_text())
+        if paths.REGISTRY_PATH.exists()
+        else {"submissions": []}
+    )
+    reg["submissions"] = [s for s in reg.get("submissions", []) if s.get("file") != primary.name]
+    row = {
+        "family": "gems24",
+        "hypothesis": hyp,
+        "date": date,
+        "content_id": cid,
+        "content_id_algorithm": "scored-float32-v2",
+        "file": primary.name,
+        "fallback": fallback.name,
+        "zip": archive.name,
+        "note_file": note_path.name,
+        "checks_file": checks_path.name,
+        "sha256": sha256_file(primary),
+        "mirror_of": args.mirror_of,
+        "live_dti": None,
+        "original_reported_dti": 0.1922 if args.mirror_of else None,
+        "score_evidence": "owner report" if args.mirror_of else None,
+        "recommended_for_new_slot": not bool(args.mirror_of),
+        "slot_spent": False,
+        "note": note,
+    }
+    reg["submissions"].append(row)
+    paths.REGISTRY_PATH.write_text(json.dumps(reg, indent=2) + "\n")
+    (ROOT / "docs/data/download.json").write_text(json.dumps(row, indent=2) + "\n")
+    print(json.dumps(row, indent=2))
 
 
 if __name__ == "__main__":

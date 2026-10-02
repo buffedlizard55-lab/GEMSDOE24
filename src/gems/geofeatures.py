@@ -19,6 +19,7 @@ data/geofeat/ (float32 GeoTIFFs, footprint grid):
 data/geofeat/featstack_u16.npy (H*W, n_feat) — ~1.2 GB on disk, page-cache
 friendly for our 3 GB RAM; tree models need order, not scale.
 """
+
 from __future__ import annotations
 
 import json
@@ -34,10 +35,24 @@ FEAT_DIR = DATA_DIR / "geofeat"
 STACK_PATH = FEAT_DIR / "featstack_u16.npy"
 FEATLIST_PATH = FEAT_DIR / "featlist.json"
 BAND_ORDER = [
-    "mag_anom", "rtp", "tmi_hg", "geod_2ndinv", "iso_grav_anom_slope", "tc",
-    "geod_shearrate", "geod_dilaterate", "tmi_vg", "deq_n100a15",
-    "iso_grav_anom_vg", "det_elev", "iso_grav_anom", "tmi",
-    "depth_to_base_surf", "ieq_n100a15", "cond_surf", "iso_grav_anom_hg",
+    "mag_anom",
+    "rtp",
+    "tmi_hg",
+    "geod_2ndinv",
+    "iso_grav_anom_slope",
+    "tc",
+    "geod_shearrate",
+    "geod_dilaterate",
+    "tmi_vg",
+    "deq_n100a15",
+    "iso_grav_anom_vg",
+    "det_elev",
+    "iso_grav_anom",
+    "tmi",
+    "depth_to_base_surf",
+    "ieq_n100a15",
+    "cond_surf",
+    "iso_grav_anom_hg",
     "det_elev_slope",
 ]
 SENTINEL = -1e30
@@ -45,11 +60,15 @@ SENTINEL = -1e30
 
 def band_semantics() -> dict:
     return {
-        "bands_source": ("DrivenData #306 competition page/967 band list; order verified against "
-                         "/tmp/gems/GEMSDOE-sparse/data/bridge/TRAINING_FEATURES_BANDS.md; raster assembled by "
-                         "scripts/assemble_features.py from SHA-pinned parts"),
-        "openness": ("O = 1 - mean_j(theta_jk)/(pi/2) averaged per ray over the 16 valid steps, then over rays; "
-                     "theta_jk = atan2(h_endpoint - h_center, 100*j m); 32 azimuths k, edge-clamped; NaN where any endpoint invalid"),
+        "bands_source": (
+            "DrivenData #306 competition page/967 band list; order verified against "
+            "/tmp/gems/GEMSDOE-sparse/data/bridge/TRAINING_FEATURES_BANDS.md; raster assembled by "
+            "scripts/assemble_features.py from SHA-pinned parts"
+        ),
+        "openness": (
+            "O = 1 - mean_j(theta_jk)/(pi/2) averaged per ray over the 16 valid steps, then over rays; "
+            "theta_jk = atan2(h_endpoint - h_center, 100*j m); 32 azimuths k, edge-clamped; NaN where any endpoint invalid"
+        ),
         "asmag": "abs(sum_k O_k * exp(i*2*t_k)) / sum_k |O_k| in [0,1]; aphase = 0.5*atan2 mod 180 deg",
         "slope": "degrees(atan(|grad det_elev| / 100 m)) central differences",
         "imputation": "invalid = non-finite or < -1e30; replaced by median of valid 3x3 neighborhood after 5x5 valid-mean seeding; pixels with no valid 5x5 neighbor stay NaN",
@@ -93,7 +112,7 @@ def build_layers(force: bool = False) -> dict:
     with rasterio.open(src) as s:
         prof = {**s.profile, "count": 1, "dtype": "float32", "nodata": None, "compress": "zstd"}
         H, W = s.height, s.width
-        data = s.read()          # (19,H,W) float32 ~896 MB, held once
+        data = s.read()  # (19,H,W) float32 ~896 MB, held once
     man: dict = {"semantics": band_semantics(), "layers": {}}
     dem_i = None
     for i, name in enumerate(BAND_ORDER):
@@ -103,8 +122,10 @@ def build_layers(force: bool = False) -> dict:
         if name == "det_elev":
             dem_i = ai
         _write_tif(FEAT_DIR / f"band_{name}.tif", ai, prof)
-        man["layers"][f"band_{name}"] = {"valid_frac": round(float(v.mean()), 4),
-                                         "imputed_frac": round(float((~v).mean()), 4)}
+        man["layers"][f"band_{name}"] = {
+            "valid_frac": round(float(v.mean()), 4),
+            "imputed_frac": round(float((~v).mean()), 4),
+        }
         del a
     del data
     gy, gx = np.gradient(dem_i, 100.0)
@@ -112,8 +133,8 @@ def build_layers(force: bool = False) -> dict:
     nray, nstep = 32, 16
     ang = 2 * np.pi * np.arange(nray) / nray
     rows, cols = np.arange(H), np.arange(W)
-    o_sum = np.zeros((H, W), np.float32)      # sum over rays of ray-mean theta
-    n_ok = np.zeros((H, W), np.float32)       # count of valid (ray,step) endpoints
+    o_sum = np.zeros((H, W), np.float32)  # sum over rays of ray-mean theta
+    n_ok = np.zeros((H, W), np.float32)  # count of valid (ray,step) endpoints
     c2 = np.zeros((H, W), np.float32)
     s2 = np.zeros((H, W), np.float32)
     oabs = np.zeros((H, W), np.float32)
@@ -132,7 +153,7 @@ def build_layers(force: bool = False) -> dict:
             th_sum += theta
             th_cnt += good
             ok_k &= good
-        ray_o = th_sum / np.maximum(th_cnt, 1)      # mean elevation angle per pixel
+        ray_o = th_sum / np.maximum(th_cnt, 1)  # mean elevation angle per pixel
         o_sum += np.where(ok_k, ray_o, 0.0)
         c2 += np.where(ok_k, np.cos(2 * ang[k]) * ray_o, 0.0)
         s2 += np.where(ok_k, np.sin(2 * ang[k]) * ray_o, 0.0)
@@ -148,8 +169,11 @@ def build_layers(force: bool = False) -> dict:
     aphase[bad_rays] = np.nan
     for nm, arr in (("openness", openness), ("asmag", asmag), ("aphase", aphase), ("slope", slope)):
         _write_tif(FEAT_DIR / f"{nm}.tif", arr, prof)
-        man["layers"][nm] = {"valid_frac": round(float(np.isfinite(arr).mean()), 4),
-                             "min": float(np.nanmin(arr)), "max": float(np.nanmax(arr))}
+        man["layers"][nm] = {
+            "valid_frac": round(float(np.isfinite(arr).mean()), 4),
+            "min": float(np.nanmin(arr)),
+            "max": float(np.nanmax(arr)),
+        }
     man_p.write_text(json.dumps(man, indent=2))
     return man
 
@@ -180,8 +204,9 @@ def build_stack(force: bool = False) -> Path:
             layers[nm] = d.read(1)
         H, W = layers[nm].shape
         break
-    stack = np.lib.format.open_memmap(STACK_PATH, mode="w+", dtype=np.uint16,
-                                      shape=(H * W, len(feats)))
+    stack = np.lib.format.open_memmap(
+        STACK_PATH, mode="w+", dtype=np.uint16, shape=(H * W, len(feats))
+    )
     for i, nm in enumerate(feats):
         a = layers.pop(nm) if nm in layers else None
         if a is None:
@@ -193,8 +218,11 @@ def build_stack(force: bool = False) -> Path:
         print(f"stack col {i + 1}/{len(feats)} {nm}", flush=True)
     stack.flush()
     del stack
-    FEATLIST_PATH.write_text(json.dumps({"features": feats, "shape": [int(H), int(W)],
-                                          "semantics": band_semantics()}, indent=2))
+    FEATLIST_PATH.write_text(
+        json.dumps(
+            {"features": feats, "shape": [int(H), int(W)], "semantics": band_semantics()}, indent=2
+        )
+    )
     return STACK_PATH
 
 
