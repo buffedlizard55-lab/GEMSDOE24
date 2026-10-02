@@ -79,7 +79,8 @@ def push_files(files: list[Path], msg: str) -> str | None:
 def main() -> None:
     import datetime
     stamp = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
-    files = sorted(x for x in DIR.rglob("*") if x.is_file() and x != LOGP)
+    skip = lambda q: any(part in ("cty",) or part.startswith("tmp_") or part.endswith("_tmp") for part in q.parts)
+    files = sorted(x for x in DIR.rglob("*") if x.is_file() and x != LOGP and not skip(x))
     small = [f for f in files if f.stat().st_size < 4_000_000]
     big = [f for f in files if f.stat().st_size >= 4_000_000]
     log(f"upload start {stamp}: {len(small)} small, {len(big)} large")

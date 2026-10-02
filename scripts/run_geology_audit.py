@@ -49,7 +49,7 @@ def load_env():
     labf = footprint.load_band(paths.DATA_DIR / "bridge" / "labels.tif", 1)          # float, NaN outside footprint
     knownb = footprint.load_band(paths.DATA_DIR / "bridge" / "existing_faults.tif", 1)
     conf = np.load(cf.CONF / "confounds.npz")
-    keys = [k for k in ("acq_window", "acq_block", "d_probe_px", "d_sinter_px", "d_vent_px", "d_well_px", "lidar_cov")
+    keys = [k for k in ("acq_window", "acq_block", "d_road_px", "d_claim_px", "d_probe_px", "d_sinter_px", "d_vent_px", "d_well_px", "lidar_cov")
             if k in conf.files]
     lab_bin = (np.nan_to_num(labf) > 0).astype(np.uint8)
     known = (np.nan_to_num(knownb) > 0)
