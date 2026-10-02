@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-01T23:53:19+00:00",
+  "generated_utc": "2026-10-02T00:14:19+00:00",
   "bbox_wgs84": [
     -120.0024,
     37.3641,
@@ -9,74 +9,807 @@
   "purpose": "confound layers for C2S2 accessibility audit (24GEMSDOE); public-domain sources; research use only",
   "log": [
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_32_roads.zip",
-      "file": "data_external/tiger_ROADS_32.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip",
+      "file": "data_external/tiger_county.zip",
+      "bytes": 83913260,
+      "sha256": "04e668d3502757c837c13444730547cd967f28a2c49aeffb873d1792ab2cb97b",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "tiger_counties_intersecting": [
+        "06003",
+        "06017",
+        "06019",
+        "06027",
+        "06035",
+        "06039",
+        "06043",
+        "06051",
+        "06091",
+        "06109",
+        "32001",
+        "32005",
+        "32007",
+        "32009",
+        "32011",
+        "32013",
+        "32015",
+        "32019",
+        "32021",
+        "32023",
+        "32027",
+        "32029",
+        "32031",
+        "32510"
+      ],
+      "tiger_year": "2024"
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06003_roads.zip",
+      "file": "data_external/tiger_ROADS_06003.zip",
+      "bytes": 264560,
+      "sha256": "015f25b4115d11ef20bda822b43280c43a84905c61ca671a96c631063963039f",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_06003_clipped.geojson",
+      "bytes": 559120,
+      "sha256": "be64683611fc8a1968aae594195b98364af8dda1b7d17929065eb1f2fd367574",
+      "n": 681
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06003_rails.zip",
+      "file": "data_external/tiger_RAILS_06003.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 0
     },
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_32_roads.zip",
-      "file": "data_external/tiger_ROADS_32.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06003_rails.zip",
+      "file": "data_external/tiger_RAILS_06003.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 1
     },
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_32_roads.zip",
-      "file": "data_external/tiger_ROADS_32.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06003_rails.zip",
+      "file": "data_external/tiger_RAILS_06003.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 2
     },
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_32_rails.zip",
-      "file": "data_external/tiger_RAILS_32.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06017_roads.zip",
+      "file": "data_external/tiger_ROADS_06017.zip",
+      "bytes": 5115037,
+      "sha256": "d15844dd9979c0eb8577bc026294514954c520e7647e101f527debdcdd8beee8",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_06017_clipped.geojson",
+      "bytes": 508718,
+      "sha256": "1c5a278d1606bf1929e29dda19939ae9b46996f7d0987e8900b3a5ff8e191a1e",
+      "n": 600
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06017_rails.zip",
+      "file": "data_external/tiger_RAILS_06017.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 0
     },
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_32_rails.zip",
-      "file": "data_external/tiger_RAILS_32.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06017_rails.zip",
+      "file": "data_external/tiger_RAILS_06017.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 1
     },
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_32_rails.zip",
-      "file": "data_external/tiger_RAILS_32.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06017_rails.zip",
+      "file": "data_external/tiger_RAILS_06017.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 2
     },
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_06_roads.zip",
-      "file": "data_external/tiger_ROADS_06.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06019_roads.zip",
+      "file": "data_external/tiger_ROADS_06019.zip",
+      "bytes": 5496210,
+      "sha256": "e62cc564a09ef796e13f5ee27301401afba9dd88a67c51db2f0e0fbd3714c742",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_06019_clipped.geojson",
+      "bytes": 20698,
+      "sha256": "2d44a434fe8e89448d4a2ed92622930b9a7f5afd6c5d0447b1b965df521b3c52",
+      "n": 25
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06019_rails.zip",
+      "file": "data_external/tiger_RAILS_06019.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 0
     },
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_06_roads.zip",
-      "file": "data_external/tiger_ROADS_06.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06019_rails.zip",
+      "file": "data_external/tiger_RAILS_06019.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 1
     },
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/ROADS/tl_2023_06_roads.zip",
-      "file": "data_external/tiger_ROADS_06.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06019_rails.zip",
+      "file": "data_external/tiger_RAILS_06019.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 2
     },
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_06_rails.zip",
-      "file": "data_external/tiger_RAILS_06.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06027_roads.zip",
+      "file": "data_external/tiger_ROADS_06027.zip",
+      "bytes": 3770915,
+      "sha256": "fe7d1b52c303f7a8348328afa6fedfab9fc22685cfe36fc575846beb6297f050",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_06027_clipped.geojson",
+      "bytes": 967309,
+      "sha256": "d2466c6c4506e7c6e0bf0ef26297e19dcab742d6c83703d3009b36ba29cb3d70",
+      "n": 1398
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06027_rails.zip",
+      "file": "data_external/tiger_RAILS_06027.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 0
     },
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_06_rails.zip",
-      "file": "data_external/tiger_RAILS_06.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06027_rails.zip",
+      "file": "data_external/tiger_RAILS_06027.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 1
     },
     {
-      "url": "https://www2.census.gov/geo/tiger/TIGER2023/RAILS/tl_2023_06_rails.zip",
-      "file": "data_external/tiger_RAILS_06.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06027_rails.zip",
+      "file": "data_external/tiger_RAILS_06027.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06035_roads.zip",
+      "file": "data_external/tiger_ROADS_06035.zip",
+      "bytes": 5021322,
+      "sha256": "9ed8ca7f53eacd35ddff587e2bf7ea2f9ac2096b61f9016aa3a49c09c6eeb6c5",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_06035_clipped.geojson",
+      "bytes": 25395,
+      "sha256": "c91181f663a6452345300294f9c0c3b06439785e8f4325bbfe88cc9015550b89",
+      "n": 48
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06035_rails.zip",
+      "file": "data_external/tiger_RAILS_06035.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06035_rails.zip",
+      "file": "data_external/tiger_RAILS_06035.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06035_rails.zip",
+      "file": "data_external/tiger_RAILS_06035.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06039_roads.zip",
+      "file": "data_external/tiger_ROADS_06039.zip",
+      "bytes": 2488330,
+      "sha256": "a54c88a28227a6bfb1f3c731dc05ed2a64a52f56c8d1d8d7916dd9677bfdaea5",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_06039_clipped.geojson",
+      "bytes": 705473,
+      "sha256": "94f5db547b0f29baaea27a134918697b47b6a6f4a1966141de43471b7d404e6d",
+      "n": 803
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06039_rails.zip",
+      "file": "data_external/tiger_RAILS_06039.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06039_rails.zip",
+      "file": "data_external/tiger_RAILS_06039.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06039_rails.zip",
+      "file": "data_external/tiger_RAILS_06039.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06043_roads.zip",
+      "file": "data_external/tiger_ROADS_06043.zip",
+      "bytes": 2361487,
+      "sha256": "487cf2c7b2df78b36e62adb84e5025cee6bf5d4f90a6b9b1ceec09ddecc24948",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_06043_clipped.geojson",
+      "bytes": 3181019,
+      "sha256": "6f885bb5a12cd8f7e363324fecf23af39aa19ed4aa207fb44b610c30f596ea4f",
+      "n": 3061
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06043_rails.zip",
+      "file": "data_external/tiger_RAILS_06043.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06043_rails.zip",
+      "file": "data_external/tiger_RAILS_06043.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06043_rails.zip",
+      "file": "data_external/tiger_RAILS_06043.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06051_roads.zip",
+      "file": "data_external/tiger_ROADS_06051.zip",
+      "bytes": 2180938,
+      "sha256": "dc66809be1f487d8bfc6793807656eac3042881aaa5aea4118f578ad8bc44f19",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_06051_clipped.geojson",
+      "bytes": 5378469,
+      "sha256": "85f7b0da5ba98225765c954e74a58d0275b89f2af8dc74ca9aabf6c1dd4a48c7",
+      "n": 6233
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06051_rails.zip",
+      "file": "data_external/tiger_RAILS_06051.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06051_rails.zip",
+      "file": "data_external/tiger_RAILS_06051.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06051_rails.zip",
+      "file": "data_external/tiger_RAILS_06051.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06091_roads.zip",
+      "file": "data_external/tiger_ROADS_06091.zip",
+      "bytes": 2551420,
+      "sha256": "9536e03340c816166ff3c35f487014dac8ba1b7261efe5b4e4ab191d4a863b58",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_06091_clipped.geojson",
+      "bytes": 8233,
+      "sha256": "3735c6be7eb6076b36c13c2b665249ee2377c5c08f7a6e658a17b8c9e70801fa",
+      "n": 30
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06091_rails.zip",
+      "file": "data_external/tiger_RAILS_06091.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06091_rails.zip",
+      "file": "data_external/tiger_RAILS_06091.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06091_rails.zip",
+      "file": "data_external/tiger_RAILS_06091.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_06109_roads.zip",
+      "file": "data_external/tiger_ROADS_06109.zip",
+      "bytes": 3405916,
+      "sha256": "4db6920eac371a3199f8bdbeb77d4d33443a06b879251901d633d5a50fc7370f",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_06109_clipped.geojson",
+      "bytes": 1651528,
+      "sha256": "ef76125a1efcb3e1cf2531347b90f9bfcb90dabb2efe077e03c41e14dbec0f1c",
+      "n": 891
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06109_rails.zip",
+      "file": "data_external/tiger_RAILS_06109.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06109_rails.zip",
+      "file": "data_external/tiger_RAILS_06109.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_06109_rails.zip",
+      "file": "data_external/tiger_RAILS_06109.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32001_roads.zip",
+      "file": "data_external/tiger_ROADS_32001.zip",
+      "bytes": 2612850,
+      "sha256": "95f33e6c9fa1270c5f177edce043b32b1ad822eb99c6bd3e544c39b39e012bee",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32001_clipped.geojson",
+      "bytes": 6507700,
+      "sha256": "71a2349b4988fdb1df72e8231c8075815a09e53d633bc02d02e859a4c0c88ace",
+      "n": 5729
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32001_rails.zip",
+      "file": "data_external/tiger_RAILS_32001.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32001_rails.zip",
+      "file": "data_external/tiger_RAILS_32001.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32001_rails.zip",
+      "file": "data_external/tiger_RAILS_32001.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32005_roads.zip",
+      "file": "data_external/tiger_ROADS_32005.zip",
+      "bytes": 900681,
+      "sha256": "6ff9518e8a1f43bbb2b589aef33db2febbf7777e912a623d7bfb378ab187084b",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32005_clipped.geojson",
+      "bytes": 2237217,
+      "sha256": "75c11eb6fde7f711788021444b1fe51512d8878974555bba15676951287188db",
+      "n": 3882
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32005_rails.zip",
+      "file": "data_external/tiger_RAILS_32005.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32005_rails.zip",
+      "file": "data_external/tiger_RAILS_32005.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32005_rails.zip",
+      "file": "data_external/tiger_RAILS_32005.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32007_roads.zip",
+      "file": "data_external/tiger_ROADS_32007.zip",
+      "bytes": 9878811,
+      "sha256": "32c31d5b45e34f1f30c092445fbefbe30f8a3de627129e6e454888c01fdd437c",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32007_clipped.geojson",
+      "bytes": 7608,
+      "sha256": "a65ae51b183fa08d0293fbec04472144d4113ba56368ec7cdc8bcd234d096c6a",
+      "n": 13
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32007_rails.zip",
+      "file": "data_external/tiger_RAILS_32007.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32007_rails.zip",
+      "file": "data_external/tiger_RAILS_32007.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32007_rails.zip",
+      "file": "data_external/tiger_RAILS_32007.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32009_roads.zip",
+      "file": "data_external/tiger_ROADS_32009.zip",
+      "bytes": 1738365,
+      "sha256": "5493412f9698e4f94fede706146d4c14424ecc7659b84c3efbace6720ad8324b",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32009_clipped.geojson",
+      "bytes": 3791585,
+      "sha256": "6c9cf2912643bf33f40b9b8af3e3b067330cab545dea4c5f008aed97db9ab753",
+      "n": 3279
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32009_rails.zip",
+      "file": "data_external/tiger_RAILS_32009.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32009_rails.zip",
+      "file": "data_external/tiger_RAILS_32009.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32009_rails.zip",
+      "file": "data_external/tiger_RAILS_32009.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32011_roads.zip",
+      "file": "data_external/tiger_ROADS_32011.zip",
+      "bytes": 1863225,
+      "sha256": "8ef69daeb2fbb49d2570d229ba285cecdd53c2ef027115d4c05535eecc1f37cf",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32011_clipped.geojson",
+      "bytes": 2130414,
+      "sha256": "3e9fb494beba5c3e45e71de5f09ff904bacee35856cf052ed870214b009febcc",
+      "n": 1837
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32011_rails.zip",
+      "file": "data_external/tiger_RAILS_32011.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32011_rails.zip",
+      "file": "data_external/tiger_RAILS_32011.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32011_rails.zip",
+      "file": "data_external/tiger_RAILS_32011.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32013_roads.zip",
+      "file": "data_external/tiger_ROADS_32013.zip",
+      "bytes": 5791363,
+      "sha256": "d27884edf6e39e1602d06991923741ba859816d4da1a88dae778f7de752447aa",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32013_clipped.geojson",
+      "bytes": 377952,
+      "sha256": "c0a57a6ab15b1be5f5a9bcf502bef0087c271f089358b5ea65f83f5abff17061",
+      "n": 414
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32013_rails.zip",
+      "file": "data_external/tiger_RAILS_32013.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32013_rails.zip",
+      "file": "data_external/tiger_RAILS_32013.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32013_rails.zip",
+      "file": "data_external/tiger_RAILS_32013.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32015_roads.zip",
+      "file": "data_external/tiger_ROADS_32015.zip",
+      "bytes": 2357550,
+      "sha256": "8495f83231376fab80555813e89c6497b273b8eebd2e4ca6d47168457a0416db",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32015_clipped.geojson",
+      "bytes": 5670772,
+      "sha256": "214749174160e4acadfd190461b827cc8b9e903888a84170aaff8b98e420c7db",
+      "n": 5422
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32015_rails.zip",
+      "file": "data_external/tiger_RAILS_32015.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32015_rails.zip",
+      "file": "data_external/tiger_RAILS_32015.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32015_rails.zip",
+      "file": "data_external/tiger_RAILS_32015.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32019_roads.zip",
+      "file": "data_external/tiger_ROADS_32019.zip",
+      "bytes": 2259645,
+      "sha256": "32e86fe26301c4cc279fcd4d010d7f3f430892650e97f8c9b5677238aed287f5",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32019_clipped.geojson",
+      "bytes": 5621598,
+      "sha256": "c9c2f5938b375ce3549dee338eb7495cb3a0244c2d8e8d1464050bc3f6ca3cd2",
+      "n": 6234
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32019_rails.zip",
+      "file": "data_external/tiger_RAILS_32019.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32019_rails.zip",
+      "file": "data_external/tiger_RAILS_32019.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32019_rails.zip",
+      "file": "data_external/tiger_RAILS_32019.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32021_roads.zip",
+      "file": "data_external/tiger_ROADS_32021.zip",
+      "bytes": 1525475,
+      "sha256": "31bc35d3ca0f2fdd4d739d3f75bda98c34846edcc2d772c63bdfa961599e8b0d",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32021_clipped.geojson",
+      "bytes": 3803041,
+      "sha256": "a10a5012bffb86f0e1f8a8d1832909a5a8142b1574f2f10ebf267a0a9eacc092",
+      "n": 5538
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32021_rails.zip",
+      "file": "data_external/tiger_RAILS_32021.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32021_rails.zip",
+      "file": "data_external/tiger_RAILS_32021.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32021_rails.zip",
+      "file": "data_external/tiger_RAILS_32021.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32023_roads.zip",
+      "file": "data_external/tiger_ROADS_32023.zip",
+      "bytes": 6371680,
+      "sha256": "9b1136f7d4194d91ce63c4cc1b4bf950cf2c947da7253769121e571ed9482f15",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32023_clipped.geojson",
+      "bytes": 8073366,
+      "sha256": "8380f4866bce6f456330c34771a6acf0779e596b3df0d0a58c5d285fe9504961",
+      "n": 8567
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32023_rails.zip",
+      "file": "data_external/tiger_RAILS_32023.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32023_rails.zip",
+      "file": "data_external/tiger_RAILS_32023.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32023_rails.zip",
+      "file": "data_external/tiger_RAILS_32023.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32027_roads.zip",
+      "file": "data_external/tiger_ROADS_32027.zip",
+      "bytes": 1627573,
+      "sha256": "1c425803f65de8a99d4a942b4639ca2cbd97d566d4f6a21e4fedb3e75f0dea17",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32027_clipped.geojson",
+      "bytes": 3331716,
+      "sha256": "c3af3d73da791a0ccadcb6b6dc6311a84beb5abd3333d739907597f3e999edae",
+      "n": 5366
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32027_rails.zip",
+      "file": "data_external/tiger_RAILS_32027.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32027_rails.zip",
+      "file": "data_external/tiger_RAILS_32027.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32027_rails.zip",
+      "file": "data_external/tiger_RAILS_32027.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32029_roads.zip",
+      "file": "data_external/tiger_ROADS_32029.zip",
+      "bytes": 505940,
+      "sha256": "41dcee568542e810fb9a0b7449dcf336bc095a3ddd0939562783eaa7f1ff0cf0",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32029_clipped.geojson",
+      "bytes": 1292559,
+      "sha256": "77b3121d43b16d71ebcea9b130c7e74dea389cd8ebab24315c7008db373dac28",
+      "n": 1946
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32029_rails.zip",
+      "file": "data_external/tiger_RAILS_32029.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32029_rails.zip",
+      "file": "data_external/tiger_RAILS_32029.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32029_rails.zip",
+      "file": "data_external/tiger_RAILS_32029.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32031_roads.zip",
+      "file": "data_external/tiger_ROADS_32031.zip",
+      "bytes": 3189748,
+      "sha256": "b01672cade64ec3722277bb2fce08029259d69d4fcf85fd51908cb6c754bb7a4",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32031_clipped.geojson",
+      "bytes": 6860183,
+      "sha256": "644b5b977bf422dac57fd5cde503e27a206ed8c63375fcdfd229eca6363ace51",
+      "n": 14419
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32031_rails.zip",
+      "file": "data_external/tiger_RAILS_32031.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32031_rails.zip",
+      "file": "data_external/tiger_RAILS_32031.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32031_rails.zip",
+      "file": "data_external/tiger_RAILS_32031.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 2
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32510_roads.zip",
+      "file": "data_external/tiger_ROADS_32510.zip",
+      "bytes": 344656,
+      "sha256": "592683a9b593d48f79a4a1bfcb3d42a4e582ada69349e075aa6dcc3ba4432722",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "derived": "data_external/tiger_ROADS_32510_clipped.geojson",
+      "bytes": 879468,
+      "sha256": "330a2355a2dd8cda90fbc34a0392a4457934a675eff43d63fc98f2984ae3e3de",
+      "n": 2024
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32510_rails.zip",
+      "file": "data_external/tiger_RAILS_32510.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 0
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32510_rails.zip",
+      "file": "data_external/tiger_RAILS_32510.zip",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "try": 1
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/RAILS/tl_2024_32510_rails.zip",
+      "file": "data_external/tiger_RAILS_32510.zip",
       "error": "<HTTPError 404: 'Not Found'>",
       "try": 2
     },
@@ -84,7 +817,7 @@
       "url": "https://mrdata.usgs.gov/mrds/",
       "file": "data_external/mrds_landing.html",
       "bytes": 20434,
-      "sha256": "62235ec04e287d7d0530a981024a24fab571538eb255b12c9a79a9a9d0e55343",
+      "sha256": "2c9105c8543b5a4163e257321cc73a128609b551cd68feb7a59b541863a80b37",
       "http": 200,
       "try": 0
     },
@@ -98,40 +831,42 @@
     },
     {
       "url": "https://mrdata.usgs.gov/mrds/mrds-csv.zip",
-      "file": "data_external/mrds_mrds-csv_zip",
+      "file": "data_external/mrds_mrds_csv.zip",
       "bytes": 25791223,
       "sha256": "31be4baaa86b082787bc74989146183db21badf7157db39b3f0a6fe0b38a5477",
       "http": 200,
       "try": 0
     },
     {
-      "url": "https://www.sciencebase.gov/catalog/item/get?ids=657e1d85d34e23d3533209f7",
-      "file": "data_external/geodawn_sciencebase.json",
-      "error": "<HTTPError 404: 'Not Found'>",
+      "mrds_selected": "https://mrdata.usgs.gov/mrds/mrds-csv.zip"
+    },
+    {
+      "url": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
+      "file": "data_external/geodawn_sb_item.html",
+      "bytes": 87458,
+      "sha256": "99ade92560271e0c37813bbc9eef8b4f66e6610ab40f93d0cbc623f2a1a0858b",
+      "http": 200,
       "try": 0
     },
     {
-      "url": "https://www.sciencebase.gov/catalog/item/get?ids=657e1d85d34e23d3533209f7",
-      "file": "data_external/geodawn_sciencebase.json",
-      "error": "<HTTPError 404: 'Not Found'>",
-      "try": 1
+      "sb_links": []
     },
     {
-      "url": "https://www.sciencebase.gov/catalog/item/get?ids=657e1d85d34e23d3533209f7",
-      "file": "data_external/geodawn_sciencebase.json",
-      "error": "<HTTPError 404: 'Not Found'>",
-      "try": 2
-    },
-    {
-      "url": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query?where=FTYPE_%20IN%20%28%27Well%20Constrained%27%2C%27Moderately%20Constrained%27%2C%27Inferred%27%29&geometry=-120.0024,37.3641,-116.1415,40.7247&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=true&f=geojson&resultRecordCount=2000",
-      "file": "data_external/qfaults_v2_in_footprint.geojson",
+      "url": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query?where=FTYPE_+IN+%28%27Well+Constrained%27%2C%27Moderately+Constrained%27%2C%27Inferred%27%29&geometry=-120.0024%2C37.3641%2C-116.1415%2C40.7247&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=%2A&returnGeometry=true&f=json&resultRecordCount=500&resultOffset=0",
+      "file": "data_external/_nbmg_page_0.json",
       "bytes": 76,
       "sha256": "80945055b6a4a6bee0ec96a1da4e1ce0e0618b95656ca2aa28130a84bfbd8df8",
       "http": 200,
       "try": 0
     },
     {
-      "qfaults_features": 0
+      "nbmg_error": "Pagination is not supported."
+    },
+    {
+      "derived": "data_external/qfaults_v2_in_footprint.json",
+      "bytes": 288,
+      "sha256": "5974d480de7f8c2db40c129ac4746b8364bbe6a18c10a6f4140987e9b834fb53",
+      "n": 0
     }
   ]
 }

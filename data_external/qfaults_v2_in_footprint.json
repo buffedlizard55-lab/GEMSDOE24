@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [], "meta": {"source": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query", "where": "FTYPE_ IN ('Well Constrained','Moderately Constrained','Inferred')", "bbox": [-120.0024, 37.3641, -116.1415, 40.7247]}}
