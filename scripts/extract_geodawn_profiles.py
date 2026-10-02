@@ -235,8 +235,27 @@ SB_FILE = "https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7
 
 
 def candidate_urls(rec: dict) -> list[str]:
-    """Official URL forms for one ScienceBase file record (no third-party mirrors)."""
-    urls = [rec.get("url"), rec.get("downloadUri"), f"{SB_FILE}?name={rec['name']}"]
+    """Official URL forms for one ScienceBase file record (no third-party mirrors).
+
+    Older records carry a ``/catalog/file/get/...?f=__disk__...`` URL. Newer, large records are
+    S3-backed (``bucket``/``key``, ``checksum: null``) and their ``url``/``downloadUri`` point at the
+    ScienceBase *Manager* web page (HTML), so the public S3 object URL forms are tried first for them.
+    """
+    manager = lambda u: bool(u) and "/manager/" in u  # noqa: E731
+    urls = []
+    if rec.get("url") and not manager(rec["url"]):
+        urls.append(rec["url"])
+    if rec.get("downloadUri") and not manager(rec["downloadUri"]):
+        urls.append(rec["downloadUri"])
+    bucket, key = rec.get("bucket"), rec.get("key")
+    if bucket and key:
+        urls += [
+            f"https://{bucket}.s3.amazonaws.com/{key}",
+            f"https://s3.amazonaws.com/{bucket}/{key}",
+            f"https://{bucket}.s3.us-west-2.amazonaws.com/{key}",
+        ]
+    urls += [f"{SB_FILE}?name={rec['name']}"]
+    urls += [u for u in (rec.get("url"), rec.get("downloadUri")) if manager(u)]
     seen, ordered = set(), []
     for u in urls:
         if u and u not in seen:
@@ -341,18 +360,33 @@ def main() -> None:
         for area, name in WANTED.items():
             rec = files.get(name)
             if rec is None:
-                raise SystemExit(f"Official file not attached to ScienceBase item: {name}")
+                receipt.setdefault("failed", []).append(
+                    {"area": area, "file": name, "error": "not attached"}
+                )
+                continue
             print(
                 "record",
-                json.dumps({k: rec.get(k) for k in ("name", "size", "checksum", "url")}),
+                json.dumps(
+                    {k: rec.get(k) for k in ("name", "size", "checksum", "bucket", "key", "url")}
+                ),
                 flush=True,
             )
             dest = args.workdir / name
             t0 = time.time()
-            got = download(rec, dest)
+            try:
+                got = download(rec, dest)
+            except Exception as e:  # noqa: BLE001 - recorded; other outputs must still be committed
+                receipt.setdefault("failed", []).append(
+                    {"area": area, "file": name, "error": str(e)[:1500]}
+                )
+                print("DOWNLOAD FAILED", name, str(e)[:600], flush=True)
+                continue
             print("downloaded", name, got["bytes"], f"{time.time() - t0:.0f}s", flush=True)
             checksum = rec.get("checksum") or {}
             jobs.append((area, dest, checksum.get("value"), {**rec, "download": got}))
+    if not jobs:
+        (args.out / "geodawn_profile_receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
+        raise SystemExit("No official profile archive could be downloaded; see receipt 'failed'")
     all_summary, all_sample = [], []
     for area, path, expected_md5, rec in jobs:
         md5, sha = md5_sha256(path)
