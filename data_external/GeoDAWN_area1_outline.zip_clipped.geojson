@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"geom": {"type": "Polygon", "coordinates": []}, "props": {"NAME": "Area1_FINAL_Outline", "LAYER": "Unknown Area Type", "PERIMETER": "188.27 km", "ENCLOSED_A": "2411.7 sq km"}}], "source": "GeoDAWN_area1_outline.zip"}

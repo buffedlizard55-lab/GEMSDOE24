@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"geom": {"type": "Polygon", "coordinates": []}, "props": {"LAYER": "SURVEY_AREA", "GM_TYPE": "Unknown Area Type", "ID": 1, "TYPE": "SURVEY_AREA", "CORNERS": 58, "AREA_NAME": "SPR_Area_2_FINAL"}}], "source": "GeoDAWN_area2_outline.zip"}

@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-02T00:14:19+00:00",
+  "generated_utc": "2026-10-02T00:20:58+00:00",
   "bbox_wgs84": [
     -120.0024,
     37.3641,
@@ -817,7 +817,7 @@
       "url": "https://mrdata.usgs.gov/mrds/",
       "file": "data_external/mrds_landing.html",
       "bytes": 20434,
-      "sha256": "2c9105c8543b5a4163e257321cc73a128609b551cd68feb7a59b541863a80b37",
+      "sha256": "4b214b476147b15029ebe3d5792d8e4fc7ac5bd59864c651ca62e48d34ebd560",
       "http": 200,
       "try": 0
     },
@@ -844,29 +844,128 @@
       "url": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
       "file": "data_external/geodawn_sb_item.html",
       "bytes": 87458,
-      "sha256": "99ade92560271e0c37813bbc9eef8b4f66e6610ab40f93d0cbc623f2a1a0858b",
+      "sha256": "ebd782b8aef650e0d49824af528a02f1f86057ac00ceaaa0f855b59a45214904",
       "http": 200,
       "try": 0
     },
     {
-      "sb_links": []
+      "sb_links": [
+        "22103_mag_a1_csv.zip",
+        "22103_ternary_a1_pdf.zip",
+        "22103_ternary_a2_pdf.zip",
+        "GeoDAWN_data_extent.zip",
+        "22103_area1_grids.zip",
+        "22103_area2_grids.zip",
+        "22103_mag_a1_gdb.zip",
+        "22103_spec_a1_gdb.zip",
+        "area1_flight_path.zip",
+        "area2_flight_path.zip",
+        "GeoDAWN_area1_outline.zip",
+        "GeoDAWN_area2_outline.zip",
+        "Figure1_index.PNG",
+        "Figure2_tmi.PNG",
+        "Figure3_tc.PNG",
+        "GeoDAWN Metadata FINAL.csv",
+        "Index.PNG",
+        "22103_area1_tiffs.zip",
+        "22103_area2_tiffs.zip",
+        "22103_ternary_a1_map.zip",
+        "22103_ternary_a2_map.zip",
+        "GeoDAWN_NV_WestCentral_Geophysical_2020_D21_Report.pdf",
+        "GeoDAWN_ReadMe.pdf"
+      ]
     },
     {
-      "url": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query?where=FTYPE_+IN+%28%27Well+Constrained%27%2C%27Moderately+Constrained%27%2C%27Inferred%27%29&geometry=-120.0024%2C37.3641%2C-116.1415%2C40.7247&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=%2A&returnGeometry=true&f=json&resultRecordCount=500&resultOffset=0",
-      "file": "data_external/_nbmg_page_0.json",
-      "bytes": 76,
-      "sha256": "80945055b6a4a6bee0ec96a1da4e1ce0e0618b95656ca2aa28130a84bfbd8df8",
+      "url": "https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7?f=__disk__09%2Ff1%2Fa5%2F09f1a519280068416e999b331e3596b7e38e8a93",
+      "file": "data_external/GeoDAWN_area1_outline.zip",
+      "bytes": 1190,
+      "sha256": "6a63cccdd7ebe51bc009eca5cc7ac83c959bf4876385813e73cebe442f850131",
       "http": 200,
       "try": 0
     },
     {
-      "nbmg_error": "Pagination is not supported."
+      "outline_members": [
+        "GeoDAWN_area1_outline.dbf",
+        "GeoDAWN_area1_outline.prj",
+        "GeoDAWN_area1_outline.shp",
+        "GeoDAWN_area1_outline.shx"
+      ],
+      "name": "GeoDAWN_area1_outline.zip"
+    },
+    {
+      "derived": "data_external/GeoDAWN_area1_outline.zip_clipped.geojson",
+      "bytes": 260,
+      "sha256": "22ecf0076bc44f9d3548ffedcd43bcf41be99cfeb9a5290bcb7cb993a2da5b38",
+      "n": 1
+    },
+    {
+      "url": "https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7?f=__disk__30%2Fc6%2Ff0%2F30c6f052098f41629e63c31e0f9526d9765f4258",
+      "file": "data_external/GeoDAWN_area2_outline.zip",
+      "bytes": 1497,
+      "sha256": "20916d6c2f74039254dc8d134cb79d380aee5ab66e5de89209ab4a8f4e0d2c27",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "outline_members": [
+        "GeoDAWN_area2_outline.dbf",
+        "GeoDAWN_area2_outline.prj",
+        "GeoDAWN_area2_outline.shp",
+        "GeoDAWN_area2_outline.shx"
+      ],
+      "name": "GeoDAWN_area2_outline.zip"
+    },
+    {
+      "derived": "data_external/GeoDAWN_area2_outline.zip_clipped.geojson",
+      "bytes": 279,
+      "sha256": "686e7dce184f5e6ccd52713e45a0df0f30ea5ff047de1692343bc8dca48ff80d",
+      "n": 1
+    },
+    {
+      "url": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query?where=FTYPE_+IN+%28%27Well+Constrained%27%2C%27Moderately+Constrained%27%2C%27Inferred%27%29&geometry=-120.0024%2C37.3641%2C-116.1415%2C40.7247&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=%2A&returnGeometry=true&f=json",
+      "file": "data_external/_nbmg_tile_0_0.json",
+      "bytes": 4892856,
+      "sha256": "1c8f7b27f792ea8519fe0ad8b50758d50c1244de089d074dcda204dd91765657",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "url": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query?where=FTYPE_+IN+%28%27Well+Constrained%27%2C%27Moderately+Constrained%27%2C%27Inferred%27%29&geometry=-120.0024%2C37.3641%2C-118.07194999999999%2C39.044399999999996&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=%2A&returnGeometry=true&f=json",
+      "file": "data_external/_nbmg_tile_1_1.json",
+      "bytes": 2067146,
+      "sha256": "2f7462e936eaf1f95cb1c5e4b5bf74c208070944958bf90acb9e00923feb5106",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "url": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query?where=FTYPE_+IN+%28%27Well+Constrained%27%2C%27Moderately+Constrained%27%2C%27Inferred%27%29&geometry=-118.07194999999999%2C37.3641%2C-116.1415%2C39.044399999999996&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=%2A&returnGeometry=true&f=json",
+      "file": "data_external/_nbmg_tile_1_1.json",
+      "bytes": 1203935,
+      "sha256": "88e64e2369cca02d9196e5c529199e183449bebb55146905344080cea0d4e381",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "url": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query?where=FTYPE_+IN+%28%27Well+Constrained%27%2C%27Moderately+Constrained%27%2C%27Inferred%27%29&geometry=-120.0024%2C39.044399999999996%2C-118.07194999999999%2C40.7247&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=%2A&returnGeometry=true&f=json",
+      "file": "data_external/_nbmg_tile_1_1.json",
+      "bytes": 1557760,
+      "sha256": "5dbd67e437766f52c43359790b28f5b6de0d18c7151162131f31f5afaa13ee6c",
+      "http": 200,
+      "try": 0
+    },
+    {
+      "url": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query?where=FTYPE_+IN+%28%27Well+Constrained%27%2C%27Moderately+Constrained%27%2C%27Inferred%27%29&geometry=-118.07194999999999%2C39.044399999999996%2C-116.1415%2C40.7247&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=%2A&returnGeometry=true&f=json",
+      "file": "data_external/_nbmg_tile_1_1.json",
+      "bytes": 653521,
+      "sha256": "42c2a2b8d64fa0a651d9cc536cf9e43f57ce014910a56127b4f1857afd6995d0",
+      "http": 200,
+      "try": 0
     },
     {
       "derived": "data_external/qfaults_v2_in_footprint.json",
-      "bytes": 288,
-      "sha256": "5974d480de7f8c2db40c129ac4746b8364bbe6a18c10a6f4140987e9b834fb53",
-      "n": 0
+      "bytes": 5821,
+      "sha256": "00fad4b03cab657dab00de35e33e6f750f133f249c14b00370e1efa23f2506c6",
+      "n": 1
     }
   ]
 }
