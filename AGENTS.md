@@ -8,6 +8,12 @@ Own the Outcome, without promising a score or prize.
   `HEAD`.** On 2026-10-02 the remote session branch already held 12 commits (dotted-H19 validation,
   official road run, derived blocks, score ledger) that the freshly created checkout did not contain.
   Merge them (never force-push) before doing any work, then read `knowledge/05_*` and `knowledge/06_*`.
+- **Second command: `gh pr list --state open` and `git ls-remote --heads origin 'arena/*'`.** A sibling Arena session of the same
+  account can run in parallel from the same base commit: on 2026-10-02 branch `arena/01a0fd2e-gemsdoe24` opened PR #7 minutes after
+  this repository's PRs #5/#6 merged, and it conflicts in 20 files. Read any open PR before starting, do not duplicate its
+  experiments, never push to a sibling's branch, and re-fetch `origin/main` before opening your own PR. If a sibling PR conflicts
+  with `main`, report it (`knowledge/08_parallel_session_pr7_2026-10-02.md`); never resolve it by overwriting `main`'s README, site,
+  audit or compliance files, and never merge a PR whose base predates `main`'s compliance fix without rebasing it first.
 - Use the active pipeline and evidence; legacy scripts/reports are historical,
   not promotion authority.
 - Preregister hypotheses before implementation (commit the preregistration *before* the run). Do not

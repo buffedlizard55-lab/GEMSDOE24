@@ -13,7 +13,7 @@ is not a score forecast or a guarantee of winning.
 
 **Start here every session, in this order:** (1) this README — status, charter and
 the owner's brief at the bottom; (2) [`knowledge/owner_brief_verbatim.md`](knowledge/owner_brief_verbatim.md);
-(3) [`AGENTS.md`](AGENTS.md) (and [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md) for the prize narrative); (4) `git fetch origin` and compare with the session branch;
+(3) [`AGENTS.md`](AGENTS.md) (and [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md) for the prize narrative); (4) `git fetch origin`, compare with the session branch, **and list open PRs / `arena/*` branches** (`gh pr list --state open`) — a sibling session may be working from the same base (see [`knowledge/08_parallel_session_pr7_2026-10-02.md`](knowledge/08_parallel_session_pr7_2026-10-02.md));
 (5) [`knowledge/06_synthesis_2026-10-02_session2.md`](knowledge/06_synthesis_2026-10-02_session2.md) and
 [`knowledge/05_findings_and_hypotheses_2026-10-02.md`](knowledge/05_findings_and_hypotheses_2026-10-02.md);
 (6) `python -m pytest -q`.
@@ -235,7 +235,7 @@ full pinned H19-5 hash. Nothing in these commands uploads to DrivenData or spend
 | `inputs/`, `inputs/calibration/` | pinned scored reference rasters; calibration rasters copied unchanged from the owner's repos |
 | `data/external/audit_sources/` | official USGS documents/figure, buffered road raster + receipt, claim-distance bridge, derived block raster + receipt |
 | `docs/` | Pages site, one-click download, executive guide, timestamped feed |
-| `knowledge/` | brief, preregistrations, findings, verified sources, synthesis |
+| `knowledge/` | brief, preregistrations, findings, verified sources, synthesis, parallel-session (PR #7) reconciliation |
 
 ## Publication and automation
 
@@ -253,13 +253,18 @@ full pinned H19-5 hash. Nothing in these commands uploads to DrivenData or spend
 
 1. **Owner decision + upload (the only step that produces new information):** primary first, alternate in the same week if
    the exception is accepted; record both with `scripts/record_live_score.py`. Re-fit τ and the retention model from the two scores.
-2. Test **H25-2** (strike-compatibility prior; no new data) next, then **H25-3** (scarp profile template on the processed 1 m
-   tiles) and **H25-6** (map-scale correction corridor; needs a per-pixel map-scale raster from GDR 1391 via CI).
-3. Combine dotting with a *retrained, nuisance-residualized* detector only if it first beats the matched baseline.
-4. If the owner supplies the S3-hosted GeoDAWN profile archives, replace the derived block raster with the official
+2. **Reconcile open PR #7** (a parallel session's H24-3A / road-source work, opened from the pre-merge base; conflicts in 20
+   files; first screen would regress to the reference file). Do not merge it as is; rebase onto `main`, port only its new
+   work, re-run the audit with an S1750-free road raster — plan and cross-checks in
+   [`knowledge/08_parallel_session_pr7_2026-10-02.md`](knowledge/08_parallel_session_pr7_2026-10-02.md).
+3. Test **H25-2** (strike-compatibility prior; no new data) next, then **H25-3** (scarp profile template on the processed 1 m
+   tiles) and **H25-6** (map-scale correction corridor; needs a per-pixel map-scale raster from GDR 1391 via CI). H24-3A has
+   a reported negative result in PR #7 (not reproduced here); H24-4A is untested.
+4. Combine dotting with a *retrained, nuisance-residualized* detector only if it first beats the matched baseline.
+5. If the owner supplies the S3-hosted GeoDAWN profile archives, replace the derived block raster with the official
    flight-number mapping.
-5. A geologist-labelled scarp set (allowed if labels are saved) is the most direct supervised signal not yet used.
-6. Keep brief-only scores flagged until the owner re-checks the submissions page.
+6. A geologist-labelled scarp set (allowed if labels are saved) is the most direct supervised signal not yet used.
+7. Keep brief-only scores flagged until the owner re-checks the submissions page.
 
 ## Owner brief (verbatim) — standing starting point, read every session
 

@@ -119,7 +119,14 @@
       "kind": "Official anonymous download via GitHub Actions; receipt committed",
       "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/",
       "verified": "Whole county files for the buffered window, complete_county_check=true, 1,141,630 seed pixels (data/external/audit_sources/tiger_road_receipt.json). Supersedes the tightly clipped owner mirror.",
-      "limit": "Nearest Census road/vehicular-trail segment on a 100 m raster; not a complete pedestrian-path or travel-time model."
+      "limit": "Nearest Census TIGER Road/Path feature on a 100 m raster. The raster includes 183 S1750 features ('Internal U.S. Census Bureau use'), alleys, parking-lot roads and some pedestrian/bike/bridle paths, so it is not a vehicle-only or travel-time model. Effect of the S1750 features measured as immaterial (IR-ROAD-S1750)."
+    },
+    {
+      "name": "Census TIGER/Line 2023 Technical Documentation, Appendix E (MTFCC definitions)",
+      "kind": "Official source read 2026-10-02",
+      "url": "https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2023/TGRSHP2023_TechDoc_E.pdf",
+      "verified": "Row S1750: 'Internal U.S. Census Bureau use'. S1710 Walkway/Pedestrian Trail, S1720 Stairway, S1730 Alley, S1780 Parking Lot Road, S1820 Bike Path or Trail and S1830 Bridle Path are also listed as Road/Path Features.",
+      "limit": "2023 edition read in full; the 2024 edition that matches the downloaded counties was not read (2019 and 2020 editions show the same S1750 wording in search excerpts only)."
     },
     {
       "name": "Prize rules: submissions, selection, AI disclosure",
