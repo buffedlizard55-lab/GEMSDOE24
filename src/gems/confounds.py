@@ -54,6 +54,7 @@ from scipy.ndimage import distance_transform_edt
 from .footprint import HEIGHT, WIDTH, load_footprint
 from .paths import DATA_DIR, ROOT
 
+ROOT = DATA_DIR.parent
 EXT = DATA_DIR / "external"
 CONF = DATA_DIR / "confounds"
 
@@ -226,17 +227,59 @@ def build_all(out_dir: Path | None = None, *, force: bool = False) -> dict:
     fp = load_footprint()
     prov: dict = {"generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "inputs": {}}
 
-    # 1. acquisition window
+    # 1. acquisition window — official ScienceBase survey-outline polygons when
+    #    present (data_external branch artifacts copied to data/external), else
+    #    the verified 5GEMSDOE rectangle approximation.
     r0, r1 = area1_rows()
     c0, c1 = area1_cols()
-    win = np.full((HEIGHT, WIDTH), 2, dtype=np.uint8)
+    win = np.full((HEIGHT, WIDTH), 3, dtype=np.uint8)   # 3 = inside fp but outside both areas
     win[~fp] = 0
-    win[max(r0, 0) : min(r1, HEIGHT), max(c0, 0) : min(c1, WIDTH)] = 1
-    prov["acq_window"] = {
-        "semantics": "0 outside GeoDAWN, 1 Area1 (200 m lines), 2 Area2 (400 m lines/4 km ties)",
-        "area1_grid_window_rows_cols": [r0, r1, c0, c1],
-        "source": "5GEMSDOE/data/reconstructed/provenance.json (source grid transforms); re-derived here from UTM window math",
-    }
+    outlines = {}
+    for nm in ("GeoDAWN_area1_outline.zip", "GeoDAWN_area2_outline.zip"):
+        for base in (DATA_DIR / "external", ROOT / "data_external"):
+            if (base / nm).exists():
+                outlines[nm] = base / nm
+                break
+    if "GeoDAWN_area1_outline.zip" in outlines and "GeoDAWN_area2_outline.zip" in outlines:
+        import zipfile
+        import shapefile
+        from rasterio.features import rasterize
+
+        for nm, val in (("GeoDAWN_area1_outline.zip", 1), ("GeoDAWN_area2_outline.zip", 2)):
+            with zipfile.ZipFile(outlines[nm]) as z:
+                stem = next(n for n in z.namelist() if n.endswith(".shp"))[:-4]
+                for ext in (".shp", ".shx", ".dbf", ".prj"):
+                    (out_dir / f"_tmp_{Path(stem).name}{ext}").write_bytes(z.read(stem + ext))
+            rr = shapefile.Reader(str(out_dir / f"_tmp_{Path(stem).name}.shp"))
+            feats = []
+            for sr in rr.shapes():
+                g = __import__("shapely.geometry", fromlist=["shape"]).shape(sr.__geo_interface__)
+                def px(ring):
+                    xs_, ys_ = ring.xy
+                    return [[(x - GRID_X0) / GRID_RES, (GRID_Y0 - y) / GRID_RES] for x, y in zip(xs_, ys_)]
+                if g.geom_type == "Polygon":
+                    feats.append(({"type": "Polygon", "coordinates": [px(g.exterior)] + [px(i) for i in g.interiors]}, 1))
+                elif g.geom_type == "MultiPolygon":
+                    for pg in g.geoms:
+                        feats.append(({"type": "Polygon", "coordinates": [px(pg.exterior)] + [px(i) for i in pg.interiors]}, 1))
+            m = rasterize(feats, out_shape=(HEIGHT, WIDTH), all_touched=True).astype(bool)
+            win[m & fp] = val
+            for ext in (".shp", ".shx", ".dbf", ".prj"):
+                (out_dir / f"_tmp_{Path(stem).name}{ext}").unlink(missing_ok=True)
+        prov["acq_window"] = {
+            "semantics": "0 outside fp, 1 Area1 polygon (200 m lines), 2 Area2 polygon (400 m/4 km), 3 inside fp but outside both official outlines",
+            "source": "ScienceBase official outline shapefiles (GeoDAWN_area1/2_outline.zip, 1.19/1.50 KB, item 657e1d85d34e23d3533209f7) fetched via public-layers CI; Area1 bbox cross-checks 5GEMSDOE reconstruction within 200 m",
+        }
+    else:
+        win = np.full((HEIGHT, WIDTH), 2, dtype=np.uint8)
+        win[~fp] = 0
+        win[max(r0, 0): min(r1, HEIGHT), max(c0, 0): min(c1, WIDTH)] = 1
+        prov["acq_window"] = {
+            "semantics": "0 outside GeoDAWN, 1 Area1 (200 m lines), 2 Area2 (400 m lines/4 km ties)",
+            "area1_grid_window_rows_cols": [r0, r1, c0, c1],
+            "source": "5GEMSDOE/data/reconstructed/provenance.json (rectangle approximation; outlines zip not fetched yet)",
+        }
+
 
     # 2. empirical block boundaries inside Area 2
     blocks = _detect_block_boundaries(EXT / "geodawn_rad_u8.tif", DATA_DIR / "bridge" / "labels.tif")
@@ -320,7 +363,7 @@ def build_all(out_dir: Path | None = None, *, force: bool = False) -> dict:
     }
 
     # 5. optional operator-provided road/claim distances
-    for opt in ("d_road_px", "d_claim_px"):
+    for opt in ("d_road_px", "d_claim_px", "d_wc_px", "d_inf_px"):
         p = out_dir / f"{opt}.tif"
         if p.exists():
             with rasterio.open(p) as s:

@@ -3,13 +3,18 @@
 
   data/confounds/d_road_px.tif    distance (100 m cells) to the nearest TIGER
                                   road/trail segment
-  data/confounds/d_claim_px.tif  distance to the nearest USGS MRDS record
+  data/confounds/d_claim_px.tif  distance to the nearest historic mining claim record
+                                  (USGS MRDS)
 
 Sources: the CI-as-proxy fetcher's ``public-layers`` branch (data_external/):
 Census TIGER2024 ROADS county files clipped to the GeoDAWN bbox, and
 https://mrdata.usgs.gov/mrds/mrds-csv.zip (public domain, USGS). Reprojection
 UTM 11N via pyproj. Distances are exact to ~half a cell; adequate for a
 distribution-shift audit (we test ordering, not metric accuracy).
+
+Also builds d_wc_px / d_inf_px — distance to Well-Constrained vs
+Inferred INGENIOUS Qfaults traces (server-native NAD83
+Albers(-117) geometry from data_external/qfaults_v2_in_footprint.json).
 """
 from __future__ import annotations
 
@@ -73,10 +78,25 @@ def _densify_ll(geom: dict, step_deg: float = 0.0009) -> list[tuple[float, float
     return out
 
 
+def _save_dist(seeds: np.ndarray, key: str) -> dict:
+    from scipy.ndimage import distance_transform_edt
+
+    fp = footprint.load_footprint()
+    d = distance_transform_edt(~seeds).astype(np.float32)
+    d = np.where(fp, d, np.nan).astype(np.float32)
+    p = OUT / f"{key}.tif"
+    prof = dict(driver="GTiff", width=fp.shape[1], height=fp.shape[0], count=1, dtype="float32",
+                crs=footprint.CRS, transform=footprint.TRANSFORM, compress="zstd", nodata=np.nan)
+    with rasterio.open(p, "w", **prof) as dst:
+        dst.write(d, 1)
+    return {"file": str(p), "seed_px": int(seeds.sum()), "min": float(np.nanmin(d)),
+            "max": round(float(np.nanmax(d)), 3), "mean_px": round(float(np.nanmean(d)), 2)}
+
+
 def build_roads() -> dict:
     feats = []
-    for p in sorted(EXT.glob("tiger_ROADS_*_clipped.geojson")):
-        feats.extend(json.loads(p.read_text())["features"])
+    for f_ in sorted(EXT.glob("tiger_ROADS_*_clipped.geojson")):
+        feats.extend(json.loads(f_.read_text())["features"])
     pts = []
     for f in feats:
         for x, y in _densify_ll(f["geom"]):
@@ -84,18 +104,9 @@ def build_roads() -> dict:
     pts_a = np.asarray(pts, dtype=np.float64)
     m = (pts_a[:, 0] > -121.5) & (pts_a[:, 0] < -114.5) & (pts_a[:, 1] > 36.0) & (pts_a[:, 1] < 42.0)
     seeds = _rasterize_points(pts_a[m])
-    from scipy.ndimage import distance_transform_edt
-
-    d = distance_transform_edt(~seeds).astype(np.float32)
-    fp = footprint.load_footprint()
-    d = np.where(fp, d, np.nan).astype(np.float32)
-    p = OUT / "d_road_px.tif"
-    prof = dict(driver="GTiff", width=d.shape[1], height=d.shape[0], count=1, dtype="float32",
-                crs=footprint.CRS, transform=footprint.TRANSFORM, compress="zstd", nodata=np.nan)
-    with rasterio.open(p, "w", **prof) as dst:
-        dst.write(d, 1)
-    return {"file": str(p), "n_source_features": len(feats), "n_seed_px": int(seeds.sum()),
-             "min": float(np.nanmin(d)), "max": float(np.nanmax(d)), "mean": round(float(np.nanmean(d)), 3)}
+    out = _save_dist(seeds, "d_road_px")
+    out["n_source_features"] = len(feats)
+    return out
 
 
 def build_claims() -> dict:
@@ -123,23 +134,52 @@ def build_claims() -> dict:
                     pts.append((lon, lat))
     pts_a = np.asarray(pts, dtype=np.float64)
     seeds = _rasterize_points(pts_a)
-    from scipy.ndimage import distance_transform_edt
+    out = _save_dist(seeds, "d_claim_px")
+    out["n_records_in_window"] = int(len(pts_a))
+    return out
 
-    d = distance_transform_edt(~seeds).astype(np.float32)
+
+def build_fault_confidence() -> dict:
+    """Distance to Well-Constrained / Inferred+Moderate INGENIOUS Qfaults traces
+    (NBMG ArcGIS REST, fetched via the public-layers CI branch; server-native
+    NAD83 Albers(-117) geometry). These encode *mapping accessibility*:
+    near-WC = the mappers could see it; far-WC/near-Inf = covered terrain where
+    the catalogue thins out."""
+    src = EXT / "qfaults_v2_in_footprint.json"
+    if not src.exists():
+        return {"skipped": "qfaults_v2_in_footprint.json not present"}
+    d = json.loads(src.read_text())
+    albers = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-117 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs"
+    t1 = Transformer.from_proj(albers, "EPSG:32611", always_xy=True)
     fp = footprint.load_footprint()
-    d = np.where(fp, d, np.nan).astype(np.float32)
-    p = OUT / "d_claim_px.tif"
-    prof = dict(driver="GTiff", width=d.shape[1], height=d.shape[0], count=1, dtype="float32",
-                crs=footprint.CRS, transform=footprint.TRANSFORM, compress="zstd", nodata=np.nan)
-    with rasterio.open(p, "w", **prof) as dst:
-        dst.write(d, 1)
-    return {"file": str(p), "n_records_in_window": len(pts_a), "n_seed_px": int(seeds.sum()),
-            "min": float(np.nanmin(d)), "max": float(np.nanmax(d)), "mean": round(float(np.nanmean(d)), 3)}
+    H, W = fp.shape
+    out = {}
+    for cls, key in (("Well Constrained", "d_wc_px"), ("Inferred", "d_inf_px")):
+        pts = []
+        for f in d["features"]:
+            ft = f["attributes"].get("FTYPE_")
+            if ft != cls:
+                continue
+            for path_ in f["geometry"]["paths"]:
+                for x, y in path_:
+                    pts.append((x, y))
+        a = np.asarray(pts, float)
+        x, y = t1.transform(a[:, 0], a[:, 1])
+        row, col = cf._utm_to_grid(x, y)
+        ok = (row >= 0) & (row < H) & (col >= 0) & (col < W)
+        seeds = np.zeros(fp.shape, bool)
+        seeds[row[ok], col[ok]] = True
+        seeds &= fp
+        r = _save_dist(seeds, key)
+        r["class"] = cls
+        r["n_points"] = int(len(pts))
+        out[key] = r
+    return out
 
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    rep = {"roads": build_roads(), "claims": build_claims()}
+    rep = {"roads": build_roads(), "claims": build_claims(), "fault_confidence": build_fault_confidence()}
     (OUT / "access_layers.json").write_text(json.dumps(rep, indent=2))
     print(json.dumps(rep, indent=2))
     print("now re-run: python scripts/build_confounds.py --force  (confounds.npz picks up d_road_px/d_claim_px)")

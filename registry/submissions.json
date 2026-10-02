@@ -1,0 +1,25 @@
+{
+  "submissions": [
+    {
+      "family": "gems24",
+      "hypothesis": "h24-0-mirror-h19-5-group-best",
+      "content_id": "e27054cf",
+      "date": "20261002",
+      "file": "gems24-h24-0-mirror-h19-5-group-best-20261002-e27054cf-nan.tif",
+      "zip": "gems24-h24-0-mirror-h19-5-group-best-20261002-e27054cf-nan.zip",
+      "sha256": "ec1f9b56b83ce33c",
+      "holdout_gate_dti": {
+        "h19-4-raw": 0.16977,
+        "h19-4-resid": 0.16984,
+        "h19-5-raw": 0.16739,
+        "h19-5-resid": 0.16809,
+        "h16-1-raw": 0.16887,
+        "h16-1-resid": 0.16867
+      },
+      "mirror_of": "19GEMSDOE:submission-h19-5",
+      "live_dti": null,
+      "slot_spent": false,
+      "note": "24GEMSDOE h24-0-mirror-h19-5-group-best | H24-0: byte-identical mirror of group best h19-5 (content-verified vs 19 registry, cid e27054cf) - format hardening, zero  | id e27054cf | not yet live-scored"
+    }
+  ]
+}

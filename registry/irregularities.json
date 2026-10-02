@@ -1,0 +1,57 @@
+{
+  "irregularities": [
+    {
+      "id": "IR-1",
+      "finding": "data/bridge/labels.tif and existing_faults.tif are pixel-identical (60,988 px each, 100% overlap) — the provided 'training labels' are the existing catalogue itself; 'new fault' truth exists only on the private test side. All local gating therefore simulates gaps with fold splits (gems/holdout.py).",
+      "evidence": "measured this session; cross-checks organizers' wording on page/967 that labels are mapped faults that 'may contain inaccurate data'",
+      "impact": "structural — determines evaluation protocol",
+      "status": "verified"
+    },
+    {
+      "id": "IR-2",
+      "finding": "Census TIGER2024 publishes no per-county RAILS layer for our 22 counties (all tl_2024_*_rails.zip -> 404); rails/trails are folded into ROADS under MTFCC S1400/S1500. Our road-distance confound therefore includes rails+trails by construction.",
+      "evidence": "https://www2.census.gov/geo/tiger/TIGER2024/ (listing parsed by CI); data_external/fetch_manifest.json on branch public-layers",
+      "impact": "minor — trail access still covered",
+      "status": "verified"
+    },
+    {
+      "id": "IR-3",
+      "finding": "NBMG Qfaults ArcGIS REST server rejects pagination ('Pagination is not supported.') and outFields=OBJECTID (OID field is FID); geometry returns in NAD83 Albers(-117) regardless of inSR. Worked around with recursive bbox tiling + maxAllowableOffset=200 m; fetched trace counts (739/351/89 in-bbox) match the published census exactly.",
+      "evidence": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query (live checks 2026-10-01)",
+      "impact": "resolved",
+      "status": "mitigated"
+    },
+    {
+      "id": "IR-4",
+      "finding": "GeoDAWN Area-2 outline covers 100% of the competition footprint outside Area-1 (no footprint pixel lies outside both official polygons): acquisition-domain contrasts within the footprint are Area1 vs Area2 only.",
+      "evidence": "rasterization of official GeoDAWN_area2_outline.zip (ScienceBase item 657e1d85d34e23d3533209f7, CC0 1.0); data/confounds/confounds_provenance.json",
+      "impact": "simplifies the window confound; the four contractor blocks remain seam-approximated (block boundaries are not in the release)",
+      "status": "verified"
+    },
+    {
+      "id": "IR-5",
+      "finding": "The C2S2 0.956 AUC for 'accessibility explains the catalogue' was dominated by a catalogue-geometry leak: leave-one-out removal of distance-to-Well-Constrained-trace collapses it to 0.495 (chance). Headline audit numbers therefore also report the clean variant (labels 0.570, predictions 0.611; both within torus-shift-null noise).",
+      "evidence": "evidence/geoaudit.json — views V1clean_*, drop1-d_wc_px, V1_shift",
+      "impact": "major interpretive finding — reported, not hidden",
+      "status": "verified"
+    },
+    {
+      "id": "IR-6",
+      "finding": "The Arena sandbox was reset mid-project (working tree restored from the pushed branch; untracked regenerable caches rebuilt; 419 MB feature raster re-assembled from git-pinned parts and re-verified at sha256 4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5). Also: sandbox GitHub token expired once mid-session (401s) — pushes must retry after refresh.",
+      "evidence": "git log arena/01a0f9ce-gemsdoe24 165abcc..HEAD; scripts/verify_data.py run post-restore",
+      "impact": "none on results — deterministic reruns reproduce measured numbers",
+      "status": "verified"
+    }
+  ],
+  "sources_verified": {
+    "drivendata_306_rules": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+    "scoring_forum_11516": "https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/2",
+    "geodawn_release": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
+    "usgs_geodawn_page": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+    "ingenuous_qfaults_rest": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0",
+    "census_tiger": "https://www2.census.gov/geo/tiger/TIGER2024/",
+    "usgs_mrds": "https://mrdata.usgs.gov/mrds/",
+    "c2s2_paper": "https://arxiv.org/abs/1610.06539",
+    "shift_null_ecology": "https://doi.org/10.1111/ecog.06258"
+  }
+}

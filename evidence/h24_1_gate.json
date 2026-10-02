@@ -1,0 +1,130 @@
+{
+  "generated_utc": "2026-10-01",
+  "features_wc": 26973,
+  "features_other": 5616,
+  "smoothing_sigma_px": 20,
+  "results": {
+    "h19-4-raw": {
+      "mean_dense_dti": 0.16977,
+      "mean_sparse_dti": 0.06731,
+      "fold_dense": [
+        0.1675,
+        0.19232,
+        0.12386,
+        0.19538
+      ],
+      "fold_sparse": [
+        0.06949,
+        0.06304,
+        0.05393,
+        0.08277
+      ]
+    },
+    "h19-4-h241-lam0.15": {
+      "mean_dense_dti": 0.16964,
+      "mean_sparse_dti": 0.06726,
+      "fold_dense": [
+        0.16808,
+        0.19195,
+        0.12344,
+        0.19509
+      ],
+      "fold_sparse": [
+        0.06973,
+        0.06291,
+        0.05368,
+        0.08271
+      ],
+      "fold_delta_dense": [
+        0.00058,
+        -0.00037,
+        -0.00042,
+        -0.00029
+      ]
+    },
+    "h19-4-h241-lam0.3": {
+      "mean_dense_dti": 0.1697,
+      "mean_sparse_dti": 0.06723,
+      "fold_dense": [
+        0.16764,
+        0.19218,
+        0.12378,
+        0.19522
+      ],
+      "fold_sparse": [
+        0.06906,
+        0.06306,
+        0.05364,
+        0.08314
+      ],
+      "fold_delta_dense": [
+        0.00014,
+        -0.00014,
+        -8e-05,
+        -0.00016
+      ],
+      "raster": "out/h19-4-h241-confidence-contrast.tif"
+    },
+    "h19-5-raw": {
+      "mean_dense_dti": 0.16739,
+      "mean_sparse_dti": 0.06609,
+      "fold_dense": [
+        0.16445,
+        0.19297,
+        0.12143,
+        0.19069
+      ],
+      "fold_sparse": [
+        0.06802,
+        0.06249,
+        0.05285,
+        0.081
+      ]
+    },
+    "h19-5-h241-lam0.15": {
+      "mean_dense_dti": 0.16805,
+      "mean_sparse_dti": 0.06664,
+      "fold_dense": [
+        0.16593,
+        0.19416,
+        0.12143,
+        0.19069
+      ],
+      "fold_sparse": [
+        0.06876,
+        0.06396,
+        0.05285,
+        0.081
+      ],
+      "fold_delta_dense": [
+        0.00148,
+        0.00119,
+        0.0,
+        0.0
+      ]
+    },
+    "h19-5-h241-lam0.3": {
+      "mean_dense_dti": 0.16784,
+      "mean_sparse_dti": 0.06631,
+      "fold_dense": [
+        0.16545,
+        0.1938,
+        0.12143,
+        0.19069
+      ],
+      "fold_sparse": [
+        0.0682,
+        0.06319,
+        0.05285,
+        0.081
+      ],
+      "fold_delta_dense": [
+        0.001,
+        0.00083,
+        0.0,
+        0.0
+      ],
+      "raster": "out/h19-5-h241-confidence-contrast.tif"
+    }
+  }
+}

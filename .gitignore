@@ -7,3 +7,12 @@ data/confounds/*.npz
 data/confounds/Paleo_geothermal_final.csv
 data/bridge/manifest.json.bak
 .pytest_cache/
+data_external/
+out/
+logs/
+data/geofeat/
+data/dem10/
+data/catalogue_ext/
+data/lidar_inv/
+data/bridge/example_submission.tif
+data/confounds/*.tif
