@@ -55,8 +55,8 @@
       "name": "GeoDAWN contractor report",
       "kind": "Official source read / preserved PDF",
       "url": "https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7?f=__disk__2b%2F67%2Fb4%2F2b67b4e0d88525acc1ae32cf17b8fd001395bf52",
-      "verified": "Winnemucca, Fallon, Hawthorne and Tonopah; two resolution/drape regimes; Tonopah helicopter acquisition.",
-      "limit": "Figure3 names blocks, but verified numeric boundaries remain unavailable; nearest airport is not membership."
+      "verified": "Winnemucca, Fallon, Hawthorne and Tonopah; two resolution/drape regimes; Tonopah helicopter acquisition. Figure 3 'The Four GeoDAWN Acquisition Blocks'; base stations (UTM): Winnemucca 432658E 4528343N, Fallon 349803E 4373452N, Hawthorne 357908E 4266948N, Tonopah 491299E 4213070N; tie lines extend >= 2 km into the adjacent block.",
+      "limit": "Figure 3 names the blocks, but official numeric boundaries are not published; base stations are not boundaries; tie lines overlap >= 2 km so membership near a seam is ambiguous. This repository's block raster is derived and audited, not official."
     },
     {
       "id": "BLM-CLOSED",
@@ -65,14 +65,6 @@
       "url": "https://gis.blm.gov/nlsdb/rest/services/Mining_Claims/MiningClaims/MapServer/2?f=pjson",
       "verified": "702,794 case IDs checked; 197,346 unique quality-filtered legal-land geometries; 20 km seed buffer.",
       "limit": "PLSS approximations, not stakes/workings. Numeric <=10 quality policy is ours, not a claim of perfect precision."
-    },
-    {
-      "id": "CENSUS",
-      "name": "TIGER/Line 2024 roads",
-      "kind": "Official definition; owner-mirror bytes currently used",
-      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/",
-      "verified": "Real road/vehicular-trail geometries and pinned mirror integrity; S codes used, rails excluded.",
-      "limit": "Legacy mirror was clipped tightly to a geographic window: nearest-road certification at boundaries is incomplete. Official buffered acquisition is implemented but not run without GitHub reconnection."
     },
     {
       "id": "MTFCC",
@@ -123,22 +115,7 @@
       "limit": "Complete raw coverage/byte receipts remain deferred; no claimed tested drainage-offset model."
     },
     {
-      "id": "RULES",
-      "name": "Prize rules",
-      "kind": "Official source read",
-      "url": "https://docs.nlr.gov/docs/fy26osti/96647.pdf",
-      "verified": "Submission limits, final selection, licensed external-data and AI/code/narrative disclosure requirements.",
-      "limit": "Do not evade quotas via repos/accounts; rules/platform deadline discrepancy requires organizer confirmation."
-    },
-    {
-      "name": "GeoDAWN contractor report (block bases)",
-      "kind": "Official report preserved in data/external/audit_sources",
-      "url": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
-      "verified": "Figure 3 'The Four GeoDAWN Acquisition Blocks'; base stations (UTM): Winnemucca 432658E 4528343N, Fallon 349803E 4373452N, Hawthorne 357908E 4266948N, Tonopah 491299E 4213070N; tie lines extend >= 2 km into the adjacent block.",
-      "limit": "Base stations are not block boundaries. Membership within ~2 km of a seam is inherently ambiguous."
-    },
-    {
-      "name": "TIGER/Line 2024 roads (official buffered run)",
+      "name": "TIGER/Line 2024 roads",
       "kind": "Official anonymous download via GitHub Actions; receipt committed",
       "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/",
       "verified": "Whole county files for the buffered window, complete_county_check=true, 1,141,630 seed pixels (data/external/audit_sources/tiger_road_receipt.json). Supersedes the tightly clipped owner mirror.",
