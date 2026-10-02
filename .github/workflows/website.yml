@@ -1,0 +1,49 @@
+name: Website and source snapshots
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: gems-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Refresh anonymous official-source snapshots (retain stale markers on failure)
+        run: python scripts/refresh_source_feed.py
+      - name: Build honest static site from recorded evidence
+        run: python scripts/build_site.py
+      - name: Stage only the small public website, never raw training data
+        run: |
+          mkdir -p .site
+          cp index.html executive-summary.html .site/
+          cp -R docs .site/docs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages artifact (no generated-feed Git commits)
+        id: deployment
+        uses: actions/deploy-pages@v4

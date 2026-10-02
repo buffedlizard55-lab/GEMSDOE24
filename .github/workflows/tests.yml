@@ -1,0 +1,24 @@
+name: Reliability checks
+on:
+  push:
+    branches: ['arena/01a0fa76-gemsdoe24', main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: pip install --no-deps -e .
+      - run: python -m pytest -q
+      - run: ruff check src scripts tests
+      - run: ruff format --check src scripts tests
+      - run: node --check docs/assets/app.js
+      - run: python scripts/refresh_source_feed.py --offline

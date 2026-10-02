@@ -6,15 +6,15 @@ Large downloads/caches stay ignored. Small bridge files already shipped here are
 verified before use. Organizer authentication is NOT bypassed: the owner supplied
 these mirrors. A bridge hash is an integrity receipt, not organizer certification.
 """
+
 from __future__ import annotations
 
 import argparse
-from concurrent.futures import ThreadPoolExecutor
-import hashlib
 import json
-from pathlib import Path
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -29,8 +29,17 @@ def gh_bytes(repo: str, path: str, ref: str, dest: Path) -> Path:
     tmp = dest.with_suffix(dest.suffix + ".partial")
     try:
         with tmp.open("wb") as out:
-            subprocess.run(["gh", "api", f"repos/{repo}/contents/{path}?ref={ref}",
-                            "-H", "Accept: application/vnd.github.raw"], stdout=out, check=True)
+            subprocess.run(
+                [
+                    "gh",
+                    "api",
+                    f"repos/{repo}/contents/{path}?ref={ref}",
+                    "-H",
+                    "Accept: application/vnd.github.raw",
+                ],
+                stdout=out,
+                check=True,
+            )
         tmp.replace(dest)
     finally:
         tmp.unlink(missing_ok=True)
@@ -39,7 +48,12 @@ def gh_bytes(repo: str, path: str, ref: str, dest: Path) -> Path:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--access-mirrors", action="store_true", help="also restore TIGER roads (not claims)")
+    ap.add_argument(
+        "--access-mirrors",
+        "--roads",
+        action="store_true",
+        help="also restore TIGER roads (not claims)",
+    )
     args = ap.parse_args()
     manifest = json.loads((ROOT / "data" / "manifest.json").read_text())["files"]
     checked = []
@@ -53,11 +67,13 @@ def main() -> None:
     if not features.exists() or sha256_file(features) != CORE_HASH:
         parts = ROOT / "data" / "raw" / "bridge_parts"
         names = [f"gems-geodawn-numerical-features.tif.part-{i:03}" for i in range(5)]
+
         def get(name: str) -> Path:
             p = parts / name
             if not p.exists():
                 gh_bytes("buffedlizard55-lab/GEMSDOE", f"data/bridge/{name}", CORE_REF, p)
             return p
+
         with ThreadPoolExecutor(max_workers=3) as ex:
             downloaded = list(ex.map(get, names))
         tmp = features.with_suffix(".partial")
@@ -73,26 +89,42 @@ def main() -> None:
         # Assembly is cheap to repeat, avoid retaining duplicate 419 MB parts.
         for p in downloaded:
             p.unlink()
-    checked.append({"file": "training_features.tif", "sha256": sha256_file(features),
-                    "bytes": features.stat().st_size, "verified": True,
-                    "mirror_ref": CORE_REF, "provenance_status": "owner-supplied bridge, not organizer-authenticated"})
+    checked.append(
+        {
+            "file": "training_features.tif",
+            "sha256": sha256_file(features),
+            "bytes": features.stat().st_size,
+            "verified": True,
+            "mirror_ref": CORE_REF,
+            "provenance_status": "owner-supplied bridge, not organizer-authenticated",
+        }
+    )
     if args.access_mirrors:
-        repo = "buffedlizard55-lab/GEMSDOE24"
-        # Resolve once, then pin all files to that immutable commit.
-        ref = subprocess.check_output(["gh", "api", f"repos/{repo}/commits/public-layers",
-                                       "--jq", ".sha"], text=True).strip()
-        tree = json.loads(subprocess.check_output(["gh", "api", f"repos/{repo}/git/trees/{ref}?recursive=1"], text=True))
-        paths = [r["path"] for r in tree["tree"] if r["path"].endswith("_clipped.geojson")
-                 and "/tiger_ROADS_" in r["path"]]
-        def restore(path: str) -> dict:
-            p = ROOT / "data" / "raw" / "access_mirrors" / Path(path).name
-            if not p.exists():
+        road_manifest = json.loads((ROOT / "data/road_mirror_manifest.json").read_text())
+        repo, ref = road_manifest["repo"], road_manifest["ref"]
+
+        def restore(row: dict) -> dict:
+            path = row["path"]
+            p = ROOT / "data/raw/access_mirrors" / Path(path).name
+            if not p.exists() or sha256_file(p) != row["sha256"]:
                 gh_bytes(repo, path, ref, p)
-            return {"file": str(p.relative_to(ROOT)), "sha256": sha256_file(p), "mirror_ref": ref}
+            actual = sha256_file(p)
+            if actual != row["sha256"]:
+                raise SystemExit(f"Pinned TIGER mirror integrity mismatch: {p.name}")
+            return {
+                "file": str(p.relative_to(ROOT)),
+                "sha256": actual,
+                "mirror_ref": ref,
+                "remote_path": path,
+            }
+
         with ThreadPoolExecutor(max_workers=4) as ex:
-            checked.extend(ex.map(restore, paths))
-    receipt = {"files": checked, "integrity_only": True,
-               "warning": "Hash-pinned mirrors do not certify organizer provenance. No mining-claim or four-block proxy is silently substituted."}
+            checked.extend(ex.map(restore, road_manifest["files"]))
+    receipt = {
+        "files": checked,
+        "integrity_only": True,
+        "warning": "Hash-pinned mirrors do not certify organizer provenance. No mining-claim or four-block proxy is silently substituted.",
+    }
     (ROOT / "evidence" / "data_restore.json").write_text(json.dumps(receipt, indent=2) + "\n")
     print(json.dumps(receipt, indent=2))
 

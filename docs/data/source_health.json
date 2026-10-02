@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "manual_source_read",
+  "checked_utc": "2026-10-02",
+  "last_success_utc": "2026-10-02",
+  "verification_method": "Official leaderboard text retrieved with the page-reading tool; exact check time and raw HTML hash not recorded",
+  "leaderboard": {
+    "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+    "participant": "DARD",
+    "best_score": 0.3195,
+    "submissions": 12,
+    "account_artifact_mapping_verified": false
+  },
+  "updates": [
+    {
+      "title": "Official leader snapshot: DARD 0.3195",
+      "kind": "Official page read, not a permanent result",
+      "checked_utc": "2026-10-02",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"
+    },
+    {
+      "title": "Known-fault masking is pixel-exact, not a 300 m exclusion buffer",
+      "kind": "Organizer staff clarification",
+      "checked_utc": "2026-10-02",
+      "url": "https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4"
+    },
+    {
+      "title": "Hidden test fault sources and types are not disclosed",
+      "kind": "Organizer staff clarification",
+      "checked_utc": "2026-10-02",
+      "url": "https://community.drivendata.org/t/how-were-the-new-test-faults-identified-data-sources-and-fault-types/11527/7"
+    },
+    {
+      "title": "GeoDAWN: two resolution areas are not four operational acquisition blocks",
+      "kind": "Official USGS report and download receipt",
+      "checked_utc": "2026-10-02",
+      "url": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7"
+    }
+  ],
+  "errors": [],
+  "deployment_verified": false,
+  "note": "The scheduled workflow refreshes snapshots after authenticated publication. A local file does not prove public Pages deployment. Unknown artifact scores are never inferred from account scores."
+}

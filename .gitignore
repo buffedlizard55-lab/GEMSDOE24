@@ -22,3 +22,6 @@ data/research/
 data/raw/
 data/access/
 data/prepared/
+
+*.egg-info/
+.site/

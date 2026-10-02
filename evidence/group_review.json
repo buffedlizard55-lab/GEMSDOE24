@@ -1,0 +1,433 @@
+{
+  "generated_utc": "2026-10-02T02:50:19.202627+00:00",
+  "rows": [
+    {
+      "repo": "GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "c0c06ac82178f26b94fce3397036ef8f12a2f3a0",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/GEMSDOE/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE/blob/c0c06ac82178f26b94fce3397036ef8f12a2f3a0/docs/index.html",
+      "html_sha256": "2ba64d9fe90df1b28e404313e13c753c4e3b3808b194f7b2ed1edf082e61c224",
+      "title": "Overview \u2014 GEMS Prize",
+      "download_links": [],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "6GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "e2fe3f41c6f5dd2dcb2fc91958ee67698f114ada",
+      "source_path": "index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/6GEMSDOE/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/6GEMSDOE/blob/e2fe3f41c6f5dd2dcb2fc91958ee67698f114ada/index.html",
+      "html_sha256": "00e2bba50de91d0d0fcb4335f5d7eaa0a39253fbbc3c4c65f6edaae348858df8",
+      "title": "GEMS Prize \u2014 6GEMSDOE entry",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/6GEMSDOE/downloads/gems6_hgb88-topk03_33cec71ff0.tif"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "GEMSDOE3",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "512371de5d30162813803cdccbd4931ceeb065c7",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE3/blob/512371de5d30162813803cdccbd4931ceeb065c7/docs/index.html",
+      "html_sha256": "14c4a97c893346de9ce5d60fc5667dd42e566762cb576a2b9cc3309cf883127c",
+      "title": "Mission control \u00b7 GEMSDOE3",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/coverage-v3-fusion-20260925T054015Z-3ccf68834a.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/coverage-v3-fusion-20260925T054015Z-3ccf68834a.zip",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/coverage-v3-ml-20260925T054017Z-92d5062aea.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/coverage-v3-ml-20260925T054017Z-92d5062aea.zip",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/coverage-v3-wide-20260925T054019Z-0ac095a7ed.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/coverage-v3-wide-20260925T054019Z-0ac095a7ed.zip",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/pindrop-v4-discovery-20260925T152423Z-37f9d5b855.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/pindrop-v4-discovery-20260925T152423Z-37f9d5b855.zip",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/pindrop-v4-nodes-20260925T152420Z-f347b70daa.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/pindrop-v4-nodes-20260925T152420Z-f347b70daa.zip",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/pindrop-v4-ridge-20260925T152422Z-4e03fc9705.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/pindrop-v4-ridge-20260925T152422Z-4e03fc9705.zip",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/riftline-context-distance-20260925T011817Z-7b6010637a.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE3/docs/downloads/riftline-context-distance-20260925T011817Z-7b6010637a.zip"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "GEMSDOE2",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "47ca6957575628697e30f092491cbaa717178fd9",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/GEMSDOE2/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE2/blob/47ca6957575628697e30f092491cbaa717178fd9/docs/index.html",
+      "html_sha256": "ffcb67257033cdc3f169dc0141eed3845b2d7cb1b1ae3d44a6c770cca3b7b6f9",
+      "title": "Overview \u2014 GEMS Prize",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/GEMSDOE2/docs/gemsdoe2-dual-family-union-f68e590f.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE2/docs/gemsdoe2-dual-family-union-f68e590f.zip",
+        "https://buffedlizard55-lab.github.io/GEMSDOE2/docs/gemsdoe2-extension-arm-ad5ba911.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE2/docs/gemsdoe2-precision-arm-8bce5dfe.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE2/docs/gemsdoe2-recall-arm-7f00890a.tif"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "GEMSDOE4",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "198a121aef68c3fb59f1d08a4e58d04109446c8e",
+      "source_path": "index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/GEMSDOE4/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE4/blob/198a121aef68c3fb59f1d08a4e58d04109446c8e/index.html",
+      "html_sha256": "204b917f6d17598a6b60758c6c744bca302f03df6cd2aac43edb7a3a91cafb21",
+      "title": "GEMS Prize \u2014 working notes",
+      "download_links": [],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "5GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "652558861cd3ebe307cf14f20cd5da0334f8aa7e",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/5GEMSDOE/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/5GEMSDOE/blob/652558861cd3ebe307cf14f20cd5da0334f8aa7e/docs/index.html",
+      "html_sha256": "17c1b1909a163b0b899cc0854332ef20227293007f513c7013b312af57759d59",
+      "title": "Overview \u2014 GEMS Prize",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/5GEMSDOE/docs/downloads/candidate_s5_catalogue_hedge.tif"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "7GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "9d8b5d55b674629f7b0e0e486269917c0fa2dade",
+      "source_path": "index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/7GEMSDOE/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/7GEMSDOE/blob/9d8b5d55b674629f7b0e0e486269917c0fa2dade/index.html",
+      "html_sha256": "683a79ead4825b1344261d32835bece9586d2a012de456b57522bed04ec3c389",
+      "title": "Executive summary \u00b7 7GEMSDOE",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/7GEMSDOE/downloads/gems7-halo15-gbt-v1-90fb7dc0fc1f.tif",
+        "https://buffedlizard55-lab.github.io/7GEMSDOE/downloads/gems7-halo15-gbt-v1-90fb7dc0fc1f.zip",
+        "https://buffedlizard55-lab.github.io/7GEMSDOE/downloads/gems7-lidarscarp-ridge-top2pct-36c3a3f341c8.tif",
+        "https://buffedlizard55-lab.github.io/7GEMSDOE/downloads/gems7-lidarscarp-ridge-top2pct-36c3a3f341c8.zip",
+        "https://buffedlizard55-lab.github.io/7GEMSDOE/downloads/gems7-strike30x3-v2-2b06d45c5b57.tif",
+        "https://buffedlizard55-lab.github.io/7GEMSDOE/downloads/gems7-strike30x3-v2-2b06d45c5b57.zip",
+        "https://buffedlizard55-lab.github.io/7GEMSDOE/external/geodawn_rad/geodawn_rad_u8.tif",
+        "https://buffedlizard55-lab.github.io/7GEMSDOE/external/qfaults/qfaults_prior_u8.tif"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "8GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "e24abefab237115d67e0afb2acfde01c6304783f",
+      "source_path": "index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/8GEMSDOE/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/8GEMSDOE/blob/e24abefab237115d67e0afb2acfde01c6304783f/index.html",
+      "html_sha256": "6b582d88f4775885c3227a38a130f1855fda11fa4abff1e41aa827fbae837fe3",
+      "title": "8GEMSDOE \u2014 Apex Geothermal Fault Discovery & Submission Hub",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/8GEMSDOE/downloads/8GEMSDOE_Hedge-v2_submission.tif",
+        "https://buffedlizard55-lab.github.io/8GEMSDOE/downloads/8GEMSDOE_Hedge-v2_submission.zip"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "GEMSDOE9",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "1fdfddcefd291889e618adf8c42922e4893d514d",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/GEMSDOE9/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE9/blob/1fdfddcefd291889e618adf8c42922e4893d514d/docs/index.html",
+      "html_sha256": "80152b097978f37716cd25cc4555415a634b782c75e7a4c338fbb9697fcc1235",
+      "title": "Overview \u2014 GEMSDOE9",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/GEMSDOE9/docs/downloads/gemsdoe9-PLACEHOLDER-2314b599.tif"
+      ],
+      "status": "source_read",
+      "consulted_files": [
+        {
+          "path": "src/gems/hypotheses.py",
+          "sha256": "e78efd5617596ca29ad7df28362537c79ad74edc1338891b2c664458d3a6acfa"
+        }
+      ]
+    },
+    {
+      "repo": "11GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "7d8133c69cb39363f394fc2d4a6d4919112c4270",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/11GEMSDOE/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/11GEMSDOE/blob/7d8133c69cb39363f394fc2d4a6d4919112c4270/docs/index.html",
+      "html_sha256": "51b6c7835de767199d578f75108d058da983c468d1eecde3bbfb51d556cfaaeb",
+      "title": "11GEMSDOE \u00b7 GEMS Prize submission",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/11GEMSDOE/docs/downloads/gems-structural-area06-v1.tif"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "12GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "840133740fa2f04a5ef95f0291fdea2b1d41826d",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/12GEMSDOE/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/12GEMSDOE/blob/840133740fa2f04a5ef95f0291fdea2b1d41826d/docs/index.html",
+      "html_sha256": "5c81e5eb170742cad32dfcfb2f1848409f07ae6052434b16b374566ef26421d7",
+      "title": "12GEMSDOE \u00b7 Geothermal Fault Discovery Workbench",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/12GEMSDOE/docs/downloads/12GEMSDOE_r5-nms3-trace_055e9aac96b8.tif",
+        "https://buffedlizard55-lab.github.io/12GEMSDOE/docs/downloads/12GEMSDOE_r6-nms3-h28-texture_8721329b55c7.tif",
+        "https://buffedlizard55-lab.github.io/12GEMSDOE/docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62.tif",
+        "https://buffedlizard55-lab.github.io/12GEMSDOE/docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62.zip",
+        "https://buffedlizard55-lab.github.io/12GEMSDOE/docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62_allfinite.tif"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "15GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "8c94b0f83f22999032ba8a29c523af7ae6cf5e76",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/15GEMSDOE/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/15GEMSDOE/blob/8c94b0f83f22999032ba8a29c523af7ae6cf5e76/docs/index.html",
+      "html_sha256": "fe3d4ec826c4487963e250dc4683b3dd152eead9d120c0324e8a85c00379875d",
+      "title": "15GEMSDOE - 15GEMSDOE",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/15GEMSDOE/docs/downloads/gems-tso1-20260929T005627Z-conj_alteration_mag.tif"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "14GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "88dd365dc7469c316f0f7c3bdd18fd90c5825a07",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/14GEMSDOE/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/14GEMSDOE/blob/88dd365dc7469c316f0f7c3bdd18fd90c5825a07/docs/index.html",
+      "html_sha256": "48a21661ea11bf7390a4772a0a36333bd8fd7a0b13b8ba5f305c504b809a94d4",
+      "title": "14GEMSDOE \u2014 GEMS Prize submission builder",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/14GEMSDOE/docs/downloads/GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0_site_e96e942f.tif",
+        "https://buffedlizard55-lab.github.io/14GEMSDOE/docs/downloads/GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0_site_e96e942f.tif.sha256"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "17GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "6fc71d19d49dca4960d5434bd81b6dd06fcc030a",
+      "source_path": "index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/17GEMSDOE/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/17GEMSDOE/blob/6fc71d19d49dca4960d5434bd81b6dd06fcc030a/index.html",
+      "html_sha256": "2877195baf38e77071d2063ffd3025774a99d4d7efddb07c52490339d7bd3c61",
+      "title": "17GEMSDOE \u00b7 download the submission",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/17GEMSDOE/docs/downloads/17GEMSDOE_A-verified-01563-support_c5ea501e_20260930T021105Z.tif"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "18GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "809482f4634e49eb552547554f0682cdcbb4d467",
+      "source_path": "index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/18GEMSDOE/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/18GEMSDOE/blob/809482f4634e49eb552547554f0682cdcbb4d467/index.html",
+      "html_sha256": "1b25679c19ba426771c2372199815cd272ed0191dcf9b42a29852288796d2bfd",
+      "title": "Home \u2014 18GEMSDOE",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/18GEMSDOE/docs/downloads/18GEMSDOE_H19-C_20260930T212401Z_c11e495e.tif"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "19GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "a3aca62fdb2be428f4245e22570cbc54082b2c15",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/19GEMSDOE/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/19GEMSDOE/blob/a3aca62fdb2be428f4245e22570cbc54082b2c15/docs/index.html",
+      "html_sha256": "3f21b6482db107aaa8490e463db86d6c015d27f626873edbfd3eb0a5c6769c42",
+      "title": "19GEMSDOE Submission Hub & Executive Summary \u00b7 19GEMSDOE",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/19GEMSDOE/docs/downloads/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-allfinite.tif",
+        "https://buffedlizard55-lab.github.io/19GEMSDOE/docs/downloads/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+        "https://buffedlizard55-lab.github.io/19GEMSDOE/docs/downloads/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.zip",
+        "https://buffedlizard55-lab.github.io/19GEMSDOE/docs/downloads/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-allfinite.tif",
+        "https://buffedlizard55-lab.github.io/19GEMSDOE/docs/downloads/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+        "https://buffedlizard55-lab.github.io/19GEMSDOE/docs/downloads/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.zip"
+      ],
+      "status": "source_read",
+      "consulted_files": [
+        {
+          "path": "docs/research/hypothesis_register.md",
+          "sha256": "b30e3b65189de63f6ca401f80af916e87dad52650c30f78e89d789c0284697bd"
+        },
+        {
+          "path": "registry/submissions.json",
+          "sha256": "24185726e15cbc294076667d563f0d784444e6c3333ece8d0f09eb97707094fd"
+        },
+        {
+          "path": "scripts/evaluate_h19_and_build_submissions.py",
+          "sha256": "def1ee96cecf43905c742910b20d002d139818212b65b690a69ae002e97e7bc1"
+        },
+        {
+          "path": "src/gems/hypotheses.py",
+          "sha256": "70e8a0761bb9f891d89c611d1b6255f759027966b8f8bc96ffc679fc27a6b0ea"
+        }
+      ]
+    },
+    {
+      "repo": "GEMSDOE10",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "4d08f51aa59bf57b4041474ff1463c9e737c8090",
+      "source_path": "index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/GEMSDOE10/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE10/blob/4d08f51aa59bf57b4041474ff1463c9e737c8090/index.html",
+      "html_sha256": "88d3976f70399502d42b19e7edd6bcefe2fab8bf0ad9f85b4d859ddcf7fb5533",
+      "title": "GEMSDOE10 \u2014 submission hub",
+      "download_links": [],
+      "status": "source_read",
+      "consulted_files": []
+    },
+    {
+      "repo": "13GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "92ee6f074323f161eed837b80ec3ee5b662e26f5",
+      "source_path": "index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/13GEMSDOE/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/13GEMSDOE/blob/92ee6f074323f161eed837b80ec3ee5b662e26f5/index.html",
+      "html_sha256": "4fd3eb7243bac4409aa0643d123174af6ffe15a60497b571d357c0f42a315923",
+      "title": "Submission download \u00b7 13GEMSDOE",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/13GEMSDOE/docs/downloads/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "https://buffedlizard55-lab.github.io/13GEMSDOE/docs/downloads/13gems_20261001_r13-lattice-s5_v2_nan-outside.zip",
+        "https://buffedlizard55-lab.github.io/13GEMSDOE/docs/downloads/13gems_20261001_r13-lattice-s5_v2_zerofill.tif",
+        "https://buffedlizard55-lab.github.io/13GEMSDOE/docs/downloads/13gems_20261001_r13-lattice-s5_v2_zerofill.zip"
+      ],
+      "status": "source_read",
+      "consulted_files": [
+        {
+          "path": "src/gems/detectors.py",
+          "sha256": "a8eeb99bc1d32199521256dc172083f0f1ba856c1e58e81bd18d556c1b81c761"
+        }
+      ]
+    },
+    {
+      "repo": "16GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "962587af0d16a50d45e32a80a3c90436435cb9d8",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/16GEMSDOE/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/16GEMSDOE/blob/962587af0d16a50d45e32a80a3c90436435cb9d8/docs/index.html",
+      "html_sha256": "1416000fe3eba7f06b20eafe0a01df2f9e1d888acb9e957adb5a75cf4d996ccf",
+      "title": "Download your GEMS submission \u00b7 16GEMSDOE",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/16GEMSDOE/docs/downloads/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-allfinite.tif",
+        "https://buffedlizard55-lab.github.io/16GEMSDOE/docs/downloads/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+        "https://buffedlizard55-lab.github.io/16GEMSDOE/docs/downloads/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.zip",
+        "https://buffedlizard55-lab.github.io/16GEMSDOE/docs/downloads/gems16-h18-3a-topo-geophys-x-complexity-prior-20260930-c502dfab-allfinite.tif",
+        "https://buffedlizard55-lab.github.io/16GEMSDOE/docs/downloads/gems16-h18-3a-topo-geophys-x-complexity-prior-20260930-c502dfab-nan.tif",
+        "https://buffedlizard55-lab.github.io/16GEMSDOE/docs/downloads/gems16-h18-3a-topo-geophys-x-complexity-prior-20260930-c502dfab-nan.zip",
+        "https://buffedlizard55-lab.github.io/16GEMSDOE/docs/downloads/gems16-h18-4-usgs-geologic-map-faults-gap-20260930-aef8f42c-allfinite.tif",
+        "https://buffedlizard55-lab.github.io/16GEMSDOE/docs/downloads/gems16-h18-4-usgs-geologic-map-faults-gap-20260930-aef8f42c-nan.tif",
+        "https://buffedlizard55-lab.github.io/16GEMSDOE/docs/downloads/gems16-h18-4-usgs-geologic-map-faults-gap-20260930-aef8f42c-nan.zip"
+      ],
+      "status": "source_read",
+      "consulted_files": [
+        {
+          "path": "docs/research/hypothesis_register.md",
+          "sha256": "b30e3b65189de63f6ca401f80af916e87dad52650c30f78e89d789c0284697bd"
+        },
+        {
+          "path": "registry/submissions.json",
+          "sha256": "079b553ff2ec23ded012d42b7fe0c4e05c3a4e0f11e29be51b7f074906080cf0"
+        },
+        {
+          "path": "src/gems/hypotheses.py",
+          "sha256": "f99ff944ebe60943843298cfc8fd610b26ecc94f2ecca45e4aa886fbb39721aa"
+        }
+      ]
+    },
+    {
+      "repo": "20GEMSDOE",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "50edbbad9bb05541f8a8ca8e62b75210fb5b2954",
+      "source_path": "docs/index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/20GEMSDOE/docs/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/20GEMSDOE/blob/50edbbad9bb05541f8a8ca8e62b75210fb5b2954/docs/index.html",
+      "html_sha256": "b1e4947508bda53831940b423d0dff8af040c5c0142e63189cb9c7dd4ffb2d52",
+      "title": "Research & GeoTIFF Download Hub \u00b7 20GEMSDOE",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/20GEMSDOE/docs/downloads/gems20-h20-1-sarnnpu-powerlaw-pi0363-tilt-wingcrack-20260930-be0e8f6b-allfinite.tif",
+        "https://buffedlizard55-lab.github.io/20GEMSDOE/docs/downloads/gems20-h20-1-sarnnpu-powerlaw-pi0363-tilt-wingcrack-20260930-be0e8f6b-nan.tif",
+        "https://buffedlizard55-lab.github.io/20GEMSDOE/docs/downloads/gems20-h20-1-sarnnpu-powerlaw-pi0363-tilt-wingcrack-20260930-be0e8f6b-nan.zip",
+        "https://buffedlizard55-lab.github.io/20GEMSDOE/docs/downloads/gems20-h20-5-continuous-pu-proxy-unverified-20260930-824ce73a-allfinite.tif",
+        "https://buffedlizard55-lab.github.io/20GEMSDOE/docs/downloads/gems20-h20-5-continuous-pu-proxy-unverified-20260930-824ce73a-nan.tif",
+        "https://buffedlizard55-lab.github.io/20GEMSDOE/docs/downloads/gems20-h20-5-continuous-pu-proxy-unverified-20260930-824ce73a-nan.zip"
+      ],
+      "status": "source_read",
+      "consulted_files": [
+        {
+          "path": "docs/research/hypothesis_register.md",
+          "sha256": "c947834163867d65912f287c24a06fcba24b51e9b32fcd0f2daabfad605df41e"
+        },
+        {
+          "path": "registry/submissions.json",
+          "sha256": "2aca9defc15802e790e6a82a0353b94c8f84bc9f7e44eeded8acad7df6abd982"
+        },
+        {
+          "path": "scripts/evaluate_h19_and_build_submissions.py",
+          "sha256": "4cfdcc64c71bd40d65499157c5797c4ecfb119bb66b17dc8bc081a7af183588a"
+        },
+        {
+          "path": "src/gems/hypotheses.py",
+          "sha256": "8d33508eb276394e4dad05c8b81a7373da190733006fe4835c70f404ac62d6f4"
+        }
+      ]
+    },
+    {
+      "repo": "GEMSDOE21",
+      "evidence_type": "team-authored source, not official score receipt",
+      "commit": "43e8510cfb37b85460a986d4d1b7796625de0d31",
+      "source_path": "index.html",
+      "site_url": "https://buffedlizard55-lab.github.io/GEMSDOE21/index.html",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE21/blob/43e8510cfb37b85460a986d4d1b7796625de0d31/index.html",
+      "html_sha256": "4a572f3615d6737d18a9fca9f0489ce91c71d486edc4777c16982086b5f7bb4b",
+      "title": "Download & evidence \u00b7 GEMSDOE21",
+      "download_links": [
+        "https://buffedlizard55-lab.github.io/GEMSDOE21/downloads/gems21-h19-4-reference-20260930-691e4dfa-masked-zero.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE21/downloads/gems21-h19-4-reference-20260930-691e4dfa.tif",
+        "https://buffedlizard55-lab.github.io/GEMSDOE21/downloads/gems21-h19-4-reference-20260930-691e4dfa.zip"
+      ],
+      "status": "source_read",
+      "consulted_files": []
+    }
+  ],
+  "unreported_scores": [
+    "22GEMSDOE",
+    "23GEMSDOE",
+    "24GEMSDOE",
+    "25GEMSDOE",
+    "26GEMSDOE",
+    "27GEMSDOE"
+  ],
+  "warning": "Blank scores are unknown, never zero. Source HTML can differ from deployed Pages; official current leaderboard is checked separately."
+}

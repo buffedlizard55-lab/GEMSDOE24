@@ -1,4 +1,5 @@
 """Small shared helper. Submission validation lives in :mod:`gems.submission` (``check_variants``, ``write_submission``)."""
+
 from __future__ import annotations
 
 import hashlib

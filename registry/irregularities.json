@@ -1,57 +1,27 @@
 {
-  "irregularities": [
-    {
-      "id": "IR-1",
-      "finding": "data/bridge/labels.tif and existing_faults.tif are pixel-identical (60,988 px each, 100% overlap) — the provided 'training labels' are the existing catalogue itself; 'new fault' truth exists only on the private test side. All local gating therefore simulates gaps with fold splits (gems/holdout.py).",
-      "evidence": "measured this session; cross-checks organizers' wording on page/967 that labels are mapped faults that 'may contain inaccurate data'",
-      "impact": "structural — determines evaluation protocol",
-      "status": "verified"
-    },
-    {
-      "id": "IR-2",
-      "finding": "Census TIGER2024 publishes no per-county RAILS layer for our 22 counties (all tl_2024_*_rails.zip -> 404); rails/trails are folded into ROADS under MTFCC S1400/S1500. Our road-distance confound therefore includes rails+trails by construction.",
-      "evidence": "https://www2.census.gov/geo/tiger/TIGER2024/ (listing parsed by CI); data_external/fetch_manifest.json on branch public-layers",
-      "impact": "minor — trail access still covered",
-      "status": "verified"
-    },
-    {
-      "id": "IR-3",
-      "finding": "NBMG Qfaults ArcGIS REST server rejects pagination ('Pagination is not supported.') and outFields=OBJECTID (OID field is FID); geometry returns in NAD83 Albers(-117) regardless of inSR. Worked around with recursive bbox tiling + maxAllowableOffset=200 m; fetched trace counts (739/351/89 in-bbox) match the published census exactly.",
-      "evidence": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0/query (live checks 2026-10-01)",
-      "impact": "resolved",
-      "status": "mitigated"
-    },
-    {
-      "id": "IR-4",
-      "finding": "GeoDAWN Area-2 outline covers 100% of the competition footprint outside Area-1 (no footprint pixel lies outside both official polygons): acquisition-domain contrasts within the footprint are Area1 vs Area2 only.",
-      "evidence": "rasterization of official GeoDAWN_area2_outline.zip (ScienceBase item 657e1d85d34e23d3533209f7, CC0 1.0); data/confounds/confounds_provenance.json",
-      "impact": "simplifies the window confound; the four contractor blocks remain seam-approximated (block boundaries are not in the release)",
-      "status": "verified"
-    },
-    {
-      "id": "IR-5",
-      "finding": "The C2S2 0.956 AUC for 'accessibility explains the catalogue' was dominated by a catalogue-geometry leak: leave-one-out removal of distance-to-Well-Constrained-trace collapses it to 0.495 (chance). Headline audit numbers therefore also report the clean variant (labels 0.570, predictions 0.611; both within torus-shift-null noise).",
-      "evidence": "evidence/geoaudit.json — views V1clean_*, drop1-d_wc_px, V1_shift",
-      "impact": "major interpretive finding — reported, not hidden",
-      "status": "verified"
-    },
-    {
-      "id": "IR-6",
-      "finding": "The Arena sandbox was reset mid-project (working tree restored from the pushed branch; untracked regenerable caches rebuilt; 419 MB feature raster re-assembled from git-pinned parts and re-verified at sha256 4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5). Also: sandbox GitHub token expired once mid-session (401s) — pushes must retry after refresh.",
-      "evidence": "git log arena/01a0f9ce-gemsdoe24 165abcc..HEAD; scripts/verify_data.py run post-restore",
-      "impact": "none on results — deterministic reruns reproduce measured numbers",
-      "status": "verified"
-    }
-  ],
-  "sources_verified": {
-    "drivendata_306_rules": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
-    "scoring_forum_11516": "https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/2",
-    "geodawn_release": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
-    "usgs_geodawn_page": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
-    "ingenuous_qfaults_rest": "https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0",
-    "census_tiger": "https://www2.census.gov/geo/tiger/TIGER2024/",
-    "usgs_mrds": "https://mrdata.usgs.gov/mrds/",
-    "c2s2_paper": "https://arxiv.org/abs/1610.06539",
-    "shift_null_ecology": "https://doi.org/10.1111/ecog.06258"
-  }
+  "schema_version": 2,
+  "review_date_utc": "2026-10-02",
+  "issues": [
+    {"id":"IR-C2-CITATION","severity":"medium","status":"fixed","issue":"Inherited arXiv 1610.06539 is not the Lopez-Paz/Oquab C2ST paper.","resolution":"Correct 1610.06545, accuracy-versus-AUC adaptation and spatial exchangeability caveats recorded."},
+    {"id":"IR-GEO-PROXIES","severity":"critical","status":"fixed","issue":"Geothermal sites and fault-confidence/label distances contaminated a supposedly nuisance-only audit.","resolution":"Active whitelist only permits road/claim/acquisition families; legacy scripts/reports retired and preserved for traceability."},
+    {"id":"IR-MRDS-CLAIMS","severity":"critical","status":"fixed","issue":"MRDS mineral occurrences were labelled historic mining claims.","resolution":"Official BLM closed claims used: complete IDs checked, quality prefixes parsed, multiple shells/holes respected, 20 km buffer retained."},
+    {"id":"IR-BLOCKS","severity":"critical","status":"blocked","issue":"Two survey areas, an inferred seam or a constant raster cannot stand in for four operational GeoDAWN blocks.","resolution":"Official report/metadata/extent/flight inventories reviewed; coordinate-verified four-block membership remains absent. Full audit cannot pass."},
+    {"id":"IR-AREA-PRIORITY","severity":"high","status":"fixed","issue":"Area2 could overwrite the finer overlapping Area1.","resolution":"Area1 priority implemented and regression-tested."},
+    {"id":"IR-ROAD-WINDOW","severity":"high","status":"blocked","issue":"The inherited road mirror is clipped tightly to (-120.0024,37.3641,-116.1415,40.7247). A 20 km seed grid does not recover missing external road geometries.","resolution":"New anonymous official county-ZIP acquisition with buffered window is implemented, but push/authentication failure prevented its CI run. Current road diagnostics/residualized experiment remain explicitly provisional; nearest-road boundary coverage is not certified."},
+    {"id":"IR-KNOWN-CREDIT","severity":"critical","status":"fixed","issue":"Masked known predictions could earn TP credit on adjacent new truth; catalogue truth masking was inconsistent.","resolution":"Both exact and binary DTI now mask predictions and truth regardless of legacy flag. Adjacent-new-truth and randomized parity tests pass."},
+    {"id":"IR-BINARY-GATE","severity":"critical","status":"fixed","issue":"Re-thinning/re-ranking binary submissions, zero-budget -0 slicing and arbitrary zero backfill invalidated inherited promotion claims.","resolution":"True four-arm refitting, as-emitted historical diagnostics, deterministic positive-only top budgets and explicit current-best reconstruction veto."},
+    {"id":"IR-NMS-HALOS","severity":"high","status":"fixed","issue":"Zero-padded quadrants or zeroing catalogue pixels before NMS could create artificial boundary/flank ridges.","resolution":"Complete predicted halos and valid-support erosion; catalogue exclusion only after NMS; boundary tests pass."},
+    {"id":"IR-DEGENERATE-SHIFT","severity":"high","status":"fixed_with_disclosed_design_update","issue":"An exact-candidate torus shift produced a single-class held-out fold, for which AUC is undefined.","resolution":"Geometry/cohort support only determines retry; no statistic-based exclusion. Every rejected draw is recorded; retries bounded; 99 valid shifts required. Shift inference is conditional and diagnostic, not an exact spatial null. Grouped primary remains unchanged."},
+    {"id":"IR-CURRENT-BEST","severity":"critical","status":"blocked","issue":"Original H19 OOF caches and source-to-artifact reconstruction are unavailable.","resolution":"Current H19 output diagnostics are scored as emitted and used only as a conservative veto. No certified win over the original current-best holdout or new public score is claimed."},
+    {"id":"IR-INDEPENDENCE","severity":"high","status":"corrected_interpretation","issue":"H19 comments call four heavily shared-input lines independent and contain old budget-only descriptions alongside changed weight code.","resolution":"Actual reviewed coefficients and shared terrain inputs documented; measured Jaccard .777234. Score differences and code coefficients are not causal ablations."},
+    {"id":"IR-ARC-SPECIFICITY","severity":"medium","status":"disclosed","issue":"Annular coherence can respond to intrusion rims, erosion and locally tangent sharp contacts; it is not unique to ring faults.","resolution":"Synthetic specificity-limit test added; first feature/run retained unchanged. No discovery or angular-coverage correction is silently claimed after observing folds."},
+    {"id":"IR-PRE-REG-DETAIL","severity":"medium","status":"disclosed","issue":"The initial preregistration fixes transforms/splits/budget/gates but does not enumerate every numeric HGB/residualizer setting.","resolution":"Settings were fixed in implementation before first fit and no outer-fold search occurred; preregistration completeness is not overstated or retroactively rewritten."},
+    {"id":"IR-BAND-PROVENANCE","severity":"high","status":"disclosed","issue":"Owner-mirror integrity does not independently authenticate organizer bytes or every original band alias.","resolution":"Full hashes/provenance caveat retained; ambiguous tc/earthquake aliases excluded. Do not claim all physical semantics independently verified."},
+    {"id":"IR-GEODAWN-METADATA","severity":"medium","status":"unresolved_official_irregularity","issue":"Official metadata has <class 'str'> placeholders, a Winnemucca title for a full-survey extent, and 151799 line-km versus 149030 in the contractor report.","resolution":"Different accounting is possible but unverified; no boundaries or calibration inferred from the discrepancies."},
+    {"id":"IR-SUBMISSION-RANGE","severity":"critical","status":"fixed_locally","issue":"Portal [0,1] rejection and weak source/grid/content-ID/ZIP checks.","resolution":"Finite [0,1] in-footprint writer; strict organizer-grid validation; full source checksum; soft-float32 content identity; one flat TIFF ZIP and separate <=200-character note. Reference and fallback both checked; portal upload itself not tested."},
+    {"id":"IR-SCORE-IDENTITY","severity":"high","status":"disclosed","issue":"Owner artifact reports, stale site claims and public account bests could be conflated.","resolution":"0.1922 original reference is owner-reported; official leader .3195 is timestamped; unknown scores remain unknown; no artifact-linked official receipt invented."},
+    {"id":"IR-GITHUB-AUTH","severity":"high","status":"blocked","issue":"gh REST/GraphQL returned 401 and git push lacked usable credentials.","resolution":"GitHub reconnection in Arena requested, without requesting secrets. Work saved locally on the fixed session branch. No PR, merge, buffered-road CI run or public deployment claimed."},
+    {"id":"IR-PROMPT-ARCHIVE","severity":"medium","status":"disclosed_context_limit","issue":"Full uncondensed original chat text was unavailable in the continuation.","resolution":"Inherited quoted owner charter retained verbatim and all available active constraints expanded in README; no claim to reproduce unseen text word for word."},
+    {"id":"IR-DEADLINE","severity":"medium","status":"organizer_confirmation_needed","issue":"Rules and platform present different deadline time conventions.","resolution":"Latest organizer guidance must be confirmed; no assumed conversion or cutoff is stated."}
+  ]
 }

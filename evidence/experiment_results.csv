@@ -1,0 +1,7 @@
+arm,evidence_type,dense_dti,sparse_dti
+physics_raw,fresh paired retraining,0.1516889348326393,0.0584253416487608
+physics_arc_raw,fresh paired retraining,0.15308298591102443,0.05961213091108214
+physics_residualized,fresh paired retraining,0.15245373324940917,0.05775359865645139
+physics_arc_residualized,fresh paired retraining,0.15568347926499732,0.06321359018897861
+h19-4,"as-emitted diagnostic, not reconstructed OOF",0.17043102097767096,0.06849978825470882
+h19-5,"as-emitted diagnostic, not reconstructed OOF",0.16944221934014636,0.06813178308647214

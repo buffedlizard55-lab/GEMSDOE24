@@ -5,10 +5,11 @@ Reference:
   alpha = 0.2 (false-positive penalty), beta = 0.8 (false-negative penalty),
   R = 300 m = 3 pixels at 100 m resolution, kernel k(d) = max(1 - d / R, 0).
 """
+
 from __future__ import annotations
 
 import numpy as np
-from scipy.ndimage import distance_transform_edt, gaussian_filter
+from scipy.ndimage import binary_erosion, distance_transform_edt, gaussian_filter
 
 ALPHA: float = 0.2
 BETA: float = 0.8
@@ -31,6 +32,32 @@ def _kernel_offsets(radius: float = RADIUS_PX) -> list[tuple[int, int, float]]:
 KERNEL_OFFSETS = _kernel_offsets(RADIUS_PX)
 
 
+def _evaluation_arrays(pred, truth, valid_mask, catalogue_mask, *, binary=False):
+    pred, truth = np.asarray(pred), np.asarray(truth)
+    if pred.ndim != 2 or pred.shape != truth.shape:
+        raise ValueError("Prediction and truth must be equal-shaped 2D grids")
+    for value in (valid_mask, catalogue_mask):
+        if value is not None and not np.isin(np.asarray(value), [0, 1]).all():
+            raise ValueError("Evaluation/catalogue masks must be finite binary grids")
+    valid = np.ones(pred.shape, bool) if valid_mask is None else np.asarray(valid_mask, bool)
+    known = (
+        np.zeros(pred.shape, bool) if catalogue_mask is None else np.asarray(catalogue_mask, bool)
+    )
+    if valid.shape != pred.shape or known.shape != pred.shape:
+        raise ValueError("Evaluation/catalogue mask grid mismatch")
+    active = valid & ~known
+    values = pred[active]
+    # Official outside-footprint NaNs are neutral, but infinities or invalid
+    # values inside the evaluation domain must not turn into giant TP credit.
+    if not np.isfinite(values).all() or np.any((values < 0) | (values > 1)):
+        raise ValueError("Evaluated predictions must be probabilities in [0,1]")
+    if binary and np.any(np.isfinite(values) & (values != 0) & (values != 1)):
+        raise ValueError("Fast DTI is binary-only; use dti_components_exact for soft scores")
+    p = np.where(active & np.isfinite(pred), pred, 0).astype(bool if binary else np.float64)
+    g = active & np.isfinite(truth) & (truth > 0)
+    return p, g, valid, known
+
+
 def dti_components_exact(
     pred: np.ndarray,
     truth: np.ndarray,
@@ -41,13 +68,12 @@ def dti_components_exact(
     mask_predictions: bool = False,
 ) -> dict[str, float]:
     """Compute exact distance-weighted Tversky index components for arbitrary p(x) in [0, 1]."""
-    H, W = truth.shape
-    p = np.nan_to_num(pred, nan=0.0).astype(np.float64)
-    if valid_mask is not None:
-        p = np.where(valid_mask, p, 0.0)
-    if mask_predictions and catalogue_mask is not None:
-        p = np.where(catalogue_mask, 0.0, p)
-    g_mask = (truth > 0) if valid_mask is None else ((truth > 0) & valid_mask)
+    p, g_mask, valid_mask, catalogue_mask = _evaluation_arrays(
+        pred, truth, valid_mask, catalogue_mask
+    )
+    H, W = p.shape
+    if alpha < 0 or beta < 0:
+        raise ValueError("Tversky penalties must be nonnegative")
     yy, xx = np.nonzero(g_mask)
     n_truth = int(len(yy))
     if n_truth == 0:
@@ -104,13 +130,11 @@ def dti_score_fast(
     mask_predictions: bool = False,
 ) -> dict[str, float]:
     """Fast exact DTI for binary {0, 1} predictions using Euclidean distance transforms."""
-    p = np.nan_to_num(pred_binary, nan=0.0) > 0.5
-    if mask_predictions and catalogue_mask is not None:
-        p = p & ~catalogue_mask
-    g = truth_binary > 0
-    if valid_mask is not None:
-        p = p & valid_mask
-        g = g & valid_mask
+    pp, g, valid_mask, catalogue_mask = _evaluation_arrays(
+        pred_binary, truth_binary, valid_mask, catalogue_mask, binary=True
+    )
+    p = pp > 0.5
+    del pp
 
     n_truth = int(g.sum())
     if n_truth == 0 or not p.any():
@@ -180,7 +204,17 @@ def verify_organizer_worked_example() -> dict[str, float | bool]:
 
 def ridge_nms(score: np.ndarray, valid: np.ndarray, sigma: float = 1.0) -> np.ndarray:
     """1-pixel Hessian across-strike non-maximum suppression (continuous along fault strike)."""
-    s = np.where(valid, np.nan_to_num(score, nan=0.0, neginf=0.0), 0.0).astype(np.float32)
+    score, valid = np.asarray(score), np.asarray(valid, bool)
+    if score.ndim != 2 or score.shape != valid.shape or min(score.shape) < 2 or sigma < 0:
+        raise ValueError("Equal-shaped 2D grids, dimensions >=2 and nonnegative sigma required")
+    valid = valid & np.isfinite(score)
+    # 4-sigma Gaussian support + two derivatives + NMS neighbor. An unknown
+    # boundary is NOT a physical contact; never emit on its padding silhouette.
+    halo = int(np.ceil(4 * sigma)) + 3
+    supported = binary_erosion(
+        valid, structure=np.ones((3, 3), bool), iterations=halo, border_value=0
+    )
+    s = np.where(valid, score, 0).astype(np.float32)
     ss = gaussian_filter(s, sigma) if sigma > 0 else s
     gy, gx = np.gradient(ss)
     hyy, hyx = np.gradient(gy)
@@ -188,7 +222,7 @@ def ridge_nms(score: np.ndarray, valid: np.ndarray, sigma: float = 1.0) -> np.nd
     hxy = 0.5 * (hxy + hyx)
     del gy, gx, hyx
 
-    tmp = np.sqrt(((hxx - hyy) * 0.5) ** 2 + hxy ** 2)
+    tmp = np.sqrt(((hxx - hyy) * 0.5) ** 2 + hxy**2)
     lam = 0.5 * (hxx + hyy) - tmp
     vx = hxy
     vy = lam - hxx
@@ -210,4 +244,17 @@ def ridge_nms(score: np.ndarray, valid: np.ndarray, sigma: float = 1.0) -> np.nd
         a = pad[1 + dy : 1 + dy + h, 1 + dx : 1 + dx + w]
         b = pad[1 - dy : 1 - dy + h, 1 - dx : 1 - dx + w]
         keep |= (q == k) & (c >= a) & (c >= b) & ((c > a) | (c > b))
-    return keep & is_concave_down & valid & (s > 0)
+    return keep & is_concave_down & supported & (s > 0)
+
+
+def select_top_positive(score: np.ndarray, eligible: np.ndarray, k: int) -> np.ndarray:
+    """Stable top-k; never pad with zero/NaN scores or select -0 = everything."""
+    score, eligible = np.asarray(score), np.asarray(eligible, bool)
+    if score.shape != eligible.shape or k < 0:
+        raise ValueError("Aligned score/eligibility grids and nonnegative budget required")
+    ids = np.flatnonzero(eligible & np.isfinite(score) & (score > 0))
+    out = np.zeros(eligible.shape, bool)
+    if k and len(ids):
+        order = np.lexsort((ids, -score.ravel()[ids]))
+        out.ravel()[ids[order[: min(k, len(ids))]]] = True
+    return out

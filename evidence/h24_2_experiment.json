@@ -1,0 +1,1028 @@
+{
+  "generated_utc": "2026-10-02T03:28:21.806809+00:00",
+  "hypothesis": "H24-2A radial-gradient arc coherence",
+  "preregistration": "knowledge/02_preregistered_2026-10-02.md",
+  "protocol": {
+    "seed": 20261002,
+    "detector_params": {
+      "max_iter": 80,
+      "max_leaf_nodes": 15,
+      "learning_rate": 0.08,
+      "l2_regularization": 5,
+      "early_stopping": false,
+      "random_state": 20261002
+    },
+    "budget": 0.0245,
+    "buffer_m": 1500,
+    "nuisance_training_only": true,
+    "nuisance_regression": "training-only uniform 30000-pixel sample; quadratic splines and interactions; Ridge alpha=100",
+    "positives": "catalogue trace pixels only",
+    "negatives": "unlabelled >=900 m from all catalogue traces (NOT verified fault absence)",
+    "component_exclusion": "every component touching held-out quadrant or 1.5 km collar removed from supervised training",
+    "historical_comparability": "as-emitted diagnostics only; cannot certify original H19 OOF cache reproduction"
+  },
+  "features": {
+    "names": [
+      "rtp",
+      "tmi_hg",
+      "tmi_vg",
+      "iso_grav_anom",
+      "iso_grav_anom_hg",
+      "iso_grav_anom_vg",
+      "det_elev",
+      "det_elev_slope",
+      "tmi",
+      "cond_surf",
+      "depth_to_base_surf",
+      "geod_dilaterate",
+      "geod_shearrate",
+      "lidar_1",
+      "lidar_2",
+      "lidar_3",
+      "lidar_4",
+      "lidar_5",
+      "lidar_6",
+      "lidar_7",
+      "lidar_8",
+      "lidar_9",
+      "lidar_10",
+      "lidar_cos2strike",
+      "lidar_sin2strike",
+      "det_local_relief",
+      "det_gradient",
+      "arc_rtp",
+      "arc_det_elev",
+      "arc_agreement"
+    ],
+    "base_count": 27,
+    "shape": [
+      5167373,
+      30
+    ],
+    "arc_radii_px": [
+      6,
+      12,
+      24
+    ],
+    "sha256": "a4ca25b2a18f6f6637f0247367cc6235a1366eb8475f77b18cd0285e62232dc8",
+    "inputs": {
+      "data/bridge/sample_submission.tif": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "data/training_features.tif": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+      "data/external/lidar_scarp_features_u8.tif": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568"
+    },
+    "note": "Band names follow owner bridge order. Ambiguous tc/earthquake description aliases are deliberately excluded. Features are not calibrated fault probabilities."
+  },
+  "nuisance_names": [
+    "road_m",
+    "claim_m",
+    "area1"
+  ],
+  "access_inputs_complete": false,
+  "missing_required": [
+    "verified geographic boundaries of the four acquisition blocks"
+  ],
+  "folds": [
+    {
+      "name": "NW",
+      "n_positive_train": 20000,
+      "n_unlabelled_train": 60000,
+      "n_excluded_components": 691,
+      "held_out_trace_pixels": 10165,
+      "held_out_sparse_pixels": 2122,
+      "training_touches_validation": false,
+      "training_component_leak": false
+    },
+    {
+      "name": "NE_LidarGapHeavy",
+      "n_positive_train": 20000,
+      "n_unlabelled_train": 60000,
+      "n_excluded_components": 705,
+      "held_out_trace_pixels": 12511,
+      "held_out_sparse_pixels": 2387,
+      "training_touches_validation": false,
+      "training_component_leak": false
+    },
+    {
+      "name": "SW",
+      "n_positive_train": 20000,
+      "n_unlabelled_train": 60000,
+      "n_excluded_components": 1183,
+      "held_out_trace_pixels": 20534,
+      "held_out_sparse_pixels": 3652,
+      "training_touches_validation": false,
+      "training_component_leak": false
+    },
+    {
+      "name": "SE",
+      "n_positive_train": 20000,
+      "n_unlabelled_train": 60000,
+      "n_excluded_components": 779,
+      "held_out_trace_pixels": 17778,
+      "held_out_sparse_pixels": 3309,
+      "training_touches_validation": false,
+      "training_component_leak": false
+    }
+  ],
+  "results": {
+    "physics_raw": {
+      "mean_dense_dti": 0.1516889348326393,
+      "mean_sparse_dti": 0.0584253416487608,
+      "fold_dense": [
+        0.1382350630468975,
+        0.17823252620470945,
+        0.1253604527059411,
+        0.16492769737300908
+      ],
+      "fold_sparse": [
+        0.06299053055232276,
+        0.061305452151168845,
+        0.04659716246966965,
+        0.06280822142188196
+      ],
+      "details": [
+        {
+          "fold": "NW",
+          "dense": {
+            "TP_w": 1897.2105109274535,
+            "FP_w": 26065.412038533235,
+            "FN_w": 8267.789489072547,
+            "n_truth": 10165,
+            "n_emitted": 28291,
+            "dti": 0.1382350630468975,
+            "coverage": 0.1866414668890756
+          },
+          "sparse": {
+            "TP_w": 455.46964817116765,
+            "FP_w": 27210.34936011096,
+            "FN_w": 1666.5303518288324,
+            "n_truth": 2122,
+            "n_emitted": 27792,
+            "dti": 0.06299053055232276,
+            "coverage": 0.2146416815132741
+          },
+          "selection": {
+            "eligible_ridges": 263891,
+            "selected": 28291,
+            "requested": 28291,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "dense": {
+            "TP_w": 3013.047525367263,
+            "FP_w": 31468.700650608076,
+            "FN_w": 9497.952474632737,
+            "n_truth": 12511,
+            "n_emitted": 34979,
+            "dti": 0.17823252620470945,
+            "coverage": 0.2408318699837953
+          },
+          "sparse": {
+            "TP_w": 532.3379563054713,
+            "FP_w": 33336.514674247315,
+            "FN_w": 1854.6620436945286,
+            "n_truth": 2387,
+            "n_emitted": 33948,
+            "dti": 0.061305452151168845,
+            "coverage": 0.223015482323197
+          },
+          "selection": {
+            "eligible_ridges": 319398,
+            "selected": 34979,
+            "requested": 34979,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "SW",
+          "dense": {
+            "TP_w": 2931.922761160935,
+            "FP_w": 31871.777832687047,
+            "FN_w": 17602.077238839065,
+            "n_truth": 20534,
+            "n_emitted": 35001,
+            "dti": 0.1253604527059411,
+            "coverage": 0.14278381032243767
+          },
+          "sparse": {
+            "TP_w": 453.66982677038754,
+            "FP_w": 33618.31439555474,
+            "FN_w": 3198.3301732296122,
+            "n_truth": 3652,
+            "n_emitted": 34147,
+            "dti": 0.04659716246966965,
+            "coverage": 0.12422503471259243
+          },
+          "selection": {
+            "eligible_ridges": 340290,
+            "selected": 35001,
+            "requested": 35001,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "SE",
+          "dense": {
+            "TP_w": 3281.4092153218035,
+            "FP_w": 25086.8256867609,
+            "FN_w": 14496.590784678196,
+            "n_truth": 17778,
+            "n_emitted": 28329,
+            "dti": 0.16492769737300908,
+            "coverage": 0.18457696114983707
+          },
+          "sparse": {
+            "TP_w": 510.2164841221798,
+            "FP_w": 26870.79770330257,
+            "FN_w": 2798.7835158778203,
+            "n_truth": 3309,
+            "n_emitted": 27374,
+            "dti": 0.06280822142188196,
+            "coverage": 0.15419053615055298
+          },
+          "selection": {
+            "eligible_ridges": 252476,
+            "selected": 28329,
+            "requested": 28329,
+            "zero_score_padding": 0
+          }
+        }
+      ]
+    },
+    "physics_arc_raw": {
+      "mean_dense_dti": 0.15308298591102443,
+      "mean_sparse_dti": 0.05961213091108214,
+      "fold_dense": [
+        0.14402390596477033,
+        0.1729926428002036,
+        0.12919023160707716,
+        0.16612516327204668
+      ],
+      "fold_sparse": [
+        0.06485686227545666,
+        0.05732178288545333,
+        0.05062572959845472,
+        0.06564414888496387
+      ],
+      "details": [
+        {
+          "fold": "NW",
+          "dense": {
+            "TP_w": 1976.2242910869722,
+            "FP_w": 25971.284921861807,
+            "FN_w": 8188.775708913028,
+            "n_truth": 10165,
+            "n_emitted": 28291,
+            "dti": 0.14402390596477033,
+            "coverage": 0.19441458840009565
+          },
+          "sparse": {
+            "TP_w": 468.6021954533541,
+            "FP_w": 27169.27400378719,
+            "FN_w": 1653.3978045466458,
+            "n_truth": 2122,
+            "n_emitted": 27793,
+            "dti": 0.06485686227545666,
+            "coverage": 0.2208304408356994
+          },
+          "selection": {
+            "eligible_ridges": 262365,
+            "selected": 28291,
+            "requested": 28291,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "dense": {
+            "TP_w": 2924.809583856696,
+            "FP_w": 31566.85437548812,
+            "FN_w": 9586.190416143305,
+            "n_truth": 12511,
+            "n_emitted": 34979,
+            "dti": 0.1729926428002036,
+            "coverage": 0.23377904115232165
+          },
+          "sparse": {
+            "TP_w": 498.16314372266277,
+            "FP_w": 33407.05120521121,
+            "FN_w": 1888.8368562773371,
+            "n_truth": 2387,
+            "n_emitted": 33979,
+            "dti": 0.05732178288545333,
+            "coverage": 0.20869842636056254
+          },
+          "selection": {
+            "eligible_ridges": 324539,
+            "selected": 34979,
+            "requested": 34979,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "SW",
+          "dense": {
+            "TP_w": 3022.309127721903,
+            "FP_w": 31812.9622336114,
+            "FN_w": 17511.690872278097,
+            "n_truth": 20534,
+            "n_emitted": 35001,
+            "dti": 0.12919023160707716,
+            "coverage": 0.1471856008435718
+          },
+          "sparse": {
+            "TP_w": 492.9673708187892,
+            "FP_w": 33586.466343595646,
+            "FN_w": 3159.0326291812107,
+            "n_truth": 3652,
+            "n_emitted": 34134,
+            "dti": 0.05062572959845472,
+            "coverage": 0.13498558894271337
+          },
+          "selection": {
+            "eligible_ridges": 338766,
+            "selected": 35001,
+            "requested": 35001,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "SE",
+          "dense": {
+            "TP_w": 3305.623557456839,
+            "FP_w": 25074.334564111254,
+            "FN_w": 14472.376442543162,
+            "n_truth": 17778,
+            "n_emitted": 28329,
+            "dti": 0.16612516327204668,
+            "coverage": 0.18593900086943632
+          },
+          "sparse": {
+            "TP_w": 532.8190697506693,
+            "FP_w": 26815.077499449108,
+            "FN_w": 2776.1809302493307,
+            "n_truth": 3309,
+            "n_emitted": 27352,
+            "dti": 0.06564414888496387,
+            "coverage": 0.1610211755063975
+          },
+          "selection": {
+            "eligible_ridges": 250789,
+            "selected": 28329,
+            "requested": 28329,
+            "zero_score_padding": 0
+          }
+        }
+      ]
+    },
+    "physics_residualized": {
+      "mean_dense_dti": 0.15245373324940917,
+      "mean_sparse_dti": 0.05775359865645139,
+      "fold_dense": [
+        0.14576218009446204,
+        0.1841109619363558,
+        0.12395634556919802,
+        0.15598544539762085
+      ],
+      "fold_sparse": [
+        0.0588279985521592,
+        0.06570447571276443,
+        0.04866853793183466,
+        0.05781338242904726
+      ],
+      "details": [
+        {
+          "fold": "NW",
+          "dense": {
+            "TP_w": 2002.109905770717,
+            "FP_w": 26015.16647890812,
+            "FN_w": 8162.890094229283,
+            "n_truth": 10165,
+            "n_emitted": 28291,
+            "dti": 0.14576218009446204,
+            "coverage": 0.19696113190071
+          },
+          "sparse": {
+            "TP_w": 425.21239919639225,
+            "FP_w": 27227.095758108968,
+            "FN_w": 1696.7876008036078,
+            "n_truth": 2122,
+            "n_emitted": 27754,
+            "dti": 0.0588279985521592,
+            "coverage": 0.2003828459926448
+          },
+          "selection": {
+            "eligible_ridges": 269063,
+            "selected": 28291,
+            "requested": 28291,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "dense": {
+            "TP_w": 3111.403526455222,
+            "FP_w": 31342.64845570684,
+            "FN_w": 9399.596473544778,
+            "n_truth": 12511,
+            "n_emitted": 34979,
+            "dti": 0.1841109619363558,
+            "coverage": 0.248693431896349
+          },
+          "sparse": {
+            "TP_w": 570.1703511725618,
+            "FP_w": 33270.83359268085,
+            "FN_w": 1816.8296488274382,
+            "n_truth": 2387,
+            "n_emitted": 33930,
+            "dti": 0.06570447571276443,
+            "coverage": 0.2388648308221876
+          },
+          "selection": {
+            "eligible_ridges": 333514,
+            "selected": 34979,
+            "requested": 34979,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "SW",
+          "dense": {
+            "TP_w": 2898.1432653409406,
+            "FP_w": 31867.62775817921,
+            "FN_w": 17635.85673465906,
+            "n_truth": 20534,
+            "n_emitted": 35001,
+            "dti": 0.12395634556919802,
+            "coverage": 0.141138758417305
+          },
+          "sparse": {
+            "TP_w": 474.08727664089633,
+            "FP_w": 33623.63687106597,
+            "FN_w": 3177.9127233591034,
+            "n_truth": 3652,
+            "n_emitted": 34150,
+            "dti": 0.04866853793183466,
+            "coverage": 0.12981579316563427
+          },
+          "selection": {
+            "eligible_ridges": 341450,
+            "selected": 35001,
+            "requested": 35001,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "SE",
+          "dense": {
+            "TP_w": 3105.6982756409093,
+            "FP_w": 25333.201095406417,
+            "FN_w": 14672.301724359091,
+            "n_truth": 17778,
+            "n_emitted": 28329,
+            "dti": 0.15598544539762085,
+            "coverage": 0.1746933443379969
+          },
+          "sparse": {
+            "TP_w": 470.03666179151696,
+            "FP_w": 26945.162250726564,
+            "FN_w": 2838.963338208483,
+            "n_truth": 3309,
+            "n_emitted": 27418,
+            "dti": 0.05781338242904726,
+            "coverage": 0.14204794856195738
+          },
+          "selection": {
+            "eligible_ridges": 255516,
+            "selected": 28329,
+            "requested": 28329,
+            "zero_score_padding": 0
+          }
+        }
+      ]
+    },
+    "physics_arc_residualized": {
+      "mean_dense_dti": 0.15568347926499732,
+      "mean_sparse_dti": 0.06321359018897861,
+      "fold_dense": [
+        0.15191989434986317,
+        0.18602508151330568,
+        0.1236911402198667,
+        0.16109780097695364
+      ],
+      "fold_sparse": [
+        0.062463925123251045,
+        0.07350929952315956,
+        0.04978350909578228,
+        0.06709762701372159
+      ],
+      "details": [
+        {
+          "fold": "NW",
+          "dense": {
+            "TP_w": 2084.656028475578,
+            "FP_w": 25865.713843805188,
+            "FN_w": 8080.343971524422,
+            "n_truth": 10165,
+            "n_emitted": 28291,
+            "dti": 0.15191989434986317,
+            "coverage": 0.20508175390807457
+          },
+          "sparse": {
+            "TP_w": 450.9927163456862,
+            "FP_w": 27161.26158640274,
+            "FN_w": 1671.0072836543138,
+            "n_truth": 2122,
+            "n_emitted": 27722,
+            "dti": 0.062463925123251045,
+            "coverage": 0.21253191156724136
+          },
+          "selection": {
+            "eligible_ridges": 268577,
+            "selected": 28291,
+            "requested": 28291,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "dense": {
+            "TP_w": 3143.914156755777,
+            "FP_w": 31314.512375235892,
+            "FN_w": 9367.085843244222,
+            "n_truth": 12511,
+            "n_emitted": 34979,
+            "dti": 0.18602508151330568,
+            "coverage": 0.25129199558434795
+          },
+          "sparse": {
+            "TP_w": 638.3631050450911,
+            "FP_w": 33234.20471281446,
+            "FN_w": 1748.636894954909,
+            "n_truth": 2387,
+            "n_emitted": 33970,
+            "dti": 0.07350929952315956,
+            "coverage": 0.26743322373066236
+          },
+          "selection": {
+            "eligible_ridges": 339170,
+            "selected": 34979,
+            "requested": 34979,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "SW",
+          "dense": {
+            "TP_w": 2892.9534372052453,
+            "FP_w": 31913.676085431453,
+            "FN_w": 17641.046562794756,
+            "n_truth": 20534,
+            "n_emitted": 35001,
+            "dti": 0.1236911402198667,
+            "coverage": 0.14088601525300698
+          },
+          "sparse": {
+            "TP_w": 484.86800785425913,
+            "FP_w": 33604.7847546706,
+            "FN_w": 3167.1319921457407,
+            "n_truth": 3652,
+            "n_emitted": 34147,
+            "dti": 0.04978350909578228,
+            "coverage": 0.132767800617267
+          },
+          "selection": {
+            "eligible_ridges": 345420,
+            "selected": 35001,
+            "requested": 35001,
+            "zero_score_padding": 0
+          }
+        },
+        {
+          "fold": "SE",
+          "dense": {
+            "TP_w": 3205.7705890444004,
+            "FP_w": 25179.881445538675,
+            "FN_w": 14572.229410955599,
+            "n_truth": 17778,
+            "n_emitted": 28329,
+            "dti": 0.16109780097695364,
+            "coverage": 0.18032234160447747
+          },
+          "sparse": {
+            "TP_w": 544.7407944889048,
+            "FP_w": 26812.408227815165,
+            "FN_w": 2764.2592055110954,
+            "n_truth": 3309,
+            "n_emitted": 27365,
+            "dti": 0.06709762701372159,
+            "coverage": 0.16462399349921572
+          },
+          "selection": {
+            "eligible_ridges": 256864,
+            "selected": 28329,
+            "requested": 28329,
+            "zero_score_padding": 0
+          }
+        }
+      ]
+    }
+  },
+  "historical_diagnostics": {
+    "h19-4": {
+      "mean_dense_dti": 0.17043102097767096,
+      "mean_sparse_dti": 0.06849978825470882,
+      "fold_dense": [
+        0.1683968870843942,
+        0.1940054783604808,
+        0.12374901143832534,
+        0.19557270702748347
+      ],
+      "fold_sparse": [
+        0.07077225429035672,
+        0.06347150738458426,
+        0.053901917240220004,
+        0.08585347410367425
+      ],
+      "details": [
+        {
+          "fold": "NW",
+          "dense": {
+            "TP_w": 2312.9202801759416,
+            "FP_w": 25701.75418099604,
+            "FN_w": 7852.079719824058,
+            "n_truth": 10165,
+            "n_emitted": 27808,
+            "dti": 0.1683968870843942,
+            "coverage": 0.2275376566823356
+          },
+          "sparse": {
+            "TP_w": 514.1002286722771,
+            "FP_w": 27318.646780177078,
+            "FN_w": 1607.8997713277229,
+            "n_truth": 2122,
+            "n_emitted": 27808,
+            "dti": 0.07077225429035672,
+            "coverage": 0.24227154979843407
+          }
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "dense": {
+            "TP_w": 3279.1413940690973,
+            "FP_w": 31188.425541085613,
+            "FN_w": 9231.858605930902,
+            "n_truth": 12511,
+            "n_emitted": 34277,
+            "dti": 0.1940054783604808,
+            "coverage": 0.2621006629421387
+          },
+          "sparse": {
+            "TP_w": 556.5163430560696,
+            "FP_w": 33735.33920643471,
+            "FN_w": 1830.4836569439303,
+            "n_truth": 2387,
+            "n_emitted": 34277,
+            "dti": 0.06347150738458426,
+            "coverage": 0.2331446766049726
+          }
+        },
+        {
+          "fold": "SW",
+          "dense": {
+            "TP_w": 2900.5895371670113,
+            "FP_w": 32159.883527195474,
+            "FN_w": 17633.410462832988,
+            "n_truth": 20534,
+            "n_emitted": 34561,
+            "dti": 0.12374901143832534,
+            "coverage": 0.14125789116426468
+          },
+          "sparse": {
+            "TP_w": 530.8223265483192,
+            "FP_w": 34100.82940766171,
+            "FN_w": 3121.1776734516807,
+            "n_truth": 3652,
+            "n_emitted": 34561,
+            "dti": 0.053901917240220004,
+            "coverage": 0.14535112994203703
+          }
+        },
+        {
+          "fold": "SE",
+          "dense": {
+            "TP_w": 3872.1501224565372,
+            "FP_w": 24011.005727506552,
+            "FN_w": 13905.849877543464,
+            "n_truth": 17778,
+            "n_emitted": 27133,
+            "dti": 0.19557270702748347,
+            "coverage": 0.2178057218166575
+          },
+          "sparse": {
+            "TP_w": 695.0897087098278,
+            "FP_w": 26550.074039065345,
+            "FN_w": 2613.910291290172,
+            "n_truth": 3309,
+            "n_emitted": 27133,
+            "dti": 0.08585347410367425,
+            "coverage": 0.21006035319124444
+          }
+        }
+      ]
+    },
+    "h19-5": {
+      "mean_dense_dti": 0.16944221934014636,
+      "mean_sparse_dti": 0.06813178308647214,
+      "fold_dense": [
+        0.16612079665124993,
+        0.1971285927229529,
+        0.12147152094262671,
+        0.1930479670437559
+      ],
+      "fold_sparse": [
+        0.06985279184253376,
+        0.06420711549754189,
+        0.053392814014478915,
+        0.08507441099133393
+      ],
+      "details": [
+        {
+          "fold": "NW",
+          "dense": {
+            "TP_w": 2262.4846683395012,
+            "FP_w": 25175.08992590879,
+            "FN_w": 7902.515331660499,
+            "n_truth": 10165,
+            "n_emitted": 27245,
+            "dti": 0.16612079665124993,
+            "coverage": 0.22257596343723574
+          },
+          "sparse": {
+            "TP_w": 499.4867852216843,
+            "FP_w": 26765.327958437472,
+            "FN_w": 1622.5132147783156,
+            "n_truth": 2122,
+            "n_emitted": 27245,
+            "dti": 0.06985279184253376,
+            "coverage": 0.23538491292256564
+          }
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "dense": {
+            "TP_w": 3301.955633769095,
+            "FP_w": 30405.355836048817,
+            "FN_w": 9209.044366230904,
+            "n_truth": 12511,
+            "n_emitted": 33510,
+            "dti": 0.1971285927229529,
+            "coverage": 0.26392419740780876
+          },
+          "sparse": {
+            "TP_w": 552.9881616409293,
+            "FP_w": 32961.85287625612,
+            "FN_w": 1834.0118383590707,
+            "n_truth": 2387,
+            "n_emitted": 33510,
+            "dti": 0.06420711549754189,
+            "coverage": 0.2316665947385544
+          }
+        },
+        {
+          "fold": "SW",
+          "dense": {
+            "TP_w": 2828.6043422419443,
+            "FP_w": 31466.15738197325,
+            "FN_w": 17705.395657758054,
+            "n_truth": 20534,
+            "n_emitted": 33843,
+            "dti": 0.12147152094262671,
+            "coverage": 0.13775223250423416
+          },
+          "sparse": {
+            "TP_w": 518.0930417118925,
+            "FP_w": 33391.02028800118,
+            "FN_w": 3133.9069582881075,
+            "n_truth": 3652,
+            "n_emitted": 33843,
+            "dti": 0.053392814014478915,
+            "coverage": 0.14186556454323454
+          }
+        },
+        {
+          "fold": "SE",
+          "dense": {
+            "TP_w": 3799.15510151662,
+            "FP_w": 23488.09664082898,
+            "FN_w": 13978.84489848338,
+            "n_truth": 17778,
+            "n_emitted": 26533,
+            "dti": 0.1930479670437559,
+            "coverage": 0.2136998032127697
+          },
+          "sparse": {
+            "TP_w": 678.7432265578364,
+            "FP_w": 25976.407275704747,
+            "FN_w": 2630.2567734421636,
+            "n_truth": 3309,
+            "n_emitted": 26533,
+            "dti": 0.08507441099133393,
+            "coverage": 0.20512034649677738
+          }
+        }
+      ]
+    }
+  },
+  "submission_slot_spent": false,
+  "paired_gate": {
+    "physics_raw": {
+      "passed": true,
+      "rules": {
+        "reported_means_match_four_fold_scores": true,
+        "mean_dense_improves": true,
+        "mean_sparse_improves": true,
+        "sparse_fold_wins_ge_3_of_4": true,
+        "no_fold_loses_more_than_0_01": true
+      },
+      "sparse_fold_wins": 3,
+      "dense_fold_wins": 2,
+      "worst_fold_delta_dense": -0.00383,
+      "worst_fold_delta_sparse": -0.00053,
+      "delta_mean_dense": 0.00399,
+      "delta_mean_sparse": 0.00479,
+      "minimum_effect_passed": true
+    },
+    "physics_residualized": {
+      "passed": true,
+      "rules": {
+        "reported_means_match_four_fold_scores": true,
+        "mean_dense_improves": true,
+        "mean_sparse_improves": true,
+        "sparse_fold_wins_ge_3_of_4": true,
+        "no_fold_loses_more_than_0_01": true
+      },
+      "sparse_fold_wins": 4,
+      "dense_fold_wins": 3,
+      "worst_fold_delta_dense": -0.00027,
+      "worst_fold_delta_sparse": 0.00111,
+      "delta_mean_dense": 0.00323,
+      "delta_mean_sparse": 0.00546,
+      "minimum_effect_passed": true
+    }
+  },
+  "historical_diagnostic_gate": {
+    "h19-4": {
+      "passed": false,
+      "rules": {
+        "reported_means_match_four_fold_scores": true,
+        "mean_dense_improves": false,
+        "mean_sparse_improves": false,
+        "sparse_fold_wins_ge_3_of_4": false,
+        "no_fold_loses_more_than_0_01": false
+      },
+      "sparse_fold_wins": 1,
+      "dense_fold_wins": 0,
+      "worst_fold_delta_dense": -0.03447,
+      "worst_fold_delta_sparse": -0.01876,
+      "delta_mean_dense": -0.01475,
+      "delta_mean_sparse": -0.00529
+    },
+    "h19-5": {
+      "passed": false,
+      "rules": {
+        "reported_means_match_four_fold_scores": true,
+        "mean_dense_improves": false,
+        "mean_sparse_improves": false,
+        "sparse_fold_wins_ge_3_of_4": false,
+        "no_fold_loses_more_than_0_01": false
+      },
+      "sparse_fold_wins": 1,
+      "dense_fold_wins": 1,
+      "worst_fold_delta_dense": -0.03195,
+      "worst_fold_delta_sparse": -0.01798,
+      "delta_mean_dense": -0.01376,
+      "delta_mean_sparse": -0.00492
+    }
+  },
+  "decision": {
+    "candidate_beats_paired_baselines": true,
+    "candidate_beats_historical_diagnostics": false,
+    "original_h19_holdout_reproduced": false,
+    "promoted": false,
+    "reason": "Requires paired gains, complete accessibility audit, and a comparable current-best OOF reconstruction. Historical rasters alone cannot certify that."
+  },
+  "experimental_raster": {
+    "path": "out/h24-2a-residualized-experimental.tif",
+    "sha256": "4945c83d6f09c8376963e32d5c36f65009122fd50d26473eda185e3674677589",
+    "positive_pixels": 126600,
+    "format_checks": {
+      "file": "h24-2a-residualized-experimental.tif",
+      "bytes": 1716712,
+      "sha256": "4945c83d6f09c8376963e32d5c36f65009122fd50d26473eda185e3674677589",
+      "format_valid": true,
+      "ok_to_upload": true,
+      "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+      "hard_failures": [],
+      "official_format_compliant": true,
+      "in_footprint_positive_pixels": 126600,
+      "in_footprint_mass": 126600.0,
+      "checks": {
+        "official_template_grid_and_footprint": {
+          "pass": true,
+          "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+          "hard_requirement": true
+        },
+        "single_band": {
+          "pass": true,
+          "detail": "count=1",
+          "hard_requirement": true
+        },
+        "dtype_float32": {
+          "pass": true,
+          "detail": "dtypes=('float32',)",
+          "hard_requirement": true
+        },
+        "crs_epsg_32611": {
+          "pass": true,
+          "detail": "EPSG:32611",
+          "hard_requirement": true
+        },
+        "shape_matches_template": {
+          "pass": true,
+          "detail": "(3730, 3292) vs (3730, 3292)",
+          "hard_requirement": true
+        },
+        "geotransform_matches_template": {
+          "pass": true,
+          "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+          "hard_requirement": true
+        },
+        "footprint_all_finite": {
+          "pass": true,
+          "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+          "hard_requirement": true
+        },
+        "footprint_range_0_1": {
+          "pass": true,
+          "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+          "hard_requirement": true
+        },
+        "outside_is_nan_official_text": {
+          "pass": true,
+          "detail": "7,111,787 of 7,111,787 outside pixels are NaN",
+          "hard_requirement": false
+        },
+        "nodata_tag_is_nan": {
+          "pass": true,
+          "detail": "nodata=nan",
+          "hard_requirement": false
+        },
+        "variant_nan_aware_whole_array": {
+          "pass": true,
+          "detail": "np.nanmin/np.nanmax over the whole array",
+          "hard_requirement": true
+        },
+        "variant_masked_read": {
+          "pass": true,
+          "detail": "rasterio read(masked=True).compressed()",
+          "hard_requirement": true
+        },
+        "variant_strict_whole_array_no_nan_allowed": {
+          "pass": false,
+          "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+          "hard_requirement": false
+        },
+        "profile_matches_official_sample": {
+          "pass": true,
+          "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+          "hard_requirement": false
+        }
+      }
+    },
+    "recommended_to_upload": false
+  },
+  "seconds": 1021.9261701107025,
+  "complete_run": true,
+  "data_quality_review": {
+    "legacy_road_source_window_verified": false,
+    "legacy_road_clip_box_wgs84": [
+      -120.0024,
+      37.3641,
+      -116.1415,
+      40.7247
+    ],
+    "discovered_during_pass": 2,
+    "effect_on_interpretation": "Results are provisional under the clipped-road proxy; they do not certify actual nearest-road distance at the boundary.",
+    "corrective_workflow": ".github/workflows/buffered-roads.yml",
+    "corrective_workflow_executed": false,
+    "blocker": "GitHub authentication and push failure; no official buffered-road raster exists yet",
+    "statistic_tuning": false
+  },
+  "retained_experimental_artifacts": {
+    "prediction": "evidence/experiments/h24-2a-clipped-road-v1/prediction-4945c83d6f09.tif",
+    "model": "evidence/experiments/h24-2a-clipped-road-v1/detector.joblib",
+    "recommended_to_upload": false
+  }
+}

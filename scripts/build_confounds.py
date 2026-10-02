@@ -1,12 +1,16 @@
-#!/usr/bin/env python
-"""Wrapper: rebuild data/confounds/confounds.npz (+ provenance) via gems.confounds.
-Run after placing optional d_road_px.tif / d_claim_px.tif in data/confounds/."""
+#!/usr/bin/env python3
+"""Build strict data/access nuisance rasters; never substitute geological proxies."""
+
+import argparse
 import json
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from gems import confounds as cf  # noqa: E402
+from gems import confounds
 
-force = "--force" in sys.argv
-print(json.dumps(cf.build_all(force=force), indent=2))
+if __name__ == "__main__":
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--force", action="store_true")
+    args = p.parse_args()
+    print(json.dumps(confounds.build_all(force=args.force), indent=2))

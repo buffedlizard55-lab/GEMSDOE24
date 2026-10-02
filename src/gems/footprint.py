@@ -1,4 +1,5 @@
 """Load the scored footprint from the committed run-length payload (docs/data/footprint.bin)."""
+
 from __future__ import annotations
 
 import json
@@ -67,6 +68,7 @@ def write_template(path: Path | str, fill_value: float = 0.0) -> Path:
 
 def meta() -> dict:
     return json.loads((SITE_DATA_DIR / "footprint.json").read_text())
+
 
 def load_band(path, band: int = 1) -> "np.ndarray":
     """Read one band of a GeoTIFF as float32, NaN outside the file's nodata.
