@@ -1,7 +1,11 @@
 {
-  "generated_utc": "2026-10-01T23:44:27+00:00",
+  "generated_utc": "2026-10-02T01:49:47+00:00",
   "note": "Small bridge + external assets committed for reproducibility. Competition originals: https://www.drivendata.org/competitions/306/competition-doe-gems/data/ (login required). External sources documented in registry/sources.json.",
   "files": {
+    "bridge/example_submission.tif": {
+      "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "bytes": 1599597
+    },
     "bridge/existing_faults.tif": {
       "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
       "bytes": 425830
