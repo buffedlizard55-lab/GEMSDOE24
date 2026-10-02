@@ -136,3 +136,31 @@ is treated. It is **not** used to relax any criterion above: section 3, item 5
 already says a sparse-pass/dense-fail result is reported as "owner decision
 required". No thinned-raster score had been computed when this addendum was
 written.
+
+## 6. Addendum 2 (frozen before the operator head-to-head is run) — merge with H25-1
+
+While integrating, I found that the earlier work on this session branch had already
+preregistered and run an independent version of this idea: **H25-1 "Dotted H19"**
+(`knowledge/04_preregistered_dotting_2026-10-02.md`, `src/gems/thinning.py::dot_thin`,
+`evidence/dotting_validation.json`; frozen d* = 2.8 -> 44,090 px, all of its gates
+passed, no slot spent). Two operators and two truth constructions now agree on the sign
+and on the optimum region (about 35-50 % of H19-5's pixels). To choose *one* deliverable
+without tuning on the outcome, the following is frozen here, before any run:
+
+* **Operators compared at equal pixel count:** `D(d)` = `thinning.dot_thin` with
+  d in {1.5, 2.4, 3.2} (60,069 / 44,090 / 34,817 px on H19-5) and `K(f)` with
+  f = N_D / N_base (0.496 / 0.364 / 0.287) plus the grid f in {0.45, 0.50, 0.55, 0.60}
+  from section 3. Bases: H19-5 (primary), H19-4 (replicate).
+* **Truth draws:** selection = sparse seed offsets 0-29, confirmation = offsets 30-59
+  (disjoint truth subsets of the same catalogue; not independent geology).
+* **Selection rule for the primary download:** among candidates that pass the legacy
+  gate (`holdout.gate`: dense and sparse means each improve by > 0.001, >=3/4 sparse
+  fold wins, no fold loses > 0.01) on the **selection** draws, take the one with the
+  highest model-extrapolated public score (phi = 0.05, harness sparse retention,
+  `emission.extrapolate_variant`); ties go to the larger pixel count. It must pass the
+  same gate on the **confirmation** draws, otherwise the next one is used.
+* **Alternate download:** the sparse-optimal candidate (highest mean sparse DTI on the
+  selection draws), labelled "owner decision required" if it fails the legacy gate.
+* Neither file is a reference: both are subsets of H19-5 with new content ids, and no
+  weekly slot is spent or recommended unless the exact file also passes the nuisance
+  audit on the available sources.
