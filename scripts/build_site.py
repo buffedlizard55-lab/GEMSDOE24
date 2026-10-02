@@ -110,6 +110,7 @@ def main():
     comp = load("evidence/h24_e1_operator_comparison.json")
     cal = load("evidence/emission_calibration.json")
     exp1 = load("evidence/h24_e1_emission_experiment.json")
+    exp2 = load("evidence/h24_2_experiment.json")
     audit = load("evidence/accessibility_audit_v2.json")
     forensics = load("evidence/format_forensics.json")
     geom = load("evidence/lb_geometry_analysis.json")
@@ -196,7 +197,7 @@ def main():
         + status
         + metrics
         + f"""<section><div class="sectionhead"><h2>Why this file, in three facts</h2><a href="research.html" class="small">Methods and numbers →</a></div><div class="grid3"><article class="card"><div class="tagline">01 · The metric</div><h3>Every emitted pixel costs 0.2</h3><p>DTI = TPw / (0.2·(TPw+FPw) + 0.8·|G|). False-positive mass is linear in emitted pixels; |G| (hidden new-fault pixels) is small. {link("https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#performance-metric", "Official definition")}</p></article><article class="card"><div class="tagline">02 · The measurement</div><h3>A blind lattice reveals the density</h3><p>The owner's spacing-5 lattice scored 0.0904. A uniform lattice earns the same expected credit wherever truth is, so that one number gives the hidden truth density (≈{fmt((tau or 0) * 100, 2)}% of cells). In the first-order model the false-positive term is about {fmt((fp_share or 0) * 100, 0)}% of H19-5's DTI denominator.</p></article><article class="card"><div class="tagline">03 · The precedent</div><h3>Dotting already worked once</h3><p>Same probability surface, solid → dotted: owner-reported 0.1280 → 0.1839 (+44%) with 60% fewer pixels. H19-4/H19-5 were never dotted. This session tests that on the best surface, under frozen rules.</p></article></div></section>
-<section><div class="grid2"><article class="card"><div class="sectionhead"><h2>What was checked</h2><span class="badge">Computed in this repo</span></div><ol class="steplist"><li><h3>Format and range</h3><p>Single band, float32, EPSG:32611, exact grid; all {5167373:,} footprint values finite in [0,1]; NaN outside. {forensics.get("submission_grid_float32_rasters", 0)} owner rasters profiled: none has a value outside [0,1].</p></li><li><h3>Paired holdout, frozen rule</h3><p>Four spatial quadrants, 30 selection + 30 confirmation sparse-truth draws; the primary improves sparse and dense DTI and wins {sel.get("selection", {}).get("draw_fold_wins", 0)}/{sel.get("selection", {}).get("draw_fold_cells", 0)} fold-draw cells.</p></li><li><h3>Exact-file accessibility audit</h3><p>Labels first, then each raster: roads, closed claims, four acquisition blocks. Labels AUC {fmt(auc(lab_a), 3)} (chance); H19-4 prediction {fmt(auc(h4_a), 3)}.</p></li><li><h3>Reproducibility</h3><p>The alternate raster is byte-identical to the earlier session's independently frozen candidate (SHA-256 prefix {e((alternate or {}).get("sha256", "")[:8])}).</p></li></ol></article><article class="card"><div class="sectionhead"><h2>Source updates</h2><span class="badge gray">Timestamped</span></div><ul class="feed" id="source-feed-list">{feed_items}</ul><p class="micro" data-source-state>Latest verified snapshot, not a live scoring API</p><p class="micro">The live site is served by GitHub Pages from <code>main</code>. The feed file refreshes only when a workflow commits it; check the timestamp.</p></article></div></section>
+<section><div class="grid2"><article class="card"><div class="sectionhead"><h2>What was checked</h2><span class="badge">Computed in this repo</span></div><ol class="steplist"><li><h3>Format and range</h3><p>Single band, float32, EPSG:32611, exact grid; all {5167373:,} footprint values finite in [0,1]; NaN outside. {forensics.get("submission_grid_float32_rasters", 0)} owner rasters profiled: none has a value outside [0,1].</p></li><li><h3>Paired holdout, frozen rule</h3><p>Four spatial quadrants, 30 selection + 30 confirmation sparse-truth draws; the primary improves sparse and dense DTI and wins {sel.get("selection", {}).get("draw_fold_wins", 0)}/{sel.get("selection", {}).get("draw_fold_cells", 0)} fold-draw cells.</p></li><li><h3>Exact-file accessibility audit</h3><p>Labels first, then each raster: roads, closed claims, four acquisition blocks. Labels AUC {fmt(auc(lab_a), 3)} (chance); H19-4 prediction {fmt(auc(h4_a), 3)}.</p></li><li><h3>Reproducibility</h3><p>The alternate raster is byte-identical to the earlier session's independently frozen candidate (SHA-256 prefix {e((alternate or {}).get("sha256", "")[:8])}).</p></li></ol></article><article class="card"><div class="sectionhead"><h2>Source updates</h2><span class="badge gray">Timestamped</span></div><ul class="feed" id="source-feed-list">{feed_items}</ul><p class="micro" data-source-state>Latest verified snapshot, not a live scoring API</p><p class="micro">The live site is served by GitHub Pages from <code>main</code>. DrivenData rows are <strong>human-read snapshots</strong> (its Terms of Use forbid automatic access, so nothing here fetches it); only the USGS ScienceBase API is checked automatically. Check the timestamps.</p></article></div></section>
 <section><div class="callout"><div><h3>Not a renamed reference</h3><p>The already-scored H19-5 file is kept for reference only. Re-uploading it spends a slot for no new information.</p></div><a class="button" href="downloads/{e(reference["file"])}" download>Reference H19-5 (do not resubmit)</a></div></section>"""
     )
 
@@ -214,22 +215,54 @@ def main():
     def cand_row(name):
         r = rows.get(name, {})
         s, c = r.get("selection", {}), r.get("confirmation", {})
+        base = name == "solid"
         gate_s = s.get("legacy_gate", {}).get("passed")
         gate_c = c.get("legacy_gate", {}).get("passed")
         return (
             f'<tr><td>{e(name)}<br><span class="sourcekind">{e(r.get("kind", ""))}</span></td><td class="num">{r.get("n", 0):,}</td>'
             f'<td class="num">{fmt(s.get("mean_dense_dti"))}</td><td class="num">{fmt(s.get("mean_sparse_dti"))}</td>'
-            f'<td class="num">{pct(s.get("paired_sparse_gain_rel"))}</td><td class="num">{fmt(c.get("mean_sparse_dti"))}</td>'
-            f'<td>{"pass" if gate_s else "fail"} / {"pass" if gate_c else "fail"}</td><td class="num">{fmt(s.get("model_public_score"), 3)}</td></tr>'
+            f'<td class="num">{"—" if base else pct(s.get("paired_sparse_gain_rel"))}</td><td class="num">{fmt(c.get("mean_sparse_dti"))}</td>'
+            f'<td>{"—" if base else ("pass" if gate_s else "fail") + " / " + ("pass" if gate_c else "fail")}</td><td class="num">{fmt(s.get("model_public_score"), 3)}</td></tr>'
         )
 
     order = ["solid", "D1.5", "K0.496", "D2.4", "K0.364", "D3.2", "K0.287", "K0.600"]
     op_rows = "".join(cand_row(n) for n in order if n in rows)
     pair_ret = pair.get("implied_credit_retention_from_reported_scores")
+    res2 = exp2.get("results", {})
+    hist2 = exp2.get("historical_diagnostics", {})
+    arm_names = {
+        "physics_raw": "Physics, raw",
+        "physics_arc_raw": "Physics + arc, raw",
+        "physics_residualized": "Physics, residualized",
+        "physics_arc_residualized": "Physics + arc, residualized",
+    }
+    refit_rows = "".join(
+        f'<tr><td>{arm_names[k]}</td><td class="num">{fmt(v.get("mean_dense_dti"), 4)}</td><td class="num">{fmt(v.get("mean_sparse_dti"), 4)}</td><td></td></tr>'
+        for k, v in res2.items()
+        if k in arm_names
+    ) + "".join(
+        f'<tr><td>{k.upper()} as emitted</td><td class="num">{fmt(v.get("mean_dense_dti"), 4)}</td><td class="num">{fmt(v.get("mean_sparse_dti"), 4)}</td><td><span class="sourcekind">diagnostic, not OOF</span></td></tr>'
+        for k, v in hist2.items()
+    )
+    raw2, cand2 = res2.get("physics_raw", {}), res2.get("physics_arc_residualized", {})
+    res_audit = refs.get("h24-2a-residualized", {})
+    refit_verdict = (
+        f"With the corrected sources the arc + residualized arm does <strong>not</strong> beat the raw physics baseline "
+        f"(Δdense {fmt((cand2.get('mean_dense_dti') or 0) - (raw2.get('mean_dense_dti') or 0), 4)}, "
+        f"Δsparse {fmt((cand2.get('mean_sparse_dti') or 0) - (raw2.get('mean_sparse_dti') or 0), 4)}), and residualizing alone costs dense DTI. "
+        "Block membership is a latitude band, so removing it also removes regional geology, while the labels themselves show no accessibility association "
+        f"(AUC {fmt(auc(lab_a), 3)}). "
+        + (
+            f"The residualized detector's emitted raster audits at AUC {fmt(auc(res_audit), 3)} (H19-5: {fmt(auc(h5_a), 3)})."
+            if res_audit
+            else ""
+        )
+    )
     research = f"""<div class="pagehead"><div class="eyebrow">Methods · frozen protocol · limits</div><h1>Efficiency before more detectors.</h1><p>The metric charges 0.2 per emitted pixel. Calibrating the hidden truth density from the owner's own blind-lattice score shows the best files emit ~10× more pixels than there is truth. Re-emitting H19-5 more efficiently is the cheapest lever with direct evidence.</p></div><div class="status">{banner}</div>
 <section><h2>What the owner's scores reveal</h2><div class="grid2"><article class="card"><h3>Truth density from a blind lattice</h3><p>The 13GEMSDOE spacing-5 lattice (owner-reported <strong>0.0904</strong>; mean kernel credit {fmt(cal.get("lattice", {}).get("mean_kernel_credit"), 3)}, {cal.get("lattice", {}).get("emitted_px", 0):,} pixels) implies τ = <strong>{fmt((tau or 0) * 100, 3)}%</strong> of cells ({(cal.get("lattice", {}).get("truth_px_equivalent") or 0):,.0f} px ≈ {fmt((cal.get("lattice", {}).get("truth_to_catalogue_ratio") or 0) * 100, 1)}% of the catalogue). Synthetic recovery: mean error +2.5%, SD 7.6%. This lies inside GEMSDOE10's independent 0.13–0.6% bound.</p><p class="micro">Caveat: 0.0904 appears only in the 2026-10-02 brief (older snapshot blank) — unconfirmed by the portal.</p></article><article class="card"><h3>A natural experiment</h3><p>Same probability surface (<code>6452ae1d00</code>): solid H25 (161,366 px) <strong>0.1280</strong> → dotted H28 (65,236 px) <strong>0.1839</strong>, +{fmt((pair.get("score_change") or 0) * 100, 0)}% (also brief-only). Implied credit retention {fmt(pair_ret, 2)}.</p><p>Out-of-sample check of my harness-based extrapolation on this pair: it under-predicted ({fmt((val.get("predictions", {}) or {}).get("phi0.05"), 3)} vs 0.1839). The harness's sparse ratio was {fmt(val.get("harness_sparse_dti_ratio_h28_over_h25"), 2)} (right sign, conservative) but its <em>dense</em> ratio was {fmt(val.get("harness_dense_dti_ratio_h28_over_h25"), 2)} (wrong sign).</p></article></div></section>
 <section><h2>Equal-pixel-count operator comparison (H19-5)</h2><div class="tablewrap"><table><thead><tr><th>Candidate</th><th>Pixels</th><th>Dense DTI</th><th>Sparse DTI</th><th>Sparse gain</th><th>Sparse (confirm)</th><th>Legacy gate sel / conf</th><th>Model score</th></tr></thead><tbody>{op_rows}</tbody></table></div><p class="micro">D = earlier session's geodesic Poisson-disk <code>dot_thin</code>; K = this session's greedy kernel cover (inferior at equal N — recorded, not hidden). Selection draws 0–29, confirmation 30–59. Frozen rule: highest model score among candidates passing the legacy gate on selection and confirmation → <strong>{e(sel_name)}</strong>; alternate = highest sparse DTI → <strong>{e(alt_name)}</strong>. Model score = first-order extrapolation from the harness's sparse credit retention, not a leaderboard result.</p></section>
-<section><div class="grid2"><article class="card"><h3>Why H19-4 / H19-5 scored best (supported)</h3><ul class="prose"><li>Same family: ≈90% topographic/scarp terms, Jaccard 0.777, ridge-thinned, no pixel on a catalogue cell.</li><li>20–23% of emitted pixels lie within 300 m of the catalogue; files that hug it (≥45% within 300 m) never exceeded 0.046 ({geom.get("halo_heavy_files_ge45pct_within_3px", {}).get("n", 0)} files).</li><li>Distance-to-catalogue alone does not explain scores (Spearman {fmt(geom.get("spearman_score_vs_share_within_3px_of_catalogue"), 2)}): method skill matters.</li><li>Not supported: attributing the +0.0028 H19-4→H19-5 gain to any named physical line.</li></ul></article><article class="card"><h3>Is a higher score possible?</h3><p>Already: H19-5 exceeded 0.1894. Beyond it, the lever with direct evidence is emission efficiency (model central {fmt(model_lo, 2)}). The 0.3195 leader needs new information or a much better detector; thinning alone does not get there.</p><p class="micro">Phase 2 re-scores on an expanded, denser label set, which favours less aggressive thinning — hence the primary is the gate-passing 50% file, not the sparsest.</p></article></div></section>"""
+<section><h2>Refit on the corrected nuisance sources (previous sessions' next step)</h2><div class="tablewrap"><table><thead><tr><th>Arm</th><th>Dense DTI</th><th>Sparse DTI</th><th>Note</th></tr></thead><tbody>{refit_rows}</tbody></table></div><p class="micro">Frozen H24-2A protocol: four spatial quadrants, 1.5 km collar, whole-component exclusion, training-only residualization, one truth draw. Nuisance = buffered Census roads, closed claims and the four derived blocks (the earlier run had only Area 1 and clipped roads). {refit_verdict}</p></section>
+<section><div class="grid2"><article class="card"><h3>Why H19-4 / H19-5 scored best (supported)</h3><ul class="prose"><li>Same family: ≈90% topographic/scarp terms, Jaccard 0.777, ridge-thinned, no pixel on a catalogue cell.</li><li>≈23% of emitted pixels lie within 300 m of the catalogue; files that hug it (≥45% within 300 m) never exceeded 0.046 ({geom.get("halo_heavy_files_ge45pct_within_3px", {}).get("n", 0)} files).</li><li>Distance-to-catalogue alone does not explain scores (Spearman {fmt(geom.get("spearman_score_vs_share_within_3px_of_catalogue"), 2)}): method skill matters.</li><li>Not supported: attributing the +0.0028 H19-4→H19-5 gain to any named physical line.</li></ul></article><article class="card"><h3>Is a higher score possible?</h3><p>Already: H19-5 exceeded 0.1894. Beyond it, the lever with direct evidence is emission efficiency (model central {fmt(model_lo, 2)}). The 0.3195 leader needs new information or a much better detector; thinning alone does not get there.</p><p class="micro">Phase 2 re-scores on an expanded, denser label set, which favours less aggressive thinning — hence the primary is the gate-passing 50% file, not the sparsest.</p></article></div></section>"""
 
     # ranked hypotheses (merged with knowledge/05)
     hyp_rows = [
@@ -260,7 +293,7 @@ def main():
         (
             "4",
             "H25-6 · map-scale correction corridor",
-            "INGENIOUS `MAPSCALE` per trace (82% of length at 1:250k) + lidar scarps",
+            "INGENIOUS <code>MAPSCALE</code> per trace (82% of length at 1:250k) + lidar scarps",
             "Staff: new truth may lie within 300 m of a known trace; Qfaults can be ≈400 m off (Hermant 2025)",
             "catalogue geometry is used as a positional-uncertainty prior, not a halo (halos fail)",
             "unknown · needs a per-pixel map-scale raster (free GDR 1391) · <span class='badge amber'>Not yet tested</span>",
@@ -305,6 +338,7 @@ def main():
             ("h19-5", "H19-5 as emitted"),
             ("candidate", "Primary candidate"),
             ("candidate_alt", "Alternate candidate"),
+            ("h24-2a-residualized", "Residualized detector (H24-2A arc + nuisance removal)"),
         )
     )
     fact_rows = "".join(
@@ -335,7 +369,7 @@ def main():
 <section><h2>Irregularities register</h2><div class="tablewrap"><table><thead><tr><th>ID</th><th>Status</th><th>Issue</th><th>Resolution / state</th></tr></thead><tbody>{irr_rows}</tbody></table></div></section>
 <section><h2>Owner score ledger</h2><div class="card"><p>{len(ledger.get("artifacts", []))} scored artifacts matched to hashed files; {len(ledger.get("unscored_artifacts", []))} unscored files recorded; blanks stay unknown, never zero. Scores marked <code>task_statement_only</code> (including H28 0.1839 and the lattice 0.0904) appear only in the 2026-10-02 brief. {link("https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/registry/live_scores.json", "registry/live_scores.json")}</p></div></section>
 <section><h2>All supplied project sources</h2><p class="small muted">Pinned HTML/source was read for every supplied URL; this does not independently prove each deployment or score.</p><div class="tablewrap"><table><thead><tr><th>Project / site</th><th>Pinned source / commit</th><th>Review status</th></tr></thead><tbody>{group_rows}</tbody></table></div></section>
-<section><div class="grid2"><article class="card"><h3>Limitations and access needs</h3><ul class="prose"><li>I cannot reach the DrivenData portal, the private leaderboard or hidden labels, nor upload or verify scores.</li><li>Hand-labelled lidar scarps are allowed by staff (labels must be saved) and need a geologist.</li><li>Official flight-number → block mapping needs the S3-hosted profile archives (anonymous GET returns 403).</li><li>The scheduled feed is only as fresh as its last committed run.</li></ul></article><article class="card"><h3>Three-pass review</h3><p>{e(review.get("summary", "Review in progress."))}</p><div class="actions"><a class="button" href="data/source_health.json" download>Source feed</a><a class="button" href="data/audit.json" download>Audit receipt</a></div></article></div></section>"""
+<section><div class="grid2"><article class="card"><h3>Limitations and access needs</h3><ul class="prose"><li>I cannot reach the DrivenData portal, the private leaderboard or hidden labels, nor upload or verify scores.</li><li>Hand-labelled lidar scarps are allowed by staff (labels must be saved) and need a geologist.</li><li>Official flight-number → block mapping needs the S3-hosted profile archives (anonymous GET returns 403).</li><li>DrivenData figures are human-read snapshots: re-verify by hand; no job here may access that site automatically.</li></ul></article><article class="card"><h3>Three-pass review</h3><p>{e(review.get("summary", "Review in progress."))}</p><div class="actions"><a class="button" href="data/source_health.json" download>Source feed</a><a class="button" href="data/audit.json" download>Audit receipt</a></div></article></div></section>"""
 
     # ------------------------------------------------------------------ write
     bodies = {

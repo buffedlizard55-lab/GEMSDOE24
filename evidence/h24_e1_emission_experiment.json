@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-02T15:54:57.556033+00:00",
+  "generated_utc": "2026-10-02T16:33:47.254861+00:00",
   "preregistration": "knowledge/04_preregistered_emission_2026-10-02.md",
   "n_draws": 30,
   "fractions": [
@@ -1177,5 +1177,5 @@
       "delta_mean_sparse": 0.0113
     }
   },
-  "seconds": 64.57620191574097
+  "seconds": 68.07542371749878
 }

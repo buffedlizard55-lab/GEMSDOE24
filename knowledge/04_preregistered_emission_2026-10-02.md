@@ -139,6 +139,12 @@ written.
 
 ## 6. Addendum 2 (frozen before the operator head-to-head is run) — merge with H25-1
 
+**Ordering disclosure.** This addendum was written *after* the section-3 K(f) grid had been run
+(`evidence/h24_e1_emission_experiment.json`: K0.60 passed the legacy gate, K0.45 did not), so the choice of
+the selection rule below was not independent of those results. It was written *before* any `D(d)` raster or
+equal-N comparison was scored; the selection and confirmation draws are disjoint, and the rule is applied
+mechanically by `scripts/run_operator_comparison.py`.
+
 While integrating, I found that the earlier work on this session branch had already
 preregistered and run an independent version of this idea: **H25-1 "Dotted H19"**
 (`knowledge/04_preregistered_dotting_2026-10-02.md`, `src/gems/thinning.py::dot_thin`,

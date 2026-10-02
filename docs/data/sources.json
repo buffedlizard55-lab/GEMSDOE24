@@ -178,6 +178,13 @@
       "url": "https://gdr.openei.org/submissions/1391",
       "verified": "data/external/gdr_qfaults_traces.csv: 1,126 in-footprint traces, 1:100,000 (18.1% of length) and 1:250,000 (81.9%). Nominal 0.5 mm map accuracy is 50 m and 125 m respectively.",
       "limit": "Per-pixel map-scale raster is not yet built, so the correction-corridor hypothesis that would use it is unvalidated. The NSHM23 fault-section database (1,017 simplified Quaternary-active sections compiled from the USGS Quaternary Fault Database) and NBMG's free 1:500,000 geologic-map fault data were read at description level only; neither is a new expert-mapped fault layer, so neither was pursued."
+    },
+    {
+      "name": "DrivenData Terms of Use: no automatic access",
+      "kind": "Official terms read 2026-10-02",
+      "url": "https://www.drivendata.org/termsofuse/",
+      "verified": "Prohibited: \"Use any robot, spider or other automatic device, process or means to access the Website for any purpose, including monitoring or copying any of the material on the Website.\" The prize rules make the Terms binding on competitors (rules A.1).",
+      "limit": "The previous scheduled feed fetched the leaderboard/forum automatically; it no longer does. Agent page-reading during this user-directed session was one-off, not monitoring; the owner should re-verify quoted leaderboard figures by hand."
     }
   ]
 }

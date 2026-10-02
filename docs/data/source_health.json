@@ -1,43 +1,98 @@
 {
   "schema_version": 1,
-  "status": "manual_source_read",
+  "status": "human_read_snapshot",
   "checked_utc": "2026-10-02",
   "last_success_utc": "2026-10-02",
-  "verification_method": "Official leaderboard text retrieved with the page-reading tool; exact check time and raw HTML hash not recorded",
+  "verification_method": "DrivenData pages were read once with an agent page-reading tool during a user-directed session on 2026-10-02; they are NOT fetched by CI or any schedule (DrivenData Terms of Use forbid automatic access). Re-verify by hand before relying on a figure.",
   "leaderboard": {
     "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
     "participant": "DARD",
     "best_score": 0.3195,
     "submissions": 12,
-    "account_artifact_mapping_verified": false
+    "account_artifact_mapping_verified": false,
+    "rank": 1
   },
   "updates": [
     {
-      "title": "Official leader snapshot: DARD 0.3195",
-      "kind": "Official page read, not a permanent result",
+      "title": "Official leader snapshot: DARD 0.3195 (#5 is 0.2919; owner-reported best 0.1922)",
+      "kind": "Human-read leaderboard snapshot, not a permanent result",
       "checked_utc": "2026-10-02",
       "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"
     },
     {
-      "title": "Known-fault masking is pixel-exact, not a 300 m exclusion buffer",
-      "kind": "Organizer staff clarification",
+      "title": "Staff: new-fault truth can lie within 300 m of a known trace (corrections count)",
+      "kind": "Organizer staff clarification (2026-09-21)",
       "checked_utc": "2026-10-02",
       "url": "https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4"
     },
     {
-      "title": "Hidden test fault sources and types are not disclosed",
-      "kind": "Organizer staff clarification",
+      "title": "Staff: public and private scores pool all subset pixels into one Tversky index",
+      "kind": "Organizer staff clarification (2026-10-01)",
       "checked_utc": "2026-10-02",
-      "url": "https://community.drivendata.org/t/how-were-the-new-test-faults-identified-data-sources-and-fault-types/11527/7"
+      "url": "https://community.drivendata.org/t/leaderboard-aggregation-pooled-over-public-test-pixels-or-mean-of-per-chunk-scores/11550"
     },
     {
-      "title": "GeoDAWN: two resolution areas are not four operational acquisition blocks",
-      "kind": "Official USGS report and download receipt",
+      "title": "DrivenData Terms of Use prohibit robots/automatic access to the site",
+      "kind": "Official terms (read 2026-10-02)",
+      "checked_utc": "2026-10-02",
+      "url": "https://www.drivendata.org/termsofuse/"
+    },
+    {
+      "title": "GeoDAWN: four named acquisition blocks; boundaries only in Figure 1",
+      "kind": "Official USGS ScienceBase release",
       "checked_utc": "2026-10-02",
       "url": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7"
     }
   ],
   "errors": [],
-  "deployment_verified": false,
-  "note": "The scheduled workflow refreshes snapshots after authenticated publication. A local file does not prove public Pages deployment. Unknown artifact scores are never inferred from account scores."
+  "deployment_verified": true,
+  "note": "Leaderboard and forum entries are human-read snapshots. The scheduled workflow only checks the USGS ScienceBase API. A local file does not prove deployment; unknown artifact scores are never inferred from account scores.",
+  "drivendata_automation": "none: drivendata.org is never requested by scheduled or CI jobs",
+  "deployment_evidence": "GitHub Pages API status 'built' for main; live overview page fetched 2026-10-02 (see README).",
+  "leaderboard_rows": [
+    {
+      "rank": 1,
+      "participant": "DARD",
+      "best_score": 0.3195,
+      "submissions": 12
+    },
+    {
+      "rank": 2,
+      "participant": "alexoktaba",
+      "best_score": 0.3042,
+      "submissions": 19
+    },
+    {
+      "rank": 3,
+      "participant": "Batik Shirt Brothers",
+      "best_score": 0.2998,
+      "submissions": 17
+    },
+    {
+      "rank": 4,
+      "participant": "xiaofanhu",
+      "best_score": 0.2941,
+      "submissions": 7
+    },
+    {
+      "rank": 5,
+      "participant": "joeyfezster",
+      "best_score": 0.2919,
+      "submissions": 18
+    },
+    {
+      "rank": 26,
+      "participant": "smrtdoog5",
+      "best_score": 0.1922,
+      "submissions": 5,
+      "note": "equals the owner-reported H19-5; ownership unverified"
+    },
+    {
+      "rank": 28,
+      "participant": "SDCF9",
+      "best_score": 0.1894,
+      "submissions": 6,
+      "note": "equals the owner-reported H19-4; ownership unverified"
+    }
+  ]
 }

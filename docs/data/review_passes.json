@@ -1,72 +1,78 @@
 {
-  "schema_version": 1,
-  "review_date_utc": "2026-10-02",
-  "summary": "Three passes completed with explicit blocked acceptance items; no full-audit, new-score, PR/merge or public-deployment success is fabricated.",
-  "passes": [
+  "date_utc": "2026-10-02",
+  "session": "second session on arena/01a0fc3e-gemsdoe24 (earlier work on the branch was merged first)",
+  "summary": "Pass 1 implemented and verified the calibration, frozen emission experiments, exact-file audit, packaging and site. Pass 2 found and fixed or disclosed 10 issues, including an inherited compliance problem (the scheduled feed fetched DrivenData automatically against its Terms of Use) and a result that did not survive corrected inputs (arc+residualized no longer beats raw physics). Pass 3 rechecked every requirement of the brief: all are addressed except the items recorded as blocked or untested (original H19 OOF reconstruction, H24-3A/4A, H25-2, official block coordinates, portal-error cause, any live score). No leaderboard result, upload, or official block coordinates are claimed.",
+  "pass_1_implement_and_verify": [
+    "Restored the hash-pinned 419 MB raster, rebuilt the 5,167,373 x 30 matrix (hash identical to the committed receipt), rebuilt nuisance rasters (official buffered roads, closed claims, four derived blocks).",
+    "Preregistered H24-E1 before any run (commits ce3e89b, 81a01ab, 05a4a3f); ran the lattice calibration, 30-draw paired holdout, equal-N operator head-to-head with disjoint selection/confirmation draws, and the h25->h28 out-of-sample check.",
+    "Full required-family classifier two-sample audit, labels first, then H19-4, H19-5, both candidates and the residualized detector (199 grouped refits, 99 shifts).",
+    "Packaged both candidates through the fail-closed post-process promotion path; independent plain-rasterio verifier passed every check on all three bundles (grid, [0,1], NaN/zeros outside, subset-of-H19-5, ZIP bytes, note length, unique ids).",
+    "Rebuilt the site from evidence; HTML well-formed, 148 page references resolve, all CSS classes defined; live preview served the exact registered bytes."
+  ],
+  "pass_2_bug_assumption_review": [
     {
-      "pass": 1,
-      "purpose": "Implement and verify sources/data/train/predict/validate",
-      "status": "completed_with_source_limits",
-      "checks": [
-        "Pinned 419 MB owner feature bridge restored and checked; 592 MiB, 5167373x30 descriptor matrix prepared.",
-        "All 21 supplied project source pages reviewed; selected H19/H16/H13 code and registries pinned.",
-        "Four ranked physical hypotheses written before new detector implementation.",
-        "Official BLM/USGS bytes fetched anonymously on CI; full claim IDs checked; quality-filtered 20 km claim-distance raster retained.",
-        "Training labels audited before detector fits; individual H19 predictions tested separately.",
-        "16 fresh paired spatial detector refits completed; full-region experimental raster produced and retained.",
-        "Exact experimental raster audited; four-reference Holm family calculated. All statistics remain provisional available-input diagnostics."
-      ],
-      "blocked": [
-        "Coordinate-verified operational acquisition blocks absent.",
-        "Original current-best H19 OOF reconstruction absent.",
-        "Owner feature/band mirror is integrity-checked, not independently organizer-authenticated."
-      ]
+      "finding": "Remote session branch held 12 commits missing from the checkout",
+      "fix": "merged without force-push; AGENTS.md makes git fetch the first command"
     },
     {
-      "pass": 2,
-      "purpose": "Fix assumptions, bugs and edge cases",
-      "status": "completed_with_blocked_road_data_correction",
-      "checks": [
-        "Known prediction/truth masking and adjacent-new-truth TP neutrality tested in both DTI implementations.",
-        "Empty components/quadrants, zero budgets, zero-score backfill and deterministic tie behavior checked.",
-        "NMS uses complete predicted halos and catalogue exclusion only after thinning; padding silhouettes rejected.",
-        "Esri multiple shells/holes, verbose quality prefixes, real nonempty distance seeds and Area1 priority tested.",
-        "Training-only median/scaling/splines/residualization and refitting every null/fold tested.",
-        "Undefined single-class shift AUC fixed with bounded geometry-only retries and recorded rejected draws; no score-based exclusions. Candidate required one rejection before 99 valid shifts.",
-        "Strict source/grid/range/soft-content-ID/flat-ZIP/comment/promotion checks verified; rejected candidate cannot be packaged as eligible.",
-        "Legacy executable wrappers fail closed; misleading reports preserved under archive.",
-        "Actual road-mirror source clipping discovered: padded raster alone cannot certify missing outside-window roads. Official buffered acquisition implemented, but not executed after auth/push failure."
-      ],
-      "tests": "55 pytest tests pass; Ruff check and format check pass; JavaScript syntax check passes; editable package build succeeds.",
-      "blocked": [
-        "Buffered official road-source correction requires a successful authenticated workflow trigger; nearest-road boundary certification remains incomplete.",
-        "No real browser engine was installed; DOM/link/HTTP checks do not claim clipboard/browser interaction testing."
-      ]
+      "finding": "Scheduled feed automatically fetched drivendata.org (leaderboard, forum) against the site's Terms of Use",
+      "fix": "script now refuses DrivenData hosts; only USGS ScienceBase is checked; tests enforce it; owner flagged (IR-DRIVENDATA-AUTOMATION)"
     },
     {
-      "pass": 3,
-      "purpose": "Recheck owner scope, reliability and publication claims",
-      "status": "completed_with_explicit_unfulfilled_acceptance_items",
-      "checks": [
-        "README preserves inherited quoted charter and expands every active available requirement; original uncondensed missing text is not invented.",
-        "Local paired gains, historical diagnostics, owner-reported 0.1922 and official 0.3195 snapshot remain separate.",
-        "Candidate is not promoted despite passing weaker paired-baseline gains; no weekly slot spent.",
-        "Exact-candidate AUC 0.534765 is below effect threshold; full requested source audit still blocked, not a pass.",
-        "First-screen uniquely named direct .tif reference, separate <=200-character note, checksum/range receipts and executive submission subpage delivered.",
-        "61 internal resource links resolve; primary TIFF served HTTP 200 in the local preview and matches full pinned SHA-256.",
-        "Scheduled anonymous source-feed/Pages artifact workflow implemented; stale/unknown snapshots marked rather than fabricated.",
-        "All changes remain on the fixed Arena session branch; no other branch created or pushed."
-      ],
-      "unfulfilled": [
-        "No independently verified full four-operational-block audit.",
-        "No corrected fully buffered official road raster/external-source retraining yet.",
-        "No reproduced current-best original OOF baseline and no verified new public score or leader-beater.",
-        "GitHub REST/GraphQL 401 and push failure prevent PR/merge/public deployment; reconnection requested without asking for secrets.",
-        "Complete uncondensed original prompt text was not available; available charter/requirements are preserved, not falsely called a verbatim unseen transcript."
-      ]
+      "finding": "build_submission24 crashed on a relative --validation path; hard-coded stale numbers in default summary",
+      "fix": "path resolved; generic summary; spacing/role/audit-label parameters added"
+    },
+    {
+      "finding": "Evidence claim (single-skill model Pearson 0.27) had no committed code",
+      "fix": "regression added to analyze_group_rasters.py; committed value 0.256 used everywhere"
+    },
+    {
+      "finding": "Proofreading inconsistencies: +35 % vs +36 %, 'SHA below', raw status codes, hard-coded '~70 %' and '20-23 %' claims, baseline row showing 'fail / fail', literal backticks",
+      "fix": "values computed from evidence; labels humanized; rows corrected"
+    },
+    {
+      "finding": "My greedy kernel-cover operator was inferior to the earlier dot_thin at equal N",
+      "fix": "disclosed as a negative result (IR-OPERATOR-INFERIOR); the delivered files use dot_thin"
+    },
+    {
+      "finding": "Extrapolation method under-predicted the one independent pair with known scores (0.138 vs 0.1839); dense ratio had the wrong sign",
+      "fix": "stated on the site and in the synthesis; predictions presented as a plausible range, not a score; gate regime issue recorded (IR-GATE-REGIME)"
+    },
+    {
+      "finding": "Earlier positive 'arc + residualized beats baseline' came from provisional inputs",
+      "fix": "re-run with full families: it does not hold; site and synthesis updated"
+    },
+    {
+      "finding": "Brief-only scores (H28 0.1839, lattice 0.0904) underpin the calibration",
+      "fix": "flagged unconfirmed everywhere (IR-BRIEF-ONLY-SCORES); consistency with GEMSDOE10's independent bound noted"
+    },
+    {
+      "finding": "GitHub credential lapsed mid-session (token expiry)",
+      "fix": "work committed locally and pushed up to the last working push; reported to the owner; no secrets requested"
     }
   ],
-  "new_submission_slot_spent": false,
-  "recommended_new_candidate": false,
-  "public_deployment_verified": false
+  "pass_3_recheck_against_the_brief": {
+    "easy_one_click_tif_at_start_of_site": "done: hero button on the overview and the guide; verified bytes",
+    "range_error_fix_unique_name_and_note": "strict writer + forensics over 148 rasters (cause of the original portal message NOT established); unique names/content ids; notes <= 200 chars",
+    "executive_summary_subpage": "done: six portal steps, copyable notes, troubleshooting, slot plan, rules",
+    "c2st_labels_first_then_predictions_then_residualize": "done with full families; labels at chance, detectors flagged mainly via claim proximity; residualization tested and costs accuracy",
+    "explain_h19_and_whether_higher_is_possible": "done (supported vs unsupported claims; emission efficiency is the lever with direct evidence)",
+    "three_to_five_hypotheses_ranked_validate_top_before_slot": "done; top item validated on the blocked holdout; no slot spent; owner decision flagged",
+    "free_official_sources_named_and_checked": "done in docs/data/sources.json; items needing CI (GDR 1391, 3DEP) named",
+    "new_strategy_and_system": "calibrated emission + frozen gates + owner-run slot protocol + ledger + record script",
+    "deep_research_and_knowledge_storage": "knowledge/04-06, sources table, irregularity register",
+    "prompt_in_readme_read_every_session": "verbatim brief embedded; AGENTS.md; provenance disclosed",
+    "autonomous_no_manual_input": "done except the unavoidable owner actions (uploads, exception decision, re-checking two brief-only scores)",
+    "data_placement_blocker": "completed: restore + prepare + confounds rebuilt with matching hashes",
+    "previous_sessions_next_steps": "roads done (CI), blocks derived+audited, refit on corrected sources done; H19 OOF reconstruction blocked; H24-3A/4A not run (deprioritized, recorded)",
+    "pr_and_merge": "see final report: depends on a valid GitHub credential"
+  },
+  "still_open": [
+    "Reconstruct the original H19 OOF reference (original surfaces unavailable)",
+    "H24-3A, H24-4A, H25-2, H25-3, H25-6 not run",
+    "Official block coordinates / flight-number mapping (S3 archives not anonymously downloadable)",
+    "Cause of the original portal error unknown",
+    "Live scores for the new files unknown; two brief-only scores unconfirmed",
+    "Scheduled feed run not yet observed"
+  ]
 }

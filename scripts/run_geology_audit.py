@@ -36,6 +36,13 @@ def main() -> None:
     ap.add_argument(
         "--candidate-alt", type=Path, help="second candidate audited in the same family-wise run"
     )
+    ap.add_argument(
+        "--extra",
+        action="append",
+        default=[],
+        metavar="LABEL=PATH",
+        help="additional reference raster audited in the same family-wise run (repeatable)",
+    )
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
     if args.permutations < 199 or args.shifts < 99:
@@ -60,6 +67,11 @@ def main() -> None:
         refs.append(("candidate", args.candidate.resolve()))
     if args.candidate_alt:
         refs.append(("candidate_alt", args.candidate_alt.resolve()))
+    for item in args.extra:
+        label, sep, extra_path = item.partition("=")
+        if not sep or not label or not extra_path:
+            raise SystemExit("--extra expects LABEL=PATH")
+        refs.append((label, Path(extra_path).resolve()))
     protocol = {
         "version": 2,
         "labels_first": True,

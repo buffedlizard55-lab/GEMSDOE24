@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-02T16:06:38.404347+00:00",
+  "generated_utc": "2026-10-02T16:18:22.527238+00:00",
   "scores": "OWNER-REPORTED (2026-10-02 brief); not organizer receipts",
   "n_scored": 26,
   "rows": [
@@ -16,7 +16,17 @@
       "share_within_3px": 0.22717553722829004,
       "share_ge10px": 0.5940097910526619,
       "share_ge40px": 0.2304529806573049,
-      "share_within_3px_of_sgmc": 0.20874094988070765
+      "share_within_3px_of_sgmc": 0.20874094988070765,
+      "bin_counts": [
+        13298,
+        9234,
+        4986,
+        12325,
+        9335,
+        21540,
+        22498,
+        27915
+      ]
     },
     {
       "label": "19GEMSDOE h19-4",
@@ -31,7 +41,17 @@
       "share_within_3px": 0.22546635535914816,
       "share_ge10px": 0.5955048917829358,
       "share_ge40px": 0.2313235686182632,
-      "share_within_3px_of_sgmc": 0.21094046647654288
+      "share_within_3px_of_sgmc": 0.21094046647654288,
+      "bin_counts": [
+        13441,
+        9427,
+        5040,
+        12583,
+        9577,
+        21908,
+        23170,
+        28633
+      ]
     },
     {
       "label": "16GEMSDOE h16-1",
@@ -46,7 +66,17 @@
       "share_within_3px": 0.2241183162684869,
       "share_ge10px": 0.5969468851612487,
       "share_ge40px": 0.22837847650860504,
-      "share_within_3px_of_sgmc": 0.21290312169696382
+      "share_within_3px_of_sgmc": 0.21290312169696382,
+      "bin_counts": [
+        13316,
+        9409,
+        5052,
+        12561,
+        9616,
+        22053,
+        23627,
+        28305
+      ]
     },
     {
       "label": "GEMSDOE10 h28",
@@ -61,7 +91,17 @@
       "share_within_3px": 0.2634894843338034,
       "share_ge10px": 0.46175424612177324,
       "share_ge40px": 0.0910540192531731,
-      "share_within_3px_of_sgmc": 0.14533386473726165
+      "share_within_3px_of_sgmc": 0.14533386473726165,
+      "bin_counts": [
+        7630,
+        5560,
+        3999,
+        10389,
+        7535,
+        14626,
+        9557,
+        5940
+      ]
     },
     {
       "label": "GEMSDOE / 5GEMSDOE",
@@ -76,7 +116,17 @@
       "share_within_3px": 0.21402963025240362,
       "share_ge10px": 0.5968267885346417,
       "share_ge40px": 0.17593187564181864,
-      "share_within_3px_of_sgmc": 0.16669569238345175
+      "share_within_3px_of_sgmc": 0.16669569238345175,
+      "bin_counts": [
+        16576,
+        11985,
+        7079,
+        17254,
+        14242,
+        36095,
+        33992,
+        29296
+      ]
     },
     {
       "label": "8GEMSDOE Hedge-v2",
@@ -91,7 +141,17 @@
       "share_within_3px": 0.21402963025240362,
       "share_ge10px": 0.5968267885346417,
       "share_ge40px": 0.17593187564181864,
-      "share_within_3px_of_sgmc": 0.16669569238345175
+      "share_within_3px_of_sgmc": 0.16669569238345175,
+      "bin_counts": [
+        16576,
+        11985,
+        7079,
+        17254,
+        14242,
+        36095,
+        33992,
+        29296
+      ]
     },
     {
       "label": "GEMSDOE2",
@@ -106,7 +166,17 @@
       "share_within_3px": 0.22732723686977477,
       "share_ge10px": 0.5843738810678094,
       "share_ge40px": 0.17251589949360327,
-      "share_within_3px_of_sgmc": 0.1767728148497576
+      "share_within_3px_of_sgmc": 0.1767728148497576,
+      "bin_counts": [
+        19134,
+        13214,
+        7650,
+        18225,
+        14906,
+        37358,
+        35108,
+        30354
+      ]
     },
     {
       "label": "7GEMSDOE",
@@ -121,7 +191,17 @@
       "share_within_3px": 0.25636555250523685,
       "share_ge10px": 0.5560181631298872,
       "share_ge40px": 0.20199326038590146,
-      "share_within_3px_of_sgmc": 0.1711315525833019
+      "share_within_3px_of_sgmc": 0.1711315525833019,
+      "bin_counts": [
+        10662,
+        5754,
+        3288,
+        8255,
+        6165,
+        13655,
+        13555,
+        15525
+      ]
     },
     {
       "label": "12GEMSDOE",
@@ -136,7 +216,17 @@
       "share_within_3px": 0.2693837266684084,
       "share_ge10px": 0.46576097999941946,
       "share_ge40px": 0.0951938614570331,
-      "share_within_3px_of_sgmc": 0.173193222831819
+      "share_within_3px_of_sgmc": 0.173193222831819,
+      "bin_counts": [
+        13774,
+        8765,
+        5301,
+        15737,
+        11635,
+        22666,
+        15631,
+        9838
+      ]
     },
     {
       "label": "12GEMSDOE allfinite",
@@ -151,7 +241,17 @@
       "share_within_3px": 0.2693837266684084,
       "share_ge10px": 0.46576097999941946,
       "share_ge40px": 0.0951938614570331,
-      "share_within_3px_of_sgmc": 0.173193222831819
+      "share_within_3px_of_sgmc": 0.173193222831819,
+      "bin_counts": [
+        13774,
+        8765,
+        5301,
+        15737,
+        11635,
+        22666,
+        15631,
+        9838
+      ]
     },
     {
       "label": "GEMSDOE10 h25",
@@ -166,7 +266,17 @@
       "share_within_3px": 0.32454792211494365,
       "share_ge10px": 0.3930629748521993,
       "share_ge40px": 0.0717127523765849,
-      "share_within_3px_of_sgmc": 0.16962061400790748
+      "share_within_3px_of_sgmc": 0.16962061400790748,
+      "bin_counts": [
+        24900,
+        16526,
+        10945,
+        27231,
+        18337,
+        32935,
+        18920,
+        11572
+      ]
     },
     {
       "label": "GEMSDOE3 nodes",
@@ -181,7 +291,17 @@
       "share_within_3px": 0.10297314557382548,
       "share_ge10px": 0.7570845240322279,
       "share_ge40px": 0.2958889440785442,
-      "share_within_3px_of_sgmc": 0.11479735003644667
+      "share_within_3px_of_sgmc": 0.11479735003644667,
+      "bin_counts": [
+        7912,
+        4695,
+        3356,
+        10986,
+        10708,
+        30603,
+        40892,
+        45869
+      ]
     },
     {
       "label": "GEMSDOE3 ridge",
@@ -196,7 +316,17 @@
       "share_within_3px": 0.22194412369936975,
       "share_ge10px": 0.5900103856896808,
       "share_ge40px": 0.18622638223208468,
-      "share_within_3px_of_sgmc": 0.39402403545326115
+      "share_within_3px_of_sgmc": 0.39402403545326115,
+      "bin_counts": [
+        17703,
+        10427,
+        6276,
+        16121,
+        13030,
+        30220,
+        32375,
+        28869
+      ]
     },
     {
       "label": "16GEMSDOE h18-3a",
@@ -211,7 +341,17 @@
       "share_within_3px": 0.30955617425483134,
       "share_ge10px": 0.41659842777595807,
       "share_ge40px": 0.03840484769079594,
-      "share_within_3px_of_sgmc": 0.22536030134294138
+      "share_within_3px_of_sgmc": 0.22536030134294138,
+      "bin_counts": [
+        17513,
+        12813,
+        7477,
+        19122,
+        14320,
+        27924,
+        18261,
+        4690
+      ]
     },
     {
       "label": "GEMSDOE10 h20",
@@ -226,7 +366,17 @@
       "share_within_3px": 0.39803142206784214,
       "share_ge10px": 0.2822208454861232,
       "share_ge40px": 0.04042267345134591,
-      "share_within_3px_of_sgmc": 0.2088864447955895
+      "share_within_3px_of_sgmc": 0.2088864447955895,
+      "bin_counts": [
+        25390,
+        19369,
+        12421,
+        29717,
+        16217,
+        23661,
+        11075,
+        5807
+      ]
     },
     {
       "label": "13GEMSDOE lattice",
@@ -241,7 +391,17 @@
       "share_within_3px": 0.0917096976098267,
       "share_ge10px": 0.7609288815866683,
       "share_ge40px": 0.29626315377694323,
-      "share_within_3px_of_sgmc": 0.106296209365098
+      "share_within_3px_of_sgmc": 0.106296209365098,
+      "bin_counts": [
+        7104,
+        6764,
+        4887,
+        15502,
+        14634,
+        40959,
+        54067,
+        60587
+      ]
     },
     {
       "label": "GEMSDOE3 discovery",
@@ -256,7 +416,17 @@
       "share_within_3px": 0.10168299778739655,
       "share_ge10px": 0.7539301126944091,
       "share_ge40px": 0.2907864095832178,
-      "share_within_3px_of_sgmc": 0.11281052244534612
+      "share_within_3px_of_sgmc": 0.11281052244534612,
+      "bin_counts": [
+        6700,
+        5216,
+        3847,
+        11357,
+        11026,
+        30922,
+        40875,
+        45078
+      ]
     },
     {
       "label": "15GEMSDOE",
@@ -271,7 +441,17 @@
       "share_within_3px": 0.09448428131583211,
       "share_ge10px": 0.751164722087182,
       "share_ge40px": 0.2826527305136931,
-      "share_within_3px_of_sgmc": 0.12575960136120565
+      "share_within_3px_of_sgmc": 0.12575960136120565,
+      "bin_counts": [
+        3623,
+        3280,
+        2426,
+        7705,
+        7535,
+        20469,
+        25790,
+        27908
+      ]
     },
     {
       "label": "GEMSDOE10 h16-cont",
@@ -286,7 +466,17 @@
       "share_within_3px": 0.532617129636161,
       "share_ge10px": 0.1502652257946193,
       "share_ge40px": 0.014693226866808684,
-      "share_within_3px_of_sgmc": 0.2665448697148823
+      "share_within_3px_of_sgmc": 0.2665448697148823,
+      "bin_counts": [
+        67293,
+        52047,
+        31674,
+        63714,
+        26199,
+        28450,
+        9989,
+        4166
+      ]
     },
     {
       "label": "GEMSDOE4",
@@ -301,7 +491,17 @@
       "share_within_3px": 0.15023826759521994,
       "share_ge10px": 0.6613193560000464,
       "share_ge40px": 0.22241147710424547,
-      "share_within_3px_of_sgmc": 0.4089918435447095
+      "share_within_3px_of_sgmc": 0.4089918435447095,
+      "bin_counts": [
+        15791,
+        13672,
+        9347,
+        26158,
+        22521,
+        55599,
+        57781,
+        57454
+      ]
     },
     {
       "label": "18GEMSDOE",
@@ -316,7 +516,17 @@
       "share_within_3px": 0.1136555373477798,
       "share_ge10px": 0.7329427250120363,
       "share_ge40px": 0.2540227651182205,
-      "share_within_3px_of_sgmc": 0.2973665961422091
+      "share_within_3px_of_sgmc": 0.2973665961422091,
+      "bin_counts": [
+        21433,
+        17965,
+        12065,
+        35919,
+        33541,
+        94320,
+        122534,
+        115021
+      ]
     },
     {
       "label": "6GEMSDOE",
@@ -331,7 +541,17 @@
       "share_within_3px": 0.7506544104218664,
       "share_ge10px": 0.044766238509770497,
       "share_ge40px": 0.004329761977232605,
-      "share_within_3px_of_sgmc": 0.3446992755828818
+      "share_within_3px_of_sgmc": 0.3446992755828818,
+      "bin_counts": [
+        52730,
+        31462,
+        14456,
+        20701,
+        6184,
+        3994,
+        1320,
+        569
+      ]
     },
     {
       "label": "11GEMSDOE",
@@ -346,7 +566,17 @@
       "share_within_3px": 0.5182913448810426,
       "share_ge10px": 0.15114781020606077,
       "share_ge40px": 0.008933311625338893,
-      "share_within_3px_of_sgmc": 0.24260453461127351
+      "share_within_3px_of_sgmc": 0.24260453461127351,
+      "bin_counts": [
+        67299,
+        49996,
+        29142,
+        61589,
+        31807,
+        32207,
+        7974,
+        2524
+      ]
     },
     {
       "label": "17GEMSDOE",
@@ -361,7 +591,17 @@
       "share_within_3px": 0.6941462984594362,
       "share_ge10px": 0.0454565490489939,
       "share_ge40px": 0.002259052740616666,
-      "share_within_3px_of_sgmc": 0.3392656425627576
+      "share_within_3px_of_sgmc": 0.3392656425627576,
+      "bin_counts": [
+        30538,
+        21465,
+        10988,
+        17785,
+        5845,
+        3333,
+        587,
+        205
+      ]
     },
     {
       "label": "GEMSDOE9",
@@ -376,7 +616,17 @@
       "share_within_3px": 0.1094705033994918,
       "share_ge10px": 0.7191195659638762,
       "share_ge40px": 0.3092576059336584,
-      "share_within_3px_of_sgmc": 0.10294622622072659
+      "share_within_3px_of_sgmc": 0.10294622622072659,
+      "bin_counts": [
+        5973,
+        5685,
+        4282,
+        13024,
+        11935,
+        29695,
+        29985,
+        45031
+      ]
     },
     {
       "label": "14GEMSDOE",
@@ -391,7 +641,17 @@
       "share_within_3px": 0.5638234712052246,
       "share_ge10px": 0.034426384670320685,
       "share_ge40px": 0.0,
-      "share_within_3px_of_sgmc": 0.2865882514907201
+      "share_within_3px_of_sgmc": 0.2865882514907201,
+      "bin_counts": [
+        24146,
+        24744,
+        16637,
+        33618,
+        13073,
+        4001,
+        0,
+        0
+      ]
     },
     {
       "label": "16GEMSDOE h18-4",
@@ -406,7 +666,17 @@
       "share_within_3px": 0.03450841943132063,
       "share_ge10px": 0.7819600920686015,
       "share_ge40px": 0.27132547635117593,
-      "share_within_3px_of_sgmc": 0.9999653877438001
+      "share_within_3px_of_sgmc": 0.9999653877438001,
+      "bin_counts": [
+        0,
+        0,
+        1994,
+        5836,
+        4769,
+        13146,
+        16360,
+        15678
+      ]
     },
     {
       "label": "20GEMSDOE h20-1",
@@ -421,7 +691,17 @@
       "share_within_3px": 0.2287590144473427,
       "share_ge10px": 0.5894661185990357,
       "share_ge40px": 0.22758804480372127,
-      "share_within_3px_of_sgmc": 0.2124784985746473
+      "share_within_3px_of_sgmc": 0.2124784985746473,
+      "bin_counts": [
+        13602,
+        9586,
+        5139,
+        12803,
+        9706,
+        21914,
+        22897,
+        28182
+      ]
     },
     {
       "label": "20GEMSDOE h20-5",
@@ -436,7 +716,17 @@
       "share_within_3px": 0.23383199459004766,
       "share_ge10px": 0.5816028633162348,
       "share_ge40px": 0.22378729650827162,
-      "share_within_3px_of_sgmc": 0.21112833792409574
+      "share_within_3px_of_sgmc": 0.21112833792409574,
+      "bin_counts": [
+        13597,
+        9608,
+        5149,
+        12776,
+        9604,
+        21392,
+        21996,
+        27136
+      ]
     }
   ],
   "spearman_score_vs_share_within_3px_of_catalogue": -0.17208347588094425,
@@ -456,5 +746,32 @@
     "n": 21,
     "max_score": 0.1922
   },
-  "interpretation": "Emission that hugs the catalogue (>=45% of off-catalogue pixels within 300 m of a mapped trace) never exceeded 0.046, while ridge-thinned emission with ~22% near-catalogue pixels reached 0.18-0.19. Distance-to-catalogue alone does not explain the scores (a single-skill per-bin model fitted to all scored files gave Pearson r=0.27): method skill matters."
+  "single_skill_distance_bin_model": {
+    "model": "per-distance-bin hit rate shared by all files; first-order (TP+FP ~ N)",
+    "bins_px": [
+      1,
+      2,
+      3,
+      4,
+      7,
+      10,
+      20,
+      40
+    ],
+    "hit_rates": [
+      0.007946591377343819,
+      1.2421220992108495e-10,
+      1.425752942551929e-10,
+      7.61209890189547e-11,
+      4.178252169198418e-11,
+      0.02162316119248843,
+      0.023679435124358147,
+      4.5328124017214006e-11
+    ],
+    "fitted_truth_pixels": 17832.66607080527,
+    "pearson_observed_vs_model": 0.255507302403979,
+    "spearman_observed_vs_model": 0.14745124871707152,
+    "verdict": "rejected: distance-to-catalogue profile alone does not explain scores"
+  },
+  "interpretation": "Emission that hugs the catalogue (>=45% of off-catalogue pixels within 300 m of a mapped trace) never exceeded 0.046, while ridge-thinned emission with ~22% near-catalogue pixels reached 0.18-0.19. Distance-to-catalogue alone does not explain the scores (see single_skill_distance_bin_model): method skill matters."
 }

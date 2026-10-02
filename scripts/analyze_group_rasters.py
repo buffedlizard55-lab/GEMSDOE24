@@ -34,6 +34,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from gems import footprint  # noqa: E402
 
 GRID = ([3730, 3292], 1, "float32")
+BIN_EDGES = [1, 2, 3, 4, 7, 10, 20, 40, 1e9]  # px (100 m) from the nearest catalogue pixel
 
 # file name -> (owner site/repo label, owner-reported public score or None=blank/not supplied)
 OWNER_REPORTED = {
@@ -227,6 +228,10 @@ def main() -> None:
                         "share_ge10px": share(10, 1e9),
                         "share_ge40px": share(40, 1e9),
                         "share_within_3px_of_sgmc": float((ds <= 3).sum() / max(n, 1)),
+                        "bin_counts": [
+                            int(((dk >= lo) & (dk < hi)).sum())
+                            for lo, hi in zip(BIN_EDGES[:-1], BIN_EDGES[1:])
+                        ],
                     }
                 )
                 row["owner_label"], row["owner_reported_score"] = label, score
@@ -283,6 +288,35 @@ def main() -> None:
     y = [r["owner_reported_score"] for r in sc]
     heavy = [r for r in sc if r["share_within_3px"] >= 0.45]
     light = [r for r in sc if r["share_within_3px"] < 0.45]
+    # Falsifiable model: DTI*(0.2*N + 0.8*G) = sum_bins a_bin * n_bin, one hit-rate a_bin in [0,1] per
+    # distance-to-catalogue bin shared by ALL files, one unknown truth size G >= 0 (first-order, TP+FP ~ N).
+    from scipy.optimize import lsq_linear
+
+    X = np.array([r["bin_counts"] + [-0.8 * r["owner_reported_score"]] for r in sc], float)
+    yv = np.array([0.2 * r["owner_reported_score"] * r["off_catalogue_px"] for r in sc], float)
+    n_off = np.array([r["off_catalogue_px"] for r in sc], float)
+    lo = [0.0] * len(BIN_EDGES[:-1]) + [-1e7]
+    hi = [1.0] * len(BIN_EDGES[:-1]) + [0.0]
+    fit = lsq_linear(X / n_off[:, None], yv / n_off, bounds=(lo, hi))
+    G = -float(fit.x[-1])
+    pred = np.array(
+        [
+            float(np.dot(fit.x[:-1], r["bin_counts"]) / (0.2 * r["off_catalogue_px"] + 0.8 * G))
+            for r in sc
+        ]
+    )
+    obs = np.array(y, float)
+    single_skill = {
+        "model": "per-distance-bin hit rate shared by all files; first-order (TP+FP ~ N)",
+        "bins_px": BIN_EDGES[:-1],
+        "hit_rates": [float(v) for v in fit.x[:-1]],
+        "fitted_truth_pixels": G,
+        "pearson_observed_vs_model": float(np.corrcoef(obs, pred)[0, 1]),
+        "spearman_observed_vs_model": float(spearmanr(obs, pred)[0]),
+        "verdict": "rejected: distance-to-catalogue profile alone does not explain scores"
+        if np.corrcoef(obs, pred)[0, 1] < 0.6
+        else "not rejected",
+    }
     analysis = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "scores": "OWNER-REPORTED (2026-10-02 brief); not organizer receipts",
@@ -301,11 +335,12 @@ def main() -> None:
             "n": len(light),
             "max_score": max((r["owner_reported_score"] for r in light), default=None),
         },
+        "single_skill_distance_bin_model": single_skill,
         "interpretation": (
             "Emission that hugs the catalogue (>=45% of off-catalogue pixels within 300 m of a mapped trace) "
             "never exceeded 0.046, while ridge-thinned emission with ~22% near-catalogue pixels reached "
-            "0.18-0.19. Distance-to-catalogue alone does not explain the scores (a single-skill per-bin "
-            "model fitted to all scored files gave Pearson r=0.27): method skill matters."
+            "0.18-0.19. Distance-to-catalogue alone does not explain the scores (see "
+            "single_skill_distance_bin_model): method skill matters."
         ),
     }
     (ROOT / "evidence/lb_geometry_analysis.json").write_text(json.dumps(analysis, indent=2) + "\n")

@@ -118,3 +118,58 @@ def test_archive_commands_cannot_execute_historical_branch_or_invalid_audit_work
             [sys.executable, str(ROOT / "scripts" / name)], capture_output=True, text=True
         )
         assert result.returncode != 0 and "Retired" in result.stderr
+
+
+def test_feed_never_requests_drivendata_hosts(monkeypatch, tmp_path):
+    """DrivenData's Terms of Use forbid automatic access; the scheduled feed must not touch it."""
+    module = script("refresh_source_feed")
+    import json as _json
+
+    seen = []
+
+    class Resp:
+        content = b'{"id": "657e1d85d34e23d3533209f7", "title": "GeoDAWN: x", "provenance": {"lastUpdated": "2025-02-28"}}'
+
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return _json.loads(self.content)
+
+    class Session:
+        headers = {}
+
+        def get(self, url, timeout=0):
+            seen.append(url)
+            return Resp()
+
+    monkeypatch.setattr(module.requests, "Session", Session)
+    feed = tmp_path / "docs/data"
+    feed.mkdir(parents=True)
+    src = module.ROOT / "docs/data/source_health.json"
+    (feed / "source_health.json").write_text(src.read_text())
+    monkeypatch.setattr(module, "ROOT", tmp_path)
+    module.main.__globals__["ROOT"] = tmp_path
+    monkeypatch.setattr("sys.argv", ["refresh_source_feed.py"])
+    module.main()
+    assert seen and all("drivendata.org" not in u for u in seen)
+    with pytest.raises(ValueError, match="Terms of Use"):
+        module.assert_allowed("https://community.drivendata.org/t/x.json")
+    with pytest.raises(ValueError, match="Terms of Use"):
+        module.assert_allowed("https://www.drivendata.org/competitions/306/")
+    assert module.assert_allowed("https://www.sciencebase.gov/catalog/item/x?format=json")
+
+
+def test_no_script_or_workflow_fetches_drivendata_automatically():
+    import re
+
+    offenders = []
+    for path in list((ROOT / "scripts").glob("*.py")) + list(
+        (ROOT / ".github/workflows").glob("*.yml")
+    ):
+        text = path.read_text()
+        for m in re.finditer(
+            r"(requests\.(get|post)|session\.get|urlopen|curl|wget)[^\n]*drivendata", text
+        ):
+            offenders.append((path.name, m.group(0)[:80]))
+    assert not offenders, offenders

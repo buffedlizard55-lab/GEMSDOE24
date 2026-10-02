@@ -30,6 +30,9 @@ Own the Outcome, without promising a score or prize.
   Judge emission/thinning policies on the density-matched sparse simulation first and report the dense
   regime as non-inferiority; on the one independent pair with known scores (h25 -> h28) the dense
   ratio had the wrong sign (-23 %) while the live score rose 44 %.
+- **Never automate access to drivendata.org** (leaderboard, forum, data, submission pages): its Terms of Use forbid any robot/automatic device
+  "for any purpose, including monitoring", and the prize rules bind competitors to them. Leaderboard rows are human-read snapshots
+  (`scripts/refresh_source_feed.py --leaderboard-file`); tests enforce this. The agent never uploads submissions.
 - Review three times; preserve source links and blocked acceptance items. Do not
   claim a PR, merge or public deployment without evidence. Never request secrets.
 - Keep large regenerable inputs/caches out of Git; retain only the small artifacts
