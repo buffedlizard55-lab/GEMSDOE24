@@ -12,6 +12,7 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import time
 import urllib.request
 import zipfile
 from concurrent.futures import ThreadPoolExecutor
@@ -35,13 +36,20 @@ TF = rasterio.transform.Affine(100, 0, 243350, 0, -100, 4508550)
 BASE = "https://www2.census.gov/geo/tiger/TIGER2024"
 
 
-def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "GEMS-reproducible-source-audit/2.0"})
-    with urllib.request.urlopen(req, timeout=180) as r:
-        if r.status != 200:
-            raise ValueError(f"Census HTTP {r.status}")
-        b = r.read()
-    return b, {"url": url, "bytes": len(b), "sha256": hashlib.sha256(b).hexdigest()}
+def fetch(url, attempts=4):
+    req = urllib.request.Request(url, headers={"User-Agent": "GEMS-reproducible-source-audit/3.0"})
+    last = None
+    for attempt in range(attempts):
+        try:
+            with urllib.request.urlopen(req, timeout=300) as r:
+                if r.status != 200:
+                    raise ValueError(f"Census HTTP {r.status}")
+                b = r.read()
+            return b, {"url": url, "bytes": len(b), "sha256": hashlib.sha256(b).hexdigest()}
+        except Exception as exc:  # noqa: BLE001 - retried, then raised with the URL
+            last = exc
+            time.sleep(2 ** (attempt + 1))
+    raise RuntimeError(f"Census download failed after {attempts} attempts: {url}: {last}")
 
 
 def reader(raw):
@@ -63,8 +71,13 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     raw, county_receipt = fetch(BASE + "/COUNTY/tl_2024_us_county.zip")
     r, crs = reader(raw)
-    if not crs.equals(CRS.from_epsg(4269)):
-        raise SystemExit("Unexpected Census county CRS; no silent assumption")
+    # TIGER .prj files use ESRI WKT with lon/lat axis order. A strict equality test
+    # against EPSG:4269 (lat/lon) is False for the standard file, so compare the
+    # datum/definition ignoring axis order and also require the authority code.
+    if not (crs.equals(CRS.from_epsg(4269), ignore_axis_order=True) and crs.to_epsg(70) == 4269):
+        raise SystemExit(
+            f"Unexpected Census county CRS; no silent assumption: {crs.to_wkt()[:200]}"
+        )
     fields = [f[0] for f in r.fields[1:]]
     fips = sorted(
         {
