@@ -67,3 +67,16 @@ def write_template(path: Path | str, fill_value: float = 0.0) -> Path:
 
 def meta() -> dict:
     return json.loads((SITE_DATA_DIR / "footprint.json").read_text())
+
+def load_band(path, band: int = 1) -> "np.ndarray":
+    """Read one band of a GeoTIFF as float32, NaN outside the file's nodata.
+    Grid-agnostic helper for research scripts (assumes footprint grid; verify
+    CRS/shape at the call site when the file is not ours)."""
+    import numpy as _np
+    import rasterio as _rio
+
+    with _rio.open(str(path)) as d:
+        a = d.read(band).astype("float32")
+        if d.nodata is not None:
+            a = _np.where(_np.isclose(a, d.nodata), _np.nan, a)
+    return a

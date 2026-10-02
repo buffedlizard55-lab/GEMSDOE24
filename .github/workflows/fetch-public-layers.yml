@@ -27,14 +27,11 @@ jobs:
         env:
           FETCH_MODE: ${{ github.event.inputs.fetch_mode || 'all' }}
         run: python scripts/ci_fetch_external.py
-      - name: commit to branch
+      - name: upload to public-layers via API
         if: always()
-        run: |
-          git config user.name "arena-fetch-bot"
-          git config user.email "bot@arena.ai"
-          git add -f data_external
-          git commit -qm "ci-fetch artifacts $(date -u +%FT%TZ)" || true
-          git push -f origin HEAD:refs/heads/"$GITHUB_REF_NAME"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: /usr/bin/python3 scripts/ci_push_artifacts_api.py
 
       - name: report
         if: always()

@@ -89,6 +89,7 @@ def tiger_roads_and_rails() -> None:
             d = dict(zip([f[0] for f in r.fields[1:]], sr.record))
             fips.add(str(d["GEOID"])[:5])
     log({"tiger_counties_intersecting": sorted(fips), "tiger_year": year})
+    cty.unlink(missing_ok=True)
     for f in sorted(fips):
         for layer in ("ROADS", "RAILS"):
             url = f"https://www2.census.gov/geo/tiger/TIGER{year}/{layer}/tl_{year}_{f}_{layer.lower()}.zip"
