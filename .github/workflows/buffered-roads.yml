@@ -24,15 +24,41 @@ jobs:
       - run: pip install numpy==2.4.6 scipy==1.17.1 rasterio==1.4.4 pyshp==3.1.6 shapely==2.1.2 pyproj==3.7.2
       - name: Derive true buffered road distances from complete official county ZIPs
         run: python scripts/fetch_official_roads.py
+      - name: Upload small acquisition diagnostics (no raw county bulk)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: buffered-road-receipt-${{ github.run_id }}
+          path: |
+            data/external/audit_sources/tiger_road_receipt.json
+            data/external/audit_sources/tiger_road_fetch_failure.json
+          if-no-files-found: warn
+          retention-days: 14
       - name: Preserve small official road raster on the fixed session branch
+        if: success()
         run: |
           set -euo pipefail
           test "$(git branch --show-current)" = 'arena/01a0fd2e-gemsdoe24'
           git config user.name 'GEMS official-source audit'
           git config user.email 'gems-audit@users.noreply.github.com'
           git pull --ff-only origin arena/01a0fd2e-gemsdoe24
-          git add data/external/audit_sources/tiger_road_distance_m.tif data/external/audit_sources/tiger_road_receipt.json
+          git add -A -- data/external/audit_sources/tiger_road_*
           if ! git diff --cached --quiet; then
             git commit -m 'Add official buffered Census road/trail distance bridge'
             git push origin arena/01a0fd2e-gemsdoe24
+          fi
+      - name: Preserve bounded failure receipt for inspection
+        if: failure()
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = 'arena/01a0fd2e-gemsdoe24'
+          if test -f data/external/audit_sources/tiger_road_fetch_failure.json; then
+            git config user.name 'GEMS official-source audit'
+            git config user.email 'gems-audit@users.noreply.github.com'
+            git pull --ff-only origin arena/01a0fd2e-gemsdoe24
+            git add data/external/audit_sources/tiger_road_fetch_failure.json
+            if ! git diff --cached --quiet; then
+              git commit -m 'Record bounded official road acquisition failure'
+              git push origin arena/01a0fd2e-gemsdoe24
+            fi
           fi

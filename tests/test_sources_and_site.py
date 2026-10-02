@@ -109,6 +109,27 @@ def test_official_roads_select_a_buffer_not_the_legacy_tight_bbox():
     assert module.PAD == 200
 
 
+def test_official_roads_retries_tls_failures_and_writes_bounded_receipt(tmp_path, monkeypatch):
+    import json
+
+    module = script("fetch_official_roads")
+    attempts = []
+    monkeypatch.setattr(module, "OUT", tmp_path)
+    monkeypatch.setattr(module.time, "sleep", lambda _: None)
+
+    def fail(_request, timeout):
+        attempts.append(timeout)
+        raise OSError("TLS peer closed connection")
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fail)
+    with pytest.raises(RuntimeError, match="verified-TLS attempts"):
+        module.fetch("https://www2.census.gov/test.zip")
+    receipt = json.loads((tmp_path / "tiger_road_fetch_failure.json").read_text())
+    assert len(attempts) == receipt["attempts"] == 3
+    assert receipt["tls_verification_disabled"] is False
+    assert "TLS peer closed" in receipt["error"]
+
+
 def test_archive_commands_cannot_execute_historical_branch_or_invalid_audit_work():
     import subprocess
     import sys

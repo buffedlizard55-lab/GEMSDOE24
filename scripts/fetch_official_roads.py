@@ -12,6 +12,7 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import time
 import urllib.request
 import zipfile
 from concurrent.futures import ThreadPoolExecutor
@@ -37,11 +38,31 @@ BASE = "https://www2.census.gov/geo/tiger/TIGER2024"
 
 def fetch(url):
     req = urllib.request.Request(url, headers={"User-Agent": "GEMS-reproducible-source-audit/2.0"})
-    with urllib.request.urlopen(req, timeout=180) as r:
-        if r.status != 200:
-            raise ValueError(f"Census HTTP {r.status}")
-        b = r.read()
-    return b, {"url": url, "bytes": len(b), "sha256": hashlib.sha256(b).hexdigest()}
+    last_error = None
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=180) as r:
+                if r.status != 200:
+                    raise ValueError(f"Census HTTP {r.status}")
+                b = r.read()
+            return b, {"url": url, "bytes": len(b), "sha256": hashlib.sha256(b).hexdigest()}
+        except Exception as exc:  # retain TLS verification; retry transient transport failures
+            last_error = f"{type(exc).__name__}: {exc}"
+            if attempt < 2:
+                time.sleep(2**attempt)
+    failure = {
+        "generated_utc": datetime.now(timezone.utc).isoformat(),
+        "url": url,
+        "attempts": 3,
+        "tls_verification_disabled": False,
+        "error": last_error,
+    }
+    OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / "tiger_road_fetch_failure.json").write_text(json.dumps(failure, indent=2) + "\n")
+    print(json.dumps(failure), flush=True)
+    raise RuntimeError(
+        f"Official Census download failed after 3 verified-TLS attempts: {last_error}"
+    )
 
 
 def reader(raw):
@@ -61,6 +82,7 @@ def intersects(b):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / "tiger_road_fetch_failure.json").unlink(missing_ok=True)
     raw, county_receipt = fetch(BASE + "/COUNTY/tl_2024_us_county.zip")
     r, crs = reader(raw)
     if not crs.equals(CRS.from_epsg(4269)):
