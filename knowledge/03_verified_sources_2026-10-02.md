@@ -23,15 +23,15 @@
 | [Staff test-source clarification](https://community.drivendata.org/t/how-were-the-new-test-faults-identified-data-sources-and-fault-types/11527/7) | hidden sources/types/coverage are not disclosed; Phase 2 expert review matters | assuming all test faults are quaternary scarps, blind conduits or ring faults | interpretation guard |
 | [Official leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) | 2026-10-02 snapshot: DARD .3195, 12 submissions; smrtdoog5 .1922, 5 submissions | which file generated the account's score; permanence of this snapshot | timestamped feed/manual source read; unknown artifact mapping remains unknown |
 | [Lopez-Paz & Oquab paper](https://arxiv.org/abs/1610.06545), [full PDF](https://arxiv.org/pdf/1610.06545) | two samples labelled by origin; classifier trained separately from held-out evaluation; original statistic is accuracy, with an iid null | a causal access explanation from classification alone; applying an iid binomial null to autocorrelated pixels | Sections 2–3 read; implementation declares AUC/spatial adaptation and refits each randomization |
-| [USGS GeoDAWN release](https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7), [DOI](https://doi.org/10.5066/P93LGLVQ) | official report, ReadMe, metadata, extent and flight paths are downloadable | that Area 1/Area 2 are four blocks or that a metadata title supplies all boundaries | direct CI receipts, preserved official documents and inventories |
-| [Official contractor report](https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7?f=__disk__2b%2F67%2Fb4%2F2b67b4e0d88525acc1ae32cf17b8fd001395bf52) | Fig.3 / pp.5–6: Winnemucca, Fallon, Hawthorne, Tonopah; Area1 200 m traverses/2 km ties and 100/150 m drape, Area2 400 m/4 km and 150/200 m; Tonopah helicopter versus other fixed-wing work; ties extend ≥2 km into neighboring blocks | numeric four-block polygons; four different line-spacing regimes; nearest airport means ownership of a grid cell | `data/external/audit_sources/*Report.pdf(.txt)`; basins/mountains distinguished from operational blocks |
+| [USGS GeoDAWN release](https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7), [DOI](https://doi.org/10.5066/P93LGLVQ) | official report, ReadMe, metadata, combined data extent, Area1/Area2 outlines and flight paths are downloadable | that Area1/Area2 are the four operational blocks or that a report figure / metadata title is a georeferenced block polygon | direct CI receipts, preserved official documents, one combined extent and inventories; flight-line fields are `Id`/`Line` only |
+| [Official contractor report](https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7?f=__disk__2b%2F67%2Fb4%2F2b67b4e0d88525acc1ae32cf17b8fd001395bf52) | Fig.3 / pp.5–6: four operational block names; only two acquisition regimes—Area1 200 m traverses/2 km ties and 100/150 m drape, Area2 400 m/4 km and 150/200 m; Area1 is in Tonopah, flown by helicopter with the other blocks' planned layout/drape | numeric four-block polygons; a distinct line-spacing/height for each block; nearest base town means ownership of a pixel | `data/external/audit_sources/*Report.pdf(.txt)`; Figure 3's block outlines are not georeferenced; report lines confirm ≥2 km tie-line overlap |
 | [BLM closed claims layer](https://gis.blm.gov/nlsdb/rest/services/Mining_Claims/MiningClaims/MapServer/2?f=pjson) | closed mining-claim legal-land polygons, native NAD83, queryable without login | exact stakes, workings, ore bodies, complete historic field accessibility or causation | 702,794-ID checked snapshot; 197,346 unique accepted geometries; full raw and derived hashes; 20 km buffer; explicit quality policy |
 | [Census TIGER roads](https://www2.census.gov/geo/tiger/TIGER2024/ROADS/), [MTFCC metadata](https://meta.geo.census.gov/data/existing/decennial/GEO/GPMB/TIGERline/Archived_19110/tl_2021_roads.shp.ea.iso.xml) | road/trail S codes; S1400 local/neighborhood/rural roads, S1500 vehicular 4WD trails; R1011 rail is not a road | every hiking path is present; a road is a fault or road distance is causal accessibility | pinned owner road-mirror hashes; code semantics official; road mirror integrity is not independent official-byte authentication |
 | [USGS MRDS](https://mrdata.usgs.gov/mrds/) | mineral-occurrence inventory, with updates ceased in 2011 | mining-claim polygons/history | explicitly excluded from nuisance inputs; old claim substitution retired |
 | [INGENIOUS/GDR](https://gdr.openei.org/submissions/1391) | TC refers to thermal conductivity; earthquake-density definitions depend on source conventions | every inherited band alias is correct; TC is automatically a heat-flow measurement | ambiguous tc/earthquake aliases deliberately excluded; bridge band order caveat remains |
 | [Faulds & Hinz 2015](https://www.osti.gov/servlets/purl/1724082) | among characterized geothermal systems, stepovers/terminations/intersections are important; 39% of the 426 known ≥37°C systems were blind | those percentages are pixel-fault prevalence or a ring-fault leaderboard prior | physical motivation only; target is faults, not known geothermal sites |
 | [Great Basin play-fairway study](https://www.osti.gov/servlets/purl/1724109) | integrated structure/thermal evidence; surface thermal outflow can be displaced from upflow; confirmation requires field/drilling evidence | a thermal blob uniquely identifies the missing conduit or fault | competing-explanation warning |
-| [USGS 3DEP tools](https://www.usgs.gov/3d-elevation-program/data-tools) | official free terrain-data source | complete raw 10 m coverage already staged for the drainage-offset hypothesis | H24-6 deferred until coverage/byte receipts verified; no claimed completed experiment |
+| [USGS 3DEP 1/3-arc-second collection](https://data.usgs.gov/datacatalog/data/USGS:3a81321b-c153-416f-98b7-cc8e5f0e17c3), [The National Map/API](https://www.usgs.gov/tools/download-data-maps-national-map) | official free/public-domain approximately 10 m product; TNM API query for bbox `(-120.0,38.5,-119.9,38.6)` returned 13 catalog records including downloadable GeoTIFFs | study-wide tiles have not been byte-downloaded, mosaicked or coverage-checked | H24-6 remains deferred; the prior guessed `.../13/TIFF/current/n39w119/...` URL returned HTTP 500 and is retired |
 | [Prize rules](https://docs.nlr.gov/docs/fy26osti/96647.pdf) | weekly limits, final selection, licensed external-data obligations and AI/code/narrative disclosure | permission to circumvent quotas across repos/accounts; an assumed deadline conversion | rules/platform time discrepancy flagged, not guessed |
 
 ## What H19-4 and H19-5 actually do
@@ -69,19 +69,34 @@ cannot identify which mechanism caused it**, and neither score proves geological
 or mapping-process independence. H19-5 already beats .1894; no new leaderboard
 improvement is claimed for this project.
 
-## Correct audit interpretation
+## C2ST method correction and audit status
 
-The first fresh label test has held-out AUC **0.5283302447** with available road,
-closed-claim and Area1-membership features. Grouped Monte Carlo p=.01 and shift
-sensitivity p=.16 do not turn a sub-.55 effect into the preregistered meaningful
-association flag. Final Holm/effect decisions, individual prediction tests and
-the exact candidate re-audit are in `evidence/accessibility_audit_v2.json`.
+`evidence/accessibility_audit_v2.json` is retained only as history and is now
+**superseded / not confirmatory**. Its feature set included Area1 membership
+when the requested four operational blocks were missing, violating the explicit
+no-substitution rule. Its primary 10 km whole-group label flips assumed
+exchangeability not established for this design, and its spatial shifts used
+`np.roll`, which wraps an irregular footprint across opposite edges. Its archived
+AUCs (labels .528330; H19-4 .565964; H19-5 .564592; candidate .534765) are not
+a valid full-nuisance audit result and must not be used to pass a gate or make an
+accessibility conclusion.
 
-**The full requested audit remains BLOCKED without real four-block membership.**
-An available-family diagnostic is neither an acquittal of the mapping process
-nor confirmation of the owner's causal premise. A residualizer only removes a
-specified conditional mean; nonlinear/variance dependence can remain. Re-audit
-of the actual emitted support is therefore required.
+The corrected implementation excludes Area1/Area2 from the classifier,
+requires all four block categories to be present together, and uses a
+non-wrapping translation of the full reference mask as the spatial null
+sensitivity. It preserves/refits the same classifier and fold protocol for each
+evaluable shift; shift draws that lack both classes after purging are rejected on
+geometry/support only, never on the AUC. Its empirical upper-tail area assumes
+approximate spatial stationarity and is **not an exact randomization p-value**.
+Holm correction and the AUC/effect-margin thresholds are reported as cautious
+diagnostics, not causal evidence.
+
+Until machine-readable true four-block membership is available, labels and
+predictions may be compared only with the available official road/trail and BLM
+closed-claim distances and the result must be marked **incomplete**. A
+non-rejection is not proof of equal distributions. Residualization removes only
+a fitted conditional mean; remaining nonlinear/variance dependence requires
+re-auditing the exact final raster.
 
 ## Limitations to keep visible
 

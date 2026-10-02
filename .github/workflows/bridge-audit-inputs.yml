@@ -1,22 +1,18 @@
 name: Small official audit bridge
 on:
-  push:
-    branches: ['arena/01a0fa76-gemsdoe24']
-    paths:
-      - '.github/workflows/bridge-audit-inputs.yml'
-      - 'scripts/export_audit_bridge.py'
+  workflow_dispatch:
 permissions:
   contents: write
   actions: read
 jobs:
   bridge:
-    if: github.ref_name == 'arena/01a0fa76-gemsdoe24'
+    if: github.ref_name == 'arena/01a0fd2e-gemsdoe24'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: arena/01a0fa76-gemsdoe24
+          ref: arena/01a0fd2e-gemsdoe24
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -31,15 +27,15 @@ jobs:
           path: data/raw/official_audit/
       - name: Derive small claim-distance bridge
         run: python scripts/export_audit_bridge.py
-      - name: Preserve only small derived evidence on this session branch
+      - name: Preserve only small official evidence on this session branch
         run: |
           set -euo pipefail
-          test "$(git branch --show-current)" = 'arena/01a0fa76-gemsdoe24'
+          test "$(git branch --show-current)" = 'arena/01a0fd2e-gemsdoe24'
           git config user.name 'GEMS official-source audit'
           git config user.email 'gems-audit@users.noreply.github.com'
-          git pull --ff-only origin arena/01a0fa76-gemsdoe24
+          git pull --ff-only origin arena/01a0fd2e-gemsdoe24
           git add data/external/audit_sources
           if ! git diff --cached --quiet; then
             git commit -m 'Bridge small official BLM/USGS audit evidence; raw bulk remains external'
-            git push origin arena/01a0fa76-gemsdoe24
+            git push origin arena/01a0fd2e-gemsdoe24
           fi

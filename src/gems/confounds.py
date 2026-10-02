@@ -1,7 +1,8 @@
 """Strict non-geological nuisance inputs; missing sources never become proxies.
 
 Allowed families: Census road/trail distance; BLM closed mining-claim distance;
-official acquisition-block/Area membership. No wells, sinter, vents, probes,
+true membership in all four official acquisition blocks. Area1/Area2 are not
+substitutes and never enter the classifier. No wells, sinter, vents, probes,
 fault-confidence distances or label-derived seam detection is permitted here.
 TIGER S1400 is a road, S1500 a vehicular trail; rails are R codes, not roads.
 Distance rasters are approximations on a 100 m grid, not survey-grade distances.
@@ -125,6 +126,7 @@ def build_all(out_dir: Path | None = None, *, force: bool = False) -> dict:
         if (
             not entry.get("source_window_verified")
             or not entry.get("complete_county_check")
+            or entry.get("seed_grid_buffer_m", 0) < 20000
             or sha256_file(road_bridge) != entry.get("sha256")
         ):
             raise ValueError("Official road source window/completeness/integrity failed")
@@ -240,11 +242,11 @@ def build_all(out_dir: Path | None = None, *, force: bool = False) -> dict:
     else:
         prov["missing_required"].append("BLM historic closed-claim distances")
     area = acquisition_areas(fp)
-    feats["area1"] = (area == 1).astype(np.uint8)
-    prov["features"]["area1"] = {
+    prov["survey_area_context_only"] = {
         "source": "USGS official Area1/Area2 outline shapefiles (Area1 priority)",
         "url": "https://doi.org/10.5066/P93LGLVQ",
         "counts": {str(i): int(np.count_nonzero(fp & (area == i))) for i in (0, 1, 2)},
+        "not_classifier_features": True,
         "not_four_blocks": True,
     }
     block_path = DATA_DIR / "raw/official_audit/acquisition_blocks.geojson"
@@ -283,12 +285,14 @@ def build_all(out_dir: Path | None = None, *, force: bool = False) -> dict:
 
 
 def classifier_features(conf) -> dict[str, np.ndarray]:
-    allowed = {"road_m", "claim_m", "area1", "block_1", "block_2", "block_3", "block_4"}
+    """Return only the requested nuisance families; Area 1/2 never substitutes for blocks."""
+    allowed = {"road_m", "claim_m", "block_1", "block_2", "block_3", "block_4"}
     keys = set(conf.files)
     if not keys <= allowed:
         raise ValueError(f"Forbidden nuisance inputs: {sorted(keys - allowed)}")
-    if {"block_1", "block_2", "block_3", "block_4"} <= keys:
-        keys.discard("area1")  # Full primary test uses ONLY the owner-requested families.
+    blocks = {"block_1", "block_2", "block_3", "block_4"} & keys
+    if blocks and blocks != {"block_1", "block_2", "block_3", "block_4"}:
+        raise ValueError("Partial operational-block categories cannot enter the audit")
     return {
         k: np.log1p(conf[k]) if k.endswith("_m") else conf[k].astype(np.float32)
         for k in sorted(keys)

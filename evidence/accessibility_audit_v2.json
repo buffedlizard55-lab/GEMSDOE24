@@ -4182,5 +4182,9 @@
   "full_requested_audit_complete": false,
   "interpretation": "Association test; not causal proof and not a certification of fault discovery. Missing inputs are never replaced by geological proxies.",
   "complete_run": true,
-  "submission_slot_spent": false
+  "submission_slot_spent": false,
+  "superseded": true,
+  "confirmatory_use": false,
+  "superseded_by": "evidence/accessibility_audit_v3.json",
+  "supersession_reason": "The v2 nuisance feature set substituted Area1 membership for true four-block membership; the 10 km whole-group flip null assumed unverified exchangeability; and its spatial shifts used toroidal np.roll across an irregular footprint. Archived AUCs remain for provenance only."
 }

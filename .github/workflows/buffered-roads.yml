@@ -1,7 +1,8 @@
 name: Official buffered roads
 on:
+  workflow_dispatch:
   push:
-    branches: ['arena/01a0fa76-gemsdoe24']
+    branches: ['arena/01a0fd2e-gemsdoe24']
     paths:
       - '.github/workflows/buffered-roads.yml'
       - 'scripts/fetch_official_roads.py'
@@ -9,13 +10,13 @@ permissions:
   contents: write
 jobs:
   roads:
-    if: github.ref_name == 'arena/01a0fa76-gemsdoe24'
+    if: github.ref_name == 'arena/01a0fd2e-gemsdoe24'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: arena/01a0fa76-gemsdoe24
+          ref: arena/01a0fd2e-gemsdoe24
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -26,12 +27,12 @@ jobs:
       - name: Preserve small official road raster on the fixed session branch
         run: |
           set -euo pipefail
-          test "$(git branch --show-current)" = 'arena/01a0fa76-gemsdoe24'
+          test "$(git branch --show-current)" = 'arena/01a0fd2e-gemsdoe24'
           git config user.name 'GEMS official-source audit'
           git config user.email 'gems-audit@users.noreply.github.com'
-          git pull --ff-only origin arena/01a0fa76-gemsdoe24
+          git pull --ff-only origin arena/01a0fd2e-gemsdoe24
           git add data/external/audit_sources/tiger_road_distance_m.tif data/external/audit_sources/tiger_road_receipt.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Correct clipped-road boundary bias with official buffered Census geometry'
-            git push origin arena/01a0fa76-gemsdoe24
+            git commit -m 'Add official buffered Census road/trail distance bridge'
+            git push origin arena/01a0fd2e-gemsdoe24
           fi

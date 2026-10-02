@@ -29,16 +29,13 @@ from gems.validator import sha256_file  # noqa: E402
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--permutations", type=int, default=199)
-    ap.add_argument("--shifts", type=int, default=99)
+    ap.add_argument("--shifts", type=int, default=199)
     ap.add_argument("--samples", type=int, default=12000)
     ap.add_argument("--candidate", type=Path)
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
-    if args.permutations < 199 or args.shifts < 99:
-        raise SystemExit(
-            "Confirmatory audit requires >=199 grouped permutations and >=99 shift diagnostics"
-        )
+    if args.shifts < 199:
+        raise SystemExit("Primary spatial-shift audit requires at least 199 valid shifts")
     fp = footprint.load_footprint()
     prov = json.loads((confounds.CONF / "provenance.json").read_text())
     with np.load(confounds.CONF / "confounds.npz") as cache:
@@ -56,32 +53,36 @@ def main() -> None:
     if args.candidate:
         refs.append(("candidate", args.candidate.resolve()))
     protocol = {
-        "version": 2,
+        "version": 3,
         "labels_first": True,
         "scope": "full required-family audit"
         if prov["full_requested_audit_available"]
         else "PROVISIONAL available-family diagnostic; not the requested full audit",
         "code_sha256": {
             str(p.relative_to(ROOT)): sha256_file(p)
-            for p in (ROOT / "src/gems/c2s2.py", ROOT / "src/gems/holdout.py", Path(__file__))
+            for p in (
+                ROOT / "src/gems/c2s2.py",
+                ROOT / "src/gems/confounds.py",
+                ROOT / "src/gems/holdout.py",
+                Path(__file__),
+            )
         },
         "environment": {k: version(k) for k in ("numpy", "scipy", "scikit-learn")},
         "feature_names": sorted(feats),
         "samples_per_class": args.samples,
-        "permutations": args.permutations,
-        "shifts": args.shifts,
+        "spatial_shifts": args.shifts,
         "seed": 20261002,
         "folds": names,
         "purge": "10 km groups touching held-out region plus 1.5 km collar are excluded from training",
-        "effect_rule": "Holm p<=.05 AND AUC>=.55 AND margin over grouped-null p95>=.02",
-        "shift_rule": "diagnostic only, not an exact p-value on a nonstationary irregular region",
+        "effect_rule": "Holm-adjusted shift-tail diagnostic <=.05 AND AUC>=.55 AND margin over shift-null p95>=.02; not an exact spatial p-value",
+        "null_rule": "non-wrapping translations of the complete reference mask; approximate stationarity sensitivity, valid draws chosen on geometry/class support only",
     }
     fingerprint = hashlib.sha256(
         (
             json.dumps(protocol, sort_keys=True) + sha256_file(confounds.CONF / "confounds.npz")
         ).encode()
     ).hexdigest()
-    path = ROOT / "evidence/accessibility_audit_v2.json"
+    path = ROOT / "evidence/accessibility_audit_v3.json"
     old = json.loads(path.read_text()) if path.exists() and not args.force else {}
     cached = old.get("references", {}) if old.get("fingerprint") == fingerprint else {}
     report = {
@@ -91,7 +92,7 @@ def main() -> None:
         "source_provenance": prov,
         "references": {},
         "full_requested_audit_complete": prov["full_requested_audit_available"],
-        "interpretation": "Association test; not causal proof and not a certification of fault discovery. Missing inputs are never replaced by geological proxies.",
+        "interpretation": "Distributional association test, not causal proof or fault-discovery certification. Spatial-shift tail probabilities rely on approximate stationarity and are not exact randomization p-values. Missing inputs are never replaced by geological proxies.",
     }
     for label, p in refs:
         t0 = time.time()
@@ -121,24 +122,12 @@ def main() -> None:
             feats,
             fold,
             fp,
-            n_null=args.permutations,
-            n_per_class=args.samples,
-            null_mode="grouped",
-            seed=20261002,
-            purge_groups=purge,
-        ).as_dict()
-        shift = c2s2.c2s2_test(
-            label,
-            reference,
-            feats,
-            fold,
-            fp,
             n_null=args.shifts,
             n_per_class=args.samples,
             null_mode="shift",
             seed=20261002,
             purge_groups=purge,
-            shift_fn=lambda dy, dx, ref=reference: np.roll(ref, (dy, dx), axis=(0, 1)),
+            shift_fn=lambda dy, dx, ref=reference: c2s2.translate_no_wrap(ref, dy, dx),
         ).as_dict()
         # Same-pipeline single-family AUCs diagnose what the classifier uses;
         # these are descriptive, not additional uncorrected significance claims.
@@ -165,7 +154,6 @@ def main() -> None:
             "sha256": digest,
             "positive_pixels": int(reference.sum()),
             "primary": primary,
-            "shift_diagnostic": shift,
             "single_feature_auc_descriptive": ablation,
             "seconds": time.time() - t0,
         }
@@ -176,10 +164,8 @@ def main() -> None:
             label,
             "auc",
             primary["observed_auc"],
-            "grouped p",
+            "shift-tail diagnostic",
             primary["p_value"],
-            "shift diagnostic p",
-            shift["p_value"],
             flush=True,
         )
     values = list(report["references"].values())

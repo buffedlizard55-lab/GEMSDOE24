@@ -165,11 +165,22 @@ def test_claim_quality_parser_handles_verbose_codes_not_just_literal_25():
 def test_only_requested_nuisance_families_and_categories_enter_primary_test(tmp_path):
     a = np.ones((2, 2), np.float32)
     p = tmp_path / "good.npz"
-    np.savez(p, road_m=a, claim_m=a, area1=a, **{f"block_{b}": a for b in range(1, 5)})
+    np.savez(p, road_m=a, claim_m=a, **{f"block_{b}": a for b in range(1, 5)})
     with np.load(p) as z:
         feats = confounds.classifier_features(z)
-        assert "area1" not in feats
-        assert len(feats) == 6
+        assert len(feats) == 6 and "area1" not in feats
+    np.savez(p, road_m=a, claim_m=a, area1=a)
+    with np.load(p) as z:
+        with pytest.raises(ValueError, match="Forbidden"):
+            confounds.classifier_features(z)
+    np.savez(p, road_m=a, claim_m=a, block_1=a)
+    with np.load(p) as z:
+        with pytest.raises(ValueError, match="Partial operational-block"):
+            confounds.classifier_features(z)
+    np.savez(p, road_m=a, claim_m=a)
+    with np.load(p) as z:
+        # Partial diagnostics may use measured distances, but never an Area1/2 proxy.
+        assert set(confounds.classifier_features(z)) == {"road_m", "claim_m"}
     np.savez(p, road_m=a, mrds_m=a)
     with np.load(p) as z:
         with pytest.raises(ValueError, match="Forbidden"):
@@ -193,6 +204,19 @@ def test_near_far_ignore_nan_outside_and_have_disjoint_populations():
         c2s2.near_far_masks(np.zeros_like(ref))
 
 
+def test_nonwrapping_shift_never_moves_reference_pixels_across_opposite_edges():
+    ref = np.zeros((4, 5), np.uint8)
+    ref[0, 0] = 1
+    ref[3, 4] = 1
+    moved = c2s2.translate_no_wrap(ref, 1, 2)
+    assert moved[1, 2] == 1
+    assert moved[3, 4] == 0
+    assert moved.sum() == 1
+    assert c2s2.translate_no_wrap(ref, 20, 0).sum() == 0
+    with pytest.raises(ValueError, match="2D"):
+        c2s2.translate_no_wrap(np.ones(4), 0, 1)
+
+
 def test_permutation_pipeline_refits_every_fold_for_every_replicate(monkeypatch):
     yy, xx = np.mgrid[:60, :60]
     fp = np.ones((60, 60), bool)
@@ -213,6 +237,17 @@ def test_permutation_pipeline_refits_every_fold_for_every_replicate(monkeypatch)
         return fit
 
     monkeypatch.setattr(c2s2, "make_model", make)
+    with pytest.raises(ValueError, match="Only spatial-shift"):
+        c2s2.c2s2_test(
+            "synthetic",
+            ref,
+            {"road_m": xx.astype(float)},
+            fold,
+            fp,
+            n_per_class=200,
+            n_null=3,
+            null_mode="grouped",
+        )
     r = c2s2.c2s2_test(
         "synthetic",
         ref,

@@ -14,6 +14,7 @@ is not a score forecast or a guarantee of winning.
 [Project site](https://buffedlizard55-lab.github.io/GEMSDOE24/index.html) ·
 [Submission/executive guide](docs/executive-summary.html) ·
 [Preregistered hypotheses](knowledge/02_preregistered_2026-10-02.md) ·
+[Remaining untested hypotheses](knowledge/04_remaining_hypotheses_2026-10-02.md) ·
 [Source review](knowledge/03_verified_sources_2026-10-02.md)
 
 ## Current decision
@@ -92,9 +93,9 @@ record as a verbatim copy of unseen text.
    association**, not its cause. Roads/claims can themselves correlate with
    geology; non-rejection does not prove absence of bias. This implementation
    explicitly adapts the paper's held-out accuracy statistic to a prespecified
-   AUC with refitted spatial randomizations. Block exchangeability is assumed;
-   torus shifts on a nonstationary, irregular footprint are sensitivity
-   diagnostics, not an exact spatial null.
+   AUC with refitted spatial randomizations. The primary non-wrapping translation
+   null is a stationarity-based sensitivity diagnostic, not an exact spatial
+   randomization p-value; Area1/Area2 never substitute for the four blocks.
 8. **Never spend a weekly slot unless the candidate beats the CURRENT comparable
    spatially blocked holdout best.** Validate the top hypothesis on the frozen
    protocol, require paired true retraining gains and the exact-raster bias
@@ -303,21 +304,25 @@ Nothing in these commands submits to DrivenData or spends a slot.
 
 ## Next actions that matter
 
-1. Reconnect GitHub and run the implemented official buffered-road acquisition;
-   then audit labels first and refit all arms on the corrected source. The
-   clipped-road version is explicitly provisional. Obtain coordinate-verified operational block boundaries (or an authoritative
-   source-to-block flight-line mapping with a declared, audited derivation).
-   Never infer them from the labels, a constant raster or nearest base station.
-2. Reconstruct the current H19 spatial OOF reference under the **same** masked
-   metric/split protocol; record input/code hashes and disclose transductive
-   steps. Do not promote against only a weaker freshly invented baseline.
-3. Use the first experiment's negative/positive results as evidence, not a
-   hindsight hyperparameter search. Test preregistered common-resolution contact
-   persistence or directional variograms next; raw drainage-offset work remains
-   deferred until 3DEP coverage is byte-verified.
+1. Complete and verify the official buffered-road Action on this fixed session
+   branch. Rebuild the nuisance cache with official roads/trails and BLM closed
+   claims only; never admit Area1/Area2 as substitutes. True four-block
+   membership is still unresolved: obtain machine-readable official boundaries
+   or a defensible, independently checked official line-to-block mapping. Do not
+   infer it from labels, a constant raster, latitude seams or nearest base towns.
+2. After the source gate is complete, audit labels first and each relevant
+   prediction using the prespecified non-wrapping spatial-shift C2ST; treat its
+   tail area as a stationarity diagnostic, not an exact p-value. Then reconstruct
+   current H19 spatial OOF under the same masked metric/split protocol with
+   hashes and transductive steps disclosed. Never compare with a weaker baseline.
+3. H24-3A common-resolution contact persistence is the highest-ranked remaining
+   untested hypothesis; implement and run it on the frozen spatial holdout only
+   after preregistration and source checks. H24-6 drainage offsets remain
+   deferred until official 3DEP coverage and required tile bytes are verified.
 4. Obtain independent fault/expert validation before claiming discovery. A
    contact, scarp, intrusion rim, road cut and mapped fault can be equifinal in
    these fields. The private leaderboard and Phase 2 expert assessment are not
    available local truth.
-5. Complete the authenticated PR/merge and Pages checks if the connection permits;
-   then verify the public `.tif` HTTP link, not merely the repository file.
+5. Open and verify the PR from this fixed session branch, merge only when checks
+   pass and permissions allow, then verify the deployed public `.tif` URL—not
+   merely the repository file.

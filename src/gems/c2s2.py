@@ -8,8 +8,10 @@ and refit the identical classifier for every randomization.
 A classifier detecting a distributional association does NOT establish its
 cause; geological, economic and topographic selection remain alternatives.
 A non-rejection is NOT proof of equal distributions or absence of bias.
-Grouped label swaps require block exchangeability; a torus shift on an irregular
-nonstationary footprint is a sensitivity diagnostic, not an exact spatial test.
+A torus shift on an irregular, nonstationary footprint is not an exact spatial
+randomization. The primary null uses non-wrapping translations of the entire
+reference mask; its tail probability is a stationarity-based sensitivity
+diagnostic, not a classical exact p-value. IID label shuffles are diagnostic only.
 """
 
 from __future__ import annotations
@@ -59,6 +61,23 @@ def near_far_masks(reference: np.ndarray, near_px: float = 3, far_px: float = 9)
         raise ValueError("reference raster has no positive pixels")
     d = distance_transform_edt(~pos)
     return d <= near_px, d >= far_px, d
+
+
+def translate_no_wrap(reference: np.ndarray, dy: int, dx: int) -> np.ndarray:
+    """Translate a 2D reference without toroidal wraparound or label padding."""
+    a = np.asarray(reference)
+    if a.ndim != 2:
+        raise ValueError("A spatial translation requires a 2D reference")
+    out = np.zeros_like(a)
+    h, w = a.shape
+    src_y0, src_y1 = max(0, -dy), min(h, h - dy)
+    src_x0, src_x1 = max(0, -dx), min(w, w - dx)
+    if src_y0 >= src_y1 or src_x0 >= src_x1:
+        return out
+    dst_y0, dst_y1 = max(0, dy), min(h, h + dy)
+    dst_x0, dst_x1 = max(0, dx), min(w, w + dx)
+    out[dst_y0:dst_y1, dst_x0:dst_x1] = a[src_y0:src_y1, src_x0:src_x1]
+    return out
 
 
 def build_matrix(feats, near, far_pool, fold, footprint, n_per_class, seed):
@@ -150,19 +169,23 @@ def c2s2_test(
     n_per_class=12000,
     n_null=199,
     seed=20261002,
-    null_mode="grouped",
+    null_mode="shift",
     shift_fn: Callable | None = None,
     purge_groups=None,
 ):
     if n_null < 1:
         raise ValueError("At least one refitted null replicate required")
+    if null_mode not in {"shift", "perm"}:
+        raise ValueError("Only spatial-shift and explicit iid-diagnostic nulls are supported")
+    if null_mode == "shift" and shift_fn is None:
+        raise ValueError("shift null requires an explicit non-wrapping geometry function")
     rng = np.random.default_rng(seed)
     near, far, _ = near_far_masks(reference)
     fit = make_model(model_kind, seed)
     X, y, f, info = build_matrix(feats, near, far, fold, footprint, n_per_class, seed)
     groups = info.pop("spatial_blocks")
     info.pop("rows")
-    unique_groups, inverse = np.unique(groups, return_inverse=True)
+    unique_groups = np.unique(groups)
     info.update(
         seed=seed,
         block_size_m=10000,
@@ -173,11 +196,9 @@ def c2s2_test(
         null_resolution=1 / (n_null + 1),
         refit_every_null=True,
         model_params={"max_iter": 25, "max_leaf_nodes": 7, "l2_regularization": 5.0},
-        null_assumption="10 km block class-label exchangeability"
-        if null_mode == "grouped"
-        else "spatial shifts are a nonstationarity sensitivity diagnostic"
+        null_assumption="non-wrapping spatial-shift stationarity diagnostic; not an exact randomization p-value"
         if null_mode == "shift"
-        else "iid pixel exchangeability (diagnostic only)",
+        else "iid pixel exchangeability; diagnostic only and not spatially valid",
     )
     kwargs = {"groups": groups, "purge_groups": purge_groups}
     nulls = []
@@ -186,19 +207,14 @@ def c2s2_test(
     with threadpool_limits(limits=2):
         observed, folds = spatial_cv_auc(fit, X, y, f, model_kind, **kwargs)
         for b in range(n_null):
-            if null_mode == "grouped":
-                flips = rng.integers(0, 2, size=len(unique_groups))
-                yp = y ^ flips[inverse].astype(np.int8)
-                a, _ = spatial_cv_auc(fit, X, yp, f, model_kind, **kwargs)
-            elif null_mode == "perm":
+            if null_mode == "perm":
                 a, _ = spatial_cv_auc(fit, X, rng.permutation(y), f, model_kind, **kwargs)
             elif null_mode == "shift":
                 if shift_fn is None:
                     raise ValueError("shift null requires an explicit geometry shift function")
                 # A shift with a single-class held-out cohort has no AUC. Use
                 # geometry/cohort support ONLY (never score) to condition this
-                # diagnostic. Record every rejected draw and cap retries; the
-                # grouped primary null is unchanged and remains fail-closed.
+                # diagnostic. Record every rejected draw and cap retries.
                 for attempt in range(20):
                     while True:
                         dy = int(
@@ -258,7 +274,10 @@ def c2s2_test(
         info["shift_draws"] = shift_draws
         info["rejected_single_class_shifts"] = dict(rejected_shifts)
         info["conditional_geometry_design"] = (
-            "99 or requested valid shifts; single-class fold draws excluded on support only, never AUC; diagnostic not an exact spatial test"
+            "requested number of valid non-wrapping shifts; single-class fold draws excluded on support only, never AUC; diagnostic not an exact spatial test"
+        )
+        info["p_value_interpretation"] = (
+            "Empirical upper-tail proportion among valid shifted references; relies on approximate spatial stationarity and must not be reported as an exact randomization p-value."
         )
         info["valid_shift_count"] = len(nulls)
     return C2S2Result(
