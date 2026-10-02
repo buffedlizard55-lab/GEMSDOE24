@@ -1,0 +1,323 @@
+{
+ "schema_version": 1,
+ "generated_utc": "2026-10-02T11:43:46.374554+00:00",
+ "warning": "Scores are OWNER-REPORTED public-leaderboard values, not DrivenData receipts, and are not linked to submission ids. A repeated 4-decimal score does not prove identical predictions (and identical bytes cannot score differently). Unknown stays unknown.",
+ "corroboration_levels": {
+  "owner_list_snapshot": "Same value appears in the owner's verbatim pasted list preserved in buffedlizard55-lab/GEMSDOE21 README.md (commit 43e8510cfb37b85460a986d4d1b7796625de0d31) or in this repo's README (H19-5 0.1922).",
+  "task_statement_only": "Appears only in the 2026-10-02 task statement; the older GEMSDOE21 snapshot shows it blank. Treat as unconfirmed until the owner re-checks the submissions page."
+ },
+ "artifacts": [
+  {
+   "id": "ens12_1563",
+   "label": "GEMSDOE ens12-adopted (7f00890a\u2026)",
+   "repo": "buffedlizard55-lab/GEMSDOE",
+   "repo_commit": "c0c06ac82178f26b94fce3397036ef8f12a2f3a0",
+   "path": "data/evidence/runs/ens12-adopted-floor0.1-w0/submission.tif",
+   "bytes": 570890,
+   "sha256": "7f00890a62878d612fb5eef67a9a364a2df819433dde74b6762ce4fc0fc4fe15",
+   "owner_reported_public_score": 0.1563,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "dual_union_1560",
+   "label": "GEMSDOE2 dual-family-union (f68e590f)",
+   "repo": "buffedlizard55-lab/GEMSDOE2",
+   "repo_commit": "47ca6957575628697e30f092491cbaa717178fd9",
+   "path": "docs/gemsdoe2-dual-family-union-f68e590f.tif",
+   "bytes": 568065,
+   "sha256": "f68e590f8534d036872f18170819b52366c728e68619f17c648dce9629b0aaf2",
+   "owner_reported_public_score": 0.156,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "hgb88_0286",
+   "label": "6GEMSDOE hgb88-topk03",
+   "repo": "buffedlizard55-lab/6GEMSDOE",
+   "repo_commit": "e2fe3f41c6f5dd2dcb2fc91958ee67698f114ada",
+   "path": "downloads/gems6_hgb88-topk03_33cec71ff0.tif",
+   "bytes": 1652883,
+   "sha256": "33cec71ff00b3f32d0d59c81c156f3f1488ffef46baa4b6499094e24ea1875ab",
+   "owner_reported_public_score": 0.0286,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "pindrop_nodes_1193",
+   "label": "GEMSDOE3 pindrop-v4-nodes",
+   "repo": "buffedlizard55-lab/GEMSDOE3",
+   "repo_commit": "512371de5d30162813803cdccbd4931ceeb065c7",
+   "path": "docs/downloads/pindrop-v4-nodes-20260925T152420Z-f347b70daa.tif",
+   "bytes": 777822,
+   "sha256": "f347b70daa95170bfc967b1c0b6bbf951496c2b74764a7102848ad6178829aca",
+   "owner_reported_public_score": 0.1193,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "pindrop_disc_0830",
+   "label": "GEMSDOE3 pindrop-v4-discovery",
+   "repo": "buffedlizard55-lab/GEMSDOE3",
+   "repo_commit": "512371de5d30162813803cdccbd4931ceeb065c7",
+   "path": "docs/downloads/pindrop-v4-discovery-20260925T152423Z-37f9d5b855.tif",
+   "bytes": 777446,
+   "sha256": "37f9d5b855ee1b6c302cb81cdae1414db94db427f5dc9da3538474df37cf1cad",
+   "owner_reported_public_score": 0.083,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "pindrop_ridge_1152",
+   "label": "GEMSDOE3 pindrop-v4-ridge",
+   "repo": "buffedlizard55-lab/GEMSDOE3",
+   "repo_commit": "512371de5d30162813803cdccbd4931ceeb065c7",
+   "path": "docs/downloads/pindrop-v4-ridge-20260925T152422Z-4e03fc9705.tif",
+   "bytes": 651948,
+   "sha256": "4e03fc97052e9bd673e48f1923ad17f15926f8db26d2befc033e1722381dc9b7",
+   "owner_reported_public_score": 0.1152,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g4_combined_0343",
+   "label": "GEMSDOE4 combined (237f0063)",
+   "repo": "buffedlizard55-lab/GEMSDOE4",
+   "repo_commit": "198a121aef68c3fb59f1d08a4e58d04109446c8e",
+   "path": "data/evidence/combined/submission.tif",
+   "bytes": 505882,
+   "sha256": "237f0063a440b2c6c4b822bcb0f74e5203586313b3b5ed6c5cabe70fa046f63f",
+   "owner_reported_public_score": 0.0343,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g7_lidar_ridge_1461",
+   "label": "7GEMSDOE lidarscarp-ridge-top2pct",
+   "repo": "buffedlizard55-lab/7GEMSDOE",
+   "repo_commit": "9d8b5d55b674629f7b0e0e486269917c0fa2dade",
+   "path": "downloads/gems7-lidarscarp-ridge-top2pct-36c3a3f341c8.tif",
+   "bytes": 548401,
+   "sha256": "36c3a3f341c8306dfb5610f61acfec635a7cb8a3ef6ef00380ca083d2f9745fe",
+   "owner_reported_public_score": 0.1461,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g9_placeholder_0107",
+   "label": "GEMSDOE9 placeholder (2314b599)",
+   "repo": "buffedlizard55-lab/GEMSDOE9",
+   "repo_commit": "1fdfddcefd291889e618adf8c42922e4893d514d",
+   "path": "docs/downloads/gemsdoe9-PLACEHOLDER-2314b599.tif",
+   "bytes": 439456,
+   "sha256": "2314b59920bfeeaf6a592d4868b25eca62212825620f9945723c2f6d0a2e5b22",
+   "owner_reported_public_score": 0.0107,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g11_struct_0202",
+   "label": "11GEMSDOE structural-area06-v1",
+   "repo": "buffedlizard55-lab/11GEMSDOE",
+   "repo_commit": "7d8133c69cb39363f394fc2d4a6d4919112c4270",
+   "path": "docs/downloads/gems-structural-area06-v1.tif",
+   "bytes": 705023,
+   "sha256": "6292a7916c83d371fc650b0f0c6a090702b9890eaa6e6546d50f104eea2fadc3",
+   "owner_reported_public_score": 0.0202,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g12_r7_dem10_1294",
+   "label": "12GEMSDOE r7-nms3-dem10-scarp",
+   "repo": "buffedlizard55-lab/12GEMSDOE",
+   "repo_commit": "00abbb89cfa1d139c9ba88fa6b60c2f190d3f885",
+   "path": "docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62.tif",
+   "bytes": 469858,
+   "sha256": "0c9199f14e625d7b2539a0a045803b74d6494ce568d185abecc193fe7e93c6f2",
+   "owner_reported_public_score": 0.1294,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g15_conj_alt_0782",
+   "label": "15GEMSDOE conj_alteration_mag",
+   "repo": "buffedlizard55-lab/15GEMSDOE",
+   "repo_commit": "8c94b0f83f22999032ba8a29c523af7ae6cf5e76",
+   "path": "docs/downloads/gems-tso1-20260929T005627Z-conj_alteration_mag.tif",
+   "bytes": 313478,
+   "sha256": "b437efcec17fb4582a3ff2f5f6ce6a179545c1e21fcd51e0c4b828cfd185d631",
+   "owner_reported_public_score": 0.0782,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g14_horse_0020",
+   "label": "14GEMSDOE geom-horse-ensemble",
+   "repo": "buffedlizard55-lab/14GEMSDOE",
+   "repo_commit": "88dd365dc7469c316f0f7c3bdd18fd90c5825a07",
+   "path": "docs/downloads/GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0_site_e96e942f.tif",
+   "bytes": 259215,
+   "sha256": "ccbe1de0cfd70cbe7257c04669195f390ca652fa3a76c51505f461f01a1424c6",
+   "owner_reported_public_score": 0.002,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g17_F_0187",
+   "label": "17GEMSDOE F-ensemble-2pct",
+   "repo": "buffedlizard55-lab/17GEMSDOE",
+   "repo_commit": "6fc71d19d49dca4960d5434bd81b6dd06fcc030a",
+   "path": "docs/downloads/17GEMSDOE_F-ensemble-2pct_20260930T050626Z.tif",
+   "bytes": 1597278,
+   "sha256": "0210da4395b209450e52e9efc780ab3ca6aceffd60c26d6f623da2b8fe76b691",
+   "owner_reported_public_score": 0.0187,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g18_H19C_0297",
+   "label": "18GEMSDOE H19-C",
+   "repo": "buffedlizard55-lab/18GEMSDOE",
+   "repo_commit": "809482f4634e49eb552547554f0682cdcbb4d467",
+   "path": "docs/downloads/18GEMSDOE_H19-C_20260930T212401Z_c11e495e.tif",
+   "bytes": 457340,
+   "sha256": "c11e495e5817730ad5f0fdc368b810f79050cbb6bd65e98c98123b7921ed336b",
+   "owner_reported_public_score": 0.0297,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "h19_4_1894",
+   "label": "19GEMSDOE h19-4",
+   "repo": "buffedlizard55-lab/19GEMSDOE",
+   "repo_commit": "a3aca62fdb2be428f4245e22570cbc54082b2c15",
+   "path": "docs/downloads/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+   "bytes": 1716768,
+   "sha256": "89109a3bd2cd3b12e7a0f388113c519843acfc9c4f46825affefc3e63dd99b22",
+   "owner_reported_public_score": 0.1894,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "h19_5_1922",
+   "label": "19GEMSDOE h19-5",
+   "repo": "buffedlizard55-lab/19GEMSDOE",
+   "repo_commit": "a3aca62fdb2be428f4245e22570cbc54082b2c15",
+   "path": "docs/downloads/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+   "bytes": 1712322,
+   "sha256": "ec1f9b56b83ce33cad781ceb9f104b18fb4f2ff785263a4e89616af4aabdee8d",
+   "owner_reported_public_score": 0.1922,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g10_h16cont_0461",
+   "label": "GEMSDOE10 h16-continuation",
+   "repo": "buffedlizard55-lab/GEMSDOE10",
+   "repo_commit": "4d08f51aa59bf57b4041474ff1463c9e737c8090",
+   "path": "docs/downloads/gems10-h16-continuation-20260927T065521077735Z-3431b83c7c.tif",
+   "bytes": 1765159,
+   "sha256": "b33684ae033512a1a1c7d2cfccd128955fedfdff2a8fed6c7585a755b1b58b3c",
+   "owner_reported_public_score": 0.0461,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g10_h20thin_0921",
+   "label": "GEMSDOE10 h20-dem10-scarp-thin",
+   "repo": "buffedlizard55-lab/GEMSDOE10",
+   "repo_commit": "4d08f51aa59bf57b4041474ff1463c9e737c8090",
+   "path": "docs/downloads/gems10-h20-dem10-scarp-thin-20260927T155223039488Z-ffc91a1686.tif",
+   "bytes": 1717585,
+   "sha256": "a26e5e46acc00ddd867f0b2910e638b25e4e81108ebe05c0abcc7c9b04372247",
+   "owner_reported_public_score": 0.0921,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g10_h25ctx_1280",
+   "label": "GEMSDOE10 H25-ctx-ridge",
+   "repo": "buffedlizard55-lab/GEMSDOE10",
+   "repo_commit": "4d08f51aa59bf57b4041474ff1463c9e737c8090",
+   "path": "docs/downloads/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+   "bytes": 1772935,
+   "sha256": "1381e784fb8b8340beffd0e735ac9eea89ad35d1a807f8a9bab5506e3fc8275e",
+   "owner_reported_public_score": 0.128,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g10_h28dot_1839",
+   "label": "GEMSDOE10 h28-dotted-ridge",
+   "repo": "buffedlizard55-lab/GEMSDOE10",
+   "repo_commit": "4d08f51aa59bf57b4041474ff1463c9e737c8090",
+   "path": "docs/downloads/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+   "bytes": 1620739,
+   "sha256": "7637b72d4c6c3e10226bf46bd72a20272d62ccbe29743062632d10b158b49c58",
+   "owner_reported_public_score": 0.1839,
+   "corroboration": "task_statement_only"
+  },
+  {
+   "id": "g13_lattice_0904",
+   "label": "13GEMSDOE r13-lattice-s5 (nan-outside)",
+   "repo": "buffedlizard55-lab/13GEMSDOE",
+   "repo_commit": "92ee6f074323f161eed837b80ec3ee5b662e26f5",
+   "path": "docs/downloads/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+   "bytes": 1706456,
+   "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+   "owner_reported_public_score": 0.0904,
+   "corroboration": "task_statement_only"
+  },
+  {
+   "id": "g16_h16_1_1855",
+   "label": "16GEMSDOE h16-1 topo-geophys-baseline-ridges",
+   "repo": "buffedlizard55-lab/16GEMSDOE",
+   "repo_commit": "962587af0d16a50d45e32a80a3c90436435cb9d8",
+   "path": "docs/downloads/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+   "bytes": 1718028,
+   "sha256": "055309694ed499ca3d87e76b3f5e81c292aef6e39c418d33ff5a817aa1309bea",
+   "owner_reported_public_score": 0.1855,
+   "corroboration": "owner_list_snapshot"
+  },
+  {
+   "id": "g16_h18_3a_0976",
+   "label": "16GEMSDOE h18-3a complexity-prior",
+   "repo": "buffedlizard55-lab/16GEMSDOE",
+   "repo_commit": "962587af0d16a50d45e32a80a3c90436435cb9d8",
+   "path": "docs/downloads/gems16-h18-3a-topo-geophys-x-complexity-prior-20260930-c502dfab-nan.tif",
+   "bytes": 1708516,
+   "sha256": "92904a5bfd84c8bd1141683fc5d29817aa4de71574d8caff5b40f7ed0072a5b8",
+   "owner_reported_public_score": 0.0976,
+   "corroboration": "task_statement_only"
+  }
+ ],
+ "unscored_artifacts": [
+  {
+   "id": "g16_h18_4_sgmc_gap",
+   "repo": "buffedlizard55-lab/16GEMSDOE",
+   "repo_commit": "962587af0d16a50d45e32a80a3c90436435cb9d8",
+   "path": "docs/downloads/gems16-h18-4-usgs-geologic-map-faults-gap-20260930-aef8f42c-nan.tif",
+   "bytes": 1620132,
+   "sha256": "736f62c2da585677ef472cab0f9bc63bd15c50c340beb4a0f4627fafd3d1c853",
+   "owner_reported_public_score": null,
+   "note": "blank in the task statement: unknown, never zero"
+  },
+  {
+   "id": "g20_h20_1",
+   "repo": "buffedlizard55-lab/20GEMSDOE",
+   "repo_commit": "50edbbad9bb05541f8a8ca8e62b75210fb5b2954",
+   "path": "docs/downloads/gems20-h20-1-sarnnpu-powerlaw-pi0363-tilt-wingcrack-20260930-be0e8f6b-nan.tif",
+   "bytes": 1717074,
+   "sha256": "defe590b944651552d7260237f79f309e3c089d03361e130db0e2dd7c87eb326",
+   "owner_reported_public_score": null,
+   "note": "blank in the task statement: unknown, never zero"
+  },
+  {
+   "id": "g20_h20_5",
+   "repo": "buffedlizard55-lab/20GEMSDOE",
+   "repo_commit": "50edbbad9bb05541f8a8ca8e62b75210fb5b2954",
+   "path": "submissions/gems20-h20-5-calibrated-continuous-nnpu-brier-verified-20260930-824ce73a-nan.tif",
+   "bytes": 2089626,
+   "sha256": "4e199f0ce1bb7e6f6e5e42fbbe54fcd3714bbf1b4ee864fad262b95ebba464f7",
+   "owner_reported_public_score": null,
+   "note": "blank in the task statement: unknown, never zero"
+  }
+ ],
+ "blank_in_task_statement": [
+  "22GEMSDOE",
+  "23GEMSDOE",
+  "24GEMSDOE",
+  "25GEMSDOE",
+  "26GEMSDOE",
+  "27GEMSDOE",
+  "h18-4",
+  "h20-1",
+  "h20-5"
+ ],
+ "duplicate_content_notes": [
+  "GEMSDOE (0.1563), 5GEMSDOE (0.1563) and 8GEMSDOE Hedge-v2 (0.1563) are the same scored pixels (8GEMSDOE only adds catalogue pixels, which are masked).",
+  "GEMSDOE21 h19-4-reference is byte-identical to 19GEMSDOE h19-4 (0.1894); 17GEMSDOE A-verified-01563 matches ens12 on scored pixels.",
+  "Account ownership of leaderboard rows is unverified."
+ ]
+}

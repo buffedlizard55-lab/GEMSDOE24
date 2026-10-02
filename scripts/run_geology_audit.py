@@ -91,6 +91,8 @@ def main() -> None:
         "source_provenance": prov,
         "references": {},
         "full_requested_audit_complete": prov["full_requested_audit_available"],
+        "block_boundary_status": prov.get("block_boundary_status", "missing"),
+        "blocks_official_coordinates": prov.get("blocks_official_coordinates", False),
         "interpretation": "Association test; not causal proof and not a certification of fault discovery. Missing inputs are never replaced by geological proxies.",
     }
     for label, p in refs:
