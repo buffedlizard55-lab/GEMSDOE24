@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-02T00:27:45+00:00",
+  "generated_utc": "2026-10-02T02:09:34+00:00",
   "bbox_wgs84": [
     -120.0024,
     37.3641,
@@ -817,7 +817,7 @@
       "url": "https://mrdata.usgs.gov/mrds/",
       "file": "data_external/mrds_landing.html",
       "bytes": 20434,
-      "sha256": "4cecd3466effb474fa99d4666e3207143169a35c377fbcff386e403f15879969",
+      "sha256": "61163a44cc55477f96c5541695ea287c4c3d29cf3dd8caa35f5fcd758e7f4801",
       "http": 200,
       "try": 0
     },
@@ -844,7 +844,7 @@
       "url": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
       "file": "data_external/geodawn_sb_item.html",
       "bytes": 87458,
-      "sha256": "6b441b7bbb6404670bb1108739feb2e21ebdf50718fa896b4e0ece5d3dde8359",
+      "sha256": "d73613b596e6c32f643175b8a6e234037fcec232475737f47b94587a70cd246a",
       "http": 200,
       "try": 0
     },
