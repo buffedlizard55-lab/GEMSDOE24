@@ -80,7 +80,7 @@ def intersects(b):
     return b[0] <= BOX[2] and b[2] >= BOX[0] and b[1] <= BOX[3] and b[3] >= BOX[1]
 
 
-def main():
+def _main():
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "tiger_road_fetch_failure.json").unlink(missing_ok=True)
     raw, county_receipt = fetch(BASE + "/COUNTY/tl_2024_us_county.zip")
@@ -174,6 +174,23 @@ def main():
     )
     (OUT / "tiger_road_receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
     print(json.dumps({k: v for k, v in receipt.items() if k not in ("assets",)}, indent=2))
+
+
+def main():
+    try:
+        _main()
+    except BaseException as exc:
+        OUT.mkdir(parents=True, exist_ok=True)
+        failure = {
+            "generated_utc": datetime.now(timezone.utc).isoformat(),
+            "stage": "unhandled_source_or_derivation_error",
+            "exception_type": type(exc).__name__,
+            "error": str(exc)[:1000],
+            "tls_verification_disabled": False,
+        }
+        (OUT / "tiger_road_failure.json").write_text(json.dumps(failure, indent=2) + "\n")
+        print(json.dumps(failure), flush=True)
+        raise
 
 
 if __name__ == "__main__":
