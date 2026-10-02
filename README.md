@@ -20,26 +20,13 @@ is not a score forecast or a guarantee of winning.
 ## Current decision
 
 <!-- STATUS:START -->
-**No new slot-eligible candidate; no slot consumed.** H19-5 remains a
-format-validated reference with owner-reported original public DTI **0.1922**.
-The official leader snapshot is **0.3195** (2026-10-02; not an artifact-linked
-score for this repo).
+**No new slot-eligible candidate; no slot consumed.** H19-5 remains a format-validated reference with owner-reported original public DTI **0.1922**. The official leaderboard snapshot on 2026-10-02 showed DARD at **0.3195** (#1); rows at **0.1922** and **0.1894** were present but are not linked to these raster hashes.
 
-Fresh physics → arc+residualized local dense/sparse DTI:
-**0.15169 / 0.05843 →
-0.15568 / 0.06321**.
-These gains are below H19-4/H19-5 as-emitted diagnostics; original current-best
-OOF reconstruction is absent. They do not predict a new leaderboard score.
+H24-3A paired residualized holdout: **0.14980 / 0.05523** vs residualized physics **0.14305 / 0.05306**. It fails the preregistered sparse-fold gate and trails H19-4/5 as-emitted local diagnostics. These local DTI values do not forecast a public score.
 
-The full requested audit is **BLOCKED**: four-block geography is unverified and
-legacy road clipping leaves boundary coverage uncertified. Official buffered
-road acquisition is implemented but its workflow could not run after GitHub
-authentication/push failed. Claim distances are official, quality-filtered and
-buffered. Exact experimental-raster audit complete: **True**
-(provisional available inputs, never a full-source pass).
+The official 2024 Census road/path bridge now passes complete county/window checks: 32 counties, 20 km buffer, explicit Road/Path MTFCC allowlist, S1750 excluded. The full three-family C2ST is still **BLOCKED** because verified four-block pixel membership is missing. Labels first, then H19-4, H19-5 and exact H24-3A were tested using the two available families only; no available-family association met the declared effect rule. No causality or absence of bias is inferred.
 
-Reference: [`gems24-reference-h19-5-20261002-80d47e1ab2ee-nan.tif`](docs/downloads/gems24-reference-h19-5-20261002-80d47e1ab2ee-nan.tif).
-Public PR/merge/deployment are **not claimed**; GitHub reconnection is required.
+Reference: [`gems24-reference-h19-5-20261002-80d47e1ab2ee-nan.tif`](docs/downloads/gems24-reference-h19-5-20261002-80d47e1ab2ee-nan.tif). New experimental exact raster is format valid but **not recommended to upload**. PR/merge/public deployment are recorded separately; this local build is not publication proof.
 <!-- STATUS:END -->
 
 ## Standing session charter — read this at the start of every session
@@ -186,32 +173,30 @@ Data placement is autonomous and hash-pinned; no manual Dropbox download is
 needed. The 419 MB raster and 592 MiB derived matrix remain ignored:
 
 ```bash
-.venv/bin/python scripts/restore_data.py --roads
+.venv/bin/python scripts/restore_data.py
 .venv/bin/python scripts/prepare_data.py
 .venv/bin/python scripts/build_confounds.py --force
 .venv/bin/python scripts/run_geology_audit.py
 ```
 
-If and only if the four operational blocks remain unavailable, the following
-**explicitly exploratory** command records that limitation and keeps promotion
-blocked. It does not waive the owner's no-slot requirement:
+The official road source bridge is already restored on this branch. If and
+only if four-block membership remains unavailable, run the current H24-3A
+experiment with the explicit partial-input flag; it records the missing family
+and cannot promote a candidate or spend a slot:
 
 ```bash
-.venv/bin/python scripts/run_h24_2_experiment.py --allow-partial-audit-inputs
+.venv/bin/python scripts/run_h24_3a_experiment.py --allow-partial-audit-inputs
 .venv/bin/python scripts/run_geology_audit.py \
-  --candidate out/h24-2a-residualized-experimental.tif
+  --candidate out/h24-3a-contact-persistence-20261002-experimental.tif
 .venv/bin/python scripts/build_site.py
 ```
 
-`out/` contains the reproducible experimental raster and serialized detector;
-these are not advertised as a winning submission. Packaging a new candidate
-fails closed unless the matched current-best holdout, training-only intervention,
-complete required-family audit and exact file identity all pass:
-
-```bash
-.venv/bin/python scripts/build_submission24.py \
-  out/h24-2a-residualized-experimental.tif --hyp h24-2a
-```
+The current exact experimental raster is retained under ignored `out/` for
+review only. It passes the format checker but fails the paired sparse-fold and
+H19 diagnostic gates; do **not** package or upload it. The promotion tool stays
+fail-closed for a future candidate unless the comparable current-best holdout,
+training-only intervention, complete three-family audit and exact file identity
+all pass. Packaging is not an upload command.
 
 The reference-only bypass verifies the **full pinned H19-5 source hash**, not an
 arbitrary `--mirror-of` string. Its comment explicitly says no new score:
@@ -232,32 +217,38 @@ Nothing in these commands submits to DrivenData or spends a slot.
   `2176d08e…`. This proves mirror consistency, **not independent organizer
   authentication** of every original byte or band description. Ambiguous
   thermal-conductivity/earthquake aliases are excluded from the new detector.
-- **Preparation:** 5,167,373 footprint rows × 30 float32 descriptors; 27 base
-  physical/LiDAR columns and three fixed annular descriptors. No training label
-  is an input to the arc transform. Global unlabelled physical context and
-  normalization are transductive; fitted model/nuisance scaling is training-only.
-- **Access data:** real TIGER road/vehicular-trail geometries and BLM **closed
-  mining claims**, not MRDS. Claims are PLSS legal-land approximations, not exact
-  stake locations or historic workings. Quality prefixes are parsed, unknown/
-  degraded records and implausibly broad polygons excluded; 20 km padded seed
-  grids preserve source geometry outside the output rectangle, but the inherited
-  road mirror was itself tightly clipped: actual nearest-road certification at
-  that source boundary remains incomplete. Official buffered road acquisition
-  is implemented and blocked by GitHub authentication; this is not a source pass.
+- **Preparation:** 5,167,373 footprint rows × 30 float32 owner-bridge descriptors;
+  27 base physical/LiDAR columns and three fixed annular descriptors. H24-3A adds
+  three upward-continuation persistence descriptors in a separate ignored cache.
+  Full-scene transforms use unlabeled physical context; nuisance regression,
+  standardization and imputation are fitted on training-region pixels only.
+- **Access data:** official TIGER 2024 Road/Path geometries and BLM **closed
+  mining claims**, not MRDS. The road bridge checks 32 complete CA/NV counties,
+  covers a 20 km buffer around the output window and excludes 183 S1750
+  internal-use features under the official MTFCC documentation. Its raster SHA-256
+  is `459af5cf…`; the receipt records county EPSG:4269, URLs, sizes and hashes.
+  TIGER still is not a complete hiking-network or travel-time model. BLM claim
+  polygons are PLSS legal-land approximations, not exact stakes/workings; the
+  documented quality policy rejects unknown/degraded records and broad polygons.
 - **Acquisition:** Area 1 has priority in the Area 1/2 overlap. Those are **not
   the four operational blocks**. The official report identifies Winnemucca,
   Fallon, Hawthorne and Tonopah, but the fetched geographic extent/flight-path
   inventories do not provide independently verified four-block polygons.
-- **Audit:** 199 grouped refitted randomizations, 99 shifts, four spatial folds
-  with purged 10 km groups and 1.5 km collars; Holm correction and AUC/effect
-  thresholds. Results with Area 1/2 only are labelled provisional and cannot
-  pass the required full audit.
-- **Experiment:** physics / physics+arc × raw / nuisance-residualized; identical
-  splits and frozen detector settings. Four quadrants, whole-component
-  supervised exclusion, fixed 2.45% maximum ridge budget, no zero padding.
-  Score surfaces include complete NMS halos; catalogue masking occurs **after**
-  NMS. Dense and 20%-component sparse truth are simulations using the incomplete
-  provided catalogue, not hidden new-fault ground truth.
+- **Audit:** v3 tested labels first, then H19-4, H19-5 and the exact H24-3A
+  raster, using 12,000 samples/class and 199 valid non-wrapping mask translations
+  with classifier refits. Only road/claim distances were available; Holm-adjusted
+  shift diagnostics were 0.28 and no raster met the available-family effect rule.
+  This is provisional, not proof of no bias: true four-block membership is still
+  missing. The superseded v2 Area1/toroidal results must not be used.
+- **Experiment:** physics / physics+potential-field persistence × raw /
+  training-only residualized; same four quadrant folds and HGB settings. H24-3A
+  uses upward-continuation scales 100/200/400 m and a preregistered 20 km training
+  collar for its nonlocal transform. Whole components touching held-out regions
+  are excluded; maximum ridge budget is 2.45%, no zero padding, complete NMS halos
+  are used, and catalogue masking occurs **after** NMS. Dense and 20%-component
+  sparse truth remain simulations on the incomplete catalogue, not hidden
+  new-fault ground truth. The candidate fails the residualized sparse-fold gate
+  and loses to H19-4/5 as-emitted diagnostics.
 - **Current-best comparison:** H19 outputs are scored **as emitted** as a
   conservative diagnostic veto. The original H19 OOF caches are absent; these
   diagnostics do not reconstruct the original 0.21413 / 0.08667 claims or certify
@@ -273,12 +264,13 @@ Nothing in these commands submits to DrivenData or spends a slot.
 |---|---|
 | `src/gems/` | exact/binary DTI, safe ridge selection, physical descriptors, strict nuisance inputs, spatial C2ST, training-only residualization, packaging and promotion |
 | `scripts/restore_data.py`, `prepare_data.py` | reproducible large-input restoration and preparation |
-| `scripts/run_geology_audit.py` | labels first, individual references, then the exact candidate; source/code/environment fingerprints |
-| `scripts/run_h24_2_experiment.py` | paired fresh spatial refits and blocked promotion decision |
+| `scripts/run_h24_3a_experiment.py`, `src/gems/scale_space.py` | preregistered multi-height potential-field contact persistence and paired holdout |
+| `scripts/run_geology_audit.py` | labels first, then H19-4/H19-5 and exact candidate; v3 spatial-shift audit |
 | `evidence/data_restore.json`, `data_preparation.json` | full input and matrix hashes; provenance caveats |
 | `evidence/group_review.json` | all 21 supplied project source pages, pinned commits and consulted files |
-| `evidence/access_inputs.json`, `accessibility_audit_v2.json` | actual nuisance families, missing inputs, refitted nulls and effect gates |
-| `evidence/h24_2_experiment.json` | all four arms/folds, historical diagnostics, exact experimental-raster receipt |
+| `evidence/access_inputs.json`, `accessibility_audit_v3.json` | official road/claim families, missing true block membership, shift-null diagnostics |
+| `evidence/h24_3a_experiment.json` | preregistered four-arm/fold results, historical comparisons and exact raster receipt |
+| `evidence/official_roads_initial_crs_failure.json` | superseded CRS-check failure; resolution history; not current source status |
 | `evidence/review_passes.json`, `registry/irregularities.json` | three-pass review, failures and remaining limitations |
 | `data/external/audit_sources/` | small official USGS documents, buffered BLM distance bridge and source receipts; raw bulk is external |
 | `docs/` | clean site, executive instructions, one-click reference and timestamped source feed |
@@ -304,25 +296,25 @@ Nothing in these commands submits to DrivenData or spends a slot.
 
 ## Next actions that matter
 
-1. Complete and verify the official buffered-road Action on this fixed session
-   branch. Rebuild the nuisance cache with official roads/trails and BLM closed
-   claims only; never admit Area1/Area2 as substitutes. True four-block
-   membership is still unresolved: obtain machine-readable official boundaries
-   or a defensible, independently checked official line-to-block mapping. Do not
-   infer it from labels, a constant raster, latitude seams or nearest base towns.
-2. After the source gate is complete, audit labels first and each relevant
-   prediction using the prespecified non-wrapping spatial-shift C2ST; treat its
-   tail area as a stationarity diagnostic, not an exact p-value. Then reconstruct
-   current H19 spatial OOF under the same masked metric/split protocol with
-   hashes and transductive steps disclosed. Never compare with a weaker baseline.
-3. H24-3A common-resolution contact persistence is the highest-ranked remaining
-   untested hypothesis; implement and run it on the frozen spatial holdout only
-   after preregistration and source checks. H24-6 drainage offsets remain
-   deferred until official 3DEP coverage and required tile bytes are verified.
+1. Obtain machine-readable true membership for Winnemucca, Fallon, Hawthorne and
+   Tonopah from an official GIS boundary or defensible, independently verified
+   line-to-block mapping. Do not infer it from labels, Area1/Area2, a constant
+   raster, latitude seams or nearest base towns. This is the remaining blocker
+   for the requested full nuisance audit.
+2. Once verified blocks exist, rebuild the strict three-family C2ST with the
+   same labels-first order, spatial refits, non-wrapping shift diagnostic, Holm
+   control and effect-size threshold. Clearly label the shift tail as an
+   approximate stationarity sensitivity analysis. Re-audit the exact final file.
+3. Reconstruct the current-best H19 spatial OOF under the same masked metric and
+   split protocol, with hashes and transductive steps disclosed. H24-3A was
+   tested and did not pass promotion; do not rerun it to tune against the folds.
+   H24-4A directional residual variograms are the next untested registered
+   hypothesis; H24-6 remains deferred until full official 3DEP tile bytes and
+   study-wide coverage are verified.
 4. Obtain independent fault/expert validation before claiming discovery. A
    contact, scarp, intrusion rim, road cut and mapped fault can be equifinal in
    these fields. The private leaderboard and Phase 2 expert assessment are not
    available local truth.
-5. Open and verify the PR from this fixed session branch, merge only when checks
-   pass and permissions allow, then verify the deployed public `.tif` URL—not
-   merely the repository file.
+5. Open a PR from this fixed session branch, verify required checks, and merge
+   only if authorized and all checks pass. Then verify any public deployment;
+   neither a repository file nor a local site build proves a deployed URL.

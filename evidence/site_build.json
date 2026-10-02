@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-02T04:53:34.965458+00:00",
+  "generated_utc": "2026-10-02T17:35:28.490886+00:00",
   "reference_sha256": "ec1f9b56b83ce33cad781ceb9f104b18fb4f2ff785263a4e89616af4aabdee8d",
   "pages": [
     "docs/index.html",
@@ -8,7 +8,8 @@
     "docs/executive-summary.html"
   ],
   "root": "index.html",
-  "publication_verified": false,
+  "full_audit_complete": false,
   "new_slot_eligible": false,
-  "no_scores_fabricated": true
+  "publication_verified": false,
+  "no_scores_inferred": true
 }

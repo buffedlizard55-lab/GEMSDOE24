@@ -69,3 +69,23 @@ Example official 10 m source to probe before H24-6:
 
 The group-best download remains a clearly labelled H19-5 reference until an
 experiment passes; renaming the reference is not a new scientific discovery.
+
+## Dated protocol/status addendum — 2026-10-02
+
+This addendum preserves, rather than overwrites, the original pre-registration.
+The initial available-family audit v2 used Area1 as a proxy for missing four-block
+membership and a toroidal spatial shift; review found both invalid for the
+requested full audit. The corrected v3 audit therefore uses only the
+non-wrapping, refitted spatial-shift sensitivity analysis, labels first, then
+each individual reference, and reports Holm-adjusted diagnostics. It requires
+199 valid shifts, uses no Area1/Area2 or geological proxy, and remains explicitly
+provisional because true four-block membership is unavailable. Its shift tail is
+not an exact spatial randomization p-value. See the complete v3 receipts for
+results and deviations; no result is retroactively represented as confirmatory.
+
+H24-2A's recorded experiment is now historical-only for promotion because it
+used Area1 and clipped-road inputs. The remaining-hypothesis register
+`knowledge/04_remaining_hypotheses_2026-10-02.md` ranks H24-3A as the next
+implementable candidate and documents a pre-implementation 20 km collar
+amendment. H24-3A was tested once; it failed the preregistered paired sparse-fold
+and historical-H19 gates. No weekly slot was consumed.

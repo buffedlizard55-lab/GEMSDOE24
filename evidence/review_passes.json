@@ -1,72 +1,74 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "review_date_utc": "2026-10-02",
-  "summary": "Three passes completed with explicit blocked acceptance items; no full-audit, new-score, PR/merge or public-deployment success is fabricated.",
+  "summary": "Three review passes completed. Official road acquisition and branch reliability checks succeeded; the complete nuisance audit and promotion remain blocked by missing true four-block membership and comparable current-best OOF evidence. No new score, slot, merge or public deployment is claimed.",
   "passes": [
     {
       "pass": 1,
       "purpose": "Implement and verify sources/data/train/predict/validate",
-      "status": "completed_with_source_limits",
+      "status": "completed_with_specific_external_source_block",
       "checks": [
-        "Pinned 419 MB owner feature bridge restored and checked; 592 MiB, 5167373x30 descriptor matrix prepared.",
-        "All 21 supplied project source pages reviewed; selected H19/H16/H13 code and registries pinned.",
-        "Four ranked physical hypotheses written before new detector implementation.",
-        "Official BLM/USGS bytes fetched anonymously on CI; full claim IDs checked; quality-filtered 20 km claim-distance raster retained.",
-        "Training labels audited before detector fits; individual H19 predictions tested separately.",
-        "16 fresh paired spatial detector refits completed; full-region experimental raster produced and retained.",
-        "Exact experimental raster audited; four-reference Holm family calculated. All statistics remain provisional available-input diagnostics."
+        "Pinned 419 MB owner feature bridge and 592 MiB, 5,167,373 x 30 descriptor matrix were integrity checked; owner mirror hashes are not organizer authentication.",
+        "All 21 supplied project source pages and selected H19/H16/H13 source/register files were reviewed and pinned.",
+        "Four distinct physical hypotheses were ranked before implementation; H24-3A's spectral transfer and 20 km collar amendment were recorded before fitting.",
+        "Official BLM/USGS source receipts were preserved; closed-claim IDs, quality filtering and 20 km claim-distance grid were checked.",
+        "Official Census buffered-road workflow 37028471805 succeeded; commit 205ff15 retains the 32-county, 20 km buffered raster/receipt. Explicit 2024 Road/Path MTFCC filtering excluded 183 S1750 features.",
+        "Corrected C2ST tested labels first, then H19-4, H19-5 and the exact H24-3A raster using road and claim distance only; 199 valid refitted non-wrapping shifts and Holm diagnostics recorded.",
+        "H24-3A completed four paired arms across four spatial quadrants, with whole-component exclusion, training-only nuisance fits and a 20 km collar. The exact experimental raster was emitted and format checked.",
+        "No candidate passed all promotion gates; no weekly slot was used."
       ],
       "blocked": [
-        "Coordinate-verified operational acquisition blocks absent.",
-        "Original current-best H19 OOF reconstruction absent.",
-        "Owner feature/band mirror is integrity-checked, not independently organizer-authenticated."
+        "Official GeoDAWN source reviewed so far does not supply verified pixel membership in all four operational blocks.",
+        "Original current-best H19 OOF model/cache is unavailable for same-protocol reconstruction.",
+        "H19 public-score-to-exact-file linkage is not independently verified."
       ]
     },
     {
       "pass": 2,
-      "purpose": "Fix assumptions, bugs and edge cases",
-      "status": "completed_with_blocked_road_data_correction",
+      "purpose": "Inspect and fix assumptions, code paths and edge cases",
+      "status": "completed_with_remaining_data_limitation",
       "checks": [
-        "Known prediction/truth masking and adjacent-new-truth TP neutrality tested in both DTI implementations.",
-        "Empty components/quadrants, zero budgets, zero-score backfill and deterministic tie behavior checked.",
-        "NMS uses complete predicted halos and catalogue exclusion only after thinning; padding silhouettes rejected.",
-        "Esri multiple shells/holes, verbose quality prefixes, real nonempty distance seeds and Area1 priority tested.",
-        "Training-only median/scaling/splines/residualization and refitting every null/fold tested.",
-        "Undefined single-class shift AUC fixed with bounded geometry-only retries and recorded rejected draws; no score-based exclusions. Candidate required one rejection before 99 valid shifts.",
-        "Strict source/grid/range/soft-content-ID/flat-ZIP/comment/promotion checks verified; rejected candidate cannot be packaged as eligible.",
-        "Legacy executable wrappers fail closed; misleading reports preserved under archive.",
-        "Actual road-mirror source clipping discovered: padded raster alone cannot certify missing outside-window roads. Official buffered acquisition implemented, but not executed after auth/push failure."
+        "Official road classifier allowlist was checked against the Census 2024 MTFCC technical documentation; internal-use S1750 and unknown/non-road classes are excluded and counts recorded.",
+        "County source CRS accepts explicit NAD83 geographic semantics; EPSG:4269 is recorded. Historical initial CRS failure was moved to a clearly superseded evidence path.",
+        "Official road receipt verifies all intersecting counties, 20 km seed-grid buffer, no outside-window clipping, per-county ZIP hashes and final raster checksum.",
+        "Area1/Area2, geological proxies, label-derived seams, MRDS, geothermal wells, sinter, vents and probes are excluded from nuisance features; four-block membership is never fabricated.",
+        "Non-wrapping shift null, geometry-only support rejection, valid-shift count, classifier refits, four spatial folds, Holm adjustment and effect-size threshold were inspected; tails are labelled approximate stationarity diagnostics, not exact p-values.",
+        "Scale-space tests cover zero-height/constant preservation, high-frequency attenuation, missing-value restoration, bounded persistence and invalid parameters.",
+        "H24-3A training-label negatives are selected using training-region labels only; component exclusion reaches the entire touching component, and all arms use identical folds/settings.",
+        "Candidate file SHA-256 is tied to format checks and the exact C2ST input. It passes GeoTIFF format only; upload eligibility remains false.",
+        "All 61 pytest tests pass; Ruff check and format pass; compileall passes; git diff --check passes.",
+        "Generated Pages links checked: 64 internal references resolve; offline source-feed schema check passes. No browser interaction or live deployment is claimed."
       ],
-      "tests": "55 pytest tests pass; Ruff check and format check pass; JavaScript syntax check passes; editable package build succeeds.",
-      "blocked": [
-        "Buffered official road-source correction requires a successful authenticated workflow trigger; nearest-road boundary certification remains incomplete.",
-        "No real browser engine was installed; DOM/link/HTTP checks do not claim clipboard/browser interaction testing."
+      "tests": "61 pytest tests passed; Ruff check/format, Python compileall, offline source-feed check and internal-link check passed.",
+      "remaining": [
+        "No verified true four-block source is available; the full requested three-family audit remains incomplete.",
+        "Potential-field upward continuation is nonlocal; the declared 20 km collar reduces but does not eliminate spatial dependence."
       ]
     },
     {
       "pass": 3,
-      "purpose": "Recheck owner scope, reliability and publication claims",
+      "purpose": "Recheck the full owner scope, evidence language and promotion/publication claims",
       "status": "completed_with_explicit_unfulfilled_acceptance_items",
       "checks": [
-        "README preserves inherited quoted charter and expands every active available requirement; original uncondensed missing text is not invented.",
-        "Local paired gains, historical diagnostics, owner-reported 0.1922 and official 0.3195 snapshot remain separate.",
-        "Candidate is not promoted despite passing weaker paired-baseline gains; no weekly slot spent.",
-        "Exact-candidate AUC 0.534765 is below effect threshold; full requested source audit still blocked, not a pass.",
-        "First-screen uniquely named direct .tif reference, separate <=200-character note, checksum/range receipts and executive submission subpage delivered.",
-        "61 internal resource links resolve; primary TIFF served HTTP 200 in the local preview and matches full pinned SHA-256.",
-        "Scheduled anonymous source-feed/Pages artifact workflow implemented; stale/unknown snapshots marked rather than fabricated.",
-        "All changes remain on the fixed Arena session branch; no other branch created or pushed."
+        "README preserves the inherited quoted charter and active constraints; no unseen original prompt text is invented.",
+        "Current official leaderboard page text reports DARD #1 at 0.3195; public rows at 0.1922/#26 and 0.1894/#28 are explicitly not mapped to the H19 file hashes.",
+        "Owner-reported H19-4/H19-5 scores, local DTI diagnostics, public leaderboard rows and exact file hashes remain separate evidence classes.",
+        "Available-family C2ST reports no effect flag but remains incomplete; no causal or no-bias conclusion is claimed.",
+        "H24-3A improves mean DTI over residualized physics but fails the sparse-fold gate (2/4 wins) and loses to H19 as-emitted diagnostics; exact candidate AUC is below the declared effect threshold. It is not promoted.",
+        "First-screen unique direct .tif reference, separate short comment, format receipt and executive submission guide remain; the download is labelled a pinned reference, not a new prediction.",
+        "README, project site source pages, source table and experiment/audit receipts refreshed; the site-build receipt explicitly marks full audit, slot eligibility and deployment false."
       ],
       "unfulfilled": [
-        "No independently verified full four-operational-block audit.",
-        "No corrected fully buffered official road raster/external-source retraining yet.",
-        "No reproduced current-best original OOF baseline and no verified new public score or leader-beater.",
-        "GitHub REST/GraphQL 401 and push failure prevent PR/merge/public deployment; reconnection requested without asking for secrets.",
-        "Complete uncondensed original prompt text was not available; available charter/requirements are preserved, not falsely called a verbatim unseen transcript."
+        "No independently verified full four-operational-block audit or complete required-family C2ST.",
+        "No reproduced current-best OOF baseline, artifact-linked new public score, or leader-beater.",
+        "No weekly competition submission slot spent.",
+        "Public Pages deployment and portal score receipt remain unverified.",
+        "No merge to main is claimed."
       ]
     }
   ],
   "new_submission_slot_spent": false,
   "recommended_new_candidate": false,
-  "public_deployment_verified": false
+  "public_deployment_verified": false,
+  "full_requested_audit_complete": false
 }

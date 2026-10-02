@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Generate the small, honest Pages site from verified local evidence.
+"""Generate the evidence-led static Pages site from current verified receipts.
 
-No binary submission re-ranking, network requests, invented live scores, or
-publication claims. The source feed is refreshed separately on hosted CI.
+The only downloadable prediction is the pinned H19-5 reference. Experimental
+rasters stay out of the site unless every promotion and exact-file gate passes.
+This script does not contact DrivenData or infer scores from participant rows.
 """
 
 from __future__ import annotations
@@ -21,22 +22,22 @@ from gems.validator import sha256_file  # noqa: E402
 DOCS = ROOT / "docs"
 
 
-def load(path, default=None):
+def load(path: str, default=None):
     p = ROOT / path
     if not p.exists():
         return {} if default is None else default
     return json.loads(p.read_text())
 
 
-def fmt(value, n=5):
-    return "pending" if value is None else f"{value:.{n}f}"
-
-
-def e(value):
+def e(value) -> str:
     return escape(str(value), quote=True)
 
 
-def page(title, active, body, prefix=""):
+def fmt(value, n: int = 5) -> str:
+    return "not available" if value is None else f"{value:.{n}f}"
+
+
+def page(title: str, active: str, body: str, prefix: str = "") -> str:
     nav = []
     for name, path in (
         ("Overview", "index.html"),
@@ -48,108 +49,152 @@ def page(title, active, body, prefix=""):
             f'<a class="{"active" if name == active else ""}" href="{prefix}{path}">{name}</a>'
         )
     return f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Evidence-led DOE GEMS fault prediction: preregistered physical hypotheses, spatial retraining, source audits and validated GeoTIFF reference downloads."><meta name="source-feed" content="{prefix}data/source_health.json"><title>{e(title)} · GEMS DOE 24</title><link rel="stylesheet" href="{prefix}assets/style.css"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Evidence-led DOE GEMS fault prediction, accessibility auditing, official data provenance, and a validated reference GeoTIFF."><meta name="source-feed" content="{prefix}data/source_health.json"><title>{e(title)} · GEMS DOE 24</title><link rel="stylesheet" href="{prefix}assets/style.css"></head>
 <body><header><div class="nav"><a class="brand" href="{prefix}index.html"><span class="mark" aria-hidden="true">∿</span><span>GEMS DOE 24<small>Geologic mapping · evidence first</small></span></a><nav class="navlinks" aria-label="Main navigation">{"".join(nav)}</nav></div></header>
-<main>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Reference downloads do not create new leaderboard results. No new weekly submission is recommended.</p><p>AI-assisted development disclosed.<br><a href="{prefix}sources.html">Sources, limitations & review</a><br>Public deployment not verified; GitHub reconnection required.</p></footer><script src="{prefix}assets/app.js" defer></script></body></html>'''
+<main>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. A reference download is not a new prediction. No new weekly submission is recommended.</p><p>AI-assisted development disclosed.<br><a href="{prefix}sources.html">Sources, limitations & review</a><br>Public deployment is not claimed by a local build.</p></footer><script src="{prefix}assets/app.js" defer></script></body></html>'''
 
 
-def main():
+def main() -> None:
     download = load("docs/data/download.json")
     if not download:
-        raise SystemExit("Create the validated reference bundle first")
+        raise SystemExit("Missing validated reference bundle metadata")
     primary = DOCS / "downloads" / download["file"]
-    if not primary.exists() or sha256_file(primary) != download["sha256"]:
-        raise SystemExit("Website download is missing or differs from its validated checksum")
-    experiment = load("evidence/h24_2_experiment.json")
-    audit = load("evidence/accessibility_audit_v2.json")
+    if not primary.is_file() or sha256_file(primary) != download["sha256"]:
+        raise SystemExit("Website reference is missing or differs from its pinned SHA-256")
+
+    experiment = load("evidence/h24_3a_experiment.json")
+    audit = load("evidence/accessibility_audit_v3.json")
     inputs = load("evidence/access_inputs.json")
     group = load("evidence/group_review.json")
     sources = load("docs/data/sources.json")
     review = load("evidence/review_passes.json")
-    results = experiment.get("results", {}) if experiment.get("complete_run") else {}
-    history = experiment.get("historical_diagnostics", {}) if experiment.get("complete_run") else {}
-    candidate = results.get("physics_arc_residualized", {})
+    source_health = load("docs/data/source_health.json")
+    results = experiment.get("results", {})
+    history = experiment.get("historical_diagnostics", {})
+    candidate = results.get("physics_persistence_residualized", {})
     baseline = results.get("physics_raw", {})
-    ds = (
-        candidate.get("mean_sparse_dti", 0) - baseline.get("mean_sparse_dti", 0)
-        if candidate and baseline
-        else None
-    )
-    dd = (
-        candidate.get("mean_dense_dti", 0) - baseline.get("mean_dense_dti", 0)
-        if candidate and baseline
-        else None
-    )
-    ref_file = e(download["file"])
+    residual_baseline = results.get("physics_residualized", {})
+    h19_4 = history.get("h19-4", {})
+    h19_5 = history.get("h19-5", {})
+    paired_gate = experiment.get("paired_gate", {}).get("physics_residualized", {})
+    refs = audit.get("references", {})
+    candidate_c2st = refs.get("candidate", {})
+    candidate_primary = candidate_c2st.get("primary", {})
+    label_primary = refs.get("labels", {}).get("primary", {})
+    leader = source_health.get("leaderboard", {})
+    leader_score = leader.get("best_score")
+    checked = source_health.get("checked_utc", "2026-10-02")
+
+    file_name = e(download["file"])
     fallback = e(download["fallback"])
     checks_file = e(download["checks_file"])
+    zip_file = e(download["zip"])
     note_file = e(download["note_file"])
-    size = primary.stat().st_size / (1024**2)
-    actions = f'''<div class="actions"><a class="button primary" href="downloads/{ref_file}" download="{ref_file}">↓ Download reference .tif <span>({size:.2f} MiB)</span></a><a class="button" href="executive-summary.html">Submission / executive guide ↗</a></div>'''
-    warning = """<div class="status"><strong>No new slot-eligible candidate.</strong> The trained arc candidate improved the matched learning baseline, but did not beat H19 diagnostics. Four-block coordinates and fully buffered road-source coverage remain unresolved. The download is the known H19-5 reference, not a new prediction; do not waste a repeat slot.</div>"""
-    local_chart = []
-    maxscore = (
-        max([v.get("mean_sparse_dti", 0) for v in (*results.values(), *history.values())] or [0.1])
-        * 1.15
+    size_mib = primary.stat().st_size / (1024 * 1024)
+    note = e(download["note"])
+    download_button = (
+        f'<a class="button primary" href="downloads/{file_name}" '
+        f'download="{file_name}">↓ Download reference .tif '
+        f"<span>({size_mib:.2f} MiB)</span></a>"
     )
-    for label, row, kind in (
-        ("Physics baseline", baseline, ""),
-        ("Arc + residualization", candidate, "candidate"),
-        ("H19-5 diagnostic", history.get("h19-5", {}), ""),
-    ):
-        score = row.get("mean_sparse_dti")
-        width = 100 * score / maxscore if score is not None and maxscore else 0
-        local_chart.append(
-            f'<div class="chartrow"><span>{label}</span><div class="track"><div class="bar {kind}" style="width:{width:.3f}%"></div></div><strong>{fmt(score, 4)}</strong></div>'
-        )
-    hero = f"""<div class="hero"><div><div class="eyebrow">DOE GEMS Prize · auditable fault prediction</div><h1>Better evidence.<br>Before another slot.</h1><p class="lead">A reproducible physical detector, a spatial nuisance audit, and a transparent decision to hold the next submission. Inspect the format-validated group reference in one click.</p>{actions}<p class="micro"><span class="badge blue">H19-5 reference</span> Original <strong>0.1922</strong> reported by the owner · not a new score · float32 / [0,1]</p></div><aside class="card visual"><div class="cardtop"><h3>LOCAL SPARSE-HOLDOUT DTI</h3><span class="badge amber">Not promoted</span></div>{"".join(local_chart)}<p class="legend">Same emitted-raster diagnostic protocol, not a reconstruction of H19’s original OOF fit and <strong>not public leaderboard scores</strong>. New candidate: 16 paired refits across four spatial folds.</p><div class="note small">Paired sparse gain: <strong>{fmt(ds)}</strong><br>Current-best diagnostic veto: <strong>failed</strong></div></aside></div>"""
-    overview = (
-        hero
-        + warning
-        + f"""<div class="metrics"><div class="card metric"><div class="number">5.17M × 30</div><div class="label">Prepared footprint descriptors</div><div class="sub">Hash-verified matrix · CPU pipeline</div></div><div class="card metric"><div class="number">16 refits</div><div class="label">Four arms × four regions</div><div class="sub">Whole-component supervised exclusion</div></div><div class="card metric"><div class="number">{fmt(ds, 4)}</div><div class="label">Paired local sparse DTI gain</div><div class="sub">Insufficient to beat current reference</div></div><div class="card metric"><div class="number" data-leader-score>0.3195</div><div class="label">Official leader snapshot</div><div class="sub"><span data-leader-name>DARD</span> · <span data-source-time>2026-10-02</span></div></div></div>
-<section><div class="sectionhead"><h2>A complete experiment. An honest stop.</h2><a href="research.html" class="small">Read the methods and results →</a></div><div class="grid3"><article class="card"><div class="tagline">01 · Physical hypothesis</div><h3>Direction-aware contact support</h3><p>Fixed 0.6 / 1.2 / 2.4 km annular gradient descriptors from RTP and detrended elevation, back-projected to edges rather than basin centers. No catalogue-defined centers.</p><p>Contacts and intrusion rims are competing explanations; the descriptor is not a ring-fault proof.</p></article><article class="card"><div class="tagline">02 · Measured nuisances</div><h3>Audit the mapping process</h3><p>Road proximity, real closed-claim distance and the available survey-area indicator only. 199 grouped refitted randomizations and 99 spatial shifts per raster.</p><p>The required four operational block categories are missing; tightly clipped legacy roads also limit boundary certification.</p></article><article class="card"><div class="tagline">03 · Protect the slot</div><h3>Promotion fails closed</h3><p>True refitting, matched holdout gains and an exact-file re-audit precede packaging. Missing current-best OOF reconstruction or required sources cannot become a green gate.</p><p>A correct GeoTIFF format does not make a candidate scientifically eligible.</p></article></div></section>
-<section><div class="grid2"><article class="card"><div class="sectionhead"><h2>What ran</h2><span class="badge">Verified locally</span></div><ol class="steplist"><li><h3>Restore and prepare</h3><p>419 MB owner feature bridge verified; 592 MiB label-free descriptor matrix completed.</p></li><li><h3>Preregister, then implement</h3><p>Four distinct physical strategies ranked before new detector implementation.</p></li><li><h3>Audit labels first</h3><p>Available-family label AUC 0.5283: below the .55 meaningful-effect threshold. It is not a full-audit pass.</p></li><li><h3>Refit all four arms</h3><p>Physics / physics+arc, each raw and training-only nuisance-residualized. No outer-fold hyperparameter search.</p></li><li><h3>Inspect the exact prediction</h3><p>126,600 binary-confidence pixels; [0,1] verified; kept experimental and not promoted.</p></li></ol></article><article class="card"><div class="sectionhead"><h2>Source updates</h2><span class="badge gray">Timestamped</span></div><ul class="feed" id="source-feed-list"><li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Official leader: 0.3195, DARD</a><small>Official page read · 2026-10-02</small></li><li><a href="sources.html">Two GeoDAWN resolution areas ≠ four operational blocks</a><small>Official USGS report · preserved byte receipt</small></li><li><a href="sources.html">MRDS is not mining claims; BLM closed claims are used</a><small>Official BLM source · quality-filtered geometry</small></li></ul><p class="micro" data-source-state>Latest verified snapshot, not a live scoring API</p><p class="micro">Scheduled feed refresh is implemented, but requires authenticated publication. Public deployment is not currently verified.</p></article></div></section>
-<section><div class="callout"><div><h3>One file. One verifiable identity.</h3><p>Exact grid, range and checksum checks, a separate short comment, and no ambiguity about whether the file is new.</p></div><a class="button" href="executive-summary.html">Open the executive guide →</a></div></section>"""
+    guide_button = (
+        '<a class="button" href="executive-summary.html">Submission / executive guide ↗</a>'
     )
-    names = {
-        "physics_raw": "Physics · raw",
-        "physics_arc_raw": "Physics + arc · raw",
-        "physics_residualized": "Physics · residualized",
-        "physics_arc_residualized": "Physics + arc · residualized",
-    }
+    full_audit = bool(audit.get("full_requested_audit_complete"))
+    warning = (
+        '<div class="status"><strong>No new slot-eligible candidate; no slot consumed.</strong> '
+        "The 2024 TIGER buffered road bridge now passes source-window and completeness checks, "
+        "but true membership in all four GeoDAWN acquisition blocks is still unavailable. "
+        "H24-3A has higher mean DTI than the residualized baseline but fails its "
+        "preregistered sparse-fold gate and trails H19 as-emitted diagnostics. The only one-click file below is the pinned H19-5 reference, "
+        "not a new prediction.</div>"
+    )
+
+    leader_html = (
+        f'<a href="{e(leader.get("url", "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"))}" '
+        f'target="_blank" rel="noopener noreferrer">{fmt(leader_score, 4)}</a>'
+        if leader_score is not None
+        else "not verified"
+    )
+    # Shared leaderboard, artifact and promotion caveat.
+    overview = f"""<div class="hero"><div><div class="eyebrow">DOE GEMS Prize · auditable fault prediction</div><h1>Evidence before<br>another slot.</h1><p class="lead">An official road-data bridge, a corrected available-family accessibility audit, and a spatially held-out physics hypothesis. The evidence says to hold—not to spend a weekly slot.</p><div class="actions">{download_button}{guide_button}</div><p class="micro"><span class="badge blue">Pinned H19-5 reference</span> Owner-reported original public DTI <strong>0.1922</strong>; not a newly scored file.</p></div><aside class="card visual"><div class="cardtop"><h3>LOCAL DENSE / SPARSE DTI</h3><span class="badge amber">Not promoted</span></div><div class="chartrow"><span>Physics raw</span><div class="track"><div class="bar" style="width:70%"></div></div><strong>{fmt(baseline.get("mean_dense_dti"), 4)} / {fmt(baseline.get("mean_sparse_dti"), 4)}</strong></div><div class="chartrow"><span>H24-3A residualized</span><div class="track"><div class="bar candidate" style="width:80%"></div></div><strong>{fmt(candidate.get("mean_dense_dti"), 4)} / {fmt(candidate.get("mean_sparse_dti"), 4)}</strong></div><div class="chartrow"><span>H19-5 as emitted</span><div class="track"><div class="bar" style="width:100%"></div></div><strong>{fmt(h19_5.get("mean_dense_dti"), 4)} / {fmt(h19_5.get("mean_sparse_dti"), 4)}</strong></div><p class="legend">Four-quadrant research holdout; these are local catalogue diagnostics, not public leaderboard scores or hidden-test predictions.</p><div class="note small">Official public leader snapshot: <strong>{leader_html}</strong> · checked {e(checked)}. No file/account score mapping inferred.</div></aside></div>
+{warning}
+<div class="metrics"><div class="card metric"><div class="number">32 counties</div><div class="label">Official TIGER 2024 source coverage</div><div class="sub">20 km buffered · 32 complete</div></div><div class="card metric"><div class="number">2 / 3</div><div class="label">Required nuisance families available</div><div class="sub">Roads + claims; four blocks missing</div></div><div class="card metric"><div class="number">{fmt(candidate_primary.get("observed_auc"), 4)}</div><div class="label">Exact candidate C2ST AUC</div><div class="sub">Two-family diagnostic; no flag</div></div><div class="card metric"><div class="number">No slot</div><div class="label">Promotion decision</div><div class="sub">Paired and historical gates fail</div></div></div>
+<section><div class="sectionhead"><h2>What the evidence says</h2><a href="research.html" class="small">Read methods and results →</a></div><div class="grid3"><article class="card"><div class="tagline">01 · Source bridge</div><h3>Road coverage fixed</h3><p>Complete official Census county sources cover the 20 km padded seed-grid window. An explicit 2024 MTFCC Road/Path allowlist excludes 183 internal-use S1750 features.</p><p>The result is a road/path distance, not a full hiking-network or travel-time model.</p></article><article class="card"><div class="tagline">02 · Mapping-process audit</div><h3>Available families tested</h3><p>Labels were tested first, then H19-4, H19-5 and the exact experimental raster against road/trail and closed-claim distances.</p><p>No measured association met the declared effect rule; the mandatory four-block feature is absent, so the full audit remains blocked.</p></article><article class="card"><div class="tagline">03 · Protect the slot</div><h3>H24-3A stopped</h3><p>The new contact-persistence detector loses to H19 as-emitted diagnostics and fails one paired residualized-baseline gate.</p><p>A passing format check cannot replace missing acquisition membership, comparable OOF evidence or scientific promotion.</p></article></div></section>
+<section><div class="grid2"><article class="card"><h2>Official source links</h2><ul class="prose"><li><a href="https://www2.census.gov/geo/tiger/TIGER2024/ROADS/" target="_blank" rel="noopener noreferrer">U.S. Census TIGER/Line 2024 roads</a> and <a href="https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2024/TGRSHP2024_TechDoc_E.pdf" target="_blank" rel="noopener noreferrer">MTFCC technical documentation</a>.</li><li><a href="https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7" target="_blank" rel="noopener noreferrer">USGS GeoDAWN release</a>: four operational areas are named, but no independently verified four-block GIS membership was available.</li><li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener noreferrer">Official public leaderboard</a>: account standings are not linked to an artifact checksum here.</li></ul></article><article class="card"><h2>Next evidence—not another slot</h2><p>Obtain verified four-block polygons or pixel membership, rebuild the C2ST on all three required nuisance families, and reconstruct a comparable current-best OOF baseline. The exact candidate is archived for review and is not recommended for upload.</p><div class="actions"><a class="button" href="data/audit.json" download>Audit receipt JSON</a><a class="button" href="data/experiment.json" download>H24-3A receipt JSON</a></div></article></div></section>
+<section><div class="callout"><div><h3>One file. One verifiable identity.</h3><p>Format-checked reference, SHA-256, separate short note, and plain-language instructions.</p></div>{guide_button}</div></section>"""
+
+    hypotheses = [
+        (
+            "1 · H24-3A · tested",
+            "RTP, TMI and gravity; upward continuation at 100/200/400 m; bounded edge-amplitude persistence and unoriented-gradient stability.",
+            "Broader buried contacts may persist when shallow artifacts fade; distinct from simply summing Gaussian worms. Expected small–medium benefit; low–moderate CPU. Available layers; flight-height corrections not assumed.",
+            "Held-out test completed; not promoted.",
+        ),
+        (
+            "2 · H24-4A · untested",
+            "High-pass RTP/gravity differences at 0.3/0.6/1.2 km in eight directions; directional residual variograms and cross-field agreement.",
+            "Could capture damage-zone texture without a sharp scarp; differs from existing structure-tensor coherence. Expected low–medium benefit; moderate CPU. Available layers.",
+            "Not implemented; no score.",
+        ),
+        (
+            "3 · H24-2A · exploratory only",
+            "RTP and detrended elevation; fixed annular radial gradients at 0.6/1.2/2.4 km with edge backprojection.",
+            "May recover arcuate contacts; differs from label-centered buffers and scalar ring averaging. Earlier run used Area1 as a forbidden proxy and clipped roads, so its gains are historical only.",
+            "Superseded; not a valid promotion result.",
+        ),
+        (
+            "4 · H24-6 · deferred",
+            "USGS 3DEP 10 m terrain; repeated signed drainage offsets at independent crossings.",
+            "Potential strike-slip evidence distinct from one terrace/road step. Expected uncertain medium; high cost; full raw coverage unverified.",
+            "Deferred pending verified official tile coverage.",
+        ),
+    ]
+    hyp_rows = "".join(
+        f"<tr><td><strong>{e(rank)}</strong></td><td>{e(layers)}</td><td>{e(rationale)}</td><td>{e(status)}</td></tr>"
+        for rank, layers, rationale, status in hypotheses
+    )
+
     result_rows = []
-    for key, row in results.items():
-        result_rows.append(
-            f'<tr class="{"highlight" if key == "physics_arc_residualized" else ""}"><td>{names[key]}<br><span class="sourcekind">Fresh matched retraining</span></td><td class="num">{fmt(row["mean_dense_dti"])}</td><td class="num">{fmt(row["mean_sparse_dti"])}</td><td>{"Selected in advance, not promoted" if key == "physics_arc_residualized" else "Controlled comparison"}</td></tr>'
+    arm_labels = (
+        ("physics_raw", "Physics baseline · raw"),
+        ("physics_persistence_raw", "Physics + H24-3A · raw"),
+        ("physics_residualized", "Physics baseline · residualized"),
+        ("physics_persistence_residualized", "Physics + H24-3A · residualized"),
+    )
+    for key, label in arm_labels:
+        row = results.get(key, {})
+        gate_text = (
+            "selected challenger; paired gate failed"
+            if key.endswith("residualized") and "persistence" in key
+            else "paired reference"
         )
-    for key, row in history.items():
         result_rows.append(
-            f'<tr><td>{key.upper()} as emitted<br><span class="sourcekind">Diagnostic, NOT reconstructed OOF</span></td><td class="num">{fmt(row["mean_dense_dti"])}</td><td class="num">{fmt(row["mean_sparse_dti"])}</td><td>Additional conservative veto</td></tr>'
+            f'<tr><td>{e(label)}</td><td class="num">{fmt(row.get("mean_dense_dti"))}</td><td class="num">{fmt(row.get("mean_sparse_dti"))}</td><td>{e(gate_text)}</td></tr>'
         )
-    research = f"""<div class="pagehead"><div class="eyebrow">Methods · frozen experiment · limitations</div><h1>Physical leverage, not a renamed raster.</h1><p>Four ranked strategies were written before implementation. The first was tested with fresh paired spatial retraining; the outcome was retained even though the current-best veto failed.</p></div>{warning}
-<section><h2>Four preregistered hypotheses</h2><div class="tablewrap"><table><thead><tr><th>Rank / hypothesis</th><th>Layers and physical signature</th><th>Missing-fault rationale / distinction</th><th>Expected benefit / cost / readiness</th></tr></thead><tbody><tr><td><strong>1 · H24-2A</strong><br>Annular radial-gradient coherence</td><td>RTP and detrended elevation; 0.6/1.2/2.4 km directional templates and rim backprojection.</td><td>Candidate arcuate contacts that straight continuity filters may fragment; not scalar ring averaging or label-centered buffers.</td><td>Conditional medium / moderate CPU.<br><span class="badge blue">Tested, not promoted</span></td></tr><tr><td><strong>2 · H24-3A</strong><br>Common-resolution contact persistence</td><td>RTP, TMI and gravity; fixed upward-continuation scales, location persistence, no noise-amplifying downward continuation.</td><td>Broader buried contacts may persist when shallow artifacts do not; different from simply summing Gaussian worms.</td><td>Small–medium / low–moderate.<br>Layers staged; flight-height corrections not assumed.</td></tr><tr><td><strong>3 · H24-4A</strong><br>Directional residual variograms</td><td>High-pass RTP/gravity differences at .3/.6/1.2 km in eight directions; anisotropy and cross-field agreement.</td><td>Damage-zone texture without a sharp scarp; variogram range/phase differs from existing structure-tensor coherence.</td><td>Low–medium / moderate.<br>Available layers; not tested.</td></tr><tr><td><strong>4 · H24-6</strong><br>Repeated drainage offsets</td><td>Raw USGS 10 m 3DEP flow networks; repeated signed displacement at independent crossings.</td><td>Kinematic concordance for short strike-slip splays, not a single terrace/road step.</td><td>Uncertain medium / high.<br><span class="badge amber">Deferred: raw coverage unverified</span></td></tr></tbody></table></div><p class="micro">Expected benefits are ordinal judgments, not predicted scores. Novelty is relative to reviewed sources, not unseen competitors.</p></section>
-<section><h2>Actual local results</h2><div class="tablewrap"><table><thead><tr><th>Arm / reference</th><th>Dense DTI</th><th>Sparse DTI</th><th>Interpretation</th></tr></thead><tbody>{"".join(result_rows)}</tbody></table></div><p class="micro">Dense = withheld provided traces; sparse = fixed 20% component subset with remaining known pixels masked. This is a catalogue-gap simulation, not private test truth. The legacy road input is tightly clipped; these remain provisional available-input experiments.</p></section>
-<section><div class="grid2"><article class="card"><h3>Frozen, paired protocol</h3><ul class="prose"><li>Four geographic quadrants, 1.5 km exclusion collar, entire touching fault components removed from supervised training.</li><li>Same positives/unlabelled negatives, 80-iteration HGB settings and training-only scaler for all four arms.</li><li>Quadratic nuisance splines/interactions fitted on a uniform training-region sample; Ridge alpha 100.</li><li>2.45% maximum ridge budget; positive finite candidates only; deterministic ties, no zero padding.</li><li>Complete predicted halos before NMS; catalogue masking only after NMS, never catalogue-shaped zero-padding artifacts.</li></ul></article><article class="card"><h3>Why the decision is a stop</h3><p>Paired dense/sparse gains are {fmt(dd)} / {fmt(ds)} over physics raw. They satisfy the in-run paired rule, but both H19 diagnostics remain stronger.</p><p>Original H19 OOF caches are absent. Neither diagnostic can certify a same-protocol current-best reconstruction. Acquisition categories and road-source boundary completeness are also unresolved.</p><p><strong>No weekly slot has been spent. No better leaderboard score is claimed.</strong></p></article></div></section>
-<section><h2>What explains H19’s strong owner-reported results?</h2><div class="card"><p>The reviewed implementation is heavily topographic: H19-4 gives 92% of its covered-area mixture to the L3/L4 scarp-family terms; H19-5 gives 90%, with altered openness/thermal/tip mixtures, gap CDF matching and a slightly smaller budget. Those coefficients are not measured causal contributions.</p><p>Both outputs are zero on all 60,988 known pixels. Their measured Jaccard is .777234: related but distinct, not statistically independent lines. The .0028 reported score difference cannot tell us which mechanism caused it. Current source comments/register wording and older artifact filenames are not a full source-version reconstruction.</p><p>Thin, accurately localized candidates and restrained false-positive allocation plausibly help the 300 m DTI. The predicted-raster access association and the incomplete source audit prevent a stronger claim of discovery.</p></div></section>
-<section><h2>Keep the scientific caveats</h2><ul class="prose"><li>C2ST association does not establish that accessibility caused mapping; roads/claims can correlate with true geology.</li><li>A conditional-mean residualizer can leave nonlinear/variance dependence. AUC below threshold is not proof of no bias.</li><li>Annular support is not unique to ring faults: intrusions, erosion and locally tangent sharp edges can respond.</li><li>Image context can extend about 4.8 km; the 1.5 km collar does not make all physical context independent. Global unlabelled descriptor normalization is transductive.</li><li>Numeric detector settings were fixed in implementation before first fit, but not all were enumerated in the initial preregistration. No hindsight search or silent amendment is claimed.</li><li>Core bridge hashes establish owner-mirror integrity, not independent organizer band authentication.</li></ul></section>"""
+    for tag, row in (("H19-4", h19_4), ("H19-5", h19_5)):
+        result_rows.append(
+            f'<tr><td>{tag} as emitted</td><td class="num">{fmt(row.get("mean_dense_dti"))}</td><td class="num">{fmt(row.get("mean_sparse_dti"))}</td><td>Historical diagnostic; not original OOF reproduction</td></tr>'
+        )
+    research = f"""<div class="pagehead"><div class="eyebrow">Preregistered physics · spatial test · honest result</div><h1>One new hypothesis.<br>One measured outcome.</h1><p>H24-3A adds multi-scale persistence of potential-field contacts. Four spatial quadrants, a predeclared 20 km training collar, identical model settings and training-only nuisance transforms were used across all arms.</p></div>{warning}
+<section><h2>Ranked hypotheses</h2><div class="tablewrap"><table><thead><tr><th>Rank / status</th><th>Named layers and physical signature</th><th>Why a fault may be missing / distinction / expected benefit and cost</th><th>Evidence state</th></tr></thead><tbody>{hyp_rows}</tbody></table></div><p class="micro">Expected benefits are ordinal hypotheses, not score promises. Novelty is relative to reviewed repository methods, not unseen competitors.</p></section>
+<section><h2>H24-3A paired holdout</h2><div class="tablewrap"><table><thead><tr><th>Arm / reference</th><th>Dense DTI</th><th>Sparse DTI</th><th>Interpretation</th></tr></thead><tbody>{"".join(result_rows)}</tbody></table></div><div class="card"><p>Contact persistence vs residualized physics: <strong>Δ dense {fmt(candidate.get("mean_dense_dti", 0) - residual_baseline.get("mean_dense_dti", 0))}, Δ sparse {fmt(candidate.get("mean_sparse_dti", 0) - residual_baseline.get("mean_sparse_dti", 0))}</strong>. Dense improved in 4/4 quadrants, but sparse improved in only {paired_gate.get("sparse_fold_wins", "not available")}/4; one sparse fold lost {fmt(paired_gate.get("worst_fold_delta_sparse"))}. The preregistered paired gate therefore fails.</p><p>Against H19-4/5 as-emitted local diagnostics, candidate means are {fmt(candidate.get("mean_dense_dti"))}/{fmt(candidate.get("mean_sparse_dti"))}, versus {fmt(h19_4.get("mean_dense_dti"))}/{fmt(h19_4.get("mean_sparse_dti"))} and {fmt(h19_5.get("mean_dense_dti"))}/{fmt(h19_5.get("mean_sparse_dti"))}. These local scores do not equal public leaderboard results.</p><p><strong>No slot was spent; the experimental raster is not promoted.</strong></p></div></section>
+<section><h2>Exact raster & accessibility audit</h2><div class="grid2"><article class="card"><h3>Format gate</h3><p>Experimental SHA-256: <code>{e(experiment.get("experimental_raster", {}).get("sha256", "not available"))}</code></p><p>Full template shape/CRS/transform, one float32 band, 5,167,373 finite in-footprint values in [0,1], and NaN outside all pass. That is a format result only.</p><p>Output remains under ignored <code>out/</code>, not a download or submission recommendation.</p></article><article class="card"><h3>Spatial / model caveats</h3><ul class="prose"><li>Positives are catalogue trace pixels, not verified fault-absence labels.</li><li>Full-scene unlabeled potential-field continuation is transductive; the 20 km collar leaves residual long-range dependence.</li><li>Whole components touching held-out quadrants/collars were excluded from supervised training; each fold used 20,000 positive and 60,000 unlabelled negatives.</li><li>Historical H19 maps are scored as emitted only; the original training/OOF caches are unavailable.</li></ul></article></div></section>
+<section><h2>Why the owner’s H19 results remain interesting</h2><div class="card"><p>Owner-reported H19-4 = <strong>0.1894</strong>; H19-5 = <strong>0.1922</strong>. The local H19-5 output is format validated and remains a reference. No artifact-linked organizer receipt proves either exact raster's score.</p><p>The official public leaderboard currently shows a top score of <strong>{fmt(leader_score, 4)}</strong> ({e(leader.get("participant", "unknown"))} checked {e(checked)}). Public rows at 0.1922 and 0.1894 are not linked to the H19 files; the .0028 owner-reported difference cannot identify a winning mechanism.</p><p>H19-4 and H19-5 share some structure but are not statistically independent submissions. Their local as-emitted DTI is a conservative diagnostic, not an OOF reproduction or score mapping.</p></div></section>
+<section><h2>Interpretation limits</h2><ul class="prose"><li>C2ST association is not causal proof; non-rejection does not establish absence of accessibility-related bias.</li><li>Road/claim residualization is an observational conditional-mean adjustment, not causal identification.</li><li>The official report names Winnemucca, Fallon, Hawthorne and Tonopah, but Figure 3 is unreferenced and does not supply true pixel-to-block membership.</li><li>The strict 20 km feature collar is conservative but the upward-continuation kernel has infinite support.</li><li>The old H24-2 experiment used Area1 as a forbidden block proxy and clipped road mirrors; its gain is superseded for confirmation/promotion.</li></ul></section>"""
+
     audit_rows = []
-    for key, value in audit.get("references", {}).items():
-        p = value.get("primary", {})
-        adjusted = p.get("holm_p_value") if audit.get("complete_run") else None
-        association = (
-            value.get("meaningful_access_association_available_features")
-            if audit.get("complete_run")
-            else None
-        )
-        status = (
-            "Flagged association"
-            if association
-            else "Below effect rule"
-            if association is False
-            else "Final adjustment pending"
+    for name in ("labels", "h19-4", "h19-5", "candidate"):
+        record = refs.get(name)
+        if not record:
+            continue
+        primary_result = record.get("primary", {})
+        flag = record.get("meaningful_access_association_available_features", False)
+        effect = (
+            "Meets available-family effect rule" if flag else "No effect flag on measured families"
         )
         audit_rows.append(
-            f'<tr><td>{e(key.upper())}</td><td class="num">{fmt(p.get("observed_auc"), 4)}</td><td class="num">{fmt(adjusted, 3)}</td><td class="num">{fmt(p.get("margin_vs_p95"), 4)}</td><td><span class="badge {"amber" if association else "gray"}">{status}</span></td></tr>'
+            f'<tr><td>{e(name)}</td><td class="num">{fmt(primary_result.get("observed_auc"), 4)}</td><td class="num">{fmt(primary_result.get("null_auc_p95"), 4)}</td><td class="num">{fmt(primary_result.get("margin_vs_p95"), 4)}</td><td class="num">{fmt(primary_result.get("holm_p_value"), 3)}</td><td>{e(effect)}</td></tr>'
         )
     fact_rows = []
     for fact in sources.get("facts", []):
@@ -162,18 +207,22 @@ def main():
             f'<tr><td><a href="{e(row["site_url"])}" target="_blank" rel="noopener noreferrer">{e(row["repo"])} ↗</a></td><td><a href="{e(row["source_url"])}" target="_blank" rel="noopener noreferrer">{e(row["source_path"])}</a><br><code>{e(row.get("commit", "")[:12])}</code></td><td>{e(row.get("status", "unknown"))}</td><td>{len(row.get("consulted_files", []))} selected method/registry files</td></tr>'
         )
     missing = "; ".join(inputs.get("missing_required", []) or ["No unresolved families recorded"])
-    source_page = f"""<div class="pagehead"><div class="eyebrow">Manual-review links · auditable receipts</div><h1>Separate facts from conclusions.</h1><p>Official sources, measured diagnostics, owner-reported scores and hypotheses are distinct evidence classes. Missing data stay missing; no geological proxy is substituted for a nuisance input.</p></div><div class="status"><strong>Full requested audit: BLOCKED.</strong> Operational block membership is unverified, and the legacy road mirror is tightly clipped. A 20 km seed grid alone cannot repair the missing outside-window road geometries. The buffered official road acquisition workflow is implemented but could not be run after GitHub authentication failed.</div>
-<section><h2>Available-input classifier two-sample diagnostics</h2><div class="tablewrap"><table><thead><tr><th>Raster</th><th>Held-out AUC</th><th>Holm p</th><th>Margin vs null p95</th><th>Available-family effect rule</th></tr></thead><tbody>{"".join(audit_rows)}</tbody></table></div><p class="micro">Only road proximity (clipped-source provisional), closed-claim distance and Area1 membership. 199 grouped refits, 99 shift diagnostics, four spatial folds and purged 10 km groups. Flag requires Holm p≤.05, AUC≥.55 and margin≥.02. None of these rows is a full-audit pass without the required sources.</p><p class="micro">AUC adapts the paper’s accuracy-based C2ST. Group exchangeability is an assumption; shifts on this irregular nonstationary footprint are diagnostic, not an exact null. Single-feature ablations are descriptive.</p></section>
-<section><h2>Verified source/data table</h2><div class="tablewrap"><table><thead><tr><th>Source / review link</th><th>Checked fact or receipt</th><th>Limitation / irregularity</th></tr></thead><tbody>{"".join(fact_rows)}</tbody></table></div></section>
-<section><h2>All 21 supplied project sources</h2><p class="small muted">Pinned HTML/source code was read for every supplied URL. This does not independently prove each current public deployment, score receipt or every unseen method. Unreported scores remain unknown.</p><div class="tablewrap"><table><thead><tr><th>Project / site</th><th>Pinned source / commit</th><th>Review status</th><th>Scope</th></tr></thead><tbody>{"".join(group_rows)}</tbody></table></div></section>
-<section><div class="grid2"><article class="card"><h3>What was repaired</h3><ul class="prose"><li>Wrong arXiv id corrected; geometric/geothermal proxies removed from nuisance tests.</li><li>MRDS “claims” substitution retired; complete-ID checked BLM closed claims used.</li><li>Area1/Area2 overwrite fixed; false four-block constants never accepted.</li><li>Known predictions and truth masked in both DTI implementations; adjacent-new-truth regression tests added.</li><li>Empty components, zero budgets, binary re-thinning, arbitrary zero backfill and soft-score hash collisions addressed.</li><li>Training-only refitting replaces post-emission rank reweighting; exact artifact identity gates packaging.</li></ul></article><article class="card"><h3>What remains genuinely unresolved</h3><p>{e(missing)}</p><p>Original H19 OOF reconstruction, source-to-artifact version linkage and independent original-band authentication are not fabricated. Archived legacy reports do not authorize a slot.</p><p>GitHub REST/GraphQL authentication and push failed. Local work is saved, but no PR, merge, buffered-road acquisition or public deployment is claimed.</p><p class="small">The full uncondensed original chat was unavailable; the README preserves the inherited quoted charter and all active requirements available in context.</p></article></div></section>
-<section><h2>Three-pass reliability review</h2><div class="card"><p>Pass 1 implements the data→features→audit→paired retraining→prediction pipeline. Pass 2 tests masks, halos, geometry orientation, source windows, empty sets, range checks and gates. Pass 3 rechecks the owner’s acceptance scope and explicitly retains blocked items.</p><p>Current review state: {e(review.get("summary", "Final source/format/reliability checks are being completed."))}</p><div class="actions"><a class="button" href="data/experiment.json" download>Download experiment receipt</a><a class="button" href="data/audit.json" download>Download audit receipt</a><a class="button" href="data/source_health.json" download>Timestamped source feed</a></div></div></section>"""
-    note = e(download["note"])
-    executive = f"""<div class="pagehead"><div class="eyebrow">Executive summary · exact submission instructions</div><h1>The right file.<br>The right expectation.</h1><p>H19-5 is already above the owner’s .1894 reference. The newly trained arc experiment did not beat the current-best diagnostics, so the visible download remains the old group reference—not a new leaderboard entry.</p>{actions}</div>{warning}
-<section><div class="grid2"><article class="card"><h3>Reference download</h3><span class="badge blue">Owner-reported original DTI 0.1922</span><p class="fileline">{ref_file}</p><ul class="checks"><li>Single band · float32 · EPSG:32611</li><li>3730 × 3292 · 100 m grid · exact template transform</li><li>All 5,167,373 in-footprint values finite and in [0,1]</li><li>NaN outside the official footprint</li><li>Scored content unchanged from pinned H19-5</li></ul><p class="micro">The primary is byte-identical to the pinned H19-5 input. The new float32-v2 content id replaces the old binary-v1 id; it does not mean a new prediction.</p></article><article class="card"><h3>Integrity, comment and fallback</h3><p class="small">Full file SHA-256:</p><div id="file-sha" class="note hash">{e(download["sha256"])}</div><p class="micro">Format is verified locally, not portal-upload tested. A green format check does not authorize a slot.</p><div class="actions"><a class="button" href="downloads/{checks_file}" download>Checks JSON</a><a class="button" href="downloads/{e(download["zip"])}" download>Single-TIFF ZIP</a><a class="button" href="downloads/{fallback}" download>Zeros-outside fallback</a></div><p class="micro">Fallback is [0,1] even under strict whole-array readers, but differs from the official NaN convention outside the footprint. Use only if the portal explicitly rejects that convention and organizer guidance permits it.</p></article></div></section>
-<section class="narrow"><h2>Do not spend a duplicate weekly slot</h2><ol class="steplist"><li><h3>Check scientific eligibility before opening the portal</h3><p>This reference has no new score. The experimental raster is not promoted. A future candidate must beat the reproduced current-best same-protocol spatial holdout and pass a complete exact-file nuisance audit.</p></li><li><h3>Download the prediction, not a training raster</h3><p>Use the single-band .tif above. Do not submit the 19-band feature stack, raw terrain values, classifier log-odds, a folder or a renamed experimental raster. Confirm the basename and checksum against its receipt.</p></li><li><h3>When an eligible candidate exists, use the official competition portal</h3><p>Sign in to DrivenData, navigate to the GEMS competition’s submissions area, select the .tif (or the permitted single-file ZIP), and paste the matching plain-text note. This repository does not sign in or upload automatically.</p></li><li><h3>If the portal reports “Predicted values must be in range [0, 1]”</h3><p>Stop. Inspect the checks JSON for in-footprint finite values, min/max, one band, float32, CRS and transform. Never repair the upload by arbitrary rescaling after seeing a score. The official NaN-outside primary and separately labelled allfinite fallback are both locally checked.</p></li><li><h3>Record only the organizer’s actual response</h3><p>Associate returned score, upload time and exact SHA-256 in the registry. Unknown or failed uploads stay unknown—not zero and not an invented improvement.</p></li><li><h3>Before final prize selection</h3><p>Follow current limits, final-selection rules, licensed-data obligations and AI/code/narrative disclosure. Confirm deadline ambiguities with the organizer. Another repo/account is not a quota reset.</p></li></ol><a class="button" href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener noreferrer">Official competition →</a></section>
-<section><h2>Short reference comment</h2><div class="note" id="submission-note">{note}</div><div class="actions" style="margin-top:12px"><button class="button" data-copy="#submission-note" data-feedback="#copy-feedback">Copy plain-text comment</button><a class="button" href="downloads/{note_file}" download>Download comment .txt</a></div><p class="copyfeedback" id="copy-feedback" aria-live="polite"></p><p class="micro">{len(download["note"])} characters; note is separate, never a second ZIP member. Copying it is not a recommendation to upload the reference again.</p></section>
-<section><h2>What the result actually says</h2><div class="card"><p>Matched fresh retraining gains are real local computations: {fmt(dd)} dense and {fmt(ds)} sparse over the physics-only learning baseline. The candidate still loses to H19 as-emitted diagnostics, and neither historical raster reconstructs its original OOF model.</p><p>Prediction access association is a robustness warning, not causal proof. Missing four-block geography and buffered road coverage prevent the full requested audit from passing. No new weekly slot has been consumed.</p><p>Next: reconnect GitHub, run the official buffered-road workflow, verify the operational blocks, audit labels first again, refit all arms on corrected sources and reconstruct the current-best OOF reference before reconsidering promotion.</p></div></section>"""
+    road_entry = inputs.get("features", {}).get("road_m", {})
+    road_counts = road_entry.get("mtfcc_counts", {})
+    excluded_s1750 = road_entry.get("mtfcc_excluded_counts", {}).get("S1750", 0)
+    source_page = f"""<div class="pagehead"><div class="eyebrow">Manual-review links · acquisition receipts · uncertainty kept visible</div><h1>Separate source facts from conclusions.</h1><p>Official data and computed diagnostics are linked to their receipts. The complete audit remains blocked by one specific missing nuisance family: true four-block acquisition membership.</p></div><div class="status"><strong>Full requested audit: {"COMPLETE" if full_audit else "BLOCKED"}.</strong> The official 2024 Census road bridge covers all 32 intersecting counties and a 20 km source-grid buffer; 183 S1750 internal-use features were excluded. Closed BLM claim distances are present. True pixel membership in all four operational acquisition blocks is still unavailable; Area1/Area2 are not substitutes.</div>
+<section><h2>Available-family C2ST diagnostics</h2><div class="tablewrap"><table><thead><tr><th>Raster (labels first)</th><th>AUC</th><th>Shift-null p95</th><th>Margin vs p95</th><th>Holm diagnostic</th><th>Interpretation</th></tr></thead><tbody>{"".join(audit_rows)}</tbody></table></div><p class="micro">AUC is the held-out two-sample statistic. Nulls refit the detector on non-wrapping translated masks; 199 valid shifts. The declared effect flag requires Holm-adjusted shift-tail diagnostic ≤.05, AUC ≥.55 and margin ≥.02. The labels-first AUC was {fmt(label_primary.get("observed_auc"), 4)}. Values do not meet that rule for available families. They are provisional, not a full three-family audit.</p><p class="micro">Measured features: official TIGER Road/Path distance and quality-filtered BLM closed-claim distance. No geology, label-derived seam, MRDS, well, vent, probe or Area1 feature entered. Association is not causation; shift-tail values are approximate stationarity diagnostics, not exact randomization p-values.</p></section>
+<section><h2>Official inputs and exclusions</h2><div class="tablewrap"><table><thead><tr><th>Source / review link</th><th>Computed receipt</th><th>Limit / scope</th></tr></thead><tbody><tr><td><a href="https://www2.census.gov/geo/tiger/TIGER2024/ROADS/" target="_blank" rel="noopener noreferrer">Census TIGER/Line 2024 Roads ↗</a></td><td>32 complete CA/NV counties; 20 km buffer; EPSG:4269 source counties. Accepted road/path counts: {e(json.dumps(road_counts, sort_keys=True))}. Excluded S1750: {e(excluded_s1750)}.</td><td>Selected roads, vehicular trails and path/access classes; not a complete hiking-network or travel-time model.</td></tr><tr><td><a href="https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2024/TGRSHP2024_TechDoc_E.pdf" target="_blank" rel="noopener noreferrer">2024 TIGER technical documentation ↗</a></td><td>Explicit Road/Path MTFCC allowlist; internal-use S1750 and unknown/non-road classes excluded.</td><td>Source classification is not a guarantee every path is traversable or public.</td></tr><tr><td><a href="https://gis.blm.gov/nlsdb/rest/services/Mining_Claims/MiningClaims/MapServer/2" target="_blank" rel="noopener noreferrer">BLM National Land Status Database, closed claims ↗</a></td><td>{e(inputs.get("features", {}).get("claim_m", {}).get("n_source_cases", "unknown"))} source cases, quality-filtered; exact raster/hash in receipt.</td><td>PLSS legal-land approximations; not exact stakes or historic workings.</td></tr><tr><td><a href="https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7" target="_blank" rel="noopener noreferrer">USGS GeoDAWN data release ↗</a></td><td>Names Winnemucca, Fallon, Hawthorne and Tonopah; two survey-area regimes.</td><td>Published Figure 3 is unreferenced; no verified four-block pixel membership.</td></tr><tr><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener noreferrer">Official DrivenData leaderboard ↗</a></td><td>Top public row {fmt(leader_score, 4)} ({e(leader.get("participant", "unknown"))}), checked {e(checked)}.</td><td>Public account standings are not tied to this repository's exact H19 file hashes.</td></tr></tbody></table></div><p class="micro">The current missing-input list is: {e(missing)}. Full county ZIP and per-county hashes, accepted/excluded MTFCC counts, exact raster checksum and source-window checks are in <code>data/external/audit_sources/tiger_road_receipt.json</code>.</p></section>
+<section><h2>Official leaderboard vs owner-reported H19 claims</h2><div class="card"><p>Owner report: H19-4 <strong>0.1894</strong>; H19-5 <strong>0.1922</strong>. Current public leaderboard snapshot: DARD <strong>{fmt(leader_score, 4)}</strong> at rank #1. Rows with 0.1922 and 0.1894 appear at ranks #26 and #28, respectively, but no receipt links those accounts' submissions to these exact files; do not infer artifact scores from the row matches.</p><p>Review the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener noreferrer">official leaderboard</a>. These are public score rows only, not new scores for this project.</p></div></section>
+<section><h2>All 21 supplied project sources</h2><p class="small muted">Repository review links and pinned commits are listed for manual review. This does not independently certify unseen implementations, current public deployment or scores without artifact-linked receipts.</p><div class="tablewrap"><table><thead><tr><th>Project / site</th><th>Pinned source / commit</th><th>Review status</th><th>Scope</th></tr></thead><tbody>{"".join(group_rows)}</tbody></table></div></section>
+<section><div class="grid2"><article class="card"><h3>What was repaired</h3><ul class="prose"><li>Strict nuisance allowlist: only roads/trails, closed mining claims and all four real acquisition blocks; no Area1/Area2 substitution.</li><li>Official buffered Census road bridge; Road/Path MTFCC filter excludes S1750 and records source CRS.</li><li>Labels-first then individual predictions; 199 non-wrapping shifts, four spatial folds, Holm adjustment and an explicit effect threshold.</li><li>Training-only nuisance transforms; no post-emission score reweighting.</li><li>Old v2 audit, which used Area1 and a toroidal/group null, is historical and non-confirmatory.</li></ul></article><article class="card"><h3>Remaining blockers and oddities</h3><p>{e(missing)}</p><p>H24-3A loses to H19 diagnostics and fails the residualized paired sparse gate. The exact raster passes format checks but is not recommended for upload. No new weekly slot was consumed.</p><p>Current best comparable OOF, original H19 caches and verified four-block membership are unavailable. No live leaderboard score is inferred for an artifact.</p><p>Review state: {e(review.get("summary", "pending final review"))}</p><p>Three review passes are recorded in <a href="data/review_passes.json">the review receipt</a>.</p></article></div></section>
+<section><h2>Source and experiment receipts</h2><div class="actions"><a class="button" href="data/audit.json" download>C2ST audit JSON</a><a class="button" href="data/experiment.json" download>H24-3A experiment JSON</a><a class="button" href="data/access_inputs.json" download>Access-input receipt</a><a class="button" href="data/source_health.json" download>Leaderboard/source snapshot</a><a class="button" href="data/review_passes.json" download>Three-pass review</a></div></section>"""
+
+    executive = f'''<div class="pagehead"><div class="eyebrow">Executive summary · submission guide</div><h1>Reference file.<br>No duplicate slot.</h1><p>H19-5 is the pinned, format-checked reference; the owner reported its original public DTI as 0.1922. It is not a new prediction and must not be resubmitted as one. The new H24-3A experiment is not promoted.</p><div class="actions">{download_button}{guide_button}</div></div>{warning}
+<section><div class="grid2"><article class="card"><h3>One-click reference download</h3><span class="badge blue">Owner-reported original DTI 0.1922</span><p class="fileline">{file_name}</p><ul class="checks"><li>Single band · float32 · EPSG:32611</li><li>3730 × 3292 · exact pinned template transform</li><li>All 5,167,373 footprint values finite and in [0,1]</li><li>NaN outside the official footprint</li><li>Content matches pinned H19-5 reference; not a new score</li></ul><p class="micro">SHA-256: <code>{e(download["sha256"])}</code>. Format validity is checked locally; the file has not been uploaded or rescored in this session.</p></article><article class="card"><h3>Separate note and optional checks</h3><p class="note" id="submission-note">{note}</p><div class="actions"><button class="button" data-copy="#submission-note" data-feedback="#copy-feedback">Copy short comment</button><a class="button" href="downloads/{note_file}" download>Comment .txt</a></div><p id="copy-feedback" class="copyfeedback" aria-live="polite"></p><div class="actions"><a class="button" href="downloads/{checks_file}" download>Format checks JSON</a><a class="button" href="downloads/{zip_file}" download>Single-TIFF ZIP</a><a class="button" href="downloads/{fallback}" download>All-finite fallback</a></div><p class="micro">The zeros-outside fallback differs from the official NaN convention; use only if the organizer explicitly permits it. The note is separate, never a second ZIP member.</p></article></div></section>
+<section class="narrow"><h2>Exactly how to submit—only if a future candidate is eligible</h2><ol class="steplist"><li><h3>Check the promotion gates first</h3><p>This H19 reference has no new score. Do not spend a repeat slot. A future candidate must beat a comparable same-protocol holdout, pass the full road/claim/four-block audit, and have its exact final file independently checked.</p></li><li><h3>Use a single-band GeoTIFF</h3><p>Select the uniquely named <code>.tif</code> above only when appropriate. Do not submit the feature stack, a preview, model weights, ZIP folders or a renamed experimental raster. Check SHA-256 and format JSON.</p></li><li><h3>Use the official DrivenData portal</h3><p>Open the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener noreferrer">GEMS competition page</a>, choose the submission area and upload the one TIFF (or permitted single-file ZIP). Paste the separate short text comment. This repository never uploads automatically.</p></li><li><h3>For “Predicted values must be in range [0, 1]”</h3><p>Stop and inspect in-footprint finite values, min/max, band count, dtype, CRS, shape and geotransform. Never rescale after seeing a score. The fallback is not silently interchangeable with the official NaN-outside raster.</p></li><li><h3>Record only the organizer’s returned result</h3><p>Save upload time, exact SHA-256, returned score and artifact receipt. Without that link, an account leaderboard score does not establish the score of this file.</p></li></ol></section>
+<section><h2>Leaderboard comparison, cautiously</h2><div class="card"><p>At the {e(checked)} check, the official public leaderboard top row was DARD at <strong>{fmt(leader_score, 4)}</strong>. Rows at 0.1922 and 0.1894 appeared at #26/#28, but no artifact-linked evidence identifies either as the H19-5/H19-4 file. The owner-reported H19 scores remain owner reports; no score is inferred from account standings.</p><p>The official page is <a href="{e(leader.get("url", "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"))}" target="_blank" rel="noopener noreferrer">reviewable here</a>. The research holdout values elsewhere on this site are not leaderboard scores.</p></div></section>'''
+
     bodies = {
         "index.html": ("Overview", "Overview", overview),
         "research.html": ("Research and results", "Research", research),
@@ -182,58 +231,51 @@ def main():
     }
     for name, (title, active, body) in bodies.items():
         (DOCS / name).write_text(page(title, active, body))
+
     root_overview = overview
-    # Root landing and /docs landing both work under a project Pages base path.
-    for path in ("downloads/", "executive-summary.html", "research.html", "sources.html"):
+    for path in ("data/", "downloads/", "executive-summary.html", "research.html", "sources.html"):
         root_overview = root_overview.replace(f'href="{path}', f'href="docs/{path}')
     (ROOT / "index.html").write_text(page("Overview", "Overview", root_overview, prefix="docs/"))
     (ROOT / "executive-summary.html").write_text(
         '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=docs/executive-summary.html"><title>Executive guide</title></head><body><a href="docs/executive-summary.html">Open the executive guide</a></body></html>'
     )
-    (DOCS / "data/experiment.json").write_text(json.dumps(experiment, indent=2) + "\n")
-    (DOCS / "data/audit.json").write_text(json.dumps(audit, indent=2) + "\n")
+    for source, target in (
+        ("evidence/h24_3a_experiment.json", "docs/data/experiment.json"),
+        ("evidence/accessibility_audit_v3.json", "docs/data/audit.json"),
+        ("evidence/access_inputs.json", "docs/data/access_inputs.json"),
+        ("docs/data/source_health.json", "docs/data/source_health.json"),
+        ("evidence/review_passes.json", "docs/data/review_passes.json"),
+    ):
+        content = load(source)
+        (ROOT / target).write_text(json.dumps(content, indent=2) + "\n")
     (DOCS / "data/group_review.json").write_text(json.dumps(group, indent=2) + "\n")
-    (DOCS / "data/access_inputs.json").write_text(json.dumps(inputs, indent=2) + "\n")
-    (DOCS / "data/review_passes.json").write_text(json.dumps(review, indent=2) + "\n")
-    status = f"""**No new slot-eligible candidate; no slot consumed.** H19-5 remains a
-format-validated reference with owner-reported original public DTI **0.1922**.
-The official leader snapshot is **0.3195** (2026-10-02; not an artifact-linked
-score for this repo).
 
-Fresh physics → arc+residualized local dense/sparse DTI:
-**{fmt(baseline.get("mean_dense_dti"))} / {fmt(baseline.get("mean_sparse_dti"))} →
-{fmt(candidate.get("mean_dense_dti"))} / {fmt(candidate.get("mean_sparse_dti"))}**.
-These gains are below H19-4/H19-5 as-emitted diagnostics; original current-best
-OOF reconstruction is absent. They do not predict a new leaderboard score.
+    status = f"""**No new slot-eligible candidate; no slot consumed.** H19-5 remains a format-validated reference with owner-reported original public DTI **0.1922**. The official leaderboard snapshot on {checked} showed DARD at **{fmt(leader_score, 4)}** (#1); rows at **0.1922** and **0.1894** were present but are not linked to these raster hashes.
 
-The full requested audit is **BLOCKED**: four-block geography is unverified and
-legacy road clipping leaves boundary coverage uncertified. Official buffered
-road acquisition is implemented but its workflow could not run after GitHub
-authentication/push failed. Claim distances are official, quality-filtered and
-buffered. Exact experimental-raster audit complete: **{audit.get("complete_run", False)}**
-(provisional available inputs, never a full-source pass).
+H24-3A paired residualized holdout: **{fmt(candidate.get("mean_dense_dti"))} / {fmt(candidate.get("mean_sparse_dti"))}** vs residualized physics **{fmt(residual_baseline.get("mean_dense_dti"))} / {fmt(residual_baseline.get("mean_sparse_dti"))}**. It fails the preregistered sparse-fold gate and trails H19-4/5 as-emitted local diagnostics. These local DTI values do not forecast a public score.
 
-Reference: [`{download["file"]}`](docs/downloads/{download["file"]}).
-Public PR/merge/deployment are **not claimed**; GitHub reconnection is required.
+The official 2024 Census road/path bridge now passes complete county/window checks: 32 counties, 20 km buffer, explicit Road/Path MTFCC allowlist, S1750 excluded. The full three-family C2ST is still **BLOCKED** because verified four-block pixel membership is missing. Labels first, then H19-4, H19-5 and exact H24-3A were tested using the two available families only; no available-family association met the declared effect rule. No causality or absence of bias is inferred.
+
+Reference: [`{download["file"]}`](docs/downloads/{download["file"]}). New experimental exact raster is format valid but **not recommended to upload**. PR/merge/public deployment are recorded separately; this local build is not publication proof.
 """
     readme = ROOT / "README.md"
-    if readme.exists():
-        text = readme.read_text()
-        text = re.sub(
-            r"<!-- STATUS:START -->.*?<!-- STATUS:END -->",
-            f"<!-- STATUS:START -->\n{status}<!-- STATUS:END -->",
-            text,
-            flags=re.S,
-        )
-        readme.write_text(text)
+    text = readme.read_text()
+    text = re.sub(
+        r"<!-- STATUS:START -->.*?<!-- STATUS:END -->",
+        f"<!-- STATUS:START -->\n{status}<!-- STATUS:END -->",
+        text,
+        flags=re.S,
+    )
+    readme.write_text(text)
     receipt = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "reference_sha256": download["sha256"],
-        "pages": [str((DOCS / p).relative_to(ROOT)) for p in bodies],
+        "pages": [str((DOCS / name).relative_to(ROOT)) for name in bodies],
         "root": "index.html",
-        "publication_verified": False,
+        "full_audit_complete": full_audit,
         "new_slot_eligible": False,
-        "no_scores_fabricated": True,
+        "publication_verified": False,
+        "no_scores_inferred": True,
     }
     (ROOT / "evidence/site_build.json").write_text(json.dumps(receipt, indent=2) + "\n")
     print(json.dumps(receipt, indent=2))

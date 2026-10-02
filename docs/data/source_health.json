@@ -1,22 +1,44 @@
 {
-  "schema_version": 1,
-  "status": "manual_source_read",
+  "schema_version": 2,
+  "status": "manual_official_page_read",
   "checked_utc": "2026-10-02",
   "last_success_utc": "2026-10-02",
-  "verification_method": "Official leaderboard text retrieved with the page-reading tool; exact check time and raw HTML hash not recorded",
+  "verification_method": "Official DrivenData leaderboard page text retrieved with the page-reading tool; raw HTML and an exact clock time were not archived.",
   "leaderboard": {
     "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+    "rank": 1,
     "participant": "DARD",
     "best_score": 0.3195,
     "submissions": 12,
-    "account_artifact_mapping_verified": false
+    "comparison_rows": [
+      {
+        "rank": 26,
+        "participant": "smrtdoog5",
+        "score": 0.1922,
+        "submissions": 5
+      },
+      {
+        "rank": 28,
+        "participant": "SDCF9",
+        "score": 0.1894,
+        "submissions": 6
+      }
+    ],
+    "account_artifact_mapping_verified": false,
+    "note": "The matching public score rows do not identify the exact H19 raster files; no artifact score is inferred."
   },
   "updates": [
     {
-      "title": "Official leader snapshot: DARD 0.3195",
-      "kind": "Official page read, not a permanent result",
+      "title": "Official leader snapshot: DARD 0.3195; public rows .1922 and .1894 are not artifact-linked",
+      "kind": "Official page read, not a permanent result or submission receipt",
       "checked_utc": "2026-10-02",
       "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"
+    },
+    {
+      "title": "Official buffered Census 2024 road/path bridge complete for 32 counties; S1750 excluded",
+      "kind": "GitHub Actions-derived local receipt; Census source ZIP URLs/hashes preserved",
+      "checked_utc": "2026-10-02",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/"
     },
     {
       "title": "Known-fault masking is pixel-exact, not a 300 m exclusion buffer",
@@ -39,5 +61,5 @@
   ],
   "errors": [],
   "deployment_verified": false,
-  "note": "The scheduled workflow refreshes snapshots after authenticated publication. A local file does not prove public Pages deployment. Unknown artifact scores are never inferred from account scores."
+  "note": "The scheduled workflow refreshes source snapshots after authenticated publication. A local file does not prove public Pages deployment. Unknown artifact scores are never inferred from account scores."
 }

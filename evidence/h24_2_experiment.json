@@ -1,5 +1,14 @@
 {
   "generated_utc": "2026-10-02T03:28:21.806809+00:00",
+  "supersession": {
+    "status": "HISTORICAL_EXPLORATORY_ONLY",
+    "confirmatory_or_promotion_use": false,
+    "reason": "This earlier run used Area1 as a proxy for missing four-block membership and legacy tightly clipped road distances. Those are not permitted substitutes for the requested nuisance families. Retain the result only as history; do not use it to select a candidate or spend a slot.",
+    "superseded_by": [
+      "evidence/accessibility_audit_v3.json",
+      "evidence/h24_3a_experiment.json"
+    ]
+  },
   "hypothesis": "H24-2A radial-gradient arc coherence",
   "preregistration": "knowledge/02_preregistered_2026-10-02.md",
   "protocol": {

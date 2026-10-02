@@ -21,7 +21,7 @@
 | [DrivenData problem](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) | incomplete provided catalogue; probability/confidence GeoTIFF; float32, UTM11N, 100 m; triangular 300 m DTI, alpha=.2/beta=.8 | identity/type/coverage of every hidden fault; a local catalogue score is not the leaderboard | page read; `gems.metric` worked-example and masking tests |
 | [Staff exact-pixel masking clarification](https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4) | known pixels themselves are excluded; predictions beside them can still be penalized; new truth may be within 300 m of known traces | a 300 m exclusion buffer around all known faults | both exact/binary scorers repaired; adjacent-new-truth regression test |
 | [Staff test-source clarification](https://community.drivendata.org/t/how-were-the-new-test-faults-identified-data-sources-and-fault-types/11527/7) | hidden sources/types/coverage are not disclosed; Phase 2 expert review matters | assuming all test faults are quaternary scarps, blind conduits or ring faults | interpretation guard |
-| [Official leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) | 2026-10-02 snapshot: DARD .3195, 12 submissions; smrtdoog5 .1922, 5 submissions | which file generated the account's score; permanence of this snapshot | timestamped feed/manual source read; unknown artifact mapping remains unknown |
+| [Official leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) | 2026-10-02 page read: DARD #1 .3195; rows #26 .1922 and #28 .1894 | which file generated any account score; permanence of this snapshot | page text read; no artifact-to-account checksum/receipt, so no H19 file score inferred |
 | [Lopez-Paz & Oquab paper](https://arxiv.org/abs/1610.06545), [full PDF](https://arxiv.org/pdf/1610.06545) | two samples labelled by origin; classifier trained separately from held-out evaluation; original statistic is accuracy, with an iid null | a causal access explanation from classification alone; applying an iid binomial null to autocorrelated pixels | Sections 2–3 read; implementation declares AUC/spatial adaptation and refits each randomization |
 | [USGS GeoDAWN release](https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7), [DOI](https://doi.org/10.5066/P93LGLVQ) | official report, ReadMe, metadata, combined data extent, Area1/Area2 outlines and flight paths are downloadable | that Area1/Area2 are the four operational blocks or that a report figure / metadata title is a georeferenced block polygon | direct CI receipts, preserved official documents, one combined extent and inventories; flight-line fields are `Id`/`Line` only |
 | [Official contractor report](https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7?f=__disk__2b%2F67%2Fb4%2F2b67b4e0d88525acc1ae32cf17b8fd001395bf52) | Fig.3 / pp.5–6: four operational block names; only two acquisition regimes—Area1 200 m traverses/2 km ties and 100/150 m drape, Area2 400 m/4 km and 150/200 m; Area1 is in Tonopah, flown by helicopter with the other blocks' planned layout/drape | numeric four-block polygons; a distinct line-spacing/height for each block; nearest base town means ownership of a pixel | `data/external/audit_sources/*Report.pdf(.txt)`; Figure 3's block outlines are not georeferenced; report lines confirm ≥2 km tie-line overlap |
@@ -127,24 +127,89 @@ re-auditing the exact final raster.
   do not use those discrepancies to infer block boundaries.
 
 
-## Pass-2 source-window correction
+## Pass-2 correction, v3 audit and latest holdout (2026-10-02)
 
-The inherited county-road downloader intersects geometries with the tight box
-(-120.0024,37.3641,-116.1415,40.7247). Padding the later raster cannot recover
-roads outside that original source window. The first experiment and available-
-family diagnostics therefore use a **clipped-road proximity proxy**, not certified
-actual nearest-road distances at every boundary pixel. This issue was discovered
-after the first run and is recorded, not silently repaired or used to tune scores.
+### Official road/trail distance bridge
 
-`scripts/fetch_official_roads.py` and the fixed-session buffered-roads workflow
-select complete official county ZIPs over a wider box and derive a small 20 km
-buffered raster. GitHub authentication/push failed, so that workflow has **not
-executed**; no successful road-source correction is claimed. Once available,
-re-audit labels first and rerun the same fixed arms. Full promotion is blocked
-independently by the missing operational block geography/current-best OOF.
+The original tight-box road mirror was not valid for nearest-road distances at
+all output pixels. That defect is **resolved for the current source raster** by
+the GitHub Actions buffered-road workflow `37028471805`; artifact commit
+`205ff15` records the regenerated raster and receipts. Source county CRS is
+EPSG:4269 (NAD83 geographic). All 32 intersecting California/Nevada counties
+were checked; the bounding box `[-120.5, 37.0, -115.9, 41.0]` has a 20 km buffer
+around the seed grid and no outside-window clipping. Current distance-raster
+SHA-256 is
+`459af5cf2247d07580af42f737533863749166cd42027a0d340745ceb3ed21b8`.
 
-The first exact-candidate shift audit hit a single-class held-out fold. Its AUC
-is undefined, not 0.5. The corrective implementation records geometry-only
-rejections, caps retries and requires 99 evaluable shifts. No draw is excluded
-based on the statistic. This changes the **diagnostic conditional shift design**,
-not the grouped primary null; it is explicitly not an exact spatial test.
+The 2024 Census technical document's Road/Path MTFCC allowlist was applied.
+It admits selected Road/Path classes (including local roads, vehicular trails,
+pedestrian paths, bike paths and bridle paths); **183 S1750 internal-use
+features were excluded**, as were unknown/non-road codes. Per-county ZIP URLs,
+byte sizes, hashes, CRS metadata and code counts are in
+`data/external/audit_sources/tiger_road_receipt.json`. This is not a complete
+hiking network or travel-time model. Initial CRS failure evidence is retained as
+superseded in `evidence/official_roads_initial_crs_failure.json`.
+
+### Corrected available-family classifier two-sample audit
+
+`evidence/accessibility_audit_v3.json` tests the training labels first, then
+H19-4, H19-5, and the exact H24-3A experimental raster, using only the two
+available permitted families: road/trail distance and historic closed-claim
+distance. It uses 12,000 samples per class, four spatial folds, the 10 km
+spatial-group purge plus 1.5 km collar, 199 valid non-wrapping mask translations,
+classifier refits, and Holm adjustment. The primary shift-tail probability is a
+stationarity sensitivity diagnostic, not an exact spatial randomization p-value.
+True four-block membership remains unavailable, so this is explicitly **not a
+full requested audit**; Area1/Area2, label seams and geological proxies do not
+enter.
+
+| Reference | C2ST AUC | Shift-null p95 | AUC − p95 | Raw shift tail | Holm shift diagnostic |
+|---|---:|---:|---:|---:|---:|
+| Training labels | 0.53021 | 0.57133 | -0.04111 | 0.175 | 0.280 |
+| H19-4 | 0.56264 | 0.56978 | -0.00714 | 0.080 | 0.280 |
+| H19-5 | 0.56697 | 0.57265 | -0.00568 | 0.070 | 0.280 |
+| H24-3A exact experimental raster | 0.54388 | 0.58023 | -0.03635 | 0.115 | 0.280 |
+
+No raster meets the declared available-family flag (`Holm <= .05`, AUC >= .55,
+margin >= .02). This is **not evidence of no accessibility bias** because the
+four-block feature is missing and the stationarity null is approximate. Single-
+feature diagnostics are descriptive; mining-claim proximity is more predictive
+than road proximity for the H19 rasters, but this is not a causal explanation.
+
+The exact experimental raster at
+`out/h24-3a-contact-persistence-20261002-experimental.tif` has SHA-256
+`3555997c584fb79777c5380fc9c0937c88afc02703be067eb3e487006a565c3f` and passes
+the organizer-grid/format checks. It is not recommended for upload.
+
+### H24-3A contact-persistence holdout
+
+The preregistered challenger upward-continues RTP, TMI and gravity using the
+spectral transfer `exp(-2*pi*h*|k|)` at 100/200/400 m, then scores
+neighbourhood-tolerant gradient persistence and orientation stability. Because
+the exact kernel is nonlocal, a 20 km training exclusion collar was declared
+before fitting. The experiment used the same four contiguous quadrants, 80-step
+HGB settings, 2.45% ridge budget, training-only nuisance/residual transforms,
+and no held-out labels in supervised class sampling. Only official road and
+closed-claim distances were available; true blocks remain missing.
+
+| Arm | Mean dense DTI | Mean sparse DTI |
+|---|---:|---:|
+| Physics raw | 0.13109 | 0.04564 |
+| Physics + H24-3A raw | 0.13824 | 0.05214 |
+| Physics residualized | 0.14305 | 0.05306 |
+| Physics + H24-3A residualized | 0.14980 | 0.05523 |
+| H19-4, emitted raster | 0.17043 | 0.06850 |
+| H19-5, emitted raster | 0.16944 | 0.06813 |
+
+Against the residualized baseline the challenger gains 0.00675 dense and 0.00217
+sparse on average, but sparse DTI improves in only 2/4 folds and one fold loses
+0.00256; the paired gate fails. It also loses to both historical H19 rasters as
+emitted. Original H19 OOF training is not reproducible from available caches.
+No slot was consumed, no new leaderboard score exists, and no candidate is
+promoted. The archived H24-2A experiment is separately marked historical only:
+it used Area1 as a forbidden acquisition proxy and legacy clipped-road inputs.
+
+The v2 audit remains non-confirmatory for the earlier documented reasons
+(Area1 substitution, toroidal shifts and invalid grouped exchangeability). The
+latest v3 values above supersede its AUCs; neither report demonstrates causal
+access bias or its absence.
