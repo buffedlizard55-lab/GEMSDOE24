@@ -1,0 +1,29 @@
+{
+  "purpose": "Owner-submitted rasters used only to calibrate hidden truth density and test emission mechanics. Copied unchanged from the owner's public sibling repositories; owner-reported scores are in registry/owner_reported_scores.json.",
+  "files": {
+    "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif": {
+      "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "bytes": 1706456
+    },
+    "8GEMSDOE_Hedge-v2_submission.tif": {
+      "sha256": "052688eafbc7a55d90caab72252a50304fe5caa8ecf973f8e791b4ae910f0792",
+      "bytes": 736494
+    },
+    "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif": {
+      "sha256": "1381e784fb8b8340beffd0e735ac9eea89ad35d1a807f8a9bab5506e3fc8275e",
+      "bytes": 1772935
+    },
+    "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif": {
+      "sha256": "7637b72d4c6c3e10226bf46bd72a20272d62ccbe29743062632d10b158b49c58",
+      "bytes": 1620739
+    },
+    "gemsdoe-ens12-adopted-7f00890a.tif": {
+      "sha256": "7f00890a62878d612fb5eef67a9a364a2df819433dde74b6762ce4fc0fc4fe15",
+      "bytes": 570890
+    },
+    "gemsdoe9-PLACEHOLDER-2314b599.tif": {
+      "sha256": "2314b59920bfeeaf6a592d4868b25eca62212825620f9945723c2f6d0a2e5b22",
+      "bytes": 439456
+    }
+  }
+}
