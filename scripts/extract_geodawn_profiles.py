@@ -231,24 +231,65 @@ def md5_sha256(path: Path):
     return m.hexdigest(), s.hexdigest()
 
 
-def download(url: str, dest: Path) -> None:
-    req = urllib.request.Request(url, headers={"User-Agent": "GEMS-reproducible-source-audit/3.0"})
-    last = None
-    for attempt in range(4):
-        try:
-            with urllib.request.urlopen(req, timeout=600) as r, open(dest, "wb") as out:
-                if r.status != 200:
-                    raise ValueError(f"HTTP {r.status}")
-                while True:
-                    block = r.read(1 << 20)
-                    if not block:
-                        break
-                    out.write(block)
-            return
-        except Exception as e:  # noqa: BLE001
-            last = e
-            time.sleep(2 ** (attempt + 1))
-    raise RuntimeError(f"download failed after retries: {last}")
+SB_FILE = "https://www.sciencebase.gov/catalog/file/get/657e1d85d34e23d3533209f7"
+
+
+def candidate_urls(rec: dict) -> list[str]:
+    """Official URL forms for one ScienceBase file record (no third-party mirrors)."""
+    urls = [rec.get("url"), rec.get("downloadUri"), f"{SB_FILE}?name={rec['name']}"]
+    seen, ordered = set(), []
+    for u in urls:
+        if u and u not in seen:
+            seen.add(u)
+            ordered.append(u)
+    return ordered
+
+
+def download(rec: dict, dest: Path) -> dict:
+    """Download one official archive; require ZIP magic bytes and the recorded size.
+
+    A response that is not the archive (HTML/JSON interstitial) is previewed in the log and the
+    next official URL form is tried; no unverified bytes are ever parsed.
+    """
+    attempts = []
+    for url in candidate_urls(rec):
+        for attempt in range(3):
+            req = urllib.request.Request(
+                url, headers={"User-Agent": "GEMS-reproducible-source-audit/3.0"}
+            )
+            try:
+                with urllib.request.urlopen(req, timeout=900) as r, open(dest, "wb") as out:
+                    ctype = r.headers.get("Content-Type")
+                    final = r.geturl()
+                    total = 0
+                    while True:
+                        block = r.read(1 << 20)
+                        if not block:
+                            break
+                        out.write(block)
+                        total += len(block)
+                with open(dest, "rb") as fh:
+                    head = fh.read(4)
+                    fh.seek(0)
+                    preview = fh.read(300) if head != b"PK\x03\x04" else b""
+                expected = int(rec.get("size") or 0)
+                info = {"url": url, "final_url": final, "content_type": ctype, "bytes": total}
+                if head == b"PK\x03\x04" and (not expected or total == expected):
+                    return info
+                info["rejected"] = (
+                    "not a ZIP archive"
+                    if head != b"PK\x03\x04"
+                    else f"size {total} != recorded {expected}"
+                )
+                info["preview"] = preview.decode("utf-8", "replace")
+                attempts.append(info)
+                print("REJECTED", json.dumps(info), flush=True)
+                break  # a deterministic non-archive answer: try the next URL form
+            except Exception as e:  # noqa: BLE001
+                attempts.append({"url": url, "error": f"{type(e).__name__}: {e}"[:300]})
+                print("ERROR", attempts[-1], flush=True)
+                time.sleep(2 ** (attempt + 1))
+    raise RuntimeError(f"no official URL returned the archive {rec['name']}: {attempts}")
 
 
 def process_zip(path: Path, area: str):
@@ -301,11 +342,17 @@ def main() -> None:
             rec = files.get(name)
             if rec is None:
                 raise SystemExit(f"Official file not attached to ScienceBase item: {name}")
+            print(
+                "record",
+                json.dumps({k: rec.get(k) for k in ("name", "size", "checksum", "url")}),
+                flush=True,
+            )
             dest = args.workdir / name
             t0 = time.time()
-            download(rec["url"], dest)
-            print("downloaded", name, dest.stat().st_size, f"{time.time() - t0:.0f}s", flush=True)
-            jobs.append((area, dest, rec.get("checksum", {}).get("value"), rec))
+            got = download(rec, dest)
+            print("downloaded", name, got["bytes"], f"{time.time() - t0:.0f}s", flush=True)
+            checksum = rec.get("checksum") or {}
+            jobs.append((area, dest, checksum.get("value"), {**rec, "download": got}))
     all_summary, all_sample = [], []
     for area, path, expected_md5, rec in jobs:
         md5, sha = md5_sha256(path)
