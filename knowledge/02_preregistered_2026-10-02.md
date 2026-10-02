@@ -1,5 +1,9 @@
 # Preregistered next experiments — 2026-10-02
 
+> **Status update (2026-10-02, second session):** H24-2A was re-run with the full nuisance families and does **not** beat the raw physics baseline
+> (Δdense −0.0088, Δsparse −0.0002; residualizing costs 0.016 dense DTI); H24-3A, H24-4A and H24-6 are still untested. The emission hypothesis
+> (`04_preregistered_emission_2026-10-02.md`) and the dotting preregistration were run instead. See `06_synthesis_2026-10-02_session2.md`.
+
 Written **before new detector implementation or fold scoring**. This extends the
 previous session's pending H24-2/3/4 queue rather than claiming those ideas were
 never mentioned. Expected gains below are **ordinal scientific judgments, not

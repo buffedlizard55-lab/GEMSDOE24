@@ -1,5 +1,11 @@
 # Source review and scientific interpretation — 2026-10-02
 
+> **Status update (2026-10-02, second session) — read before relying on the statements below.**
+> Superseded: (1) *"full audit BLOCKED / clipped-road proxy / buffered workflow not run / GitHub authentication failed"* — the official whole-county Census run
+> succeeded in CI (32 counties, 1,141,630 seed px, SHA matches `tiger_road_receipt.json`), the four blocks are now **derived from the official figure and audited
+> against published line-km (not official coordinates)**, the full required-family audit ran (labels first), and GitHub access works. (2) *The H24-2A positive*:
+> re-run on the corrected sources, arc + residualized no longer beats raw physics. Current status: `06_synthesis_2026-10-02_session2.md` and `registry/irregularities.json`.
+
 ## Evidence classes
 
 1. **Official source read / official byte receipt:** organizer specification,
