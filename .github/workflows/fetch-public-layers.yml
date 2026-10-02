@@ -27,15 +27,15 @@ jobs:
         env:
           FETCH_MODE: ${{ github.event.inputs.fetch_mode || 'all' }}
         run: python scripts/ci_fetch_external.py
-      - name: show manifest
-        run: cat data_external/fetch_manifest.json
-      - name: commit to public-layers
+      - name: commit to branch
         if: always()
         run: |
           git config user.name "arena-fetch-bot"
           git config user.email "bot@arena.ai"
-          git checkout --orphan public-layers 2>/dev/null || git checkout public-layers
-          git rm -rq --cached . 2>/dev/null || true
-          git add -f data_external || true
-          git commit -m "external public-domain fetch $(date -u +%FT%TZ)" || true
-          git push -f origin HEAD:refs/heads/public-layers
+          git add -f data_external
+          git commit -qm "ci-fetch artifacts $(date -u +%FT%TZ)" || true
+          git push -f origin HEAD:${{ github.ref_name }}
+
+      - name: report
+        if: always()
+        run: cat data_external/fetch_manifest.json
