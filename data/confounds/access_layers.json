@@ -1,0 +1,38 @@
+{
+  "roads": {
+    "file": "/home/user/GEMSDOE24/data/confounds/d_road_px.tif",
+    "seed_px": 307429,
+    "min": 0.0,
+    "max": 130.832,
+    "mean_px": 10.56,
+    "n_source_features": 78440
+  },
+  "claims": {
+    "file": "/home/user/GEMSDOE24/data/confounds/d_claim_px.tif",
+    "seed_px": 4258,
+    "min": 0.0,
+    "max": 256.844,
+    "mean_px": 33.95,
+    "n_records_in_window": 35818
+  },
+  "fault_confidence": {
+    "d_wc_px": {
+      "file": "/home/user/GEMSDOE24/data/confounds/d_wc_px.tif",
+      "seed_px": 9363,
+      "min": 0.0,
+      "max": 225.338,
+      "mean_px": 34.05,
+      "class": "Well Constrained",
+      "n_points": 26973
+    },
+    "d_inf_px": {
+      "file": "/home/user/GEMSDOE24/data/confounds/d_inf_px.tif",
+      "seed_px": 134,
+      "min": 0.0,
+      "max": 1280.244,
+      "mean_px": 536.72,
+      "class": "Inferred",
+      "n_points": 1453
+    }
+  }
+}
