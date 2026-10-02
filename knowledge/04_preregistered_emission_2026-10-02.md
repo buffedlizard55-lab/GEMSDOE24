@@ -112,3 +112,27 @@ Under the calibrated model and retention 0.70–0.85, a cover thinned to
 This is a model-based extrapolation with real uncertainty; a bad outcome (no
 sparse gain, or random thinning matching the cover) falsifies the credit-retention
 argument and is recorded as such.
+
+## 5. Addendum (written before any thinned-raster holdout score) — provenance
+
+After the sections above were committed (`ce3e89b`), reading GEMSDOE10's
+`README.md`/`HYPOTHESES.md` (Session 5, 2026-09-28) showed that **the group had
+already established this mechanism**: a leaderboard probe bounded hidden truth
+density at ~0.13–0.6 % of the scored area, a density-matched "protocol v5"
+simulation was adopted, and the dotted emission `ridge20_d3`
+(`placement.dot_nms`, probability-ordered radius-3 suppression along a ridge)
+was released as H28 (owner-reported LB 0.1839 vs 0.1280 for the un-dotted H25 on
+the same probability surface). The later H16-1/H19 line returned to un-thinned
+NMS at 2.45–2.5 % and to the legacy dense-weighted gate, so **the best surface
+(H19-5) has never been thinned.** H24-E1 is therefore *not* a new discovery; it
+is the application of an existing, LB-supported technique to the best available
+content, plus (i) an independent lattice calibration of τ that lands inside
+GEMSDOE10's 0.13–0.6 % bound, (ii) an exact-kernel greedy cover with a random-
+thinning control, and (iii) a paired test under the current harness.
+
+GEMSDOE10's v5 rule (density-matched primary, full-density non-inferiority with
+loss ≤ 0.01) is recorded here as the precedent for how a dense-regime regression
+is treated. It is **not** used to relax any criterion above: section 3, item 5
+already says a sparse-pass/dense-fail result is reported as "owner decision
+required". No thinned-raster score had been computed when this addendum was
+written.
