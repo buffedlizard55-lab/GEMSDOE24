@@ -8,7 +8,7 @@ for (const button of document.querySelectorAll('[data-copy]')) {
     try {
       if (!navigator.clipboard) throw new Error('Clipboard unavailable');
       await navigator.clipboard.writeText(target.textContent.trim());
-      if (feedback) feedback.textContent = 'Copied. Reference only — no new slot recommended.';
+      if (feedback) feedback.textContent = 'Copied to clipboard.';
     } catch (_) {
       if (feedback) feedback.textContent = 'Please select and copy the plain-text comment below.';
     }

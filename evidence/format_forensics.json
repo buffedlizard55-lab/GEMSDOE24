@@ -1,0 +1,47 @@
+{
+  "generated_utc": "2026-10-02T16:06:38.404092+00:00",
+  "scope": "unique rasters across the owner's public sibling repositories (shallow clones)",
+  "unique_rasters": 167,
+  "submission_grid_float32_rasters": 148,
+  "rasters_with_any_range_or_nan_problem": 3,
+  "flagged": [
+    {
+      "sha256": "45d50773d2313de651b0b804c7f4520fc241d2038136150b8b17ad8d28f6bb73",
+      "example_path": "5GEMSDOE/data/evidence/runs/35042805806-experiment/submission.tif",
+      "problems": [
+        "NaN inside the scoring footprint"
+      ],
+      "inside_nan": 3061,
+      "outside_finite": 1540
+    },
+    {
+      "sha256": "a5ae61d572b0cd95eac111cab86954eca2219ad310fc0febddcda7ab92fb7969",
+      "example_path": "5GEMSDOE/data/evidence/runs/35042805806/submission.tif",
+      "problems": [
+        "NaN inside the scoring footprint"
+      ],
+      "inside_nan": 3061,
+      "outside_finite": 1540
+    },
+    {
+      "sha256": "b9f2bc4d7e63df5f79f28c941eb3d6077d8b89f2a03ff1bbe3ae96183c7d4fb6",
+      "example_path": "5GEMSDOE/data/evidence/runs/local-sandbox-smoke/submission.tif",
+      "problems": [
+        "NaN inside the scoring footprint"
+      ],
+      "inside_nan": 3061,
+      "outside_finite": 1540
+    }
+  ],
+  "none_has_values_outside_0_1_inside_footprint": true,
+  "blank_score_files_format_identical_to_scored_files": [
+    "16GEMSDOE h18-4",
+    "20GEMSDOE h20-1",
+    "20GEMSDOE h20-5"
+  ],
+  "both_outside_conventions_scored_identically": {
+    "evidence": "12GEMSDOE r7-nms3-dem10-scarp: NaN-outside and zeros-outside variants both reported 0.1294",
+    "basis": "owner-reported scores in the 2026-10-02 brief"
+  },
+  "interpretation": "No shipped raster violates the stated [0,1] contract inside the scoring footprint. The only format anomalies are NaN inside the footprint (and finite values outside it) in early 5GEMSDOE submission.tif files. The files whose score is blank are format-identical to files that did score, so their blank scores cannot be attributed to a format failure. The cause of the original portal message is NOT established by this evidence."
+}

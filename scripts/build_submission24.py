@@ -39,6 +39,23 @@ def main():
         help="label-free dot-thinning of the pinned H19-5 reference (new evidence rule)",
     )
     ap.add_argument("--validation", type=Path, default=ROOT / "evidence/dotting_validation.json")
+    ap.add_argument(
+        "--spacing",
+        type=float,
+        default=None,
+        help="dot_thin min distance (px); default = validation selected_d",
+    )
+    ap.add_argument(
+        "--role",
+        choices=["primary", "alternate"],
+        default="primary",
+        help="primary -> docs/data/download.json, alternate -> docs/data/alternate_download.json",
+    )
+    ap.add_argument(
+        "--candidate-label",
+        default="candidate",
+        help="key of this raster in the accessibility audit references",
+    )
     ap.add_argument("--summary", default="")
     ap.add_argument("--gate-file", type=Path, default=ROOT / "evidence/h24_2_experiment.json")
     ap.add_argument(
@@ -67,7 +84,11 @@ def main():
             ref_arr = d.read(1)
         with rasterio.open(source) as d:
             cand_arr = d.read(1)
-        spacing = validation["selection_and_gates"]["selected_d"]
+        spacing = (
+            args.spacing
+            if args.spacing is not None
+            else validation["selection_and_gates"]["selected_d"]
+        )
         expected = dot_thin((ref_arr > 0) & fp0 & ~known0, spacing)
         recomputed = bool(
             np.array_equal((cand_arr > 0) & fp0, expected) and np.isin(cand_arr[fp0], [0, 1]).all()
@@ -79,6 +100,7 @@ def main():
                 recomputed,
                 validation,
                 json.loads(args.audit_file.read_text()),
+                candidate_label=args.candidate_label,
             )
         except (OSError, ValueError, KeyError) as exc:
             raise SystemExit(str(exc)) from exc
@@ -105,7 +127,7 @@ def main():
     date = datetime.now(timezone.utc).strftime("%Y%m%d")
     hyp = "reference-h19-5" if args.mirror_of else args.hyp
     if args.postprocess_of and args.hyp == "h24-2a":
-        hyp = "h25-1-dotted-h19-5"
+        hyp = f"h25-1-dotted-h19-5-d{spacing:g}"
     dl = paths.DOWNLOADS_DIR
     dl.mkdir(parents=True, exist_ok=True)
     primary = dl / submission.make_filename("gems24", hyp, date, cid, "nan")
@@ -122,7 +144,7 @@ def main():
         if submission.scored_content_id(d.read(1), fp, known) != cid:
             raise SystemExit("Packaging changed scored predictions")
     default_summary = (
-        "H19-5 dot-thinned to 44k px (label-free). Blocked holdout +27% rel on sparse truths; neutral at full density; unscored"
+        "H19-5 dot-thinned (label-free subset); paired spatial-holdout gains on sparse truths; unscored"
         if args.postprocess_of
         else "Held-out candidate with matched training-only nuisance removal and exact-raster re-audit"
     )
@@ -176,13 +198,23 @@ def main():
         "slot_recommendation": gate.get("slot_recommendation") if args.postprocess_of else None,
         "postprocess_of": args.postprocess_of,
         "strict_owner_audit_gate_passed": gate.get("strict_owner_audit_gate_passed"),
-        "validation_file": str(args.validation.relative_to(ROOT)) if args.postprocess_of else None,
+        "validation_file": str(args.validation.resolve().relative_to(ROOT))
+        if args.postprocess_of
+        else None,
         "slot_spent": False,
+        "role": None if args.mirror_of else args.role,
+        "pixel_count": int((arr[fp] > 0).sum()),
         "note": note,
     }
     reg["submissions"].append(row)
     paths.REGISTRY_PATH.write_text(json.dumps(reg, indent=2) + "\n")
-    target = "reference_download.json" if args.mirror_of else "download.json"
+    target = (
+        "reference_download.json"
+        if args.mirror_of
+        else "alternate_download.json"
+        if args.role == "alternate"
+        else "download.json"
+    )
     (ROOT / "docs/data" / target).write_text(json.dumps(row, indent=2) + "\n")
     print(json.dumps(row, indent=2))
 

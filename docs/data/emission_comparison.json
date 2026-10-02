@@ -1,0 +1,1915 @@
+{
+  "generated_utc": "2026-10-02T16:01:07.869870+00:00",
+  "preregistration": "knowledge/04_preregistered_emission_2026-10-02.md (sections 5-6)",
+  "tau": 0.002444501885533123,
+  "phi": 0.05,
+  "selection_draw_offsets": [
+    0,
+    29
+  ],
+  "confirmation_draw_offsets": [
+    30,
+    59
+  ],
+  "bases": {
+    "h19-5": {
+      "lb_owner": 0.1922,
+      "n_base": 121131,
+      "candidates": {
+        "solid": {
+          "kind": "baseline",
+          "param": null,
+          "n": 121131,
+          "pixel_fraction": 1.0,
+          "selection": {
+            "fold_dense": [
+              0.16612,
+              0.19713,
+              0.12147,
+              0.19305
+            ],
+            "fold_sparse": [
+              0.06288,
+              0.07448,
+              0.05578,
+              0.09083
+            ],
+            "mean_dense_dti": 0.16944,
+            "mean_sparse_dti": 0.07099,
+            "sparse_mean_over_draws": 0.07099009743440193,
+            "paired_sparse_gain_abs": 0.0,
+            "paired_sparse_gain_rel": 0.0,
+            "paired_dense_gain_abs": 0.0,
+            "sparse_retention": 1.0,
+            "dense_retention": 1.0,
+            "model_public_score": 0.1922,
+            "draw_fold_wins": 0,
+            "draw_fold_cells": 120
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.16612,
+              0.19713,
+              0.12147,
+              0.19305
+            ],
+            "fold_sparse": [
+              0.06439,
+              0.07764,
+              0.05621,
+              0.09082
+            ],
+            "mean_dense_dti": 0.16944,
+            "mean_sparse_dti": 0.07227,
+            "sparse_mean_over_draws": 0.0722654579090516,
+            "paired_sparse_gain_abs": 0.0,
+            "paired_sparse_gain_rel": 0.0,
+            "paired_dense_gain_abs": 0.0,
+            "sparse_retention": 1.0,
+            "dense_retention": 1.0,
+            "model_public_score": 0.1922,
+            "draw_fold_wins": 0,
+            "draw_fold_cells": 120
+          }
+        },
+        "D1.5": {
+          "kind": "dot_thin",
+          "param": 1.5,
+          "n": 60069,
+          "pixel_fraction": 0.4959011318324789,
+          "selection": {
+            "fold_dense": [
+              0.17955,
+              0.20889,
+              0.12416,
+              0.19321
+            ],
+            "fold_sparse": [
+              0.08838,
+              0.10452,
+              0.0738,
+              0.11826
+            ],
+            "mean_dense_dti": 0.17645,
+            "mean_sparse_dti": 0.09624,
+            "sparse_mean_over_draws": 0.09623835985710502,
+            "paired_sparse_gain_abs": 0.02524826242270309,
+            "paired_sparse_gain_rel": 0.35565893462864495,
+            "paired_dense_gain_abs": 0.007011784116178782,
+            "sparse_retention": 0.8728438246456037,
+            "dense_retention": 0.871606450119205,
+            "model_public_score": 0.25484516853553785,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 4,
+              "worst_fold_delta_dense": 0.00016,
+              "worst_fold_delta_sparse": 0.01802,
+              "delta_mean_dense": 0.00701,
+              "delta_mean_sparse": 0.02525
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.17955,
+              0.20889,
+              0.12416,
+              0.19321
+            ],
+            "fold_sparse": [
+              0.09064,
+              0.1084,
+              0.07445,
+              0.11758
+            ],
+            "mean_dense_dti": 0.17645,
+            "mean_sparse_dti": 0.09777,
+            "sparse_mean_over_draws": 0.09776714014772789,
+            "paired_sparse_gain_abs": 0.025501682238676285,
+            "paired_sparse_gain_rel": 0.3528889593527653,
+            "paired_dense_gain_abs": 0.007011784116178782,
+            "sparse_retention": 0.8716505547594368,
+            "dense_retention": 0.871606450119205,
+            "model_public_score": 0.2545145028051745,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 4,
+              "worst_fold_delta_dense": 0.00016,
+              "worst_fold_delta_sparse": 0.01824,
+              "delta_mean_dense": 0.00701,
+              "delta_mean_sparse": 0.0255
+            }
+          }
+        },
+        "D2.4": {
+          "kind": "dot_thin",
+          "param": 2.4,
+          "n": 44090,
+          "pixel_fraction": 0.36398609769588297,
+          "selection": {
+            "fold_dense": [
+              0.17103,
+              0.19878,
+              0.11508,
+              0.18126
+            ],
+            "fold_sparse": [
+              0.09426,
+              0.11164,
+              0.07517,
+              0.12196
+            ],
+            "mean_dense_dti": 0.16654,
+            "mean_sparse_dti": 0.10076,
+            "sparse_mean_over_draws": 0.10075549945329146,
+            "paired_sparse_gain_abs": 0.029765402018889525,
+            "paired_sparse_gain_rel": 0.41928949381136027,
+            "paired_dense_gain_abs": -0.002904893700256095,
+            "sparse_retention": 0.7790367805508506,
+            "dense_retention": 0.7783861124559253,
+            "model_public_score": 0.2642920420514521,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.01179,
+              "worst_fold_delta_sparse": 0.01939,
+              "delta_mean_dense": -0.0029,
+              "delta_mean_sparse": 0.02977
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.17103,
+              0.19878,
+              0.11508,
+              0.18126
+            ],
+            "fold_sparse": [
+              0.09655,
+              0.11542,
+              0.07596,
+              0.12123
+            ],
+            "mean_dense_dti": 0.16654,
+            "mean_sparse_dti": 0.10229,
+            "sparse_mean_over_draws": 0.10229015583731803,
+            "paired_sparse_gain_abs": 0.030024697928266425,
+            "paired_sparse_gain_rel": 0.4154778617199586,
+            "paired_dense_gain_abs": -0.002904893700256095,
+            "sparse_retention": 0.7779512806347375,
+            "dense_retention": 0.7783861124559253,
+            "model_public_score": 0.26394322089759137,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.01179,
+              "worst_fold_delta_sparse": 0.01975,
+              "delta_mean_dense": -0.0029,
+              "delta_mean_sparse": 0.03002
+            }
+          }
+        },
+        "D3.2": {
+          "kind": "dot_thin",
+          "param": 3.2,
+          "n": 34817,
+          "pixel_fraction": 0.2874326142771049,
+          "selection": {
+            "fold_dense": [
+              0.15654,
+              0.18077,
+              0.10505,
+              0.16449
+            ],
+            "fold_sparse": [
+              0.09388,
+              0.1095,
+              0.07312,
+              0.11807
+            ],
+            "mean_dense_dti": 0.15171,
+            "mean_sparse_dti": 0.09864,
+            "sparse_mean_over_draws": 0.09864160847215307,
+            "paired_sparse_gain_abs": 0.02765151103775114,
+            "paired_sparse_gain_rel": 0.3895122282837038,
+            "paired_dense_gain_abs": -0.017729313764755172,
+            "sparse_retention": 0.6854093526063147,
+            "dense_retention": 0.6851353789036148,
+            "model_public_score": 0.2574041952145581,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.02856,
+              "worst_fold_delta_sparse": 0.01734,
+              "delta_mean_dense": -0.01773,
+              "delta_mean_sparse": 0.02765
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.15654,
+              0.18077,
+              0.10505,
+              0.16449
+            ],
+            "fold_sparse": [
+              0.09595,
+              0.11369,
+              0.07444,
+              0.11642
+            ],
+            "mean_dense_dti": 0.15171,
+            "mean_sparse_dti": 0.10013,
+            "sparse_mean_over_draws": 0.10012642354862393,
+            "paired_sparse_gain_abs": 0.027860965639572327,
+            "paired_sparse_gain_rel": 0.3855364159545802,
+            "paired_dense_gain_abs": -0.017729313764755172,
+            "sparse_retention": 0.6846525355683077,
+            "dense_retention": 0.6851353789036148,
+            "model_public_score": 0.25713459061846505,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.02856,
+              "worst_fold_delta_sparse": 0.01823,
+              "delta_mean_dense": -0.01773,
+              "delta_mean_sparse": 0.02786
+            }
+          }
+        },
+        "K0.287": {
+          "kind": "kernel_cover",
+          "param": 0.287,
+          "n": 34765,
+          "pixel_fraction": 0.2870033269765791,
+          "selection": {
+            "fold_dense": [
+              0.14635,
+              0.17769,
+              0.07926,
+              0.12977
+            ],
+            "fold_sparse": [
+              0.0854,
+              0.10442,
+              0.05679,
+              0.09495
+            ],
+            "mean_dense_dti": 0.13327,
+            "mean_sparse_dti": 0.08539,
+            "sparse_mean_over_draws": 0.08538921201802277,
+            "paired_sparse_gain_abs": 0.014399114583620837,
+            "paired_sparse_gain_rel": 0.20283272039352074,
+            "paired_dense_gain_abs": -0.036174811531479945,
+            "sparse_retention": 0.5893702464391153,
+            "dense_retention": 0.5882648925591933,
+            "model_public_score": 0.22307102808974738,
+            "draw_fold_wins": 108,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.06328,
+              "worst_fold_delta_sparse": 0.00101,
+              "delta_mean_dense": -0.03617,
+              "delta_mean_sparse": 0.0144
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.14635,
+              0.17769,
+              0.07926,
+              0.12977
+            ],
+            "fold_sparse": [
+              0.08686,
+              0.10817,
+              0.05779,
+              0.09437
+            ],
+            "mean_dense_dti": 0.13327,
+            "mean_sparse_dti": 0.0868,
+            "sparse_mean_over_draws": 0.08679884639406818,
+            "paired_sparse_gain_abs": 0.014533388485016577,
+            "paired_sparse_gain_rel": 0.20111113809459713,
+            "paired_dense_gain_abs": -0.036174811531479945,
+            "sparse_retention": 0.5898436184297834,
+            "dense_retention": 0.5882648925591933,
+            "model_public_score": 0.22324219536459258,
+            "draw_fold_wins": 102,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.06328,
+              "worst_fold_delta_sparse": 0.00158,
+              "delta_mean_dense": -0.03617,
+              "delta_mean_sparse": 0.01453
+            }
+          }
+        },
+        "K0.364": {
+          "kind": "kernel_cover",
+          "param": 0.364,
+          "n": 44092,
+          "pixel_fraction": 0.3640026087459032,
+          "selection": {
+            "fold_dense": [
+              0.15658,
+              0.18566,
+              0.10354,
+              0.16392
+            ],
+            "fold_sparse": [
+              0.08633,
+              0.10369,
+              0.06751,
+              0.11024
+            ],
+            "mean_dense_dti": 0.15242,
+            "mean_sparse_dti": 0.09194,
+            "sparse_mean_over_draws": 0.09194409204055459,
+            "paired_sparse_gain_abs": 0.02095399460615266,
+            "paired_sparse_gain_rel": 0.29516785246724164,
+            "paired_dense_gain_abs": -0.017017325105037395,
+            "sparse_retention": 0.7092958820403574,
+            "dense_retention": 0.7091865535394237,
+            "model_public_score": 0.24177145235715378,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.02913,
+              "worst_fold_delta_sparse": 0.01173,
+              "delta_mean_dense": -0.01702,
+              "delta_mean_sparse": 0.02095
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.15658,
+              0.18566,
+              0.10354,
+              0.16392
+            ],
+            "fold_sparse": [
+              0.08845,
+              0.10749,
+              0.06868,
+              0.11011
+            ],
+            "mean_dense_dti": 0.15242,
+            "mean_sparse_dti": 0.09368,
+            "sparse_mean_over_draws": 0.09368192659025751,
+            "paired_sparse_gain_abs": 0.021416468681205905,
+            "paired_sparse_gain_rel": 0.29635830590265155,
+            "paired_dense_gain_abs": -0.017017325105037395,
+            "sparse_retention": 0.7110726069417677,
+            "dense_retention": 0.7091865535394237,
+            "model_public_score": 0.24234771499648428,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.02913,
+              "worst_fold_delta_sparse": 0.01247,
+              "delta_mean_dense": -0.01702,
+              "delta_mean_sparse": 0.02141
+            }
+          }
+        },
+        "K0.450": {
+          "kind": "kernel_cover",
+          "param": 0.45,
+          "n": 54509,
+          "pixel_fraction": 0.4500004127762505,
+          "selection": {
+            "fold_dense": [
+              0.16908,
+              0.19818,
+              0.11607,
+              0.18225
+            ],
+            "fold_sparse": [
+              0.0865,
+              0.10258,
+              0.07125,
+              0.11527
+            ],
+            "mean_dense_dti": 0.1664,
+            "mean_sparse_dti": 0.0939,
+            "sparse_mean_over_draws": 0.09389822057193535,
+            "paired_sparse_gain_abs": 0.022908123137533418,
+            "paired_sparse_gain_rel": 0.32269462876426624,
+            "paired_dense_gain_abs": -0.003044323727373538,
+            "sparse_retention": 0.807410806981079,
+            "dense_retention": 0.8056558471180673,
+            "model_public_score": 0.24825555162636823,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.0108,
+              "worst_fold_delta_sparse": 0.01547,
+              "delta_mean_dense": -0.00304,
+              "delta_mean_sparse": 0.02291
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.16908,
+              0.19818,
+              0.11607,
+              0.18225
+            ],
+            "fold_sparse": [
+              0.08839,
+              0.10662,
+              0.07202,
+              0.11484
+            ],
+            "mean_dense_dti": 0.1664,
+            "mean_sparse_dti": 0.09547,
+            "sparse_mean_over_draws": 0.09546588000022842,
+            "paired_sparse_gain_abs": 0.023200422091176814,
+            "paired_sparse_gain_rel": 0.3210444209787655,
+            "paired_dense_gain_abs": -0.003044323727373538,
+            "sparse_retention": 0.8073291641834192,
+            "dense_retention": 0.8056558471180673,
+            "model_public_score": 0.24823169508170298,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.0108,
+              "worst_fold_delta_sparse": 0.01581,
+              "delta_mean_dense": -0.00304,
+              "delta_mean_sparse": 0.0232
+            }
+          }
+        },
+        "K0.496": {
+          "kind": "kernel_cover",
+          "param": 0.496,
+          "n": 60081,
+          "pixel_fraction": 0.49600019813260027,
+          "selection": {
+            "fold_dense": [
+              0.17287,
+              0.20223,
+              0.11607,
+              0.18225
+            ],
+            "fold_sparse": [
+              0.08243,
+              0.09723,
+              0.07125,
+              0.11527
+            ],
+            "mean_dense_dti": 0.16836,
+            "mean_sparse_dti": 0.09154,
+            "sparse_mean_over_draws": 0.09154144433082365,
+            "paired_sparse_gain_abs": 0.020551346896421713,
+            "paired_sparse_gain_rel": 0.28949596689048196,
+            "paired_dense_gain_abs": -0.001086664402906612,
+            "sparse_retention": 0.8309420755236908,
+            "dense_retention": 0.8301506522701421,
+            "model_public_score": 0.24318163739449025,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.0108,
+              "worst_fold_delta_sparse": 0.01547,
+              "delta_mean_dense": -0.00108,
+              "delta_mean_sparse": 0.02055
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.17287,
+              0.20223,
+              0.11607,
+              0.18225
+            ],
+            "fold_sparse": [
+              0.08454,
+              0.10126,
+              0.07202,
+              0.11484
+            ],
+            "mean_dense_dti": 0.16836,
+            "mean_sparse_dti": 0.09316,
+            "sparse_mean_over_draws": 0.09316273668803986,
+            "paired_sparse_gain_abs": 0.020897278778988254,
+            "paired_sparse_gain_rel": 0.289173823616923,
+            "paired_dense_gain_abs": -0.001086664402906612,
+            "sparse_retention": 0.8322116107242982,
+            "dense_retention": 0.8301506522701421,
+            "model_public_score": 0.2435350801372827,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.0108,
+              "worst_fold_delta_sparse": 0.01581,
+              "delta_mean_dense": -0.00108,
+              "delta_mean_sparse": 0.02089
+            }
+          }
+        },
+        "K0.500": {
+          "kind": "kernel_cover",
+          "param": 0.5,
+          "n": 60566,
+          "pixel_fraction": 0.500004127762505,
+          "selection": {
+            "fold_dense": [
+              0.17288,
+              0.2024,
+              0.11626,
+              0.1823
+            ],
+            "fold_sparse": [
+              0.08189,
+              0.09719,
+              0.07117,
+              0.11526
+            ],
+            "mean_dense_dti": 0.16846,
+            "mean_sparse_dti": 0.09138,
+            "sparse_mean_over_draws": 0.0913778343576817,
+            "paired_sparse_gain_abs": 0.02038773692327976,
+            "paired_sparse_gain_rel": 0.28719127963049984,
+            "paired_dense_gain_abs": -0.0009843910500555164,
+            "sparse_retention": 0.8328817791289183,
+            "dense_retention": 0.8319639274023946,
+            "model_public_score": 0.2427329357335,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.01075,
+              "worst_fold_delta_sparse": 0.01539,
+              "delta_mean_dense": -0.00098,
+              "delta_mean_sparse": 0.02039
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.17288,
+              0.2024,
+              0.11626,
+              0.1823
+            ],
+            "fold_sparse": [
+              0.08402,
+              0.10119,
+              0.07192,
+              0.11483
+            ],
+            "mean_dense_dti": 0.16846,
+            "mean_sparse_dti": 0.09299,
+            "sparse_mean_over_draws": 0.0929902586031661,
+            "paired_sparse_gain_abs": 0.020724800694114504,
+            "paired_sparse_gain_rel": 0.28678709432931737,
+            "paired_dense_gain_abs": -0.0009843910500555164,
+            "sparse_retention": 0.8340963125467532,
+            "dense_retention": 0.8319639274023946,
+            "model_public_score": 0.24306968883243332,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.01075,
+              "worst_fold_delta_sparse": 0.01571,
+              "delta_mean_dense": -0.00098,
+              "delta_mean_sparse": 0.02072
+            }
+          }
+        },
+        "K0.550": {
+          "kind": "kernel_cover",
+          "param": 0.55,
+          "n": 66622,
+          "pixel_fraction": 0.5499995872237495,
+          "selection": {
+            "fold_dense": [
+              0.17288,
+              0.2024,
+              0.12096,
+              0.18939
+            ],
+            "fold_sparse": [
+              0.08189,
+              0.09719,
+              0.06924,
+              0.11198
+            ],
+            "mean_dense_dti": 0.17141,
+            "mean_sparse_dti": 0.09007,
+            "sparse_mean_over_draws": 0.09007356358966687,
+            "paired_sparse_gain_abs": 0.019083466155264933,
+            "paired_sparse_gain_rel": 0.2688187063399783,
+            "paired_dense_gain_abs": 0.001965293805965912,
+            "sparse_retention": 0.8649557336641263,
+            "dense_retention": 0.864003128583318,
+            "model_public_score": 0.23950102561235265,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00366,
+              "worst_fold_delta_sparse": 0.01346,
+              "delta_mean_dense": 0.00197,
+              "delta_mean_sparse": 0.01908
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.17288,
+              0.2024,
+              0.12096,
+              0.18939
+            ],
+            "fold_sparse": [
+              0.08402,
+              0.10119,
+              0.06985,
+              0.11137
+            ],
+            "mean_dense_dti": 0.17141,
+            "mean_sparse_dti": 0.09161,
+            "sparse_mean_over_draws": 0.09160625479378233,
+            "paired_sparse_gain_abs": 0.019340796884730727,
+            "paired_sparse_gain_rel": 0.26763542976606813,
+            "paired_dense_gain_abs": 0.001965293805965912,
+            "sparse_retention": 0.8647147675248117,
+            "dense_retention": 0.864003128583318,
+            "model_public_score": 0.23943749869491723,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00366,
+              "worst_fold_delta_sparse": 0.01364,
+              "delta_mean_dense": 0.00197,
+              "delta_mean_sparse": 0.01934
+            }
+          }
+        },
+        "K0.600": {
+          "kind": "kernel_cover",
+          "param": 0.6,
+          "n": 72679,
+          "pixel_fraction": 0.6000033022100041,
+          "selection": {
+            "fold_dense": [
+              0.16978,
+              0.20343,
+              0.12096,
+              0.18942
+            ],
+            "fold_sparse": [
+              0.0759,
+              0.09084,
+              0.06924,
+              0.11199
+            ],
+            "mean_dense_dti": 0.1709,
+            "mean_sparse_dti": 0.08699,
+            "sparse_mean_over_draws": 0.08699019724732567,
+            "paired_sparse_gain_abs": 0.016000099812923732,
+            "paired_sparse_gain_rel": 0.22538495355226895,
+            "paired_dense_gain_abs": 0.0014566453582110228,
+            "sparse_retention": 0.8805129982287182,
+            "dense_retention": 0.8800846027991834,
+            "model_public_score": 0.23242107449993876,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00363,
+              "worst_fold_delta_sparse": 0.01302,
+              "delta_mean_dense": 0.00146,
+              "delta_mean_sparse": 0.016
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.16978,
+              0.20343,
+              0.12096,
+              0.18942
+            ],
+            "fold_sparse": [
+              0.078,
+              0.09472,
+              0.06985,
+              0.11139
+            ],
+            "mean_dense_dti": 0.1709,
+            "mean_sparse_dti": 0.08849,
+            "sparse_mean_over_draws": 0.08848868102166349,
+            "paired_sparse_gain_abs": 0.016223223112611887,
+            "paired_sparse_gain_rel": 0.22449484971131484,
+            "paired_dense_gain_abs": 0.0014566453582110228,
+            "sparse_retention": 0.8811138425012571,
+            "dense_retention": 0.8800846027991834,
+            "model_public_score": 0.2325722967759805,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00363,
+              "worst_fold_delta_sparse": 0.01361,
+              "delta_mean_dense": 0.00146,
+              "delta_mean_sparse": 0.01622
+            }
+          }
+        }
+      }
+    },
+    "h19-4": {
+      "lb_owner": 0.1894,
+      "n_base": 123779,
+      "candidates": {
+        "solid": {
+          "kind": "baseline",
+          "param": null,
+          "n": 123779,
+          "pixel_fraction": 1.0,
+          "selection": {
+            "fold_dense": [
+              0.1684,
+              0.19401,
+              0.12375,
+              0.19557
+            ],
+            "fold_sparse": [
+              0.06327,
+              0.0728,
+              0.05664,
+              0.0911
+            ],
+            "mean_dense_dti": 0.17043,
+            "mean_sparse_dti": 0.07095,
+            "sparse_mean_over_draws": 0.07095404919505556,
+            "paired_sparse_gain_abs": 0.0,
+            "paired_sparse_gain_rel": 0.0,
+            "paired_dense_gain_abs": 0.0,
+            "sparse_retention": 1.0,
+            "dense_retention": 1.0,
+            "model_public_score": 0.18940000000000004,
+            "draw_fold_wins": 0,
+            "draw_fold_cells": 120
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.1684,
+              0.19401,
+              0.12375,
+              0.19557
+            ],
+            "fold_sparse": [
+              0.06469,
+              0.07558,
+              0.05681,
+              0.09118
+            ],
+            "mean_dense_dti": 0.17043,
+            "mean_sparse_dti": 0.07207,
+            "sparse_mean_over_draws": 0.07206645141219722,
+            "paired_sparse_gain_abs": 0.0,
+            "paired_sparse_gain_rel": 0.0,
+            "paired_dense_gain_abs": 0.0,
+            "sparse_retention": 1.0,
+            "dense_retention": 1.0,
+            "model_public_score": 0.18940000000000004,
+            "draw_fold_wins": 0,
+            "draw_fold_cells": 120
+          }
+        },
+        "D1.5": {
+          "kind": "dot_thin",
+          "param": 1.5,
+          "n": 62056,
+          "pixel_fraction": 0.5013451393208864,
+          "selection": {
+            "fold_dense": [
+              0.18281,
+              0.20552,
+              0.1254,
+              0.19754
+            ],
+            "fold_sparse": [
+              0.08903,
+              0.10181,
+              0.07399,
+              0.11891
+            ],
+            "mean_dense_dti": 0.17782,
+            "mean_sparse_dti": 0.09593,
+            "sparse_mean_over_draws": 0.09593413392683901,
+            "paired_sparse_gain_abs": 0.024980084731783453,
+            "paired_sparse_gain_rel": 0.35206003061378754,
+            "paired_dense_gain_abs": 0.007385196820380052,
+            "sparse_retention": 0.872761823383824,
+            "dense_retention": 0.8726150776539371,
+            "model_public_score": 0.25060595531926094,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 4,
+              "worst_fold_delta_dense": 0.00165,
+              "worst_fold_delta_sparse": 0.01735,
+              "delta_mean_dense": 0.00739,
+              "delta_mean_sparse": 0.02498
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.18281,
+              0.20552,
+              0.1254,
+              0.19754
+            ],
+            "fold_sparse": [
+              0.09093,
+              0.10524,
+              0.07437,
+              0.11864
+            ],
+            "mean_dense_dti": 0.17782,
+            "mean_sparse_dti": 0.09729,
+            "sparse_mean_over_draws": 0.09729463859750123,
+            "paired_sparse_gain_abs": 0.025228187185304007,
+            "paired_sparse_gain_rel": 0.35006839785973076,
+            "paired_dense_gain_abs": 0.007385196820380052,
+            "sparse_retention": 0.8722056085083766,
+            "dense_retention": 0.8726150776539371,
+            "model_public_score": 0.2504542431852,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 4,
+              "worst_fold_delta_dense": 0.00165,
+              "worst_fold_delta_sparse": 0.01756,
+              "delta_mean_dense": 0.00739,
+              "delta_mean_sparse": 0.02522
+            }
+          }
+        },
+        "D2.4": {
+          "kind": "dot_thin",
+          "param": 2.4,
+          "n": 45605,
+          "pixel_fraction": 0.36843891128543615,
+          "selection": {
+            "fold_dense": [
+              0.17605,
+              0.19499,
+              0.11737,
+              0.1838
+            ],
+            "fold_sparse": [
+              0.09626,
+              0.10818,
+              0.07631,
+              0.12188
+            ],
+            "mean_dense_dti": 0.16805,
+            "mean_sparse_dti": 0.10066,
+            "sparse_mean_over_draws": 0.10065774719517323,
+            "paired_sparse_gain_abs": 0.02970369800011767,
+            "paired_sparse_gain_rel": 0.4186328805345696,
+            "paired_dense_gain_abs": -0.0023796438543646214,
+            "sparse_retention": 0.7794433620049862,
+            "dense_retention": 0.7790720287503011,
+            "model_public_score": 0.2605342693915056,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.01177,
+              "worst_fold_delta_sparse": 0.01967,
+              "delta_mean_dense": -0.00238,
+              "delta_mean_sparse": 0.02971
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.17605,
+              0.19499,
+              0.11737,
+              0.1838
+            ],
+            "fold_sparse": [
+              0.09829,
+              0.11164,
+              0.0767,
+              0.12143
+            ],
+            "mean_dense_dti": 0.16805,
+            "mean_sparse_dti": 0.10202,
+            "sparse_mean_over_draws": 0.10201532829218012,
+            "paired_sparse_gain_abs": 0.02994887687998289,
+            "paired_sparse_gain_rel": 0.4155730758641747,
+            "paired_dense_gain_abs": -0.0023796438543646214,
+            "sparse_retention": 0.7786318222379056,
+            "dense_retention": 0.7790720287503011,
+            "model_public_score": 0.2602771273753084,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.01177,
+              "worst_fold_delta_sparse": 0.01989,
+              "delta_mean_dense": -0.00238,
+              "delta_mean_sparse": 0.02995
+            }
+          }
+        },
+        "D3.2": {
+          "kind": "dot_thin",
+          "param": 3.2,
+          "n": 36115,
+          "pixel_fraction": 0.29177000945233034,
+          "selection": {
+            "fold_dense": [
+              0.15958,
+              0.17596,
+              0.10643,
+              0.16611
+            ],
+            "fold_sparse": [
+              0.09447,
+              0.10572,
+              0.07384,
+              0.11733
+            ],
+            "mean_dense_dti": 0.15202,
+            "mean_sparse_dti": 0.09784,
+            "sparse_mean_over_draws": 0.09783986018870887,
+            "paired_sparse_gain_abs": 0.02688581099365331,
+            "paired_sparse_gain_rel": 0.37891862830468104,
+            "paired_dense_gain_abs": -0.0184126587404507,
+            "sparse_retention": 0.6805277907948926,
+            "dense_retention": 0.6807310159603928,
+            "model_public_score": 0.25209260918842913,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.02946,
+              "worst_fold_delta_sparse": 0.0172,
+              "delta_mean_dense": -0.01841,
+              "delta_mean_sparse": 0.02689
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.15958,
+              0.17596,
+              0.10643,
+              0.16611
+            ],
+            "fold_sparse": [
+              0.09601,
+              0.10893,
+              0.07455,
+              0.11653
+            ],
+            "mean_dense_dti": 0.15202,
+            "mean_sparse_dti": 0.09901,
+            "sparse_mean_over_draws": 0.0990053475123199,
+            "paired_sparse_gain_abs": 0.026938896100122678,
+            "paired_sparse_gain_rel": 0.373806335295195,
+            "paired_dense_gain_abs": -0.0184126587404507,
+            "sparse_retention": 0.67926862632684,
+            "dense_retention": 0.6807310159603928,
+            "model_public_score": 0.251649644140694,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.02946,
+              "worst_fold_delta_sparse": 0.01774,
+              "delta_mean_dense": -0.01841,
+              "delta_mean_sparse": 0.02694
+            }
+          }
+        },
+        "K0.292": {
+          "kind": "kernel_cover",
+          "param": 0.292,
+          "n": 36143,
+          "pixel_fraction": 0.2919962190678548,
+          "selection": {
+            "fold_dense": [
+              0.15154,
+              0.17406,
+              0.08073,
+              0.13326
+            ],
+            "fold_sparse": [
+              0.08624,
+              0.10117,
+              0.05773,
+              0.09716
+            ],
+            "mean_dense_dti": 0.1349,
+            "mean_sparse_dti": 0.08558,
+            "sparse_mean_over_draws": 0.08557649932388485,
+            "paired_sparse_gain_abs": 0.01462245012882929,
+            "paired_sparse_gain_rel": 0.20608337782994712,
+            "paired_dense_gain_abs": -0.0355353623358928,
+            "sparse_retention": 0.5921833185580889,
+            "dense_retention": 0.5906928265902904,
+            "model_public_score": 0.22074565867386697,
+            "draw_fold_wins": 107,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.06231,
+              "worst_fold_delta_sparse": 0.00109,
+              "delta_mean_dense": -0.03553,
+              "delta_mean_sparse": 0.01463
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.15154,
+              0.17406,
+              0.08073,
+              0.13326
+            ],
+            "fold_sparse": [
+              0.0881,
+              0.10398,
+              0.05846,
+              0.09596
+            ],
+            "mean_dense_dti": 0.1349,
+            "mean_sparse_dti": 0.08662,
+            "sparse_mean_over_draws": 0.0866242258862824,
+            "paired_sparse_gain_abs": 0.01455777447408517,
+            "paired_sparse_gain_rel": 0.2020048745125429,
+            "paired_dense_gain_abs": -0.0355353623358928,
+            "sparse_retention": 0.5912038903474022,
+            "dense_retention": 0.5906928265902904,
+            "model_public_score": 0.22039665462699795,
+            "draw_fold_wins": 109,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.06231,
+              "worst_fold_delta_sparse": 0.00165,
+              "delta_mean_dense": -0.03553,
+              "delta_mean_sparse": 0.01455
+            }
+          }
+        },
+        "K0.368": {
+          "kind": "kernel_cover",
+          "param": 0.368,
+          "n": 45551,
+          "pixel_fraction": 0.36800264988406756,
+          "selection": {
+            "fold_dense": [
+              0.15921,
+              0.18373,
+              0.10596,
+              0.16756
+            ],
+            "fold_sparse": [
+              0.08646,
+              0.10174,
+              0.06923,
+              0.11123
+            ],
+            "mean_dense_dti": 0.15412,
+            "mean_sparse_dti": 0.09216,
+            "sparse_mean_over_draws": 0.09216419412873637,
+            "paired_sparse_gain_abs": 0.021210144933680813,
+            "paired_sparse_gain_rel": 0.2989279001593448,
+            "paired_dense_gain_abs": -0.016313848116629698,
+            "sparse_retention": 0.7125428088140712,
+            "dense_retention": 0.7120306467250627,
+            "model_public_score": 0.23936686760149056,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.02801,
+              "worst_fold_delta_sparse": 0.01259,
+              "delta_mean_dense": -0.01631,
+              "delta_mean_sparse": 0.02121
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.15921,
+              0.18373,
+              0.10596,
+              0.16756
+            ],
+            "fold_sparse": [
+              0.08833,
+              0.10471,
+              0.06951,
+              0.11123
+            ],
+            "mean_dense_dti": 0.15412,
+            "mean_sparse_dti": 0.09344,
+            "sparse_mean_over_draws": 0.0934444271905468,
+            "paired_sparse_gain_abs": 0.021377975778349573,
+            "paired_sparse_gain_rel": 0.29664254808488266,
+            "paired_dense_gain_abs": -0.016313848116629698,
+            "sparse_retention": 0.7121608867555356,
+            "dense_retention": 0.7120306467250627,
+            "model_public_score": 0.23924470629400404,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": false
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 0,
+              "worst_fold_delta_dense": -0.02801,
+              "worst_fold_delta_sparse": 0.0127,
+              "delta_mean_dense": -0.01631,
+              "delta_mean_sparse": 0.02137
+            }
+          }
+        },
+        "K0.450": {
+          "kind": "kernel_cover",
+          "param": 0.45,
+          "n": 55701,
+          "pixel_fraction": 0.45000363551167805,
+          "selection": {
+            "fold_dense": [
+              0.17272,
+              0.19478,
+              0.1173,
+              0.18626
+            ],
+            "fold_sparse": [
+              0.08764,
+              0.10035,
+              0.07162,
+              0.11655
+            ],
+            "mean_dense_dti": 0.16776,
+            "mean_sparse_dti": 0.09404,
+            "sparse_mean_over_draws": 0.09403974924987765,
+            "paired_sparse_gain_abs": 0.023085700054822092,
+            "paired_sparse_gain_rel": 0.32536127700560913,
+            "paired_dense_gain_abs": -0.0026687047269075836,
+            "sparse_retention": 0.8054069879323985,
+            "dense_retention": 0.8047679072681195,
+            "model_public_score": 0.24504938749930988,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00931,
+              "worst_fold_delta_sparse": 0.01498,
+              "delta_mean_dense": -0.00267,
+              "delta_mean_sparse": 0.02309
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.17272,
+              0.19478,
+              0.1173,
+              0.18626
+            ],
+            "fold_sparse": [
+              0.08919,
+              0.10343,
+              0.07207,
+              0.11643
+            ],
+            "mean_dense_dti": 0.16776,
+            "mean_sparse_dti": 0.09528,
+            "sparse_mean_over_draws": 0.09527958825402957,
+            "paired_sparse_gain_abs": 0.02321313684183235,
+            "paired_sparse_gain_rel": 0.3221073937588599,
+            "paired_dense_gain_abs": -0.0026687047269075836,
+            "sparse_retention": 0.8044541496473517,
+            "dense_retention": 0.8047679072681195,
+            "model_public_score": 0.2447736736290624,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00931,
+              "worst_fold_delta_sparse": 0.01526,
+              "delta_mean_dense": -0.00267,
+              "delta_mean_sparse": 0.02321
+            }
+          }
+        },
+        "K0.500": {
+          "kind": "kernel_cover",
+          "param": 0.5,
+          "n": 61890,
+          "pixel_fraction": 0.5000040394574201,
+          "selection": {
+            "fold_dense": [
+              0.17572,
+              0.19922,
+              0.11732,
+              0.18623
+            ],
+            "fold_sparse": [
+              0.08308,
+              0.09498,
+              0.07158,
+              0.11583
+            ],
+            "mean_dense_dti": 0.16962,
+            "mean_sparse_dti": 0.09137,
+            "sparse_mean_over_draws": 0.0913671664874729,
+            "paired_sparse_gain_abs": 0.020413117292417335,
+            "paired_sparse_gain_rel": 0.2876948887906432,
+            "paired_dense_gain_abs": -0.0008082040781678124,
+            "sparse_retention": 0.8303344304688198,
+            "dense_retention": 0.8304125563846012,
+            "model_public_score": 0.23933391249212083,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00934,
+              "worst_fold_delta_sparse": 0.01494,
+              "delta_mean_dense": -0.00081,
+              "delta_mean_sparse": 0.02042
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.17572,
+              0.19922,
+              0.11732,
+              0.18623
+            ],
+            "fold_sparse": [
+              0.08487,
+              0.09803,
+              0.07204,
+              0.11572
+            ],
+            "mean_dense_dti": 0.16962,
+            "mean_sparse_dti": 0.09267,
+            "sparse_mean_over_draws": 0.09266778536464804,
+            "paired_sparse_gain_abs": 0.020601333952450812,
+            "paired_sparse_gain_rel": 0.28586580230817416,
+            "paired_dense_gain_abs": -0.0008082040781678124,
+            "sparse_retention": 0.8305431062215867,
+            "dense_retention": 0.8304125563846012,
+            "model_public_score": 0.23939118097459042,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00934,
+              "worst_fold_delta_sparse": 0.01523,
+              "delta_mean_dense": -0.00081,
+              "delta_mean_sparse": 0.0206
+            }
+          }
+        },
+        "K0.501": {
+          "kind": "kernel_cover",
+          "param": 0.501,
+          "n": 62013,
+          "pixel_fraction": 0.5009977459827596,
+          "selection": {
+            "fold_dense": [
+              0.17582,
+              0.19926,
+              0.11732,
+              0.18623
+            ],
+            "fold_sparse": [
+              0.08288,
+              0.09497,
+              0.07158,
+              0.11583
+            ],
+            "mean_dense_dti": 0.16966,
+            "mean_sparse_dti": 0.09131,
+            "sparse_mean_over_draws": 0.09131296520446223,
+            "paired_sparse_gain_abs": 0.020358916009406675,
+            "paired_sparse_gain_rel": 0.28693099605124983,
+            "paired_dense_gain_abs": -0.0007734937396282893,
+            "sparse_retention": 0.8307594437293053,
+            "dense_retention": 0.8309005142194974,
+            "model_public_score": 0.2392071163180066,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00934,
+              "worst_fold_delta_sparse": 0.01494,
+              "delta_mean_dense": -0.00077,
+              "delta_mean_sparse": 0.02036
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.17582,
+              0.19926,
+              0.11732,
+              0.18623
+            ],
+            "fold_sparse": [
+              0.08476,
+              0.09797,
+              0.07204,
+              0.11572
+            ],
+            "mean_dense_dti": 0.16966,
+            "mean_sparse_dti": 0.09262,
+            "sparse_mean_over_draws": 0.0926237896254583,
+            "paired_sparse_gain_abs": 0.02055733821326107,
+            "paired_sparse_gain_rel": 0.2852553138169607,
+            "paired_dense_gain_abs": -0.0007734937396282893,
+            "sparse_retention": 0.8310448892946407,
+            "dense_retention": 0.8309005142194974,
+            "model_public_score": 0.23928537350877419,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": false,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": false,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00934,
+              "worst_fold_delta_sparse": 0.01523,
+              "delta_mean_dense": -0.00077,
+              "delta_mean_sparse": 0.02055
+            }
+          }
+        },
+        "K0.550": {
+          "kind": "kernel_cover",
+          "param": 0.55,
+          "n": 68078,
+          "pixel_fraction": 0.5499963644883219,
+          "selection": {
+            "fold_dense": [
+              0.17569,
+              0.19941,
+              0.12333,
+              0.19125
+            ],
+            "fold_sparse": [
+              0.08232,
+              0.09494,
+              0.07004,
+              0.11302
+            ],
+            "mean_dense_dti": 0.17242,
+            "mean_sparse_dti": 0.09008,
+            "sparse_mean_over_draws": 0.0900802683146626,
+            "paired_sparse_gain_abs": 0.019126219119607046,
+            "paired_sparse_gain_rel": 0.2695578242057517,
+            "paired_dense_gain_abs": 0.0019883705837180354,
+            "sparse_retention": 0.8618812988717734,
+            "dense_retention": 0.8617287164764417,
+            "model_public_score": 0.2359189991182383,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00432,
+              "worst_fold_delta_sparse": 0.0134,
+              "delta_mean_dense": 0.00199,
+              "delta_mean_sparse": 0.01913
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.17569,
+              0.19941,
+              0.12333,
+              0.19125
+            ],
+            "fold_sparse": [
+              0.08417,
+              0.09796,
+              0.07037,
+              0.11283
+            ],
+            "mean_dense_dti": 0.17242,
+            "mean_sparse_dti": 0.09133,
+            "sparse_mean_over_draws": 0.09133488734668978,
+            "paired_sparse_gain_abs": 0.019268435934492553,
+            "paired_sparse_gain_rel": 0.2673703999144237,
+            "paired_dense_gain_abs": 0.0019883705837180354,
+            "sparse_retention": 0.8610620732007386,
+            "dense_retention": 0.8617287164764417,
+            "model_public_score": 0.2357053271143959,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00432,
+              "worst_fold_delta_sparse": 0.01356,
+              "delta_mean_dense": 0.00199,
+              "delta_mean_sparse": 0.01926
+            }
+          }
+        },
+        "K0.600": {
+          "kind": "kernel_cover",
+          "param": 0.6,
+          "n": 74267,
+          "pixel_fraction": 0.5999967684340639,
+          "selection": {
+            "fold_dense": [
+              0.17266,
+              0.20035,
+              0.12333,
+              0.1934
+            ],
+            "fold_sparse": [
+              0.07692,
+              0.0894,
+              0.07004,
+              0.11236
+            ],
+            "mean_dense_dti": 0.17244,
+            "mean_sparse_dti": 0.08718,
+            "sparse_mean_over_draws": 0.0871783910723842,
+            "paired_sparse_gain_abs": 0.016224341877328644,
+            "paired_sparse_gain_rel": 0.2286598448064221,
+            "paired_dense_gain_abs": 0.0020048939078524675,
+            "sparse_retention": 0.8806586928807908,
+            "dense_retention": 0.8809823800081354,
+            "model_public_score": 0.22965482047046146,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00217,
+              "worst_fold_delta_sparse": 0.0134,
+              "delta_mean_dense": 0.00201,
+              "delta_mean_sparse": 0.01623
+            }
+          },
+          "confirmation": {
+            "fold_dense": [
+              0.17266,
+              0.20035,
+              0.12333,
+              0.1934
+            ],
+            "fold_sparse": [
+              0.07878,
+              0.09251,
+              0.07037,
+              0.1121
+            ],
+            "mean_dense_dti": 0.17244,
+            "mean_sparse_dti": 0.08844,
+            "sparse_mean_over_draws": 0.08844041140431254,
+            "paired_sparse_gain_abs": 0.016373959992115314,
+            "paired_sparse_gain_rel": 0.22720641395899266,
+            "paired_dense_gain_abs": 0.0020048939078524675,
+            "sparse_retention": 0.88064584106985,
+            "dense_retention": 0.8809823800081354,
+            "model_public_score": 0.22965162295716,
+            "draw_fold_wins": 120,
+            "draw_fold_cells": 120,
+            "legacy_gate": {
+              "passed": true,
+              "rules": {
+                "reported_means_match_four_fold_scores": true,
+                "mean_dense_improves": true,
+                "mean_sparse_improves": true,
+                "sparse_fold_wins_ge_3_of_4": true,
+                "no_fold_loses_more_than_0_01": true
+              },
+              "sparse_fold_wins": 4,
+              "dense_fold_wins": 2,
+              "worst_fold_delta_dense": -0.00217,
+              "worst_fold_delta_sparse": 0.01356,
+              "delta_mean_dense": 0.00201,
+              "delta_mean_sparse": 0.01637
+            }
+          }
+        }
+      }
+    }
+  },
+  "slot_spent": false,
+  "evaluator_max_abs_diff_vs_gems_metric": 0.0,
+  "frozen_selection": {
+    "eligible_on_selection_draws_ranked_by_model_score": [
+      "D1.5",
+      "K0.550",
+      "K0.600"
+    ],
+    "primary": "D1.5",
+    "primary_passes_confirmation": true,
+    "alternate_sparse_optimal": "D2.4",
+    "alternate_selection_gate_passed": false,
+    "alternate_confirmation_gate_passed": false
+  },
+  "seconds": 110.45400643348694
+}

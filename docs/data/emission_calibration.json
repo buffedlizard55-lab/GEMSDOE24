@@ -1,0 +1,57 @@
+{
+  "lattice": {
+    "file": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+    "reported_score_owner": 0.0904,
+    "emitted_px": 204504,
+    "emitted_density": 0.03957600893142415,
+    "mean_kernel_credit": 0.3717529686840718,
+    "tau": 0.002444501885533123,
+    "truth_px_equivalent": 12631.65304175295,
+    "tau_sensitivity_to_score_rounding": {
+      "0.09035": 0.002442784999402679,
+      "0.09045": 0.0024462192845862733
+    },
+    "synthetic_estimator_error": "mean +2.5 %, sd 7.6 %, range -9 %..+18 % over 24 synthetic truth layouts (tests/test_emission.py world)",
+    "catalogue_px": 60988,
+    "truth_to_catalogue_ratio": 0.20711702370553142
+  },
+  "natural_experiment_same_surface_6452ae1d00": {
+    "ridge": {
+      "file": "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+      "reported": 0.128,
+      "off_catalogue_px": 161366,
+      "implied_credit_over_truth": 0.42393423262452573
+    },
+    "dotted": {
+      "file": "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+      "reported": 0.1839,
+      "off_catalogue_px": 65236,
+      "implied_credit_over_truth": 0.3400804783453511
+    },
+    "pixel_ratio": 0.4042735148668245,
+    "geometric_credit_retention_truth_within_1px_of_ridge": 0.6955181456970032,
+    "implied_credit_retention_from_reported_scores": 0.8022010306644826,
+    "model_predicted_dotted_score_by_retention": {
+      "0.70": 0.1612264730873341,
+      "0.75": 0.17234569703806898,
+      "0.80": 0.1834139354731986,
+      "0.85": 0.19443153827009568
+    },
+    "score_change": 0.43671875000000004
+  },
+  "known_pixel_masking_check": {
+    "ens12_reported": 0.1563,
+    "hedge_v2_reported": 0.1563,
+    "identical_off_catalogue_pixels": true,
+    "hedge_pixels_on_catalogue": 60988,
+    "ens12_pixels_on_catalogue": 6455,
+    "inference": "Adding every catalogue pixel as a prediction left the reported score unchanged, consistent with known-pixel masking of predictions (owner-reported scores; not an organizer receipt)."
+  },
+  "assumptions": [
+    "lattice is a blind sampler: expected credit at a truth pixel is independent of truth layout",
+    "false-positive mass ~ N(1-phi), phi = mean kernel proximity of emitted pixels to truth (0.05; swept 0-0.10)",
+    "public-subset truth density transfers to the private subset; Phase 2 truth is denser",
+    "owner-reported scores are correctly attributed to these exact files (content ids = sha256 prefixes)"
+  ]
+}

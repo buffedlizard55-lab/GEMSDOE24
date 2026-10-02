@@ -48,6 +48,7 @@ def require_postprocess_evidence(
     audit: dict,
     *,
     relative_auc_tolerance: float = 0.01,
+    candidate_label: str = "candidate",
 ) -> dict:
     """Evidence for a label-free, deterministic subset transform of one pinned scored reference.
 
@@ -65,7 +66,7 @@ def require_postprocess_evidence(
     gates = validation.get("selection_and_gates", {})
     cand = validation.get("candidate", {})
     refs = audit.get("references", {})
-    cand_audit = refs.get("candidate", {})
+    cand_audit = refs.get(candidate_label, {})
     ref_audit = refs.get("h19-5", {})
     rules = {
         "reference_is_the_pinned_scored_raster": validation.get("sources", {})

@@ -19,26 +19,17 @@ is not a score forecast or a guarantee of winning.
 ## Current decision
 
 <!-- STATUS:START -->
-**No new slot-eligible candidate; no slot consumed.** H19-5 remains a
-format-validated reference with owner-reported original public DTI **0.1922**.
-The official leader snapshot is **0.3195** (2026-10-02; not an artifact-linked
-score for this repo).
+**Owner decision required before a weekly slot is spent. The file passes the frozen holdout gates and every format check, but the strict accessibility gate is not passed — the same is true of the already-scored reference (H19-4 prediction AUC 0.556 vs label AUC 0.496). This file is no more associated with accessibility than that reference. The agent cannot upload anything.**
 
-Fresh physics → arc+residualized local dense/sparse DTI:
-**0.15169 / 0.05843 →
-0.15568 / 0.06321**.
-These gains are below H19-4/H19-5 as-emitted diagnostics; original current-best
-OOF reconstruction is absent. They do not predict a new leaderboard score.
+Primary download: [`gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif`](docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif) — 60,069 px,
+unscored. Calibrated hidden truth density τ ≈ 0.244% of cells (blind lattice, owner-reported 0.0904,
+brief-only). Paired sparse-holdout DTI for the primary vs H19-5 as emitted: 0.0962 vs 0.0710
+(+36%); model-based expectation ≈ 0.25 (plausible 0.22–0.28) — a model, **not a leaderboard result**.
+The best owner-reported score remains **0.1922** (H19-5); the official leader snapshot is **0.3195**
+(2026-10-02). No weekly slot has been spent by this repository.
 
-The full requested audit is **BLOCKED**: four-block geography is unverified and
-legacy road clipping leaves boundary coverage uncertified. Official buffered
-road acquisition is implemented but its workflow could not run after GitHub
-authentication/push failed. Claim distances are official, quality-filtered and
-buffered. Exact experimental-raster audit complete: **True**
-(provisional available inputs, never a full-source pass).
-
-Reference: [`gems24-reference-h19-5-20261002-80d47e1ab2ee-nan.tif`](docs/downloads/gems24-reference-h19-5-20261002-80d47e1ab2ee-nan.tif).
-Public PR/merge/deployment are **not claimed**; GitHub reconnection is required.
+Exact-file audit (labels first; roads + claims + four derived blocks): labels AUC 0.496, H19-4 0.556, H19-5 0.563, primary 0.555, alternate 0.558.
+Live site (GitHub Pages, branch `main`): https://buffedlizard55-lab.github.io/GEMSDOE24/
 <!-- STATUS:END -->
 
 ## Standing session charter — read this at the start of every session

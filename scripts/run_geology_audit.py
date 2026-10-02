@@ -33,6 +33,9 @@ def main() -> None:
     ap.add_argument("--shifts", type=int, default=99)
     ap.add_argument("--samples", type=int, default=12000)
     ap.add_argument("--candidate", type=Path)
+    ap.add_argument(
+        "--candidate-alt", type=Path, help="second candidate audited in the same family-wise run"
+    )
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
     if args.permutations < 199 or args.shifts < 99:
@@ -55,6 +58,8 @@ def main() -> None:
     refs += [(tag, next((ROOT / "inputs").glob(f"*{tag}*-nan.tif"))) for tag in ("h19-4", "h19-5")]
     if args.candidate:
         refs.append(("candidate", args.candidate.resolve()))
+    if args.candidate_alt:
+        refs.append(("candidate_alt", args.candidate_alt.resolve()))
     protocol = {
         "version": 2,
         "labels_first": True,

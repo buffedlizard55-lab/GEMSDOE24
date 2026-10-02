@@ -217,3 +217,19 @@ def test_postprocess_never_rewrites_the_owner_strict_gate():
     assert (
         require_postprocess_evidence("ref", "cand", True, v, a)["slot_recommendation"] == "eligible"
     )
+
+
+def test_postprocess_audit_label_selects_the_right_reference_entry():
+    from gems.promotion import require_postprocess_evidence
+
+    v, a = _post_inputs(strict=False, cand_auc=0.553, ref_auc=0.556)
+    a["references"]["candidate_alt"] = {
+        "sha256": "alt",
+        "primary": {"observed_auc": 0.60},
+        "full_requested_audit_gate_passed": False,
+    }
+    v["candidate"]["sha256"] = "alt"
+    out = require_postprocess_evidence("ref", "alt", True, v, a, candidate_label="candidate_alt")
+    assert out["slot_recommendation"] == "not_recommended"  # judged on ITS audit, not the primary's
+    with pytest.raises(ValueError, match="same_exact_candidate_audited"):
+        require_postprocess_evidence("ref", "alt", True, v, a)  # default label points at "cand"
