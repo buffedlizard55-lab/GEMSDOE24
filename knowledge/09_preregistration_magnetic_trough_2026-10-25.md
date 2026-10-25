@@ -108,3 +108,20 @@ SHA, scored-content SHA, full validator JSON and a single final JSON run card.
 No organizer receipt was supplied for the brief's score claims; do not label any of them
 ORGANIZER-CONFIRMED. The brief contains conflicting leader claims (0.4413 vs 0.3195).
 No projection is a score. No automatic access to DrivenData and no slot selection/upload.
+
+## Pre-run implementation correction (no experiment result inspected)
+
+Support erosion is **72 px**, not the initially listed 40. Code review shows that
+`Gaussian8((Gaussian1(a)-Gaussian8(Gaussian1(a)))**2)` has nested support:
+4 + 32 + 32 pixels, plus 4 px tangent displacement = 72. A 40 px mask would
+allow nodata fill to affect scores near a survey edge. Scales, weights, spacing
+and budget are unchanged. This correction is committed before any experiment.
+
+The registry is pinned to the initial review's commits. A concurrent update to
+GEMSDOE25 main during discovery was detected by a Git blob hash mismatch; do not
+mix its new README with the earlier snapshot. Refreshes require explicit opt-in.
+
+Raw raster Spearman checks will be **exact over all footprint pixels**, stronger
+than the preregistered uniform sample; only the additional kernel-field
+sensitivity uses the fixed 200,000-pixel sample. Undefined constant-field
+correlations are recorded as null, never invented as zero.

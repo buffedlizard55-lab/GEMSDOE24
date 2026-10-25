@@ -229,3 +229,228 @@ def gate(
         "delta_mean_dense": round(candidate["mean_dense_dti"] - baseline["mean_dense_dti"], 5),
         "delta_mean_sparse": round(candidate["mean_sparse_dti"] - baseline["mean_sparse_dti"], 5),
     }
+
+
+# Historical Holdout above remains for reproducing dated experiments only.
+# This version fixes the mean-of-ratios / hide-and-recover mismatch in that
+# protocol once, in the shared module, instead of creating a private evaluator.
+SEGMENT_EVALUATOR_VERSION = "gems-segment-pooled-v1"
+
+
+def pooled_components(rows):
+    """Pool metric components, never average region-level DTI ratios."""
+    from .metric import ALPHA, BETA, EPS
+
+    keys = ("TP_w", "FP_w", "FN_w", "n_truth", "n_emitted")
+    out = {k: float(sum(r[k] for r in rows)) for k in keys}
+    den = out["TP_w"] + ALPHA * out["FP_w"] + BETA * out["FN_w"] + EPS
+    out["dti"] = out["TP_w"] / den
+    return out
+
+
+def spatial_bootstrap_ci(blocks, *, draws=1999, seed=20261025):
+    """Approximate 95% CI, resampling 10 km blocks and pooling their components."""
+    from .metric import ALPHA, BETA, EPS
+
+    x = np.asarray(blocks, np.float64)
+    if x.ndim != 2 or x.shape[1] != 3 or not len(x) or not np.isfinite(x).all():
+        raise ValueError("Finite nonempty block TP/FP/FN components required")
+    if draws < 100 or np.any(x < -1e-9):
+        raise ValueError("At least 100 draws and nonnegative components required")
+    rng = np.random.default_rng(seed)
+    # Small matrix (hundreds of spatial groups); do not store full raster draws.
+    sampled = x[rng.integers(len(x), size=(draws, len(x)))].sum(axis=1)
+    scores = sampled[:, 0] / (sampled[:, 0] + ALPHA * sampled[:, 1] + BETA * sampled[:, 2] + EPS)
+    return {
+        "level": 0.95,
+        "interval": np.quantile(scores, [0.025, 0.975]).tolist(),
+        "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+        "block_pixels": 100,
+        "block_size_m": 10000,
+        "n_blocks": len(x),
+        "resamples": draws,
+        "seed": seed,
+        "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval.",
+    }
+
+
+class SegmentHoldout:
+    """Whole-component, buffered, quadrant-blocked hide-and-recover context.
+
+    ``visible`` is the ONLY catalogue a detector may read. Whole connected
+    components touching validation or its collar are hidden everywhere, not
+    merely clipped at a split line. ``train`` is independently spatially purged.
+    The positive class is an imperfect mapped-fault proxy, not hidden new truth.
+    """
+
+    def __init__(self, footprint, labels, *, buffer_px=15):
+        from scipy.ndimage import distance_transform_edt
+
+        self.footprint = np.asarray(footprint, bool)
+        self.labels = np.asarray(labels, bool)
+        if (
+            self.footprint.shape != self.labels.shape
+            or self.footprint.ndim != 2
+            or buffer_px < 3
+            or np.any(self.labels & ~self.footprint)
+            or not self.labels.any()
+        ):
+            raise ValueError("Aligned nonempty catalogue, footprint and >=3 px collar required")
+        self.components, self.n_components = ndi_label(self.labels, structure=np.ones((3, 3), int))
+        self.fold_grid, names = make_quadrant_folds(self.footprint)
+        self.folds = []
+        for f, name in enumerate(names):
+            valid = self.footprint & (self.fold_grid == f)
+            if not valid.any():
+                raise ValueError(f"Empty spatial fold: {name}")
+            collar = distance_transform_edt(~valid) <= buffer_px
+            hidden_ids = np.unique(self.components[collar & self.labels])
+            hidden_ids = hidden_ids[hidden_ids > 0]
+            hidden = self.labels & np.isin(self.components, hidden_ids)
+            visible = self.labels & ~hidden
+            truth = hidden & valid
+            if not truth.any():
+                raise ValueError(f"No withheld positives: {name}")
+            self.folds.append(
+                {
+                    "id": f,
+                    "name": name,
+                    "valid": valid,
+                    "train": self.footprint & ~collar,
+                    "visible": visible,
+                    "truth": truth,
+                    "hidden_component_ids": hidden_ids,
+                }
+            )
+        self.buffer_px = buffer_px
+
+    def score_fold(self, prediction, fold):
+        """Use the common exact metric, then audit bootstrap contributions by KD tree."""
+        from scipy.spatial import cKDTree
+
+        from . import metric
+
+        pred = np.asarray(prediction)
+        if pred.shape != self.footprint.shape or not np.isin(pred, [0, 1]).all():
+            raise ValueError("A finite aligned binary prediction is required")
+        valid, visible, truth = fold["valid"], fold["visible"], fold["truth"]
+        active_pred = pred.astype(bool) & valid & ~visible
+        reference = metric.dti_score_fast(
+            active_pred, truth, valid_mask=valid, catalogue_mask=visible
+        )
+        pyx, tyx = np.argwhere(active_pred), np.argwhere(truth)
+        tp = (
+            np.maximum(1 - cKDTree(pyx).query(tyx)[0] / metric.RADIUS_PX, 0)
+            if len(pyx)
+            else np.zeros(len(tyx))
+        )
+        fp = (
+            1 - np.maximum(1 - cKDTree(tyx).query(pyx)[0] / metric.RADIUS_PX, 0)
+            if len(tyx)
+            else np.ones(len(pyx))
+        )
+        nx = (self.footprint.shape[1] + 99) // 100
+        n = ((self.footprint.shape[0] + 99) // 100) * nx
+        ti = (tyx[:, 0] // 100) * nx + tyx[:, 1] // 100
+        pi = (pyx[:, 0] // 100) * nx + pyx[:, 1] // 100
+        blocks = np.column_stack(
+            [
+                np.bincount(ti, weights=tp, minlength=n),
+                np.bincount(pi, weights=fp, minlength=n),
+                np.bincount(ti, weights=1 - tp, minlength=n),
+            ]
+        )
+        if not np.allclose(
+            blocks.sum(axis=0),
+            [reference[k] for k in ("TP_w", "FP_w", "FN_w")],
+            rtol=0,
+            atol=1e-8,
+        ):
+            raise AssertionError("Bootstrap components disagree with shared exact metric")
+        return reference, blocks
+
+    def summarize(self, predictions, *, ci_draws=1999):
+        if len(predictions) != len(self.folds):
+            raise ValueError("One independent prediction per held-out fold required")
+        rows, block_rows = [], []
+        for pred, fold in zip(predictions, self.folds):
+            result, blocks = self.score_fold(pred, fold)
+            rows.append({"fold": fold["name"], **result})
+            block_rows.append(blocks)
+        blocks = np.sum(block_rows, axis=0)
+        yy, xx = np.nonzero(self.footprint)
+        nx = (self.footprint.shape[1] + 99) // 100
+        active_blocks = np.unique((yy // 100) * nx + xx // 100)
+        total = pooled_components(rows)
+        return {
+            "label": "HOLDOUT-DTI",
+            "evaluator_version": SEGMENT_EVALUATOR_VERSION,
+            **total,
+            "n_withheld_positive_pixels": int(total["n_truth"]),
+            "n_unique_withheld_components": self.n_components,
+            "ci95": spatial_bootstrap_ci(blocks[active_blocks], draws=ci_draws),
+            "folds": rows,
+            "protocol": {
+                "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+                "buffer_m": self.buffer_px * 100,
+                "whole_components_hidden_everywhere": True,
+                "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+                "catalogue_features": "must be constructed from fold.visible only",
+                "alpha": 0.2,
+                "beta": 0.8,
+                "triangular_kernel_radius_m": 300,
+            },
+        }
+
+    def canary(self, features, *, seed=20261025, max_per_class=15000):
+        """One-feature AUC diagnostics, never silently change a feature after a flag."""
+        from scipy.ndimage import distance_transform_edt
+        from sklearn.metrics import roc_auc_score
+
+        rng = np.random.default_rng(seed)
+        rows, samples = {}, []
+        for fold in self.folds:
+            truth, valid = fold["truth"], fold["valid"]
+            positive = np.flatnonzero(truth)
+            negative = np.flatnonzero(
+                valid & ~fold["visible"] & (distance_transform_edt(~truth) >= 9)
+            )
+            positive = rng.choice(positive, min(len(positive), max_per_class), replace=False)
+            negative = rng.choice(negative, min(len(negative), max_per_class), replace=False)
+            samples.append((np.r_[positive, negative], len(positive), len(negative)))
+        for name, surface in features.items():
+            surface = np.asarray(surface)
+            if surface.shape != self.footprint.shape:
+                raise ValueError("Canary feature shape mismatch")
+            details, values, labels = [], [], []
+            for fold, (ids, n_positive, n_negative) in zip(self.folds, samples):
+                x = surface.ravel()[ids]
+                # Missingness itself is tested: use the same fixed zero sentinel
+                # that the detector uses outside its supported physical domain.
+                x = np.where(np.isfinite(x), x, 0)
+                y = np.r_[np.ones(n_positive), np.zeros(n_negative)]
+                auc = float(roc_auc_score(y, x))
+                details.append(
+                    {
+                        "fold": fold["name"],
+                        "auc": auc,
+                        "positives": n_positive,
+                        "background": n_negative,
+                    }
+                )
+                values.append(x)
+                labels.append(y)
+            auc = float(roc_auc_score(np.concatenate(labels), np.concatenate(values)))
+            suspicious = (
+                max([max(auc, 1 - auc)] + [max(x["auc"], 1 - x["auc"]) for x in details]) > 0.90
+            )
+            rows[name] = {"pooled_auc": auc, "leakage_suspected": suspicious, "folds": details}
+        return {
+            "diagnostic": "LEAKAGE-CANARY AUC, not a DTI or organizer score",
+            "evaluator_version": SEGMENT_EVALUATOR_VERSION,
+            "threshold": 0.90,
+            "two_polarities_checked": True,
+            "passed": not any(x["leakage_suspected"] for x in rows.values()),
+            "features": rows,
+            "interpretation": "AUC > .90 is leakage until explained; lower AUC does not prove independence or fault discovery.",
+        }

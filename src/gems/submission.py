@@ -210,7 +210,8 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         "bytes": path.stat().st_size,
         "sha256": sha256_file(path),
         "format_valid": not hard_fail,
-        "ok_to_upload": not hard_fail,
+        "ok_to_upload": False,
+        "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": hard_fail,
         "official_format_compliant": checks["outside_is_nan_official_text"]["pass"]
