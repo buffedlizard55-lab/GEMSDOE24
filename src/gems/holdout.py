@@ -495,6 +495,14 @@ class SegmentHoldout:
         from scipy.ndimage import distance_transform_edt
         from sklearn.metrics import roc_auc_score
 
+        if not isinstance(features, dict) or not features:
+            raise ValueError("At least one actual feature required for leakage canary")
+        if (
+            isinstance(max_per_class, bool)
+            or not isinstance(max_per_class, int)
+            or max_per_class < 1
+        ):
+            raise ValueError("Positive integer canary sample limit required")
         rng = np.random.default_rng(seed)
         rows, samples = {}, []
         for fold in self.folds:
