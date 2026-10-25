@@ -14,7 +14,7 @@ The earlier [`2026-10-25_review_and_run_card.md`](2026-10-25_review_and_run_card
 - Reviewed open PR #7. It is still open and marked conflicting against `main`; it is a separate H24-3A road/potential-field change. No changes were made on that sibling branch and it was not merged.
 - `origin/main` advanced during the review first to `a60a25a` (PR #11), then to `2363058` (PR #12). Both were merged into the fixed session branch rather than discarded. This preserves the independent MTR1 negative result, shared holdout/writer/site work, and the later exact-file receipt hardening.
 - Ran `.venv/bin/python scripts/evaluate_holdout.py --verify-recorded`: `verified=true`, `experiment_rerun=false`, 7 source fingerprints, 2 pooled arms and 2 exact TIFF variants verified. MTR1's primary SHA-256 is `3f881cdcaa22557b4265c0415d1b9f436b9f5804a55aabb52edfbc4de67fee83`; its HOLDOUT-DTI is `0.0644115636` (gems-segment-pooled-v1, 60,988 withheld positive pixels, 95% spatial-block CI `[0.0582994014, 0.0711243136]`). Its strict final-dot rule fails: 1.0 of emitted dots are within 3 px of registered calibration lattice `registry-039`. The lattice covers 100% of MTR1's supported domain, making the rule non-discriminating there, but the predeclared gate is retained as failed; no comparator was removed.
-- Ran `.venv/bin/python scripts/audit_research_downloads.py` after PR #12: both ASPC primary/companion exact TIFFs revalidated against their embedded receipts; `new_experiments=0`, `submission_authorized=false`, verdict negative. This fresh file audit does not override ASPC's missing matched-best OOF and nuisance audit.
+- Ran `.venv/bin/python scripts/audit_research_downloads.py` after PR #12 and `.venv/bin/python scripts/verify_research_release.py` after PR #13: both ASPC primary/companion exact TIFFs revalidated against their embedded receipts; `new_experiments=0`, `submission_authorized=false`, verdict negative. This fresh file audit does not override ASPC's missing matched-best OOF and nuisance audit.
 
 ## Pass 2 — independent checks and discrepancies fixed
 
@@ -28,7 +28,7 @@ The earlier [`2026-10-25_review_and_run_card.md`](2026-10-25_review_and_run_card
 ## Pass 3 — final implementation and acceptance verification
 
 - Installed the pinned Python dependencies into the ignored `.venv` (system Python initially lacked NumPy/pytest); no data or generated cache was added to Git.
-- Before integrating newer `origin/main`, the then-current tree passed **119 tests**. After integrating PRs #11 and #12, the final integrated tree passed **159 tests** (`.venv/bin/python -m pytest -q`).
+- Before integrating newer `origin/main`, the then-current tree passed **119 tests**. After integrating PRs #11–#13, the current integrated tree passed **168 tests** (`.venv/bin/python -m pytest -q`).
 - `.venv/bin/ruff check src scripts tests`: passed on the final integrated tree.
 - Python `compileall`, `node --check docs/assets/app.js`, and `git diff --check`: passed.
 - Exact TIFF validators and `submission_authorized=false` agree with the visible first-screen status and executive guide. The download is obvious, uniquely named, and conspicuously labeled **DO NOT SUBMIT**; the note is 93 characters, within the requested 140-character limit. The project does not upload to DrivenData.
