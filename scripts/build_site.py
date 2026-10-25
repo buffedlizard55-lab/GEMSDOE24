@@ -127,16 +127,32 @@ def build_independent_site(primary):
         or (DOCS / "downloads" / primary["note_file"]).read_text().strip() != primary["note"]
     ):
         raise SystemExit("Current note is missing, changed or over the 140-character limit")
+    preflight_path = p.with_suffix(".preflight.json")
+    preflight = json.loads(preflight_path.read_text())
+    if (
+        preflight.get("artifact", {}).get("sha256") != primary["sha256"]
+        or preflight.get("run_card", {}).get("artifact_sha256_matches") is not True
+        or preflight.get("run_card", {}).get("artifact_name_matches") is not True
+        or preflight.get("decision", {}).get("submission_status") != "DO_NOT_SUBMIT"
+        or preflight.get("decision", {}).get("ready_to_submit") is not False
+        or preflight.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1")
+        is not True
+    ):
+        raise SystemExit("Current exact-file preflight is missing, stale, or does not fail closed")
     concurrent = concurrent_aspc(ROOT)
     score = card["holdout"]
     lo, hi = score["ci95"]["interval"]
     version = score["evaluator_version"]
     n = score["n_withheld_positive_pixels"]
     hlabel = f"HOLDOUT-DTI · {e(version)} · {n:,} withheld positives · approximate 95% CI [{lo:.5f}, {hi:.5f}]"
-    download = download_button(primary, "", "Download audit-only .tif — DO NOT SUBMIT")
+    download = (
+        download_button(primary, "", "Download audit-only .tif — DO NOT SUBMIT")
+        + f'<a class="button" href="downloads/{e(preflight_path.name)}">'
+        "Automated preflight — DO NOT SUBMIT</a>"
+    )
     status = '<div class="status stopped" role="status"><strong>DOWNLOAD: YES · SUBMIT: NO. NOT OK TO SUBMIT.</strong> Automated verdict: NEGATIVE. The overlap gate failed against a registered calibration lattice. No human inspection or exception can turn this packet into a PASS.</div>'
     note = f'<div class="note" id="note-current">{e(primary["note"])}</div><div class="actions"><button class="button" data-copy="#note-current" data-feedback="#copy-feedback">Copy short note</button><a class="button" href="downloads/{e(primary["note_file"])}" download>Note .txt</a></div><p id="copy-feedback" class="copyfeedback" aria-live="polite"></p><p class="micro">{len(primary["note"])} characters · maximum 140</p>'
-    file_info = f'<p class="fileline">{e(primary["file"])}</p><p class="hash">SHA-256 {e(primary["sha256"])}</p>'
+    file_info = f'<p class="fileline">{e(primary["file"])}</p><p class="hash">SHA-256 {e(primary["sha256"])}</p><p class="micro">Strict whole-array [0,1] diagnostic: pass · scientific authorization: false</p>'
     hero = f"""<div class="hero"><div><div class="eyebrow">DOE GEMS · independently generated experiment</div><h1>A new raster.<br>An honest decision.</h1><p class="lead">The paired-magnetic-trough method generated its own predictions from cached physical layers. <strong>No previous submission pixels were copied.</strong> It passes file-format checks, but it fails your lane-overlap rule. It is not yet scored and <strong>must not be submitted</strong>.</p>{status}<div class="actions">{download}<a class="button" href="executive-summary.html">Submission status &amp; guide →</a></div>{file_info}<p class="micro"><span class="badge blue">Format PASS</span> <span class="badge danger">Novelty gate FAIL</span> <span class="badge gray">No slot used</span></p></div><aside class="card visual"><div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Not leaderboard scores</span></div><div class="result-number">{score["dti"]:.5f}</div><p>{hlabel}</p><img class="raster-preview" src="assets/mtr1-preview.png" alt="Downsampled map of independently computed experimental fault dots, not verified faults or geothermal vents"><p class="micro">Experiment preview · downsampled 100 m grid · not verified faults or vents</p></aside></div>"""
     rows = [
         (
@@ -205,7 +221,7 @@ def build_independent_site(primary):
 # Verifies frozen evidence; the stopped experiment refuses implicit reruns.
 .venv/bin/python scripts/export_negative_result.py
 .venv/bin/python scripts/build_site.py
-.venv/bin/python -m pytest -q</code></pre><p class="micro">Caches and the 419 MB training raster are ignored. GitHub download access is sufficient for this CPU experiment. Original organizer authentication of owner mirrors, an explicit lane and a comparable current-best OOF model remain unavailable. No GPU is required for this fixed physical operator.</p></section><section><h2>Next work — separate from this stopped lane</h2><ol class="steplist"><li><h3>Repair the shared protocol, not the result</h3><p>Agree a registry-overlap definition that distinguishes dense calibration controls from competing method lanes. Retain this failed run; do not retroactively call it a pass.</p></li><li><h3>Reconstruct the current-best OOF detector</h3><p>Refit under the same whole-component buffered protocol. Historical submitted rasters cannot substitute for a leakage-free baseline.</p></li><li><h3>Require independent fault evidence</h3><p>The near-chance feature canaries and low internal DTI do not justify a leaderboard claim. Future methods need independent localization evidence and an exact-file nuisance audit before selection.</p></li></ol><p>Open legacy PR #7 remains conflicting and was not merged or overwritten. Official block boundaries remain a derived audit, not published coordinates. No human exception is requested.</p></section><section><h2>Machine-readable evidence</h2><div class="actions"><a class="button" href="data/mtr1_run_card.json" download>Final JSON card</a><a class="button" href="data/mtr1_experiment.json" download>Complete experiment</a><a class="button" href="data/priority_rasters.json" download>Registry manifest</a><a class="button" href="data/priority_feed.json" download>Source freshness</a></div></section>"""
+.venv/bin/python -m pytest -q</code></pre><p class="micro">Caches and the 419 MB training raster are ignored. GitHub download access is sufficient for this CPU experiment. Original organizer authentication of owner mirrors, an explicit lane and a comparable current-best OOF model remain unavailable. No GPU is required for this fixed physical operator.</p></section><section><h2>Next work — separate from this stopped lane</h2><ol class="steplist"><li><h3>Repair the shared protocol, not the result</h3><p>Agree a registry-overlap definition that distinguishes dense calibration controls from competing method lanes. Retain this failed run; do not retroactively call it a pass.</p></li><li><h3>Reconstruct the current-best OOF detector</h3><p>Refit under the same whole-component buffered protocol. Historical submitted rasters cannot substitute for a leakage-free baseline.</p></li><li><h3>Require independent fault evidence</h3><p>The near-chance feature canaries and low internal DTI do not justify a leaderboard claim. Future methods need independent localization evidence and an exact-file nuisance audit before selection.</p></li></ol><p>Open legacy PR #7 remains conflicting and was not merged or overwritten. Official block boundaries remain a derived audit, not published coordinates. No human exception is requested.</p></section><section><h2>Machine-readable evidence</h2><div class="actions"><a class="button" href="data/mtr1_run_card.json" download>Final JSON card</a><a class="button" href="data/mtr1_experiment.json" download>Complete experiment</a><a class="button" href="data/priority_rasters.json" download>Registry manifest</a><a class="button" href="data/priority_feed.json" download>Source freshness</a><a class="button" href="data/submission_preflight_review_20261025.json" download>Preflight review</a></div></section>"""
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),
@@ -235,6 +251,12 @@ def build_independent_site(primary):
         (DOCS / "data" / name).write_text((ROOT / "evidence" / name).read_text())
     (DOCS / "data/priority_rasters.json").write_text(
         (ROOT / "registry/priority_rasters.json").read_text()
+    )
+    preflight_review = ROOT / "evidence/submission_preflight_review_20261025.json"
+    if not preflight_review.exists():
+        raise SystemExit("Missing exact-file preflight review record")
+    (DOCS / "data/submission_preflight_review_20261025.json").write_text(
+        preflight_review.read_text()
     )
     md = f"""**DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
 

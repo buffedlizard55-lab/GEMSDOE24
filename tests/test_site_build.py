@@ -110,13 +110,24 @@ def test_site_never_links_a_missing_local_file(built):
                 )
 
 
-def test_current_negative_lane_is_not_a_legacy_recommendation(built):
-    report = json.loads((built / "docs/data/active_lane.json").read_text())
-    assert not report["submission_authorized"]
+def test_current_negative_lane_has_a_hash_bound_preflight_and_no_legacy_recommendation(built):
+    row = json.loads((built / "docs/data/independent_download.json").read_text())
+    preflight = json.loads(
+        (
+            built
+            / "docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.preflight.json"
+        ).read_text()
+    )
+    assert preflight["artifact"]["sha256"] == row["sha256"]
+    assert preflight["run_card"]["artifact_sha256_matches"]
+    assert preflight["run_card"]["artifact_name_matches"]
+    assert preflight["decision"]["submission_status"] == "DO_NOT_SUBMIT"
+    assert not preflight["decision"]["ready_to_submit"]
     for name in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         text = (built / name).read_text()
         assert "NOT OK TO SUBMIT" in text
         assert "DO NOT SUBMIT" in text
+        assert "Automated preflight" in text
         assert "One click gets the recommended submission" not in text
     historical = json.loads((built / "docs/data/download.json").read_text())
     assert historical["status"] == "historical_superseded"
@@ -161,6 +172,25 @@ def test_site_rejects_mtr_card_checksum_tampering_without_falling_back_to_old_fi
             [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
         )
         assert result.returncode != 0 and "checksum" in result.stderr
+    finally:
+        path.write_text(original)
+
+
+def test_site_rejects_a_stale_or_permissive_mtr_preflight(built):
+    path = (
+        built
+        / "docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.preflight.json"
+    )
+    original = path.read_text()
+    try:
+        altered = json.loads(original)
+        altered["decision"]["ready_to_submit"] = True
+        altered["decision"]["submission_status"] = "OK_TO_SUBMIT"
+        path.write_text(json.dumps(altered))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0 and "preflight" in result.stderr
     finally:
         path.write_text(original)
 

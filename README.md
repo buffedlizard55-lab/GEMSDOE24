@@ -48,6 +48,11 @@ python -m venv .venv
 .venv/bin/pip install -r requirements.txt
 .venv/bin/pip install --no-deps -e .
 .venv/bin/python scripts/audit_research_downloads.py  # read-only; never authorizes
+# Separate FORMAT / strict-range / scientific gates; active packet must print DO_NOT_SUBMIT.
+.venv/bin/python scripts/preflight_submission.py \
+  docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif \
+  --run-card evidence/mtr1_run_card.json \
+  --output docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.preflight.json
 .venv/bin/python -m pytest -q
 ```
 
