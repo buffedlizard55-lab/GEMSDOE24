@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "artifact": {
     "file": "gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif",
     "sha256": "06d28182d9fea06d1d4ac3fc603bada748306e68350ebe432e3ff9f82fd3703e",
@@ -116,9 +116,11 @@
     "verdict_promote": false,
     "submission_authorized": false,
     "scientific_authorization": false,
+    "independent_selector_verified": false,
     "reason_codes": [
       "RUN_CARD_NOT_PROMOTED",
-      "RUN_CARD_NOT_AUTHORIZED"
+      "RUN_CARD_NOT_AUTHORIZED",
+      "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED"
     ],
     "note": "GEMS24 RSHG1 | 42ch NaN-HGB+res+K300 b2 98f69d77e868 | DTI 0.1290; DO NOT SUBMIT"
   },
@@ -143,7 +145,8 @@
     "blockers": [
       "hash_bound_scientific_promotion",
       "RUN_CARD_NOT_PROMOTED",
-      "RUN_CARD_NOT_AUTHORIZED"
+      "RUN_CARD_NOT_AUTHORIZED",
+      "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED"
     ],
     "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score."
   }

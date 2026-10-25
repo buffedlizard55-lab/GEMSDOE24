@@ -2,8 +2,9 @@
 
 A syntactically valid GeoTIFF is not evidence that a competition submission is
 scientifically eligible.  This module deliberately reports those two questions
-separately and only returns ``OK_TO_SUBMIT`` when both the exact bytes and a
-hash-bound promotion run card satisfy their respective gates.
+separately and reserves ``OK_TO_SUBMIT`` for an independently verified selector release.
+Hash-bound run-card booleans alone cannot authorize a competition slot. The
+selector receipt verifier is not implemented; current releases fail closed.
 
 The strict whole-array range diagnostic is intentionally stricter than the
 competition-template footprint convention: it is useful after a portal reports
@@ -20,7 +21,7 @@ from typing import Any
 from . import submission
 from .validator import sha256_file
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 NOTE_LIMIT = 140
 
 
@@ -48,6 +49,7 @@ def _card_evidence(artifact: Path, artifact_sha256: str, run_card: Path | None) 
         "verdict_promote": False,
         "submission_authorized": False,
         "scientific_authorization": False,
+        "independent_selector_verified": False,
         "reason_codes": [],
         "note": None,
     }
@@ -80,7 +82,12 @@ def _card_evidence(artifact: Path, artifact_sha256: str, run_card: Path | None) 
     ):
         if not base[field]:
             base["reason_codes"].append(code)
-    base["scientific_authorization"] = not base["reason_codes"]
+    # Card booleans are assertions, not evidence of the underlying holdout,
+    # canary, novelty, nuisance-audit and live-quota gates. No independent
+    # selector receipt verifier exists yet. Reserve positive authorization for
+    # that implementation; never grant it from a fabricated promote flag.
+    base["reason_codes"].append("INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED")
+    base["scientific_authorization"] = False
     return base
 
 
