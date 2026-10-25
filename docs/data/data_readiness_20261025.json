@@ -1,0 +1,50 @@
+{
+  "generated_date": "2026-10-25",
+  "status": "data_ready_science_gate_blocked",
+  "training_features": {
+    "path": "data/training_features.tif",
+    "bytes": 418912844,
+    "sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+    "mirror_repo": "buffedlizard55-lab/GEMSDOE",
+    "mirror_ref": "c0c06ac82178f26b94fce3397036ef8f12a2f3a0",
+    "integrity_verified": true,
+    "organizer_provenance_authenticated": false
+  },
+  "prepared_features": {
+    "path": "data/prepared/features.npy",
+    "shape": [5167373, 30],
+    "base_model_columns": 27,
+    "auxiliary_arc_columns": 3,
+    "sha256": "a4ca25b2a18f6f6637f0247367cc6235a1366eb8475f77b18cd0285e62232dc8",
+    "git_ignored": true
+  },
+  "input_checks": {
+    "footprint_pixels": 5167373,
+    "labels_positive_pixels": 60988,
+    "existing_faults_positive_pixels": 60988,
+    "labels_xor_existing_faults": 0,
+    "sample_submission_equals_labels_set": true,
+    "anomalies": []
+  },
+  "novelty_irregularity": {
+    "calibration_control": "registry-039 spacing-5 lattice",
+    "max_footprint_coverage_within_3px": 0.9987,
+    "mtr1_supported_domain_coverage_within_3px": 1.0,
+    "sahg1_literal_max_final_dot_overlap": 1.0,
+    "sahg1_literal_all_entries_passed": false,
+    "interpretation": "Synthetic calibration raster retained. Its literal all-entry check blocks both frozen negative candidates; assess exact support/dots for every future candidate without removing the comparator after observation."
+  },
+  "experiment": {
+    "new_experiments_run_this_readiness_pass": 0,
+    "new_tif_generated": false,
+    "competition_slots_used": 0,
+    "reason_stopped": "No assigned method-lane paragraph; literal all-entry novelty gate requires exact candidate checks and is non-discriminating for the recorded support."
+  },
+  "evidence_links": {
+    "restore": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/evidence/data_restore.json",
+    "prepared_metadata": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/evidence/data_preparation.json",
+    "verification": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/evidence/data_verification.json",
+    "next_gate_review": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/14_data_readiness_and_next_gate_2026-10-25.md",
+    "run_card": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/evidence/2026-10-25_data_readiness_run_card.json"
+  }
+}

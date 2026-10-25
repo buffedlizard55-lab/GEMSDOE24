@@ -25,8 +25,5 @@
     }
   ],
   "integrity_only": true,
-  "warning": "Hash-pinned mirrors do not certify organizer provenance. No mining-claim or four-block proxy is silently substituted.",
-  "last_verified_utc": "2026-10-25T20:35:37.379801+00:00",
-  "historical_receipt_preserved_at": "evidence/data_restore.json",
-  "scope": "Only the four files restored/checked for this session; historical restoration records were not discarded."
+  "warning": "Hash-pinned mirrors do not certify organizer provenance. No mining-claim or four-block proxy is silently substituted."
 }
