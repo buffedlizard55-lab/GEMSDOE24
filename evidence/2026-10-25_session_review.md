@@ -4,7 +4,7 @@
 
 The repository contains two preserved, independently preregistered negative research experiments: the ASPC branch result and the later MTR1 result merged from `main` during this review. Neither is **OK TO SUBMIT**. This session did not launch another model experiment, retune frozen folds, claim a score above the reported GEMSDOE32 result, or upload anything. The current root README/site status follows MTR1: the exact file is download-only, and a strict overlap veto blocks submission. ASPC's separate nine-site comparison remains distinct within its older, narrower pinned registry scope; the protocols are not directly comparable.
 
-The earlier [`2026-10-25_review_and_run_card.md`](2026-10-25_review_and_run_card.md) and [`2026-10-25_run_card.json`](2026-10-25_run_card.json) were initial pre-experiment records and have now been marked superseded. Their historical nulls must not be read as current experiment results. The active records are the [`ASPC run card`](aspc_run_card_20261025.json), [`full experiment receipt`](aspc_run_20261025.json), and [`ASPC findings`](../knowledge/10_ASPC_findings_2026-10-25.md).
+The earlier [`2026-10-25_review_and_run_card.md`](2026-10-25_review_and_run_card.md) and [`2026-10-25_run_card.json`](2026-10-25_run_card.json) were initial pre-experiment records and have now been marked superseded. Their historical nulls must not be read as current experiment results. The ASPC evidence is preserved in its [`run card`](aspc_run_card_20261025.json), [`full experiment receipt`](aspc_run_20261025.json), and [`findings`](../knowledge/10_ASPC_findings_2026-10-25.md); the current site's separate MTR1 decision is documented in [`evidence/mtr1_run_card.json`](mtr1_run_card.json) and [`knowledge/11_MTR1_findings_2026-10-25.md`](../knowledge/11_MTR1_findings_2026-10-25.md).
 
 ## Pass 1 — repository and requested evidence
 
@@ -12,8 +12,9 @@ The earlier [`2026-10-25_review_and_run_card.md`](2026-10-25_review_and_run_card
 - Confirmed the four preregistered hypotheses are described in `knowledge/09_preregistered_ASPC_2026-10-25.md`; ASPC was the single frozen experiment. The lane is explicitly provisional because the prompt contains no assigned method paragraph.
 - Inspected the nine named repositories' downloadable raster registry. Restored 98 pinned references / 84 unique blobs through the existing GitHub-only restore tool; the script SHA-1-validates Git object identity and checks byte counts / SHA-256 before forensics. The working raster cache is ignored under `data/research/` and is not a repository deliverable.
 - Reviewed open PR #7. It is still open and marked conflicting against `main`; it is a separate H24-3A road/potential-field change. No changes were made on that sibling branch and it was not merged.
-- `origin/main` advanced during the review to commit `a60a25a` (PR #11). I merged that newer main into the fixed session branch rather than discarding it. It contains the independent MTR1 negative result, newer shared holdout/writer/site work and a separate explicit stop verdict. Those later changes are preserved.
+- `origin/main` advanced during the review first to `a60a25a` (PR #11), then to `2363058` (PR #12). Both were merged into the fixed session branch rather than discarded. This preserves the independent MTR1 negative result, shared holdout/writer/site work, and the later exact-file receipt hardening.
 - Ran `.venv/bin/python scripts/evaluate_holdout.py --verify-recorded`: `verified=true`, `experiment_rerun=false`, 7 source fingerprints, 2 pooled arms and 2 exact TIFF variants verified. MTR1's primary SHA-256 is `3f881cdcaa22557b4265c0415d1b9f436b9f5804a55aabb52edfbc4de67fee83`; its HOLDOUT-DTI is `0.0644115636` (gems-segment-pooled-v1, 60,988 withheld positive pixels, 95% spatial-block CI `[0.0582994014, 0.0711243136]`). Its strict final-dot rule fails: 1.0 of emitted dots are within 3 px of registered calibration lattice `registry-039`. The lattice covers 100% of MTR1's supported domain, making the rule non-discriminating there, but the predeclared gate is retained as failed; no comparator was removed.
+- Ran `.venv/bin/python scripts/audit_research_downloads.py` after PR #12: both ASPC primary/companion exact TIFFs revalidated against their embedded receipts; `new_experiments=0`, `submission_authorized=false`, verdict negative. This fresh file audit does not override ASPC's missing matched-best OOF and nuisance audit.
 
 ## Pass 2 — independent checks and discrepancies fixed
 
@@ -27,7 +28,7 @@ The earlier [`2026-10-25_review_and_run_card.md`](2026-10-25_review_and_run_card
 ## Pass 3 — final implementation and acceptance verification
 
 - Installed the pinned Python dependencies into the ignored `.venv` (system Python initially lacked NumPy/pytest); no data or generated cache was added to Git.
-- Before integrating newer `origin/main`, the then-current tree passed **119 tests**. After merging the concurrent main update and re-running, the final integrated tree passed **139 tests** (`.venv/bin/python -m pytest -q`).
+- Before integrating newer `origin/main`, the then-current tree passed **119 tests**. After integrating PRs #11 and #12, the final integrated tree passed **159 tests** (`.venv/bin/python -m pytest -q`).
 - `.venv/bin/ruff check src scripts tests`: passed on the final integrated tree.
 - Python `compileall`, `node --check docs/assets/app.js`, and `git diff --check`: passed.
 - Exact TIFF validators and `submission_authorized=false` agree with the visible first-screen status and executive guide. The download is obvious, uniquely named, and conspicuously labeled **DO NOT SUBMIT**; the note is 93 characters, within the requested 140-character limit. The project does not upload to DrivenData.
