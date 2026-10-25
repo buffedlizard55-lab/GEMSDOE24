@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-02T01:49:47+00:00",
+  "generated_utc": "2026-10-25T21:51:07+00:00",
   "official_grid": {
     "width": 3292,
     "height": 3730,
@@ -14,39 +14,6 @@
     ]
   },
   "files": {
-    "bridge/example_submission.tif": {
-      "shape": [
-        3730,
-        3292
-      ],
-      "count": 1,
-      "dtype": "float32",
-      "crs": "EPSG:32611",
-      "transform": [
-        100.0,
-        0.0,
-        243350.0,
-        0.0,
-        -100.0,
-        4508550.0
-      ],
-      "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
-      "bytes": 1599597,
-      "grid_matches_official": true,
-      "inside_footprint": {
-        "n": 5167373,
-        "n_finite": 5167373,
-        "min": 0.0,
-        "max": 1.0,
-        "n_positive": 60988,
-        "n_nan": 0
-      },
-      "outside_footprint": {
-        "n": 7111787,
-        "all_nan": true,
-        "n_nonzero": 7111787
-      }
-    },
     "bridge/existing_faults.tif": {
       "shape": [
         3730,

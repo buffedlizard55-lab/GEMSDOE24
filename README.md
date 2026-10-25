@@ -62,6 +62,29 @@ filenames or embedded receipts for **both** primary and companion downloads.
 [Fresh exact-file audit](evidence/research_download_audit_20261025.json).
 No new experiment, new geological discovery, higher score or slot use is claimed.
 
+## Data readiness and next gate — 2026-10-25
+
+The previously missing competition feature raster has now been restored from a
+hash-pinned **owner-supplied GitHub mirror** and verified locally. Its 418,912,844
+bytes match the recorded SHA-256; this checks integrity, **not organizer provenance**
+and does not bypass DrivenData login. The label-free preparation pipeline produced
+the ignored `(5,167,373, 30)` feature cache; the feature/label/template checks passed.
+No new experiment ran and no new submission was authorized. Existing SAHG1 remains
+`DOWNLOAD: YES · SUBMIT: NO`; its frozen receipt verified without rerunning.
+
+The next proposed experiment is a fold-local integration of SAHG1's strike-projected
+LiDAR/geochemical features into the OOF multi-physics baseline, with training-only
+nuisance residualization. It is blocked until a lane is explicitly assigned and the
+exact registry-overlap policy is resolved prospectively: the spacing-5 calibration
+raster covers 99.87% of the footprint within 3 px and all of MTR1's recorded support.
+No comparator will be removed after seeing overlap. Four ranked candidate ideas,
+checksums, source limitations and the stop decision are documented in
+[the data-readiness and next-gate review](knowledge/14_data_readiness_and_next_gate_2026-10-25.md) and [negative run card](evidence/2026-10-25_data_readiness_run_card.json).
+
+The manifest and verification report were refreshed. The inventory does not contain
+`data/bridge/example_submission.tif`; `sample_submission.tif` is present. This missing
+path is an inventory irregularity, not evidence of an authentic organizer example file.
+
 ## Current decision
 
 <!-- STATUS:START -->
@@ -71,7 +94,7 @@ New 2026-10-25 `H24-SAHG1` Strike-Hydro-Geomorph GeoTIFF:
 [`gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif`](docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif) (`SHA-256: 8d5a5f99245fecf11cea72c33c41bad800cd0e41215744d7dd5d9ac6df673f11`)
 and NaN-outside twin [`gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif`](docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif).
 Passes exact-grid/`[0,1]` checks and prospective novelty against all 46 competing method lanes (max 3-px overlap `0.4768` ≤ 0.70)
-and 83 peer blobs (`0.4594` ≤ 0.70), and achieves **HOLDOUT-DTI** `gems-segment-pooled-v1` = **0.09672**
+and 83 peer blobs (`0.4594` ≤ 0.70). However, the literal all-entry overlap is `1.0` against the retained synthetic calibration lattice, so the duplicate gate fails. SAHG1 achieves **HOLDOUT-DTI** `gems-segment-pooled-v1` = **0.09672**
 (95% CI **[0.08657, 0.10703]**, 60,988 withheld positives) and `segment-hide-recover-pooled-v1` = **0.09655**
 (95% CI **[0.08270, 0.10976]**), outperforming both `MTR1` (`0.06441`) and `ASPC` (`0.08553`) and its geomorphic-only
 ablation (`0.08659`, paired Δ **+0.01012**). Remains **DOWNLOAD: YES · SUBMIT: NO** because it trails the newly reconstructed

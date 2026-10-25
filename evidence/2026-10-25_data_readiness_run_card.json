@@ -1,0 +1,35 @@
+{
+  "hypothesis": "Next test priority: fold-local integration of SAHG1 strike-projected LiDAR, stable-Th-controlled K/U, basement/strain-step features into the OOF multi-physics HGB baseline with training-only nuisance residualization. This was not run in this review.",
+  "mechanism": "A fault-related surface scarp and hydrothermal geochemical alteration may provide conditional information beyond the existing geophysical/LiDAR feature stack; only spatially held-out, visible-fault-only evaluation can test incremental localization.",
+  "named_non_fault_mimic": "Acquisition-block coverage and road/mining accessibility, with lithologic contacts or pluvial-shoreline ledges as geological alternatives.",
+  "holdout_dti": null,
+  "holdout_dti_status": "NOT RUN this review: no explicitly assigned method lane; no new candidate; exact literal novelty gate must pass before any dots are placed. Existing same-protocol baseline is documented separately in evidence/sahg1_run_card_20261025.json.",
+  "withheld_positives": null,
+  "correlation_overlap_vs_registry": {
+    "new_candidate": "NOT CHECKED: no new candidate surface or dots generated.",
+    "relevant_recorded_result": "Prior SAHG1 receipt: method lanes and peer blobs pass their separate prospective checks, but literal all-entry maximum 3-px overlap is 1.0 against retained synthetic registry-039 spacing-5 lattice; literal_all_entries_passed=false.",
+    "scope_note": "Use exact pinned registry and candidate bytes for the next authorized candidate; do not remove or relabel the calibration comparator post hoc."
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_candidate_available": false,
+    "no_nan_inside_footprint": "NOT APPLICABLE: no new TIFF generated.",
+    "values_in_0_1": "NOT APPLICABLE: no new TIFF generated.",
+    "crs_shape_transform_match": "NOT APPLICABLE: no new TIFF generated.",
+    "existing_sahg1_file": {
+      "name": "gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif",
+      "sha256": "8d5a5f99245fecf11cea72c33c41bad800cd0e41215744d7dd5d9ac6df673f11",
+      "format_valid": true,
+      "no_nan_inside_footprint": true,
+      "range_0_1_inside_footprint": true,
+      "crs_epsg_32611": true,
+      "shape": [3730, 3292],
+      "transform": [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0],
+      "scientific_authorization": false,
+      "warning": "Existing negative artifact only; the literal all-entry registry-overlap gate fails, and zeros-outside is not the sample's NaN-outside encoding."
+    }
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "verdict": "negative"
+}
