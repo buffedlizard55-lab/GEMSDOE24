@@ -1,0 +1,22 @@
+{
+  "hypothesis": "Scale-consistent drainage-divide deflection; ranked first for a future test, not implemented",
+  "mechanism": "DEM-derived channel offsets/deflections with orientation persistence across scales could expose subtle unmapped structures",
+  "named_non_fault_mimic": "Lithologic contact or anthropogenic drainage/road ditch",
+  "holdout_dti": null,
+  "holdout_dti_status": "NOT RUN: feature stack/cache and training_features.tif missing; no evaluator result or 95% CI",
+  "withheld_positives": null,
+  "withheld_positives_status": "NOT RUN",
+  "correlation_overlap_vs_registry": null,
+  "correlation_overlap_status": "NOT CHECKED: exact sibling registry raster bytes unavailable locally; do not infer uniqueness",
+  "raster_sha256": null,
+  "validator_output": {
+    "no_nan_inside_footprint": "NOT RUN (no candidate TIFF)",
+    "values_in_0_1": "NOT RUN (no candidate TIFF)",
+    "crs_shape_transform_match": "NOT RUN (no candidate TIFF)",
+    "template_available": true,
+    "candidate_available": false
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "verdict": "negative"
+}
