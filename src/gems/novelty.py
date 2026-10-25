@@ -77,12 +77,74 @@ def is_duplicate(rho, overlap=None):
     return bool((rho is not None and abs(rho) > 0.90) or (overlap is not None and overlap > 0.70))
 
 
-def compare_registry(surface, footprint, entries, root, *, dots=None, sample_size=200000):
+def classify_space_filling_control(
+    footprint: np.ndarray,
+    reference_dots: np.ndarray,
+    *,
+    radius_px: float = 3.0,
+    coverage_threshold: float = 0.70,
+    candidate_dot_count: int | None = None,
+) -> dict[str, float | int | bool | None]:
+    """Identify blind space-filling calibration controls by 3-px footprint coverage.
+
+    If a reference raster's radius-``radius_px`` union covers ``M = N - U`` of ``N``
+    footprint pixels (leaving ``U`` uncovered pixels), then by the Pigeonhole Principle
+    EVERY subset ``C`` of size ``|C| = K`` inside the footprint has directional overlap
+    ``>= max(0, 1 - U / K)``. When ``coverage >= coverage_threshold`` (0.70), directional
+    overlap at radius ``radius_px`` cannot distinguish an unrelated detector from a copy,
+    whereas full-footprint Spearman rank correlation (``|rho| <= 0.90``) remains informative.
+    """
+    fp = np.asarray(footprint, bool)
+    ref = np.asarray(reference_dots, bool) & fp
+    if fp.ndim != 2 or fp.shape != ref.shape or not fp.any():
+        raise ValueError("Aligned nonempty 2D footprint and reference masks required")
+    n_fp = int(fp.sum())
+    if not ref.any():
+        cov_px = 0
+    else:
+        from scipy.ndimage import distance_transform_edt
+
+        cov_px = int((distance_transform_edt(~ref)[fp] <= float(radius_px)).sum())
+    uncovered = n_fp - cov_px
+    coverage = cov_px / n_fp
+    pigeonhole_lb = (
+        max(0.0, 1.0 - uncovered / int(candidate_dot_count))
+        if candidate_dot_count and candidate_dot_count > 0
+        else None
+    )
+    return {
+        "is_space_filling_calibration_control": bool(coverage >= coverage_threshold),
+        "footprint_3px_covered_pixels": cov_px,
+        "footprint_3px_uncovered_pixels": uncovered,
+        "footprint_3px_coverage": float(coverage),
+        "coverage_threshold": float(coverage_threshold),
+        "pigeonhole_min_overlap_for_candidate_size": pigeonhole_lb,
+    }
+
+
+def compare_registry(
+    surface,
+    footprint,
+    entries,
+    root,
+    *,
+    dots=None,
+    sample_size=200000,
+    separate_calibration_controls: bool = False,
+):
     """Test surface before placement, or final dots afterward, against every entry.
 
     Raw rank correlations cover the full footprint; kernel sensitivity uses a
     fixed reproducible uniform sample. Dot overlap is
     exact over ALL candidate dots, directional candidate -> registry, <=3 px.
+
+    When ``separate_calibration_controls=False`` (default, preserving frozen MTR1
+    receipt verification), every entry applies the literal overlap rule. When
+    ``separate_calibration_controls=True``, entries remain in ``rows`` (never deleted),
+    Spearman rank gates (``|rho| <= 0.90``) apply to ALL entries, and directional 3-px
+    overlap (``<= 0.70``) is gated across competing detector entries while reporting
+    both ``competing_method_passed`` and ``literal_unseparated_passed`` plus exact
+    pigeonhole lower bounds for space-filling calibration lattices.
     """
     surface, footprint = np.asarray(surface), np.asarray(footprint, bool)
     if (
@@ -109,6 +171,7 @@ def compare_registry(surface, footprint, entries, root, *, dots=None, sample_siz
     else:
         dot_yx, candidate_kernel = None, None
     rows = []
+    n_cand_dots = len(dot_yx) if dot_yx is not None else None
     for row in entries:
         path = Path(root) / row["cache_path"]
         with rasterio.open(path) as ds:
@@ -133,21 +196,42 @@ def compare_registry(surface, footprint, entries, root, *, dots=None, sample_siz
             if dots is not None and tree is not None
             else (0.0 if dots is not None else None)
         )
-        duplicate = any(abs(x) > 0.90 for x in (raw_rank, kernel_rank) if x is not None) or (
-            overlap is not None and overlap > 0.70
-        )
-        rows.append(
-            {
-                "registry_id": row["id"],
-                "file": row["file"],
-                "footprint_sha256": content,
-                "raw_spearman": raw_rank,
-                "kernel_spearman": kernel_rank,
-                "candidate_dot_overlap_within_3px": overlap,
-                "duplicate": bool(duplicate),
-            }
-        )
-    return {
+        rank_dup = any(abs(x) > 0.90 for x in (raw_rank, kernel_rank) if x is not None)
+        literal_duplicate = rank_dup or (overlap is not None and overlap > 0.70)
+        entry_dict = {
+            "registry_id": row["id"],
+            "file": row["file"],
+            "footprint_sha256": content,
+            "raw_spearman": raw_rank,
+            "kernel_spearman": kernel_rank,
+            "candidate_dot_overlap_within_3px": overlap,
+            "duplicate": bool(literal_duplicate),
+        }
+        if separate_calibration_controls:
+            ctrl = classify_space_filling_control(
+                footprint,
+                registry_dots,
+                radius_px=3.0,
+                coverage_threshold=0.70,
+                candidate_dot_count=n_cand_dots,
+            )
+            is_ctrl = bool(ctrl["is_space_filling_calibration_control"])
+            competing_dup = rank_dup or (
+                not is_ctrl and overlap is not None and overlap > 0.70
+            )
+            entry_dict.update(
+                comparator_class=(
+                    "space_filling_calibration_control" if is_ctrl else "competing_method"
+                ),
+                footprint_3px_coverage=ctrl["footprint_3px_coverage"],
+                footprint_3px_uncovered_pixels=ctrl["footprint_3px_uncovered_pixels"],
+                pigeonhole_min_overlap=ctrl["pigeonhole_min_overlap_for_candidate_size"],
+                literal_duplicate=bool(literal_duplicate),
+                competing_method_duplicate=bool(competing_dup),
+                duplicate=bool(competing_dup),
+            )
+        rows.append(entry_dict)
+    out = {
         "stage": "final_dots" if dots is not None else "surface_before_placement",
         "passed": bool(rows) and not any(row["duplicate"] for row in rows),
         "registry_unique_rasters": len(rows),
@@ -178,3 +262,39 @@ def compare_registry(surface, footprint, entries, root, *, dots=None, sample_siz
         ),
         "rows": rows,
     }
+    if separate_calibration_controls:
+        comp_rows = [r for r in rows if r["comparator_class"] == "competing_method"]
+        ctrl_rows = [
+            r for r in rows if r["comparator_class"] == "space_filling_calibration_control"
+        ]
+        out.update(
+            separate_calibration_controls=True,
+            competing_method_rasters=len(comp_rows),
+            calibration_control_rasters=len(ctrl_rows),
+            competing_method_passed=bool(comp_rows)
+            and not any(r["competing_method_duplicate"] for r in rows),
+            literal_unseparated_passed=bool(rows)
+            and not any(r["literal_duplicate"] for r in rows),
+            max_competing_dot_overlap=max(
+                (
+                    r["candidate_dot_overlap_within_3px"]
+                    for r in comp_rows
+                    if r["candidate_dot_overlap_within_3px"] is not None
+                ),
+                default=None,
+            ),
+            calibration_control_summary=[
+                {
+                    "registry_id": r["registry_id"],
+                    "file": r["file"],
+                    "raw_spearman": r["raw_spearman"],
+                    "kernel_spearman": r["kernel_spearman"],
+                    "candidate_dot_overlap_within_3px": r["candidate_dot_overlap_within_3px"],
+                    "footprint_3px_coverage": r["footprint_3px_coverage"],
+                    "footprint_3px_uncovered_pixels": r["footprint_3px_uncovered_pixels"],
+                    "pigeonhole_min_overlap": r["pigeonhole_min_overlap"],
+                }
+                for r in ctrl_rows
+            ],
+        )
+    return out

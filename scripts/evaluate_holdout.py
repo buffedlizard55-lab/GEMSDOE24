@@ -36,13 +36,56 @@ def main():
     parser.add_argument(
         "--verify-recorded",
         action="store_true",
-        help="Check immutable evidence/files; do not run the stopped experiment",
+        help="Check immutable MTR1 evidence/files; do not run the stopped experiment",
+    )
+    parser.add_argument(
+        "--run-gvc1",
+        action="store_true",
+        help="Execute the preregistered H24-GVC1 experiment via shared SegmentHoldout + writer",
+    )
+    parser.add_argument(
+        "--verify-gvc1",
+        action="store_true",
+        help="Verify recorded H24-GVC1 experiment, C2ST receipt, Run Card, and GeoTIFFs",
+    )
+    parser.add_argument(
+        "--work-dir",
+        type=Path,
+        default=Path("/tmp/gems_work"),
+        help="Scratch directory outside tracked workspace for memmaps",
     )
     args = parser.parse_args()
     if args.verify_recorded:
         from verify_mtr_receipt import verify
 
         print(json.dumps(verify(), indent=2, allow_nan=False))
+        return
+    if args.verify_gvc1:
+        from run_gvc1_pipeline import verify_gvc1
+
+        print(json.dumps(verify_gvc1(), indent=2, allow_nan=False))
+        return
+    if args.run_gvc1:
+        from run_gvc1_pipeline import run_gvc1
+
+        summary = run_gvc1(work_dir=args.work_dir)
+        print(
+            json.dumps(
+                {
+                    "submission_name": summary["submission_name"],
+                    "holdout_dti": summary["holdout"]["dti"],
+                    "ci95": summary["holdout"]["ci95"]["interval"],
+                    "b0_dti": summary["baselines_same_evaluator"]["B0_oof_h24_ridge_dti"],
+                    "b1_dti": summary["baselines_same_evaluator"]["B1_oof_base_submod_dti"],
+                    "all_technical_gates_passed": summary["all_technical_gates_passed"],
+                    "ok_to_download": summary["ok_to_download"],
+                    "ok_to_submit": summary["ok_to_submit"],
+                    "verdict": summary["verdict"],
+                },
+                indent=2,
+                allow_nan=False,
+            )
+        )
         return
     if RESULT.exists():
         raise SystemExit(

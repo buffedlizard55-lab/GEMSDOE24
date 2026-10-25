@@ -60,27 +60,27 @@ No new experiment, new geological discovery, higher score or slot use is claimed
 ## Current decision
 
 <!-- STATUS:START -->
-**DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
+**DOWNLOAD: YES · SUBMIT: NO — automatic `NEGATIVE` verdict (`ok_to_submit = false`), NOT awaiting human inspection.**
 
-Independently generated audit TIFF: [`gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif`](docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif).
-It passes exact-grid/[0,1] file checks but fails the lane overlap rule against a registered
-spacing-5 calibration lattice. Content is not copied or identical to any compared file;
-this does **not** mean the lane-uniqueness gate passed. No comparator was removed.
+Latest independently generated continuation GeoTIFF (`H24-GVC1`):
+[`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif) (`SHA-256: b5ca6f1755af059e17f5edf0940fd7e945d43a1359e103a4789eae33c536ad41`) ·
+[NaN-outside `.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.tif) ·
+[NaN-outside `.zip`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.zip) ·
+[Validator JSON](docs/downloads/checks-gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.json) ·
+[Note `.txt` (104/140 chars)](docs/downloads/note-gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.txt).
 
-**HOLDOUT-DTI** `gems-segment-pooled-v1`: **0.06441**, approximate **95% CI
-[0.05830, 0.07112]**; **60,988 withheld positives** in whole components, buffered
-quadrants, pooled metric components. No ORGANIZER-CONFIRMED score exists; this is
-not a leaderboard result. No weekly slot has been spent by this session.
+- **Zero copied predictions:** Computed strictly from 30 scale-separated base features + 18 label-free OpenEI GDR INGENIOUS paleo-sinter/travertine, 2 m shallow temperature-probe, and geothermometry upflow features + Miller–Singh `TMI` tilt derivatives + 8-azimuth directional lineaments + submodular 300 m kernel allocation (`37,654` binary `{0.0, 1.0}` dots in `[0, 1]`, `0` NaN inside footprint).
+- **`HOLDOUT-DTI` (`gems-segment-pooled-v1`, `60,988` withheld positives in `3,199` whole fault components, 1.5 km collar):** **`0.14876`**, **95% CI `[0.13413, 0.16370]`** — beats matched-allocator `B1: OOF-Base-Submod` (`0.13900`) by **`+0.00976`** (paired 10 km block-bootstrap **95% CI `[+0.00075, +0.01951]`**, `3/4` folds won), beats `B0: OOF-H24-Ridge` (`0.14179`), and improves `2.31×` over unsupervised `H24-MTR1` (`0.06441`). This is not a leaderboard result; no `ORGANIZER-CONFIRMED` receipt exists. No weekly slot has been spent by this session.
+- **Leakage & C2ST Nuisance Gates (`PASS`):** All 48 single-feature holdout AUCs in `[0.3889, 0.5924]`; exact-file Lopez-Paz & Oquab C2ST `AUC = 0.4859` (`Holm p = 1.000`, `labels = 0.4958`).
+- **Why submission is blocked (`FAIL`):** Pre-placement surface rank correlation passes (`max |rho| = 0.5478 <= 0.90`), and prospective calibration-control separation isolates the blind spacing-5 lattice (`registry-039`: `99.69%`), **but `76.82%` (`> 70%`) of final dots fall within 3 px (`300 m`) of `registry-041` (`gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif`)** due to supervised range-front scarp convergence. Stopped immediately per Rule 1 with zero retuning and **0 competition slots used**.
 
-[Executive guide](docs/executive-summary.html) · [JSON run card](evidence/mtr1_run_card.json) ·
-[Preregistration](knowledge/09_preregistration_magnetic_trough_2026-10-25.md) ·
-[Current owner brief](knowledge/owner_brief_2026-10-25.md)
+[Executive submission guide](docs/executive-summary.html) ·
+[GVC1 JSON run card](evidence/gvc1_run_card_20261025.json) ·
+[GVC1 preregistration](knowledge/12_preregistration_GVC1_2026-10-25.md) ·
+[GVC1 scientific findings & source ledger](knowledge/13_GVC1_findings_2026-10-25.md) ·
+[Embedded owner brief](knowledge/owner_brief_2026-10-25.md)
 
-Parallel ASPC research from PR #10 is retained with its own negative verdict and
-[run card](evidence/aspc_run_card_20261025.json); its protocol differs, so the two
-point scores are not a certified current-best comparison.
-
-Earlier scores/forecasts below are historical, not current promotion authority.
+Retained prior negative packets remain intact and downloadable: [`gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif`](docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif) ([MTR1 run card](evidence/mtr1_run_card.json)) and parallel ASPC ([ASPC run card](evidence/aspc_run_card_20261025.json)). Earlier historical tables below are archival context, not promotion authority.
 <!-- STATUS:END -->
 
 ## Current protocol — 2026-10-25 (supersedes historical promotion advice)
