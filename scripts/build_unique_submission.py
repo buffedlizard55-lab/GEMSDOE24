@@ -39,7 +39,6 @@ Verdict is set by the gates, not assumed. No upload occurs.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import sys
 import time
@@ -95,7 +94,7 @@ def norm01(a, valid_mask):
 def build_score_surface(fp):
     """Catalogue-independent score surface from LiDAR + radiometric layers."""
     with rasterio.open(TEMPLATE) as t:
-        t_shape, t_crs, t_tr = t.shape, t.crs, t.transform
+        t_shape, _t_crs, _t_tr = t.shape, t.crs, t.transform
         t_fp = np.isfinite(t.read(1))
 
     lidar_valid = read_u8_band(LIDAR, 12) > 0
@@ -105,10 +104,14 @@ def build_score_surface(fp):
     k_band = read_u8_band(RAD, 1)
     thk_band = read_u8_band(EXT, 1)
 
-    for name, arr in (("lidar_valid", lidar_valid.astype(np.float32)),
-                      ("ex_max", ex_max), ("step_max", step_max),
-                      ("relief", relief), ("k_band", k_band),
-                      ("thk_band", thk_band)):
+    for name, arr in (
+        ("lidar_valid", lidar_valid.astype(np.float32)),
+        ("ex_max", ex_max),
+        ("step_max", step_max),
+        ("relief", relief),
+        ("k_band", k_band),
+        ("thk_band", thk_band),
+    ):
         if arr.shape != t_shape:
             raise SystemExit(f"{name} shape {arr.shape} != template {t_shape}")
 
@@ -127,9 +130,16 @@ def build_score_surface(fp):
 
 
 def main():
+    raise SystemExit(
+        "Retired: frozen historical lane; no reruns, retuning or slot authorization. "
+        "Inspect the recorded evidence and original code at commit caeda657e63c1136de98888fb70aa4c232542dd6."
+    )
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--verify-recorded", action="store_true",
-                    help="Inspect recorded evidence; do not run a new experiment")
+    ap.add_argument(
+        "--verify-recorded",
+        action="store_true",
+        help="Inspect recorded evidence; do not run a new experiment",
+    )
     args = ap.parse_args()
 
     if args.verify_recorded:
@@ -142,7 +152,7 @@ def main():
     started = time.monotonic()
     fp = footprint.load_footprint()
     with rasterio.open(TEMPLATE) as t:
-        t_meta = t.profile.copy()
+        t.profile.copy()
 
     with rasterio.open(LABELS) as s:
         catalogue = (s.read(1) > 0) & fp
@@ -162,40 +172,49 @@ def main():
     lidar_valid = read_u8_band(LIDAR, 12) > 0
 
     canary_features = {
-        "scarps_ex_max": np.where(fp & lidar_valid,
-                                  norm01(ex_max, lidar_valid), 0.0).astype(np.float32),
-        "k_anomaly": np.where(fp & lidar_valid & (k_band > 0),
-                              norm01(k_band, lidar_valid & (k_band > 0)),
-                              0.0).astype(np.float32),
-        "alteration_thk": np.where(fp & lidar_valid & (thk_band > 0),
-                                   1.0 - norm01(thk_band, lidar_valid & (thk_band > 0)),
-                                   0.0).astype(np.float32),
+        "scarps_ex_max": np.where(fp & lidar_valid, norm01(ex_max, lidar_valid), 0.0).astype(
+            np.float32
+        ),
+        "k_anomaly": np.where(
+            fp & lidar_valid & (k_band > 0), norm01(k_band, lidar_valid & (k_band > 0)), 0.0
+        ).astype(np.float32),
+        "alteration_thk": np.where(
+            fp & lidar_valid & (thk_band > 0),
+            1.0 - norm01(thk_band, lidar_valid & (thk_band > 0)),
+            0.0,
+        ).astype(np.float32),
         "score_surface": score,
     }
 
     report = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "hypothesis": ("H-UNIQUE-01 blind hydrothermal conduit: LiDAR scarps "
-                       "x radiometric K x low Th/K"),
-        "mechanism": ("Hydrothermal K-enrichment coincides with subtle "
-                      "LiDAR-expressed fault scarps; catalogue-independent so "
-                      "blind conduits absent from USGS/INGENIOUS are detectable"),
+        "hypothesis": (
+            "H-UNIQUE-01 blind hydrothermal conduit: LiDAR scarps x radiometric K x low Th/K"
+        ),
+        "mechanism": (
+            "Hydrothermal K-enrichment coincides with subtle "
+            "LiDAR-expressed fault scarps; catalogue-independent so "
+            "blind conduits absent from USGS/INGENIOUS are detectable"
+        ),
         "non_fault_mimic": "K-rich alluvial-fan toes with steep slopes",
         "preregistration": "knowledge/unique_hypothesis_2026-10-25.md",
         "experiment_number": 1,
         "maximum_experiments": 3,
         "maximum_session_hours": 2,
-        "input_provenance": ("Committed external mirrors (USGS GeoDAWN, "
-                             "3DEP LiDAR derivatives)"),
+        "input_provenance": ("Committed external mirrors (USGS GeoDAWN, 3DEP LiDAR derivatives)"),
         "inputs": {
-            str(p.relative_to(ROOT)): sha256_file(p)
-            for p in (TEMPLATE, LABELS, LIDAR, RAD, EXT)
+            str(p.relative_to(ROOT)): sha256_file(p) for p in (TEMPLATE, LABELS, LIDAR, RAD, EXT)
         },
         "code_sha256": {
             str(p.relative_to(ROOT)): sha256_file(p)
-            for p in (Path(__file__), ROOT / "src/gems/holdout.py",
-                      ROOT / "src/gems/metric.py", ROOT / "src/gems/emission.py",
-                      ROOT / "src/gems/novelty.py", ROOT / "src/gems/submission.py")
+            for p in (
+                Path(__file__),
+                ROOT / "src/gems/holdout.py",
+                ROOT / "src/gems/metric.py",
+                ROOT / "src/gems/emission.py",
+                ROOT / "src/gems/novelty.py",
+                ROOT / "src/gems/submission.py",
+            )
         },
         "supported_pixels": int(support.sum()),
         "catalogue_features": [],
@@ -221,8 +240,11 @@ def main():
     # ---- Leakage canary ------------------------------------------------------
     report["canary"] = context.canary(canary_features)
     if not report["canary"]["passed"]:
-        report.update(verdict="negative", stopped_reason="leakage-canary",
-                      elapsed_seconds=time.monotonic() - started)
+        report.update(
+            verdict="negative",
+            stopped_reason="leakage-canary",
+            elapsed_seconds=time.monotonic() - started,
+        )
         save(report, RESULT)
         raise SystemExit("Leakage canary failed; no candidate packaged")
     print("Canaries passed", flush=True)
@@ -233,8 +255,11 @@ def main():
         score, fp, registry["unique_rasters"], ROOT
     )
     if not report["surface_novelty"]["passed"]:
-        report.update(verdict="negative", stopped_reason="duplicate-surface",
-                      elapsed_seconds=time.monotonic() - started)
+        report.update(
+            verdict="negative",
+            stopped_reason="duplicate-surface",
+            elapsed_seconds=time.monotonic() - started,
+        )
         save(report, RESULT)
         raise SystemExit("Duplicate surface; stopped before placement")
     print("Surface registry check passed", flush=True)
@@ -245,20 +270,17 @@ def main():
         eligible = support & f["valid"] & ~f["visible"]
         predictions.append(
             emission.priority_poisson(
-                score, eligible,
-                round(BUDGET_FRACTION * f["valid"].sum()), min_dist=MIN_DIST_PX
+                score, eligible, round(BUDGET_FRACTION * f["valid"].sum()), min_dist=MIN_DIST_PX
             )
         )
 
     results = context.summarize(predictions)
     report["holdout"] = results
-    print(f"HOLDOUT-DTI {results['dti']} CI {results['ci95']['interval']}",
-          flush=True)
+    print(f"HOLDOUT-DTI {results['dti']} CI {results['ci95']['interval']}", flush=True)
 
     # ---- Final dots on full support, excluding catalogue ---------------------
     final = emission.priority_poisson(
-        score, support & ~catalogue,
-        round(BUDGET_FRACTION * fp.sum()), min_dist=MIN_DIST_PX
+        score, support & ~catalogue, round(BUDGET_FRACTION * fp.sum()), min_dist=MIN_DIST_PX
     )
     if not final.any():
         raise SystemExit("No positive evidence; refusing an empty submission")
@@ -267,8 +289,11 @@ def main():
         final.astype(np.float32), fp, registry["unique_rasters"], ROOT, dots=final
     )
     if not report["final_novelty"]["passed"]:
-        report.update(verdict="negative", stopped_reason="duplicate-final-dots",
-                      elapsed_seconds=time.monotonic() - started)
+        report.update(
+            verdict="negative",
+            stopped_reason="duplicate-final-dots",
+            elapsed_seconds=time.monotonic() - started,
+        )
         save(report, RESULT)
         raise SystemExit("Duplicate final dots; stopped without packaging")
     print("Final dots novelty check passed", flush=True)
@@ -276,9 +301,7 @@ def main():
     # ---- Package TIF (zeros outside = finite [0,1] everywhere) ---------------
     content_id = submission.scored_content_id(final, fp, catalogue)
     date_str = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = submission.make_filename(
-        "24gems", "doer-blind-conduit", date_str, content_id, "zeros"
-    )
+    name = submission.make_filename("24gems", "doer-blind-conduit", date_str, content_id, "zeros")
 
     zeros_path = DOWNLOADS / name
     zeros = submission.write_submission(final, TEMPLATE, zeros_path, outside="zero")
@@ -288,8 +311,10 @@ def main():
         raise SystemExit("Exact-file format checks failed; do not publish")
 
     # ---- Note (<= 140 chars) --------------------------------------------------
-    note = (f"24GEMS blind-conduit LiDARxK | catalogue-independent | "
-            f"research; HOLDOUT-DTI {results['dti']:.5f} | id {content_id}")
+    note = (
+        f"24GEMS blind-conduit LiDARxK | catalogue-independent | "
+        f"research; HOLDOUT-DTI {results['dti']:.5f} | id {content_id}"
+    )
     if len(note) > 140:
         note = note[:137] + "..."
     note_file = f"note-{name[:-4]}.txt"
@@ -302,7 +327,8 @@ def main():
 
     # ---- Preflight -----------------------------------------------------------
     preflight_report = preflight(
-        zeros, TEMPLATE,
+        zeros,
+        TEMPLATE,
         run_card_path=None,
         note=note,
         expected_template_sha256=sha256_file(TEMPLATE),
@@ -334,7 +360,9 @@ def main():
             "protocol": results["protocol"],
         },
         "correlation_overlap_vs_registry": {
-            "surface_max_abs_rank_correlation": report["surface_novelty"]["max_abs_rank_correlation"],
+            "surface_max_abs_rank_correlation": report["surface_novelty"][
+                "max_abs_rank_correlation"
+            ],
             "final_max_abs_rank_correlation": report["final_novelty"]["max_abs_rank_correlation"],
             "final_max_overlap_within_3px": report["final_novelty"]["max_dot_overlap"],
             "passed": report["final_novelty"]["passed"],
@@ -358,13 +386,18 @@ def main():
         "verdict": verdict,
         "ok_to_download": checks["format_valid"],
         "ok_to_submit": ok_to_submit,
-        "reasons": ([] if ok_to_submit else
-                    (["holdout DTI does not beat current comparable best "
-                      f"{CURRENT_BEST_HOLDOUT}"] if not beats_current_best else [])
-                    + (["format or range check failed"] if not checks["format_valid"] else [])
-                    + (["novelty gate failed"]
-                       if not report["final_novelty"]["passed"] else [])
-                    + (["canary failed"] if not report["canary"]["passed"] else [])),
+        "reasons": (
+            []
+            if ok_to_submit
+            else (
+                [f"holdout DTI does not beat current comparable best {CURRENT_BEST_HOLDOUT}"]
+                if not beats_current_best
+                else []
+            )
+            + (["format or range check failed"] if not checks["format_valid"] else [])
+            + (["novelty gate failed"] if not report["final_novelty"]["passed"] else [])
+            + (["canary failed"] if not report["canary"]["passed"] else [])
+        ),
         "organizer_confirmed_score": None,
         "experiments_run": 1,
         "submission_slots_used": 0,
@@ -394,20 +427,28 @@ def main():
     }
     save(download_entry, DATA_OUT / "unique_download.json")
 
-    print(json.dumps({
-        "file": name,
-        "pixels": int(final.sum()),
-        "sha256": raster_sha256,
-        "holdout_dti": results["dti"],
-        "holdout_ci95": results["ci95"]["interval"],
-        "note_characters": len(note),
-        "verdict": verdict,
-        "ok_to_submit": ok_to_submit,
-        "ok_to_download": checks["format_valid"],
-        "strict_range_ok": checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"],
-        "novelty_passed": report["final_novelty"]["passed"],
-        "canary_passed": report["canary"]["passed"],
-    }, indent=2), flush=True)
+    print(
+        json.dumps(
+            {
+                "file": name,
+                "pixels": int(final.sum()),
+                "sha256": raster_sha256,
+                "holdout_dti": results["dti"],
+                "holdout_ci95": results["ci95"]["interval"],
+                "note_characters": len(note),
+                "verdict": verdict,
+                "ok_to_submit": ok_to_submit,
+                "ok_to_download": checks["format_valid"],
+                "strict_range_ok": checks["checks"]["variant_strict_whole_array_no_nan_allowed"][
+                    "pass"
+                ],
+                "novelty_passed": report["final_novelty"]["passed"],
+                "canary_passed": report["canary"]["passed"],
+            },
+            indent=2,
+        ),
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

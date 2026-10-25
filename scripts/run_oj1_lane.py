@@ -48,7 +48,14 @@ def verify_recorded(root=ROOT):
             if not np.isclose(result[key], pooled[key], rtol=1e-12, atol=1e-10):
                 raise ValueError(f"OJ1 pooled {key} does not match folds")
     if card["submission_name"] is not None:
-        path = root / "docs/downloads" / card["submission_name"]
+        name = card["submission_name"]
+        if not isinstance(name, str) or Path(name).name != name or not name.endswith(".tif"):
+            raise ValueError("Unsafe OJ1 artifact name")
+        if not isinstance(card.get("note"), str) or not 1 <= len(card["note"]) <= 140:
+            raise ValueError("Invalid OJ1 note")
+        if card.get("ok_to_submit") is not False or "DO NOT SUBMIT" not in card["note"]:
+            raise ValueError("OJ1 cannot grant slot authorization")
+        path = root / "docs/downloads" / name
         if sha256_file(path) != card["raster_sha256"]:
             raise ValueError("OJ1 raster checksum mismatch")
         checks = submission.check_variants(path, root / TEMPLATE.relative_to(ROOT))

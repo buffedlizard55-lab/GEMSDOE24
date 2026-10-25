@@ -1,4 +1,5 @@
 """Current first-screen download must fail closed on stale/tampered evidence."""
+
 import json
 import shutil
 from pathlib import Path
@@ -17,11 +18,17 @@ def test_current_download_is_format_valid_not_submit_ready():
     assert not result["ok_to_submit"]
 
 
-@pytest.mark.parametrize("change", [
-    {"ok_to_submit": True}, {"verdict": "promote"},
-    {"raster_sha256": "0" * 64}, {"submission_name": "../escape.tif"},
-    {"note": "x" * 141}, {"validator_output": {}},
-])
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"ok_to_submit": True},
+        {"verdict": "promote"},
+        {"raster_sha256": "0" * 64},
+        {"submission_name": "../escape.tif"},
+        {"note": "x" * 141},
+        {"validator_output": {}},
+    ],
+)
 def test_current_download_rejects_inconsistent_card(tmp_path, change):
     for directory in ("docs/data", "docs/downloads", "data/bridge"):
         shutil.copytree(ROOT / directory, tmp_path / directory)
