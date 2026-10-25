@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from html import escape
 
-from gems.validator import sha256_file
+from gems.receipts import research_receipt
 
 
 def concurrent_aspc(root):
@@ -22,15 +22,9 @@ def concurrent_aspc(root):
     digest = row["sha256"]
     if card.get("raster_sha256") != digest or card.get("submission_name") != name:
         raise ValueError("Concurrent ASPC run-card and artifact identity disagree")
-    target = root / "docs/downloads" / name
-    checks = json.loads(target.with_suffix(".checks.json").read_text())
-    if (
-        sha256_file(target) != digest
-        or checks.get("sha256") != digest
-        or checks.get("format_valid") is not True
-        or checks.get("submission_authorized") is not False
-    ):
-        raise ValueError("Concurrent ASPC file or exact-file validator disagrees")
+    checks = research_receipt(root / "docs/downloads", row)
+    if card.get("validator_output") != checks:
+        raise ValueError("Concurrent ASPC validator output disagrees")
     if (
         report.get("submission_authorized") is not False
         or row.get("submission_authorized") is not False
@@ -40,15 +34,9 @@ def concurrent_aspc(root):
         raise ValueError("A negative research page cannot grant ASPC slot authorization")
     twin = report.get("template_convention_companion")
     if twin:
-        p = root / "docs/downloads" / twin["file"]
-        sidecar = json.loads(p.with_suffix(".checks.json").read_text())
-        if (
-            sha256_file(p) != twin["sha256"]
-            or sidecar.get("sha256") != twin["sha256"]
-            or sidecar.get("format_valid") is not True
-            or sidecar.get("submission_authorized") is not False
-        ):
-            raise ValueError("Concurrent ASPC template-convention companion changed")
+        research_receipt(root / "docs/downloads", twin)
+        if card.get("template_convention_companion") != twin:
+            raise ValueError("Concurrent ASPC companion identity disagrees")
     if len(row["note"]) > 140:
         raise ValueError("Concurrent lane note exceeds current limit")
     e = lambda s: escape(str(s), quote=True)  # noqa: E731

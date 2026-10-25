@@ -108,3 +108,7 @@ radius-3 overlap rule even for unrelated methods. This must be resolved prospect
 by protocol coordination, never by dropping a comparator after seeing results.
 Read `11_MTR1_findings_2026-10-25.md` before any future experiment; the authoritative
 shared registry is broader than ASPC's historical nine-repository registry.
+
+A second parallel merge advanced main to `2363058` while PR #13 checks ran.
+Preserved that continuation audit and its receipt checks as well; final combined
+suite: 168 passing tests. The active MTR1 site decision remains unchanged.
