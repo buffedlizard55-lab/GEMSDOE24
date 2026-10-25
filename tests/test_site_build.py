@@ -159,3 +159,18 @@ def test_site_rejects_mtr_card_checksum_tampering_without_falling_back_to_old_fi
         assert result.returncode != 0 and "checksum" in result.stderr
     finally:
         path.write_text(original)
+
+
+def test_site_rejects_sahg1_card_checksum_tampering(built):
+    path = built / "evidence/sahg1_run_card_20261025.json"
+    original = path.read_text()
+    try:
+        altered = json.loads(original)
+        altered["raster_sha256"] = "0" * 64
+        path.write_text(json.dumps(altered))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0 and "SAHG1 checksum" in result.stderr
+    finally:
+        path.write_text(original)

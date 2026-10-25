@@ -30,7 +30,19 @@ the owner's brief at the bottom; (2) [`knowledge/owner_brief_verbatim.md`](knowl
 <!-- STATUS:START -->
 **DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
 
-Independently generated audit TIFF: [`gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif`](docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif).
+New 2026-10-25 `H24-SAHG1` Strike-Hydro-Geomorph GeoTIFF:
+[`gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif`](docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif) (`SHA-256: 8d5a5f99245fecf11cea72c33c41bad800cd0e41215744d7dd5d9ac6df673f11`)
+and NaN-outside twin [`gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif`](docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif).
+Passes exact-grid/`[0,1]` checks and prospective novelty against all 46 competing method lanes (max 3-px overlap `0.4768` ≤ 0.70)
+and 83 peer blobs (`0.4594` ≤ 0.70), and achieves **HOLDOUT-DTI** `gems-segment-pooled-v1` = **0.09672**
+(95% CI **[0.08657, 0.10703]**, 60,988 withheld positives) and `segment-hide-recover-pooled-v1` = **0.09655**
+(95% CI **[0.08270, 0.10976]**), outperforming both `MTR1` (`0.06441`) and `ASPC` (`0.08553`) and its geomorphic-only
+ablation (`0.08659`, paired Δ **+0.01012**). Remains **DOWNLOAD: YES · SUBMIT: NO** because it trails the newly reconstructed
+same-protocol OOF multi-physics baseline `oof_multiphysics_hgb_d3` (**HOLDOUT-DTI 0.13000**, 95% CI **[0.11565, 0.14396]**)
+and flags the exact-file C2ST nuisance audit (AUC `0.5826`, Holm *p* = `0.020`).
+[SAHG1 JSON run card](evidence/sahg1_run_card_20261025.json) · [SAHG1 preregistration](knowledge/12_preregistered_SAHG1_2026-10-25.md) · [SAHG1 findings](knowledge/13_SAHG1_findings_2026-10-25.md)
+
+Independently generated MTR1 audit TIFF: [`gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif`](docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif).
 It passes exact-grid/[0,1] file checks but fails the lane overlap rule against a registered
 spacing-5 calibration lattice. Content is not copied or identical to any compared file;
 this does **not** mean the lane-uniqueness gate passed. No comparator was removed.
@@ -80,39 +92,33 @@ Earlier scores/forecasts below are historical, not current promotion authority.
   projected leaderboard score is claimed. Conflicting leader claims in the brief
   remain unverified. No DrivenData automation or competition slot was used.
 
-### Verify/repackage the current stopped experiment
+### Verify/repackage the current stopped experiments
 
 ```bash
-.venv/bin/python scripts/restore_data.py
+.venv/bin/python scripts/restore_data.py --access-mirrors
 .venv/bin/python scripts/prepare_data.py
 .venv/bin/python scripts/cache_priority_registry.py
-.venv/bin/python scripts/evaluate_holdout.py --verify-recorded  # no experiment rerun
-.venv/bin/python scripts/export_negative_result.py  # same failed raster, audit only
+.venv/bin/python scripts/evaluate_holdout.py --verify-recorded  # MTR1 receipt check
+.venv/bin/python scripts/run_sahg1_lane.py --verify-recorded    # SAHG1 + OOF receipt check
+.venv/bin/python scripts/export_negative_result.py              # MTR1 failed raster, audit only
 .venv/bin/python scripts/build_site.py
 .venv/bin/python -m pytest -q
 ```
 
-The recorded experiment refuses implicit reruns. Verification checks the original
-source fingerprints at `b6b4cc0`, pooled recorded metric components and exact TIFFs;
+The recorded experiments refuse implicit reruns. Verification checks the original
+source fingerprints, pooled recorded metric components and exact TIFFs;
 packaging reconstructs only the frozen surface and must reproduce both recorded
 SHA256 values exactly. Use the pinned registry, not a refreshed registry after seeing a result. Large
-inputs/caches stay ignored. GitHub-only access and CPU are enough for this fixed
-operator. The original organizer authentication of owner mirrors, explicit lane,
-current-best OOF reconstruction and actual account quota are not available.
+inputs/caches stay ignored. GitHub-only access and CPU are enough for these fixed
+operators. The original organizer authentication of owner mirrors, explicit lane,
+and actual account quota are not available.
 
-### Next work, in order (not more experiments in this stopped lane)
+### Completed 2026-10-25 next-work items and remaining next steps
 
-1. Correct the shared protocol's treatment of dense calibration controls so an
-   unrelated field can be distinguished from a method duplicate; keep this failed
-   run and do not retroactively relabel it a pass.
-2. Reconstruct a current-best OOF detector under the same buffered component
-   holdout. An old submitted raster is not that baseline.
-3. Require independent localization evidence and an exact-file nuisance audit
-   before a separate selector can release a PASS packet. Near-chance feature
-   AUCs are not evidence of hydrothermal specificity.
-4. Current GitHub-source feed detects changes but never silently changes pinned
-   inputs, retrains, selects or uploads. The conflicting legacy PR #7 is not
-   merged or overwritten by this work.
+1. **Completed (`src/gems/novelty.py`):** Added `compare_prospective_registry(...)` to prospectively separate synthetic calibration controls (`registry-039` spacing-5 lattice, `registry-044` zero placeholder) from the 46 competing method lanes and 83 peer blobs while keeping `compare_registry(...)` and the failed `MTR1` receipt unchanged.
+2. **Completed (`scripts/run_sahg1_lane.py`):** Reconstructed a leakage-free same-protocol out-of-fold multi-physics baseline (`oof_multiphysics_hgb_d3`, 27 prepared physical/LiDAR/DEM channels trained strictly on `fold["train"]` of `SegmentHoldout`), establishing a benchmark of **HOLDOUT-DTI `0.13000`** (95% CI `[0.11565, 0.14396]`).
+3. **Completed (`src/gems/sahg1.py`, `evidence/sahg1_run_card_20261025.json`):** Preregistered and executed `H24-SAHG1` (Strike-Aligned Hydrothermal-Geomorphic Conduit Detector) with complete $9\times 9$ discrete receptive-field support verification (`verify_receptive_field_support`), achieving **HOLDOUT-DTI `0.09672`** (`[0.08657, 0.10703]`) on `gems-segment-pooled-v1` and **`0.09655`** (`[0.08270, 0.10976]`) on `segment-hide-recover-pooled-v1` (beating `MTR1`, `ASPC`, and its own geomorphic ablation `G_0` by `+0.01012`), passing prospective method-lane novelty (`0.4768` $\le 0.70$), and running the exact-file C2ST nuisance audit (`0.5826` vs. labels `0.4912`).
+4. **Remaining next step for future sessions:** Integrate `H24-SAHG1`'s strike-projected LiDAR scarp (`G_strike`) and stable-Th-controlled K/U alteration (`R_alt`) features as fold-local input columns inside the out-of-fold `oof_multiphysics_hgb_d3` model with training-only nuisance residualization (`gems.residualize.NuisanceResidualizer`), testing whether adding `G_strike` and `R_alt` beats `0.13000` on `HOLDOUT-DTI` while reducing exact-file C2ST AUC below `0.55`. Maintain strict fail-closed promotion gating.
 
 ## Concurrent main work preserved — not a cross-protocol winner
 

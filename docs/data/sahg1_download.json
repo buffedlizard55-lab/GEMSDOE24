@@ -1,0 +1,22 @@
+{
+  "file": "gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif",
+  "nan_file": "gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif",
+  "sha256": "8d5a5f99245fecf11cea72c33c41bad800cd0e41215744d7dd5d9ac6df673f11",
+  "nan_sha256": "80f893de18ac9a83696a572e7d0e92e93d33057dd68491807d487acfb7a7cd25",
+  "content_id": "13d01f28d5db",
+  "pixel_count": 37722,
+  "note": "GEMS24 SAHG1 | strike LiDAR scarp x stable-Th K/U + basement step | research only; DO NOT SUBMIT | id 13d01f28d5db",
+  "note_file": "note-gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.txt",
+  "checks_file": "checks-gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.json",
+  "generation": "independent-sahg1-v1",
+  "format_valid": true,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "slot_recommendation": "not_recommended",
+  "verdict": "negative",
+  "live_dti": null,
+  "run_card": "sahg1_run_card.json",
+  "independently_computed": true,
+  "method_lane_uniqueness_passed": true,
+  "literal_lattice_uniqueness_passed": false
+}

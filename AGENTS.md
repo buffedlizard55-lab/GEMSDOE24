@@ -36,6 +36,21 @@ current-best OOF baseline. Do not rerun either recorded lane. Both share the
 central evaluator/novelty/writer implementation; their declared fold/buffer/CI
 policies and pinned registry scopes differ. Keep those differences explicit.
 
+**2026-10-25 H24-SAHG1 and OOF baseline packet (`knowledge/12_preregistered_SAHG1_2026-10-25.md`, `knowledge/13_SAHG1_findings_2026-10-25.md`):**
+Executes the Next-work items from PRs #10 and #11 (`src/gems/sahg1.py`, `scripts/run_sahg1_lane.py`,
+`evidence/sahg1_run_card_20261025.json`):
+- Prospective novelty check `gems.novelty.compare_prospective_registry(...)` separates synthetic
+  calibration controls (`registry-039` spacing-5 lattice, `registry-044` zero placeholder) from
+  competing method lanes while preserving `compare_registry(...)` and literal all-entry flags.
+- Reconstructed same-protocol out-of-fold multi-physics baseline (`oof_multiphysics_hgb_d3`,
+  `gems-segment-pooled-v1` HOLDOUT-DTI `0.13000`, 95% CI `[0.11565, 0.14396]`).
+- `H24-SAHG1` achieves HOLDOUT-DTI `0.09672` (`[0.08657, 0.10703]`) on `gems-segment-pooled-v1`
+  and `0.09655` (`[0.08270, 0.10976]`) on `segment-hide-recover-pooled-v1`, beating `MTR1`,
+  `ASPC`, and its own geomorphic ablation `G_0` (`+0.01012`), passing prospective method-lane
+  novelty (`46/46` method lanes, `83/83` peer blobs), and running the exact-file C2ST audit
+  (`AUC 0.5826`). Remains `DOWNLOAD: YES · SUBMIT: NO` (`verdict: "negative"`). Verify with
+  `.venv/bin/python scripts/run_sahg1_lane.py --verify-recorded`.
+
 Read the entire root README, its standing owner charter and the **verbatim owner brief**
 (`README.md`, section "Owner brief") at the start of every session. Maximize P(Win) and
 Own the Outcome, without promising a score or prize.
