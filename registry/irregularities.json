@@ -225,6 +225,27 @@
       "status": "open_immaterial_measured",
       "issue": "The official Census road raster merged to main (raster sha256 e5350423..., 1,141,630 seed px) includes 183 features of MTFCC S1750, which the 2023 TIGER/Line Technical Documentation Appendix E defines only as 'Internal U.S. Census Bureau use'. It also contains walkways, stairways, alleys, parking-lot roads, bike and bridle paths (all 'Road/Path Features'), so the label 'road/vehicular-trail' was too narrow.",
       "resolution": "Measured against the parallel session's S1750-free raster (sha256 459af5cf..., 1,141,492 seed px): same grid; 56 of 5,167,373 finite pixels differ (0.0011 %), 11 by more than 100 m, maximum 300 m, none above 500 m. Descriptive single-feature road-distance AUCs agree within 1.7e-4 (claims bit-identical). The classifier audit was not re-run on the S1750-free raster. Fix when reconciling PR #7: explicit MTFCC allowlist in scripts/fetch_official_roads.py plus a regenerated raster and receipt from the official CI run (changing the script alone would leave the committed receipt inconsistent)."
+    },
+    {
+      "id": "IR-PR18-FUSE-OOM-CON-NOVELTY",
+      "severity": "medium",
+      "status": "fixed",
+      "issue": "In PR #18 (commit 878fd87), scripts/run_fuse_lane.py attempted unchunked 5.1M-row predict_proba while retaining all 2D band arrays in memory, aborting with OOM on 3.8 GB instances. In addition, H24-CON (evidence/con_run_card_20261025.json) ran without data/research cached, leaving correlation_overlap_vs_registry fields null.",
+      "resolution": "Rewrote scripts/run_fuse_lane.py with 75,000-row chunked inference, immediate 2D buffer cleanup, and three preregistered arms (FUSE-RAW, FUSE-RESID, FUSE-HCW), completing in <1.8 GB RAM. Backfilled H24-CON's exact novelty metrics against all 46 priority rasters (method_lane_passed=true, max method overlap 0.3108, literal lattice overlap 1.0) without modifying its TIFF bytes."
+    },
+    {
+      "id": "IR-PR19-UNIQUE03-UNITS-HTML",
+      "severity": "high",
+      "status": "disclosed_and_site_restored",
+      "issue": "In PR #19 (commit 32e15c8), scripts/build_unique_submission3.py set DIST_DECAY_PX = 300.0 with comment '# 300 m = matches DTI kernel radius', which is 30,000 m (30 km) on the 100 m grid (100x unit error), omitted distance_to_visible_fault from the leakage canary, iterated across three scripts after viewing holdout scores, and manually edited docs/index.html, docs/executive-summary.html, and index.html outside scripts/build_site.py.",
+      "resolution": "Preserved H-UNIQUE-03 TIFF and receipts on disk for audit traceability, documented the unit/canary irregularities, and restored scripts/build_site.py + scripts/site_packets.py as the single deterministic generator of all HTML pages and README.md."
+    },
+    {
+      "id": "IR-SIBLING-BRANCH-6B1D9ADE",
+      "severity": "low",
+      "status": "disclosed",
+      "issue": "Unmerged sibling branch origin/arena/6b1d9ade-gemsdoe24 (commit e6f8414) ran GT1/GT2 experiments without opening a pull request; GT2 failed prospective method-lane novelty (0.758 > 0.70 dot overlap with registry-006) and did not run C2ST.",
+      "resolution": "Recorded in knowledge/18_FUSE_findings_2026-10-25.md; sibling branch was not modified or merged."
     }
   ]
 }

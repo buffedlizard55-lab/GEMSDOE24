@@ -1,0 +1,392 @@
+{
+  "hypothesis": "H24-FUSE fold-local 31-channel OOF-HGB fusing 27 multi-physics/LiDAR base channels with SAHG1 strike-projected scarp (G_sat), stable-Th K/U alteration (R_alt), basement/strain step (B_step), and hydrothermal conduit interaction (H_conduit), tested with and without training-only nuisance residualization (NuisanceResidualizer) and hydrothermal-conduit priority weighting",
+  "mechanism": "Per-fold HistGradientBoostingClassifier trained strictly on visible faults inside fold['train'] with >=900 m negative buffer, evaluated across three preregistered arms (FUSE-RAW, FUSE-RESID, FUSE-HCW) inside a verified 9x9 discrete receptive-field support mask",
+  "named_non_fault_mimic": "Pleistocene Lake Lahontan tufa-cemented beach ridges or welded-tuff stratigraphic ledges overlying buried intrusive contacts; road/mining access corridors along range fronts",
+  "selected_arm": "fuse_hcw",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 7072.85919319761,
+    "FP_w": 34810.67778266676,
+    "FN_w": 53915.14080680239,
+    "n_truth": 60988.0,
+    "n_emitted": 37722.0,
+    "dti": 0.12372253058552446,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.11228686943124891,
+        0.13495620100209746
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 1290.5957219778857,
+        "FP_w": 7876.221194635185,
+        "FN_w": 8874.404278022113,
+        "n_truth": 10165,
+        "n_emitted": 8430,
+        "dti": 0.12950814459257873,
+        "coverage": 0.12696465538395332
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 1632.7901866833954,
+        "FP_w": 9696.077475560174,
+        "FN_w": 10878.209813316604,
+        "n_truth": 12511,
+        "n_emitted": 10422,
+        "dti": 0.1330221520408587,
+        "coverage": 0.13050836757120896
+      },
+      {
+        "fold": "SW",
+        "TP_w": 1926.4687009551935,
+        "FP_w": 9656.47727422275,
+        "FN_w": 18607.531299044807,
+        "n_truth": 20534,
+        "n_emitted": 10429,
+        "dti": 0.1027790422149622,
+        "coverage": 0.09381848158932471
+      },
+      {
+        "fold": "SE",
+        "TP_w": 2223.004583581135,
+        "FP_w": 7581.901838248648,
+        "FN_w": 15554.995416418864,
+        "n_truth": 17778,
+        "n_emitted": 8441,
+        "dti": 0.13736341896084128,
+        "coverage": 0.1250424447958789
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "arms_holdout_summary": {
+    "oof_multiphysics_hgb_d3_baseline": {
+      "dti": 0.129996798011798,
+      "ci95": [
+        0.11565083071042537,
+        0.14396153633627826
+      ],
+      "TP_w": 7429.662484715415,
+      "FP_w": 34381.625470582076
+    },
+    "fuse_raw": {
+      "dti": 0.1299500703519766,
+      "ci95": [
+        0.11479067097244967,
+        0.14475781379935826
+      ],
+      "TP_w": 7426.633588816662,
+      "FP_w": 34370.8688427034,
+      "method_lane_novelty_passed": false,
+      "method_lane_max_overlap_within_3px": 0.7398600286305074,
+      "peer_blobs_max_overlap_within_3px": 0.7398600286305074,
+      "c2st_auc": 0.5296030705178938,
+      "c2st_holm_p": 0.36,
+      "c2st_passed": true
+    },
+    "fuse_resid": {
+      "dti": 0.12210134739550878,
+      "ci95": [
+        0.10882479393236982,
+        0.13481636099255634
+      ],
+      "TP_w": 6973.043690257895,
+      "FP_w": 34618.229950233144,
+      "method_lane_novelty_passed": true,
+      "method_lane_max_overlap_within_3px": 0.6676475266422777,
+      "peer_blobs_max_overlap_within_3px": 0.6551084247918987,
+      "c2st_auc": 0.49284871679532405,
+      "c2st_holm_p": 0.8699999999999999,
+      "c2st_passed": true
+    },
+    "fuse_hcw": {
+      "dti": 0.12372253058552446,
+      "ci95": [
+        0.11228686943124891,
+        0.13495620100209746
+      ],
+      "TP_w": 7072.85919319761,
+      "FP_w": 34810.67778266676,
+      "method_lane_novelty_passed": true,
+      "method_lane_max_overlap_within_3px": 0.6314882561900217,
+      "peer_blobs_max_overlap_within_3px": 0.6025396320449605,
+      "c2st_auc": 0.5108074968634704,
+      "c2st_holm_p": 0.8699999999999999,
+      "c2st_passed": true
+    }
+  },
+  "bridge_protocol_holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "segment-hide-recover-pooled-v1",
+    "n_withheld_positives": 60988,
+    "dti": 0.12361693668893049,
+    "ci95": [
+      0.10803472878233734,
+      0.13979549703821978
+    ],
+    "recorded_aspc_dti": 0.08552612516643854,
+    "recorded_aspc_ci95": [
+      0.07439983571419555,
+      0.09648277663462658
+    ],
+    "delta_vs_recorded_aspc": 0.038090811522491955
+  },
+  "paired_comparisons": {
+    "fuse_raw_minus_oof_base": {
+      "delta_dti": -4.6727659821416134e-05,
+      "ci95": [
+        -0.004199611522983417,
+        0.0039641884410039985
+      ]
+    },
+    "fuse_resid_minus_oof_base": {
+      "delta_dti": -0.007895450616289226,
+      "ci95": [
+        -0.017879339919959207,
+        0.0015079261350212283
+      ]
+    },
+    "fuse_hcw_minus_oof_base": {
+      "delta_dti": -0.006274267426273544,
+      "ci95": [
+        -0.014878091142814395,
+        0.0018617403996853334
+      ]
+    },
+    "fuse_resid_minus_fuse_raw": {
+      "delta_dti": -0.00784872295646781,
+      "ci95": [
+        -0.01864169121823668,
+        0.0025406915418855875
+      ]
+    }
+  },
+  "correlation_overlap_vs_registry": {
+    "total_unique_rasters_checked": 51,
+    "competing_method_rasters_checked": 49,
+    "calibration_control_rasters_checked": 2,
+    "peer_blobs_checked": 83,
+    "surface_max_abs_rank_correlation": 0.4579722332044484,
+    "final_max_abs_rank_correlation": 0.4044994725947137,
+    "method_lane_max_overlap_within_3px": 0.6314882561900217,
+    "peer_blobs_max_overlap_within_3px": 0.6025396320449605,
+    "literal_all_entries_max_overlap_within_3px": 1.0,
+    "method_lane_passed": true,
+    "literal_all_entries_passed": false,
+    "passed": false,
+    "scope": "All 46 unique rasters in registry/priority_rasters.json + 5 prior 2026-10-25 GEMSDOE24 session rasters + 84 unique peer blobs in registry/peer_rasters_20261025.json"
+  },
+  "exact_file_nuisance_audit": {
+    "observed_auc": 0.5108074968634704,
+    "fold_aucs": [
+      0.4658073038504952,
+      0.5271275376797732,
+      0.6225141278101368,
+      0.4277810181134766
+    ],
+    "null_p95": 0.5254929003671066,
+    "margin_vs_p95": -0.01468540350363623,
+    "raw_p_value": 0.29,
+    "holm_p_value": 0.8699999999999999,
+    "strict_gate_flagged": false,
+    "strict_gate_passed": true
+  },
+  "all_arms_c2st_audit": {
+    "method": "Classifier two-sample test (Lopez-Paz & Oquab, ICLR 2017) with 10 km block label swaps",
+    "nuisance_families_only": [
+      "block_1",
+      "block_2",
+      "block_3",
+      "block_4",
+      "claim_m",
+      "road_m"
+    ],
+    "block_boundary_status": "derived_audited_not_official_coordinates (audited against published line-km, not official coordinates)",
+    "labels_first": {
+      "observed_auc": 0.5040084703386403,
+      "fold_aucs": [
+        0.5090975159687721,
+        0.5246382471655577,
+        0.502744437201213,
+        0.479553681019018
+      ],
+      "null_p95": 0.5263710840715217,
+      "margin_vs_p95": -0.022362613732881398,
+      "raw_p_value": 0.43,
+      "holm_p_value": 0.8699999999999999
+    },
+    "candidates": {
+      "fuse_raw": {
+        "observed_auc": 0.5296030705178938,
+        "fold_aucs": [
+          0.5795322236546582,
+          0.49791479670031075,
+          0.6135943711131733,
+          0.4273708906034328
+        ],
+        "null_p95": 0.5411615385352371,
+        "margin_vs_p95": -0.011558468017343282,
+        "raw_p_value": 0.09,
+        "holm_p_value": 0.36,
+        "strict_gate_flagged": false,
+        "strict_gate_passed": true
+      },
+      "fuse_resid": {
+        "observed_auc": 0.49284871679532405,
+        "fold_aucs": [
+          0.47711277704482574,
+          0.5114935228082318,
+          0.5384741243316442,
+          0.4443144429965944
+        ],
+        "null_p95": 0.5288292414515191,
+        "margin_vs_p95": -0.035980524656195056,
+        "raw_p_value": 0.75,
+        "holm_p_value": 0.8699999999999999,
+        "strict_gate_flagged": false,
+        "strict_gate_passed": true
+      },
+      "fuse_hcw": {
+        "observed_auc": 0.5108074968634704,
+        "fold_aucs": [
+          0.4658073038504952,
+          0.5271275376797732,
+          0.6225141278101368,
+          0.4277810181134766
+        ],
+        "null_p95": 0.5254929003671066,
+        "margin_vs_p95": -0.01468540350363623,
+        "raw_p_value": 0.29,
+        "holm_p_value": 0.8699999999999999,
+        "strict_gate_flagged": false,
+        "strict_gate_passed": true
+      }
+    }
+  },
+  "raster_sha256": "cfb5d21f9f0308a4c5cc917641c1cfd4d8f73d60fa4f64cf12ba9548ae23afb3",
+  "nan_outside_artifact": "gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-nan.tif",
+  "nan_outside_sha256": "8aca8f26d3fb87bd37f9aa88a8d85962c0bfb66dc1977886ebb04cc9a6216b3e",
+  "validator_output": {
+    "file": "gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif",
+    "bytes": 825876,
+    "sha256": "cfb5d21f9f0308a4c5cc917641c1cfd4d8f73d60fa4f64cf12ba9548ae23afb3",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37722,
+    "in_footprint_mass": 37722.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "submission_name": "gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif",
+  "note": "GEMS24 FUSE (FUSE_HCW) | OOF-HGB + SAHG1 conduit | research only; DO NOT SUBMIT | id 3fd41218a10a",
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "reasons": [
+    "Selected arm fuse_hcw did not beat reconstructed same-protocol OOF multi-physics baseline (0.12372 vs 0.13000)",
+    "Literal all-entry overlap rule still flags synthetic spacing-5 calibration lattice registry-039 (1.0 overlap within 3 px), though competing method lanes and peer blobs are reported separately",
+    "No single assigned method-lane paragraph was supplied in the prompt (provisional lane)",
+    "Promotion to a weekly competition slot requires a separate selector step within verified portal quota"
+  ],
+  "organizer_confirmed_score": null,
+  "experiments_run": 3,
+  "submission_slots_used": 0
+}
