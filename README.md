@@ -100,6 +100,26 @@ filenames or embedded receipts for **both** primary and companion downloads.
 [Fresh exact-file audit](evidence/research_download_audit_20261025.json).
 No new experiment, new geological discovery, higher score or slot use is claimed.
 
+## Repository review and build-precedence fix — 2026-10-25
+
+The default site build now validates the current first-screen H-UNIQUE download
+against its hash-bound run card and ensures the root overview, docs overview and
+executive guide all point to the same explicitly negative file. It no longer
+silently rebuilds the older MTR1 packet as the primary page. Legacy MTR1/ASPC
+renderers are retained only behind `--legacy-research-site` for reproduction.
+
+No new detector experiment, TIFF or competition slot was used: no method paragraph
+was assigned and the current H-UNIQUE card already records three experiments.
+The `0.2778` H33-B2 figure remains owner-reported, not organizer-confirmed; its
+pixel ancestry does not establish hidden-label TP/FP or score causality. Ranked
+untried hypotheses, official-source limitations, three review passes and exact
+validation outcomes are documented in [the repository review](knowledge/18_repository_review_2026-10-25.md)
+and [its JSON run card](evidence/repository_review_run_card_20261025.json).
+
+The exact current download remains **DOWNLOAD: YES · SUBMIT: NO**. Review test and
+lint counts are recorded in the run card; full-repository Ruff findings remain
+open in three unpromoted prototype scripts.
+
 ## Data readiness and next gate — 2026-10-25
 
 The previously missing competition feature raster has now been restored from a

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the Pages site and the README status block from recorded evidence.
+"""Validate the current Pages packet against recorded evidence; legacy renderers are opt-in.
 
 Every number on the pages comes from ``evidence/*.json``, ``registry/*.json`` or
 ``docs/data/*.json``; nothing is hard-coded except wording. No network access, no
@@ -360,7 +360,67 @@ Earlier scores/forecasts below are historical, not current promotion authority.
     print(json.dumps(receipt, indent=2))
 
 
+def build_current_download_site():
+    """Fail closed on the committed first-screen artifact without rerunning a lane.
+
+    The historical MTR1/ASPC renderers remain available to reproduce their
+    research pages, but the public Pages workflow must not replace the newer
+    current-download page with an older packet merely because its metadata file
+    also exists.
+    """
+    from gems.release_audit import verify_current_download
+
+    report = verify_current_download(ROOT)
+    card = load("docs/data/unique_run_card.json")
+    name = card["submission_name"]
+    for relative in ("index.html", "docs/index.html", "docs/executive-summary.html"):
+        html = (ROOT / relative).read_text()
+        if (
+            f'download="{name}"' not in html
+            or name not in html
+            or card["raster_sha256"] not in html
+            or "NOT OK TO SUBMIT" not in html
+        ):
+            raise SystemExit(f"Current site page is stale or permissive: {relative}")
+    receipt = {
+        "generated_utc": datetime.now(timezone.utc).isoformat(),
+        "primary_sha256": card["raster_sha256"],
+        "active_file": name,
+        "pages": [
+            "docs/index.html",
+            "docs/executive-summary.html",
+            "docs/research.html",
+            "docs/sources.html",
+        ],
+        "root": "index.html",
+        "slot_recommendation": "not_recommended",
+        "new_slot_eligible": False,
+        "submission_authorized": False,
+        "no_scores_fabricated": True,
+        "verdict": "negative",
+        "site_policy": "current-download-v1; static pages verified against exact-file receipt",
+        "format_valid": report["validator_output"]["format_valid"],
+        "strict_whole_array_values_in_0_1": report["validator_output"]["checks"][
+            "variant_strict_whole_array_no_nan_allowed"
+        ]["pass"],
+    }
+    (ROOT / "evidence/site_build.json").write_text(json.dumps(receipt, indent=2) + "\n")
+    print(json.dumps(receipt, indent=2))
+
+
 def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--legacy-research-site",
+        action="store_true",
+        help="Reproduce historical MTR1/ASPC renderers for their tests; not for Pages deployment.",
+    )
+    args = parser.parse_args()
+    if not args.legacy_research_site:
+        return build_current_download_site()
+
     # Both negative lanes supersede historical recommendations. MTR has its own
     # packet; never overwrite the incoming historical metadata or ASPC receipt.
     primary = load("docs/data/independent_download.json")

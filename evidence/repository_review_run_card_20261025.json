@@ -1,0 +1,77 @@
+{
+  "review_date": "2026-10-25",
+  "review_only": true,
+  "hypothesis": "No candidate experiment was authorized. Untried next priority: upward-continuation survival of a paired RTP/TMI magnetic trough, using the already registered cached layers; this is a proposal, not a DTI forecast.",
+  "mechanism": "A concealed basement-scale magnetic alteration corridor may retain paired-trough geometry after upward continuation while short-wavelength cultural or surficial anomalies attenuate. No new surface was built or scored in this review.",
+  "named_non_fault_process_that_could_mimic_it": "A long magnetite-poor lithologic strip or survey-processing seam.",
+  "holdout_dti": null,
+  "holdout_dti_status": "NOT RUN in this review: no assigned single-method paragraph and the current H-UNIQUE run card already records 3 experiments. Existing comparable reference: HOLDOUT-DTI 0.13000, evaluator gems-segment-pooled-v1, 60,988 withheld positives, 95% CI [0.11565, 0.14396] (evidence/sahg1_run_card_20261025.json).",
+  "withheld_positive_count": null,
+  "correlation_overlap_vs_registry": {
+    "new_candidate": "NOT CHECKED; no candidate surface or dots generated.",
+    "existing_current_H_UNIQUE": {
+      "max_abs_rank_correlation_surface": 0.09014801636293802,
+      "max_abs_rank_correlation_final": 0.13641883495585908,
+      "max_dot_overlap_within_3px": 0.9986745135464715,
+      "passed": false,
+      "scope": "Pinned downloadable rasters across the nine requested repositories plus local inputs; not every unseen registry."
+    },
+    "existing_MTR1": {
+      "max_abs_rank_correlation_surface": 0.04241557642574978,
+      "max_abs_rank_correlation_final": 0.07756090544069577,
+      "max_dot_overlap_within_3px": 1.0,
+      "passed": false,
+      "veto_registry_id": "registry-039"
+    }
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_candidate_available": false,
+    "no_nan_inside_footprint": "NOT APPLICABLE; no new TIFF",
+    "values_in_0_1": "NOT APPLICABLE; no new TIFF",
+    "crs_shape_transform_match": "NOT APPLICABLE; no new TIFF",
+    "current_download_revalidated_separately": {
+      "file": "24gems-doer-fault-guided-k-20261025T220208Z-dedb860f7e83-zeros.tif",
+      "sha256": "800856082214038640ba98796c390ff76cb8583944dbc05505d9787ce7688c9e",
+      "format_valid": true,
+      "strict_whole_array_values_in_0_1": true,
+      "crs_epsg_32611": true,
+      "shape": [3730, 3292],
+      "transform": [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0],
+      "submission_authorized": false,
+      "important_caveat": "Zero-outside encoding is globally range-safe, but the template convention check reports official_format_compliant=false; portal acceptance is not proven."
+    }
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "verdict": "negative",
+  "submission_slots_used_this_review": 0,
+  "experiment_count_this_review": 0,
+  "budget_gate": "No experiment run: assigned method paragraph absent; current H-UNIQUE run card records 3 experiments.",
+  "site_build": {
+    "command": "python scripts/build_site.py",
+    "result": "PASS; default public route validates the committed H-UNIQUE exact file and confirms root overview/docs overview/executive guide link the identical negative artifact. Historical renderer is explicit opt-in.",
+    "receipt": "evidence/site_build.json",
+    "site_policy": "current-download-v1; static pages verified against exact-file receipt"
+  },
+  "verification": {
+    "pytest": "190 passed",
+    "verify_current_download": "PASS; exact TIFF/card/template revalidated; ok_to_submit=false",
+    "evaluate_holdout_verify_recorded": "verified=true; experiment_rerun=false",
+    "sahg1_verify_recorded": "verified=true; experiment_rerun=false",
+    "research_download_audit": "verdict=negative; submission_authorized=false; new_experiments=0",
+    "ruff_check": "FAIL; 54 findings in scripts/build_unique_submission.py, scripts/run_con_lane.py, scripts/run_fuse_lane.py",
+    "ruff_format_check": "FAIL; 7 files would be reformatted",
+    "compileall": "PASS",
+    "javascript_syntax": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "source_links": [
+    "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+    "https://github.com/drivendataorg/gems-prize-reference-solution",
+    "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
+    "https://doi.org/10.5066/P93LGLVQ",
+    "https://www.usgs.gov/3d-elevation-program/data-tools",
+    "https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html"
+  ]
+}
