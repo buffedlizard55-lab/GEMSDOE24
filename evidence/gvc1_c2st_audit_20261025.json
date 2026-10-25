@@ -1,0 +1,372 @@
+{
+  "generated_utc": "2026-10-25T22:56:11.605385+00:00",
+  "protocol": {
+    "method": "Lopez-Paz & Oquab (ICLR 2017) spatial C2ST, https://arxiv.org/abs/1610.06545",
+    "labels_first": true,
+    "feature_names": [
+      "block_1",
+      "block_2",
+      "block_3",
+      "block_4",
+      "claim_m",
+      "road_m"
+    ],
+    "samples_per_class": 12000,
+    "grouped_permutations": 199,
+    "spatial_shifts": 99,
+    "seed": 20261002,
+    "folds": [
+      "NW",
+      "NE_LidarGapHeavy",
+      "SW",
+      "SE"
+    ],
+    "effect_rule": "Holm p<=.05 AND AUC>=.55 AND margin over grouped-null p95>=.02"
+  },
+  "source_provenance": {
+    "road_m_sha256": "e5350423508968fa2d32b0a6ae0d3fb4ae3ea645e3b8736f0c8e7ad9ff2f2988",
+    "claim_m_sha256": "a88356423c03fc8b6510a84f77cee2b1d38c4ccbd7761bc95c1ca8332a2e166a",
+    "acquisition_blocks_sha256": "2c0785c4b3ec46c734d1be7a7aedbb3e816201100ab358033a3af074418c894a",
+    "block_boundary_status": "derived_audited_not_official_coordinates",
+    "blocks_official_coordinates": false,
+    "full_requested_audit_available": true
+  },
+  "references": {
+    "labels": {
+      "file": "labels.tif",
+      "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "positive_pixels": 60988,
+      "primary": {
+        "surface": "labels",
+        "model": "hgb",
+        "observed_auc": 0.4957985306011384,
+        "fold_aucs": [
+          0.5008528165302707,
+          0.5001578416895718,
+          0.5045094227413147,
+          0.47767404144339615
+        ],
+        "null_kind": "grouped",
+        "n_null": 199,
+        "null_auc_mean": 0.4999167731424087,
+        "null_auc_p95": 0.5199812271889039,
+        "null_auc_max": 0.5326775534528261,
+        "margin_vs_p95": -0.024182696587765562,
+        "p_value": 0.625,
+        "info": {
+          "feature_names": [
+            "block_1",
+            "block_2",
+            "block_3",
+            "block_4",
+            "claim_m",
+            "road_m"
+          ],
+          "n_near": 12000,
+          "n_far": 12000,
+          "n_near_total": 444794,
+          "n_far_total": 3995479,
+          "seed": 20261002,
+          "block_size_m": 10000,
+          "n_spatial_blocks": 575,
+          "near_m": 300,
+          "far_m": 900,
+          "statistic": "unweighted mean of per-fold ROC AUC",
+          "null_resolution": 0.005,
+          "refit_every_null": true,
+          "model_params": {
+            "max_iter": 25,
+            "max_leaf_nodes": 7,
+            "l2_regularization": 5.0
+          },
+          "null_assumption": "10 km block class-label exchangeability"
+        },
+        "holm_p_value": 1.0
+      },
+      "shift_diagnostic": {
+        "surface": "labels",
+        "model": "hgb",
+        "observed_auc": 0.4957985306011384,
+        "fold_aucs": [
+          0.5008528165302707,
+          0.5001578416895718,
+          0.5045094227413147,
+          0.47767404144339615
+        ],
+        "null_kind": "shift",
+        "n_null": 99,
+        "null_auc_mean": 0.5170520943081367,
+        "null_auc_p95": 0.6515953759668701,
+        "null_auc_max": 0.6993582262079184,
+        "margin_vs_p95": -0.15579684536573174,
+        "p_value": 0.54,
+        "info": {
+          "feature_names": [
+            "block_1",
+            "block_2",
+            "block_3",
+            "block_4",
+            "claim_m",
+            "road_m"
+          ],
+          "n_near": 12000,
+          "n_far": 12000,
+          "n_near_total": 444794,
+          "n_far_total": 3995479,
+          "seed": 20261002,
+          "block_size_m": 10000,
+          "n_spatial_blocks": 575,
+          "near_m": 300,
+          "far_m": 900,
+          "statistic": "unweighted mean of per-fold ROC AUC",
+          "null_resolution": 0.01,
+          "refit_every_null": true,
+          "model_params": {
+            "max_iter": 25,
+            "max_leaf_nodes": 7,
+            "l2_regularization": 5.0
+          },
+          "null_assumption": "spatial shifts are a nonstationarity sensitivity diagnostic",
+          "rejected_single_class_shifts": {},
+          "conditional_geometry_design": "99 or requested valid shifts; single-class fold draws excluded on support only, never AUC; diagnostic not an exact spatial test",
+          "valid_shift_count": 99
+        }
+      },
+      "single_feature_auc_descriptive": {
+        "block_1": 0.49382696020031475,
+        "block_2": 0.5054658461992043,
+        "block_3": 0.49509339659915885,
+        "block_4": 0.49861910201757564,
+        "claim_m": 0.4942357761621641,
+        "road_m": 0.5222023636256322
+      },
+      "reused_verified_labels_receipt": "evidence/accessibility_audit_v2.json",
+      "meaningful_access_association_flagged": false,
+      "strict_c2st_gate_passed": true
+    },
+    "e1_gvc1": {
+      "file": "e1_gvc1_zeros.tif",
+      "sha256": "b5ca6f1755af059e17f5edf0940fd7e945d43a1359e103a4789eae33c536ad41",
+      "positive_pixels": 37654,
+      "primary": {
+        "surface": "e1_gvc1",
+        "model": "hgb",
+        "observed_auc": 0.4859400180429616,
+        "fold_aucs": [
+          0.49443787240047776,
+          0.5031684621365243,
+          0.5428419495413274,
+          0.4033117880935172
+        ],
+        "null_kind": "grouped",
+        "n_null": 199,
+        "null_auc_mean": 0.5006193186975497,
+        "null_auc_p95": 0.5257106337383449,
+        "null_auc_max": 0.5436401824101351,
+        "margin_vs_p95": -0.039770615695383316,
+        "p_value": 0.81,
+        "info": {
+          "feature_names": [
+            "block_1",
+            "block_2",
+            "block_3",
+            "block_4",
+            "claim_m",
+            "road_m"
+          ],
+          "n_near": 12000,
+          "n_far": 12000,
+          "n_near_total": 702166,
+          "n_far_total": 3686485,
+          "seed": 20261002,
+          "block_size_m": 10000,
+          "n_spatial_blocks": 571,
+          "near_m": 300,
+          "far_m": 900,
+          "statistic": "unweighted mean of per-fold ROC AUC",
+          "null_resolution": 0.005,
+          "refit_every_null": true,
+          "model_params": {
+            "max_iter": 25,
+            "max_leaf_nodes": 7,
+            "l2_regularization": 5.0
+          },
+          "null_assumption": "10 km block class-label exchangeability"
+        },
+        "holm_p_value": 1.0
+      },
+      "shift_diagnostic": {
+        "surface": "e1_gvc1",
+        "model": "hgb",
+        "observed_auc": 0.4859400180429616,
+        "fold_aucs": [
+          0.49443787240047776,
+          0.5031684621365243,
+          0.5428419495413274,
+          0.4033117880935172
+        ],
+        "null_kind": "shift",
+        "n_null": 99,
+        "null_auc_mean": 0.5062635044671425,
+        "null_auc_p95": 0.6298229907057018,
+        "null_auc_max": 0.7395673087378553,
+        "margin_vs_p95": -0.1438829726627402,
+        "p_value": 0.58,
+        "info": {
+          "feature_names": [
+            "block_1",
+            "block_2",
+            "block_3",
+            "block_4",
+            "claim_m",
+            "road_m"
+          ],
+          "n_near": 12000,
+          "n_far": 12000,
+          "n_near_total": 702166,
+          "n_far_total": 3686485,
+          "seed": 20261002,
+          "block_size_m": 10000,
+          "n_spatial_blocks": 571,
+          "near_m": 300,
+          "far_m": 900,
+          "statistic": "unweighted mean of per-fold ROC AUC",
+          "null_resolution": 0.01,
+          "refit_every_null": true,
+          "model_params": {
+            "max_iter": 25,
+            "max_leaf_nodes": 7,
+            "l2_regularization": 5.0
+          },
+          "null_assumption": "spatial shifts are a nonstationarity sensitivity diagnostic",
+          "rejected_single_class_shifts": {},
+          "conditional_geometry_design": "99 or requested valid shifts; single-class fold draws excluded on support only, never AUC; diagnostic not an exact spatial test",
+          "valid_shift_count": 99
+        }
+      },
+      "single_feature_auc_descriptive": {
+        "block_1": 0.49284806197631287,
+        "block_2": 0.49715055975144384,
+        "block_3": 0.5038263602446568,
+        "block_4": 0.4918711419802122,
+        "claim_m": 0.5187928787584799,
+        "road_m": 0.5045892457006822
+      },
+      "meaningful_access_association_flagged": false,
+      "strict_c2st_gate_passed": true
+    },
+    "e2_gvc1_resid": {
+      "file": "e2_gvc1_resid_zeros.tif",
+      "sha256": "e25f0524279097d597dc08f69d62c1c68f51dddaaf2595db94f775746e625ab1",
+      "positive_pixels": 37654,
+      "primary": {
+        "surface": "e2_gvc1_resid",
+        "model": "hgb",
+        "observed_auc": 0.5182958323040026,
+        "fold_aucs": [
+          0.48983448347068104,
+          0.49429907944865925,
+          0.6437429070463216,
+          0.44530685925034796
+        ],
+        "null_kind": "grouped",
+        "n_null": 199,
+        "null_auc_mean": 0.5024901958506626,
+        "null_auc_p95": 0.5279675669103264,
+        "null_auc_max": 0.5407948869951789,
+        "margin_vs_p95": -0.009671734606323867,
+        "p_value": 0.175,
+        "info": {
+          "feature_names": [
+            "block_1",
+            "block_2",
+            "block_3",
+            "block_4",
+            "claim_m",
+            "road_m"
+          ],
+          "n_near": 12000,
+          "n_far": 12000,
+          "n_near_total": 771917,
+          "n_far_total": 3452827,
+          "seed": 20261002,
+          "block_size_m": 10000,
+          "n_spatial_blocks": 573,
+          "near_m": 300,
+          "far_m": 900,
+          "statistic": "unweighted mean of per-fold ROC AUC",
+          "null_resolution": 0.005,
+          "refit_every_null": true,
+          "model_params": {
+            "max_iter": 25,
+            "max_leaf_nodes": 7,
+            "l2_regularization": 5.0
+          },
+          "null_assumption": "10 km block class-label exchangeability"
+        },
+        "holm_p_value": 0.5249999999999999
+      },
+      "shift_diagnostic": {
+        "surface": "e2_gvc1_resid",
+        "model": "hgb",
+        "observed_auc": 0.5182958323040026,
+        "fold_aucs": [
+          0.48983448347068104,
+          0.49429907944865925,
+          0.6437429070463216,
+          0.44530685925034796
+        ],
+        "null_kind": "shift",
+        "n_null": 99,
+        "null_auc_mean": 0.5106183165808483,
+        "null_auc_p95": 0.6142698270964826,
+        "null_auc_max": 0.7058568123152896,
+        "margin_vs_p95": -0.09597399479248003,
+        "p_value": 0.39,
+        "info": {
+          "feature_names": [
+            "block_1",
+            "block_2",
+            "block_3",
+            "block_4",
+            "claim_m",
+            "road_m"
+          ],
+          "n_near": 12000,
+          "n_far": 12000,
+          "n_near_total": 771917,
+          "n_far_total": 3452827,
+          "seed": 20261002,
+          "block_size_m": 10000,
+          "n_spatial_blocks": 573,
+          "near_m": 300,
+          "far_m": 900,
+          "statistic": "unweighted mean of per-fold ROC AUC",
+          "null_resolution": 0.01,
+          "refit_every_null": true,
+          "model_params": {
+            "max_iter": 25,
+            "max_leaf_nodes": 7,
+            "l2_regularization": 5.0
+          },
+          "null_assumption": "spatial shifts are a nonstationarity sensitivity diagnostic",
+          "rejected_single_class_shifts": {
+            "Fold 3 lacks both classes after spatial purging": 1
+          },
+          "conditional_geometry_design": "99 or requested valid shifts; single-class fold draws excluded on support only, never AUC; diagnostic not an exact spatial test",
+          "valid_shift_count": 99
+        }
+      },
+      "single_feature_auc_descriptive": {
+        "block_1": 0.4924369377517781,
+        "block_2": 0.5026766434008852,
+        "block_3": 0.49394541873836423,
+        "block_4": 0.4958148756125286,
+        "claim_m": 0.5494096162223592,
+        "road_m": 0.5004119282812673
+      },
+      "meaningful_access_association_flagged": false,
+      "strict_c2st_gate_passed": true
+    }
+  }
+}

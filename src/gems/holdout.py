@@ -490,6 +490,60 @@ class SegmentHoldout:
             },
         }
 
+    def compare_paired(
+        self, candidate_predictions, baseline_predictions, *, ci_draws=1999, seed=20261025
+    ):
+        """Paired 10 km block-bootstrap comparison of two fold-aligned prediction sets."""
+        if len(candidate_predictions) != len(self.folds) or len(baseline_predictions) != len(
+            self.folds
+        ):
+            raise ValueError(
+                "One independent prediction per held-out fold required for both series"
+            )
+        cand_rows, cand_blocks = [], []
+        base_rows, base_blocks = [], []
+        fold_deltas = []
+        for c_pred, b_pred, fold in zip(candidate_predictions, baseline_predictions, self.folds):
+            c_res, c_blk = self.score_fold(c_pred, fold)
+            b_res, b_blk = self.score_fold(b_pred, fold)
+            cand_rows.append({"fold": fold["name"], **c_res})
+            base_rows.append({"fold": fold["name"], **b_res})
+            cand_blocks.append(c_blk)
+            base_blocks.append(b_blk)
+            fold_deltas.append(
+                {
+                    "fold": fold["name"],
+                    "candidate_dti": float(c_res["dti"]),
+                    "baseline_dti": float(b_res["dti"]),
+                    "delta_dti": float(c_res["dti"] - b_res["dti"]),
+                    "candidate_wins": bool(c_res["dti"] > b_res["dti"]),
+                }
+            )
+        c_sum = np.sum(cand_blocks, axis=0)
+        b_sum = np.sum(base_blocks, axis=0)
+        yy, xx = np.nonzero(self.footprint)
+        nx = (self.footprint.shape[1] + 99) // 100
+        active = np.unique((yy // 100) * nx + xx // 100)
+        c_tot = pooled_components(cand_rows)
+        b_tot = pooled_components(base_rows)
+        delta_ci = pooled_bootstrap(
+            c_sum[active], paired=b_sum[active], resamples=ci_draws, seed=seed
+        )
+        delta = float(c_tot["dti"] - b_tot["dti"])
+        wins = int(sum(1 for d in fold_deltas if d["candidate_wins"]))
+        return {
+            "evaluator_version": MTR_EVALUATOR_VERSION,
+            "candidate_dti": float(c_tot["dti"]),
+            "baseline_dti": float(b_tot["dti"]),
+            "paired_delta_dti": delta,
+            "paired_delta_ci95": delta_ci,
+            "ci95_strictly_positive": bool(delta_ci[0] > 0.0),
+            "fold_wins": wins,
+            "n_folds": len(self.folds),
+            "min_fold_delta": float(min(d["delta_dti"] for d in fold_deltas)),
+            "folds": fold_deltas,
+        }
+
     def canary(self, features, *, seed=20261025, max_per_class=15000):
         """One-feature AUC diagnostics, never silently change a feature after a flag."""
         from scipy.ndimage import distance_transform_edt

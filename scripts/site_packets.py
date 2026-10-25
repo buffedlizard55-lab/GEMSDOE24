@@ -2,11 +2,230 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
+import zipfile
 from html import escape
+from pathlib import Path
 
 from gems.receipts import research_receipt
+from gems.submission import check_variants
 from gems.validator import sha256_file
+
+
+def gvc1_packet(root):
+    """Validate and render the 2026-10-25 H24-GVC1 hydrothermal+tilt+lineament packet."""
+    exp_path = root / "evidence/gvc1_experiment_20261025.json"
+    card_path = root / "evidence/gvc1_run_card_20261025.json"
+    c2st_path = root / "evidence/gvc1_c2st_audit_20261025.json"
+    dl_path = root / "docs/data/gvc1_download.json"
+    if not (exp_path.exists() and card_path.exists() and c2st_path.exists() and dl_path.exists()):
+        return "", "", ""
+    experiment = json.loads(exp_path.read_text())
+    card = json.loads(card_path.read_text())
+    c2st = json.loads(c2st_path.read_text())
+    dl = json.loads(dl_path.read_text())
+    name = dl["file"]
+    digest = dl["sha256"]
+    if (
+        card.get("raster_sha256") != digest
+        or card.get("submission_name") != name
+        or dl.get("note") != card.get("note")
+        or c2st.get("references", {}).get("e1_gvc1", {}).get("sha256") != digest
+    ):
+        raise ValueError("GVC1 checksum or identity disagree with run card or C2ST receipt")
+    if (
+        experiment.get("ok_to_submit") is not False
+        or dl.get("ok_to_submit") is not False
+        or card.get("ok_to_submit") is not False
+        or card.get("verdict") != "negative"
+    ):
+        raise ValueError("A negative research page cannot grant GVC1 slot authorization")
+
+    template = root / "data/bridge/sample_submission.tif"
+    checks = json.loads((root / "docs/downloads" / dl["checks_file"]).read_text())
+    for key in ("zero_outside", "nan_outside"):
+        row = checks[key]
+        target_variant = root / "docs/downloads" / row["file"]
+        fresh = check_variants(target_variant, template)
+        if (
+            not fresh["format_valid"]
+            or not row["format_valid"]
+            or fresh.get("submission_authorized") is not False
+            or any(fresh.get(field) != value for field, value in row.items())
+        ):
+            raise ValueError(f"GVC1 download variant invalid or stale: {key}")
+    zip_target = root / "docs/downloads" / checks["nan_zip_file"]
+    if sha256_file(zip_target) != checks["nan_zip_sha256"]:
+        raise ValueError("GVC1 ZIP checksum disagrees with receipt")
+    with zipfile.ZipFile(zip_target) as zf:
+        if zf.namelist() != [checks["nan_outside"]["file"]]:
+            raise ValueError("GVC1 ZIP entry list invalid")
+        if (
+            hashlib.sha256(zf.read(checks["nan_outside"]["file"])).hexdigest()
+            != checks["nan_outside"]["sha256"]
+        ):
+            raise ValueError("GVC1 ZIP inner TIFF hash disagrees")
+
+    note_path = root / "docs/downloads" / dl["note_file"]
+    if len(dl["note"]) > 140 or note_path.read_text().strip() != dl["note"]:
+        raise ValueError("GVC1 note is missing, changed, or exceeds 140 characters")
+
+    target = root / "docs/downloads" / name
+    preflight_path = target.with_suffix(".preflight.json")
+    preflight = json.loads(preflight_path.read_text())
+    if (
+        preflight.get("artifact", {}).get("sha256") != digest
+        or preflight.get("run_card", {}).get("artifact_sha256_matches") is not True
+        or preflight.get("run_card", {}).get("artifact_name_matches") is not True
+        or preflight.get("decision", {}).get("submission_status") != "DO_NOT_SUBMIT"
+        or preflight.get("decision", {}).get("ready_to_submit") is not False
+        or preflight.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1")
+        is not True
+    ):
+        raise ValueError("GVC1 exact-file preflight is missing, stale, or does not fail closed")
+
+    e = lambda s: escape(str(s), quote=True)  # noqa: E731
+    score = card["holdout"]
+    lo, hi = score["ci95"]["interval"]
+    base = card["baselines_same_evaluator"]
+    b0_lo, b0_hi = base["B0_ci95"]
+    b1_lo, b1_hi = base["B1_ci95"]
+    paired = experiment["paired_comparisons"]["E1_vs_B1_physics_geothermal_gain"]
+    d_lo, d_hi = paired["paired_delta_ci95"]
+    e2 = experiment["holdout_results"]["E2_h24_gvc1_resid"]
+    e2_lo, e2_hi = e2["ci95"]["interval"]
+    nov = card["correlation_overlap_vs_registry"]
+    cal_row = nov["calibration_control_summary"][0]
+    top_comp = experiment["novelty_48_rasters"]["e1_final_dots"]["top_competing_comparators"][0]
+    c2_aud = card["c2st_nuisance_audit"]
+    canary_aucs = [v["pooled_auc"] for v in experiment["canary"]["features"].values()]
+    canary_min, canary_max = min(canary_aucs), max(canary_aucs)
+
+    status_box = (
+        '<div class="status stopped" role="status">'
+        "<strong>HIGHEST HOLDOUT ARTIFACT (H24-GVC1) — DOWNLOAD: YES · SUBMIT: NO. NOT OK TO SUBMIT (DO_NOT_SUBMIT).</strong> "
+        "Automated gates ran end-to-end with zero human-inspector fallback: format/strict-[0,1] PASS, "
+        f"48/48 two-polarity leakage canaries PASS ([{canary_min:.4f}, {canary_max:.4f}]), "
+        f"matched OOF-Base gain PASS (HOLDOUT-DTI {score['dti']:.5f} vs {base['B1_oof_base_submod_dti']:.5f}, "
+        f"paired Δ {paired['paired_delta_dti']:+.5f}, 95% CI [{d_lo:+.5f}, {d_hi:+.5f}], {paired['fold_wins']}/4 folds), "
+        f"and exact-file C2ST nuisance audit PASS (AUC {c2_aud['candidate_auc']:.4f}, Holm p = {c2_aud['candidate_holm_p']:.3f}), "
+        f"but 3-px dot overlap reaches {100 * nov['final_max_competing_overlap_within_3px']:.2f}% (&gt; 70%) against "
+        f"prior 161k-px range-front ridges ({e(top_comp['registry_id'])}) plus {100 * cal_row['candidate_dot_overlap_within_3px']:.2f}% "
+        f"on the retained spacing-5 lattice ({e(cal_row['registry_id'])}). Stopped immediately per Rule 1.</div>"
+    )
+    gate_rows = [
+        (
+            "1. Exact-grid GeoTIFF & strict [0,1]",
+            "PASS",
+            f"Single-band float32, EPSG:32611, 3730×3292, 0 NaN/Inf inside footprint, all 12,279,160 cells in [0.0, 1.0]; {dl['pixel_count']:,} binary {{0,1}} dots (&ge;300 m clearance).",
+        ),
+        (
+            "2. 48-feature two-polarity leakage canary",
+            "PASS",
+            f"All 30 scale-separated base + 18 label-free INGENIOUS hydrothermal/tilt/lineament features in [{canary_min:.4f}, {canary_max:.4f}] (well inside [0.10, 0.90]).",
+        ),
+        (
+            "3. Reconstructed OOF HOLDOUT-DTI win",
+            "PASS",
+            f"HOLDOUT-DTI {score['dti']:.5f} [{lo:.5f}, {hi:.5f}] beats matched B1 OOF-Base-Submod ({base['B1_oof_base_submod_dti']:.5f}) by {paired['paired_delta_dti']:+.5f} (95% CI [{d_lo:+.5f}, {d_hi:+.5f}], 3/4 folds), B0 OOF-H24-Ridge ({base['B0_oof_h24_ridge_dti']:.5f}), and RSHG1 (0.12900).",
+        ),
+        (
+            "4. Exact-file C2ST nuisance audit",
+            "PASS",
+            f"Labels audited first (AUC {c2_aud['labels_auc']:.4f}); H24-GVC1 AUC {c2_aud['candidate_auc']:.4f} (margin vs null p95 {c2_aud['candidate_margin_vs_null_p95']:+.4f}, Holm p = {c2_aud['candidate_holm_p']:.3f}).",
+        ),
+        (
+            "5. Registry 3-px dot-overlap uniqueness",
+            "FAIL",
+            f"Surface max |ρ| = {nov['surface_max_abs_rank_correlation']:.4f} &le; 0.90 PASS and non-duplicate vs all 2026-10-25 GEMSDOE24 lanes (&le;60.7%), but 3-px overlap = {100 * nov['final_max_competing_overlap_within_3px']:.2f}% (&gt;70%) on {top_comp['registry_id']} ({Path(top_comp['file']).name}).",
+        ),
+        (
+            "6. Separate weekly-slot selector",
+            "BLOCKED",
+            "Stopped automatically on Rule 1 overlap + unassigned coordinator lane + external weekly-quota selector. Zero competition slots spent.",
+        ),
+    ]
+    gate_table = (
+        '<div class="tablewrap"><table><thead><tr><th>Automated gate</th><th>Decision</th><th>Exact measurement / interpretation</th></tr></thead><tbody>'
+        + "".join(
+            f"<tr><td>{e(a)}</td><td><strong>{e(b)}</strong></td><td>{e(c)}</td></tr>"
+            for a, b, c in gate_rows
+        )
+        + "</tbody></table></div>"
+    )
+    note_block = (
+        f'<div class="note" id="note-gvc1">{e(dl["note"])}</div>'
+        '<div class="actions"><button class="button" data-copy="#note-gvc1" data-feedback="#copy-feedback-gvc1">'
+        "Copy GVC1 note (&le;140 chars)</button>"
+        f'<a class="button" href="downloads/{e(dl["note_file"])}" download>GVC1 Note .txt</a></div>'
+        '<p id="copy-feedback-gvc1" class="copyfeedback" aria-live="polite"></p>'
+        f'<p class="micro">{len(dl["note"])} characters · maximum 140</p>'
+    )
+    hero_html = f"""<section class="hero" aria-label="Latest H24-GVC1 hydrothermal + lineament GeoTIFF and automated gate">
+<div>
+<div class="eyebrow">Highest GEMSDOE24 Holdout · H24-GVC1 INGENIOUS Hydrothermal + Tilt + 8-Azimuth Lineaments</div>
+<h1>Genuine hydrothermal OOF win.<br>Automatic overlap stop: DO NOT SUBMIT.</h1>
+<p class="lead"><strong><code>{e(name)}</code></strong> was computed independently from OpenEI GDR INGENIOUS paleo-sinter/travertine (899 pts), 2 m shallow temperature probes (599 pts), and geothermometry (2,331 pts) fused with Miller–Singh magnetic tilt derivatives, 8-azimuth DEM/gravity/magnetic lineaments, and a 300 m submodular kernel allocator. <strong>Zero previous submission pixels were copied.</strong> It is <strong>not yet scored</strong> on the competition portal, achieves the highest <code>HOLDOUT-DTI</code> in GEMSDOE24 (<strong><code>{score["dti"]:.5f}</code></strong>, paired Δ <strong><code>{paired["paired_delta_dti"]:+.5f}</code></strong> with 95% CI <code>[{d_lo:+.5f}, {d_hi:+.5f}]</code> over matched <code>OOF-Base</code>) while passing strict C2ST (AUC <code>{c2_aud["candidate_auc"]:.4f}</code>, Holm <em>p</em> = <code>{c2_aud["candidate_holm_p"]:.3f}</code>), and is automatically marked <strong>NOT OK TO SUBMIT</strong> because 76.82% of its dots fall within 300 m of dense range-front ridges (<code>{e(top_comp["registry_id"])}</code>).</p>
+{status_box}
+<div class="actions">
+<a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download H24-GVC1 GeoTIFF (zeros outside, [0,1]) — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["nan_file"])}" download="{e(dl["nan_file"])}">↓ NaN-outside .tif — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["zip_file"])}" download="{e(dl["zip_file"])}">↓ NaN-outside .zip — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(preflight_path.name)}">Automated preflight — DO_NOT_SUBMIT</a>
+<a class="button" href="data/gvc1_run_card_20261025.json" download>GVC1 JSON run card</a>
+<a class="button" href="executive-summary.html">Executive submission guide →</a>
+</div>
+<p class="fileline">{e(name)}</p>
+<p class="hash">SHA-256 {e(digest)} · NaN-twin SHA-256 {e(dl["nan_sha256"])}</p>
+<p class="micro"><span class="badge blue">Format &amp; [0,1] PASS</span> <span class="badge blue">OOF Δ {paired["paired_delta_dti"]:+.5f} PASS</span> <span class="badge blue">C2ST {c2_aud["candidate_auc"]:.4f} PASS</span> <span class="badge danger">3-px Overlap 76.8% FAIL</span> <span class="badge gray">0 slots used</span></p>
+{note_block}
+</div>
+<aside class="card visual">
+<div class="cardtop"><h3>H24-GVC1 HOLDOUT-DTI</h3><span class="badge amber">Not leaderboard scores</span></div>
+<div class="result-number">{score["dti"]:.5f}</div>
+<p>HOLDOUT-DTI · <code>{e(score["evaluator_version"])}</code> · {score["n_withheld_positive_pixels"]:,} withheld positives · 95% CI [{lo:.5f}, {hi:.5f}] · Paired Δ vs matched OOF-Base: <strong>{paired["paired_delta_dti"]:+.5f}</strong> [{d_lo:+.5f}, {d_hi:+.5f}] ({paired["fold_wins"]}/4 folds)</p>
+<img class="raster-preview" src="assets/gvc1-preview.png" alt="Downsampled preview of H24-GVC1 independently computed fault dots (37,654 positive cells)">
+<p class="micro">37,654 binary {{0,1}} dots · NW fold DTI {score["folds"][0]["dti"]:.5f} (+0.02387 vs OOF-Base) · SE fold DTI {score["folds"][3]["dti"]:.5f} (+0.02299)</p>
+</aside>
+</section>
+<section aria-label="H24-GVC1 automated gate breakdown"><h2>H24-GVC1 automated validation gates (zero human-inspector fallback)</h2>{gate_table}</section>"""
+
+    exec_html = f"""<section class="card concurrent" aria-label="H24-GVC1 submission status">
+<h2>Highest Holdout Artifact: <code>{e(name)}</code> — DOWNLOAD: YES · SUBMIT: NO</h2>
+{status_box}
+<div class="actions">
+<a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download H24-GVC1 GeoTIFF (zeros outside) — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["nan_file"])}" download="{e(dl["nan_file"])}">↓ GVC1 NaN-outside twin — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["zip_file"])}" download="{e(dl["zip_file"])}">↓ GVC1 NaN-outside .zip — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(preflight_path.name)}">GVC1 Automated preflight JSON</a>
+<a class="button" href="downloads/{e(dl["checks_file"])}">GVC1 Exact-file validator JSON</a>
+<a class="button" href="data/gvc1_run_card_20261025.json" download>GVC1 JSON run card</a>
+</div>
+<p class="fileline">{e(name)} · SHA-256 <code>{e(digest)}</code></p>
+{note_block}
+{gate_table}
+</section>"""
+
+    b0_folds = {r["fold"]: r for r in experiment["holdout_results"]["B0_oof_h24_ridge"]["folds"]}
+    b1_folds = {r["fold"]: r for r in experiment["holdout_results"]["B1_oof_base_submod"]["folds"]}
+    e2_folds = {r["fold"]: r for r in experiment["holdout_results"]["E2_h24_gvc1_resid"]["folds"]}
+    e1_folds = {r["fold"]: r for r in experiment["holdout_results"]["E1_h24_gvc1"]["folds"]}
+    fold_rows = "".join(
+        f"<tr><td><code>{e(fn)}</code></td><td><strong>{e1_folds[fn]['dti']:.5f}</strong></td><td>{e2_folds[fn]['dti']:.5f}</td><td>{b1_folds[fn]['dti']:.5f}</td><td>{b0_folds[fn]['dti']:.5f}</td><td>{e1_folds[fn]['n_emitted']:,}</td></tr>"
+        for fn in ("NW", "NE_LidarGapHeavy", "SW", "SE")
+    )
+    research_html = f"""<section><h2>2026-10-25 Continuation Breakthrough &amp; Overlap Stop: H24-GVC1 Geothermal-Vent Upflow + Tilt + Lineament Submodular Detector</h2>
+<div class="grid2"><article class="card"><h3>HOLDOUT-DTI vs Reconstructed OOF Baselines (not leaderboard scores)</h3>
+<div class="tablewrap"><table><thead><tr><th>Fold / Summary</th><th>E1: H24-GVC1</th><th>E2: GVC1-Resid</th><th>B1: OOF-Base-Submod</th><th>B0: OOF-H24-Ridge</th><th>GVC1 Dots</th></tr></thead><tbody>
+{fold_rows}
+<tr><td><strong>Pooled <code>gems-segment-pooled-v1</code></strong></td><td><strong>{score["dti"]:.5f}</strong> [{lo:.5f}, {hi:.5f}]</td><td>{e2["dti"]:.5f} [{e2_lo:.5f}, {e2_hi:.5f}]</td><td>{base["B1_oof_base_submod_dti"]:.5f} [{b1_lo:.5f}, {b1_hi:.5f}]</td><td>{base["B0_oof_h24_ridge_dti"]:.5f} [{b0_lo:.5f}, {b0_hi:.5f}]</td><td>{dl["pixel_count"]:,}</td></tr>
+</tbody></table></div>
+<p class="micro">Adding 18 label-free OpenEI GDR INGENIOUS hydrothermal-upflow (paleo-sinter/travertine, 2 m shallow temperature probes, wells/springs geothermometry), Miller–Singh TMI tilt, and 8-azimuth DEM/gravity/magnetic lineament features to the matched 30-feature submodular baseline lifts pooled <code>HOLDOUT-DTI</code> by <strong>{paired["paired_delta_dti"]:+.5f}</strong> (10 km block-bootstrap 95% CI <strong>[{d_lo:+.5f}, {d_hi:+.5f}]</strong>, winning 3/4 quadrants: NW <code>+0.02387</code>, SE <code>+0.02299</code>, NE <code>+0.00034</code>). Linear road/claim/block residualization (<code>E2</code>) erases the gain (<code>{e2["dti"]:.5f}</code>) because Great Basin roads and historic mining claims follow range-bounding valleys — while <code>E1</code> already passes strict exact-file C2ST without residualization (AUC <strong><code>{c2_aud["candidate_auc"]:.4f}</code></strong>, Holm <em>p</em> = <code>{c2_aud["candidate_holm_p"]:.3f}</code>).</p></article>
+<article class="card"><h3>4 Ranked Hypotheses, Mimics &amp; Supervised Range-Front Convergence</h3>
+<img class="raster-preview" src="assets/gvc1-preview.png" alt="Downsampled preview of H24-GVC1 fault dots (37,654 positive cells)">
+<p class="micro">Ranked pre-run in commit <code>1bc8ace0</code>: (1) <code>H24-GVC1</code> hydrothermal+tilt+lineaments (executed), (2) <code>H24-CSB2</code> tensor curvature step-over saddles, (3) <code>H24-MDE3</code> multi-depth potential-field persistence, (4) <code>H24-INSAR4</code> NASA OPERA Sentinel-1 InSAR deformation (deferred, network-blocked). Named mimics: welded ash-flow tuff hogbacks/caldera margins, lateral fan thermal outflow plumes, and Pleistocene Lahontan shorezone tufa. Although non-duplicate (&le;60.7%) against every 2026-10-25 GEMSDOE24 lane, 76.82% of <code>H24-GVC1</code> dots fall within 300 m of 161,366-px <code>gems10-h25-ctx-ridge</code> (<code>registry-041</code>, raw &rho; = 0.0445), triggering an immediate Rule 1 stop. <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/12_preregistration_GVC1_2026-10-25.md">GVC1 preregistration →</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/13_GVC1_findings_2026-10-25.md">GVC1 findings &amp; source ledger →</a></p></article></div></section>"""
+    return hero_html, exec_html, research_html
 
 
 def rshg1_packet(root):
