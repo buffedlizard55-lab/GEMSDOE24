@@ -66,7 +66,7 @@ def test_tampered_or_misbound_run_card_never_grants_authorization(tmp_path):
     assert "RUN_CARD_VALIDATOR_HASH_MISMATCH" in report["decision"]["blockers"]
 
 
-def test_positive_path_requires_a_synthetic_hash_bound_promoted_card(tmp_path):
+def test_self_asserted_promoted_card_cannot_replace_independent_selector_evidence(tmp_path):
     """This is a unit fixture, not a claim about the active research artifact."""
     digest = sha256_file(ZEROS)
     card = {
@@ -80,9 +80,10 @@ def test_positive_path_requires_a_synthetic_hash_bound_promoted_card(tmp_path):
     path = tmp_path / "synthetic-promoted-card.json"
     path.write_text(json.dumps(card))
     report = preflight(ZEROS, TEMPLATE, run_card_path=path, expected_template_sha256=TEMPLATE_SHA)
-    assert report["run_card"]["scientific_authorization"]
-    assert report["decision"]["ready_to_submit"]
-    assert report["decision"]["submission_status"] == "OK_TO_SUBMIT"
+    assert not report["run_card"]["scientific_authorization"]
+    assert not report["decision"]["ready_to_submit"]
+    assert report["decision"]["submission_status"] == "DO_NOT_SUBMIT"
+    assert "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED" in report["decision"]["blockers"]
 
 
 def test_cli_writes_a_reproducible_receipt_and_does_not_turn_negative_gate_into_error(tmp_path):

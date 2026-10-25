@@ -1,0 +1,59 @@
+{
+  "status": "three passes completed; research deliverable with explicit unmet submission requirements",
+  "pass_1": {
+    "preregistration_commit": "4a112db",
+    "execution_code_commit": "4ccbe13",
+    "experiments_run": 1,
+    "original_source_hashes_verified": 6,
+    "shared_evaluator_writer_novelty_reused": true,
+    "negative_stop_respected": true,
+    "submission_slots_used": 0
+  },
+  "pass_2": {
+    "authorization_shortcut_closed": true,
+    "empty_canary_pass_closed": true,
+    "historical_30km_decay_misdescription_flagged": true,
+    "frozen_lane_reruns_blocked": true,
+    "nonzero_placeholder_exemption_removed_prospectively": true,
+    "stopped_experiment_not_retuned": true
+  },
+  "pass_3": {
+    "pytest": "216 passed",
+    "ruff_check": "PASS",
+    "ruff_format": "105 files already formatted",
+    "javascript_syntax": "PASS",
+    "git_diff_check": "PASS",
+    "pip_check": "No broken requirements found",
+    "shared_evaluator_recorded_verification": "PASS",
+    "sahg1_recorded_verification": "PASS",
+    "oj1_exact_file_and_pooled_components_verification": "PASS",
+    "source_feed_offline_schemas": "PASS; not a current leaderboard check",
+    "static_preview_host_and_tiff_download_hash": "PASS",
+    "nine_named_artifacts_ancestry_replayed": "PASS"
+  },
+  "artifact": {
+    "file": "gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif",
+    "sha256": "ec0139cb4e9f1641dd43ad385d1c164d639a2c854f64ff4c1f9d61e6dc86635a",
+    "format_valid": true,
+    "strict_whole_array_finite_range_0_1": true,
+    "scientific_uniqueness_gate_passed": false,
+    "ok_to_download": true,
+    "ok_to_submit": false
+  },
+  "unmet_requirements": [
+    "Submission-ready unique file: NOT achieved; duplicate-final-dots and baseline loss",
+    "Assigned single method paragraph absent; OJ1 provisional research only",
+    "Independent selector/quota evidence verifier not implemented; no flag-only release",
+    "Exact-file nuisance audit not run after duplicate stop",
+    "Baseline compared from recorded same-protocol receipt, not retrained this session",
+    "Registry pin predates changes in eight of nine GitHub sites; no current/global novelty claim",
+    "Organizer receipts/current leaderboard/current quota unavailable",
+    "Official non-GitHub source hosts not freshly accessible"
+  ],
+  "github": {
+    "concurrent_main_pr_20_preserved": true,
+    "stale_conflicting_pr_7_not_merged": true,
+    "branch_protection_read": "HTTP 403 Resource not accessible by integration; not inferred absent",
+    "pr_merge_and_deployment": "To be verified and reported from GitHub after this receipt; no publication claimed here"
+  }
+}

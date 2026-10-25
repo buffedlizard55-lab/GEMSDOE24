@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Print a fresh fail-closed receipt for the current research-only download."""
+"""Print a fresh fail-closed receipt for the historical UNIQUE03 research-only download."""
+
 import json
 import sys
 from pathlib import Path
