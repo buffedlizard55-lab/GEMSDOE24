@@ -149,6 +149,27 @@ The manifest and verification report were refreshed. The inventory does not cont
 `data/bridge/example_submission.tif`; `sample_submission.tif` is present. This missing
 path is an inventory irregularity, not evidence of an authentic organizer example file.
 
+## H24-FUSE stop — 2026-10-25 (negative, duplicate gate)
+
+The preregistered Rank-1 learner (27 base + 4 SAHG1 channels in the same fold-local HGB) was run once after two
+attempts (one crash on a missing peer-cache, one discarded run with a final-dot novelty bug found on review; see
+[knowledge/17](knowledge/17_FUSE_findings_2026-10-25.md)). It gives **HOLDOUT-DTI 0.12995** (95% CI [0.11479, 0.14476],
+60,988 withheld positives, `gems-segment-pooled-v1`), statistically tied with the reconstructed OOF baseline 0.12997, and its
+final dots exceed the 0.70 3-px overlap limit against registry-006 and registry-016 (plus
+registry-040/041/042, classified as method lanes although their files sit in `inputs/calibration/`). **Stopped as duplicate: no TIFF is packaged; DOWNLOAD: NO · SUBMIT: NO.**
+Run card: [`evidence/fuse_run_card_20261025.json`](evidence/fuse_run_card_20261025.json) · record: [`evidence/fuse_experiment_20261025.json`](evidence/fuse_experiment_20261025.json).
+
+```bash
+.venv/bin/python scripts/restore_data.py --access-mirrors   # integrity-pinned owner mirrors
+.venv/bin/python scripts/prepare_data.py                    # 30-channel cache (sha a4ca25b2…)
+.venv/bin/python scripts/review_peer_registry.py            # 84 pinned GitHub blobs for the peer check
+.venv/bin/python scripts/run_fuse_prereg.py --write-card      # derive card from the recorded stop (no rerun)
+.venv/bin/python -m pytest -q
+```
+
+Irregularities for review (the H33 analysis still cites `registry/live_scores.json` as forensic evidence although that file has no H33-B2 row; main's correction header now marks 0.2778 as owner-reported) are listed in
+[knowledge/17 §6](knowledge/17_FUSE_findings_2026-10-25.md#6-irregularities-for-review).
+
 ## Current decision
 
 <!-- STATUS:START -->
