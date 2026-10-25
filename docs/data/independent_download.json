@@ -1,0 +1,20 @@
+{
+  "file": "gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif",
+  "nan_file": "gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-nan.tif",
+  "sha256": "3f881cdcaa22557b4265c0415d1b9f436b9f5804a55aabb52edfbc4de67fee83",
+  "content_id": "ed7243e6d163",
+  "pixel_count": 37722,
+  "note": "GEMS24 MTR1 | paired RTP trough + Th/K | NEGATIVE: lattice overlap veto; DO NOT SUBMIT | id ed7243e6d163",
+  "note_file": "note-gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.txt",
+  "checks_file": "checks-gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.json",
+  "generation": "independent-mtr1-v1",
+  "format_valid": true,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "slot_recommendation": "not_recommended",
+  "verdict": "negative",
+  "live_dti": null,
+  "run_card": "mtr1_run_card.json",
+  "independently_computed": true,
+  "lane_uniqueness_gate_passed": false
+}

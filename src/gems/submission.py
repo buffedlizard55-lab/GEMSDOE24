@@ -212,6 +212,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         "format_valid": not hard_fail,
         # Deprecated legacy alias: a format-only check cannot authorize a slot.
         "ok_to_upload": False,
+        "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
         "format_acceptable": not hard_fail,
         "submission_authorized": False,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
