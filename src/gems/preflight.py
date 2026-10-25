@@ -35,9 +35,7 @@ def _read_json(path: Path) -> tuple[dict[str, Any] | None, str | None]:
     return value, None
 
 
-def _card_evidence(
-    artifact: Path, artifact_sha256: str, run_card: Path | None
-) -> dict[str, Any]:
+def _card_evidence(artifact: Path, artifact_sha256: str, run_card: Path | None) -> dict[str, Any]:
     """Check that promotion authority is bound to this file, not its name."""
     base: dict[str, Any] = {
         "provided": run_card is not None,

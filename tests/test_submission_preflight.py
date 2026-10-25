@@ -14,7 +14,9 @@ CARD = ROOT / "evidence/aspc_run_card_20261025.json"
 ZEROS = ROOT / "docs/downloads/gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.tif"
 NAN = ROOT / "docs/downloads/gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-nan.tif"
 MTR_CARD = ROOT / "evidence/mtr1_run_card.json"
-MTR_ZEROS = ROOT / "docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif"
+MTR_ZEROS = (
+    ROOT / "docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif"
+)
 TEMPLATE_SHA = "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
 
 
@@ -32,7 +34,9 @@ def test_research_artifact_passes_format_and_strict_range_but_is_not_authorized(
 
 
 def test_current_mtr_artifact_is_strict_range_compatible_but_has_a_negative_scientific_gate():
-    report = preflight(MTR_ZEROS, TEMPLATE, run_card_path=MTR_CARD, expected_template_sha256=TEMPLATE_SHA)
+    report = preflight(
+        MTR_ZEROS, TEMPLATE, run_card_path=MTR_CARD, expected_template_sha256=TEMPLATE_SHA
+    )
     assert report["format_validation"]["format_valid"]
     assert report["portal_range_diagnostic"]["strict_whole_array_values_in_0_1"]
     assert report["note"]["characters"] == 104 and report["note"]["within_limit"]

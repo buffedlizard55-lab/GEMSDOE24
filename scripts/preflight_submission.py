@@ -59,7 +59,9 @@ def main() -> int:
     )
     notes = parser.add_mutually_exclusive_group()
     notes.add_argument("--note", default=None, help="exact optional submission note")
-    notes.add_argument("--note-file", type=Path, default=None, help="file containing the exact note")
+    notes.add_argument(
+        "--note-file", type=Path, default=None, help="file containing the exact note"
+    )
     parser.add_argument(
         "--expected-template-sha256",
         default=None,
