@@ -1,0 +1,25 @@
+{
+  "audit": "fresh-exact-file-validation-v1",
+  "files": [
+    {
+      "file": "gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.tif",
+      "sha256": "7f5706e03866d826e83ba5298a7f3fbbcfacc3b3e74b957d726269b54714e7bd",
+      "format_valid": true
+    },
+    {
+      "file": "gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-nan.tif",
+      "sha256": "de1c22230f12011fb1f30cb137b7bef912ea250df4539a0bef8d0d25276c9218",
+      "format_valid": true
+    }
+  ],
+  "submission_authorized": false,
+  "new_experiments": 0,
+  "verdict": "negative",
+  "blockers": [
+    "No assigned parallel-run method lane",
+    "Current-best comparable OOF reconstruction unavailable",
+    "Exact-file nuisance audit not run; negative screening candidate",
+    "Weekly selector authorization and current portal cap unverified",
+    "Promotion not established; research-only file, do not upload"
+  ]
+}

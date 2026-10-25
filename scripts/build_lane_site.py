@@ -18,24 +18,22 @@ def build(root, page):
     download = "<p>No TIFF released: the experiment stopped at a required gate.</p>"
     name = None
     if artifact:
-        from gems.validator import sha256_file
+        from gems.receipts import research_receipt
 
         name = artifact["file"]
-        target = docs / "downloads" / name
-        if sha256_file(target) != artifact["sha256"]:
-            raise ValueError("Active research artifact differs from its exact-file receipt")
+        checks = research_receipt(docs / "downloads", artifact)
         if card.get("raster_sha256") != artifact["sha256"] or card.get("submission_name") != name:
             raise ValueError("Run card and active artifact identity disagree")
-        checks = json.loads(target.with_suffix(".checks.json").read_text())
-        if checks.get("sha256") != artifact["sha256"] or checks.get("format_valid") is not True:
-            raise ValueError("Active artifact does not have a hash-bound passing format receipt")
-        if card["submission_authorized"] or artifact["submission_authorized"]:
+        if card.get("validator_output") != checks:
+            raise ValueError("Run card and artifact validator output disagree")
+        if card.get("submission_authorized") is not False or card.get("verdict") != "negative":
             raise ValueError("A research lane cannot grant selector authorization")
         download = f'''<div class="actions"><a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download unique research .tif — DO NOT SUBMIT</a><a class="button" href="downloads/{e(name.replace(".tif", ".checks.json"))}">Exact-file validator</a></div><p class="fileline">{e(name)}</p><p class="micro">SHA-256: {e(artifact["sha256"])}</p>'''
     twin = report.get("template_convention_companion")
     if twin:
-        if sha256_file(docs / "downloads" / twin["file"]) != twin["sha256"]:
-            raise ValueError("Template-convention companion checksum mismatch")
+        research_receipt(docs / "downloads", twin)
+        if card.get("template_convention_companion") != twin:
+            raise ValueError("Run card and companion identity disagree")
         download += f'<p><a href="downloads/{e(twin["file"])}" download="{e(twin["file"])}">Same research predictions, NaN-outside template convention — also DO NOT SUBMIT</a></p>'
     blockers = "".join(f"<li>{e(x)}</li>" for x in report["blockers"])
     status = f"""<div class="status"><strong>NOT OK TO SUBMIT — negative promotion decision.</strong> Automated gates do not authorize a competition slot. Downloading is safe; uploading this file is not recommended.<ul>{blockers}</ul></div>"""

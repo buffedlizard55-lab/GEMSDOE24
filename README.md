@@ -25,6 +25,29 @@ the owner's brief at the bottom; (2) [`knowledge/owner_brief_verbatim.md`](knowl
 [Dotting preregistration](knowledge/04_preregistered_dotting_2026-10-02.md) ·
 [Source review](knowledge/03_verified_sources_2026-10-02.md)
 
+## Latest continuation audit (2026-10-25)
+
+The repeated owner request remains the active [project brief](knowledge/owner_brief_2026-10-25.md).
+Read it at each session start; no new single-method lane paragraph was supplied.
+This continuation **does not relabel or regenerate the existing TIFF as new work**.
+Both existing download encodings were independently reopened using the shared
+validator and pinned template. Their bytes and decisions match their receipts.
+**NOT OK TO SUBMIT** remains the automated scientific decision.
+
+```bash
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/pip install --no-deps -e .
+.venv/bin/python scripts/audit_research_downloads.py  # read-only; never authorizes
+.venv/bin/python -m pytest -q
+```
+
+The ASPC download checks now reject inconsistent authorization, hard-requirement decisions,
+filenames or embedded receipts for **both** primary and companion downloads.
+[Three-pass review and next steps](knowledge/11_continuation_audit_2026-10-25.md) ·
+[Fresh exact-file audit](evidence/research_download_audit_20261025.json).
+No new experiment, new geological discovery, higher score or slot use is claimed.
+
 ## Current decision
 
 <!-- STATUS:START -->
