@@ -1,0 +1,1543 @@
+{
+  "sources": [
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE24",
+      "ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+      "files": [
+        {
+          "path": "README.md",
+          "blob_sha": "559967d3ba04e097341033d6e0c882ff739c2cf8",
+          "bytes": 42873
+        },
+        {
+          "path": "docs/downloads/gems24-h24-0-mirror-h19-5-group-best-20261002-e27054cf-allfinite.tif",
+          "blob_sha": "918e6e23d71e27475e784fa4593c866d2d915743",
+          "bytes": 937342
+        },
+        {
+          "path": "docs/downloads/gems24-h24-0-mirror-h19-5-group-best-20261002-e27054cf-nan.tif",
+          "blob_sha": "5d1a920f40fa3a589e91248c1309761e44d45da8",
+          "bytes": 1712322
+        },
+        {
+          "path": "docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
+          "blob_sha": "6b6d31807e501af4749bbaeb43702450893fd720",
+          "bytes": 863902
+        },
+        {
+          "path": "docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+          "blob_sha": "cc1752f2ea48b23bd41232c1fdcdceb5f439e401",
+          "bytes": 1632732
+        },
+        {
+          "path": "docs/downloads/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-allfinite.tif",
+          "blob_sha": "bfb7e86d046dd178c3d6ab60522861b5464dd420",
+          "bytes": 836982
+        },
+        {
+          "path": "docs/downloads/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+          "blob_sha": "c8d3a46481152bbdfd61b113484be979fde9d4c6",
+          "bytes": 1603424
+        },
+        {
+          "path": "docs/downloads/gems24-reference-h19-5-20261002-80d47e1ab2ee-allfinite.tif",
+          "blob_sha": "918e6e23d71e27475e784fa4593c866d2d915743",
+          "bytes": 937342
+        },
+        {
+          "path": "docs/downloads/gems24-reference-h19-5-20261002-80d47e1ab2ee-nan.tif",
+          "blob_sha": "5d1a920f40fa3a589e91248c1309761e44d45da8",
+          "bytes": 1712322
+        },
+        {
+          "path": "docs/index.html",
+          "blob_sha": "ef45ef1ab9037bcd3ddd962f020a205992ef3298",
+          "bytes": 9211
+        },
+        {
+          "path": "index.html",
+          "blob_sha": "6629ac242c0540bff33436c6d5bb70c7b0ddb9bc",
+          "bytes": 9276
+        },
+        {
+          "path": "registry/submissions.json",
+          "blob_sha": "ed8f447fb6cde7c47f4ae272d5a2c9d8aceacbc4",
+          "bytes": 4658
+        },
+        {
+          "path": "src/gems/__init__.py",
+          "blob_sha": "32f3c742d9c3387814be5f030db0ecc53faa8818",
+          "bytes": 410
+        },
+        {
+          "path": "src/gems/acquisition.py",
+          "blob_sha": "0ed0d914ab40e5a8839271746a5bc6ca055a6b4d",
+          "bytes": 8289
+        },
+        {
+          "path": "src/gems/arcs.py",
+          "blob_sha": "6d22f0e545bd9cbc1caeb576dcba7fc7c7afb852",
+          "bytes": 3565
+        },
+        {
+          "path": "src/gems/c2s2.py",
+          "blob_sha": "23e44bbe588a37770f58d6bfd4b6988e6dede0a8",
+          "bytes": 10751
+        },
+        {
+          "path": "src/gems/confounds.py",
+          "blob_sha": "8c9364f2ef40ecbe61d949b5489c812d072d526e",
+          "bytes": 15195
+        },
+        {
+          "path": "src/gems/emission.py",
+          "blob_sha": "f81dee1d49a88dfecb32669d1f87281eeef25934",
+          "bytes": 8517
+        },
+        {
+          "path": "src/gems/emission_eval.py",
+          "blob_sha": "579d3f23406c690a9874a3bb6d046c90b1fff408",
+          "bytes": 4253
+        },
+        {
+          "path": "src/gems/footprint.py",
+          "blob_sha": "7714693c789cdd38a0b913073dbc46fdd346d961",
+          "bytes": 2399
+        },
+        {
+          "path": "src/gems/geofeatures.py",
+          "blob_sha": "c3ca4b2573e2b49adc237c7443a71cabe0f85a13",
+          "bytes": 8917
+        },
+        {
+          "path": "src/gems/holdout.py",
+          "blob_sha": "f993442618f15430046a2f4ef899c3578921b838",
+          "bytes": 9720
+        },
+        {
+          "path": "src/gems/metric.py",
+          "blob_sha": "b590ce19f367df59174a07768248ba72f6aafd44",
+          "bytes": 9544
+        },
+        {
+          "path": "src/gems/paths.py",
+          "blob_sha": "e689c71a7812f3d11d092a0a27d83ac278b5cef3",
+          "bytes": 1208
+        },
+        {
+          "path": "src/gems/promotion.py",
+          "blob_sha": "664ad214e2dd059975670c326802c8b08d9ad67f",
+          "bytes": 5572
+        },
+        {
+          "path": "src/gems/residualize.py",
+          "blob_sha": "2aa0e3d7120efca6a2f8c9bc7c1d8efe4bc85f33",
+          "bytes": 3311
+        },
+        {
+          "path": "src/gems/submission.py",
+          "blob_sha": "aa24ff573ea16f812f49a29d9a91291e9a5258d1",
+          "bytes": 10197
+        },
+        {
+          "path": "src/gems/thinning.py",
+          "blob_sha": "a69b744a6669c58a632cbc16ac38971cebb74b03",
+          "bytes": 4952
+        },
+        {
+          "path": "src/gems/validator.py",
+          "blob_sha": "e98fab4bde46ca2c926d0b4790777badd5369218",
+          "bytes": 396
+        }
+      ]
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE25",
+      "ref": "04333cc3fbf7486c56e0324fd07aee684be614dc",
+      "files": [
+        {
+          "path": "README.md",
+          "blob_sha": "9e5e7d2412e2ecc275c707be44ba8dc4c4a229b4",
+          "bytes": 70976
+        },
+        {
+          "path": "docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+          "blob_sha": "c8d3a46481152bbdfd61b113484be979fde9d4c6",
+          "bytes": 1603424
+        },
+        {
+          "path": "docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif",
+          "blob_sha": "bfb7e86d046dd178c3d6ab60522861b5464dd420",
+          "bytes": 836982
+        },
+        {
+          "path": "docs/index.html",
+          "blob_sha": "f936a6d9ceb03250200a2ad0a0c78be8f3a96e08",
+          "bytes": 15528
+        },
+        {
+          "path": "index.html",
+          "blob_sha": "8709487d0b1f6681f9b88a64d2565196cd6d7999",
+          "bytes": 15592
+        },
+        {
+          "path": "registry/submissions.json",
+          "blob_sha": "50c53b906162b0045b02ac6eb06a335476c57a6c",
+          "bytes": 8260
+        },
+        {
+          "path": "src/gems25/__init__.py",
+          "blob_sha": "20daeeef5dfb860a0b76dd916c3c3fd5c9b65fed",
+          "bytes": 118
+        },
+        {
+          "path": "src/gems25/design.py",
+          "blob_sha": "add6b0c7c46bf2227dc1068ad1304fc2103ad6b8",
+          "bytes": 2564
+        },
+        {
+          "path": "src/gems25/experiment.py",
+          "blob_sha": "66ea98319109b9d72a1cb9cf2c79976f3e02ab6c",
+          "bytes": 13340
+        },
+        {
+          "path": "src/gems25/factorial.py",
+          "blob_sha": "fc5e2c1c46e074980b78b2d00effda83054e7a62",
+          "bytes": 5455
+        },
+        {
+          "path": "src/gems25/families.py",
+          "blob_sha": "9509a0c89aab439cf5576bea6a06ad4c7c3ef84a",
+          "bytes": 3306
+        },
+        {
+          "path": "src/gems25/features.py",
+          "blob_sha": "efa04bfab858e4414e35a15b3d056f75ecf27a21",
+          "bytes": 19887
+        },
+        {
+          "path": "src/gems25/h30.py",
+          "blob_sha": "08959a1cb28d6723460faad7074b0218307fb1f0",
+          "bytes": 15759
+        },
+        {
+          "path": "src/gems25/holdout.py",
+          "blob_sha": "fa1dd7ad2e2c50d93828d04d00bb6eb85ef9c2a3",
+          "bytes": 5814
+        },
+        {
+          "path": "src/gems25/livecal.py",
+          "blob_sha": "956cf6e3addf1a46f74cbe36200a9f52d6d6a707",
+          "bytes": 30877
+        },
+        {
+          "path": "src/gems25/metric.py",
+          "blob_sha": "3127a7d2fc2a760e40e47e0c0d922dbb621f4fdd",
+          "bytes": 5809
+        },
+        {
+          "path": "src/gems25/paths.py",
+          "blob_sha": "93400a7b262dd779e1f88321a7058529e82b29d6",
+          "bytes": 572
+        },
+        {
+          "path": "src/gems25/prepare.py",
+          "blob_sha": "0153a8e3c7e784b6d3bf74e14af079ef294f45e4",
+          "bytes": 1194
+        },
+        {
+          "path": "src/gems25/submission.py",
+          "blob_sha": "ef4c01a9006e077999b6d64a303a983a4bd2e435",
+          "bytes": 9412
+        },
+        {
+          "path": "src/gems25/thinning.py",
+          "blob_sha": "1e21defe31182163256ce97fc06fbf16f5948386",
+          "bytes": 7464
+        }
+      ]
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE27",
+      "ref": "b8dd298e10884afffa05436673ac73aeaf850b8c",
+      "files": [
+        {
+          "path": "README.md",
+          "blob_sha": "e9d20554b4cf8b221155f1c3f9a8c1efcf9701ac",
+          "bytes": 38690
+        },
+        {
+          "path": "docs/downloads/gems27-all-increments-d2-8-h27-4-r1-t-v2-20261002-23ad46a4d7ba-allfinite.tif",
+          "blob_sha": "4ed39dc9d45f32b58665a07000166605812e8c3c",
+          "bytes": 832396
+        },
+        {
+          "path": "docs/downloads/gems27-all-increments-d2-8-h27-4-r1-t-v2-20261002-23ad46a4d7ba-nan.tif",
+          "blob_sha": "5193683671986d56b802229bd21a2eaa256bc3f3",
+          "bytes": 1598402
+        },
+        {
+          "path": "docs/downloads/gems27-farfield-swap-augmented-detector-probe-20261002-a34b0799df59-allfinite.tif",
+          "blob_sha": "5fec72ffc3329b5ad3445c18893f05d9967ca388",
+          "bytes": 863870
+        },
+        {
+          "path": "docs/downloads/gems27-farfield-swap-augmented-detector-probe-20261002-a34b0799df59-nan.tif",
+          "blob_sha": "5a764746641b52681efb1b220a327f0d3e94cfa3",
+          "bytes": 1632158
+        },
+        {
+          "path": "docs/downloads/gems27-h28-1-edge-coherence-plus-t-v2-h27-4-20261002-1113fba5f6cb-allfinite.tif",
+          "blob_sha": "0d409af9b3bc43d2063bef5d097c4e321cd2bae6",
+          "bytes": 863814
+        },
+        {
+          "path": "docs/downloads/gems27-h28-1-edge-coherence-plus-t-v2-h27-4-20261002-1113fba5f6cb-nan.tif",
+          "blob_sha": "ef40acdb0232d453abf83519637303ee87cc42c4",
+          "bytes": 1630604
+        },
+        {
+          "path": "docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif",
+          "blob_sha": "49ad427035b2267dcd3e8acee10bdc85d5dbe322",
+          "bytes": 866160
+        },
+        {
+          "path": "docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+          "blob_sha": "c64e48b8bece14391fb59c1969c42c7efd718d39",
+          "bytes": 1635084
+        },
+        {
+          "path": "docs/downloads/gems27-topo-gap-closure-t-v2-on-d2-8-20261002-3ebd51534bb1-allfinite.tif",
+          "blob_sha": "7498bef5d58d01fc1350e7b28921804d4d289538",
+          "bytes": 839304
+        },
+        {
+          "path": "docs/downloads/gems27-topo-gap-closure-t-v2-on-d2-8-20261002-3ebd51534bb1-nan.tif",
+          "blob_sha": "f939bed1c16739e22131b4958814ee0ac6bff849",
+          "bytes": 1605928
+        },
+        {
+          "path": "docs/downloads/gems27-topo-gap-closure-t-v2-plus-h27-4-r1-on-d1-5-20261002-d466b251f309-allfinite.tif",
+          "blob_sha": "6a37ea19fe818fe35723545fe58b58c28d8ec8bd",
+          "bytes": 857108
+        },
+        {
+          "path": "docs/downloads/gems27-topo-gap-closure-t-v2-plus-h27-4-r1-on-d1-5-20261002-d466b251f309-nan.tif",
+          "blob_sha": "37f2c6589937206835661ea5664d79cfc8281173",
+          "bytes": 1625248
+        },
+        {
+          "path": "docs/index.html",
+          "blob_sha": "2ca9e3083ff955f3279b8d50b7927a6e991bd65f",
+          "bytes": 13808
+        },
+        {
+          "path": "index.html",
+          "blob_sha": "a3cffb7e7f9898a48423ac2794992c7e98a915af",
+          "bytes": 14173
+        },
+        {
+          "path": "src/gems27/__init__.py",
+          "blob_sha": "f99c6df0796f9a76c823ea0e1e9cd62ca091708d",
+          "bytes": 392
+        },
+        {
+          "path": "src/gems27/annulus.py",
+          "blob_sha": "f05a6fb18a6533d20a10c95eedb3d7f5f01522e0",
+          "bytes": 4238
+        },
+        {
+          "path": "src/gems27/candidates.py",
+          "blob_sha": "3313b8a6511c2ce634e89630f1e5a45a1042d527",
+          "bytes": 5719
+        },
+        {
+          "path": "src/gems27/coverage_thin.py",
+          "blob_sha": "fff85e51f5cc8d6fc7c271e07283d250a98b4d14",
+          "bytes": 6770
+        },
+        {
+          "path": "src/gems27/graph.py",
+          "blob_sha": "1ecdb49bfa2707eb445eaa71d0f046c71b3a09dd",
+          "bytes": 10780
+        },
+        {
+          "path": "src/gems27/graph_value.py",
+          "blob_sha": "4e09f36f1602c832f630cdb790011ccb15bfb4f4",
+          "bytes": 10837
+        },
+        {
+          "path": "src/gems27/grid.py",
+          "blob_sha": "57ccfc1ea7e2a11a3f0e030c9996ddba6f27bf7e",
+          "bytes": 2176
+        },
+        {
+          "path": "src/gems27/holdout.py",
+          "blob_sha": "20596d79b0ae9a7c3b31f8ca058f0fa726c3a33e",
+          "bytes": 2777
+        },
+        {
+          "path": "src/gems27/layers.py",
+          "blob_sha": "91718e74868c902c75672909583f5202df39a6f7",
+          "bytes": 4138
+        },
+        {
+          "path": "src/gems27/links.py",
+          "blob_sha": "8a153152d5e95173fd1b9664152c92d67b36e4a6",
+          "bytes": 8267
+        },
+        {
+          "path": "src/gems27/metric.py",
+          "blob_sha": "213444f989075ed7d4529da1e6a6cb6ea3eaba88",
+          "bytes": 5768
+        },
+        {
+          "path": "src/gems27/newinfo.py",
+          "blob_sha": "242e03a84246807d49167ac97f1575274a44488a",
+          "bytes": 15739
+        },
+        {
+          "path": "src/gems27/oof_detector.py",
+          "blob_sha": "20a1db040412502f985bc78abe513e00eaef85b1",
+          "bytes": 8307
+        },
+        {
+          "path": "src/gems27/paths.py",
+          "blob_sha": "b776ff304585420ab767db3babdad81faebd3e40",
+          "bytes": 1233
+        },
+        {
+          "path": "src/gems27/potential_edges.py",
+          "blob_sha": "8082913229c00493fc8ed926febf12bbce2d2e51",
+          "bytes": 5699
+        },
+        {
+          "path": "src/gems27/submission.py",
+          "blob_sha": "45cbd97e0991b951f434ad4e2afb5a5ab5f1dd22",
+          "bytes": 8570
+        },
+        {
+          "path": "src/gems27/thinning.py",
+          "blob_sha": "df35e83a7587b86a6b21ee57469f91565598543e",
+          "bytes": 2725
+        },
+        {
+          "path": "src/gems27/tomography.py",
+          "blob_sha": "d8f782c655f2412ff4708fdaf91ae6ee004fbf36",
+          "bytes": 11718
+        },
+        {
+          "path": "src/gems27/topology_classes.py",
+          "blob_sha": "7743a5fe123f216d9d65f082f8815fb26aced4a8",
+          "bytes": 1942
+        },
+        {
+          "path": "src/gems27/topology_theory.py",
+          "blob_sha": "81bfb934a6aea71c9bc9bf2bc71d1c5db9d83abc",
+          "bytes": 5452
+        },
+        {
+          "path": "src/gems27/vector_graph.py",
+          "blob_sha": "fe66e186065565788e3ab1af83c1e38c6a5a7041",
+          "bytes": 9920
+        }
+      ]
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE28",
+      "ref": "78e724f95337a6528b1248be5c113c6d6d502891",
+      "files": [
+        {
+          "path": "README.md",
+          "blob_sha": "cb121877fa2d612c7a6489decdfeb8a65fa16c1b",
+          "bytes": 96776
+        },
+        {
+          "path": "docs/downloads/gems27-all-increments-d2-8-h27-4-r1-t-v2-20261002-23ad46a4d7ba-allfinite.tif",
+          "blob_sha": "4ed39dc9d45f32b58665a07000166605812e8c3c",
+          "bytes": 832396
+        },
+        {
+          "path": "docs/downloads/gems27-all-increments-d2-8-h27-4-r1-t-v2-20261002-23ad46a4d7ba-nan.tif",
+          "blob_sha": "5193683671986d56b802229bd21a2eaa256bc3f3",
+          "bytes": 1598402
+        },
+        {
+          "path": "docs/downloads/gems27-h27-4-r1-pruned-d1-5-20261003-450eb6859636-allfinite.tif",
+          "blob_sha": "ed5ad5ca7b3d50e10af7cc5f4797599f59472b76",
+          "bytes": 854790
+        },
+        {
+          "path": "docs/downloads/gems27-h27-4-r1-pruned-d1-5-20261003-450eb6859636-nan.tif",
+          "blob_sha": "9f69010008e5bedbb0c25087eecd57ee4010204e",
+          "bytes": 1622840
+        },
+        {
+          "path": "docs/downloads/gems27-h28-1-edge-coherence-plus-t-v2-h27-4-20261002-1113fba5f6cb-allfinite.tif",
+          "blob_sha": "0d409af9b3bc43d2063bef5d097c4e321cd2bae6",
+          "bytes": 863814
+        },
+        {
+          "path": "docs/downloads/gems27-h28-1-edge-coherence-plus-t-v2-h27-4-20261002-1113fba5f6cb-nan.tif",
+          "blob_sha": "ef40acdb0232d453abf83519637303ee87cc42c4",
+          "bytes": 1630604
+        },
+        {
+          "path": "docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif",
+          "blob_sha": "49ad427035b2267dcd3e8acee10bdc85d5dbe322",
+          "bytes": 866160
+        },
+        {
+          "path": "docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+          "blob_sha": "c64e48b8bece14391fb59c1969c42c7efd718d39",
+          "bytes": 1635084
+        },
+        {
+          "path": "docs/downloads/gems28-h27-4-r1-solo-d2-8-20261003-8acb75e1f2cc-allfinite.tif",
+          "blob_sha": "7e422e07d5d3aac9ceb187a154bacc0f72a79f5c",
+          "bytes": 830036
+        },
+        {
+          "path": "docs/downloads/gems28-h27-4-r1-solo-d2-8-20261003-8acb75e1f2cc-nan.tif",
+          "blob_sha": "12b0a4ddf1cf76f2552621b8a8b1a1b88d783786",
+          "bytes": 1595850
+        },
+        {
+          "path": "docs/downloads/gems28-h32-1-prethin-tip-euler-d2-8-20261003-31e35eee884e-allfinite.tif",
+          "blob_sha": "3fa20e5def84596794539ba9c3304c9c9277f04f",
+          "bytes": 833784
+        },
+        {
+          "path": "docs/downloads/gems28-h32-1-prethin-tip-euler-d2-8-20261003-31e35eee884e-nan.tif",
+          "blob_sha": "6d9717d75f144ccbd3c8ec7886000fae95af312e",
+          "bytes": 1599962
+        },
+        {
+          "path": "docs/downloads/gems28-h32-1-tip-euler-dejitter-d2-8-20261003-c3aeda1d31a3-allfinite.tif",
+          "blob_sha": "b272149ab22878f0e0e85964aec99e80584dcfa7",
+          "bytes": 832622
+        },
+        {
+          "path": "docs/downloads/gems28-h32-1-tip-euler-dejitter-d2-8-20261003-c3aeda1d31a3-nan.tif",
+          "blob_sha": "6081ac7362638b9005d04ca68e52243d2ee7178f",
+          "bytes": 1598722
+        },
+        {
+          "path": "docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif",
+          "blob_sha": "10b2354d4ac8af863419284f1e694a02db180711",
+          "bytes": 825430
+        },
+        {
+          "path": "docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
+          "blob_sha": "d0fc9ebbda0b15c31208022dbd124d4b9b112108",
+          "bytes": 1590848
+        },
+        {
+          "path": "docs/downloads/gems28-h37-1-coverprob-h19-5-r1-20261003-0bbddf41eb6d-allfinite.tif",
+          "blob_sha": "1c83f1f95c8fef3c0596563a634e8334c2c9329a",
+          "bytes": 825296
+        },
+        {
+          "path": "docs/downloads/gems28-h37-1-coverprob-h19-5-r1-20261003-0bbddf41eb6d-nan.tif",
+          "blob_sha": "cd3c787a0b4bd2425b7edd5c1b40985355c1fc5e",
+          "bytes": 1590628
+        },
+        {
+          "path": "docs/downloads/gems28-h37-1-probe-union-pool-r1-20261003-52a13184267e-allfinite.tif",
+          "blob_sha": "e74ff9758011b76c25f9c2de6e97d69fc1a0f357",
+          "bytes": 827730
+        },
+        {
+          "path": "docs/downloads/gems28-h37-1-probe-union-pool-r1-20261003-52a13184267e-nan.tif",
+          "blob_sha": "cda27eeca19fbae9b30a3882530d8d71b258be5f",
+          "bytes": 1592246
+        },
+        {
+          "path": "docs/downloads/gems28-h38-1-hf-euler-r30-r1-20261003-56a9f473edc7-allfinite.tif",
+          "blob_sha": "37dd960345125bc943542e16994b2736ff0e9e22",
+          "bytes": 825790
+        },
+        {
+          "path": "docs/downloads/gems28-h38-1-hf-euler-r30-r1-20261003-56a9f473edc7-nan.tif",
+          "blob_sha": "c20459cd43667af1404447362c8cb8e81696871e",
+          "bytes": 1591212
+        },
+        {
+          "path": "docs/index.html",
+          "blob_sha": "de1f9129472d608b958fdff0104f0d371ab5a1d1",
+          "bytes": 31512
+        },
+        {
+          "path": "index.html",
+          "blob_sha": "54e8926873ee667c09b81754af3d8dfa7d2a6687",
+          "bytes": 30071
+        },
+        {
+          "path": "src/gems27/__init__.py",
+          "blob_sha": "f99c6df0796f9a76c823ea0e1e9cd62ca091708d",
+          "bytes": 392
+        },
+        {
+          "path": "src/gems27/annulus.py",
+          "blob_sha": "f05a6fb18a6533d20a10c95eedb3d7f5f01522e0",
+          "bytes": 4238
+        },
+        {
+          "path": "src/gems27/candidates.py",
+          "blob_sha": "3313b8a6511c2ce634e89630f1e5a45a1042d527",
+          "bytes": 5719
+        },
+        {
+          "path": "src/gems27/coverage_thin.py",
+          "blob_sha": "fff85e51f5cc8d6fc7c271e07283d250a98b4d14",
+          "bytes": 6770
+        },
+        {
+          "path": "src/gems27/euler.py",
+          "blob_sha": "3f579130d553b32d99aa2310ca21e37e6399dd8d",
+          "bytes": 23351
+        },
+        {
+          "path": "src/gems27/external_clip.py",
+          "blob_sha": "de8046028d6d549aceaa02612509e482eb1c255b",
+          "bytes": 10251
+        },
+        {
+          "path": "src/gems27/graph.py",
+          "blob_sha": "1ecdb49bfa2707eb445eaa71d0f046c71b3a09dd",
+          "bytes": 10780
+        },
+        {
+          "path": "src/gems27/graph_value.py",
+          "blob_sha": "4e09f36f1602c832f630cdb790011ccb15bfb4f4",
+          "bytes": 10837
+        },
+        {
+          "path": "src/gems27/gravity_bench.py",
+          "blob_sha": "ad2f8b2cd23ec84e741e395474d37719058377f9",
+          "bytes": 7357
+        },
+        {
+          "path": "src/gems27/grid.py",
+          "blob_sha": "555b0f551c8f4022901eb9b0809fb67827928787",
+          "bytes": 2604
+        },
+        {
+          "path": "src/gems27/h38_1.py",
+          "blob_sha": "e75479d6b77f618c20659b38760ad59f3f11f878",
+          "bytes": 8044
+        },
+        {
+          "path": "src/gems27/heatflow_euler.py",
+          "blob_sha": "7a407b7901f84526c489db7713c34fb0b924965a",
+          "bytes": 16469
+        },
+        {
+          "path": "src/gems27/holdout.py",
+          "blob_sha": "20596d79b0ae9a7c3b31f8ca058f0fa726c3a33e",
+          "bytes": 2777
+        },
+        {
+          "path": "src/gems27/hydrothermal.py",
+          "blob_sha": "7f27347d8eb45c97ef9fdfefd7861f4676741b25",
+          "bytes": 8796
+        },
+        {
+          "path": "src/gems27/kinematics.py",
+          "blob_sha": "bbad558b0928e00c59d63ac3dd2a0213f4824552",
+          "bytes": 9468
+        },
+        {
+          "path": "src/gems27/layers.py",
+          "blob_sha": "91718e74868c902c75672909583f5202df39a6f7",
+          "bytes": 4138
+        },
+        {
+          "path": "src/gems27/links.py",
+          "blob_sha": "8a153152d5e95173fd1b9664152c92d67b36e4a6",
+          "bytes": 8267
+        },
+        {
+          "path": "src/gems27/losfo.py",
+          "blob_sha": "10e1a1fa01a1e4c471b0b7b3a01c3c5a7d645b42",
+          "bytes": 10475
+        },
+        {
+          "path": "src/gems27/metric.py",
+          "blob_sha": "213444f989075ed7d4529da1e6a6cb6ea3eaba88",
+          "bytes": 5768
+        },
+        {
+          "path": "src/gems27/newinfo.py",
+          "blob_sha": "242e03a84246807d49167ac97f1575274a44488a",
+          "bytes": 15739
+        },
+        {
+          "path": "src/gems27/oof_detector.py",
+          "blob_sha": "6b0fcb394f0a7dc9241c98a0c7d679e0a5c458a5",
+          "bytes": 9560
+        },
+        {
+          "path": "src/gems27/operating_point.py",
+          "blob_sha": "5c73a3fbf6ae17759adb4c003fc4852eea75bf1d",
+          "bytes": 20931
+        },
+        {
+          "path": "src/gems27/packing.py",
+          "blob_sha": "6a512eaf667fa357a4cc58134568be6338e895f1",
+          "bytes": 8579
+        },
+        {
+          "path": "src/gems27/paths.py",
+          "blob_sha": "62f43e51dc8b75b41d3c28a9a718182703fc24fc",
+          "bytes": 1355
+        },
+        {
+          "path": "src/gems27/potential_edges.py",
+          "blob_sha": "8082913229c00493fc8ed926febf12bbce2d2e51",
+          "bytes": 5699
+        },
+        {
+          "path": "src/gems27/structural_step.py",
+          "blob_sha": "c24bc1438438fe907413759c957b9de451749889",
+          "bytes": 6693
+        },
+        {
+          "path": "src/gems27/submission.py",
+          "blob_sha": "45cbd97e0991b951f434ad4e2afb5a5ab5f1dd22",
+          "bytes": 8570
+        },
+        {
+          "path": "src/gems27/thermal.py",
+          "blob_sha": "08e3c925baed43835d1fb4c189f1993c025a41da",
+          "bytes": 8331
+        },
+        {
+          "path": "src/gems27/thinning.py",
+          "blob_sha": "b6cdd86d5c66499c4a5d998b50ab1edb4d3884f2",
+          "bytes": 9082
+        },
+        {
+          "path": "src/gems27/tomography.py",
+          "blob_sha": "d8f782c655f2412ff4708fdaf91ae6ee004fbf36",
+          "bytes": 11718
+        },
+        {
+          "path": "src/gems27/topology_classes.py",
+          "blob_sha": "7743a5fe123f216d9d65f082f8815fb26aced4a8",
+          "bytes": 1942
+        },
+        {
+          "path": "src/gems27/topology_theory.py",
+          "blob_sha": "81bfb934a6aea71c9bc9bf2bc71d1c5db9d83abc",
+          "bytes": 5452
+        },
+        {
+          "path": "src/gems27/vector_graph.py",
+          "blob_sha": "fe66e186065565788e3ab1af83c1e38c6a5a7041",
+          "bytes": 9920
+        }
+      ]
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE30",
+      "ref": "3d5bec2af5f29291617f97c9e2dfe443be6f55c3",
+      "files": [
+        {
+          "path": "README.md",
+          "blob_sha": "16433301085f36157c4968d747640335e6f498f9",
+          "bytes": 75803
+        },
+        {
+          "path": "docs/downloads/GEMSDOE30_oof-gbm-adaptive-r5_20261003T170425181215Z_aedb3d13-nan.tif",
+          "blob_sha": "19681b2241f3f8392b93f5b827e6902e0b5d849b",
+          "bytes": 606280
+        },
+        {
+          "path": "docs/downloads/GEMSDOE30_oof-gbm-adaptive-r5_20261003T170425181215Z_aedb3d13-zeros.tif",
+          "blob_sha": "dc9ee6b2e2fd01682f1e1e998ae4e5d6dac2f15f",
+          "bytes": 535030
+        },
+        {
+          "path": "docs/downloads/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+          "blob_sha": "c8d3a46481152bbdfd61b113484be979fde9d4c6",
+          "bytes": 1603424
+        },
+        {
+          "path": "docs/downloads/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif",
+          "blob_sha": "de952dfaae19d6f13c3ca200cbe1ac8249c84620",
+          "bytes": 423878
+        },
+        {
+          "path": "docs/downloads/gemsdoe30-d15-poisson200m-offcat-60069-20261003T233210Z-68d0e2e4.tif",
+          "blob_sha": "16a3b73388a505abaf5c0f46ff7d6da4322f52db",
+          "bytes": 833678
+        },
+        {
+          "path": "docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca-nanoutside.tif",
+          "blob_sha": "e2c01413650468bc444507ba44018d6f22f07a92",
+          "bytes": 1573188
+        },
+        {
+          "path": "docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+          "blob_sha": "a59665a7fad659dcc6a45e5e7e71059586c3247a",
+          "bytes": 806758
+        },
+        {
+          "path": "docs/downloads/gemsdoe30-edge-hybrid-80k-02845bd4-20261003T234340Z-allfinite.tif",
+          "blob_sha": "b3773335c38fde0be460a88c4d82eb0eb3fd7619",
+          "bytes": 870078
+        },
+        {
+          "path": "docs/downloads/gemsdoe30-edge-hybrid-80k-02845bd4-nan.tif",
+          "blob_sha": "97544b81e5e42a7810a7ace34b9c0cb94d71dc43",
+          "bytes": 592782
+        },
+        {
+          "path": "docs/downloads/gemsdoe30-sgmc-hedge-d10-85k-20261003-ac08b41e-zeros.tif",
+          "blob_sha": "b73517951cc3728a405e0f08a155624c02c0acb5",
+          "bytes": 554680
+        },
+        {
+          "path": "docs/downloads/gemsdoe30-sgmc-hedge-d10-85k-20261003-ac08b41e.tif",
+          "blob_sha": "3b442e92bcee521bbe5fbc16136297ced49d3c76",
+          "bytes": 630052
+        },
+        {
+          "path": "index.html",
+          "blob_sha": "22c5749f58ac55cfe5508a97d5bdfa37810c88f0",
+          "bytes": 33946
+        },
+        {
+          "path": "src/gemsdoe30/__init__.py",
+          "blob_sha": "c0bcb768c0becfb10fd86177371c4a98a79bd146",
+          "bytes": 222
+        },
+        {
+          "path": "src/gemsdoe30/analysis.py",
+          "blob_sha": "f67d0764085338808364a2f81331cf75ca82e01b",
+          "bytes": 4614
+        },
+        {
+          "path": "src/gemsdoe30/cv.py",
+          "blob_sha": "b59c157a9ec12c33a445eef82348010ab5bd0cc1",
+          "bytes": 8237
+        },
+        {
+          "path": "src/gemsdoe30/emission.py",
+          "blob_sha": "248ff07b9e384d867e6df2b3945b38361e181104",
+          "bytes": 22792
+        },
+        {
+          "path": "src/gemsdoe30/emitter_opt.py",
+          "blob_sha": "e8e430cd1cd058f325094058687e3f2877dc5b90",
+          "bytes": 19148
+        },
+        {
+          "path": "src/gemsdoe30/fields.py",
+          "blob_sha": "a8cb5b0c3680c091b2fb3d4e79f770957096d927",
+          "bytes": 6707
+        },
+        {
+          "path": "src/gemsdoe30/geology.py",
+          "blob_sha": "0b544461ae48a780b3be15b274079e9315d2f2f6",
+          "bytes": 2124
+        },
+        {
+          "path": "src/gemsdoe30/holdout.py",
+          "blob_sha": "dc913cb0d3a3a1e518225919c7db4a9c73e1a732",
+          "bytes": 10965
+        },
+        {
+          "path": "src/gemsdoe30/losses.py",
+          "blob_sha": "a27c12883108d157699e34ed0da2637d2fdef27c",
+          "bytes": 12407
+        },
+        {
+          "path": "src/gemsdoe30/metric.py",
+          "blob_sha": "9e032993445cce22fdc003185eef061a09b4fc30",
+          "bytes": 13302
+        },
+        {
+          "path": "src/gemsdoe30/model.py",
+          "blob_sha": "abbd8336794f1334bb97a0d8de360fe05e4f84ef",
+          "bytes": 2687
+        },
+        {
+          "path": "src/gemsdoe30/normalization.py",
+          "blob_sha": "d3377d46c1a03f069554e06a02ea7376ad0ad389",
+          "bytes": 4296
+        },
+        {
+          "path": "src/gemsdoe30/scarp.py",
+          "blob_sha": "ac18dcb746601b4159ad1527c4625a5f8fd061b2",
+          "bytes": 6601
+        },
+        {
+          "path": "src/gemsdoe30/submission.py",
+          "blob_sha": "c9ba35846d13e8771f8092f6e09499b939e58d0c",
+          "bytes": 19163
+        },
+        {
+          "path": "src/gemsdoe30/training.py",
+          "blob_sha": "a598e134cd624676c710713db1c52a9fb250a527",
+          "bytes": 10843
+        },
+        {
+          "path": "src/gemsdoe30/verification.py",
+          "blob_sha": "a6e59bb6ba92899efb87008f004a2ebfdae6ade8",
+          "bytes": 16646
+        }
+      ]
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE31",
+      "ref": "cf13282fcd86290f1539f0a86446c8ba7205a79b",
+      "files": [
+        {
+          "path": "README.md",
+          "blob_sha": "178fdfdfddd1b0133da4cbdfbb026292d31ba053",
+          "bytes": 13170
+        },
+        {
+          "path": "docs/downloads/gemsdoe31-add-arm-d28-20261004-8acb75e1-allfinite.tif",
+          "blob_sha": "5e02dda181f30749fefa57b021fe377415cbf9ab",
+          "bytes": 169213
+        },
+        {
+          "path": "docs/downloads/gemsdoe31-add-arm-d28-20261004-8acb75e1-nan.tif",
+          "blob_sha": "fe3071fafc209240d188af4b4201f10e39c030eb",
+          "bytes": 212925
+        },
+        {
+          "path": "docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif",
+          "blob_sha": "40df0d6d854542aefc00f1fed87d4e9c7719fa63",
+          "bytes": 154580
+        },
+        {
+          "path": "docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+          "blob_sha": "36c2aa32e0bba3d976d1ba76f3fb14903199262d",
+          "bytes": 199214
+        },
+        {
+          "path": "docs/downloads/gemsdoe31-reference-d28-offcat-44090-20261004-nan.tif",
+          "blob_sha": "e2c01413650468bc444507ba44018d6f22f07a92",
+          "bytes": 1573188
+        },
+        {
+          "path": "docs/downloads/gemsdoe31-union-b-p060-20261004-8acb75e1-allfinite.tif",
+          "blob_sha": "733661a0e887ff059ee7ad99e8537d8abe9b2f60",
+          "bytes": 204922
+        },
+        {
+          "path": "docs/downloads/gemsdoe31-union-b-p060-20261004-8acb75e1-nan.tif",
+          "blob_sha": "6249e86a58570c15e72c3ab6157f82e1d6d54876",
+          "bytes": 247886
+        },
+        {
+          "path": "docs/index.html",
+          "blob_sha": "329989c5110f32a833b172b860e48221b563dafa",
+          "bytes": 13380
+        },
+        {
+          "path": "index.html",
+          "blob_sha": "406fd5ff8373e1822055e7e03b25c06dd5aa82df",
+          "bytes": 832
+        },
+        {
+          "path": "registry/submissions.json",
+          "blob_sha": "605982c1b3ff660ab9218c54f2bd7bc7a0363b53",
+          "bytes": 8559
+        },
+        {
+          "path": "src/gemsdoe31/__init__.py",
+          "blob_sha": "ebc879ca55bf8979a9ecc109887c4ab91207cefc",
+          "bytes": 97
+        },
+        {
+          "path": "src/gemsdoe31/analysis.py",
+          "blob_sha": "6bb06d4bc649a2b6507757f30f56afd56d9f2e42",
+          "bytes": 11891
+        },
+        {
+          "path": "src/gemsdoe31/buffer.py",
+          "blob_sha": "6734aa01c240c5d2d6f6768f7b4249e5fe2afacb",
+          "bytes": 13124
+        },
+        {
+          "path": "src/gemsdoe31/h31_features.py",
+          "blob_sha": "7c78e5b6a92a233d5f7abd3cc5026fb1841d8bb3",
+          "bytes": 6152
+        },
+        {
+          "path": "src/gemsdoe31/metric.py",
+          "blob_sha": "e739c07cd080952e2b8e58165643fe51ffd60057",
+          "bytes": 8147
+        },
+        {
+          "path": "src/gemsdoe31/raster.py",
+          "blob_sha": "c8e4188344a643524ac62f24d739f6a1563a983c",
+          "bytes": 1381
+        },
+        {
+          "path": "src/gemsdoe31/runtime.py",
+          "blob_sha": "8262e41f30232a2706052e6f5dfad1156ff16bea",
+          "bytes": 9160
+        },
+        {
+          "path": "src/gemsdoe31/submission.py",
+          "blob_sha": "3b249d0612c4631af4f853f62d1bb5b3575e790b",
+          "bytes": 10649
+        },
+        {
+          "path": "src/gemsdoe31/variogram.py",
+          "blob_sha": "b203c8ac88e892347c52275f7329cf40b392e688",
+          "bytes": 16895
+        }
+      ]
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE32",
+      "ref": "012e17b2a115c3c0d5e7885bea625bf9657c99fc",
+      "files": [
+        {
+          "path": "README.md",
+          "blob_sha": "91abbf982eda2ef1a585b94bf09aee60bbf58500",
+          "bytes": 71340
+        },
+        {
+          "path": "docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+          "blob_sha": "c8d3a46481152bbdfd61b113484be979fde9d4c6",
+          "bytes": 1603424
+        },
+        {
+          "path": "docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif",
+          "blob_sha": "bfb7e86d046dd178c3d6ab60522861b5464dd420",
+          "bytes": 836982
+        },
+        {
+          "path": "docs/downloads/gems32-bayesopt-dilation-scarp-d28-20261004-nan.tif",
+          "blob_sha": "65094e61f309244239333b90cf406b588babda7c",
+          "bytes": 355310
+        },
+        {
+          "path": "docs/downloads/gems32-bayesopt-dilation-scarp-d28-20261004-zeros.tif",
+          "blob_sha": "300b28b7ae239060a63e98241c24421fb312423e",
+          "bytes": 302357
+        },
+        {
+          "path": "docs/downloads/gems32-lazygreedy-maxcov-44090-supconfined-zeros.tif",
+          "blob_sha": "be5ed484f0f8388d24a6232ccc77d8f4d53218c8",
+          "bytes": 806599
+        },
+        {
+          "path": "docs/downloads/gems32-probe-S1-ANCHOR-identical-to-live-02600.tif",
+          "blob_sha": "30cbb06f362a3c49c82a3487d002f8f3b6feb10a",
+          "bytes": 806758
+        },
+        {
+          "path": "docs/downloads/gems32-probe-S2-SCALE-lambda-0.5.tif",
+          "blob_sha": "704ceb7e6090e9b9f848c59eca3e6676be007f63",
+          "bytes": 799095
+        },
+        {
+          "path": "docs/downloads/gems32-probe-S3-NULLADD-2000px.tif",
+          "blob_sha": "63a57a2b6b1656eb01febf8ed8889185243a25d6",
+          "bytes": 810344
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-d28-ref02600-repro-44090-20261004T183200Z-426073b6-nan.tif",
+          "blob_sha": "4e404ee491b67cec9d321742ff1e0ae1125e83ee",
+          "bytes": 379333
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-d28-ref02600-repro-44090-20261004T183200Z-426073b6-zeros.tif",
+          "blob_sha": "2bf483bfb99df4c4523b15847b94629e3625fca4",
+          "bytes": 243828
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h32a-dip-projected-step-46090-20261004T183200Z-838fcd84-nan.tif",
+          "blob_sha": "ac0ac189fca02ac192da3bf0879a4f70e348e79f",
+          "bytes": 385762
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h32a-dip-projected-step-46090-20261004T183200Z-838fcd84-zeros.tif",
+          "blob_sha": "9e96cd85f16b2e8c77746f5ba9f8fdb91b628654",
+          "bytes": 250381
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h32b-transtensional-swarm-45890-20261004T183200Z-27b7c9e6-nan.tif",
+          "blob_sha": "b252a5532de5b9b6538ffeeb93aa69347cf2d2ea",
+          "bytes": 384916
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h32b-transtensional-swarm-45890-20261004T183200Z-27b7c9e6-zeros.tif",
+          "blob_sha": "2d5f4e841a11588ede80a34a555c1bce668e2511",
+          "bytes": 249551
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h32c-mt-claycap-breach-45890-20261004T183200Z-a5963d0a-nan.tif",
+          "blob_sha": "598d3b4ecce2557a53bc9d785816aecf632ce53f",
+          "bytes": 385772
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h32c-mt-claycap-breach-45890-20261004T183200Z-a5963d0a-zeros.tif",
+          "blob_sha": "76b54e97ee46a94164e61ffbf08c6ef62519709a",
+          "bytes": 250718
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h32d-equalbudget-44090-20261004T183200Z-350cdc3f-nan.tif",
+          "blob_sha": "e04a6bbedb7be9dbc27694d581ac110f58d19592",
+          "bytes": 379319
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h32d-equalbudget-44090-20261004T183200Z-350cdc3f-zeros.tif",
+          "blob_sha": "7c3879710e632332510cf302cbd8efbb3b94a8b1",
+          "bytes": 243967
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h32d-submodular-multipysics-46090-20261004T183200Z-4de30601-nan.tif",
+          "blob_sha": "080af66515984faa15e762af9aa2357b22474c90",
+          "bytes": 385688
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h32d-submodular-multipysics-46090-20261004T183200Z-4de30601-zeros.tif",
+          "blob_sha": "45b9f47ac9c1518875b5e4b9ea92ca2fc6727fe4",
+          "bytes": 250577
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-nan.tif",
+          "blob_sha": "c00c2ca916c046544baeb6e40d1e782bf46f50c0",
+          "bytes": 355443
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+          "blob_sha": "17a76895f68174cc93f3cb1597d25686f6d6bc67",
+          "bytes": 219065
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h33-h33-2b2-plus-h33-1-20261004T220000Z-31588dc7-nan.tif",
+          "blob_sha": "08d76f6d82da45384fdb1be9801c659995ff5ce0",
+          "bytes": 358154
+        },
+        {
+          "path": "docs/downloads/gemsdoe32-h33-h33-2b2-plus-h33-1-20261004T220000Z-31588dc7-zeros.tif",
+          "blob_sha": "9e3a320ba0727937ee5ab58279acb506793c38df",
+          "bytes": 221921
+        },
+        {
+          "path": "docs/index.html",
+          "blob_sha": "45d52189a1fc35d57fefb4ea920af6797926aaf2",
+          "bytes": 19571
+        },
+        {
+          "path": "index.html",
+          "blob_sha": "2f8c363aae18e9e33c013d0b20465b1854852db4",
+          "bytes": 3709
+        },
+        {
+          "path": "src/gems32/__init__.py",
+          "blob_sha": "9efce07675433f30ed55b7b2ed8b3ea17185234e",
+          "bytes": 139
+        },
+        {
+          "path": "src/gems32/bo.py",
+          "blob_sha": "34b8eabc66c108af5c685d1c96a6817db08b37d1",
+          "bytes": 9030
+        },
+        {
+          "path": "src/gems32/bo_surrogate.py",
+          "blob_sha": "4ae9a3c2830a7b884913df3fbc58f23d34340c32",
+          "bytes": 13991
+        },
+        {
+          "path": "src/gems32/detector.py",
+          "blob_sha": "97ff34f08a93b2bef804a16fbcde7d835cacfcda",
+          "bytes": 3565
+        },
+        {
+          "path": "src/gems32/emission.py",
+          "blob_sha": "da1318abee7931bed7112218bb828505d1031590",
+          "bytes": 14321
+        },
+        {
+          "path": "src/gems32/emitter.py",
+          "blob_sha": "5f7b0b1bf1c2fc7dfe24eac2cc675556469d06d1",
+          "bytes": 13306
+        },
+        {
+          "path": "src/gems32/features.py",
+          "blob_sha": "7150996bbf7c177a3371d470c5a528f7684eab61",
+          "bytes": 5089
+        },
+        {
+          "path": "src/gems32/feed.py",
+          "blob_sha": "2d25b7b590700f90d7d0be6be6bd38d5a60e5ed4",
+          "bytes": 5525
+        },
+        {
+          "path": "src/gems32/grid.py",
+          "blob_sha": "cb97bb8cf2bf54e0443c872f4090ddbae238fbc9",
+          "bytes": 5118
+        },
+        {
+          "path": "src/gems32/h33.py",
+          "blob_sha": "86eb18e89e92a7982804e2a367f646ac8f1ba895",
+          "bytes": 17901
+        },
+        {
+          "path": "src/gems32/holdout.py",
+          "blob_sha": "179740676afe94afcd2f5c7e9f44561bc5b390eb",
+          "bytes": 11979
+        },
+        {
+          "path": "src/gems32/hypotheses.py",
+          "blob_sha": "35fd2e249d7703933f8af905c6613f70b72c917e",
+          "bytes": 20286
+        },
+        {
+          "path": "src/gems32/hypotheses33.py",
+          "blob_sha": "444a3378600fa0ff929236bd534ff4136014cc50",
+          "bytes": 19482
+        },
+        {
+          "path": "src/gems32/live_anchor.py",
+          "blob_sha": "758faf838f396e233034683c60ae95b275fe888f",
+          "bytes": 8492
+        },
+        {
+          "path": "src/gems32/live_mirror.py",
+          "blob_sha": "70e0e5c03f4e593b8a1353da4467ded2621ac1ec",
+          "bytes": 11881
+        },
+        {
+          "path": "src/gems32/metric.py",
+          "blob_sha": "723e46f833e65ec2b5d93136c8e21fcb21b394cf",
+          "bytes": 10284
+        },
+        {
+          "path": "src/gems32/paths.py",
+          "blob_sha": "09565e3ad332db4df3e77519756b299d0b7fc3af",
+          "bytes": 1678
+        },
+        {
+          "path": "src/gems32/submission.py",
+          "blob_sha": "62700e6f3248b80e26368a93a20b52b05f294556",
+          "bytes": 8057
+        },
+        {
+          "path": "src/gemsdoe32/__init__.py",
+          "blob_sha": "926fcc1697fd4c3785357035e911c2bcc7656758",
+          "bytes": 1232
+        },
+        {
+          "path": "src/gemsdoe32/emission.py",
+          "blob_sha": "008062bf15e88aeb22ebe584e689b92a86ff19e2",
+          "bytes": 5568
+        },
+        {
+          "path": "src/gemsdoe32/geology.py",
+          "blob_sha": "df1cd9a003f91680ad5db754e518b4df7c5462ae",
+          "bytes": 4305
+        },
+        {
+          "path": "src/gemsdoe32/holdout.py",
+          "blob_sha": "4f566eaa28599f5e87c8cbd5774bed7ffd958898",
+          "bytes": 2749
+        },
+        {
+          "path": "src/gemsdoe32/losses.py",
+          "blob_sha": "22a24a23130fe8229057c83ccd6a574bfe036907",
+          "bytes": 2860
+        },
+        {
+          "path": "src/gemsdoe32/metric.py",
+          "blob_sha": "07937c31d66f95e44d7ed03e16e2067755946628",
+          "bytes": 5052
+        },
+        {
+          "path": "src/gemsdoe32/scarp.py",
+          "blob_sha": "b693168f951e800f33f3435ec2c87579fde3fc8e",
+          "bytes": 1900
+        },
+        {
+          "path": "src/gemsdoe32/submission.py",
+          "blob_sha": "bd106399b3d8a4b1d917236ffb2a2f8491584ba8",
+          "bytes": 7083
+        },
+        {
+          "path": "src/gemsdoe32/surrogate.py",
+          "blob_sha": "268cafe27a03dd889a81ebcc85447109230bf24e",
+          "bytes": 9367
+        },
+        {
+          "path": "src/gemsdoe32/verification.py",
+          "blob_sha": "a452145fa40a4e91d390d10321bd37e589c54db3",
+          "bytes": 3542
+        }
+      ]
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE33",
+      "ref": "f52533110fe62cd03e77f1228e9e5ecac412c463",
+      "files": [
+        {
+          "path": "README.md",
+          "blob_sha": "4711854570e6b99cb6cd792fc38794933afb3ecc",
+          "bytes": 24455
+        },
+        {
+          "path": "docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e-nanoutside.tif",
+          "blob_sha": "c6e73d35a5ee8a36abdd06b7314bf79646c5d7f9",
+          "bytes": 966684
+        },
+        {
+          "path": "docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+          "blob_sha": "901d9db3f008f0f5c3be9c314524ccc8e95fb43e",
+          "bytes": 917544
+        },
+        {
+          "path": "docs/downloads/gemsdoe33-d28-reference-20261004-426073b6b4ab-nan.tif",
+          "blob_sha": "78ba1f83579999e59a4f53e59c7b4244b1be903c",
+          "bytes": 499842
+        },
+        {
+          "path": "docs/downloads/gemsdoe33-d28-reference-20261004-426073b6b4ab-zeros.tif",
+          "blob_sha": "298f61a156c54c49a285621707e0ed13ffb80eab",
+          "bytes": 423456
+        },
+        {
+          "path": "docs/downloads/gemsdoe33-h33f-analog-xfer-20261004-d042874b26ef-nan.tif",
+          "blob_sha": "113d62c4929d7adb56a60e07a5881390b6d829af",
+          "bytes": 477936
+        },
+        {
+          "path": "docs/downloads/gemsdoe33-h33f-analog-xfer-20261004-d042874b26ef-zeros.tif",
+          "blob_sha": "a8d18edcff1e464cc5b46b61592c01ecd529bff7",
+          "bytes": 403314
+        },
+        {
+          "path": "docs/downloads/research/GEMSDOE33-H33-6-edge-consensus-research-20261004-6c888d2ce0f7-nan.tif",
+          "blob_sha": "1e0a9f55c2cafcce0d50d3f63404fa87d0294dfa",
+          "bytes": 482682
+        },
+        {
+          "path": "docs/downloads/research/GEMSDOE33-H33-6-edge-consensus-research-20261004-6c888d2ce0f7-zeros.tif",
+          "blob_sha": "c367d15227138f6f590a8e1f04c0096fecf02e6b",
+          "bytes": 405850
+        },
+        {
+          "path": "docs/index.html",
+          "blob_sha": "b8eaa3f0d1a7c1b03cfe8377b07cfdc95a4d366b",
+          "bytes": 14781
+        },
+        {
+          "path": "index.html",
+          "blob_sha": "48a4c81ca99bf768f0b7a484514aa454a284e2da",
+          "bytes": 190
+        },
+        {
+          "path": "src/gems33/__init__.py",
+          "blob_sha": "12ade91a787ea2e92fd84fa37c7859fe23d52c60",
+          "bytes": 405
+        },
+        {
+          "path": "src/gems33/candidates.py",
+          "blob_sha": "a703c8707ec8b652b722dfc27b76adf60e742dd2",
+          "bytes": 21336
+        },
+        {
+          "path": "src/gems33/grid.py",
+          "blob_sha": "98dc2a2f407d5fe08cd33bb111c529252f077a59",
+          "bytes": 4722
+        },
+        {
+          "path": "src/gems33/holdout.py",
+          "blob_sha": "1ddb5170cf7031f616fc467d5b0b4e68fa548487",
+          "bytes": 6566
+        },
+        {
+          "path": "src/gems33/hypotheses.py",
+          "blob_sha": "2647a9850169ee74d3a61e9c62c4a4aa972032ac",
+          "bytes": 16820
+        },
+        {
+          "path": "src/gems33/metric.py",
+          "blob_sha": "6268c64824c02fea0092416395878e78998fea23",
+          "bytes": 4735
+        },
+        {
+          "path": "src/gems33/thinning.py",
+          "blob_sha": "8533411218759fc8ad8988578d7af84dc0350976",
+          "bytes": 3081
+        },
+        {
+          "path": "src/gemsdoe33/__init__.py",
+          "blob_sha": "bfffdf9dec036c120588ef2d4c22cac11b6f19e3",
+          "bytes": 644
+        },
+        {
+          "path": "src/gemsdoe33/analog.py",
+          "blob_sha": "65848bd34212437d423d9b19863ff3f01c53ac28",
+          "bytes": 15508
+        },
+        {
+          "path": "src/gemsdoe33/detector.py",
+          "blob_sha": "454707918ed54e30bcfdf6fa47f2052963efb186",
+          "bytes": 932
+        },
+        {
+          "path": "src/gemsdoe33/domain.py",
+          "blob_sha": "32dcf305911adfeab9f3b6466a5fd0e9a6664521",
+          "bytes": 7705
+        },
+        {
+          "path": "src/gemsdoe33/emission.py",
+          "blob_sha": "5fef6b368f8bafeb04781b9879c034e0c6a0e5d2",
+          "bytes": 3855
+        },
+        {
+          "path": "src/gemsdoe33/features.py",
+          "blob_sha": "2543cc5c3a0a106e68cdc827f9b18afd8d91c922",
+          "bytes": 12726
+        },
+        {
+          "path": "src/gemsdoe33/grid.py",
+          "blob_sha": "f904d369451484df7abad17362c83b5960512fb3",
+          "bytes": 9264
+        },
+        {
+          "path": "src/gemsdoe33/holdout.py",
+          "blob_sha": "7db4f35d06d72a7f9c7e97dd8124383535875cf6",
+          "bytes": 1766
+        },
+        {
+          "path": "src/gemsdoe33/metric.py",
+          "blob_sha": "8a92edfc584c08067565cc4f5b4ec86dd828a291",
+          "bytes": 7297
+        },
+        {
+          "path": "src/gemsdoe33/paths.py",
+          "blob_sha": "1df4a41553ea67686f633b82cdb407f716bfaf89",
+          "bytes": 1004
+        },
+        {
+          "path": "src/gemsdoe33/submission.py",
+          "blob_sha": "aa59e001a7e7d02f34c7fb2e7e4536972fb121c0",
+          "bytes": 6019
+        }
+      ]
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE36",
+      "ref": "c9ad59ec6f969ed931d089a03044c1567a633e84",
+      "files": [
+        {
+          "path": "README.md",
+          "blob_sha": "e488a37eec4def91d91456242d879c91026439aa",
+          "bytes": 24746
+        },
+        {
+          "path": "docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif",
+          "blob_sha": "a97c7b2a513225c9f9f2b35736afe5abf4d2a491",
+          "bytes": 1129
+        },
+        {
+          "path": "docs/downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif",
+          "blob_sha": "25acd552f1f3ce14dea35a4fff57fb79318d6559",
+          "bytes": 307100
+        },
+        {
+          "path": "docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif",
+          "blob_sha": "366095dcdb3c71c1a84cdcb840c0f90c4047cc48",
+          "bytes": 371126
+        },
+        {
+          "path": "docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+          "blob_sha": "e79b7bdb633369c724628e30efba6de60c1d25d9",
+          "bytes": 318190
+        },
+        {
+          "path": "docs/index.html",
+          "blob_sha": "1d05d2eb6ab533319f17306b9465e43b48ecfacb",
+          "bytes": 17453
+        },
+        {
+          "path": "index.html",
+          "blob_sha": "7418f17985fd2b2328d14c922782cae4c8311b8f",
+          "bytes": 547
+        },
+        {
+          "path": "src/gemsdoe36/__init__.py",
+          "blob_sha": "f6d1cc97bb04c00add8998293fbdb6366c5e8c76",
+          "bytes": 86
+        },
+        {
+          "path": "src/gemsdoe36/anderson.py",
+          "blob_sha": "2131bbfc81c6f63ae193cb0900d5e03d9dc93a04",
+          "bytes": 4536
+        },
+        {
+          "path": "src/gemsdoe36/anderson_dip.py",
+          "blob_sha": "56c063257c2036a590aae4f438567d61a967a80f",
+          "bytes": 19080
+        },
+        {
+          "path": "src/gemsdoe36/emitter.py",
+          "blob_sha": "8f42b4ca2a5f1f23f32ff3278f0d076bb11aa40e",
+          "bytes": 8757
+        },
+        {
+          "path": "src/gemsdoe36/field.py",
+          "blob_sha": "5974f114f3d249dcbff121f17314b711746b2a0e",
+          "bytes": 14209
+        },
+        {
+          "path": "src/gemsdoe36/geothermal.py",
+          "blob_sha": "eee5220d1c54a2ad021fb15f80eb5a6f2cf09a80",
+          "bytes": 4201
+        },
+        {
+          "path": "src/gemsdoe36/hypotheses.py",
+          "blob_sha": "b1fceed942db5c38dc684a89d1ca96710c4e4daf",
+          "bytes": 4603
+        },
+        {
+          "path": "src/gemsdoe36/live_mirror.py",
+          "blob_sha": "a614a37b548542f8f3aa66bde19a8724c3d74824",
+          "bytes": 5329
+        },
+        {
+          "path": "src/gemsdoe36/metric.py",
+          "blob_sha": "250b168b96024b9807c745a806ea0c5ca9bbabaf",
+          "bytes": 5773
+        },
+        {
+          "path": "src/gemsdoe36/model.py",
+          "blob_sha": "8fe18df642e384e16f2b4feb52cde7db1d1daeab",
+          "bytes": 10436
+        },
+        {
+          "path": "src/gemsdoe36/orientation.py",
+          "blob_sha": "5d1cd1f7162852c4ae25e56ec34354ffd9b78030",
+          "bytes": 13191
+        },
+        {
+          "path": "src/gemsdoe36/paths.py",
+          "blob_sha": "eef7e2ccfb891c1f0ff1a2834649aabe3334cc4a",
+          "bytes": 1643
+        },
+        {
+          "path": "src/gemsdoe36/spatial_cv.py",
+          "blob_sha": "c8dd45b734b753798ef37140e7fa394a9e5a98a8",
+          "bytes": 4812
+        },
+        {
+          "path": "src/gemsdoe36/submission.py",
+          "blob_sha": "56625c90e5ae028088cdc8de1596b0811389894f",
+          "bytes": 16099
+        }
+      ]
+    }
+  ]
+}

@@ -126,7 +126,10 @@ def main():
     try:
         session = requests.Session()
         session.headers["User-Agent"] = "GEMS-source-health/3.0 (USGS ScienceBase JSON API)"
-        response = session.get(assert_allowed(SCIENCEBASE_ITEM), timeout=30)
+        # Never follow a cross-host redirect into a prohibited competition host.
+        response = session.get(assert_allowed(SCIENCEBASE_ITEM), timeout=30, allow_redirects=False)
+        if 300 <= response.status_code < 400:
+            raise ValueError("Source redirected; automatic redirects are disabled for compliance")
         response.raise_for_status()
         obj = response.json()
         if not obj.get("id") or "GeoDAWN" not in str(obj.get("title", "")):

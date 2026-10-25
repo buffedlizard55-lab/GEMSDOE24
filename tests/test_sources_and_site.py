@@ -128,6 +128,7 @@ def test_feed_never_requests_drivendata_hosts(monkeypatch, tmp_path):
     seen = []
 
     class Resp:
+        status_code = 200
         content = b'{"id": "657e1d85d34e23d3533209f7", "title": "GeoDAWN: x", "provenance": {"lastUpdated": "2025-02-28"}}'
 
         def raise_for_status(self):
@@ -139,7 +140,8 @@ def test_feed_never_requests_drivendata_hosts(monkeypatch, tmp_path):
     class Session:
         headers = {}
 
-        def get(self, url, timeout=0):
+        def get(self, url, timeout=0, allow_redirects=True):
+            assert not allow_redirects
             seen.append(url)
             return Resp()
 
@@ -173,3 +175,35 @@ def test_no_script_or_workflow_fetches_drivendata_automatically():
         ):
             offenders.append((path.name, m.group(0)[:80]))
     assert not offenders, offenders
+
+
+def test_official_source_redirect_is_refused_without_a_followup_request(monkeypatch, tmp_path):
+    import json
+
+    module = script("refresh_source_feed")
+    seen = []
+
+    class Response:
+        status_code = 302
+        headers = {"Location": "https://www.drivendata.org/competitions/306/"}
+
+    class Session:
+        headers = {}
+
+        def get(self, url, **kwargs):
+            assert kwargs["allow_redirects"] is False
+            seen.append(url)
+            return Response()
+
+    feed = tmp_path / "docs/data/source_health.json"
+    feed.parent.mkdir(parents=True)
+    original = json.loads((module.ROOT / "docs/data/source_health.json").read_text())
+    feed.write_text(json.dumps(original))
+    monkeypatch.setattr(module.requests, "Session", Session)
+    monkeypatch.setattr(module, "ROOT", tmp_path)
+    monkeypatch.setattr("sys.argv", ["refresh_source_feed.py"])
+    module.main()
+    after = json.loads(feed.read_text())
+    assert seen == [module.SCIENCEBASE_ITEM]
+    assert "redirected" in after["errors"][0]["error"]
+    assert after.get("last_success_utc") == original.get("last_success_utc")

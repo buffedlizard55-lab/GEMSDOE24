@@ -1,0 +1,8 @@
+{
+  "registry_id": "registry-039",
+  "lattice_file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+  "footprint_fraction_within_3px_of_lattice": 0.9987132726822701,
+  "supported_candidate_domain_fraction_within_3px": 1.0,
+  "interpretation": "Spacing-5 lattice covers the supported domain at radius 3: overlap alone cannot distinguish ANY detector in that domain. Gate nevertheless remains failed.",
+  "no_comparator_removed": true
+}

@@ -38,7 +38,9 @@ async function refreshSourceFeed() {
       node.textContent = sourceDate(data.last_success_utc || data.checked_utc);
     }
     for (const node of document.querySelectorAll('[data-source-state]')) {
-      node.textContent = data.status === 'failed' || data.status === 'stale' ? 'Fetch failed — showing last verified snapshot' : 'Latest verified snapshot, not a live scoring API';
+      node.textContent = data.scope?.startsWith('GitHub')
+        ? (data.status === 'stale' ? 'Some GitHub checks failed — pinned experiment unchanged' : 'GitHub source freshness only — no score verification or automatic promotion')
+        : (data.status === 'failed' || data.status === 'stale' ? 'Fetch failed — showing last verified snapshot' : 'Latest verified snapshot, not a live scoring API');
     }
     const feed = document.querySelector('#source-feed-list');
     if (feed && Array.isArray(data.updates)) {
