@@ -164,9 +164,7 @@ def _run_batched_canary(
         merged_features.update(res["features"])
         del fdict
         gc.collect()
-    meta_template["passed"] = not any(
-        v["leakage_suspected"] for v in merged_features.values()
-    )
+    meta_template["passed"] = not any(v["leakage_suspected"] for v in merged_features.values())
     meta_template["features"] = merged_features
     return meta_template
 
@@ -328,9 +326,7 @@ def _run_c2st_family(
         r = refs_out[label]
         p = r["primary"]
         p["holm_p_value"] = float(hp)
-        flagged = bool(
-            hp <= 0.05 and p["observed_auc"] >= 0.55 and p["margin_vs_p95"] >= 0.02
-        )
+        flagged = bool(hp <= 0.05 and p["observed_auc"] >= 0.55 and p["margin_vs_p95"] >= 0.02)
         r["meaningful_access_association_flagged"] = flagged
         r["strict_c2st_gate_passed"] = not flagged
 
@@ -377,12 +373,17 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
     base_mm = np.load(base_npy, mmap_mode="r")
     base_names: list[str] = list(meta["names"])
 
-    print("[1/7] Building/verifying 18 label-free GVC1 geothermal/lineament/tilt features...", flush=True)
+    print(
+        "[1/7] Building/verifying 18 label-free GVC1 geothermal/lineament/tilt features...",
+        flush=True,
+    )
     gvc_npy = work_dir / "gvc1_features.npy"
     if gvc_npy.exists():
         gvc_mm = np.load(gvc_npy, mmap_mode="r")
         if gvc_mm.shape != (int(fp.sum()), len(gvc.GVC1_FEATURE_NAMES)):
-            _, gvc_names = gvc.build_gvc1_features(ROOT, base_mm, base_names, fp, transform, gvc_npy)
+            _, gvc_names = gvc.build_gvc1_features(
+                ROOT, base_mm, base_names, fp, transform, gvc_npy
+            )
             gvc_mm = np.load(gvc_npy, mmap_mode="r")
         else:
             gvc_names = list(gvc.GVC1_FEATURE_NAMES)
@@ -431,7 +432,10 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
         if not canary["passed"]:
             raise SystemExit("Leakage canary flagged >0.90; halting immediately without fitting")
 
-        print("[4/7] Running 4-fold SegmentHoldout (B0, B1, E1: H24-GVC1, E2: H24-GVC1-Resid)...", flush=True)
+        print(
+            "[4/7] Running 4-fold SegmentHoldout (B0, B1, E1: H24-GVC1, E2: H24-GVC1-Resid)...",
+            flush=True,
+        )
         total_offcat = int((fp & ~catalogue).sum())
         preds_b0, preds_b1, preds_e1, preds_e2 = [], [], [], []
         fold_fit_meta = []
@@ -465,7 +469,12 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
                 residualize=False,
             )
             p_b1 = gvc.submodular_dti_allocate(
-                surf_b1, f["valid"], f["visible"], budget=k_fold, min_spacing_px=2.5, catalogue_clearance_px=2.0
+                surf_b1,
+                f["valid"],
+                f["visible"],
+                budget=k_fold,
+                min_spacing_px=2.5,
+                catalogue_clearance_px=2.0,
             )
             preds_b1.append(p_b1)
             del surf_b1
@@ -482,7 +491,12 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
                 residualize=False,
             )
             p_e1 = gvc.submodular_dti_allocate(
-                surf_e1, f["valid"], f["visible"], budget=k_fold, min_spacing_px=2.5, catalogue_clearance_px=2.0
+                surf_e1,
+                f["valid"],
+                f["visible"],
+                budget=k_fold,
+                min_spacing_px=2.5,
+                catalogue_clearance_px=2.0,
             )
             preds_e1.append(p_e1)
             del surf_e1
@@ -499,7 +513,12 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
                 residualize=True,
             )
             p_e2 = gvc.submodular_dti_allocate(
-                surf_e2, f["valid"], f["visible"], budget=k_fold, min_spacing_px=2.5, catalogue_clearance_px=2.0
+                surf_e2,
+                f["valid"],
+                f["visible"],
+                budget=k_fold,
+                min_spacing_px=2.5,
+                catalogue_clearance_px=2.0,
             )
             preds_e2.append(p_e2)
             del surf_e2
@@ -510,7 +529,7 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
             se1, _ = context.score_fold(p_e1, f)
             se2, _ = context.score_fold(p_e2, f)
             print(
-                f"      Fold {fname:<18} | k={k_fold:,} | B0={s0['dti']:.5f} | B1={s1['dti']:.5f} | E1={se1['dti']:.5f} | E2={se2['dti']:.5f} ({time.monotonic()-t_f:.1f}s)",
+                f"      Fold {fname:<18} | k={k_fold:,} | B0={s0['dti']:.5f} | B1={s1['dti']:.5f} | E1={se1['dti']:.5f} | E2={se2['dti']:.5f} ({time.monotonic() - t_f:.1f}s)",
                 flush=True,
             )
             fold_fit_meta.append(
@@ -551,7 +570,9 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
         del preds_b0, preds_b1, preds_e1, preds_e2
         gc.collect()
 
-        print("[5/7] Fitting full-footprint surfaces & checking 48-raster novelty gate...", flush=True)
+        print(
+            "[5/7] Fitting full-footprint surfaces & checking 48-raster novelty gate...", flush=True
+        )
         full_surf_e1, full_meta_e1 = gvc.fit_predict_calibrated_hgb(
             base_mm,
             gvc_mm,
@@ -564,7 +585,12 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
             residualize=False,
         )
         full_dots_e1 = gvc.submodular_dti_allocate(
-            full_surf_e1, fp, catalogue, budget=FULL_DOT_BUDGET, min_spacing_px=2.5, catalogue_clearance_px=2.0
+            full_surf_e1,
+            fp,
+            catalogue,
+            budget=FULL_DOT_BUDGET,
+            min_spacing_px=2.5,
+            catalogue_clearance_px=2.0,
         )
 
         full_surf_e2, full_meta_e2 = gvc.fit_predict_calibrated_hgb(
@@ -579,7 +605,12 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
             residualize=True,
         )
         full_dots_e2 = gvc.submodular_dti_allocate(
-            full_surf_e2, fp, catalogue, budget=FULL_DOT_BUDGET, min_spacing_px=2.5, catalogue_clearance_px=2.0
+            full_surf_e2,
+            fp,
+            catalogue,
+            budget=FULL_DOT_BUDGET,
+            min_spacing_px=2.5,
+            catalogue_clearance_px=2.0,
         )
 
         entries_48 = _extended_registry_entries(ROOT, fp)
@@ -639,7 +670,10 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
         return {"stage5_complete": True, "elapsed_stage15": round(stage15_elapsed, 2)}
 
     t_s6 = time.monotonic()
-    print("[6/7] Running exact-file Lopez-Paz & Oquab C2ST Nuisance Audit (labels first)...", flush=True)
+    print(
+        "[6/7] Running exact-file Lopez-Paz & Oquab C2ST Nuisance Audit (labels first)...",
+        flush=True,
+    )
     e1_tmp_tif = cand_tmp / "e1_gvc1_zeros.tif"
     e2_tmp_tif = cand_tmp / "e2_gvc1_resid_zeros.tif"
     _write_via_shared_cli(full_dots_e1, e1_tmp_tif, template, "zero", cand_tmp / "e1.npy")
@@ -698,11 +732,7 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
     comp_nov_ok = bool(
         sel_nov_surf["competing_method_passed"] and sel_nov_dots["competing_method_passed"]
     )
-    slug = (
-        base_slug
-        if comp_nov_ok
-        else base_slug.replace("gvc1-", "gvc1-negative-", 1)
-    )
+    slug = base_slug if comp_nov_ok else base_slug.replace("gvc1-", "gvc1-negative-", 1)
 
     print(
         f"[7/7] Packaging selected arm {selected_arm} (competing_novelty_ok={comp_nov_ok}) via shared submission_writer.py...",
@@ -718,9 +748,7 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
     chk_zeros = _write_via_shared_cli(
         sel_dots, zeros_path, template, "zero", cand_tmp / "final_z.npy"
     )
-    chk_nan = _write_via_shared_cli(
-        sel_dots, nan_path, template, "nan", cand_tmp / "final_n.npy"
-    )
+    chk_nan = _write_via_shared_cli(sel_dots, nan_path, template, "nan", cand_tmp / "final_n.npy")
     if not (chk_zeros["format_valid"] and chk_nan["format_valid"]):
         raise SystemExit("Exact-file format validator failed")
     zip_path = submission.zip_single(nan_path, downloads / nan_name.replace(".tif", ".zip"))
@@ -756,9 +784,7 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
         "format_and_unit_range_valid": bool(chk_zeros["format_valid"] and chk_nan["format_valid"]),
         "leakage_canary_passed": bool(canary["passed"]),
         "competing_method_uniqueness_47_rasters_passed": bool(comp_nov_ok),
-        "beats_reconstructed_legacy_oof_ridge_B0_pooled": bool(
-            sel_holdout["dti"] > sum_b0["dti"]
-        ),
+        "beats_reconstructed_legacy_oof_ridge_B0_pooled": bool(sel_holdout["dti"] > sum_b0["dti"]),
         "beats_matched_allocator_oof_base_B1_ci95_gt_0": bool(
             sel_vs_b1["ci95_strictly_positive"] and sel_vs_b1["fold_wins"] >= 3
         ),
@@ -782,7 +808,7 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
             key=lambda r: r["candidate_dot_overlap_within_3px"] or 0.0,
         )
         blockers.append(
-            f"Duplicate-overlap stop (Rule 1): {top_comp_row['candidate_dot_overlap_within_3px']*100:.2f}% (>70%) of emitted dots lie <=3 px from competing supervised range-front detector {top_comp_row['registry_id']} ({top_comp_row['file']}, raw Spearman rho={top_comp_row['raw_spearman']:.4f})"
+            f"Duplicate-overlap stop (Rule 1): {top_comp_row['candidate_dot_overlap_within_3px'] * 100:.2f}% (>70%) of emitted dots lie <=3 px from competing supervised range-front detector {top_comp_row['registry_id']} ({top_comp_row['file']}, raw Spearman rho={top_comp_row['raw_spearman']:.4f})"
         )
     for k, v in technical_gates.items():
         if not v and k != "competing_method_uniqueness_47_rasters_passed":
@@ -791,14 +817,18 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
         ctrl = sel_nov_dots["calibration_control_summary"][0]
         blockers.append(
             f"Retained spacing-5 calibration lattice ({ctrl['registry_id']}) covers "
-            f"{ctrl['footprint_3px_coverage']*100:.2f}% of footprint at 3 px "
-            f"(pigeonhole lower bound >= {ctrl['pigeonhole_min_overlap']*100:.2f}% > 70%)"
+            f"{ctrl['footprint_3px_coverage'] * 100:.2f}% of footprint at 3 px "
+            f"(pigeonhole lower bound >= {ctrl['pigeonhole_min_overlap'] * 100:.2f}% > 70%)"
         )
     if not governance_gates["assigned_coordinator_lane_present"]:
         blockers.append(
             "No coordinator-assigned single method paragraph in brief (IR-20261025-MISSING-LANE)"
         )
-    if not governance_gates["external_weekly_selector_quota_verified" if "external_weekly_selector_quota_verified" in governance_gates else "external_weekly_selector_quota_authorized"]:
+    if not governance_gates[
+        "external_weekly_selector_quota_verified"
+        if "external_weekly_selector_quota_verified" in governance_gates
+        else "external_weekly_selector_quota_authorized"
+    ]:
         blockers.append(
             "Parallel-Run Protocol Rule 6: live weekly-slot selection requires separate cross-lane selector and verified DrivenData weekly cap"
         )
@@ -992,9 +1022,7 @@ def run_gvc1(*, work_dir: Path, stop_after_stage5: bool = False) -> dict[str, An
         "competing_method_uniqueness_passed": bool(
             sel_nov_surf["competing_method_passed"] and sel_nov_dots["competing_method_passed"]
         ),
-        "literal_unseparated_uniqueness_passed": bool(
-            sel_nov_dots["literal_unseparated_passed"]
-        ),
+        "literal_unseparated_uniqueness_passed": bool(sel_nov_dots["literal_unseparated_passed"]),
         "strict_c2st_gate_passed": bool(sel_c2st["strict_c2st_gate_passed"]),
         "ok_to_download": True,
         "ok_to_submit": ok_to_submit,

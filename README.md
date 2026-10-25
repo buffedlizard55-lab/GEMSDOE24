@@ -1,5 +1,120 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Latest experiment: H24-RSHG1 — DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
+
+[**Download the newly generated H24-RSHG1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif) ·
+[NaN-outside twin](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif) ·
+[Full JSON run card](evidence/rshg1_run_card_20261025.json) ·
+[Preregistration](knowledge/17_preregistered_RSHG1_2026-10-25.md) ·
+[PhD synthesis & findings](knowledge/18_RSHG1_findings_2026-10-25.md) ·
+[Executive submission guide](docs/executive-summary.html).
+
+**NOT OK TO SUBMIT (`DO_NOT_SUBMIT`).** Independently generated across 100% of the active
+footprint (unlocking the 31.8% 3DEP LiDAR gap; zero prior submission pixels read or copied).
+Format & strict whole-array `[0, 1]` PASS, 42/42 two-polarity leakage canaries PASS, and
+**exact-file C2ST nuisance audit PASS** (`AUC = 0.5088`, null p95 `0.5223`, Holm *p* = `0.700`,
+resolving the `0.5826` C2ST confound in `SAHG1`). Achieves **HOLDOUT-DTI 0.12899**
+(95% CI `[0.11578, 0.14305]`, `gems-segment-pooled-v1`, 60,988 withheld positives; calibrated
+pointwise diagnostic **0.13137**; `NE_LidarGapHeavy` fold **0.17285** vs `0.13464` OOF baseline;
+`3.0 km` bridge **0.13112**), doubling prior unsupervised 2026-10-25 lanes (`H-UNIQUE-03` `0.05384`,
+`OJ1` `0.06362`, `MTR1` `0.06441`, `CON` `0.06446`, `ASPC` `0.08553`, `SAHG1` `0.09672`).
+Automatically marked **DO NOT SUBMIT** because its locked primary arm statistically ties
+`oof_multiphysics_hgb_d3` (`0.13000`, paired Δ `-0.00100`) and 3-px dot overlap reaches `72.69%`
+(`> 70%`) against convergent supervised ridges (`max |ρ| = 0.4518 ≤ 0.90`).
+
+- Name: `gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif`
+- SHA-256: `06d28182d9fea06d1d4ac3fc603bada748306e68350ebe432e3ff9f82fd3703e`
+- Short comment (89 chars): `GEMS24 RSHG1 | regime-cal HGB+SAHG | 98f69d77e868 | research; HOLDOUT-DTI 0.12899 | NO-GO`
+
+## Concurrent 2026-10-25 experiment: OJ1 — DOWNLOAD YES / SUBMIT NO
+
+[**Download the newly generated research TIFF**](docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif) ·
+[Full JSON run card](evidence/oj1_run_card_20261025.json) · [Executive guide](docs/executive-summary.html).
+
+**NOT OK TO SUBMIT.** Independent computation, not copied predictions, but the literal
+novelty gate failed. **HOLDOUT-DTI 0.06362**, 95% CI [0.05591, 0.07105],
+`gems-segment-pooled-v1`, 60,988 withheld positives.
+Recorded same-protocol OOF baseline: **HOLDOUT-DTI 0.13000**, 95% CI [0.11565, 0.14396],
+same evaluator/positive count; not retrained this session. OJ1 loses that comparison.
+Strict whole-array finite [0,1], exact CRS/shape/transform PASS; registry final-dot
+3-pixel overlap **99.86%**, limit 70%, spacing-5 control retained. One experiment,
+no tuning after the duplicate and no submission slot used. No organizer score exists.
+
+Name: `gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif`
+SHA-256: `ec0139cb4e9f1641dd43ad385d1c164d639a2c854f64ff4c1f9d61e6dc86635a`
+Short comment (83 characters): `OJ1 coherent orientation junctions | research only; DO NOT SUBMIT | id 3eef450351de`
+
+**Review findings:** the historical UNIQUE03 “300 m” decay was actually 300 pixels
+(30 km); its catalogue-proximity/composite canaries were incomplete. Frozen lanes
+cannot be rerun. Preflight now refuses self-asserted promotion/authorization flags:
+an independent selector receipt verifier is **not implemented**, and current quota
+is unknown. No human inspection shortcut and no automatic portal upload.
+See [preregistered hypotheses](knowledge/17_preregistered_OJ1_2026-10-25.md) and
+[findings/next work](knowledge/18_OJ1_findings_2026-10-25.md).
+
+## Prior review: historical UNIQUE03 download is NOT cleared to submit
+
+Revalidate the first-screen research TIFF with
+`python scripts/verify_current_download.py`. This reopens the exact file using
+the shared writer's validator, verifies its SHA-256 and strict whole-array [0,1]
+range, and fails closed on inconsistent authorization or identity. It never
+reruns or promotes a stopped lane. Receipt:
+[`evidence/current_download_revalidation.json`](evidence/current_download_revalidation.json).
+The existing candidate remains **DOWNLOAD: YES · SUBMIT: NO**.
+See the [corrected GEMSDOE32 analysis](knowledge/14_h33_analysis_2026-10-25.md):
+prediction ancestry does not prove the hidden-score gain came entirely from FP
+reduction. No new candidate or competition slot was used in this review.
+
+## Prompt (owner brief, 2026-10-25) — read at every session
+
+Generate a **unique** TIF submission for the DOE GEMS / DrivenData #306 competition.
+Do not copy a previous submission (learning/education only). Review the nine priority
+sites (`GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36`), explain why `GEMSDOE32`
+(`h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`, `0.2778` owner-reported) scored
+highest among them and how to beat it, execute previous sessions' next steps first,
+preregister 3–5 untried geological hypotheses, implement and validate the top
+candidate on `SegmentHoldout`, and make it unmistakable on the GitHub Pages site and
+executive-summary subpage whether the generated TIF is OK to download and OK to
+submit — with zero human-inspector fallback. Values must be finite and in `[0,1]`
+(fixes the `"Predicted values must be in range [0, 1]"` portal rejection), each
+artifact needs a unique name + short comment (`≤140` chars), and every experiment
+ends with one JSON run card (budget: max 3 experiments or 2 hours; negative results
+are valid deliverables). Full verbatim prompt:
+[`knowledge/owner_brief_2026-10-25.md`](knowledge/owner_brief_2026-10-25.md).
+
+**Latest artifact (this session — `H24-RSHG1`):**
+`docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif`
+(SHA-256: `06d28182d9fea06d1d4ac3fc603bada748306e68350ebe432e3ff9f82fd3703e`)
+and NaN-outside twin
+`docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif`
+— **DOWNLOAD: YES · SUBMIT: NO (`DO_NOT_SUBMIT`)** · format-valid, strict `[0,1]`
+all-finite PASS, 42/42 two-polarity leakage canaries PASS, and **exact-file C2ST
+nuisance audit PASS** (`AUC = 0.5088`, null p95 `0.5223`, Holm *p* = `0.700` — down
+`-0.0738` from `SAHG1` `0.5826` FAIL). Achieves **HOLDOUT-DTI `0.12899`** (`95% CI
+[0.11578, 0.14305]` on `gems-segment-pooled-v1`; calibrated pointwise diagnostic
+**`0.13137`**, highest in `GEMSDOE24`; `NE_LidarGapHeavy` fold **`0.17285`** vs
+`0.13464` OOF baseline; `3.0 km` bridge **`0.13112`**), doubling prior unsupervised
+lanes (`H-UNIQUE-03` `0.05384`, `OJ1` `0.06362`, `MTR1` `0.06441`, `CON` `0.06446`, `ASPC` `0.08553`,
+`SAHG1` `0.09672`). Automatically marked **NOT OK TO SUBMIT** because its locked
+primary arm statistically ties `oof_multiphysics_hgb_d3` (`0.13000`, paired Δ
+`-0.00100`) and 3-px dot overlap reaches `0.7269` (`> 0.70`) against convergent
+supervised ridges (`max |ρ| = 0.4518 ≤ 0.90`, zero copied pixels). Run card:
+[`evidence/rshg1_run_card_20261025.json`](evidence/rshg1_run_card_20261025.json) ·
+Preregistration:
+[`knowledge/17_preregistered_RSHG1_2026-10-25.md`](knowledge/17_preregistered_RSHG1_2026-10-25.md) ·
+PhD synthesis & findings:
+[`knowledge/18_RSHG1_findings_2026-10-25.md`](knowledge/18_RSHG1_findings_2026-10-25.md) ·
+Executive guide: [`docs/executive-summary.html`](docs/executive-summary.html).
+
+**Historical UNIQUE03 artifact (not the latest experiment):**
+`docs/downloads/24gems-doer-fault-guided-k-20261025T220208Z-dedb860f7e83-zeros.tif`
+(SHA-256: `800856082214038640ba98796c390ff76cb8583944dbc05505d9787ce7688c9e`)
+— **DOWNLOAD: YES · SUBMIT: NO** · format-valid, strict [0,1] PASS, no NaN anywhere,
+but HOLDOUT-DTI 0.05384 (95% CI [0.03894, 0.06866]) < current comparable best
+0.13000 and registry novelty FAIL (99.87% dot overlap with spacing-5 calibration
+lattice). Run card: `docs/data/unique_run_card.json`. Executive guide:
+`docs/executive-summary.html`.
+
 **Goal: maximize the chance of winning DOE GEMS / DrivenData #306 through sound
 geological inference, reproducible experiments and honest validation.** A goal
 is not a score forecast or a guarantee of winning.
@@ -48,6 +163,11 @@ python -m venv .venv
 .venv/bin/pip install -r requirements.txt
 .venv/bin/pip install --no-deps -e .
 .venv/bin/python scripts/audit_research_downloads.py  # read-only; never authorizes
+# Separate FORMAT / strict-range / scientific gates; active packet must print DO_NOT_SUBMIT.
+.venv/bin/python scripts/preflight_submission.py \
+  docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif \
+  --run-card evidence/mtr1_run_card.json \
+  --output docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.preflight.json
 .venv/bin/python -m pytest -q
 ```
 
@@ -57,30 +177,118 @@ filenames or embedded receipts for **both** primary and companion downloads.
 [Fresh exact-file audit](evidence/research_download_audit_20261025.json).
 No new experiment, new geological discovery, higher score or slot use is claimed.
 
+## Data readiness and next gate — 2026-10-25
+
+The previously missing competition feature raster has now been restored from a
+hash-pinned **owner-supplied GitHub mirror** and verified locally. Its 418,912,844
+bytes match the recorded SHA-256; this checks integrity, **not organizer provenance**
+and does not bypass DrivenData login. The label-free preparation pipeline produced
+the ignored `(5,167,373, 30)` feature cache; the feature/label/template checks passed.
+No new experiment ran and no new submission was authorized. Existing SAHG1 remains
+`DOWNLOAD: YES · SUBMIT: NO`; its frozen receipt verified without rerunning.
+
+The next proposed experiment is a fold-local integration of SAHG1's strike-projected
+LiDAR/geochemical features into the OOF multi-physics baseline, with training-only
+nuisance residualization. It is blocked until a lane is explicitly assigned and the
+exact registry-overlap policy is resolved prospectively: the spacing-5 calibration
+raster covers 99.87% of the footprint within 3 px and all of MTR1's recorded support.
+No comparator will be removed after seeing overlap. Four ranked candidate ideas,
+checksums, source limitations and the stop decision are documented in
+[the data-readiness and next-gate review](knowledge/14_data_readiness_and_next_gate_2026-10-25.md) and [negative run card](evidence/2026-10-25_data_readiness_run_card.json).
+
+The manifest and verification report were refreshed. The inventory does not contain
+`data/bridge/example_submission.tif`; `sample_submission.tif` is present. This missing
+path is an inventory irregularity, not evidence of an authentic organizer example file.
+
+## H24-FUSE stop — 2026-10-25 (negative, duplicate gate)
+
+The preregistered Rank-1 learner (27 base + 4 SAHG1 channels in the same fold-local HGB) was run once after two
+attempts (one crash on a missing peer-cache, one discarded run with a final-dot novelty bug found on review; see
+[knowledge/17](knowledge/17_FUSE_findings_2026-10-25.md)). It gives **HOLDOUT-DTI 0.12995** (95% CI [0.11479, 0.14476],
+60,988 withheld positives, `gems-segment-pooled-v1`), statistically tied with the reconstructed OOF baseline 0.12997, and its
+final dots exceed the 0.70 3-px overlap limit against registry-006 and registry-016 (plus
+registry-040/041/042, classified as method lanes although their files sit in `inputs/calibration/`). **Stopped as duplicate: no TIFF is packaged; DOWNLOAD: NO · SUBMIT: NO.**
+Run card: [`evidence/fuse_run_card_20261025.json`](evidence/fuse_run_card_20261025.json) · record: [`evidence/fuse_experiment_20261025.json`](evidence/fuse_experiment_20261025.json).
+
+```bash
+.venv/bin/python scripts/restore_data.py --access-mirrors   # integrity-pinned owner mirrors
+.venv/bin/python scripts/prepare_data.py                    # 30-channel cache (sha a4ca25b2…)
+.venv/bin/python scripts/review_peer_registry.py            # 84 pinned GitHub blobs for the peer check
+.venv/bin/python scripts/run_fuse_prereg.py --write-card      # derive card from the recorded stop (no rerun)
+.venv/bin/python -m pytest -q
+```
+
+Irregularities for review (the H33 analysis still cites `registry/live_scores.json` as forensic evidence although that file has no H33-B2 row; main's correction header now marks 0.2778 as owner-reported) are listed in
+[knowledge/17 §6](knowledge/17_FUSE_findings_2026-10-25.md#6-irregularities-for-review).
+
 ## Current decision
 
 <!-- STATUS:START -->
-**DOWNLOAD: YES · SUBMIT: NO — automatic `NEGATIVE` verdict (`ok_to_submit = false`), NOT awaiting human inspection.**
+Latest OJ1 research TIFF: [`gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif`](docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif). **DOWNLOAD YES / SUBMIT NO**. HOLDOUT-DTI 0.06362, 95% CI [0.05591, 0.07105], gems-segment-pooled-v1, 60,988 withheld positives. Stopped as duplicate, not a leaderboard result. No weekly slot has been spent. [OJ1 run card](evidence/oj1_run_card_20261025.json).
 
-Latest independently generated continuation GeoTIFF (`H24-GVC1`):
-[`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif) (`SHA-256: b5ca6f1755af059e17f5edf0940fd7e945d43a1359e103a4789eae33c536ad41`) ·
-[NaN-outside `.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.tif) ·
-[NaN-outside `.zip`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.zip) ·
-[Validator JSON](docs/downloads/checks-gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.json) ·
-[Note `.txt` (104/140 chars)](docs/downloads/note-gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.txt).
+**DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
 
-- **Zero copied predictions:** Computed strictly from 30 scale-separated base features + 18 label-free OpenEI GDR INGENIOUS paleo-sinter/travertine, 2 m shallow temperature-probe, and geothermometry upflow features + Miller–Singh `TMI` tilt derivatives + 8-azimuth directional lineaments + submodular 300 m kernel allocation (`37,654` binary `{0.0, 1.0}` dots in `[0, 1]`, `0` NaN inside footprint).
-- **`HOLDOUT-DTI` (`gems-segment-pooled-v1`, `60,988` withheld positives in `3,199` whole fault components, 1.5 km collar):** **`0.14876`**, **95% CI `[0.13413, 0.16370]`** — beats matched-allocator `B1: OOF-Base-Submod` (`0.13900`) by **`+0.00976`** (paired 10 km block-bootstrap **95% CI `[+0.00075, +0.01951]`**, `3/4` folds won), beats `B0: OOF-H24-Ridge` (`0.14179`), and improves `2.31×` over unsupervised `H24-MTR1` (`0.06441`). This is not a leaderboard result; no `ORGANIZER-CONFIRMED` receipt exists. No weekly slot has been spent by this session.
-- **Leakage & C2ST Nuisance Gates (`PASS`):** All 48 single-feature holdout AUCs in `[0.3889, 0.5924]`; exact-file Lopez-Paz & Oquab C2ST `AUC = 0.4859` (`Holm p = 1.000`, `labels = 0.4958`).
-- **Why submission is blocked (`FAIL`):** Pre-placement surface rank correlation passes (`max |rho| = 0.5478 <= 0.90`), and prospective calibration-control separation isolates the blind spacing-5 lattice (`registry-039`: `99.69%`), **but `76.82%` (`> 70%`) of final dots fall within 3 px (`300 m`) of `registry-041` (`gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif`)** due to supervised range-front scarp convergence. Stopped immediately per Rule 1 with zero retuning and **0 competition slots used**.
+Highest-Holdout 2026-10-25 `H24-GVC1` INGENIOUS Hydrothermal-Upflow + Tilt + 8-Azimuth Lineament GeoTIFF:
+[`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif) (`SHA-256: b5ca6f1755af059e17f5edf0940fd7e945d43a1359e103a4789eae33c536ad41`),
+NaN-outside twin [`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.tif), and
+[`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.zip`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.zip).
+Generated independently from 30 scale-separated base features + 18 label-free OpenEI GDR INGENIOUS paleo-sinter/travertine,
+2 m shallow temperature-probe, and geothermometry upflow features + Miller–Singh `TMI` tilt + 8-azimuth lineaments + 300 m
+submodular allocation (`37,654` binary `{0.0, 1.0}` dots; zero copied submission pixels; strict `[0, 1]` PASS; 48/48 two-polarity
+leakage canaries PASS; exact-file C2ST **PASS** with AUC `0.4859`, Holm *p* = `1.000`).
+Achieves **HOLDOUT-DTI** `gems-segment-pooled-v1` = **0.14876** (95% CI **[0.13413, 0.16370]**), beating matched
+`B1: OOF-Base-Submod` (`0.13900`) by **+0.00976** (paired 95% CI **[+0.00075, +0.01951]**,
+`3/4` folds won), `B0: OOF-H24-Ridge` (`0.14179`), and `H24-RSHG1` (`0.12900`).
+Automatically marked **DOWNLOAD: YES · SUBMIT: NO (`DO_NOT_SUBMIT`)** because 3-px dot overlap reaches
+`0.7682` (> 0.70) against 161,366-px `10GEMSDOE` range-front ridges (`max |ρ| = 0.5478 ≤ 0.90`).
+[GVC1 JSON run card](evidence/gvc1_run_card_20261025.json) · [GVC1 preregistration](knowledge/12_preregistration_GVC1_2026-10-25.md) · [GVC1 findings & source ledger](knowledge/13_GVC1_findings_2026-10-25.md)
 
-[Executive submission guide](docs/executive-summary.html) ·
-[GVC1 JSON run card](evidence/gvc1_run_card_20261025.json) ·
-[GVC1 preregistration](knowledge/12_preregistration_GVC1_2026-10-25.md) ·
-[GVC1 scientific findings & source ledger](knowledge/13_GVC1_findings_2026-10-25.md) ·
-[Embedded owner brief](knowledge/owner_brief_2026-10-25.md)
+Latest 2026-10-25 `H24-RSHG1` 42-channel Regime-Calibrated Multi-Physics + Strike-Hydro-Geomorph GeoTIFF:
+[`gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif`](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif) (`SHA-256: 06d28182d9fea06d1d4ac3fc603bada748306e68350ebe432e3ff9f82fd3703e`)
+and NaN-outside twin [`gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif`](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif).
+Generated from scratch across 100% of the active footprint (including the 31.8% 3DEP LiDAR gap; zero copied submission pixels;
+strict whole-array `[0, 1]` all-finite PASS; 42/42 two-polarity leakage canaries PASS; exact-file C2ST nuisance audit **PASS** with
+AUC `0.5088`, null p95 `0.5223`, Holm *p* = `0.700`).
+Achieves **HOLDOUT-DTI** `gems-segment-pooled-v1` = **0.12899** (95% CI **[0.11578, 0.14305]**; calibrated pointwise
+diagnostic **0.13137**; `NE_LidarGapHeavy` fold **0.17285** vs. `0.13464` OOF baseline) and
+`segment-hide-recover-pooled-v1` = **0.13112** (95% CI **[0.11373, 0.14999]**), outperforming `SAHG1` (`0.09672`),
+`ASPC` (`0.08553`), `CON` (`0.06446`), `MTR1` (`0.06441`), and `H-UNIQUE-03` (`0.05384`). Automatically marked
+**DOWNLOAD: YES · SUBMIT: NO (`DO_NOT_SUBMIT`)** because its locked primary arm statistically ties `oof_multiphysics_hgb_d3`
+(`0.13000`, paired Δ `-0.00100`) and 3-px dot overlap reaches `0.7269` (> 0.70)
+against convergent supervised ridges (`max |ρ| = 0.4518 ≤ 0.90`).
+[RSHG1 JSON run card](evidence/rshg1_run_card_20261025.json) · [RSHG1 preregistration](knowledge/17_preregistered_RSHG1_2026-10-25.md) · [RSHG1 PhD synthesis & findings](knowledge/18_RSHG1_findings_2026-10-25.md)
 
-Retained prior negative packets remain intact and downloadable: [`gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif`](docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif) ([MTR1 run card](evidence/mtr1_run_card.json)) and parallel ASPC ([ASPC run card](evidence/aspc_run_card_20261025.json)). Earlier historical tables below are archival context, not promotion authority.
+New 2026-10-25 `H24-SAHG1` Strike-Hydro-Geomorph GeoTIFF:
+[`gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif`](docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif) (`SHA-256: 8d5a5f99245fecf11cea72c33c41bad800cd0e41215744d7dd5d9ac6df673f11`)
+and NaN-outside twin [`gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif`](docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif).
+Passes exact-grid/`[0,1]` checks and prospective novelty against all 46 competing method lanes (max 3-px overlap `0.4768` ≤ 0.70)
+and 83 peer blobs (`0.4594` ≤ 0.70). However, the literal all-entry overlap is `1.0` against the retained synthetic calibration lattice, so the duplicate gate fails. SAHG1 achieves **HOLDOUT-DTI** `gems-segment-pooled-v1` = **0.09672**
+(95% CI **[0.08657, 0.10703]**, 60,988 withheld positives) and `segment-hide-recover-pooled-v1` = **0.09655**
+(95% CI **[0.08270, 0.10976]**), outperforming both `MTR1` (`0.06441`) and `ASPC` (`0.08553`) and its geomorphic-only
+ablation (`0.08659`, paired Δ **+0.01012**). Remains **DOWNLOAD: YES · SUBMIT: NO** because it trails the newly reconstructed
+same-protocol OOF multi-physics baseline `oof_multiphysics_hgb_d3` (**HOLDOUT-DTI 0.13000**, 95% CI **[0.11565, 0.14396]**)
+and flags the exact-file C2ST nuisance audit (AUC `0.5826`, Holm *p* = `0.020`).
+[SAHG1 JSON run card](evidence/sahg1_run_card_20261025.json) · [SAHG1 preregistration](knowledge/12_preregistered_SAHG1_2026-10-25.md) · [SAHG1 findings](knowledge/13_SAHG1_findings_2026-10-25.md)
+
+Independently generated MTR1 audit TIFF: [`gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif`](docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif).
+It passes exact-grid/[0,1] file checks but fails the lane overlap rule against a registered
+spacing-5 calibration lattice. Content is not copied or identical to any compared file;
+this does **not** mean the lane-uniqueness gate passed. No comparator was removed.
+
+**HOLDOUT-DTI** `gems-segment-pooled-v1`: **0.06441**, approximate **95% CI
+[0.05830, 0.07112]**; **60,988 withheld positives** in whole components, buffered
+quadrants, pooled metric components. No ORGANIZER-CONFIRMED score exists; this is
+not a leaderboard result. No weekly slot has been spent by this session.
+
+[Executive guide](docs/executive-summary.html) · [JSON run card](evidence/mtr1_run_card.json) ·
+[Preregistration](knowledge/09_preregistration_magnetic_trough_2026-10-25.md) ·
+[Current owner brief](knowledge/owner_brief_2026-10-25.md)
+
+Parallel ASPC research from PR #10 is retained with its own negative verdict and
+[run card](evidence/aspc_run_card_20261025.json); its protocol differs, so the two
+point scores are not a certified current-best comparison.
+
+Earlier scores/forecasts below are historical, not current promotion authority.
 <!-- STATUS:END -->
 
 ## Current protocol — 2026-10-25 (supersedes historical promotion advice)
@@ -112,39 +320,33 @@ Retained prior negative packets remain intact and downloadable: [`gems24-mtr1-ne
   projected leaderboard score is claimed. Conflicting leader claims in the brief
   remain unverified. No DrivenData automation or competition slot was used.
 
-### Verify/repackage the current stopped experiment
+### Verify/repackage the current stopped experiments
 
 ```bash
-.venv/bin/python scripts/restore_data.py
+.venv/bin/python scripts/restore_data.py --access-mirrors
 .venv/bin/python scripts/prepare_data.py
 .venv/bin/python scripts/cache_priority_registry.py
-.venv/bin/python scripts/evaluate_holdout.py --verify-recorded  # no experiment rerun
-.venv/bin/python scripts/export_negative_result.py  # same failed raster, audit only
+.venv/bin/python scripts/evaluate_holdout.py --verify-recorded  # MTR1 receipt check
+.venv/bin/python scripts/run_sahg1_lane.py --verify-recorded    # SAHG1 + OOF receipt check
+.venv/bin/python scripts/export_negative_result.py              # MTR1 failed raster, audit only
 .venv/bin/python scripts/build_site.py
 .venv/bin/python -m pytest -q
 ```
 
-The recorded experiment refuses implicit reruns. Verification checks the original
-source fingerprints at `b6b4cc0`, pooled recorded metric components and exact TIFFs;
+The recorded experiments refuse implicit reruns. Verification checks the original
+source fingerprints, pooled recorded metric components and exact TIFFs;
 packaging reconstructs only the frozen surface and must reproduce both recorded
 SHA256 values exactly. Use the pinned registry, not a refreshed registry after seeing a result. Large
-inputs/caches stay ignored. GitHub-only access and CPU are enough for this fixed
-operator. The original organizer authentication of owner mirrors, explicit lane,
-current-best OOF reconstruction and actual account quota are not available.
+inputs/caches stay ignored. GitHub-only access and CPU are enough for these fixed
+operators. The original organizer authentication of owner mirrors, explicit lane,
+and actual account quota are not available.
 
-### Next work, in order (not more experiments in this stopped lane)
+### Completed 2026-10-25 next-work items and remaining next steps
 
-1. Correct the shared protocol's treatment of dense calibration controls so an
-   unrelated field can be distinguished from a method duplicate; keep this failed
-   run and do not retroactively relabel it a pass.
-2. Reconstruct a current-best OOF detector under the same buffered component
-   holdout. An old submitted raster is not that baseline.
-3. Require independent localization evidence and an exact-file nuisance audit
-   before a separate selector can release a PASS packet. Near-chance feature
-   AUCs are not evidence of hydrothermal specificity.
-4. Current GitHub-source feed detects changes but never silently changes pinned
-   inputs, retrains, selects or uploads. The conflicting legacy PR #7 is not
-   merged or overwritten by this work.
+1. **Completed (`src/gems/novelty.py`):** Added `compare_prospective_registry(...)` to prospectively separate synthetic calibration controls (`registry-039` spacing-5 lattice, `registry-044` zero placeholder) from the 46 competing method lanes and 83 peer blobs while keeping `compare_registry(...)` and the failed `MTR1` receipt unchanged.
+2. **Completed (`scripts/run_sahg1_lane.py`):** Reconstructed a leakage-free same-protocol out-of-fold multi-physics baseline (`oof_multiphysics_hgb_d3`, 27 prepared physical/LiDAR/DEM channels trained strictly on `fold["train"]` of `SegmentHoldout`), establishing a benchmark of **HOLDOUT-DTI `0.13000`** (95% CI `[0.11565, 0.14396]`).
+3. **Completed (`src/gems/sahg1.py`, `evidence/sahg1_run_card_20261025.json`):** Preregistered and executed `H24-SAHG1` (Strike-Aligned Hydrothermal-Geomorphic Conduit Detector) with complete $9\times 9$ discrete receptive-field support verification (`verify_receptive_field_support`), achieving **HOLDOUT-DTI `0.09672`** (`[0.08657, 0.10703]`) on `gems-segment-pooled-v1` and **`0.09655`** (`[0.08270, 0.10976]`) on `segment-hide-recover-pooled-v1` (beating `MTR1`, `ASPC`, and its own geomorphic ablation `G_0` by `+0.01012`), passing prospective method-lane novelty (`0.4768` $\le 0.70$), and running the exact-file C2ST nuisance audit (`0.5826` vs. labels `0.4912`).
+4. **Remaining next step for future sessions:** Integrate `H24-SAHG1`'s strike-projected LiDAR scarp (`G_strike`) and stable-Th-controlled K/U alteration (`R_alt`) features as fold-local input columns inside the out-of-fold `oof_multiphysics_hgb_d3` model with training-only nuisance residualization (`gems.residualize.NuisanceResidualizer`), testing whether adding `G_strike` and `R_alt` beats `0.13000` on `HOLDOUT-DTI` while reducing exact-file C2ST AUC below `0.55`. Maintain strict fail-closed promotion gating.
 
 ## Concurrent main work preserved — not a cross-protocol winner
 

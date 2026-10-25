@@ -1,0 +1,18 @@
+{
+  "lane_id": "H24-RSHG1",
+  "file": "gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif",
+  "sha256": "06d28182d9fea06d1d4ac3fc603bada748306e68350ebe432e3ff9f82fd3703e",
+  "nan_file": "gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif",
+  "nan_sha256": "2641944cf4fa7ae7960243f738e89a8fe020c09b22275c00f033155e0197ef4a",
+  "pixel_count": 37722,
+  "min_distance_to_catalogue_px": 2.23606797749979,
+  "note": "GEMS24 RSHG1 | 42ch NaN-HGB+res+K300 b2 98f69d77e868 | DTI 0.1290; DO NOT SUBMIT",
+  "note_file": "note-gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.txt",
+  "checks_file": "checks-gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.json",
+  "preview_png": "assets/rshg1-preview.png",
+  "verdict": "negative",
+  "technical_promotion_gates_passed": false,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "submission_authorized": false
+}

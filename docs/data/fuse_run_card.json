@@ -1,0 +1,95 @@
+{
+  "hypothesis": "H24-FUSE: 27 prepared base channels + 4 SAHG1 channels (G_sat, R_alt, B_step, H_conduit) in a fold-local HistGradientBoosting learner",
+  "mechanism": "Learned fusion of strike-projected LiDAR scarp, stable-Th-normalised K/U alteration, gravity/magnetic/basement/strain step and their conjunction, with fold-local training on visible faults only",
+  "named_non_fault_mimic": "Pleistocene Lake Lahontan shoreline/tufa bars or welded-tuff ledges that co-register with alteration and basement-step signals",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator": "gems-segment-pooled-v1",
+    "dti": 0.1299500703519766,
+    "ci95": [
+      0.11479067097244967,
+      0.14475781379935826
+    ],
+    "withheld_positives": 60988
+  },
+  "reconstructed_oof_baseline": {
+    "label": "HOLDOUT-DTI",
+    "dti": 0.129996798011798,
+    "ci95": [
+      0.11565083071042537,
+      0.14396153633627826
+    ],
+    "withheld_positives": 60988
+  },
+  "paired_fuse_minus_baseline": {
+    "delta_dti": -4.6727659821416134e-05,
+    "ci95": [
+      -0.004199611522983417,
+      0.0039641884410039985
+    ]
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_max_abs_rank_correlation": 0.34680867512960734,
+    "surface_method_lane_passed": true,
+    "final_max_abs_rank_correlation": 0.5044766719326802,
+    "final_method_lane_max_dot_overlap_within_3px": 0.7415566512910238,
+    "final_literal_all_entries_max_overlap_within_3px": 1.0,
+    "final_duplicates_over_0_70_or_rho_0_90": [
+      {
+        "registry_id": "registry-006",
+        "file": "docs/downloads/gems27-h28-1-edge-coherence-plus-t-v2-h27-4-20261002-1113fba5f6cb-allfinite.tif",
+        "dot_overlap_within_3px": 0.7415566512910238,
+        "raw_spearman": 0.08756206832553326
+      },
+      {
+        "registry_id": "registry-016",
+        "file": "docs/downloads/gems28-h37-1-probe-union-pool-r1-20261003-52a13184267e-allfinite.tif",
+        "dot_overlap_within_3px": 0.7394093632363077,
+        "raw_spearman": 0.05425697510971301
+      },
+      {
+        "registry_id": "registry-039",
+        "file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "dot_overlap_within_3px": 1.0,
+        "raw_spearman": 0.0001120062732378966
+      },
+      {
+        "registry_id": "registry-040",
+        "file": "inputs/calibration/8GEMSDOE_Hedge-v2_submission.tif",
+        "dot_overlap_within_3px": 0.7048141667992153,
+        "raw_spearman": 0.028745875912084298
+      },
+      {
+        "registry_id": "registry-041",
+        "file": "inputs/calibration/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+        "dot_overlap_within_3px": 0.7189173426647579,
+        "raw_spearman": 0.057343592933657775
+      },
+      {
+        "registry_id": "registry-042",
+        "file": "inputs/calibration/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+        "dot_overlap_within_3px": 0.7073060813318488,
+        "raw_spearman": 0.031393193592639354
+      }
+    ],
+    "peer_blob_max_dot_overlap_within_3px": 0.7415566512910238,
+    "method_lane_passed": false
+  },
+  "leakage_canary": {
+    "passed": true,
+    "max_pooled_auc": 0.5923667823107298,
+    "threshold": 0.9
+  },
+  "raster_sha256": null,
+  "validator_output": "not run: stopped at the duplicate gate before packaging",
+  "submission_name": null,
+  "note": null,
+  "verdict": "negative",
+  "stopped_reason": "duplicate-final-dots-vs-registry (lane rule: >0.70 within 3 px or rho>0.90)",
+  "ok_to_download": false,
+  "ok_to_submit": false,
+  "organizer_confirmed_score": null,
+  "submission_slots_used": 0,
+  "experiments_run": 3,
+  "attempt_note": "Attempt 1 printed the holdout arms, then crashed at the peer-blob cache step (missing data/research/peer_review; no record written). The peer cache was restored from pinned GitHub blobs. Attempt 2 (full run, fixed final-dot novelty call without dots=, which had passed literal overlap as None) was discarded before any conclusion was drawn from it. No HGB, sampling or budget parameter was changed in any attempt."
+}

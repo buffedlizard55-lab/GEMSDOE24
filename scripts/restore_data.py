@@ -13,6 +13,7 @@ import argparse
 import json
 import subprocess
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -24,26 +25,33 @@ CORE_REF = "c0c06ac82178f26b94fce3397036ef8f12a2f3a0"
 CORE_HASH = "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5"
 
 
-def gh_bytes(repo: str, path: str, ref: str, dest: Path) -> Path:
+def gh_bytes(repo: str, path: str, ref: str, dest: Path, retries: int = 4) -> Path:
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_suffix(dest.suffix + ".partial")
-    try:
-        with tmp.open("wb") as out:
-            subprocess.run(
-                [
-                    "gh",
-                    "api",
-                    f"repos/{repo}/contents/{path}?ref={ref}",
-                    "-H",
-                    "Accept: application/vnd.github.raw",
-                ],
-                stdout=out,
-                check=True,
-            )
-        tmp.replace(dest)
-    finally:
-        tmp.unlink(missing_ok=True)
-    return dest
+    last_exc: Exception | None = None
+    for attempt in range(retries):
+        try:
+            with tmp.open("wb") as out:
+                subprocess.run(
+                    [
+                        "gh",
+                        "api",
+                        f"repos/{repo}/contents/{path}?ref={ref}",
+                        "-H",
+                        "Accept: application/vnd.github.raw",
+                    ],
+                    stdout=out,
+                    check=True,
+                )
+            tmp.replace(dest)
+            return dest
+        except subprocess.CalledProcessError as exc:
+            last_exc = exc
+            tmp.unlink(missing_ok=True)
+            if attempt + 1 < retries:
+                time.sleep(1.5 * (attempt + 1))
+    assert last_exc is not None
+    raise last_exc
 
 
 def main() -> None:
@@ -125,7 +133,12 @@ def main() -> None:
         "integrity_only": True,
         "warning": "Hash-pinned mirrors do not certify organizer provenance. No mining-claim or four-block proxy is silently substituted.",
     }
-    (ROOT / "evidence" / "data_restore.json").write_text(json.dumps(receipt, indent=2) + "\n")
+    target = (
+        ROOT / "evidence" / "data_restore.json"
+        if args.access_mirrors
+        else ROOT / "evidence" / "data_restore_20261025.json"
+    )
+    target.write_text(json.dumps(receipt, indent=2) + "\n")
     print(json.dumps(receipt, indent=2))
 
 

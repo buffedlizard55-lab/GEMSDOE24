@@ -490,10 +490,16 @@ class SegmentHoldout:
             },
         }
 
-    def compare_paired(self, candidate_predictions, baseline_predictions, *, ci_draws=1999, seed=20261025):
+    def compare_paired(
+        self, candidate_predictions, baseline_predictions, *, ci_draws=1999, seed=20261025
+    ):
         """Paired 10 km block-bootstrap comparison of two fold-aligned prediction sets."""
-        if len(candidate_predictions) != len(self.folds) or len(baseline_predictions) != len(self.folds):
-            raise ValueError("One independent prediction per held-out fold required for both series")
+        if len(candidate_predictions) != len(self.folds) or len(baseline_predictions) != len(
+            self.folds
+        ):
+            raise ValueError(
+                "One independent prediction per held-out fold required for both series"
+            )
         cand_rows, cand_blocks = [], []
         base_rows, base_blocks = [], []
         fold_deltas = []
@@ -543,6 +549,14 @@ class SegmentHoldout:
         from scipy.ndimage import distance_transform_edt
         from sklearn.metrics import roc_auc_score
 
+        if not isinstance(features, dict) or not features:
+            raise ValueError("At least one actual feature required for leakage canary")
+        if (
+            isinstance(max_per_class, bool)
+            or not isinstance(max_per_class, int)
+            or max_per_class < 1
+        ):
+            raise ValueError("Positive integer canary sample limit required")
         rng = np.random.default_rng(seed)
         rows, samples = {}, []
         for fold in self.folds:

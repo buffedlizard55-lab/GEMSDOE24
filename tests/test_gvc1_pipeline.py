@@ -48,17 +48,34 @@ def test_classify_space_filling_control_and_pigeonhole_bound(tmp_path):
         "crs": "EPSG:32611",
         "transform": transform,
     }
-    for path, arr in ((lat_path, lattice.astype(np.float32)), (cor_path, corridor.astype(np.float32))):
+    for path, arr in (
+        (lat_path, lattice.astype(np.float32)),
+        (cor_path, corridor.astype(np.float32)),
+    ):
         with rasterio.open(path, "w", **profile) as ds:
             ds.write(arr, 1)
 
     import hashlib
 
-    lat_sha = hashlib.sha256(np.asarray(lattice.astype(np.float32)[fp], dtype="<f4").tobytes()).hexdigest()
-    cor_sha = hashlib.sha256(np.asarray(corridor.astype(np.float32)[fp], dtype="<f4").tobytes()).hexdigest()
+    lat_sha = hashlib.sha256(
+        np.asarray(lattice.astype(np.float32)[fp], dtype="<f4").tobytes()
+    ).hexdigest()
+    cor_sha = hashlib.sha256(
+        np.asarray(corridor.astype(np.float32)[fp], dtype="<f4").tobytes()
+    ).hexdigest()
     entries = [
-        {"id": "reg-lat", "cache_path": "lattice.tif", "file": "lattice.tif", "footprint_sha256": lat_sha},
-        {"id": "reg-cor", "cache_path": "corridor.tif", "file": "corridor.tif", "footprint_sha256": cor_sha},
+        {
+            "id": "reg-lat",
+            "cache_path": "lattice.tif",
+            "file": "lattice.tif",
+            "footprint_sha256": lat_sha,
+        },
+        {
+            "id": "reg-cor",
+            "cache_path": "corridor.tif",
+            "file": "corridor.tif",
+            "footprint_sha256": cor_sha,
+        },
     ]
 
     cand = np.zeros((H, W), dtype=np.float32)
@@ -110,7 +127,9 @@ def test_paired_segment_holdout_zero_and_positive_gain():
 def test_oriented_lineament_and_submodular_allocator():
     H, W = 64, 64
     fp = np.ones((H, W), dtype=bool)
-    _, xx = np.meshgrid(np.arange(H, dtype=np.float32), np.arange(W, dtype=np.float32), indexing="ij")
+    _, xx = np.meshgrid(
+        np.arange(H, dtype=np.float32), np.arange(W, dtype=np.float32), indexing="ij"
+    )
     ridge = np.exp(-0.5 * ((xx - 32.0) / 1.5) ** 2).astype(np.float32)
     rmax = gvc.oriented_lineament_response(ridge, fp)
     assert rmax.shape == (H, W) and np.isfinite(rmax).all()

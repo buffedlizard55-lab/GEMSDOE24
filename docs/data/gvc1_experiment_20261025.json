@@ -16,15 +16,15 @@
     "rasterio": "1.4.4"
   },
   "code_sha256": {
-    "src/gems/gvc.py": "9d936d4ab89c3e387bc305e5640c25eb04e4ad7a69336557f563417ed4435db4",
-    "src/gems/holdout.py": "efba2a674f4ae7e453d323182e784797b1bc1b29868372f7bbbfcb7b85cb1038",
+    "src/gems/gvc.py": "ba42a3498278b9901ba73cbab8e8feee397d9b93e94c965f33c9f95b429b08bc",
+    "src/gems/holdout.py": "34fb7f12e849280c8162d5c433aa972f70746ddecf1a289ce3a9c81144b344dc",
     "src/gems/metric.py": "c024510de39746c9390e5bbf5c1d1b639a9ee895017a38fab4b609f0f2c33e48",
-    "src/gems/novelty.py": "3e0acb38dfce1a8ff0ed0155707a16080966a036ac110e1a97df415f35d567d1",
+    "src/gems/novelty.py": "0bfd40199fb00041446eb70368dbb7023f681a260073b41478629cbdc23d26c9",
     "src/gems/c2s2.py": "952c94e73d47fa8817ab8c51d1ad13ea0c0d6589404eb94e6b50725a3fb167f3",
     "src/gems/residualize.py": "8c7b7882a5937bb8a5f7331191c8a51197790f4faeebefd7c96145d4dfc7415a",
     "src/gems/submission.py": "380ef4c785680d0c9063f53f9fa6227e8a564314d40df02fa46f02fe37d29711",
     "scripts/submission_writer.py": "552621e4f1a8836922cbd0557c56e409b22e98d90d8b091baaa77a2fa0ef0717",
-    "scripts/run_gvc1_pipeline.py": "588061759477a249dd2abee60cb9e4599dd8c0cf18b50d169e3b430a82856db5"
+    "scripts/run_gvc1_pipeline.py": "6ca258de31d6b139df15e4bee3a08e592812721328ddb280b1d6c014217f2725"
   },
   "forbidden_columns_verified_unread": [
     "dist_known_fault_px",

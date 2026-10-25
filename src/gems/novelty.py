@@ -216,9 +216,7 @@ def compare_registry(
                 candidate_dot_count=n_cand_dots,
             )
             is_ctrl = bool(ctrl["is_space_filling_calibration_control"])
-            competing_dup = rank_dup or (
-                not is_ctrl and overlap is not None and overlap > 0.70
-            )
+            competing_dup = rank_dup or (not is_ctrl and overlap is not None and overlap > 0.70)
             entry_dict.update(
                 comparator_class=(
                     "space_filling_calibration_control" if is_ctrl else "competing_method"
@@ -273,8 +271,7 @@ def compare_registry(
             calibration_control_rasters=len(ctrl_rows),
             competing_method_passed=bool(comp_rows)
             and not any(r["competing_method_duplicate"] for r in rows),
-            literal_unseparated_passed=bool(rows)
-            and not any(r["literal_duplicate"] for r in rows),
+            literal_unseparated_passed=bool(rows) and not any(r["literal_duplicate"] for r in rows),
             max_competing_dot_overlap=max(
                 (
                     r["candidate_dot_overlap_within_3px"]
@@ -298,3 +295,80 @@ def compare_registry(
             ],
         )
     return out
+
+
+SYNTHETIC_CALIBRATION_CONTROL_FILES = {
+    "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif": "synthetic_spacing5_calibration_lattice",
+}
+
+
+def classify_registry_entry(row: dict) -> str:
+    """Classify only established controls, never infer empty content from a filename.
+
+    The historical GEMSDOE9 PLACEHOLDER actually has 147,684 positive pixels in
+    the pinned registry; its former all-zero classification was incorrect.
+    This prospective correction does not rewrite frozen comparisons or exempt
+    any comparator from the literal all-entry gate.
+    """
+    file_path = str(row.get("file", ""))
+    if file_path in SYNTHETIC_CALIBRATION_CONTROL_FILES:
+        return SYNTHETIC_CALIBRATION_CONTROL_FILES[file_path]
+    return "competing_method_lane"
+
+
+def compare_prospective_registry(
+    surface,
+    footprint,
+    entries,
+    root,
+    *,
+    dots=None,
+    sample_size=200000,
+    extra_entries=(),
+):
+    """Prospective registry comparison that separates synthetic calibration lattices from method lanes.
+
+    Every entry in ``entries`` and ``extra_entries`` is still evaluated and retained in ``rows``;
+    no comparator is ever deleted. Both ``method_lane_passed`` (excluding synthetic uniform
+    calibration lattices/placeholders) and ``literal_all_entries_passed`` (treating the spacing-5
+    calibration lattice as a method lane) are reported explicitly.
+    """
+    combined = list(entries) + list(extra_entries)
+    base = compare_registry(surface, footprint, combined, root, dots=dots, sample_size=sample_size)
+    method_rows = []
+    control_rows = []
+    for entry, row in zip(combined, base["rows"]):
+        role = classify_registry_entry(entry)
+        row["entry_role"] = role
+        if role == "competing_method_lane":
+            method_rows.append(row)
+        else:
+            control_rows.append(row)
+    method_max_rho = max(
+        (
+            abs(r[k])
+            for r in method_rows
+            for k in ("raw_spearman", "kernel_spearman")
+            if r[k] is not None
+        ),
+        default=None,
+    )
+    method_max_overlap = max(
+        (
+            r["candidate_dot_overlap_within_3px"]
+            for r in method_rows
+            if r["candidate_dot_overlap_within_3px"] is not None
+        ),
+        default=None,
+    )
+    method_passed = bool(method_rows) and not any(r["duplicate"] for r in method_rows)
+    return {
+        **base,
+        "method_lane_passed": method_passed,
+        "literal_all_entries_passed": base["passed"],
+        "competing_method_rasters_count": len(method_rows),
+        "calibration_control_rasters_count": len(control_rows),
+        "method_lane_max_abs_rank_correlation": method_max_rho,
+        "method_lane_max_dot_overlap": method_max_overlap,
+        "calibration_control_rows": control_rows,
+    }

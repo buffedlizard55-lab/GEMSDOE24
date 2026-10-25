@@ -1,5 +1,16 @@
 # Standing project instructions
 
+**OJ1 continuation (2026-10-25):** Read `knowledge/17_preregistered_OJ1_2026-10-25.md`,
+`knowledge/18_OJ1_findings_2026-10-25.md`, and `evidence/oj1_run_card_20261025.json` first.
+OJ1 stopped as duplicate-final-dots (spacing-5 control retained), loses the recorded
+OOF baseline, and is DOWNLOAD YES / SUBMIT NO. Do not rerun or retune it.
+Historical UNIQUE01/02/03, CON and FUSE entrypoints are retired; source/evidence
+remain for education. UNIQUE03 executed a 30 km decay, not its advertised 300 m;
+its proximity/composite canaries were not run. Never present it as catalogue-independent.
+Shared preflight schema v2 refuses to authorize from promote booleans alone;
+independent selector verification is missing, not a human-inspection pending state.
+
+
 **Current precedence (2026-10-25):** read `knowledge/owner_brief_2026-10-25.md`
 and the current README decision first. It is also embedded in README. The
 current brief supersedes historic requests to submit reference subsets or seek
@@ -35,6 +46,21 @@ receipts and downloads remain intact; it is not a substitute for a comparable
 current-best OOF baseline. Do not rerun either recorded lane. Both share the
 central evaluator/novelty/writer implementation; their declared fold/buffer/CI
 policies and pinned registry scopes differ. Keep those differences explicit.
+
+**2026-10-25 H24-SAHG1 and OOF baseline packet (`knowledge/12_preregistered_SAHG1_2026-10-25.md`, `knowledge/13_SAHG1_findings_2026-10-25.md`):**
+Executes the Next-work items from PRs #10 and #11 (`src/gems/sahg1.py`, `scripts/run_sahg1_lane.py`,
+`evidence/sahg1_run_card_20261025.json`):
+- Prospective novelty check `gems.novelty.compare_prospective_registry(...)` separates synthetic
+  calibration controls (`registry-039` spacing-5 lattice, `registry-044` zero placeholder) from
+  competing method lanes while preserving `compare_registry(...)` and literal all-entry flags.
+- Reconstructed same-protocol out-of-fold multi-physics baseline (`oof_multiphysics_hgb_d3`,
+  `gems-segment-pooled-v1` HOLDOUT-DTI `0.13000`, 95% CI `[0.11565, 0.14396]`).
+- `H24-SAHG1` achieves HOLDOUT-DTI `0.09672` (`[0.08657, 0.10703]`) on `gems-segment-pooled-v1`
+  and `0.09655` (`[0.08270, 0.10976]`) on `segment-hide-recover-pooled-v1`, beating `MTR1`,
+  `ASPC`, and its own geomorphic ablation `G_0` (`+0.01012`), passing prospective method-lane
+  novelty (`46/46` method lanes, `83/83` peer blobs), and running the exact-file C2ST audit
+  (`AUC 0.5826`). Remains `DOWNLOAD: YES · SUBMIT: NO` (`verdict: "negative"`). Verify with
+  `.venv/bin/python scripts/run_sahg1_lane.py --verify-recorded`.
 
 Read the entire root README, its standing owner charter and the **verbatim owner brief**
 (`README.md`, section "Owner brief") at the start of every session. Maximize P(Win) and

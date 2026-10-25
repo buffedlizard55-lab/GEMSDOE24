@@ -504,7 +504,9 @@ def submodular_dti_allocate(
     hp, wp = h + 2 * pad, w + 2 * pad
 
     # Probability mass exists only on active off-visible evaluation domain
-    active_mass = np.where(valid_2d & ~vis_2d & np.isfinite(prob_2d), np.clip(prob_2d, 0.0, 1.0), 0.0)
+    active_mass = np.where(
+        valid_2d & ~vis_2d & np.isfinite(prob_2d), np.clip(prob_2d, 0.0, 1.0), 0.0
+    )
     p_pad = np.zeros((hp, wp), dtype=np.float32)
     p_pad[pad : pad + h, pad : pad + w] = active_mass
 
@@ -593,9 +595,7 @@ def _sample_train_indices(
 
     yx = np.vstack([pos_yx, neg_yx])
     fp_rows = fp_lookup[yx[:, 0], yx[:, 1]]
-    y = np.concatenate(
-        [np.ones(len(pos_yx), dtype=np.int8), np.zeros(len(neg_yx), dtype=np.int8)]
-    )
+    y = np.concatenate([np.ones(len(pos_yx), dtype=np.int8), np.zeros(len(neg_yx), dtype=np.int8)])
     nx_blk = (footprint.shape[1] + 199) // 200
     blocks_20km = (yx[:, 0] // 200) * nx_blk + (yx[:, 1] // 200)
     return fp_rows, y, blocks_20km
@@ -666,8 +666,7 @@ def fit_predict_calibrated_hgb(
             models.append(clf)
 
         raw_cal = 0.5 * (
-            models[0].predict_proba(X[cal_hold])[:, 1]
-            + models[1].predict_proba(X[cal_hold])[:, 1]
+            models[0].predict_proba(X[cal_hold])[:, 1] + models[1].predict_proba(X[cal_hold])[:, 1]
         )
         iso = IsotonicRegression(y_min=0.0, y_max=1.0, out_of_bounds="clip")
         iso.fit(raw_cal, y[cal_hold].astype(np.float64))
@@ -685,8 +684,7 @@ def fit_predict_calibrated_hgb(
                 C_chunk = np.asarray(nuisance_mm[sl], dtype=np.float32)
                 X_chunk = resid.transform(C_chunk, X_chunk, remove=True)
             raw_p = 0.5 * (
-                models[0].predict_proba(X_chunk)[:, 1]
-                + models[1].predict_proba(X_chunk)[:, 1]
+                models[0].predict_proba(X_chunk)[:, 1] + models[1].predict_proba(X_chunk)[:, 1]
             )
             pred_vals[sl] = iso.transform(raw_p).astype(np.float32)
 
