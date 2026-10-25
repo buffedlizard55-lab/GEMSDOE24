@@ -1,5 +1,14 @@
 # ASPC findings, critical review and next session
 
+> **Integration note, 2026-10-25:** this is the preserved ASPC session report, not
+> a current winner recommendation. A concurrent MTR session subsequently restored
+> the full 419 MB input (ignored by Git); the original statement below about it
+> remaining unassembled describes the ASPC checkout at its run time. MTR1's
+> broader registry included a local dense calibration lattice not in ASPC's
+> pinned published-download registry. Their novelty claims have different scopes,
+> and their fold/collar/bootstrap policies differ. Both promotion verdicts remain
+> negative. See [MTR1 findings and integration review](11_MTR1_findings_2026-10-25.md).
+
 ## Executive decision
 
 **Download: yes, as research. Submit: NO.** One unique prediction TIFF was generated from decoded cached LiDAR descriptors, not copied or re-ranked from a prior submission. Automated scientific gate status is negative for promotion. There is no discretionary human-inspection escape hatch and no competition upload.

@@ -26,6 +26,10 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Refresh anonymous official-source snapshots (retain stale markers on failure)
         run: python scripts/refresh_source_feed.py
+      - name: Check priority source freshness on GitHub only (never a leaderboard)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/refresh_priority_feed.py
       - name: Build honest static site from recorded evidence
         run: python scripts/build_site.py
       - name: Stage only the small public website, never raw training data

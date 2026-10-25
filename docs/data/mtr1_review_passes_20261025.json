@@ -1,0 +1,77 @@
+{
+  "generated_utc": "2026-10-25T20:38:44.282700+00:00",
+  "scope": "MTR1 only: one frozen scientific experiment plus non-experimental integration/packaging verification; concurrent ASPC evidence preserved separately",
+  "experiment_count": 1,
+  "submission_slots_used": 0,
+  "passes": [
+    {
+      "pass": 1,
+      "status": "complete",
+      "work": [
+        "Read standing charter/brief/AGENTS, fetched main and inspected open PR #7 without merging it; 105 baseline tests passed",
+        "Pinned nine priority source repositories, inspected source/actual downloads; 46 distinct footprint rasters, 62 aliases, one off-grid format demo rejected",
+        "Preregistered four ranked hypotheses in 3589290 and support/exact-rank amendment + implementation in b6b4cc0 before any outcomes",
+        "Reused cached physical feature stack, common exact metric and writer; one fixed MTR1 plus magnetic-only ablation",
+        "Ran feature-alone two-polarity canaries, pre-placement rank comparisons, pooled whole-component holdout and final-dot comparisons",
+        "Stopped negative at the final lattice overlap veto; no comparator removal, model retuning, second scientific experiment or competition slot"
+      ]
+    },
+    {
+      "pass": 2,
+      "status": "complete",
+      "fixes": [
+        "Exported unchanged negative raster for audit only, explicitly recording the packaging-only preregistration deviation",
+        "Separated independently computed/nonidentical content from failed lane uniqueness and submission eligibility",
+        "Detected concurrent main PRs #9/#10; preserved their source, tests, evidence, downloads, normalized brief and complete README snapshot",
+        "Consolidated both policy adapters onto shared exact metric, spatial-component attribution, pooled ratio, bootstrap, novelty primitives and writer",
+        "Extended MTR training purge around entire hidden components; no tested predictions affected because the frozen method never fitted/read that mask",
+        "Added fail-closed recorded-run guard and verification of all seven actual tested-source fingerprints at original commit b6b4cc0",
+        "Verified original pooled components and exact zero/NaN twin bytes; atomic repackaging must reproduce recorded SHA256, not new outputs",
+        "Preserved historic data_restore.json provenance; separately hash-verified the four actually restored session files",
+        "Central emitter rejects fractional budgets/nonfinite spacing; novelty rejects undefined numeric statistics; no valid-parameter output changed",
+        "Hardened source freshness schema and missing-gh failures; official source redirects disabled to prevent indirect DrivenData requests",
+        "Current site validates both negative packets, retains ASPC first-screen research link, and never falls back to historical recommended metadata"
+      ]
+    },
+    {
+      "pass": 3,
+      "status": "complete",
+      "checks": [
+        "139 pytest tests passed (6.57 s), including exact files, canary completeness, all 46 registry comparisons, unchanged overlap veto, full prompt embedding, both packet tamper rejections and no implicit rerun",
+        "Ruff lint and formatting checks, Python compileall, node syntax check and git diff --check executed locally",
+        "Scratch-copy static-site tests resolve anchor/style/script/image links and verify both first-screen download identities/status",
+        "Mapped original acceptance criteria to measured evidence, explicit failures and unverified items rather than claiming universal completion",
+        "Reviewed physical mechanism versus alluvial/lithologic mimic, label-proxy limitations, upstream full-survey quantization and incomplete formal Gaussian-corner support bound",
+        "No verified current leader, organizer score, claim of beating 0.2778, current-best OOF win, exact-file nuisance pass or current portal acceptance/allowance fabricated",
+        "Publication/deployment must be checked independently through GitHub; a local build is not deployment evidence"
+      ]
+    }
+  ],
+  "acceptance": {
+    "independently_computed_nonidentical_tiff": "PASS; not copied from a prior raster",
+    "literal_lane_uniqueness": "FAIL; 100% dot overlap against retained local spacing-5 calibration lattice",
+    "template_grid_finite_footprint_range": "PASS locally for both zero/NaN outside variants",
+    "short_note_and_first_screen_download": "PASS; 104 characters and conspicuous DO NOT SUBMIT",
+    "feature_alone_leakage_canaries": "PASS threshold; not proof of geological specificity",
+    "pooled_whole_component_holdout_ci": "COMPLETE; gems-segment-pooled-v1, 60,988 withheld positives, approximate 95% CI",
+    "beats_current_comparable_holdout_best": "UNAVAILABLE; no matched current-best OOF reconstruction",
+    "exact_final_nuisance_audit": "NOT RUN after duplicate stop; remains a blocker",
+    "explicit_assigned_method_lane": "UNAVAILABLE in supplied brief; provisional lane",
+    "fresh_official_external_data_authentication": "PARTIAL; organizer GitHub freshly read, cached USGS metadata read, no fresh USGS/GDR/rules fetch",
+    "organizer_confirmed_score_or_portal_acceptance": "NONE",
+    "weekly_slot_authorization": "NONE; agent never uploads",
+    "full_current_prompt_in_readme": "PASS; normalized formatting, full available current text, upstream summary retained separately",
+    "three_review_passes": "COMPLETE",
+    "pull_request_and_deployment": "PENDING separate GitHub operation/check receipts at time of this record"
+  },
+  "limitations": [
+    "Raster components approximate expert segment IDs; CI conditional on fixed quadrants/catalogue and spatial dependence may cross 10 km blocks",
+    "Near-chance canary AUCs and a nonzero DTI do not establish skill above chance or hydrothermal alteration; no chance-control experiment run",
+    "Frozen 72-pixel Euclidean support guard is not a formal corner-wise discrete Gaussian receptive-field proof; candidate not modified post-stop",
+    "Input quantization is a frozen all-survey data product, not raw-channel training-only reconstruction",
+    "Registry snapshots differ from concurrent ASPC and changed source branches; freshness polling never refreshes scientific pins",
+    "No shared-protocol/score equivalence asserted between MTR1 and ASPC; both remain negative"
+  ],
+  "ok_to_submit": false,
+  "verdict": "negative"
+}

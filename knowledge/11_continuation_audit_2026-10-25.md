@@ -86,3 +86,21 @@ be established. A geothermal vent discovery is not proven by a fault prediction.
    gates before selector consideration. Selector verifies the current weekly cap;
    this lane never uploads or spends a slot.
 5. Resolve conflicting PR #7 separately without dropping newer safety work.
+
+## Concurrent main integration
+
+Before merge, `origin/main` advanced through PR #11. Merged it into the fixed
+session branch without replacing its MTR negative packet, full owner transcript,
+shared tools, site or tests. Applied the ASPC receipt hardening to the now-active
+`scripts/site_packets.py` as well as the legacy lane renderer. The shared
+validator added explanatory `upload_authorization` prose; fresh comparison ignores
+only that annotation, not any safety decision. Original scientific receipts and
+TIFF bytes are unchanged. Post-integration suite: 159 tests pass.
+
+**Important registry limitation:** main's MTR work records a spacing-5 calibration
+lattice that covers the supported domain within radius 3. ASPC's earlier pinned
+nine-site registry excluded that local comparator. Therefore its recorded
+uniqueness pass is scoped/historical, not a current global lane certificate.
+Do not remove the comparator or retune a stopped lane. The negative decision
+remains unchanged. The user's fresh unique, promotion-qualified submission goal
+is not complete.

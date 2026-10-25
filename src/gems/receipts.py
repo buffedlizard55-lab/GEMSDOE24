@@ -43,6 +43,10 @@ def research_receipt(downloads: Path, row: dict, *, template: Path | None = None
         from .submission import check_variants
 
         fresh = check_variants(path, template)
-        if fresh != checks:
+        # New shared-validator versions may add this explanatory annotation.
+        # Ignore only that non-decision prose, never a check or authorization flag.
+        fresh_comparable = {k: v for k, v in fresh.items() if k != "upload_authorization"}
+        recorded_comparable = {k: v for k, v in checks.items() if k != "upload_authorization"}
+        if fresh_comparable != recorded_comparable:
             raise ValueError("Fresh exact-file validation disagrees with retained receipt")
     return checks
