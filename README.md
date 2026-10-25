@@ -1,5 +1,30 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Prompt (owner brief, 2026-10-25) — read at every session
+
+Generate a **unique** TIF submission for the DOE GEMS / DrivenData #306 competition.
+Do not copy a previous submission (learning/education only). It must be obvious
+whether the generated TIF is OK to download and submit. There must be an easy
+one-click `.tif` download, values must be finite and in [0,1] (fixes the
+"Predicted values must be in range [0, 1]" portal rejection), each artifact needs
+a unique name + short comment (≤140 chars), and an executive-summary subpage must
+explain exactly how to submit. Validation is automated through the project — no
+human inspection. Lane rule: rank-correlation ≤0.90 and dot overlap ≤70% within 3px
+vs every registry raster; holdout = hide-and-recover with pooled DTI (α=0.2, β=0.8,
+300 m triangular kernel). Leakage canary: AUC >0.90 means leakage. Run card: one
+JSON card per experiment. Budget: 3 experiments or 2 hours. Negative results are
+deliverables. Target: beat 0.3195 on the leaderboard (owner-reported high; 0.4413
+and 0.2778 appear in site snapshots but are not organizer-confirmed).
+
+**Current artifact (this session):**
+`docs/downloads/24gems-doer-fault-guided-k-20261025T220208Z-dedb860f7e83-zeros.tif`
+(SHA-256: `800856082214038640ba98796c390ff76cb8583944dbc05505d9787ce7688c9e`)
+— **DOWNLOAD: YES · SUBMIT: NO** · format-valid, strict [0,1] PASS, no NaN anywhere,
+but HOLDOUT-DTI 0.05384 (95% CI [0.03894, 0.06866]) < current comparable best
+0.13000 and registry novelty FAIL (99.87% dot overlap with spacing-5 calibration
+lattice). Run card: `docs/data/unique_run_card.json`. Executive guide:
+`docs/executive-summary.html`.
+
 **Goal: maximize the chance of winning DOE GEMS / DrivenData #306 through sound
 geological inference, reproducible experiments and honest validation.** A goal
 is not a score forecast or a guarantee of winning.
