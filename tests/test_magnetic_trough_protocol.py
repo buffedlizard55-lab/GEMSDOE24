@@ -6,6 +6,7 @@ import numpy as np
 import pytest
 import rasterio
 from rasterio.transform import Affine
+from scipy.ndimage import distance_transform_edt
 from scipy.spatial import cKDTree
 
 from gems import emission, holdout, magnetic_trough, novelty, submission
@@ -27,6 +28,9 @@ def test_whole_fault_component_is_removed_everywhere_and_train_is_buffered():
         assert not np.isin(h.components[f["visible"]], hidden).any()
         assert not (f["train"] & f["valid"]).any()
         assert not (f["visible"] & f["truth"]).any()
+        whole_hidden = np.isin(h.components, hidden) & h.labels
+        protected = f["valid"] | whole_hidden
+        assert not (f["train"] & (distance_transform_edt(~protected) <= h.buffer_px)).any()
     assert not h.folds[0]["visible"][30, 200]  # far across the split, not a clipped fragment
 
 
@@ -144,3 +148,14 @@ def test_format_validator_never_authorizes_an_upload(tmp_path, monkeypatch):
     assert checks["format_valid"]
     assert checks["ok_to_upload"] is False
     assert "selector" in checks["upload_authorization"]
+
+
+def test_shared_emitter_rejects_fractional_budget_and_nonfinite_spacing():
+    score = np.ones((12, 12), np.float32)
+    eligible = np.ones_like(score, bool)
+    for budget in (2.5, np.nan, np.inf):
+        with pytest.raises(ValueError):
+            emission.priority_poisson(score, eligible, budget)
+    for distance in (np.nan, np.inf):
+        with pytest.raises(ValueError):
+            emission.priority_poisson(score, eligible, 2, min_dist=distance)

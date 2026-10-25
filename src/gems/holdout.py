@@ -231,39 +231,160 @@ def gate(
     }
 
 
-# Historical Holdout above remains for reproducing dated experiments only.
-# This version fixes the mean-of-ratios / hide-and-recover mismatch in that
-# protocol once, in the shared module, instead of creating a private evaluator.
-SEGMENT_EVALUATOR_VERSION = "gems-segment-pooled-v1"
+# Legacy Holdout above remains for reproduction of historical evidence. It is NOT
+# the authority for the parallel-run segment protocol below.
+SEGMENT_EVALUATOR_VERSION = "segment-hide-recover-pooled-v1"
+
+
+def segment_folds(footprint, labels, buffer_px=30):
+    """Hide whole 8-connected components touching each quadrant.
+
+    Components are a conservative raster proxy for segments, not expert trace IDs.
+    Components that cross quadrant boundaries can be withheld in multiple folds,
+    but each scored positive pixel belongs to only one quadrant.
+    All catalogue-based features MUST consume only the yielded visible grid.
+    """
+    from scipy.ndimage import distance_transform_edt
+
+    fp, truth = np.asarray(footprint, bool), np.asarray(labels, bool)
+    if (
+        fp.shape != truth.shape
+        or np.any(truth & ~fp)
+        or not np.isfinite(buffer_px)
+        or buffer_px < 0
+    ):
+        raise ValueError("Aligned footprint/truth, truth inside footprint and buffer >=0 required")
+    components, count = ndi_label(truth, structure=np.ones((3, 3), int))
+    if not count:
+        raise ValueError("No fault components to withhold")
+    fold_grid, names = make_quadrant_folds(fp)
+    for fold, name in enumerate(names):
+        test = fp & (fold_grid == fold)
+        ids = np.unique(components[test & truth])
+        if not len(ids):
+            raise ValueError(f"No withheld positive components in {name}")
+        selected = np.zeros(count + 1, bool)
+        selected[ids] = True
+        hidden = selected[components]
+        visible = truth & ~hidden
+        # Exclude the entire test region and a buffer from every hidden segment
+        # and test boundary when deriving/fitting any train-dependent features.
+        training = fp & (distance_transform_edt(~(test | hidden)) > buffer_px)
+        yield {
+            "name": name,
+            "fold": fold,
+            "test": test,
+            "hidden": hidden,
+            "visible": visible,
+            "training": training,
+            "n_withheld_components": int(len(ids)),
+            "n_withheld_whole_segment_pixels": int(hidden.sum()),
+            "n_withheld_positives": int((hidden & test).sum()),
+            "buffer_px": buffer_px,
+        }
+
+
+def pooled_dti(components):
+    """Ratio of SUMMED TP/FP/FN, never an average of fold scores."""
+    from .metric import ALPHA, BETA, EPS
+
+    a = np.asarray(components, dtype=np.float64)
+    if a.ndim != 2 or a.shape[1] != 3 or not np.isfinite(a).all() or np.any(a < -1e-8):
+        raise ValueError("Finite nonnegative [TP,FP,FN] rows required")
+    tp, false_positive, fn = a.sum(axis=0)
+    return float(tp / (tp + ALPHA * false_positive + BETA * fn + EPS))
+
+
+def spatial_components(prediction, truth, valid, visible, tile_px=200):
+    """Exact binary DTI decomposed by spatial tile for cluster bootstrap.
+
+    Distances are computed on the full evaluation domain BEFORE tile attribution;
+    there are no artificial tile-edge penalties. Known pixels are masked exactly.
+    Contributions are assigned to the truth pixel for TP/FN, prediction pixel for FP.
+    """
+    from scipy.spatial import cKDTree
+
+    from .metric import RADIUS_PX, dti_score_fast
+
+    if tile_px < 1:
+        raise ValueError("Positive spatial tile size required")
+    # Reference call validates inputs, masks visible faults and supplies exact
+    # components. KD-trees only attribute these same components to spatial tiles.
+    reference = dti_score_fast(prediction, truth, valid_mask=valid, catalogue_mask=visible)
+    active = np.asarray(valid, bool) & ~np.asarray(visible, bool)
+    pp = np.argwhere(active & (np.asarray(prediction) > 0))
+    gg = np.argwhere(active & np.asarray(truth, bool))
+    ncols = (active.shape[1] + tile_px - 1) // tile_px
+    nrows = (active.shape[0] + tile_px - 1) // tile_px
+    rows = np.zeros((ncols * nrows, 3), dtype=np.float64)
+
+    def tile_ids(points):
+        return (points[:, 0] // tile_px) * ncols + points[:, 1] // tile_px
+
+    credit = np.zeros(len(gg))
+    if len(pp) and len(gg):
+        credit = np.maximum(1 - cKDTree(pp).query(gg)[0] / RADIUS_PX, 0)
+    if len(gg):
+        np.add.at(rows[:, 0], tile_ids(gg), credit)
+        np.add.at(rows[:, 2], tile_ids(gg), 1 - credit)
+    penalty = np.ones(len(pp))
+    if len(gg) and len(pp):
+        penalty = 1 - np.maximum(1 - cKDTree(gg).query(pp)[0] / RADIUS_PX, 0)
+    if len(pp):
+        np.add.at(rows[:, 1], tile_ids(pp), penalty)
+    expected = [reference[k] for k in ("TP_w", "FP_w", "FN_w")]
+    if not np.allclose(rows.sum(axis=0), expected, rtol=1e-10, atol=1e-7):
+        raise AssertionError("Spatial components disagree with shared exact metric")
+    return rows, reference
+
+
+def pooled_bootstrap(rows, *, paired=None, resamples=1000, seed=20261025):
+    """Conditional spatial cluster-bootstrap CI; paired rows must use identical tiles."""
+    a = np.asarray(rows, dtype=np.float64)
+    pooled_dti(a)  # validates even when all tiles have zero contribution
+    if len(a) < 2 or resamples < 2:
+        raise ValueError("At least two clusters and two resamples required")
+    b = None if paired is None else np.asarray(paired, dtype=np.float64)
+    if b is not None:
+        pooled_dti(b)
+        if b.shape != a.shape:
+            raise ValueError("Paired cluster grids must match")
+    rng = np.random.default_rng(seed)
+    scores = []
+    for _ in range(resamples):
+        ids = rng.integers(0, len(a), len(a))
+        value = pooled_dti(a[ids])
+        if b is not None:
+            value -= pooled_dti(b[ids])
+        scores.append(value)
+    return [float(x) for x in np.quantile(scores, [0.025, 0.975])]
+
+
+# Frozen MTR1 policy adapter: 1.5 km collar selection and 10 km CI blocks.
+# Numerical source evidence for the original run is pinned at b6b4cc0.
+MTR_EVALUATOR_VERSION = "gems-segment-pooled-v1"
 
 
 def pooled_components(rows):
     """Pool metric components, never average region-level DTI ratios."""
-    from .metric import ALPHA, BETA, EPS
-
     keys = ("TP_w", "FP_w", "FN_w", "n_truth", "n_emitted")
     out = {k: float(sum(r[k] for r in rows)) for k in keys}
-    den = out["TP_w"] + ALPHA * out["FP_w"] + BETA * out["FN_w"] + EPS
-    out["dti"] = out["TP_w"] / den
+    triples = np.asarray([[r[k] for k in keys[:3]] for r in rows], dtype=float).reshape(-1, 3)
+    out["dti"] = pooled_dti(triples)
     return out
 
 
 def spatial_bootstrap_ci(blocks, *, draws=1999, seed=20261025):
     """Approximate 95% CI, resampling 10 km blocks and pooling their components."""
-    from .metric import ALPHA, BETA, EPS
-
     x = np.asarray(blocks, np.float64)
     if x.ndim != 2 or x.shape[1] != 3 or not len(x) or not np.isfinite(x).all():
         raise ValueError("Finite nonempty block TP/FP/FN components required")
     if draws < 100 or np.any(x < -1e-9):
         raise ValueError("At least 100 draws and nonnegative components required")
-    rng = np.random.default_rng(seed)
-    # Small matrix (hundreds of spatial groups); do not store full raster draws.
-    sampled = x[rng.integers(len(x), size=(draws, len(x)))].sum(axis=1)
-    scores = sampled[:, 0] / (sampled[:, 0] + ALPHA * sampled[:, 1] + BETA * sampled[:, 2] + EPS)
+    interval = pooled_bootstrap(x, resamples=draws, seed=seed)
     return {
         "level": 0.95,
-        "interval": np.quantile(scores, [0.025, 0.975]).tolist(),
+        "interval": interval,
         "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
         "block_pixels": 100,
         "block_size_m": 10000,
@@ -291,6 +412,7 @@ class SegmentHoldout:
         if (
             self.footprint.shape != self.labels.shape
             or self.footprint.ndim != 2
+            or not np.isfinite(buffer_px)
             or buffer_px < 3
             or np.any(self.labels & ~self.footprint)
             or not self.labels.any()
@@ -316,7 +438,8 @@ class SegmentHoldout:
                     "id": f,
                     "name": name,
                     "valid": valid,
-                    "train": self.footprint & ~collar,
+                    "train": self.footprint
+                    & (distance_transform_edt(~(valid | hidden)) > buffer_px),
                     "visible": visible,
                     "truth": truth,
                     "hidden_component_ids": hidden_ids,
@@ -325,48 +448,13 @@ class SegmentHoldout:
         self.buffer_px = buffer_px
 
     def score_fold(self, prediction, fold):
-        """Use the common exact metric, then audit bootstrap contributions by KD tree."""
-        from scipy.spatial import cKDTree
-
-        from . import metric
-
+        """Use the same exact metric/tile attribution as every current lane."""
         pred = np.asarray(prediction)
         if pred.shape != self.footprint.shape or not np.isin(pred, [0, 1]).all():
             raise ValueError("A finite aligned binary prediction is required")
-        valid, visible, truth = fold["valid"], fold["visible"], fold["truth"]
-        active_pred = pred.astype(bool) & valid & ~visible
-        reference = metric.dti_score_fast(
-            active_pred, truth, valid_mask=valid, catalogue_mask=visible
+        blocks, reference = spatial_components(
+            pred, fold["truth"], fold["valid"], fold["visible"], tile_px=100
         )
-        pyx, tyx = np.argwhere(active_pred), np.argwhere(truth)
-        tp = (
-            np.maximum(1 - cKDTree(pyx).query(tyx)[0] / metric.RADIUS_PX, 0)
-            if len(pyx)
-            else np.zeros(len(tyx))
-        )
-        fp = (
-            1 - np.maximum(1 - cKDTree(tyx).query(pyx)[0] / metric.RADIUS_PX, 0)
-            if len(tyx)
-            else np.ones(len(pyx))
-        )
-        nx = (self.footprint.shape[1] + 99) // 100
-        n = ((self.footprint.shape[0] + 99) // 100) * nx
-        ti = (tyx[:, 0] // 100) * nx + tyx[:, 1] // 100
-        pi = (pyx[:, 0] // 100) * nx + pyx[:, 1] // 100
-        blocks = np.column_stack(
-            [
-                np.bincount(ti, weights=tp, minlength=n),
-                np.bincount(pi, weights=fp, minlength=n),
-                np.bincount(ti, weights=1 - tp, minlength=n),
-            ]
-        )
-        if not np.allclose(
-            blocks.sum(axis=0),
-            [reference[k] for k in ("TP_w", "FP_w", "FN_w")],
-            rtol=0,
-            atol=1e-8,
-        ):
-            raise AssertionError("Bootstrap components disagree with shared exact metric")
         return reference, blocks
 
     def summarize(self, predictions, *, ci_draws=1999):
@@ -384,7 +472,7 @@ class SegmentHoldout:
         total = pooled_components(rows)
         return {
             "label": "HOLDOUT-DTI",
-            "evaluator_version": SEGMENT_EVALUATOR_VERSION,
+            "evaluator_version": MTR_EVALUATOR_VERSION,
             **total,
             "n_withheld_positive_pixels": int(total["n_truth"]),
             "n_unique_withheld_components": self.n_components,
@@ -447,7 +535,7 @@ class SegmentHoldout:
             rows[name] = {"pooled_auc": auc, "leakage_suspected": suspicious, "folds": details}
         return {
             "diagnostic": "LEAKAGE-CANARY AUC, not a DTI or organizer score",
-            "evaluator_version": SEGMENT_EVALUATOR_VERSION,
+            "evaluator_version": MTR_EVALUATOR_VERSION,
             "threshold": 0.90,
             "two_polarities_checked": True,
             "passed": not any(x["leakage_suspected"] for x in rows.values()),

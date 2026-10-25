@@ -1,0 +1,32 @@
+{
+  "files": [
+    {
+      "file": "bridge/labels.tif",
+      "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "verified": true
+    },
+    {
+      "file": "bridge/existing_faults.tif",
+      "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "verified": true
+    },
+    {
+      "file": "bridge/sample_submission.tif",
+      "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "verified": true
+    },
+    {
+      "file": "training_features.tif",
+      "sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+      "bytes": 418912844,
+      "verified": true,
+      "mirror_ref": "c0c06ac82178f26b94fce3397036ef8f12a2f3a0",
+      "provenance_status": "owner-supplied bridge, not organizer-authenticated"
+    }
+  ],
+  "integrity_only": true,
+  "warning": "Hash-pinned mirrors do not certify organizer provenance. No mining-claim or four-block proxy is silently substituted.",
+  "last_verified_utc": "2026-10-25T20:35:37.379801+00:00",
+  "historical_receipt_preserved_at": "evidence/data_restore.json",
+  "scope": "Only the four files restored/checked for this session; historical restoration records were not discarded."
+}

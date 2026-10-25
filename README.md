@@ -44,6 +44,10 @@ not a leaderboard result. No weekly slot has been spent by this session.
 [Preregistration](knowledge/09_preregistration_magnetic_trough_2026-10-25.md) ·
 [Current owner brief](knowledge/owner_brief_2026-10-25.md)
 
+Parallel ASPC research from PR #10 is retained with its own negative verdict and
+[run card](evidence/aspc_run_card_20261025.json); its protocol differs, so the two
+point scores are not a certified current-best comparison.
+
 Earlier scores/forecasts below are historical, not current promotion authority.
 <!-- STATUS:END -->
 
@@ -76,19 +80,22 @@ Earlier scores/forecasts below are historical, not current promotion authority.
   projected leaderboard score is claimed. Conflicting leader claims in the brief
   remain unverified. No DrivenData automation or competition slot was used.
 
-### Reproduce the current stopped experiment
+### Verify/repackage the current stopped experiment
 
 ```bash
 .venv/bin/python scripts/restore_data.py
 .venv/bin/python scripts/prepare_data.py
 .venv/bin/python scripts/cache_priority_registry.py
-.venv/bin/python scripts/evaluate_holdout.py  # expected stop: duplicate-final-dots
+.venv/bin/python scripts/evaluate_holdout.py --verify-recorded  # no experiment rerun
 .venv/bin/python scripts/export_negative_result.py  # same failed raster, audit only
 .venv/bin/python scripts/build_site.py
 .venv/bin/python -m pytest -q
 ```
 
-Use the pinned registry, not a refreshed registry after seeing a result. Large
+The recorded experiment refuses implicit reruns. Verification checks the original
+source fingerprints at `b6b4cc0`, pooled recorded metric components and exact TIFFs;
+packaging reconstructs only the frozen surface and must reproduce both recorded
+SHA256 values exactly. Use the pinned registry, not a refreshed registry after seeing a result. Large
 inputs/caches stay ignored. GitHub-only access and CPU are enough for this fixed
 operator. The original organizer authentication of owner mirrors, explicit lane,
 current-best OOF reconstruction and actual account quota are not available.
@@ -106,6 +113,33 @@ current-best OOF reconstruction and actual account quota are not available.
 4. Current GitHub-source feed detects changes but never silently changes pinned
    inputs, retrains, selects or uploads. The conflicting legacy PR #7 is not
    merged or overwritten by this work.
+
+## Concurrent main work preserved — not a cross-protocol winner
+
+PRs [#9](https://github.com/buffedlizard55-lab/GEMSDOE24/pull/9) and
+[#10](https://github.com/buffedlizard55-lab/GEMSDOE24/pull/10) landed during this
+experiment. Their [independent review](evidence/2026-10-25_review_and_run_card.md),
+[ASPC preregistration](knowledge/09_preregistered_ASPC_2026-10-25.md),
+[findings](knowledge/10_ASPC_findings_2026-10-25.md),
+[run card](evidence/aspc_run_card_20261025.json), code, tests and both
+[research downloads](docs/downloads/gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.tif)
+are preserved. **ASPC also has a negative promotion verdict.** Its recorded
+`segment-hide-recover-pooled-v1` protocol uses a 3 km training buffer and 20 km
+bootstrap tiles. MTR1 uses a different component/collar policy and 10 km tiles;
+the scores are not a certified current-best comparison. Their registry scopes
+also differ: MTR1 retained a local spacing-5 calibration lattice.
+
+Both APIs now reuse the same metric, spatial-component attribution and bootstrap
+implementation in `src/gems/holdout.py`, shared novelty primitives and writer.
+Original scientific source fingerprints remain tied to their recorded commits;
+integration tests do not launch another experiment. The incoming
+[owner-requirements summary](knowledge/owner_brief_2026-10-25_summary.md) and
+[complete incoming README snapshot](knowledge/archive/README_2026-10-25_parallel_ASPC.md)
+are retained. This README embeds the full current brief available to this session,
+not a consolidated summary substituted for it.
+
+[MTR1 findings, source ledger and limitations](knowledge/11_MTR1_findings_2026-10-25.md)
+· [Three-pass review](evidence/mtr1_review_passes_20261025.json).
 
 ## Historical standing charter — retained for provenance; current protocol governs
 

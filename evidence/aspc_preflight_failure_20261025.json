@@ -1,0 +1,8 @@
+{
+  "stage": "pre-placement registry grid preflight",
+  "holdout_results_observed": false,
+  "scientific_experiments_scored": 0,
+  "failure": "GEMSDOE36 GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif is a 32 by 48 demonstration, not a competition-grid prediction",
+  "action": "Explicitly classify only this demonstration as non-submission. Keep it in the registry, record its exclusion, never silently reproject. Rerun the unchanged preregistered hypothesis once.",
+  "protocol_correction": "Bootstrap aggregates same global spatial tile across quadrant portions, rather than treating split tiles independently. Corrected before any holdout results were observed."
+}

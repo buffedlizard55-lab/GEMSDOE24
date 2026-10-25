@@ -8,6 +8,7 @@ failure halts before packaging. A negative scientific result is still published.
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 import time
@@ -31,6 +32,22 @@ def save(obj, path):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--verify-recorded",
+        action="store_true",
+        help="Check immutable evidence/files; do not run the stopped experiment",
+    )
+    args = parser.parse_args()
+    if args.verify_recorded:
+        from verify_mtr_receipt import verify
+
+        print(json.dumps(verify(), indent=2, allow_nan=False))
+        return
+    if RESULT.exists():
+        raise SystemExit(
+            "Experiment already recorded and stopped. No implicit rerun/tuning; use --verify-recorded."
+        )
     started = time.monotonic()
     fp = footprint.load_footprint()
     template = ROOT / "data/bridge/sample_submission.tif"

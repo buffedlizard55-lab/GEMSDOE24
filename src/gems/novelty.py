@@ -15,10 +15,66 @@ from scipy.spatial import cKDTree
 from scipy.stats import rankdata
 
 
-def _correlation(x, y):
-    if np.ptp(x) == 0 or np.ptp(y) == 0:
-        return None  # constant surfaces have undefined rank correlation
-    return float(np.corrcoef(rankdata(x), rankdata(y))[0, 1])
+def correlation(a, b):
+    """Spearman rho with explicit undefined status for constant arrays."""
+    a, b = np.asarray(a), np.asarray(b)
+    if a.shape != b.shape or a.ndim != 1 or not len(a):
+        raise ValueError("Nonempty aligned vectors required")
+    if not np.isfinite(a).all() or not np.isfinite(b).all():
+        raise ValueError("Finite vectors required")
+    if np.ptp(a) == 0 or np.ptp(b) == 0:
+        return None
+    return rank_correlation(rankdata(a), b)
+
+
+def rank_correlation(ranks_a, b):
+    """Spearman given precomputed average ranks for the first vector."""
+    ra = np.asarray(ranks_a, dtype=np.float64)
+    b = np.asarray(b)
+    if (
+        ra.shape != b.shape
+        or ra.ndim != 1
+        or not ra.size
+        or not np.isfinite(ra).all()
+        or not np.isfinite(b).all()
+    ):
+        raise ValueError("Aligned finite vectors required")
+    if np.ptp(b) == 0 or np.ptp(ra) == 0:
+        return None
+    # Binary references are overwhelmingly common; a binary vector is affine
+    # to its average ranks, so avoid ranking millions of tied values again.
+    if np.isin(b, [0, 1]).all():
+        rb = b.astype(np.float64)
+    else:
+        rb = rankdata(b)
+    da, db = ra - ra.mean(), rb - rb.mean()
+    return float(np.dot(da, db) / np.sqrt(np.dot(da, da) * np.dot(db, db)))
+
+
+def dot_overlap(candidate, reference, radius_px=3.0):
+    """Directional inclusive-radius coverage, not a symmetric similarity score."""
+    c, r = np.asarray(candidate, bool), np.asarray(reference, bool)
+    if c.shape != r.shape or c.ndim != 2 or not np.isfinite(radius_px) or radius_px < 0:
+        raise ValueError("Aligned masks and nonnegative radius required")
+    cp, rp = np.argwhere(c), np.argwhere(r)
+    forward = None if not len(cp) else 0.0
+    reverse = None if not len(rp) else 0.0
+    if len(cp) and len(rp):
+        forward = float(np.mean(cKDTree(rp).query(cp)[0] <= radius_px))
+        reverse = float(np.mean(cKDTree(cp).query(rp)[0] <= radius_px))
+    return {
+        "candidate_within_3px_of_reference": forward,
+        "reference_within_3px_of_candidate": reverse,
+        "radius_px": float(radius_px),
+        "candidate_dots": len(cp),
+        "reference_dots": len(rp),
+    }
+
+
+def is_duplicate(rho, overlap=None):
+    if any(v is not None and not np.isfinite(v) for v in (rho, overlap)):
+        raise ValueError("Duplicate checks need finite statistics or explicit None")
+    return bool((rho is not None and abs(rho) > 0.90) or (overlap is not None and overlap > 0.70))
 
 
 def compare_registry(surface, footprint, entries, root, *, dots=None, sample_size=200000):
@@ -29,7 +85,13 @@ def compare_registry(surface, footprint, entries, root, *, dots=None, sample_siz
     exact over ALL candidate dots, directional candidate -> registry, <=3 px.
     """
     surface, footprint = np.asarray(surface), np.asarray(footprint, bool)
-    if surface.shape != footprint.shape or not np.isfinite(surface[footprint]).all():
+    if (
+        surface.shape != footprint.shape
+        or footprint.ndim != 2
+        or not footprint.any()
+        or sample_size < 1
+        or not np.isfinite(surface[footprint]).all()
+    ):
         raise ValueError("Finite footprint-aligned candidate surface required")
     ids = np.flatnonzero(footprint)
     rng = np.random.default_rng(20261025)
@@ -38,7 +100,6 @@ def compare_registry(surface, footprint, entries, root, *, dots=None, sample_siz
     sample_yx = np.column_stack(np.unravel_index(sample, (h, w)))
     values = surface.ravel()[sample]
     full_ranks = rankdata(surface.ravel()[ids])
-    rank_mean, rank_sd = float(full_ranks.mean()), float(full_ranks.std())
     if dots is not None:
         dots = np.asarray(dots, bool)
         if dots.shape != surface.shape or np.any(dots & ~footprint) or not dots.any():
@@ -65,17 +126,8 @@ def compare_registry(surface, footprint, entries, root, *, dots=None, sample_siz
             if tree is not None
             else np.zeros(len(sample))
         )
-        reference_ranks = rankdata(a.ravel()[ids])
-        ref_sd = float(reference_ranks.std())
-        raw_rank = (
-            float(
-                np.mean((full_ranks - rank_mean) * (reference_ranks - reference_ranks.mean()))
-                / (rank_sd * ref_sd)
-            )
-            if rank_sd > 0 and ref_sd > 0
-            else None
-        )
-        kernel_rank = _correlation(candidate_kernel if dots is not None else values, kernel)
+        raw_rank = rank_correlation(full_ranks, a.ravel()[ids])
+        kernel_rank = correlation(candidate_kernel if dots is not None else values, kernel)
         overlap = (
             float(np.mean(tree.query(dot_yx)[0] <= 3.0))
             if dots is not None and tree is not None

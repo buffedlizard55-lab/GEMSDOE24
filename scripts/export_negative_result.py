@@ -31,10 +31,22 @@ def main():
     r = json.loads(experiment_path.read_text())
     if r.get("stopped_reason") != "duplicate-final-dots" or r.get("verdict") != "negative":
         raise SystemExit("Only the recorded stopped negative experiment can be exported here")
-    for group in ("inputs", "code_sha256"):
-        for name, digest in r[group].items():
-            if sha256_file(ROOT / name) != digest:
-                raise SystemExit(f"Experiment provenance changed: {name}")
+    # Main changed concurrently. Fingerprint the actual experimental commit;
+    # later shared holdout/novelty/validator refactors are not new predictions.
+    from verify_mtr_receipt import verify_sources
+
+    source_provenance = verify_sources(r)
+    for name, digest in r["inputs"].items():
+        if sha256_file(ROOT / name) != digest:
+            raise SystemExit(f"Experiment input changed: {name}")
+    for name in ("src/gems/magnetic_trough.py",):
+        if sha256_file(ROOT / name) != r["code_sha256"][name]:
+            raise SystemExit(f"Frozen physical transform changed: {name}")
+    previous = json.loads((ROOT / "evidence/mtr1_run_card.json").read_text())
+    previous_metadata = json.loads((ROOT / "docs/data/independent_download.json").read_text())
+    previous_checks = json.loads(
+        (ROOT / "docs/downloads" / previous_metadata["checks_file"]).read_text()
+    )
     fp = footprint.load_footprint()
     ids = np.flatnonzero(fp)
     meta = json.loads((ROOT / "data/prepared/features.json").read_text())
@@ -59,9 +71,13 @@ def main():
     )
     download = ROOT / "docs/downloads"
     template = ROOT / "data/bridge/sample_submission.tif"
-    zero = submission.write_submission(final, template, download / name, outside="zero")
+    if name != previous["submission_name"]:
+        raise SystemExit("Reconstructed negative filename changed")
+    zero = write_unchanged(final, template, download / name, "zero", previous["raster_sha256"])
     nan_name = name.replace("-zeros.tif", "-nan.tif")
-    nan = submission.write_submission(final, template, download / nan_name, outside="nan")
+    nan = write_unchanged(
+        final, template, download / nan_name, "nan", previous_checks["nan_outside"]["sha256"]
+    )
     checks = {
         "zero_outside": submission.check_variants(zero, template),
         "nan_outside": submission.check_variants(nan, template),
@@ -137,6 +153,8 @@ def main():
         "experiments_run": 1,
         "submission_slots_used": 0,
         "packaging_deviation": "After duplicate stop, exported the unchanged already-tested negative artifact solely for audit. No retuning, comparator removal, new experiment or promotion.",
+        "tested_source_provenance": source_provenance,
+        "post_merge_packaging_verification": "Shared tool integration preserved the original tested transform/placement and both recorded raster SHA256 values exactly. The experiment was not rerun.",
     }
     save(card, ROOT / "evidence/mtr1_run_card.json")
     save(card, ROOT / "docs/data/mtr1_run_card.json")
@@ -164,7 +182,7 @@ def main():
     old = ROOT / "docs/data/download.json"
     if not (ROOT / "evidence/archive/download_20261002.json").exists():
         (ROOT / "evidence/archive/download_20261002.json").write_text(old.read_text())
-    save(d, old)
+    # Do not replace the incoming parallel session's historical metadata.
     save(d, ROOT / "docs/data/independent_download.json")
     print(
         json.dumps(
@@ -181,6 +199,23 @@ def main():
             indent=2,
         )
     )
+
+
+def write_unchanged(prediction, template, target, outside, expected_sha256):
+    """Reproduce fixed bytes atomically; never replace a recorded raster with new bytes."""
+    temporary = target.with_name(".verify-" + target.name)
+    try:
+        submission.write_submission(prediction, template, temporary, outside=outside)
+        if sha256_file(temporary) != expected_sha256:
+            raise ValueError("Shared-writer replay changed the frozen negative raster bytes")
+        if target.exists():
+            if sha256_file(target) != expected_sha256:
+                raise ValueError("Existing negative raster differs from its receipt")
+        else:
+            temporary.replace(target)
+    finally:
+        temporary.unlink(missing_ok=True)
+    return target
 
 
 def hashlib_footprint(a, fp):

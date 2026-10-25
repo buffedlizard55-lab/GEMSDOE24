@@ -28,6 +28,14 @@ The older instructions below remain for historical reproduction where they do
 not conflict with that current protocol.
 
 
+**Concurrent main work preserved:** PRs #9/#10 landed during this lane. Read
+`knowledge/09_preregistered_ASPC_2026-10-25.md` and
+`knowledge/10_ASPC_findings_2026-10-25.md` as well. ASPC's negative run, code,
+receipts and downloads remain intact; it is not a substitute for a comparable
+current-best OOF baseline. Do not rerun either recorded lane. Both share the
+central evaluator/novelty/writer implementation; their declared fold/buffer/CI
+policies and pinned registry scopes differ. Keep those differences explicit.
+
 Read the entire root README, its standing owner charter and the **verbatim owner brief**
 (`README.md`, section "Owner brief") at the start of every session. Maximize P(Win) and
 Own the Outcome, without promising a score or prize.
@@ -53,8 +61,8 @@ Own the Outcome, without promising a score or prize.
 - Fit nuisance removal/scaling on training-region data only; refit and re-audit
   the exact emitted candidate. Association is not causation.
 - No weekly slot unless the candidate beats the CURRENT comparable holdout best and passes the
-  exact-file audit, or the owner explicitly accepts a declared exception (recorded in
-  `registry/submissions.json`). Format green is not gate green. The agent never uploads.
+  exact-file audit, uniqueness gates and separate selector. The current charter does not permit
+  the historical human/owner-exception shortcut. Format green is not gate green. The agent never uploads.
 - Keep owner-reported scores, official snapshots, local diagnostics and hypotheses distinct.
   Preserve unknowns, hashes, negative results and source limitations. Scores that appear only in the
   brief (`registry/live_scores.json`, `task_statement_only`) are unconfirmed.

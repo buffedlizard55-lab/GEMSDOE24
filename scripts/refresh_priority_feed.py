@@ -35,7 +35,7 @@ def check(row):
             "changed_since_review": value != ref,
             "status": "checked",
         }
-    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, ValueError) as exc:
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, OSError, ValueError) as exc:
         return {
             **base,
             "latest_main_ref": None,
@@ -45,18 +45,54 @@ def check(row):
         }
 
 
+def validate_feed(data, sources):
+    """Fail closed on fake leaderboard data, omitted repositories or inconsistent states."""
+    if data.get("scope") != "GitHub source freshness only; not a leaderboard or scoring API":
+        raise ValueError("Unexpected feed scope")
+    if data.get("leaderboard") is not None or data.get("organizer_score_receipts") != []:
+        raise ValueError("A source freshness feed cannot contain competition scores")
+    stamp = datetime.fromisoformat(data["checked_utc"])
+    if stamp.tzinfo is None:
+        raise ValueError("Feed timestamp must include timezone")
+    expected = {r["repo"]: r["ref"] for r in sources}
+    rows = data["rows"]
+    if len(rows) != len(expected) or {r["repo"] for r in rows} != set(expected):
+        raise ValueError("Feed must include every pinned priority repository exactly once")
+    for row in rows:
+        if row["pinned_ref"] != expected[row["repo"]]:
+            raise ValueError("Feed silently changed the scientific review pin")
+        latest = row["latest_main_ref"]
+        if row["status"] == "checked":
+            if (
+                not isinstance(latest, str)
+                or len(latest) != 40
+                or any(c not in "0123456789abcdef" for c in latest)
+            ):
+                raise ValueError("Invalid checked Git commit")
+            if row["changed_since_review"] is not (latest != row["pinned_ref"]):
+                raise ValueError("Source change marker disagrees with the returned commit")
+        elif (
+            row["status"] != "failed"
+            or latest is not None
+            or row["changed_since_review"] is not None
+        ):
+            raise ValueError("Failed checks must remain explicitly unknown")
+    state = "stale" if any(r["status"] == "failed" for r in rows) else "checked"
+    if data["status"] != state:
+        raise ValueError("Feed status must acknowledge failed checks")
+    return data
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--offline", action="store_true")
     args = ap.parse_args()
     path = ROOT / "docs/data/priority_feed.json"
+    sources = json.loads((ROOT / "registry/priority_rasters.json").read_text())["sources"]
     if args.offline:
-        data = json.loads(path.read_text())
-        if data.get("scope") != "GitHub source freshness only; not a leaderboard or scoring API":
-            raise SystemExit("Unexpected feed scope")
+        validate_feed(json.loads(path.read_text()), sources)
         print("Offline priority feed schema valid; source timestamps unchanged")
         return
-    sources = json.loads((ROOT / "registry/priority_rasters.json").read_text())["sources"]
     with ThreadPoolExecutor(max_workers=4) as pool:
         rows = list(pool.map(check, sources))
     now = datetime.now(timezone.utc).isoformat()
@@ -85,6 +121,7 @@ def main():
         "organizer_score_receipts": [],
         "warning": "Registry/experiment snapshots stay pinned. New commits require a new audit; the stopped negative candidate stays DO NOT SUBMIT.",
     }
+    validate_feed(feed, sources)
     path.write_text(json.dumps(feed, indent=2) + "\n")
     print(
         json.dumps(

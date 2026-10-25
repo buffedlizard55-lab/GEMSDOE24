@@ -16,5 +16,8 @@
   "score_evidence": "owner report",
   "recommended_for_new_slot": false,
   "slot_spent": false,
-  "note": "24GEMSDOE reference-h19-5 | H19-5 reference; original DTI 0.1922 reported by owner. Not a new prediction; do not spend a repeat slot. | id 80d47e1ab2ee | reference, no new score"
+  "note": "24GEMSDOE reference-h19-5 | H19-5 reference; original DTI 0.1922 reported by owner. Not a new prediction; do not spend a repeat slot. | id 80d47e1ab2ee | reference, no new score",
+  "status": "historical_superseded",
+  "submission_authorized": false,
+  "superseded_by": "active_lane.json"
 }

@@ -185,6 +185,8 @@
     "format_valid": true,
     "ok_to_upload": false,
     "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
     "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
     "hard_failures": [],
     "official_format_compliant": false,
@@ -282,5 +284,10 @@
   "organizer_confirmed_score": null,
   "experiments_run": 1,
   "submission_slots_used": 0,
-  "packaging_deviation": "After duplicate stop, exported the unchanged already-tested negative artifact solely for audit. No retuning, comparator removal, new experiment or promotion."
+  "packaging_deviation": "After duplicate stop, exported the unchanged already-tested negative artifact solely for audit. No retuning, comparator removal, new experiment or promotion.",
+  "tested_source_provenance": {
+    "source_commit": "b6b4cc06f5842a5b5fdde5d9fca388f0e334fdf9",
+    "source_files_verified": 7
+  },
+  "post_merge_packaging_verification": "Shared tool integration preserved the original tested transform/placement and both recorded raster SHA256 values exactly. The experiment was not rerun."
 }

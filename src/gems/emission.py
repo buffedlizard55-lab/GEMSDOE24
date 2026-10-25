@@ -231,7 +231,14 @@ def priority_poisson(score, eligible, budget, *, min_dist=3.0):
     Catalogue exclusion is the caller's explicit eligibility mask.
     """
     score, eligible = np.asarray(score), np.asarray(eligible, bool)
-    if score.ndim != 2 or eligible.shape != score.shape or budget < 0 or min_dist < 1:
+    if (
+        score.ndim != 2
+        or eligible.shape != score.shape
+        or not isinstance(budget, (int, np.integer))
+        or budget < 0
+        or not np.isfinite(min_dist)
+        or min_dist < 1
+    ):
         raise ValueError("Aligned 2D grids, nonnegative budget and >=1 px spacing required")
     ids = np.flatnonzero(eligible & np.isfinite(score) & (score > 0))
     order = ids[np.lexsort((ids, -score.ravel()[ids]))]

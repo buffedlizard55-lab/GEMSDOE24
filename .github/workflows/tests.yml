@@ -12,11 +12,14 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Verify the original preregistered source commit, not only a shallow merge.
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - run: pip install -r requirements.txt
       - run: pip install --no-deps -e .
+      - run: python scripts/evaluate_holdout.py --verify-recorded
       - run: python -m pytest -q
       - run: ruff check src scripts tests
       - run: ruff format --check src scripts tests
