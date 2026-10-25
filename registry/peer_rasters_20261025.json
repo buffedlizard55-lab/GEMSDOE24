@@ -949,7 +949,8 @@
       "bytes": 1129,
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c9ad59ec6f969ed931d089a03044c1567a633e84/docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif",
       "sha256": "60543f8ea9d4ee432b018832337c3cf1fe0db4f71b87d15fea71869fe4f23638",
-      "cache_path": "data/research/peer_review/rasters/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif"
+      "cache_path": "data/research/peer_review/rasters/a97c7b2a513225c9f9f2b35736afe5abf4d2a491.tif",
+      "role": "format_demo_not_submission"
     },
     {
       "repo": "GEMSDOE36",
