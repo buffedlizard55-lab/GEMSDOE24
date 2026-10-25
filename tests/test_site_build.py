@@ -159,3 +159,22 @@ def test_site_rejects_mtr_card_checksum_tampering_without_falling_back_to_old_fi
         assert result.returncode != 0 and "checksum" in result.stderr
     finally:
         path.write_text(original)
+
+
+@pytest.mark.parametrize("encoding", ["primary", "companion"])
+def test_site_rejects_upload_permission_in_either_download_receipt(built, encoding):
+    report = json.loads((built / "evidence/aspc_run_20261025.json").read_text())
+    row = report["artifact" if encoding == "primary" else "template_convention_companion"]
+    path = (built / "docs/downloads" / row["file"]).with_suffix(".checks.json")
+    original = path.read_text()
+    checks = json.loads(original)
+    checks["ok_to_upload"] = True
+    try:
+        path.write_text(json.dumps(checks))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0
+        assert "disagrees" in result.stderr or "cannot grant upload authorization" in result.stderr
+    finally:
+        path.write_text(original)
