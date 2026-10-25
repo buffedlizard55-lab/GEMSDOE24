@@ -38,11 +38,11 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 import numpy as np  # noqa: E402
 import rasterio  # noqa: E402
+import run_sahg1_lane as s1  # noqa: E402  (shared SAHG1 helpers; not re-implemented)
 from scipy.ndimage import distance_transform_edt  # noqa: E402
 from sklearn.ensemble import HistGradientBoostingClassifier  # noqa: E402
 from threadpoolctl import threadpool_limits  # noqa: E402
 
-import run_sahg1_lane as s1  # noqa: E402  (shared SAHG1 helpers; not re-implemented)
 from gems import emission, footprint, holdout, novelty, sahg1, submission  # noqa: E402
 from gems.validator import sha256_file  # noqa: E402
 
@@ -182,7 +182,12 @@ def build_card_from_record(record: dict) -> dict:
     arm = record["results"]["h24_fuse_hgb_sahg1_channels"]
     base = record["results"]["oof_multiphysics_hgb_d3"]
     dups = [
-        {"registry_id": r["registry_id"], "file": r["file"], "dot_overlap_within_3px": r["candidate_dot_overlap_within_3px"], "raw_spearman": r["raw_spearman"]}
+        {
+            "registry_id": r["registry_id"],
+            "file": r["file"],
+            "dot_overlap_within_3px": r["candidate_dot_overlap_within_3px"],
+            "raw_spearman": r["raw_spearman"],
+        }
         for r in final["rows"]
         if r["duplicate"]
     ]
@@ -208,16 +213,26 @@ def build_card_from_record(record: dict) -> dict:
             "ci95": record["paired_fuse_minus_oof_baseline"]["ci95"],
         },
         "correlation_overlap_vs_registry": {
-            "surface_max_abs_rank_correlation": record["surface_novelty"]["max_abs_rank_correlation"],
+            "surface_max_abs_rank_correlation": record["surface_novelty"][
+                "max_abs_rank_correlation"
+            ],
             "surface_method_lane_passed": record["surface_novelty"]["method_lane_passed"],
             "final_max_abs_rank_correlation": final["max_abs_rank_correlation"],
             "final_method_lane_max_dot_overlap_within_3px": final["method_lane_max_dot_overlap"],
             "final_literal_all_entries_max_overlap_within_3px": final["max_dot_overlap"],
             "final_duplicates_over_0_70_or_rho_0_90": dups,
-            "peer_blob_max_dot_overlap_within_3px": record["peer_blob_novelty"]["max_dot_overlap_within_3px"],
-            "method_lane_passed": bool(final["method_lane_passed"] and record["peer_blob_novelty"]["passed"]),
+            "peer_blob_max_dot_overlap_within_3px": record["peer_blob_novelty"][
+                "max_dot_overlap_within_3px"
+            ],
+            "method_lane_passed": bool(
+                final["method_lane_passed"] and record["peer_blob_novelty"]["passed"]
+            ),
         },
-        "leakage_canary": {"passed": record["canary"]["passed"], "max_pooled_auc": max(v["pooled_auc"] for v in record["canary"]["features"].values()), "threshold": 0.90},
+        "leakage_canary": {
+            "passed": record["canary"]["passed"],
+            "max_pooled_auc": max(v["pooled_auc"] for v in record["canary"]["features"].values()),
+            "threshold": 0.90,
+        },
         "raster_sha256": None,
         "validator_output": "not run: stopped at the duplicate gate before packaging",
         "submission_name": None,
@@ -236,7 +251,9 @@ def build_card_from_record(record: dict) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--verify-recorded", action="store_true")
-    ap.add_argument("--write-card", action="store_true", help="derive the JSON run card from the recorded stop")
+    ap.add_argument(
+        "--write-card", action="store_true", help="derive the JSON run card from the recorded stop"
+    )
     args = ap.parse_args()
     if args.write_card:
         record = json.loads(EXPERIMENT_PATH.read_text())
@@ -251,7 +268,9 @@ def main() -> None:
         print(json.dumps(verify_recorded(), indent=2, allow_nan=False))
         return
     if EXPERIMENT_PATH.exists():
-        raise SystemExit("FUSE experiment already recorded. No implicit rerun; use --verify-recorded.")
+        raise SystemExit(
+            "FUSE experiment already recorded. No implicit rerun; use --verify-recorded."
+        )
 
     t0 = time.monotonic()
     fp = footprint.load_footprint()
@@ -362,7 +381,10 @@ def main() -> None:
     )
     if not surface_novelty["method_lane_passed"]:
         save_json(
-            {"stopped_reason": "duplicate-surface-vs-method-lane", "surface_novelty": surface_novelty},
+            {
+                "stopped_reason": "duplicate-surface-vs-method-lane",
+                "surface_novelty": surface_novelty,
+            },
             EXPERIMENT_PATH,
         )
         raise SystemExit("Duplicate surface against a competing method lane; halted")
@@ -385,7 +407,10 @@ def main() -> None:
             "stopped_reason": "duplicate-final-dots-vs-registry (lane rule: >0.70 within 3 px or rho>0.90)",
             "canary": canary_report,
             "results": arm_results,
-            "paired_fuse_minus_oof_baseline": {"delta_dti": fuse_dti - arm_results["oof_multiphysics_hgb_d3"]["dti"], "ci95": paired},
+            "paired_fuse_minus_oof_baseline": {
+                "delta_dti": fuse_dti - arm_results["oof_multiphysics_hgb_d3"]["dti"],
+                "ci95": paired,
+            },
             "surface_novelty": surface_novelty,
             "final_novelty": final_novelty,
             "peer_blob_novelty": peer_check,
@@ -398,7 +423,10 @@ def main() -> None:
             "elapsed_seconds": round(time.monotonic() - t0, 3),
         }
         save_json(stop_record, EXPERIMENT_PATH)
-        print("STOP: final dots are a duplicate of a registry raster; see evidence/fuse_experiment_20261025.json", flush=True)
+        print(
+            "STOP: final dots are a duplicate of a registry raster; see evidence/fuse_experiment_20261025.json",
+            flush=True,
+        )
         raise SystemExit(0)
 
     # 6. Exact-file C2ST nuisance audit on the emitted dots.
@@ -419,9 +447,7 @@ def main() -> None:
     if not all(c["format_valid"] for c in checks.values()):
         raise SystemExit("Exact-file format validation failed")
 
-    note = (
-        f"GEMS24 H24-FUSE | SAHG1 channels in fold-local HGB | research only; DO NOT SUBMIT | id {content_id}"
-    )
+    note = f"GEMS24 H24-FUSE | SAHG1 channels in fold-local HGB | research only; DO NOT SUBMIT | id {content_id}"
     if len(note) > 140:
         raise AssertionError(f"Note length {len(note)} exceeds 140 characters")
 
@@ -442,7 +468,9 @@ def main() -> None:
         reasons.append(
             f"Exact-file C2ST nuisance audit flagged association (AUC {nuisance['sahg1_candidate']['observed_auc']:.4f}, Holm p={nuisance['sahg1_candidate']['holm_p_value']:.3f})"
         )
-    reasons.append("Promotion to a weekly slot needs a separate selector step; the agent never uploads")
+    reasons.append(
+        "Promotion to a weekly slot needs a separate selector step; the agent never uploads"
+    )
     verdict = "promote" if all_gates else "negative"
 
     experiment = {
@@ -465,7 +493,10 @@ def main() -> None:
             "recorded_source": "evidence/sahg1_experiment_20261025.json",
             "reproduced_delta": baseline_repro_delta,
         },
-        "paired_fuse_minus_oof_baseline": {"delta_dti": fuse_dti - arm_results["oof_multiphysics_hgb_d3"]["dti"], "ci95": paired},
+        "paired_fuse_minus_oof_baseline": {
+            "delta_dti": fuse_dti - arm_results["oof_multiphysics_hgb_d3"]["dti"],
+            "ci95": paired,
+        },
         "surface_novelty": surface_novelty,
         "final_novelty": final_novelty,
         "peer_blob_novelty": peer_check,
@@ -498,14 +529,18 @@ def main() -> None:
             "evaluator": holdout.MTR_EVALUATOR_VERSION,
             "dti": fuse_dti,
             "ci95": arm_results["h24_fuse_hgb_sahg1_channels"]["ci95"],
-            "withheld_positives": arm_results["h24_fuse_hgb_sahg1_channels"]["n_withheld_positive_pixels"],
+            "withheld_positives": arm_results["h24_fuse_hgb_sahg1_channels"][
+                "n_withheld_positive_pixels"
+            ],
             "label": "HOLDOUT-DTI",
         },
         "reconstructed_oof_baseline": arm_results["oof_multiphysics_hgb_d3"],
         "paired_vs_oof_baseline": experiment["paired_fuse_minus_oof_baseline"],
         "correlation_overlap_vs_registry": {
             "competing_method_rasters_checked": final_novelty["competing_method_rasters_count"],
-            "calibration_control_rasters_checked": final_novelty["calibration_control_rasters_count"],
+            "calibration_control_rasters_checked": final_novelty[
+                "calibration_control_rasters_count"
+            ],
             "peer_blobs_checked": peer_check["peer_unique_blobs_checked"],
             "surface_max_abs_rank_correlation": surface_novelty["max_abs_rank_correlation"],
             "final_max_abs_rank_correlation": final_novelty["max_abs_rank_correlation"],
