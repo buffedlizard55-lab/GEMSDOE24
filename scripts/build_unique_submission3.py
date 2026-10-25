@@ -90,6 +90,12 @@ def main():
             print(json.dumps({"status": "no_recorded_experiment"}))
         return
 
+    raise SystemExit(
+        "Retired: stopped historical lane; executed decay was 300 px (30 km), not 300 m. "
+        "Catalogue-proximity canaries and independent selector evidence were incomplete. "
+        "Use --verify-recorded for the frozen negative record; do not rerun or retune."
+    )
+
     started = time.monotonic()
     fp = footprint.load_footprint()
     with rasterio.open(TEMPLATE) as t:
@@ -114,31 +120,37 @@ def main():
 
     report = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "hypothesis": ("H-UNIQUE-03 visible-fault-guided radiometric "
-                       "modulation: blind extensions near faults x K"),
-        "mechanism": ("Blind fault extensions/stepovers adjacent to visible "
-                      "catalogue faults; hydrothermal K enrichment near "
-                      "fault traces marks concealed conduits absent from "
-                      "USGS/INGENIOUS. Dots guided by visible-fault proximity "
-                      "and weighted by radiometric K — a unique combination "
-                      "not in any reviewed lane."),
-        "non_fault_mimic": ("Radiometrically altered alluvial fans or "
-                            "mineralized veins near mapped faults"),
+        "hypothesis": (
+            "H-UNIQUE-03 visible-fault-guided radiometric "
+            "modulation: blind extensions near faults x K"
+        ),
+        "mechanism": (
+            "Blind fault extensions/stepovers adjacent to visible "
+            "catalogue faults; hydrothermal K enrichment near "
+            "fault traces marks concealed conduits absent from "
+            "USGS/INGENIOUS. Dots guided by visible-fault proximity "
+            "and weighted by radiometric K — a unique combination "
+            "not in any reviewed lane."
+        ),
+        "non_fault_mimic": (
+            "Radiometrically altered alluvial fans or mineralized veins near mapped faults"
+        ),
         "preregistration": "knowledge/unique_hypothesis_2026-10-25.md",
         "experiment_number": 3,
         "maximum_experiments": 3,
         "maximum_session_hours": 2,
-        "input_provenance": ("Committed external mirrors (USGS GeoDAWN) and "
-                             "bridge labels"),
-        "inputs": {
-            str(p.relative_to(ROOT)): sha256_file(p)
-            for p in (TEMPLATE, LABELS, RAD, EXT)
-        },
+        "input_provenance": ("Committed external mirrors (USGS GeoDAWN) and bridge labels"),
+        "inputs": {str(p.relative_to(ROOT)): sha256_file(p) for p in (TEMPLATE, LABELS, RAD, EXT)},
         "code_sha256": {
             str(p.relative_to(ROOT)): sha256_file(p)
-            for p in (Path(__file__), ROOT / "src/gems/holdout.py",
-                      ROOT / "src/gems/metric.py", ROOT / "src/gems/emission.py",
-                      ROOT / "src/gems/novelty.py", ROOT / "src/gems/submission.py")
+            for p in (
+                Path(__file__),
+                ROOT / "src/gems/holdout.py",
+                ROOT / "src/gems/metric.py",
+                ROOT / "src/gems/emission.py",
+                ROOT / "src/gems/novelty.py",
+                ROOT / "src/gems/submission.py",
+            )
         },
         "supported_pixels": int(t_fp.sum()),
         "catalogue_features": ["distance_to_visible_fault"],
@@ -167,8 +179,11 @@ def main():
     }
     report["canary"] = context.canary(canary_features)
     if not report["canary"]["passed"]:
-        report.update(verdict="negative", stopped_reason="leakage-canary",
-                      elapsed_seconds=time.monotonic() - started)
+        report.update(
+            verdict="negative",
+            stopped_reason="leakage-canary",
+            elapsed_seconds=time.monotonic() - started,
+        )
         save(report, RESULT)
         raise SystemExit("Leakage canary failed; no candidate packaged")
     print("Canaries passed", flush=True)
@@ -192,8 +207,11 @@ def main():
         mean_surface, fp, registry["unique_rasters"], ROOT
     )
     if not report["surface_novelty"]["passed"]:
-        report.update(verdict="negative", stopped_reason="duplicate-surface",
-                      elapsed_seconds=time.monotonic() - started)
+        report.update(
+            verdict="negative",
+            stopped_reason="duplicate-surface",
+            elapsed_seconds=time.monotonic() - started,
+        )
         save(report, RESULT)
         raise SystemExit("Duplicate surface; stopped before placement")
     print("Surface registry check passed", flush=True)
@@ -204,15 +222,13 @@ def main():
         eligible = f["valid"] & ~f["visible"] & (surface > 0)
         predictions.append(
             emission.priority_poisson(
-                surface, eligible,
-                round(BUDGET_FRACTION * f["valid"].sum()), min_dist=MIN_DIST_PX
+                surface, eligible, round(BUDGET_FRACTION * f["valid"].sum()), min_dist=MIN_DIST_PX
             )
         )
 
     results = context.summarize(predictions)
     report["holdout"] = results
-    print(f"HOLDOUT-DTI {results['dti']} CI {results['ci95']['interval']}",
-          flush=True)
+    print(f"HOLDOUT-DTI {results['dti']} CI {results['ci95']['interval']}", flush=True)
 
     # ---- Final dots: proximity to ALL visible faults, off-catalogue ----------
     full_dist = distance_transform_edt(~labels)
@@ -221,8 +237,10 @@ def main():
     final_score = np.where(t_fp & ~labels & (final_score > 0), final_score, 0.0).astype(np.float32)
 
     final = emission.priority_poisson(
-        final_score, t_fp & ~labels & (final_score > 0),
-        round(BUDGET_FRACTION * fp.sum()), min_dist=MIN_DIST_PX
+        final_score,
+        t_fp & ~labels & (final_score > 0),
+        round(BUDGET_FRACTION * fp.sum()),
+        min_dist=MIN_DIST_PX,
     )
     if not final.any():
         raise SystemExit("No positive evidence; refusing an empty submission")
@@ -239,9 +257,7 @@ def main():
     # ---- Package TIF ALWAYS (zeros outside = finite [0,1] everywhere) --------
     content_id = submission.scored_content_id(final, fp, labels)
     date_str = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = submission.make_filename(
-        "24gems", "doer-fault-guided-k", date_str, content_id, "zeros"
-    )
+    name = submission.make_filename("24gems", "doer-fault-guided-k", date_str, content_id, "zeros")
 
     zeros_path = DOWNLOADS / name
     zeros = submission.write_submission(final, TEMPLATE, zeros_path, outside="zero")
@@ -250,8 +266,10 @@ def main():
     if not checks["format_valid"]:
         raise SystemExit("Exact-file format checks failed; do not publish")
 
-    note = (f"24GEMS fault-guided K-mod blind-conduit | off-catalogue dots | "
-            f"research; HOLDOUT-DTI {results['dti']:.5f} | id {content_id}")
+    note = (
+        f"24GEMS fault-guided K-mod blind-conduit | off-catalogue dots | "
+        f"research; HOLDOUT-DTI {results['dti']:.5f} | id {content_id}"
+    )
     if len(note) > 140:
         note = note[:137] + "..."
     note_file = f"note-{name[:-4]}.txt"
@@ -263,7 +281,8 @@ def main():
     raster_sha256 = sha256_file(zeros)
 
     preflight_report = preflight(
-        zeros, TEMPLATE,
+        zeros,
+        TEMPLATE,
         run_card_path=None,
         note=note,
         expected_template_sha256=sha256_file(TEMPLATE),
@@ -304,7 +323,9 @@ def main():
             "protocol": results["protocol"],
         },
         "correlation_overlap_vs_registry": {
-            "surface_max_abs_rank_correlation": report["surface_novelty"]["max_abs_rank_correlation"],
+            "surface_max_abs_rank_correlation": report["surface_novelty"][
+                "max_abs_rank_correlation"
+            ],
             "final_max_abs_rank_correlation": report["final_novelty"]["max_abs_rank_correlation"],
             "final_max_overlap_within_3px": report["final_novelty"]["max_dot_overlap"],
             "passed": report["final_novelty"]["passed"],
@@ -358,20 +379,28 @@ def main():
     }
     save(download_entry, DATA_OUT / "unique_download.json")
 
-    print(json.dumps({
-        "file": name,
-        "pixels": int(final.sum()),
-        "sha256": raster_sha256,
-        "holdout_dti": results["dti"],
-        "holdout_ci95": results["ci95"]["interval"],
-        "note_characters": len(note),
-        "verdict": verdict,
-        "ok_to_submit": ok_to_submit,
-        "ok_to_download": checks["format_valid"],
-        "strict_range_ok": checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"],
-        "novelty_passed": report["final_novelty"]["passed"],
-        "canary_passed": report["canary"]["passed"],
-    }, indent=2), flush=True)
+    print(
+        json.dumps(
+            {
+                "file": name,
+                "pixels": int(final.sum()),
+                "sha256": raster_sha256,
+                "holdout_dti": results["dti"],
+                "holdout_ci95": results["ci95"]["interval"],
+                "note_characters": len(note),
+                "verdict": verdict,
+                "ok_to_submit": ok_to_submit,
+                "ok_to_download": checks["format_valid"],
+                "strict_range_ok": checks["checks"]["variant_strict_whole_array_no_nan_allowed"][
+                    "pass"
+                ],
+                "novelty_passed": report["final_novelty"]["passed"],
+                "canary_passed": report["canary"]["passed"],
+            },
+            indent=2,
+        ),
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

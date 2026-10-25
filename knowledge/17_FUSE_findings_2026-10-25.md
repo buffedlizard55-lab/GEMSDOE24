@@ -1,7 +1,7 @@
 # H24-FUSE findings — 2026-10-25 (negative; stopped at the duplicate gate)
 
 **Status:** `verdict: negative` · `ok_to_download: false` · `ok_to_submit: false` · no artifact packaged · no slot spent · no ORGANIZER-CONFIRMED score.
-Run card: [`evidence/fuse_run_card_20261025.json`](../evidence/fuse_run_card_20261025.json) (derived deterministically from the recorded stop by `scripts/run_fuse_lane.py --write-card`).
+Run card: [`evidence/fuse_run_card_20261025.json`](../evidence/fuse_run_card_20261025.json) (derived deterministically from the recorded stop by `scripts/run_fuse_prereg.py --write-card`).
 Record: [`evidence/fuse_experiment_20261025.json`](../evidence/fuse_experiment_20261025.json). Preregistration: [`knowledge/15_preregistered_next_gen_2026-10-25.md`](15_preregistered_next_gen_2026-10-25.md), Rank 1.
 
 ## 1. Hypothesis tested
@@ -49,7 +49,7 @@ No HGB, sampling, seed or budget parameter changed across attempts. Attempts 1 a
 
 ## 6. Irregularities for review
 
-1. **H33 analysis citation.** `knowledge/14_h33_analysis_2026-10-25.md` §1 and §5 cite `registry/live_scores.json` as a source for the owner-reported 0.2778. That file does **not** contain 0.2778 (its `warning` field says owner-reported; the value is absent). The only source for 0.2778 in the repository is the owner brief (`knowledge/owner_brief_2026-10-25.md`) and documents that quote it. The citation should be corrected. Not corrected in this session.
+1. **H33 analysis citation (partly corrected on main).** Main's correction header in `knowledge/14_h33_analysis_2026-10-25.md` now labels the 0.2778 as OWNER-REPORTED with no receipt in the checkout. The body still lists `registry/live_scores.json` as "local forensic evidence" for H33-B2, but that file has no H33-B2 row (checked: no `h33` entry in `artifacts` or `unscored_artifacts`). The citation should be removed or re-pointed. Not changed in this session.
 2. **Conflicting leaders.** The brief states 0.3195 and 0.4413 as the "current high" and 0.2778 as the H33-B2 score. None of these are ORGANIZER-CONFIRMED in the repository. The live leaderboard was not automatically read (DrivenData automation is forbidden by `AGENTS.md`).
 3. **Role classification.** Registry-040/041/042 are classified `competing_method_lane` although their files live in `inputs/calibration/`. Under that classification they count as duplicates (0.7048, 0.7189, 0.7073). Whether they should be re-classified as calibration controls is a registry-governance question for review, not something this run changed. Registry-043 sits at 0.6320. Registry-039 (lattice) is 1.0 and is treated as a calibration control.
 4. **Owner mirror integrity only.** Restored inputs are hash-pinned to owner-supplied GitHub mirrors (`buffedlizard55-lab/GEMSDOE`). Hashes verify integrity, not organizer provenance.

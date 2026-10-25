@@ -36,7 +36,7 @@ def test_recorded_fuse_stop_is_fail_closed():
 
 @pytest.mark.skipif(not EXPERIMENT.exists(), reason="FUSE experiment not recorded in this checkout")
 def test_fuse_run_card_is_deterministic_function_of_record():
-    import run_fuse_lane as fuse
+    import run_fuse_prereg as fuse
 
     rec = json.loads(EXPERIMENT.read_text())
     expected = fuse.build_card_from_record(rec)
@@ -46,3 +46,14 @@ def test_fuse_run_card_is_deterministic_function_of_record():
     assert expected["holdout"]["label"] == "HOLDOUT-DTI"
     assert expected["holdout"]["withheld_positives"] == 60988
     assert expected["raster_sha256"] is None and expected["submission_name"] is None
+
+
+@pytest.mark.skipif(not EXPERIMENT.exists(), reason="FUSE experiment not recorded in this checkout")
+def test_prereg_runner_refuses_to_rerun_a_recorded_experiment():
+    import subprocess
+
+    result = subprocess.run(
+        [sys.executable, "scripts/run_fuse_prereg.py"], cwd=ROOT, capture_output=True, text=True
+    )
+    assert result.returncode != 0
+    assert "already recorded" in result.stderr

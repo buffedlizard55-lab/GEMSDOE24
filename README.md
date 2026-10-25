@@ -1,5 +1,44 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Latest experiment: OJ1 — DOWNLOAD YES / SUBMIT NO
+
+[**Download the newly generated research TIFF**](docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif) ·
+[Full JSON run card](evidence/oj1_run_card_20261025.json) · [Executive guide](docs/executive-summary.html).
+
+**NOT OK TO SUBMIT.** Independent computation, not copied predictions, but the literal
+novelty gate failed. **HOLDOUT-DTI 0.06362**, 95% CI [0.05591, 0.07105],
+`gems-segment-pooled-v1`, 60,988 withheld positives.
+Recorded same-protocol OOF baseline: **HOLDOUT-DTI 0.13000**, 95% CI [0.11565, 0.14396],
+same evaluator/positive count; not retrained this session. OJ1 loses that comparison.
+Strict whole-array finite [0,1], exact CRS/shape/transform PASS; registry final-dot
+3-pixel overlap **99.86%**, limit 70%, spacing-5 control retained. One experiment,
+no tuning after the duplicate and no submission slot used. No organizer score exists.
+
+Name: `gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif`
+SHA-256: `ec0139cb4e9f1641dd43ad385d1c164d639a2c854f64ff4c1f9d61e6dc86635a`
+Short comment (83 characters): `OJ1 coherent orientation junctions | research only; DO NOT SUBMIT | id 3eef450351de`
+
+**Review findings:** the historical UNIQUE03 “300 m” decay was actually 300 pixels
+(30 km); its catalogue-proximity/composite canaries were incomplete. Frozen lanes
+cannot be rerun. Preflight now refuses self-asserted promotion/authorization flags:
+an independent selector receipt verifier is **not implemented**, and current quota
+is unknown. No human inspection shortcut and no automatic portal upload.
+See [preregistered hypotheses](knowledge/17_preregistered_OJ1_2026-10-25.md) and
+[findings/next work](knowledge/18_OJ1_findings_2026-10-25.md).
+
+## Prior review: historical UNIQUE03 download is NOT cleared to submit
+
+Revalidate the first-screen research TIFF with
+`python scripts/verify_current_download.py`. This reopens the exact file using
+the shared writer's validator, verifies its SHA-256 and strict whole-array [0,1]
+range, and fails closed on inconsistent authorization or identity. It never
+reruns or promotes a stopped lane. Receipt:
+[`evidence/current_download_revalidation.json`](evidence/current_download_revalidation.json).
+The existing candidate remains **DOWNLOAD: YES · SUBMIT: NO**.
+See the [corrected GEMSDOE32 analysis](knowledge/14_h33_analysis_2026-10-25.md):
+prediction ancestry does not prove the hidden-score gain came entirely from FP
+reduction. No new candidate or competition slot was used in this review.
+
 ## Prompt (owner brief, 2026-10-25) — read at every session
 
 Generate a **unique** TIF submission for the DOE GEMS / DrivenData #306 competition.
@@ -16,7 +55,7 @@ JSON card per experiment. Budget: 3 experiments or 2 hours. Negative results are
 deliverables. Target: beat 0.3195 on the leaderboard (owner-reported high; 0.4413
 and 0.2778 appear in site snapshots but are not organizer-confirmed).
 
-**Current artifact (this session):**
+**Historical UNIQUE03 artifact (not the latest experiment):**
 `docs/downloads/24gems-doer-fault-guided-k-20261025T220208Z-dedb860f7e83-zeros.tif`
 (SHA-256: `800856082214038640ba98796c390ff76cb8583944dbc05505d9787ce7688c9e`)
 — **DOWNLOAD: YES · SUBMIT: NO** · format-valid, strict [0,1] PASS, no NaN anywhere,
@@ -124,16 +163,18 @@ Run card: [`evidence/fuse_run_card_20261025.json`](evidence/fuse_run_card_202610
 .venv/bin/python scripts/restore_data.py --access-mirrors   # integrity-pinned owner mirrors
 .venv/bin/python scripts/prepare_data.py                    # 30-channel cache (sha a4ca25b2…)
 .venv/bin/python scripts/review_peer_registry.py            # 84 pinned GitHub blobs for the peer check
-.venv/bin/python scripts/run_fuse_lane.py --write-card      # derive card from the recorded stop (no rerun)
+.venv/bin/python scripts/run_fuse_prereg.py --write-card      # derive card from the recorded stop (no rerun)
 .venv/bin/python -m pytest -q
 ```
 
-Irregularities for review (H33 citation to `registry/live_scores.json` for 0.2778 is not supported by that file) are listed in
+Irregularities for review (the H33 analysis still cites `registry/live_scores.json` as forensic evidence although that file has no H33-B2 row; main's correction header now marks 0.2778 as owner-reported) are listed in
 [knowledge/17 §6](knowledge/17_FUSE_findings_2026-10-25.md#6-irregularities-for-review).
 
 ## Current decision
 
 <!-- STATUS:START -->
+Latest OJ1 research TIFF: [`gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif`](docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif). **DOWNLOAD YES / SUBMIT NO**. HOLDOUT-DTI 0.06362, 95% CI [0.05591, 0.07105], gems-segment-pooled-v1, 60,988 withheld positives. Stopped as duplicate, not a leaderboard result. No weekly slot has been spent. [OJ1 run card](evidence/oj1_run_card_20261025.json).
+
 **DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
 
 New 2026-10-25 `H24-SAHG1` Strike-Hydro-Geomorph GeoTIFF:
