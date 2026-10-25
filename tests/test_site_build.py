@@ -109,10 +109,20 @@ def test_site_never_links_a_missing_local_file(built):
 def test_current_negative_lane_is_not_a_legacy_recommendation(built):
     report = json.loads((built / "docs/data/active_lane.json").read_text())
     assert not report["submission_authorized"]
+    preflight = json.loads(
+        (
+            built
+            / "docs/downloads/gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.preflight.json"
+        ).read_text()
+    )
+    assert preflight["artifact"]["sha256"] == report["artifact"]["sha256"]
+    assert preflight["decision"]["submission_status"] == "DO_NOT_SUBMIT"
+    assert not preflight["decision"]["ready_to_submit"]
     for name in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         text = (built / name).read_text()
         assert "NOT OK TO SUBMIT" in text
         assert "DO NOT SUBMIT" in text
+        assert "Automated preflight" in text
         assert "One click gets the recommended submission" not in text
     historical = json.loads((built / "docs/data/download.json").read_text())
     assert historical["status"] == "historical_superseded"

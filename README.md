@@ -32,6 +32,11 @@ the owner's brief at the bottom; (2) [`knowledge/owner_brief_verbatim.md`](knowl
 .venv/bin/python scripts/review_peer_registry.py
 # run_aspc_lane.py is frozen and refuses to overwrite its recorded experiment.
 .venv/bin/python scripts/package_aspc_companion.py  # same predictions, template NaN convention
+# Exact-file gate: FORMAT is distinct from SUBMISSION; this active file must print DO_NOT_SUBMIT.
+.venv/bin/python scripts/preflight_submission.py \
+  docs/downloads/gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.tif \
+  --run-card evidence/aspc_run_card_20261025.json \
+  --output docs/downloads/gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.preflight.json
 .venv/bin/python scripts/build_site.py
 .venv/bin/python -m pytest -q
 ```

@@ -1,0 +1,63 @@
+{
+  "review_date_utc": "2026-10-25",
+  "scope": "Exact-file preflight hardening for the already-recorded ASPC research TIFF. This is validation tooling, not a new geological experiment or a claim of organizer acceptance.",
+  "active_artifact": {
+    "file": "docs/downloads/gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.tif",
+    "sha256": "7f5706e03866d826e83ba5298a7f3fbbcfacc3b3e74b957d726269b54714e7bd",
+    "preflight_receipt": "docs/downloads/gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.preflight.json",
+    "submission_status": "DO_NOT_SUBMIT",
+    "new_experiment_count": 0,
+    "weekly_slot_spent": false
+  },
+  "pass_1_implementation": {
+    "implemented": [
+      "Shared gems.preflight module that independently reports exact-file format checks, strict whole-array range compatibility, pinned template bytes, note length, and hash-bound promotion evidence.",
+      "CLI scripts/preflight_submission.py; it writes a JSON receipt and never contacts DrivenData or uploads a file.",
+      "Static-site gate: the active lane build fails if the active preflight is absent, stale, or does not report DO_NOT_SUBMIT.",
+      "First-screen and executive-summary links to the exact preflight receipt."
+    ],
+    "observed_result": "The zero-outside ASPC TIFF is float32, one band, on the pinned template grid, finite and in [0,1] over the footprint and under a strict whole-array test. Its run card is hash-bound but has negative verdict and submission_authorized=false, so the automated decision is DO_NOT_SUBMIT."
+  },
+  "pass_2_edge_case_review": {
+    "fixed": [
+      "A self-consistent custom template cannot yield OK_TO_SUBMIT without an explicit expected template SHA-256.",
+      "A malformed, hash-mismatched, renamed, non-promoted, or non-authorized run card cannot yield scientific authorization.",
+      "NaN-outside encoding is distinguished from a stricter whole-array [0,1] portal-compatibility diagnostic rather than silently treated as a cause of the reported portal error.",
+      "Receipt output omits local absolute paths so it can be published and reproduced in another checkout."
+    ],
+    "tests": [
+      "A negative ASPC file may pass format and strict-range checks yet still returns DO_NOT_SUBMIT.",
+      "Its NaN-outside twin is format-valid but fails the stricter whole-array range diagnostic.",
+      "Tampered promotion cards fail closed.",
+      "A synthetic unit-only promoted card verifies that every required hash-bound gate is needed for an OK_TO_SUBMIT path."
+    ]
+  },
+  "pass_3_acceptance_recheck": {
+    "verification_commands": {
+      "registry": ".venv/bin/python scripts/review_peer_registry.py -> Verified 98 references, 84 unique blobs; no slots used",
+      "tests": ".venv/bin/python -m pytest -q -> 124 passed",
+      "lint": ".venv/bin/python -m ruff check src scripts tests -> All checks passed",
+      "syntax": ".venv/bin/python -m compileall -q src scripts tests -> success",
+      "diff_whitespace": "git diff --check -> success"
+    },
+    "requirements_covered": [
+      "One-click TIFF remains at the first screen with explicit DO NOT SUBMIT wording.",
+      "The site exposes an exact-file JSON preflight instead of relying on a human inspection step.",
+      "The prior [0,1] error is addressed by an independent strict whole-array diagnostic without asserting an unverified portal cause.",
+      "Unique filename, SHA-256, and a 93-character note are captured in the receipt.",
+      "No score, current leaderboard value, organizer receipt, portal access, or promotion was invented."
+    ],
+    "remaining_blockers": [
+      "The ASPC run is on a provisional unassigned lane.",
+      "No current-best comparable OOF reconstruction exists.",
+      "The exact artifact has no completed nuisance audit or selector authorization.",
+      "The pinned sample is an owner mirror; it is not independently organizer-authenticated.",
+      "The local strict range check is not an organizer portal acceptance receipt."
+    ],
+    "next_steps": [
+      "Do not spend a competition slot on ASPC. Obtain an assigned lane and reconstruct a current comparable OOF benchmark before a new preregistered hypothesis.",
+      "If a future candidate is promoted, rerun this preflight against its exact bytes and hash-bound run card, then retain the artifact-linked organizer receipt before calling any score ORGANIZER-CONFIRMED.",
+      "Resolve open parallel work only after rebasing it onto the current safety/site baseline; do not treat sibling negative results as a reason to retune this frozen lane."
+    ]
+  }
+}
