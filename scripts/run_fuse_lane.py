@@ -1,511 +1,557 @@
 #!/usr/bin/env python3
-"""Run H24-FUSE: SAHG1-augmented OOF-HGB lane — one fixed experiment, no tuning.
+"""Execute the preregistered H24-FUSE experiment (knowledge/15_preregistered_next_gen_2026-10-25.md, Rank 1).
 
-Compares:
-- Enhanced OOF-HGB with 27 base + 4 SAHG1 channels (G_sat, R_alt, B_step, H_conduit)
-- Recorded OOF-HGB-D3 baseline (0.13000) via direct paired bootstrap if available
+H24-FUSE = the same fold-local HistGradientBoosting learner as the reconstructed
+OOF multi-physics baseline (``oof_multiphysics_hgb_d3``), with the four SAHG1-engineered
+channels (G_sat, R_alt, B_step, H_conduit) appended to the 27 prepared base channels.
 
-Uses SegmentHoldout with 15 px collar, pooled DTI alpha 0.2 beta 0.8 R 300m.
+Design rules enforced here (see the preregistration):
+- One fixed run. A recorded experiment is never overwritten; use ``--verify-recorded``.
+- No tuning: HGB parameters, sampling sizes, seeds and budget are the SAHG1/OOF constants.
+- Shared code only: ``gems.holdout.SegmentHoldout``, ``gems.novelty``, ``gems.submission`` and
+  the SAHG1 runner helpers (baseline reconstruction, peer-blob check, exact-file C2ST audit).
+- The full-footprint model (trained on ALL catalogue pixels) is used ONLY to place dots and for
+  novelty comparison against registry rasters. It is never scored on the holdout, so no
+  holdout truth leaks into any reported DTI, and the SAHG1 bridge-protocol evaluation is skipped
+  for this arm for the same reason.
+- Verdict fails closed. File validity never sets ``ok_to_submit``; a separate selector step is
+  required, and the agent never uploads.
 """
+
 from __future__ import annotations
-import argparse, hashlib, json, sys, time
-from pathlib import Path
+
+import argparse
+import gc
+import json
 import os
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+
 os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 os.environ.setdefault("OMP_NUM_THREADS", "1")
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-import numpy as np
-import rasterio
-from scipy.ndimage import distance_transform_edt
-from sklearn.ensemble import HistGradientBoostingClassifier
-from threadpoolctl import threadpool_limits
-from gems import holdout, novelty, sahg1, submission, confounds, c2s2
-from gems.validator import sha256_file
+sys.path.insert(0, str(ROOT / "scripts"))
 
-BUDGET_FRAC = 0.0073
-SEED = 20261025
-HGB_PARAMS = dict(max_iter=80, max_leaf_nodes=15, learning_rate=0.08, l2_regularization=5.0, early_stopping=False, random_state=SEED)
-EXPERIMENT_JSON = ROOT / "evidence/fuse_experiment_20261025.json"
-RUN_CARD_JSON = ROOT / "evidence/fuse_run_card_20261025.json"
-DOCS_RUN_CARD = ROOT / "docs/data/fuse_run_card.json"
+import numpy as np  # noqa: E402
+import rasterio  # noqa: E402
+from scipy.ndimage import distance_transform_edt  # noqa: E402
+from sklearn.ensemble import HistGradientBoostingClassifier  # noqa: E402
+from threadpoolctl import threadpool_limits  # noqa: E402
 
-def save_json(obj, path: Path):
+import run_sahg1_lane as s1  # noqa: E402  (shared SAHG1 helpers; not re-implemented)
+from gems import emission, footprint, holdout, novelty, sahg1, submission  # noqa: E402
+from gems.validator import sha256_file  # noqa: E402
+
+BUDGET_FRACTION = s1.BUDGET_FRACTION
+SEED = s1.SEED
+HGB_PARAMS = dict(s1.HGB_PARAMS)
+AUG_KEYS = (
+    "saturating_scarp_g_sat",
+    "radiometric_alteration_r_alt",
+    "basement_step_b_step",
+    "hydrothermal_conduit_h",
+)
+AUG_NAMES = ("G_sat", "R_alt", "B_step", "H_conduit")
+ATTEMPT_NOTE = (
+    "Attempt 1 printed the holdout arms, then crashed at the peer-blob cache step (missing "
+    "data/research/peer_review; no record written). The peer cache was restored from pinned GitHub "
+    "blobs. Attempt 2 (full run, fixed final-dot novelty call without dots=, which had passed "
+    "literal overlap as None) was discarded before any conclusion was drawn from it. No HGB, sampling or "
+    "budget parameter was changed in any attempt."
+)
+N_POS, N_NEG = 20000, 60000
+BASELINE_RECORDED = ROOT / "evidence/sahg1_experiment_20261025.json"
+
+EXPERIMENT_PATH = ROOT / "evidence/fuse_experiment_20261025.json"
+RUN_CARD_PATH = ROOT / "evidence/fuse_run_card_20261025.json"
+DOCS_CARD_PATH = ROOT / "docs/data/fuse_run_card.json"
+DOCS_DOWNLOAD_PATH = ROOT / "docs/data/fuse_download.json"
+
+
+def save_json(obj: dict, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(obj, indent=2, allow_nan=False) + "\n")
 
-def load_inputs(fp):
-    # Verify prepared
-    prep_meta = json.loads((ROOT / "data/prepared/features.json").read_text())
-    prep_path = ROOT / "data/prepared/features.npy"
-    if sha256_file(prep_path) != prep_meta["sha256"]:
-        raise SystemExit("Prepared checksum mismatch")
-    template = ROOT / "data/bridge/sample_submission.tif"
-    lidar_path = ROOT / "data/external/lidar_scarp_features_u8.tif"
-    lidar_meta = json.loads((lidar_path.with_name("lidar_scarp_features.json")).read_text())
-    rad_path = ROOT / "data/external/geodawn_rad_u8.tif"
-    rad_meta = json.loads(rad_path.with_name("geodawn_rad.json").read_text())
-    ext_path = ROOT / "data/external/geodawn_extensions_u8.tif"
-    ext_meta = json.loads(ext_path.with_name("geodawn_extensions.json").read_text())
-    if sha256_file(rad_path) != rad_meta["product_sha256"]:
-        raise SystemExit("Rad checksum mismatch")
-    if sha256_file(ext_path) != ext_meta["product_sha256"]:
-        raise SystemExit("Ext checksum mismatch")
-    with rasterio.open(template) as t:
-        grid = (t.shape, t.crs, t.transform)
-    lidar_bands = {}
-    with rasterio.open(lidar_path) as ds:
-        if (ds.shape, ds.crs, ds.transform) != grid:
-            raise SystemExit("LiDAR grid mismatch")
-        for name in sahg1.LIDAR_SPECS:
-            idx = lidar_meta["bands"].index(name) + 1
-            lidar_bands[name] = ds.read(idx)
-    rad_bands = {}
-    with rasterio.open(rad_path) as ds:
-        if (ds.shape, ds.crs, ds.transform) != grid:
-            raise SystemExit("Rad grid mismatch")
-        for name in sahg1.RAD_BANDS:
-            idx = rad_meta["channels"].index(name) + 1
-            rad_bands[name] = ds.read(idx)
-    ext_bands = {}
-    with rasterio.open(ext_path) as ds:
-        if (ds.shape, ds.crs, ds.transform) != grid:
-            raise SystemExit("Ext grid mismatch")
-        for name in sahg1.EXT_BANDS:
-            idx = ext_meta["channels"].index(name) + 1
-            ext_bands[name] = ds.read(idx)
-    stack = np.load(prep_path, mmap_mode="r")
-    fp_ids = np.flatnonzero(fp)
-    geophys_bands = {}
-    for name in sahg1.GEOPHYS_BANDS:
-        arr = np.full(fp.shape, np.nan, dtype=np.float32)
-        arr.ravel()[fp_ids] = stack[:, prep_meta["names"].index(name)]
-        geophys_bands[name] = arr
-    hashes = {str(p.relative_to(ROOT)): sha256_file(p) for p in (template, ROOT/"data/bridge/labels.tif", prep_path, lidar_path, rad_path, ext_path)}
-    return lidar_bands, rad_bands, ext_bands, geophys_bands, stack, prep_meta, hashes
 
-def main():
-    started = time.monotonic()
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--verify-recorded", action="store_true")
-    args = ap.parse_args()
-    if args.verify_recorded:
-        # Verify last fuse run if exists, else check sahg1
-        if RUN_CARD_JSON.exists():
-            card = json.loads(RUN_CARD_JSON.read_text())
-            print(json.dumps({"verify":"fuse", "file": card.get("submission_name"), "sha256": card.get("raster_sha256")}, indent=2))
-            sys.exit(0)
-        else:
-            print(json.dumps({"verify":"no_fuse_recorded"}, indent=2))
-            sys.exit(0)
+def augmented_block(stack, base_nc: int, aug_flat: np.ndarray, ids: np.ndarray) -> np.ndarray:
+    """Rows = footprint-order indices ``ids``; columns = 27 base + 4 SAHG1 channels."""
+    X = np.empty((len(ids), base_nc + len(AUG_KEYS)), dtype=np.float32)
+    X[:, :base_nc] = stack[ids, :base_nc]
+    X[:, base_nc:] = aug_flat[ids]
+    return X
 
-    # Load footprint & catalogue
-    template = ROOT / "data/bridge/sample_submission.tif"
-    labels_path = ROOT / "data/bridge/labels.tif"
-    with rasterio.open(template) as t:
-        template_arr = t.read(1)
-        fp = np.isfinite(template_arr)
-        crs, transform, shape = t.crs, t.transform, t.shape
-        profile = t.profile
-    with rasterio.open(labels_path) as ds:
-        catalogue = ds.read(1) > 0
-        assert catalogue.shape == fp.shape
 
-    # Load registry for novelty
-    import json as _j
-    priority_entries = []
-    for cand_path in [ROOT/"registry/priority_rasters.json", ROOT/"docs/data/priority_rasters.json", ROOT/"registry/live_scores.json"]:
-        if cand_path.exists():
-            try:
-                obj = _j.loads(cand_path.read_text())
-                if isinstance(obj, dict) and "entries" in obj:
-                    tmp = obj["entries"]
-                elif isinstance(obj, list):
-                    tmp = obj
-                elif isinstance(obj, dict) and "artifacts" in obj:
-                    tmp = []  # live_scores not suitable
-                else:
-                    tmp = []
-                if tmp and isinstance(tmp[0], dict) and "cache_path" in tmp[0]:
-                    priority_entries = tmp
-                    break
-            except: pass
-    # Peer
-    peer_entries = []
-    peer_path = ROOT/"registry/peer_rasters_20261025.json"
-    if peer_path.exists():
-        peer = _j.loads(peer_path.read_text())
-        if isinstance(peer, dict) and "entries" in peer:
-            peer_entries = peer["entries"]
-        elif isinstance(peer, list):
-            peer_entries = peer
-        else:
-            peer_entries = []
-
-    # Load inputs & build SAHG1 surfaces
-    lidar_bands, rad_bands, ext_bands, geophys_bands, stack, prep_meta, input_hashes = load_inputs(fp)
-    surfaces, support = sahg1.build_surfaces(lidar_bands, rad_bands, ext_bands, geophys_bands, fp)
-    # surfaces contains candidate, geomorphic_core etc. Extract needed
-    G_sat = surfaces["saturating_scarp_g_sat"] if "saturating_scarp_g_sat" in surfaces else surfaces.get("g_sat")
-    R_alt = surfaces["radiometric_alteration_r_alt"] if "radiometric_alteration_r_alt" in surfaces else surfaces.get("r_alt")
-    B_step = surfaces["basement_step_b_step"] if "basement_step_b_step" in surfaces else surfaces.get("b_step")
-    H_conduit = surfaces["hydrothermal_conduit_h"] if "hydrothermal_conduit_h" in surfaces else surfaces.get("h_conduit", np.sqrt(np.maximum(R_alt*B_step,0)))
-    # fallback names
-    if G_sat is None:
-        # sahg1.build_surfaces returns dict keys: check actual keys
-        print(f"SAHG1 keys: {list(surfaces.keys())}")
-        raise SystemExit("Missing G_sat")
-    print(f"SAHG1 support {support.sum()} pixels, G_sat finite {np.isfinite(G_sat[support]).sum()}, R_alt {R_alt[support].mean():.4f}, B_step {B_step[support].mean():.4f}")
-
-    # Holdout context
-    context = holdout.SegmentHoldout(fp, catalogue, buffer_px=15)
-    print(f"Holdout folds: {len(context.folds)} folds, each buffer 15 px (1.5km)")
-    for f in context.folds:
-        print(f"  fold {f['name']} id {f['id']} valid {int(f['valid'].sum())} train {int(f['train'].sum())} truth {int(f['truth'].sum())} withheld {int(f['truth'].sum())} hidden_comps {len(f['hidden_component_ids'])}")
-
-    # Leakage canaries on new features
-    # Build feature dict for canary: each raw + derived, using per-fold visible-masked evaluation inside canary()
-    # We need to test each of the 4 engineered + candidate surface
-    # For simplicity, test raw inputs via context.canary using support-masked arrays
-    # Prepare stack for canary: use full footprint arrays, but canary will compare withheld positives vs random negatives outside withheld
-    canary_features = {
-        "G_sat": G_sat,
-        "R_alt": R_alt,
-        "B_step": B_step,
-        "H_conduit": H_conduit,
-        "candidate_product": surfaces["candidate"] if "candidate" in surfaces else G_sat * (0.15+0.85*H_conduit) * np.sqrt(np.maximum(B_step,0)),
-    }
-    # Add a couple base channels for sanity (e.g., lidar_1 etc.) — but canary expects dict of 2D arrays
-    # Use stack's first few channels unpacked
-    fp_ids = np.flatnonzero(fp)
-    base_names = prep_meta["names"][:5]
-    for i, n in enumerate(base_names):
-        arr = np.full(fp.shape, np.nan, dtype=np.float32)
-        arr.ravel()[fp_ids] = stack[:, i]
-        canary_features[f"base_{n}"] = arr
-
-    canary_report = context.canary(canary_features, seed=SEED)
-    print(f"Canary passed: {canary_report['passed']}, worst AUC {canary_report.get('max_auc', 'n/a')}")
-    # Check flagged
-    if not canary_report["passed"]:
-        print("Leakage canary flagged, aborting")
-        save_json({"canary": canary_report, "verdict":"negative", "stopped_reason":"leakage-canary"}, EXPERIMENT_JSON)
-        sys.exit(1)
-
-    # Pre-placement novelty on a proxy surface: we use averaged augmented HGB prediction would be learned, so we test canary product surface as proxy
-    # Use H_conduit as proxy for surface novelty
-    proxy_surface = canary_features["candidate_product"]
-    # Registry scope for prospective: method lanes = priority_entries excluding synthetic controls
-    # compare_prospective handles separation automatically if we pass all entries
-    all_entries = priority_entries + peer_entries
-    # Need to ensure entries have cache_path and footprint_sha256; priority_entries from live_scores has different schema than novelty expects
-    # Novelty expects entries with cache_path and footprint_sha256, but our priority_rasters.json might be different format
-    # Let's inspect one entry
-    if all_entries:
-        print(f"Registry total entries for check: {len(all_entries)}, example keys: {list(all_entries[0].keys())[:10]}")
-        # If entries lack cache_path, we need to build proper list via registry/priority_rasters.json vs docs/data
-        # Fallback: use docs/data/priority_rasters.json which should be correct format
-        try:
-            import pathlib
-            # Try loading docs/data priority_rasters
-            docs_prio = json.loads((ROOT/"docs/data/priority_rasters.json").read_text())
-            if isinstance(docs_prio, dict):
-                # might be dict with entries
-                pass
-        except: pass
-
-    # Attempt novelty check with filtered entries that have cache_path
-    valid_entries = [e for e in all_entries if "cache_path" in e and "footprint_sha256" in e]
-    print(f"Valid entries with cache_path: {len(valid_entries)}")
-    if valid_entries:
-        from gems.novelty import compare_prospective_registry
-        # Use proxy surface for pre-placement
-        pre_novelty = compare_prospective_registry(proxy_surface.astype(np.float32), fp, [e for e in valid_entries if e.get("file","").startswith("inputs/") is False or True], ROOT, sample_size=100000)
-        print(f"Pre-placement method_lane_passed: {pre_novelty['method_lane_passed']}, literal: {pre_novelty['literal_all_entries_passed']}, max overlap method {pre_novelty.get('method_lane_max_dot_overlap')}")
-        # we won't halt on proxy; just report
-
-    # Build augmented feature matrix for HGB: base 27 + 4 engineered, on footprint pixels only
-    base_count = int(prep_meta["base_count"])  # 27
-    # Stack is (5167373, 30) where 30 = 27 base + 10 lidar? Wait check: base_count 27, total 30 includes lidar_ etc but first 27 are base
-    # We need to map indices: names = list of 30 names, base_count 27 means first 27 are base
-    # For augmentation we want 27 base + 4 new = 31
-    # Build fp-indexed arrays for engineered
-    eng_arrays = [G_sat, R_alt, B_step, H_conduit]
-    # Create augmented stack as memmap to avoid RAM blow
-    # Simpler: create small augmented array on the fly per fold using indexing
-
-    # Prepare OOF predictions
+def fuse_oof_predictions(context, fp, support, stack, base_nc, aug_flat, fp_ids):
+    """Per-fold FUSE learner, identical sampling/emission protocol to the OOF baseline."""
+    predictions = []
     oof_surface = np.zeros(fp.shape, dtype=np.float32)
-    fold_predictions = []
-    fold_truths = []
     with threadpool_limits(limits=2):
         for fold in context.folds:
-            fid = int(fold["id"])
-            rng = np.random.default_rng(SEED + fid)
-            # Derive training indices
-            # fold["visible"] and fold["train"], fold["valid"] etc are boolean masks on full grid
-            # For sampling we need flat footprint indices
-            train_mask = fold["train"]
-            valid_mask = fold["visible"]
-            # distance to visible for negative buffer
-            dist_visible = distance_transform_edt(~valid_mask)
-            pos_mask = train_mask & valid_mask
-            neg_mask = train_mask & ~valid_mask & (dist_visible >= 9)
-            # Map to footprint ids
-            pos_ids = np.flatnonzero(pos_mask.ravel()[fp_ids])
-            neg_ids = np.flatnonzero(neg_mask.ravel()[fp_ids])
-            # Sample
-            n_pos = min(20000, len(pos_ids))
-            n_neg = min(60000, len(neg_ids))
-            pos_sel = rng.choice(pos_ids, n_pos, replace=False) if n_pos>0 else np.array([], dtype=int)
-            neg_sel = rng.choice(neg_ids, n_neg, replace=False) if n_neg>0 else np.array([], dtype=int)
+            rng = np.random.default_rng(SEED + int(fold["id"]))
+            # Visible catalogue only for the negative buffer; never hidden components.
+            dist_visible = distance_transform_edt(~fold["visible"])
+            pos_ids = np.flatnonzero((fold["train"] & fold["visible"]).ravel()[fp_ids])
+            neg_ids = np.flatnonzero(
+                (fold["train"] & ~fold["visible"] & (dist_visible >= 9)).ravel()[fp_ids]
+            )
+            pos_sel = rng.choice(pos_ids, min(N_POS, len(pos_ids)), replace=False)
+            neg_sel = rng.choice(neg_ids, min(N_NEG, len(neg_ids)), replace=False)
             train_sel = np.r_[pos_sel, neg_sel]
-            y_train = np.r_[np.ones(len(pos_sel), dtype=np.int8), np.zeros(len(neg_sel), dtype=np.int8)]
-            # Build X_train: base 27 + 4 engineered
-            # stack[train_sel, :base_count] gives base features for those footprint positions
-            X_base = np.asarray(stack[train_sel, :base_count], dtype=np.float32)
-            # engineered for those positions
-            # footprint positions: fp_ids[train_sel] gives flat grid idx, need to map to 2D coords? Instead use flat engineered raveled on footprint
-            # Simpler: flatten engineered arrays on footprint
-            eng_flat = []
-            for arr in eng_arrays:
-                flat = arr.ravel()[fp_ids][train_sel]
-                # Replace nan outside support with 0 (already 0)
-                flat = np.nan_to_num(flat, nan=0.0)
-                eng_flat.append(flat)
-            X_eng = np.column_stack(eng_flat) if eng_flat else np.empty((len(train_sel),0))
-            X_train = np.hstack([X_base, X_eng])
-            print(f"Fold {fid} {fold['name']} train X {X_train.shape} pos {n_pos} neg {n_neg}")
-            # Train
-            model = HistGradientBoostingClassifier(**HGB_PARAMS)
-            model.fit(X_train, y_train)
-            # Predict on valid (test) region for this fold
-            test_mask = fold["valid"]
-            # test indices flat
-            test_flat_idx = np.flatnonzero(test_mask.ravel()[fp_ids])
-            # Need to separate but we want OOF surface for all footprint? For holdout we only need test pixels
-            # Build X_test for test pixels
-            X_test_base = np.asarray(stack[test_flat_idx, :base_count], dtype=np.float32)
-            eng_test = []
-            for arr in eng_arrays:
-                f = arr.ravel()[fp_ids][test_flat_idx]
-                f = np.nan_to_num(f, nan=0.0)
-                eng_test.append(f)
-            X_test_eng = np.column_stack(eng_test) if eng_test else np.empty((len(test_flat_idx),0))
-            X_test = np.hstack([X_test_base, X_test_eng])
-            proba = model.predict_proba(X_test)[:,1].astype(np.float32)
-            # Place into oof_surface at test locations
-            test_coords = np.flatnonzero(fp.ravel())  # not correct
-            # Use flat grid indices for placement: we need to map back to 2D via fp_ids
-            # test_mask is 2D bool; we can assign via where
-            # Create temporary array for this fold's predictions on full grid then mask
-            fold_proba = np.zeros(fp.shape, dtype=np.float32)
-            # Get 2D indices of test pixels: we have test_flat_idx indexes into fp_ids, need to get actual grid flat idx
-            grid_flat_ids = fp_ids[test_flat_idx]
-            # Assign
-            fold_proba.ravel()[grid_flat_ids] = proba
-            oof_surface += fold_proba
-            # Also store for per-fold DTI we need predictions for that fold's test region
-            # For summarize we need list of binary dot predictions per fold, but we will create dots via emission priority poisson on OOF surface per fold
-            # For now store fold_proba
-            fold_predictions.append(fold_proba)
-            # Also for debugging, compute fold DTI later
+            y_train = np.r_[np.ones(len(pos_sel), np.int8), np.zeros(len(neg_sel), np.int8)]
+            model = HistGradientBoostingClassifier(**HGB_PARAMS).fit(
+                augmented_block(stack, base_nc, aug_flat, train_sel), y_train
+            )
 
-    # Now we have OOF surface covering all test pixels (each pixel predicted exactly once from its fold's model)
-    # For holdout scoring, we need to emit detections per fold from OOF surface using eligible = support & fold["valid"] & ~fold["visible"]? Wait SAHG1 used support & valid & ~visible for per-fold
-    # For HGB, eligibility for each fold's predictions should be support & valid & ~visible as well (to avoid placing on known faults)
-    # But for pooled evaluation we can now create per-fold dot masks
-    per_fold_dots = []
-    for fold, fold_proba in zip(context.folds, fold_predictions):
-        eligible = support & fold["valid"] & ~fold["visible"]
-        k = round(BUDGET_FRAC * int(fold["valid"].sum()))
-        if k <=0:
-            k = round(BUDGET_FRAC * int(fp.sum()) * int(fold["valid"].sum())/int(fp.sum()))
-        dots = holdout.emission.priority_poisson(fold_proba, eligible, k, min_dist=3) if 'holdout' in dir() else None
-        # Actually emission is in gems.emission
-        from gems import emission
-        dots = emission.priority_poisson(fold_proba, eligible, k, min_dist=3)
-        per_fold_dots.append(dots)
-        print(f"Fold {fold['name']} emitted {int(dots.sum())} dots budget {k}")
+            val_ids = np.flatnonzero(fold["valid"].ravel()[fp_ids])
+            fold_score = np.zeros(fp.shape, dtype=np.float32)
+            for begin in range(0, len(val_ids), 75000):
+                chunk = val_ids[begin : begin + 75000]
+                probs = model.predict_proba(augmented_block(stack, base_nc, aug_flat, chunk))[
+                    :, 1
+                ].astype(np.float32)
+                fold_score.ravel()[fp_ids[chunk]] = probs
+                oof_surface.ravel()[fp_ids[chunk]] = probs
+            eligible = support & fold["valid"] & ~fold["visible"]
+            budget = round(BUDGET_FRACTION * int(fold["valid"].sum()))
+            predictions.append(emission.priority_poisson(fold_score, eligible, budget, min_dist=3))
+            del model, fold_score
+            gc.collect()
+    return predictions, oof_surface
 
-    # Summarize via holdout pooled
-    results = context.summarize(per_fold_dots, ci_draws=1999)
-    print(f"FUSE HOLDOUT-DTI {results['dti']} CI {results['ci95']['interval']}")
-    # Compare to recorded baseline
-    # Load recorded baseline if exists
-    baseline_dti = 0.13000
-    baseline_ci = [0.11565, 0.14396]
-    paired_delta = results['dti'] - baseline_dti
-    print(f"Delta vs OOF baseline {baseline_dti}: {paired_delta:.5f}")
 
-    # Leakage canary already done, now novelty on final dots
-    # Prepare final full-footprint model for submission
-    # Train on full catalogue (all visible faults are catalogue, but we must mask only catalogue pixels as in final emission)
-    # For final we train on all pos where labels true, neg where not, sampled similarly but using whole grid train = fp & ~catalogue_buffer? Use same logic as before but with visible = catalogue
-    # Simpler: train full model on all positives vs negatives with dist>=9 from catalogue
-    rng_full = np.random.default_rng(SEED+99)
+def full_footprint_surface(fp, catalogue, support, stack, base_nc, aug_flat, fp_ids) -> np.ndarray:
+    """Placement model: trained on every catalogue pixel. NEVER used for holdout scoring."""
+    rng = np.random.default_rng(SEED + 99)
     dist_cat = distance_transform_edt(~catalogue)
-    pos_full_mask = catalogue & fp
-    neg_full_mask = fp & ~catalogue & (dist_cat >= 9) & support
-    pos_full_ids = np.flatnonzero(pos_full_mask.ravel()[fp_ids])
-    neg_full_ids = np.flatnonzero(neg_full_mask.ravel()[fp_ids])
-    n_pos_full = min(25000, len(pos_full_ids))
-    n_neg_full = min(75000, len(neg_full_ids))
-    pos_sel_full = rng_full.choice(pos_full_ids, n_pos_full, replace=False)
-    neg_sel_full = rng_full.choice(neg_full_ids, n_neg_full, replace=False)
-    train_sel_full = np.r_[pos_sel_full, neg_sel_full]
-    y_full = np.r_[np.ones(len(pos_sel_full)), np.zeros(len(neg_sel_full))]
-    X_base_full = np.asarray(stack[train_sel_full, :base_count], dtype=np.float32)
-    eng_full = []
-    for arr in eng_arrays:
-        f = arr.ravel()[fp_ids][train_sel_full]
-        f = np.nan_to_num(f, nan=0.0)
-        eng_full.append(f)
-    X_eng_full = np.column_stack(eng_full)
-    X_full = np.hstack([X_base_full, X_eng_full])
-    print(f"Full train {X_full.shape}")
-    model_full = HistGradientBoostingClassifier(**HGB_PARAMS)
-    model_full.fit(X_full, y_full)
-    # Predict full footprint
-    # Need to predict all support pixels
-    support_ids = np.flatnonzero(support.ravel()[fp_ids])
-    # But we need mapping: support is 2D, fp_ids are footprint flat positions, support subset of footprint? Actually support = eroded raw_valid which is subset of fp, so support pixels are subset of fp_ids
-    # To predict, we need to get indices of support pixels in footprint ordering
-    # Build mask support_in_fp: boolean array length fp_pixels where support pixel is true
-    # We can compute support_flat_on_fp = support.ravel()[fp_ids] (bool)
-    support_on_fp = support.ravel()[fp_ids]
-    sup_idx_in_fp = np.flatnonzero(support_on_fp)
-    X_base_sup = np.asarray(stack[sup_idx_in_fp, :base_count], dtype=np.float32)
-    eng_sup = []
-    for arr in eng_arrays:
-        f = arr.ravel()[fp_ids][sup_idx_in_fp]
-        f = np.nan_to_num(f, nan=0.0)
-        eng_sup.append(f)
-    X_eng_sup = np.column_stack(eng_sup)
-    X_sup = np.hstack([X_base_sup, X_eng_sup])
-    proba_sup = model_full.predict_proba(X_sup)[:,1]
-    p_full = np.zeros(fp.shape, dtype=np.float32)
-    # Place proba into p_full at support locations
-    # support locations are at grid flat ids = fp_ids[sup_idx_in_fp]
-    grid_ids_sup = fp_ids[sup_idx_in_fp]
-    p_full.ravel()[grid_ids_sup] = proba_sup
-    # Ensure [0,1] and zero outside support (already)
-    p_full = np.clip(p_full, 0, 1)
-    print(f"p_full max {p_full.max():.4f} mean {p_full[support].mean():.4f}")
+    pos_ids = np.flatnonzero(catalogue.ravel()[fp_ids])
+    neg_ids = np.flatnonzero((fp & ~catalogue & (dist_cat >= 9)).ravel()[fp_ids])
+    pos_sel = rng.choice(pos_ids, min(N_POS, len(pos_ids)), replace=False)
+    neg_sel = rng.choice(neg_ids, min(N_NEG, len(neg_ids)), replace=False)
+    y = np.r_[np.ones(len(pos_sel), np.int8), np.zeros(len(neg_sel), np.int8)]
+    with threadpool_limits(limits=2):
+        model = HistGradientBoostingClassifier(**HGB_PARAMS).fit(
+            augmented_block(stack, base_nc, aug_flat, np.r_[pos_sel, neg_sel]), y
+        )
+        surface = np.zeros(fp.shape, dtype=np.float32)
+        ids = np.flatnonzero((support & fp).ravel()[fp_ids])
+        for begin in range(0, len(ids), 75000):
+            chunk = ids[begin : begin + 75000]
+            probs = model.predict_proba(augmented_block(stack, base_nc, aug_flat, chunk))[
+                :, 1
+            ].astype(np.float32)
+            surface.ravel()[fp_ids[chunk]] = probs
+    return surface
 
-    # Emit final dots for submission: eligible = support & ~catalogue
-    eligible_final = support & ~catalogue
-    full_budget = round(BUDGET_FRAC * int(fp.sum()))
-    from gems import emission as em
-    final_dots = em.priority_poisson(p_full, eligible_final, full_budget, min_dist=3)
-    print(f"Final dots {int(final_dots.sum())} budget {full_budget}")
-    if not final_dots.any():
-        raise SystemExit("No dots")
 
-    # Novelty on final dots
-    if valid_entries:
-        from gems.novelty import compare_prospective_registry
-        final_novelty = compare_prospective_registry(p_full.astype(np.float32), fp, valid_entries, ROOT, dots=final_dots, sample_size=100000)
-        method_pass = final_novelty["method_lane_passed"]
-        literal_pass = final_novelty["literal_all_entries_passed"]
-        max_overlap = final_novelty.get("method_lane_max_dot_overlap")
-        max_rho = final_novelty.get("method_lane_max_abs_rank_correlation")
-        print(f"Final novelty method_pass {method_pass} literal_pass {literal_pass} max_overlap {max_overlap} max_rho {max_rho}")
-    else:
-        final_novelty = {"method_lane_passed": None, "literal_all_entries_passed": None}
-        method_pass = None
-
-    # Write submission pair
-    content_id = submission.scored_content_id(final_dots, fp, catalogue)
-    name = submission.make_filename("gems24", "fuse-sahg1-hgb", "20261025", content_id, "zeros")
-    downloads = ROOT / "docs/downloads"
-    zeros = submission.write_submission(final_dots.astype(np.float32), template, downloads / name, outside="zero")
-    nan_name = name.replace("-zeros.tif", "-nan.tif")
-    nan = submission.write_submission(final_dots.astype(np.float32), template, downloads / nan_name, outside="nan")
-    checks = {
-        "zero_outside": submission.check_variants(zeros, template),
-        "nan_outside": submission.check_variants(nan, template),
+def verify_recorded() -> dict:
+    exp = json.loads(EXPERIMENT_PATH.read_text())
+    card = json.loads(RUN_CARD_PATH.read_text())
+    template = ROOT / "data/bridge/sample_submission.tif"
+    z_path = ROOT / "docs/downloads" / card["submission_name"]
+    n_path = ROOT / "docs/downloads" / card["nan_outside_artifact"]
+    if sha256_file(z_path) != card["raster_sha256"]:
+        raise ValueError("FUSE primary TIFF checksum mismatch")
+    if sha256_file(n_path) != card["nan_outside_sha256"]:
+        raise ValueError("FUSE NaN-outside TIFF checksum mismatch")
+    for path in (z_path, n_path):
+        c = submission.check_variants(path, template)
+        if not c["format_valid"] or c["ok_to_upload"] or c["submission_authorized"]:
+            raise ValueError(f"FUSE validator check failed for {path.name}")
+    if card["ok_to_submit"] or card["verdict"] not in ("negative", "promote"):
+        raise ValueError("FUSE verdict weakened or malformed")
+    return {
+        "verified": True,
+        "experiment_rerun": False,
+        "submission_name": card["submission_name"],
+        "raster_sha256": card["raster_sha256"],
+        "holdout_dti": card["holdout"]["dti"],
+        "ci95": card["holdout"]["ci95"]["interval"],
+        "verdict": card["verdict"],
+        "ok_to_submit": card["ok_to_submit"],
+        "experiments_run": exp["experiment_number"],
     }
-    print(f"Checks zero format_valid {checks['zero_outside']['format_valid']} nan {checks['nan_outside']['format_valid']}")
-    if not all(c["format_valid"] for c in checks.values()):
-        raise SystemExit("Format check failed")
 
-    note = f"GEMS24 FUSE | SAHG1-augmented OOF-HGB + Th/U · {content_id} | research; DO NOT SUBMIT"  # check length
-    # Ensure <=140
-    if len(note) > 140:
-        note = note[:140]
-    note_file = f"note-{name[:-4]}.txt"
-    (downloads / note_file).write_text(note + "\n")
-    checks_file = f"checks-{name[:-4]}.json"
-    save_json(checks, downloads / checks_file)
-    # also save preflight
-    from gems.preflight import preflight as pf
-    try:
-        pre = pf(zeros, template)
-        save_json(pre, downloads / f"{name[:-4]}.preflight.json")
-    except Exception as e:
-        print(f"preflight failed {e}")
 
-    # Build run card
-    # Load recorded baseline details if available
-    sahg1_card_path = ROOT / "evidence/sahg1_run_card_20261025.json"
-    if sahg1_card_path.exists():
-        sahg1_card = json.loads(sahg1_card_path.read_text())
-        baseline_info = sahg1_card.get("reconstructed_oof_multiphysics_baseline")
-    else:
-        baseline_info = None
-
-    # Paired gain estimate vs baseline: need bootstrap; we have results dti, but not paired draws, so report simple delta
-    card = {
-        "hypothesis": "H24-FUSE SAHG1-augmented OOF-HGB (27 base + G_sat/R_alt/B_step/H_conduit)",
-        "mechanism": "Per-fold HGB on fold-local visible faults only, with SAHG1 strike-projected scarp + stable-Th K/U alteration + basement-step channels; OOF prediction + Poisson-disk thinning",
-        "non_fault_mimic": "Lahontan beach bars / welded-tuff ledges with no basement step",
+def build_card_from_record(record: dict) -> dict:
+    """Deterministic run card from the recorded stop (no recomputation, no new numbers)."""
+    final = record["final_novelty"]
+    arm = record["results"]["h24_fuse_hgb_sahg1_channels"]
+    base = record["results"]["oof_multiphysics_hgb_d3"]
+    dups = [
+        {"registry_id": r["registry_id"], "file": r["file"], "dot_overlap_within_3px": r["candidate_dot_overlap_within_3px"], "raw_spearman": r["raw_spearman"]}
+        for r in final["rows"]
+        if r["duplicate"]
+    ]
+    return {
+        "hypothesis": "H24-FUSE: 27 prepared base channels + 4 SAHG1 channels (G_sat, R_alt, B_step, H_conduit) in a fold-local HistGradientBoosting learner",
+        "mechanism": "Learned fusion of strike-projected LiDAR scarp, stable-Th-normalised K/U alteration, gravity/magnetic/basement/strain step and their conjunction, with fold-local training on visible faults only",
+        "named_non_fault_mimic": "Pleistocene Lake Lahontan shoreline/tufa bars or welded-tuff ledges that co-register with alteration and basement-step signals",
         "holdout": {
             "label": "HOLDOUT-DTI",
-            "evaluator_version": "gems-segment-pooled-v1",
-            "dti": results["dti"],
-            "ci95": results["ci95"],
-            "n_withheld_positive_pixels": 60988,
-            "n_withheld_components": 3199,
-            "paired_delta_vs_oof_baseline_0_13": paired_delta,
-            "baseline_dti": baseline_dti,
-            "baseline_ci": baseline_ci,
-            "folds": results.get("folds"),
+            "evaluator": arm["evaluator_version"],
+            "dti": arm["dti"],
+            "ci95": arm["ci95"]["interval"],
+            "withheld_positives": arm["n_withheld_positive_pixels"],
         },
-        "canary": canary_report,
+        "reconstructed_oof_baseline": {
+            "label": "HOLDOUT-DTI",
+            "dti": base["dti"],
+            "ci95": base["ci95"]["interval"],
+            "withheld_positives": base["n_withheld_positive_pixels"],
+        },
+        "paired_fuse_minus_baseline": {
+            "delta_dti": record["paired_fuse_minus_oof_baseline"]["delta_dti"],
+            "ci95": record["paired_fuse_minus_oof_baseline"]["ci95"],
+        },
         "correlation_overlap_vs_registry": {
-            "method_lane_passed": final_novelty.get("method_lane_passed"),
-            "literal_all_entries_passed": final_novelty.get("literal_all_entries_passed"),
-            "method_lane_max_abs_rank_correlation": final_novelty.get("method_lane_max_abs_rank_correlation"),
-            "method_lane_max_dot_overlap": final_novelty.get("method_lane_max_dot_overlap"),
-            "total_entries_checked": len(valid_entries),
+            "surface_max_abs_rank_correlation": record["surface_novelty"]["max_abs_rank_correlation"],
+            "surface_method_lane_passed": record["surface_novelty"]["method_lane_passed"],
+            "final_max_abs_rank_correlation": final["max_abs_rank_correlation"],
+            "final_method_lane_max_dot_overlap_within_3px": final["method_lane_max_dot_overlap"],
+            "final_literal_all_entries_max_overlap_within_3px": final["max_dot_overlap"],
+            "final_duplicates_over_0_70_or_rho_0_90": dups,
+            "peer_blob_max_dot_overlap_within_3px": record["peer_blob_novelty"]["max_dot_overlap_within_3px"],
+            "method_lane_passed": bool(final["method_lane_passed"] and record["peer_blob_novelty"]["passed"]),
         },
-        "raster_sha256": sha256_file(zeros),
-        "validator_output": checks["zero_outside"],
-        "submission_name": name,
-        "nan_submission_name": nan_name,
-        "note": note,
-        "note_file": note_file,
-        "checks_file": checks_file,
-        "verdict": "negative" if results["dti"] <= baseline_dti else "promote",
-        "ok_to_download": True,
-        "ok_to_submit": bool(results["dti"] > baseline_dti and (final_novelty.get("method_lane_passed") is True)),
-        "experiments_run": 1,
-        "elapsed_seconds": time.monotonic() - started,
+        "leakage_canary": {"passed": record["canary"]["passed"], "max_pooled_auc": max(v["pooled_auc"] for v in record["canary"]["features"].values()), "threshold": 0.90},
+        "raster_sha256": None,
+        "validator_output": "not run: stopped at the duplicate gate before packaging",
+        "submission_name": None,
+        "note": None,
+        "verdict": "negative",
+        "stopped_reason": record["stopped_reason"],
+        "ok_to_download": False,
+        "ok_to_submit": False,
         "organizer_confirmed_score": None,
+        "submission_slots_used": 0,
+        "experiments_run": 3,
+        "attempt_note": record["attempt_note"],
     }
-    # If not beating baseline, ensure negative
-    if results["dti"] <= baseline_dti:
-        card["verdict"] = "negative"
-        card["ok_to_submit"] = False
-        card["reasons"] = [f"Does not beat reconstructed OOF baseline 0.13000 (delta {paired_delta:.5f})", "Prospective novelty must be true", "Selector not run"]
-    else:
-        card["reasons"] = ["Beats OOF baseline but still requires C2ST and selector"]
 
-    save_json(card, RUN_CARD_JSON)
-    save_json(card, DOCS_RUN_CARD)
-    save_json({"canary": canary_report, "results": results, "final_novelty": final_novelty, "card": card, "input_hashes": input_hashes}, EXPERIMENT_JSON)
-    print(json.dumps({"file": name, "dti": results["dti"], "ci": results["ci95"]["interval"], "delta": paired_delta, "verdict": card["verdict"], "sha256": card["raster_sha256"]}, indent=2))
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--verify-recorded", action="store_true")
+    ap.add_argument("--write-card", action="store_true", help="derive the JSON run card from the recorded stop")
+    args = ap.parse_args()
+    if args.write_card:
+        record = json.loads(EXPERIMENT_PATH.read_text())
+        if record.get("artifact") is not None or record.get("stopped_reason") is None:
+            raise SystemExit("Only a recorded STOP can be carded here")
+        card = build_card_from_record(record)
+        save_json(card, RUN_CARD_PATH)
+        save_json(card, DOCS_CARD_PATH)
+        print(json.dumps(card, indent=2, allow_nan=False))
+        return
+    if args.verify_recorded:
+        print(json.dumps(verify_recorded(), indent=2, allow_nan=False))
+        return
+    if EXPERIMENT_PATH.exists():
+        raise SystemExit("FUSE experiment already recorded. No implicit rerun; use --verify-recorded.")
+
+    t0 = time.monotonic()
+    fp = footprint.load_footprint()
+    template = ROOT / "data/bridge/sample_submission.tif"
+    with rasterio.open(ROOT / "data/bridge/labels.tif") as ds:
+        catalogue = (ds.read(1) > 0) & fp
+
+    # 1. SAHG1 engineered surfaces (uses no catalogue) and the verified 27-channel stack.
+    context = holdout.SegmentHoldout(fp, catalogue, buffer_px=15)
+    lidar_b, rad_b, ext_b, geophys_b, input_hashes = s1.load_inputs(fp)
+    surfaces, support = sahg1.build_surfaces(lidar_b, rad_b, ext_b, geophys_b, fp)
+    prep_meta = json.loads((ROOT / "data/prepared/features.json").read_text())
+    base_nc = int(prep_meta["base_count"])
+    stack = np.load(ROOT / "data/prepared/features.npy", mmap_mode="r")
+    fp_ids = np.flatnonzero(fp)
+    aug_flat = np.stack([surfaces[k].ravel()[fp_ids] for k in AUG_KEYS], axis=1).astype(np.float32)
+    if not np.isfinite(aug_flat).all():
+        raise SystemExit("Non-finite SAHG1 channel inside footprint; halted")
+    del lidar_b, rad_b, ext_b, geophys_b
+    gc.collect()
+
+    # 2. Leakage canaries: each engineered channel and each of the 27 base channels alone.
+    # Batched (memory-bounded) canaries: one 2-D surface at a time inside each batch.
+    pending = [(name, surfaces[k]) for k, name in zip(AUG_KEYS, AUG_NAMES)]
+    for i, name in enumerate(prep_meta["names"][:base_nc]):
+        arr = np.full(fp.shape, np.nan, dtype=np.float32)
+        arr.ravel()[fp_ids] = stack[:, i]
+        pending.append((f"base_{name}", arr))
+    canary_features: dict = {}
+    canary_passed = True
+    for begin in range(0, len(pending), 6):
+        part = context.canary(dict(pending[begin : begin + 6]), seed=SEED)
+        canary_features.update(part["features"])
+        canary_passed = canary_passed and part["passed"]
+        del part
+        gc.collect()
+    del pending
+    canary_report = {
+        "diagnostic": "LEAKAGE-CANARY AUC, not a DTI or organizer score",
+        "evaluator_version": holdout.MTR_EVALUATOR_VERSION,
+        "threshold": 0.90,
+        "two_polarities_checked": True,
+        "passed": canary_passed,
+        "features": canary_features,
+    }
+    if not canary_report["passed"]:
+        save_json(
+            {"stopped_reason": "leakage-canary", "canary": canary_report},
+            EXPERIMENT_PATH,
+        )
+        raise SystemExit("Leakage canary failed on FUSE input; stopped")
+    print("FUSE leakage canaries passed:", len(canary_report["features"]), flush=True)
+
+    # 3. Same-protocol holdout arms.
+    priority_reg = json.loads((ROOT / "registry/priority_rasters.json").read_text())
+    extras = s1.extra_20261025_entries(fp)
+    arm_results = {}
+    arm_blocks = {}
+    yy, xx = np.nonzero(fp)
+    nx = (fp.shape[1] + 99) // 100
+    active_blocks = np.unique((yy // 100) * nx + xx // 100)
+
+    print("Running reconstructed OOF multi-physics HGB baseline (27 channels)...", flush=True)
+    base_preds, _ = s1.build_oof_baseline_predictions(context, fp, support)
+    base_scored = [context.score_fold(p, f)[1] for p, f in zip(base_preds, context.folds)]
+    arm_results["oof_multiphysics_hgb_d3"] = context.summarize(base_preds)
+    arm_blocks["oof_multiphysics_hgb_d3"] = np.sum(base_scored, axis=0)[active_blocks]
+    del base_preds, base_scored
+    gc.collect()
+
+    print("Running H24-FUSE OOF learner (27 + 4 SAHG1 channels)...", flush=True)
+    fuse_preds, fuse_oof_surface = fuse_oof_predictions(
+        context, fp, support, stack, base_nc, aug_flat, fp_ids
+    )
+    fuse_scored = [context.score_fold(p, f)[1] for p, f in zip(fuse_preds, context.folds)]
+    arm_results["h24_fuse_hgb_sahg1_channels"] = context.summarize(fuse_preds)
+    arm_blocks["h24_fuse_hgb_sahg1_channels"] = np.sum(fuse_scored, axis=0)[active_blocks]
+    del fuse_preds, fuse_scored
+    gc.collect()
+    for name in ("oof_multiphysics_hgb_d3", "h24_fuse_hgb_sahg1_channels"):
+        r = arm_results[name]
+        print(name, "HOLDOUT-DTI", r["dti"], r["ci95"]["interval"], flush=True)
+
+    recorded = json.loads(BASELINE_RECORDED.read_text())["results"]["oof_multiphysics_hgb_d3"]
+    baseline_repro_delta = arm_results["oof_multiphysics_hgb_d3"]["dti"] - recorded["dti"]
+
+    paired = holdout.pooled_bootstrap(
+        arm_blocks["h24_fuse_hgb_sahg1_channels"],
+        paired=arm_blocks["oof_multiphysics_hgb_d3"],
+        resamples=1999,
+        seed=SEED,
+    )
+    fuse_dti = arm_results["h24_fuse_hgb_sahg1_channels"]["dti"]
+    beats_baseline = fuse_dti > recorded["dti"] and paired[0] > 0
+
+    # 4. Full-footprint placement model (never scored on holdout).
+    print("Training full-footprint placement model (no holdout scoring)...", flush=True)
+    p_full = full_footprint_surface(fp, catalogue, support, stack, base_nc, aug_flat, fp_ids)
+    full_budget = round(BUDGET_FRACTION * int(fp.sum()))
+    eligible = support & ~catalogue
+    final_dots = emission.priority_poisson(p_full, eligible, full_budget, min_dist=3)
+    final_dots = final_dots.astype(np.float32)
+    pixel_count = int((final_dots > 0).sum())
+
+    # 5. Prospective novelty: pre-placement surface, then final dots.
+    surface_novelty = novelty.compare_prospective_registry(
+        p_full, fp, priority_reg["unique_rasters"], ROOT, extra_entries=extras
+    )
+    if not surface_novelty["method_lane_passed"]:
+        save_json(
+            {"stopped_reason": "duplicate-surface-vs-method-lane", "surface_novelty": surface_novelty},
+            EXPERIMENT_PATH,
+        )
+        raise SystemExit("Duplicate surface against a competing method lane; halted")
+    # Final-dot check: dots=final_dots is REQUIRED so the all-dot directional overlap is computed.
+    final_novelty = novelty.compare_prospective_registry(
+        final_dots, fp, priority_reg["unique_rasters"], ROOT, dots=final_dots, extra_entries=extras
+    )
+    peer_check = s1.check_peer_blobs(p_full, final_dots, fp)
+    if final_novelty["method_lane_max_dot_overlap"] is None:
+        raise SystemExit("Final-dot overlap not computed; refusing to certify novelty")
+    final_gate_ok = bool(final_novelty["method_lane_passed"] and peer_check["passed"])
+    if not final_gate_ok:
+        # Protocol: log the duplicate and STOP. No C2ST, no downloadable TIF is packaged.
+        stop_record = {
+            "generated_utc": datetime.now(timezone.utc).isoformat(),
+            "hypothesis": "H24-FUSE: 27 prepared base channels + 4 SAHG1 channels in a fold-local HistGradientBoosting learner",
+            "preregistration": "knowledge/15_preregistered_next_gen_2026-10-25.md (Rank 1)",
+            "experiment_number": 1,
+            "attempt_note": ATTEMPT_NOTE,
+            "stopped_reason": "duplicate-final-dots-vs-registry (lane rule: >0.70 within 3 px or rho>0.90)",
+            "canary": canary_report,
+            "results": arm_results,
+            "paired_fuse_minus_oof_baseline": {"delta_dti": fuse_dti - arm_results["oof_multiphysics_hgb_d3"]["dti"], "ci95": paired},
+            "surface_novelty": surface_novelty,
+            "final_novelty": final_novelty,
+            "peer_blob_novelty": peer_check,
+            "artifact": None,
+            "verdict": "negative",
+            "ok_to_download": False,
+            "ok_to_submit": False,
+            "submission_slot_spent": False,
+            "organizer_confirmed_score": None,
+            "elapsed_seconds": round(time.monotonic() - t0, 3),
+        }
+        save_json(stop_record, EXPERIMENT_PATH)
+        print("STOP: final dots are a duplicate of a registry raster; see evidence/fuse_experiment_20261025.json", flush=True)
+        raise SystemExit(0)
+
+    # 6. Exact-file C2ST nuisance audit on the emitted dots.
+    print("Running exact-file C2ST nuisance audit...", flush=True)
+    nuisance = s1.run_exact_file_nuisance_audit(final_dots, catalogue, fp)
+
+    # 7. Writer + validator (both NaN-outside and zero-outside variants).
+    content_id = submission.scored_content_id(final_dots, fp, catalogue)
+    sub_name = submission.make_filename("gems24", "fuse-sahg1-hgb", "20261025", content_id, "zeros")
+    nan_name = sub_name.replace("-zeros.tif", "-nan.tif")
+    downloads = ROOT / "docs/downloads"
+    z_path = submission.write_submission(final_dots, template, downloads / sub_name, outside="zero")
+    n_path = submission.write_submission(final_dots, template, downloads / nan_name, outside="nan")
+    checks = {
+        "zero_outside": submission.check_variants(z_path, template),
+        "nan_outside": submission.check_variants(n_path, template),
+    }
+    if not all(c["format_valid"] for c in checks.values()):
+        raise SystemExit("Exact-file format validation failed")
+
+    note = (
+        f"GEMS24 H24-FUSE | SAHG1 channels in fold-local HGB | research only; DO NOT SUBMIT | id {content_id}"
+    )
+    if len(note) > 140:
+        raise AssertionError(f"Note length {len(note)} exceeds 140 characters")
+
+    method_lane_ok = bool(final_novelty["method_lane_passed"] and peer_check["passed"])
+    literal_ok = bool(final_novelty["literal_all_entries_passed"])
+    c2st_ok = bool(nuisance["sahg1_candidate"]["strict_gate_passed"])
+    all_gates = bool(beats_baseline and c2st_ok and method_lane_ok and literal_ok)
+    reasons = []
+    if not beats_baseline:
+        reasons.append(
+            f"Did not beat reconstructed OOF multi-physics HGB baseline ({fuse_dti:.5f} vs {recorded['dti']:.5f}; paired delta CI low {paired[0]:+.5f})"
+        )
+    if not literal_ok:
+        reasons.append(
+            "Literal all-entry overlap rule flags the synthetic spacing-5 calibration lattice (registry-039) at the reported overlap"
+        )
+    if not c2st_ok:
+        reasons.append(
+            f"Exact-file C2ST nuisance audit flagged association (AUC {nuisance['sahg1_candidate']['observed_auc']:.4f}, Holm p={nuisance['sahg1_candidate']['holm_p_value']:.3f})"
+        )
+    reasons.append("Promotion to a weekly slot needs a separate selector step; the agent never uploads")
+    verdict = "promote" if all_gates else "negative"
+
+    experiment = {
+        "generated_utc": datetime.now(timezone.utc).isoformat(),
+        "hypothesis": "H24-FUSE: 27 prepared base channels + 4 SAHG1 channels (G_sat, R_alt, B_step, H_conduit) in a fold-local HistGradientBoosting learner",
+        "preregistration": "knowledge/15_preregistered_next_gen_2026-10-25.md (Rank 1)",
+        "experiment_number": 1,
+        "attempt_note": ATTEMPT_NOTE,
+        "maximum_experiments": 3,
+        "maximum_session_hours": 2,
+        "inputs": input_hashes,
+        "prepared_features_sha256": prep_meta["sha256"],
+        "base_channels": base_nc,
+        "augmented_channels": list(AUG_NAMES),
+        "catalogue_used_for_features": False,
+        "canary": canary_report,
+        "results": arm_results,
+        "baseline_reproduction": {
+            "recorded_dti": recorded["dti"],
+            "recorded_source": "evidence/sahg1_experiment_20261025.json",
+            "reproduced_delta": baseline_repro_delta,
+        },
+        "paired_fuse_minus_oof_baseline": {"delta_dti": fuse_dti - arm_results["oof_multiphysics_hgb_d3"]["dti"], "ci95": paired},
+        "surface_novelty": surface_novelty,
+        "final_novelty": final_novelty,
+        "peer_blob_novelty": peer_check,
+        "exact_file_nuisance_audit": nuisance,
+        "bridge_protocol_evaluation": "skipped: placement model trained on all catalogue pixels would be in-sample",
+        "artifact": {
+            "file": sub_name,
+            "nan_file": nan_name,
+            "sha256": sha256_file(z_path),
+            "nan_sha256": sha256_file(n_path),
+            "content_id": content_id,
+            "pixel_count": pixel_count,
+            "note": note,
+        },
+        "verdict": verdict,
+        "verdict_reasons": reasons,
+        "ok_to_download": bool(all(c["format_valid"] for c in checks.values())),
+        "ok_to_submit": False,
+        "submission_slot_spent": False,
+        "organizer_confirmed_score": None,
+        "elapsed_seconds": round(time.monotonic() - t0, 3),
+    }
+    save_json(experiment, EXPERIMENT_PATH)
+
+    run_card = {
+        "hypothesis": experiment["hypothesis"],
+        "mechanism": "Fold-local learned fusion: LiDAR strike-projected scarp (G_sat), stable-Th-normalised K/U alteration (R_alt), gravity/magnetic/basement/strain step (B_step) and their geometric conjunction (H_conduit) as extra channels next to the 27 prepared base channels",
+        "named_non_fault_mimic": "Pleistocene Lake Lahontan shoreline/tufa bars or welded-tuff ledges that co-register with alteration and basement-step signals",
+        "holdout": {
+            "evaluator": holdout.MTR_EVALUATOR_VERSION,
+            "dti": fuse_dti,
+            "ci95": arm_results["h24_fuse_hgb_sahg1_channels"]["ci95"],
+            "withheld_positives": arm_results["h24_fuse_hgb_sahg1_channels"]["n_withheld_positive_pixels"],
+            "label": "HOLDOUT-DTI",
+        },
+        "reconstructed_oof_baseline": arm_results["oof_multiphysics_hgb_d3"],
+        "paired_vs_oof_baseline": experiment["paired_fuse_minus_oof_baseline"],
+        "correlation_overlap_vs_registry": {
+            "competing_method_rasters_checked": final_novelty["competing_method_rasters_count"],
+            "calibration_control_rasters_checked": final_novelty["calibration_control_rasters_count"],
+            "peer_blobs_checked": peer_check["peer_unique_blobs_checked"],
+            "surface_max_abs_rank_correlation": surface_novelty["max_abs_rank_correlation"],
+            "final_max_abs_rank_correlation": final_novelty["max_abs_rank_correlation"],
+            "method_lane_max_overlap_within_3px": final_novelty["method_lane_max_dot_overlap"],
+            "peer_blobs_max_overlap_within_3px": peer_check["max_dot_overlap_within_3px"],
+            "literal_all_entries_max_overlap_within_3px": final_novelty["max_dot_overlap"],
+            "method_lane_passed": method_lane_ok,
+            "literal_all_entries_passed": literal_ok,
+        },
+        "exact_file_nuisance_audit": nuisance["sahg1_candidate"],
+        "raster_sha256": experiment["artifact"]["sha256"],
+        "nan_outside_artifact": nan_name,
+        "nan_outside_sha256": experiment["artifact"]["nan_sha256"],
+        "validator_output": checks["zero_outside"],
+        "submission_name": sub_name,
+        "note": note,
+        "verdict": verdict,
+        "ok_to_download": experiment["ok_to_download"],
+        "ok_to_submit": False,
+        "reasons": reasons,
+        "organizer_confirmed_score": None,
+        "experiments_run": 1,
+        "submission_slots_used": 0,
+    }
+    save_json(run_card, RUN_CARD_PATH)
+    save_json(run_card, DOCS_CARD_PATH)
+    save_json(
+        {
+            "file": sub_name,
+            "nan_file": nan_name,
+            "sha256": experiment["artifact"]["sha256"],
+            "nan_sha256": experiment["artifact"]["nan_sha256"],
+            "content_id": content_id,
+            "pixel_count": pixel_count,
+            "note": note,
+            "format_valid": True,
+            "ok_to_download": experiment["ok_to_download"],
+            "ok_to_submit": False,
+            "verdict": verdict,
+            "live_dti": None,
+            "run_card": "fuse_run_card.json",
+        },
+        DOCS_DOWNLOAD_PATH,
+    )
+    print(json.dumps(verify_recorded(), indent=2, allow_nan=False), flush=True)
+
 
 if __name__ == "__main__":
     main()
