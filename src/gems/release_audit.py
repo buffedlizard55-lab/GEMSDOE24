@@ -63,7 +63,11 @@ def verify_research_release(root: Path) -> dict:
         stored = load(path.with_suffix(".checks.json"))
         if not fresh["format_valid"] or fresh["sha256"] != row["sha256"]:
             raise ValueError("Exact-file hash or format verification failed")
-        if not fresh == stored == row.get("validator_output", card_receipt) == card_receipt:
+        # Validators may add explanatory fields after a frozen run. Every
+        # recorded field must still match; never rewrite historical receipts.
+        if not stored == row.get("validator_output", card_receipt) == card_receipt or any(
+            fresh.get(key) != value for key, value in stored.items()
+        ):
             raise ValueError("Fresh validator output disagrees with stored receipts")
         with rasterio.open(path) as ds:
             arrays.append(ds.read(1))

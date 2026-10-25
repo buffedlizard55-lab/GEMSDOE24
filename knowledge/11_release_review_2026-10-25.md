@@ -90,3 +90,21 @@ sources are not described as freshly obtained.
 
 This review owns the engineering outcome without pretending it resolves the
 missing scientific comparison. Negative evidence remains a useful deliverable.
+
+## Parallel integration addendum
+
+During final fetch, main advanced to `a60a25a` with the MTR1 negative experiment.
+Merged that history into this session branch, preserving its active site, full
+owner prompt, research files and shared evaluator changes. MTR1 is now the active
+first-screen download; ASPC is retained parallel research, not the active release.
+The exact-file revalidation fix also applies to MTR1's active site renderer.
+Historical receipts are preserved: every recorded validator field must match fresh
+validation, while additive explanatory fields from a newer validator are allowed.
+No scientific result was recomputed or reclassified. The merged suite contains
+148 tests (the earlier 128 count was before parallel integration).
+
+The parallel MTR1 report identifies a dense calibration lattice that triggers the
+radius-3 overlap rule even for unrelated methods. This must be resolved prospectively
+by protocol coordination, never by dropping a comparator after seeing results.
+Read `11_MTR1_findings_2026-10-25.md` before any future experiment; the authoritative
+shared registry is broader than ASPC's historical nine-repository registry.

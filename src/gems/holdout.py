@@ -247,7 +247,12 @@ def segment_folds(footprint, labels, buffer_px=30):
     from scipy.ndimage import distance_transform_edt
 
     fp, truth = np.asarray(footprint, bool), np.asarray(labels, bool)
-    if fp.shape != truth.shape or np.any(truth & ~fp) or buffer_px < 0:
+    if (
+        fp.shape != truth.shape
+        or np.any(truth & ~fp)
+        or not np.isfinite(buffer_px)
+        or buffer_px < 0
+    ):
         raise ValueError("Aligned footprint/truth, truth inside footprint and buffer >=0 required")
     components, count = ndi_label(truth, structure=np.ones((3, 3), int))
     if not count:
@@ -353,3 +358,187 @@ def pooled_bootstrap(rows, *, paired=None, resamples=1000, seed=20261025):
             value -= pooled_dti(b[ids])
         scores.append(value)
     return [float(x) for x in np.quantile(scores, [0.025, 0.975])]
+
+
+# Frozen MTR1 policy adapter: 1.5 km collar selection and 10 km CI blocks.
+# Numerical source evidence for the original run is pinned at b6b4cc0.
+MTR_EVALUATOR_VERSION = "gems-segment-pooled-v1"
+
+
+def pooled_components(rows):
+    """Pool metric components, never average region-level DTI ratios."""
+    keys = ("TP_w", "FP_w", "FN_w", "n_truth", "n_emitted")
+    out = {k: float(sum(r[k] for r in rows)) for k in keys}
+    triples = np.asarray([[r[k] for k in keys[:3]] for r in rows], dtype=float).reshape(-1, 3)
+    out["dti"] = pooled_dti(triples)
+    return out
+
+
+def spatial_bootstrap_ci(blocks, *, draws=1999, seed=20261025):
+    """Approximate 95% CI, resampling 10 km blocks and pooling their components."""
+    x = np.asarray(blocks, np.float64)
+    if x.ndim != 2 or x.shape[1] != 3 or not len(x) or not np.isfinite(x).all():
+        raise ValueError("Finite nonempty block TP/FP/FN components required")
+    if draws < 100 or np.any(x < -1e-9):
+        raise ValueError("At least 100 draws and nonnegative components required")
+    interval = pooled_bootstrap(x, resamples=draws, seed=seed)
+    return {
+        "level": 0.95,
+        "interval": interval,
+        "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+        "block_pixels": 100,
+        "block_size_m": 10000,
+        "n_blocks": len(x),
+        "resamples": draws,
+        "seed": seed,
+        "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval.",
+    }
+
+
+class SegmentHoldout:
+    """Whole-component, buffered, quadrant-blocked hide-and-recover context.
+
+    ``visible`` is the ONLY catalogue a detector may read. Whole connected
+    components touching validation or its collar are hidden everywhere, not
+    merely clipped at a split line. ``train`` is independently spatially purged.
+    The positive class is an imperfect mapped-fault proxy, not hidden new truth.
+    """
+
+    def __init__(self, footprint, labels, *, buffer_px=15):
+        from scipy.ndimage import distance_transform_edt
+
+        self.footprint = np.asarray(footprint, bool)
+        self.labels = np.asarray(labels, bool)
+        if (
+            self.footprint.shape != self.labels.shape
+            or self.footprint.ndim != 2
+            or not np.isfinite(buffer_px)
+            or buffer_px < 3
+            or np.any(self.labels & ~self.footprint)
+            or not self.labels.any()
+        ):
+            raise ValueError("Aligned nonempty catalogue, footprint and >=3 px collar required")
+        self.components, self.n_components = ndi_label(self.labels, structure=np.ones((3, 3), int))
+        self.fold_grid, names = make_quadrant_folds(self.footprint)
+        self.folds = []
+        for f, name in enumerate(names):
+            valid = self.footprint & (self.fold_grid == f)
+            if not valid.any():
+                raise ValueError(f"Empty spatial fold: {name}")
+            collar = distance_transform_edt(~valid) <= buffer_px
+            hidden_ids = np.unique(self.components[collar & self.labels])
+            hidden_ids = hidden_ids[hidden_ids > 0]
+            hidden = self.labels & np.isin(self.components, hidden_ids)
+            visible = self.labels & ~hidden
+            truth = hidden & valid
+            if not truth.any():
+                raise ValueError(f"No withheld positives: {name}")
+            self.folds.append(
+                {
+                    "id": f,
+                    "name": name,
+                    "valid": valid,
+                    "train": self.footprint
+                    & (distance_transform_edt(~(valid | hidden)) > buffer_px),
+                    "visible": visible,
+                    "truth": truth,
+                    "hidden_component_ids": hidden_ids,
+                }
+            )
+        self.buffer_px = buffer_px
+
+    def score_fold(self, prediction, fold):
+        """Use the same exact metric/tile attribution as every current lane."""
+        pred = np.asarray(prediction)
+        if pred.shape != self.footprint.shape or not np.isin(pred, [0, 1]).all():
+            raise ValueError("A finite aligned binary prediction is required")
+        blocks, reference = spatial_components(
+            pred, fold["truth"], fold["valid"], fold["visible"], tile_px=100
+        )
+        return reference, blocks
+
+    def summarize(self, predictions, *, ci_draws=1999):
+        if len(predictions) != len(self.folds):
+            raise ValueError("One independent prediction per held-out fold required")
+        rows, block_rows = [], []
+        for pred, fold in zip(predictions, self.folds):
+            result, blocks = self.score_fold(pred, fold)
+            rows.append({"fold": fold["name"], **result})
+            block_rows.append(blocks)
+        blocks = np.sum(block_rows, axis=0)
+        yy, xx = np.nonzero(self.footprint)
+        nx = (self.footprint.shape[1] + 99) // 100
+        active_blocks = np.unique((yy // 100) * nx + xx // 100)
+        total = pooled_components(rows)
+        return {
+            "label": "HOLDOUT-DTI",
+            "evaluator_version": MTR_EVALUATOR_VERSION,
+            **total,
+            "n_withheld_positive_pixels": int(total["n_truth"]),
+            "n_unique_withheld_components": self.n_components,
+            "ci95": spatial_bootstrap_ci(blocks[active_blocks], draws=ci_draws),
+            "folds": rows,
+            "protocol": {
+                "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+                "buffer_m": self.buffer_px * 100,
+                "whole_components_hidden_everywhere": True,
+                "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+                "catalogue_features": "must be constructed from fold.visible only",
+                "alpha": 0.2,
+                "beta": 0.8,
+                "triangular_kernel_radius_m": 300,
+            },
+        }
+
+    def canary(self, features, *, seed=20261025, max_per_class=15000):
+        """One-feature AUC diagnostics, never silently change a feature after a flag."""
+        from scipy.ndimage import distance_transform_edt
+        from sklearn.metrics import roc_auc_score
+
+        rng = np.random.default_rng(seed)
+        rows, samples = {}, []
+        for fold in self.folds:
+            truth, valid = fold["truth"], fold["valid"]
+            positive = np.flatnonzero(truth)
+            negative = np.flatnonzero(
+                valid & ~fold["visible"] & (distance_transform_edt(~truth) >= 9)
+            )
+            positive = rng.choice(positive, min(len(positive), max_per_class), replace=False)
+            negative = rng.choice(negative, min(len(negative), max_per_class), replace=False)
+            samples.append((np.r_[positive, negative], len(positive), len(negative)))
+        for name, surface in features.items():
+            surface = np.asarray(surface)
+            if surface.shape != self.footprint.shape:
+                raise ValueError("Canary feature shape mismatch")
+            details, values, labels = [], [], []
+            for fold, (ids, n_positive, n_negative) in zip(self.folds, samples):
+                x = surface.ravel()[ids]
+                # Missingness itself is tested: use the same fixed zero sentinel
+                # that the detector uses outside its supported physical domain.
+                x = np.where(np.isfinite(x), x, 0)
+                y = np.r_[np.ones(n_positive), np.zeros(n_negative)]
+                auc = float(roc_auc_score(y, x))
+                details.append(
+                    {
+                        "fold": fold["name"],
+                        "auc": auc,
+                        "positives": n_positive,
+                        "background": n_negative,
+                    }
+                )
+                values.append(x)
+                labels.append(y)
+            auc = float(roc_auc_score(np.concatenate(labels), np.concatenate(values)))
+            suspicious = (
+                max([max(auc, 1 - auc)] + [max(x["auc"], 1 - x["auc"]) for x in details]) > 0.90
+            )
+            rows[name] = {"pooled_auc": auc, "leakage_suspected": suspicious, "folds": details}
+        return {
+            "diagnostic": "LEAKAGE-CANARY AUC, not a DTI or organizer score",
+            "evaluator_version": MTR_EVALUATOR_VERSION,
+            "threshold": 0.90,
+            "two_polarities_checked": True,
+            "passed": not any(x["leakage_suspected"] for x in rows.values()),
+            "features": rows,
+            "interpretation": "AUC > .90 is leakage until explained; lower AUC does not prove independence or fault discovery.",
+        }

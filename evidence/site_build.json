@@ -1,16 +1,16 @@
 {
-  "generated_utc": "2026-10-25T20:41:53.706299+00:00",
-  "active_file": "gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.tif",
-  "primary_sha256": "7f5706e03866d826e83ba5298a7f3fbbcfacc3b3e74b957d726269b54714e7bd",
-  "slot_recommendation": "not_recommended",
-  "new_slot_eligible": false,
-  "submission_authorized": false,
-  "no_scores_fabricated": true,
-  "root": "index.html",
+  "generated_utc": "2026-10-25T20:43:17.038617+00:00",
+  "primary_sha256": "3f881cdcaa22557b4265c0415d1b9f436b9f5804a55aabb52edfbc4de67fee83",
   "pages": [
     "docs/index.html",
     "docs/executive-summary.html",
     "docs/research.html",
     "docs/sources.html"
-  ]
+  ],
+  "root": "index.html",
+  "slot_recommendation": "not_recommended",
+  "new_slot_eligible": false,
+  "no_scores_fabricated": true,
+  "verdict": "negative",
+  "current_evaluator": "gems-segment-pooled-v1"
 }
