@@ -1,0 +1,215 @@
+{
+  "generated_utc": "2026-10-25T22:07:33.525313+00:00",
+  "hypothesis": "H24-GT2 HGB multi-physics + 2m thermal DAB (31 features)",
+  "mechanism": "OOF HistGradientBoostingClassifier on 30 prepared geophysical/LiDAR/DEM features + IDW F2mDAB thermal (5km, k=100), trained per-fold on 20k pos/60k neg, priority Poisson min_dist 3, budget 0.0073",
+  "named_non_fault_mimic": "Buried pluton/lava edge or lithologic facies change + hydrologic thermal drift (non-tectonic warming)",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 8282.612814039423,
+    "FP_w": 34033.346796044876,
+    "FN_w": 52705.38718596058,
+    "n_truth": 60988.0,
+    "n_emitted": 37722.0,
+    "dti": 0.1446653831834065,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.13067478728524634,
+        0.15881755030443187
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 1415.0226871989444,
+        "FP_w": 7759.613692553352,
+        "FN_w": 8749.977312801057,
+        "n_truth": 10165,
+        "n_emitted": 8430,
+        "dti": 0.14197180816188995,
+        "coverage": 0.13920537995070775
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 2334.4292543132206,
+        "FP_w": 9351.970694667792,
+        "FN_w": 10176.570745686779,
+        "n_truth": 12511,
+        "n_emitted": 10422,
+        "dti": 0.1890826283503487,
+        "coverage": 0.1865901410209592
+      },
+      {
+        "fold": "SW",
+        "TP_w": 2062.688490605087,
+        "FP_w": 9508.634218320833,
+        "FN_w": 18471.311509394913,
+        "n_truth": 20534,
+        "n_emitted": 10429,
+        "dti": 0.11006015490386019,
+        "coverage": 0.10045234686885589
+      },
+      {
+        "fold": "SE",
+        "TP_w": 2470.4723819221704,
+        "FP_w": 7413.128190502902,
+        "FN_w": 15307.52761807783,
+        "n_truth": 17778,
+        "n_emitted": 8441,
+        "dti": 0.1525065784096421,
+        "coverage": 0.1389623344539414
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "reconstructed_oof_multiphysics_baseline": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "dti": 0.13,
+    "ci95": {
+      "interval": [
+        0.11565,
+        0.14396
+      ]
+    }
+  },
+  "delta_vs_oof": 0.014665383183406488,
+  "leakage_canary": {
+    "diagnostic": "LEAKAGE-CANARY AUC",
+    "threshold": 0.9,
+    "passed": true,
+    "pooled_auc_thermal": 0.5081897496013364
+  },
+  "novelty": {
+    "surface_prospective_method_lane_max_rho": 0.13409383822412332,
+    "surface_prospective_method_lane_passed": true,
+    "final_dot_prospective_method_lane_max_overlap": 0.7584433487089762,
+    "final_dot_prospective_method_lane_passed": false,
+    "duplicate_registry_id": "registry-006",
+    "duplicate_file": "docs/downloads/gems27-h28-1-edge-coherence-plus-t-v2-h27-4-20261002-1113fba5f6cb-allfinite.tif",
+    "literal_lattice_overlap": 0.9936376650230635,
+    "note": "Literal spacing-5 lattice covers 99.87% within 3px. Competing method overlap 0.758 >0.70 indicates lane drift per strict protocol."
+  },
+  "raster_sha256": "9b3f627dd7c81f6d56ba39129615c5aff9fe02ef3ea6e69021b0c735c26e15bb",
+  "validator": {
+    "file": "gems24-h24-gt2-hgb-thermal-20261025-658220e55504-zeros.tif",
+    "bytes": 827278,
+    "sha256": "9b3f627dd7c81f6d56ba39129615c5aff9fe02ef3ea6e69021b0c735c26e15bb",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37722,
+    "in_footprint_mass": 37722.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "content_id": "658220e55504",
+  "pixel_count": 37722,
+  "file": "gems24-h24-gt2-hgb-thermal-20261025-658220e55504-zeros.tif",
+  "file_nan": "gems24-h24-gt2-hgb-thermal-20261025-658220e55504-nan.tif",
+  "note": "24GEMSDOE GT2 HGB+thermal 37k dots HOLDOUT-DTI 0.1447 vs oof 0.1300 dup-flagged | id 658220e55504",
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "reasons": [
+    "Duplicate-flagged: 75.8% dots within 3px of registry-006 >0.70, literal lattice 99.4%",
+    "Passes format and beats OOF baseline (0.14467 vs 0.13000) but requires selector and full C2ST",
+    "No organizer-confirmed score"
+  ],
+  "experiments_run": 2,
+  "submission_slots_used": 0
+}

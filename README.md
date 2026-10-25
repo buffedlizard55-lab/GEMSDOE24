@@ -65,7 +65,13 @@ No new experiment, new geological discovery, higher score or slot use is claimed
 ## Current decision
 
 <!-- STATUS:START -->
-**DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
+**DOWNLOAD: YES · SUBMIT: NO — multiple concurrent audit GeoTIFFs, no slot spent (not leaderboard scores).**
+
+**NEW 2026-10-25 — GT2 HGB+thermal beats OOF baseline (HOLDOUT-DTI 0.14467, +0.01467) but duplicate-flagged, requires selector:**
+[`gems24-h24-gt2-hgb-thermal-20261025-658220e55504-zeros.tif`](docs/downloads/gems24-h24-gt2-hgb-thermal-20261025-658220e55504-zeros.tif) (SHA-256 `9b3f627dd7c81f6d56ba39129615c5aff9fe02ef3ea6e69021b0c735c26e15bb`) and nan twin. 31-feature HGB (30 prepared + IDW F2m thermal 5 km, 547 k px, AUC 0.508 canary pass) — **HOLDOUT-DTI `gems-segment-pooled-v1` 0.14467** 95% CI [0.13067, 0.15882], 60,988 withheld, vs OOF 0.13000 ([0.11565, 0.14396]) and SAHG1 0.09672; per-fold 0.142/0.189/0.110/0.153. Surface prospective pass (max |ρ| 0.134), final 3-px overlap 0.758 vs registry-006 edge-coherence → duplicate-flagged, literal lattice 0.993 expected. Format pass (zeros variant all-finite whole-array [0,1]). **Portal tip: upload `-zeros.tif` if portal says “range [0,1]”.** [GT2 run card](evidence/gt2_run_card.json) · [GT2 findings](knowledge/16_GT_findings_2026-10-25.md) · validator/preflight alongside file.
+
+**GT1 basement-hinge×thermal DAB — prospective-unique, low holdout (DOWNLOAD YES · SUBMIT NO):**
+[`gems24-h24-gt1-basement-thermal-20261025-f1fea52e8e40-zeros.tif`](docs/downloads/gems24-h24-gt1-basement-thermal-20261025-f1fea52e8e40-zeros.tif) (SHA 85b9f177…) — HOLDOUT 0.04070 vs OOF 0.13000, prospective method-lane pass (max |ρ| 0.381, overlap 0.476), 547 k thermal px. Unique lane but insufficient recall on catalogue-proxy holdout. [GT1 run card](evidence/gt1_run_card.json)
 
 New 2026-10-25 `H24-SAHG1` Strike-Hydro-Geomorph GeoTIFF:
 [`gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif`](docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif) (`SHA-256: 8d5a5f99245fecf11cea72c33c41bad800cd0e41215744d7dd5d9ac6df673f11`)
