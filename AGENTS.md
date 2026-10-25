@@ -1,5 +1,16 @@
 # Standing project instructions
 
+**OJ1 continuation (2026-10-25):** Read `knowledge/17_preregistered_OJ1_2026-10-25.md`,
+`knowledge/18_OJ1_findings_2026-10-25.md`, and `evidence/oj1_run_card_20261025.json` first.
+OJ1 stopped as duplicate-final-dots (spacing-5 control retained), loses the recorded
+OOF baseline, and is DOWNLOAD YES / SUBMIT NO. Do not rerun or retune it.
+Historical UNIQUE01/02/03, CON and FUSE entrypoints are retired; source/evidence
+remain for education. UNIQUE03 executed a 30 km decay, not its advertised 300 m;
+its proximity/composite canaries were not run. Never present it as catalogue-independent.
+Shared preflight schema v2 refuses to authorize from promote booleans alone;
+independent selector verification is missing, not a human-inspection pending state.
+
+
 **Current precedence (2026-10-25):** read `knowledge/owner_brief_2026-10-25.md`
 and the current README decision first. It is also embedded in README. The
 current brief supersedes historic requests to submit reference subsets or seek

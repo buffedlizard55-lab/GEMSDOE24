@@ -1,0 +1,43 @@
+{
+  "official_reference": {
+    "repo": "https://github.com/drivendataorg/gems-prize-reference-solution",
+    "commit": "aebe92f7c8a990f0e3443451b7a825d9afd6336b",
+    "notebook_sha256": "1a7622732ba00f67237058bc0efe79b45ba4e87c449fc9c1e5d6ea659de92ca0",
+    "readme_sha256": "cfa4d55559c9128313beb9417eae7e0a94c31677132afb1120f9e86222804239",
+    "verified_claims": [
+      {
+        "claim": "Target is geological fault detection, not vent classification",
+        "notebook_cell_index": 0
+      },
+      {
+        "claim": "Training Tversky alpha=0.2 and beta=0.8",
+        "notebook_cell_index": 16
+      },
+      {
+        "claim": "CPU-only training environment supported; GPU faster but not required",
+        "source": "README.md#choosing-gpu-vs-cpu"
+      }
+    ],
+    "not_verified": [
+      "Official distance-weighted scoring implementation",
+      "Current competition leaderboard",
+      "Submission-page quota or organizer acceptance"
+    ]
+  },
+  "experiment_code": {
+    "commit": "4ccbe13",
+    "original_execution_hashes_verified_from_git": {
+      "scripts/run_oj1_lane.py": "de1baa3b3e20dca343fdbf6aec0b7decdd03c02de5a54bdcca93b25ca4c92cba",
+      "src/gems/orientation_junction.py": "d64a642a9f3b1c17ee609c893e5ccab1fb62d475bd73290a6a4ef1b7fcdfc75a",
+      "src/gems/holdout.py": "4455b6ba733418168dabdad10d3ce782af3510dd314b022400e91eae542a7f20",
+      "src/gems/novelty.py": "8ffb8d61bd44fd1191927ddf8f3fe040c7cb341cd6811a63f1af8e2093749842",
+      "src/gems/metric.py": "c024510de39746c9390e5bbf5c1d1b639a9ee895017a38fab4b609f0f2c33e48",
+      "src/gems/submission.py": "380ef4c785680d0c9063f53f9fa6227e8a564314d40df02fa46f02fe37d29711"
+    },
+    "later_changes": "Only receipt verification was hardened after the run; no detector or scientific results rerun"
+  },
+  "limitations": [
+    "Other official hosts outside environment allowlist; links retained for review, not freshly fetched",
+    "Derived LiDAR provenance verified against team manifest; not independently authenticated against original 3DEP tiles"
+  ]
+}

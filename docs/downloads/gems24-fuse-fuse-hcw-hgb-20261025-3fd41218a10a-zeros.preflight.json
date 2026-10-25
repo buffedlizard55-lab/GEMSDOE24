@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "artifact": {
     "file": "gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif",
     "sha256": "cfb5d21f9f0308a4c5cc917641c1cfd4d8f73d60fa4f64cf12ba9548ae23afb3",
@@ -107,7 +107,7 @@
   },
   "run_card": {
     "provided": true,
-    "path": "/home/user/GEMSDOE24/evidence/fuse_run_card_20261025.json",
+    "path": "evidence/hcw_run_card_20261025.json",
     "readable": true,
     "artifact_sha256_matches": true,
     "artifact_name_matches": true,
@@ -116,9 +116,11 @@
     "verdict_promote": false,
     "submission_authorized": false,
     "scientific_authorization": false,
+    "independent_selector_verified": false,
     "reason_codes": [
       "RUN_CARD_NOT_PROMOTED",
-      "RUN_CARD_NOT_AUTHORIZED"
+      "RUN_CARD_NOT_AUTHORIZED",
+      "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED"
     ],
     "note": "GEMS24 FUSE (FUSE_HCW) | OOF-HGB + SAHG1 conduit | research only; DO NOT SUBMIT | id 3fd41218a10a"
   },
@@ -143,7 +145,8 @@
     "blockers": [
       "hash_bound_scientific_promotion",
       "RUN_CARD_NOT_PROMOTED",
-      "RUN_CARD_NOT_AUTHORIZED"
+      "RUN_CARD_NOT_AUTHORIZED",
+      "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED"
     ],
     "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score."
   }

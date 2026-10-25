@@ -1,5 +1,10 @@
 # H24-CON findings — 2026-10-25
 
+> Review correction: physical interpretation below is a hypothesis, not verified
+> clay-cap or vent detection. Missing registry comparisons are UNKNOWN, never a
+> uniqueness pass. The code assumes slope units and computes several global
+> normalizations; this run is not promotion evidence.
+
 ## Experiment summary
 
 **Hypothesis:** H24-CON conductive clay-cap breach at transtensional strain stepovers. Saddle in `cond_surf` high background (negative Hessian determinant) weighted by `geod_dilaterate * geod_shearrate` transtensional product, RTP demag trough, basement gravity step, and flat-cover exponent `exp(-slope/5°)`. All operators inside verified 5×5 (400 m radius) discrete support mask.
@@ -42,9 +47,12 @@ All 8 features tested per-fold, pooled AUC 0.46–0.55, well below 0.90 threshol
 
 ## What this means for beating 0.2778
 
-CON's failure, together with SAHG1's 0.09672 and MTR1's 0.06441, shows that **purely regional geophysical saddle/strain operators (100–300 m wavelength) cannot rival learned multi-physics HGB (0.13000) or LiDAR-scoped geometry** on the 300 m DTI kernel. The conductive clay-cap hypothesis, while physically plausible for blind geothermal, has wavelength ~1 km > kernel and low fault-normal localization, so `TP_w` gain is small relative to `FP_w` penalty.
-
-Beating H33-B2's 0.2778 (owner-reported) via ORGANIZER-CONFIRMED will require the Rank-1 FUSE hypothesis: fold-local HGB augmented with SAHG1's strike-projected LiDAR + stable-Th R_alt channels, not another unsupervised product. FUSE OOM on 3.8 GB instance indicates it needs chunked training or larger memory — next session should implement per-fold streaming HGB without holding all folds in RAM.
+The recorded configurations underperformed the comparable baseline; this does
+not establish that every regional operator fails or that FUSE must win. Hidden
+truth components and a receipt-linked GEMSDOE32 score are unavailable. The
+conductive clay-cap interpretation and its spatial wavelength require independent
+physical verification. FUSE's reported memory failure is an engineering blocker,
+not a scientific result or evidence of superiority.
 
 ## Next steps
 
@@ -52,4 +60,4 @@ Beating H33-B2's 0.2778 (owner-reported) via ORGANIZER-CONFIRMED will require th
 2. Re-run prospective novelty with full `data/research` cache restored via `scripts/cache_priority_registry.py`.
 3. Add exact-file C2ST audit and nuisance residualization to reduce C2ST AUC 0.58 → <0.55.
 
-All numbers above are HOLDOUT-DTI, not ORGANIZER-CONFIRMED. No weekly slot spent.
+Only explicitly labeled holdout results are HOLDOUT-DTI; AUC, geometry, hashes, and runtime are diagnostics, not scores. No result here is ORGANIZER-CONFIRMED. No weekly slot spent.

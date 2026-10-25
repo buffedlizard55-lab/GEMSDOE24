@@ -86,3 +86,43 @@ def verify_research_release(root: Path) -> dict:
         "submission_authorized": False,
         "verdict": "negative",
     }
+
+
+def verify_current_download(root: Path) -> dict:
+    """Revalidate the first-screen negative download without rerunning its lane.
+
+    Does not certify novelty or scientific measurements; those remain frozen
+    observations. A valid TIFF alone can never authorize an upload.
+    """
+    card = json.loads((root / "docs/data/unique_run_card.json").read_text())
+    if card.get("verdict") != "negative" or card.get("ok_to_submit") is not False:
+        raise ValueError("Current research download must remain negative")
+    name = card.get("submission_name", "")
+    if not name or Path(name).name != name or not name.endswith(".tif"):
+        raise ValueError("Download must be a plain TIFF filename")
+    note = card.get("note")
+    if not isinstance(note, str) or not 0 < len(note) <= 140:
+        raise ValueError("Research note must contain 1–140 characters")
+    fresh = check_variants(
+        root / "docs/downloads" / name, root / "data/bridge/sample_submission.tif"
+    )
+    if not fresh["format_valid"] or fresh["sha256"] != card.get("raster_sha256"):
+        raise ValueError("Current download hash or format verification failed")
+    stored = card.get("validator_output", {})
+    if not stored:
+        raise ValueError("Current download receipt is absent")
+    for key, value in stored.items():
+        if value != fresh.get(key):
+            raise ValueError(f"Current download receipt disagrees: {key}")
+    if not fresh["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]:
+        raise ValueError("First-screen download must be finite and in [0,1] everywhere")
+    return {
+        "audit_kind": "current exact-file revalidation; no experiment rerun",
+        "run_card": "docs/data/unique_run_card.json",
+        "validator_output": fresh,
+        "scientific_evidence": "recorded; not rerun or independently confirmed",
+        "ok_to_download": True,
+        "ok_to_submit": False,
+        "submission_authorized": False,
+        "verdict": "negative",
+    }

@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_recorded_fuse_receipts_and_exact_files_verify() -> None:
     res = subprocess.run(
-        [sys.executable, str(ROOT / "scripts/run_fuse_lane.py"), "--verify-recorded"],
+        [sys.executable, str(ROOT / "scripts/run_hcw_lane.py"), "--verify-recorded"],
         cwd=ROOT,
         capture_output=True,
         text=True,
@@ -33,8 +33,8 @@ def test_recorded_fuse_receipts_and_exact_files_verify() -> None:
     assert 0.128 < payload["fuse_raw_dti"] < 0.132
     assert 0.120 < payload["fuse_resid_dti"] < 0.126
 
-    card = json.loads((ROOT / "evidence/fuse_run_card_20261025.json").read_text())
-    dl = json.loads((ROOT / "docs/data/fuse_download.json").read_text())
+    card = json.loads((ROOT / "evidence/hcw_run_card_20261025.json").read_text())
+    dl = json.loads((ROOT / "docs/data/hcw_download.json").read_text())
     zero_path = ROOT / "docs/downloads" / card["submission_name"]
     nan_path = ROOT / "docs/downloads" / card["nan_outside_artifact"]
 
@@ -61,7 +61,7 @@ def test_recorded_fuse_receipts_and_exact_files_verify() -> None:
 
 def test_fuse_refuses_implicit_rerun() -> None:
     res = subprocess.run(
-        [sys.executable, str(ROOT / "scripts/run_fuse_lane.py")],
+        [sys.executable, str(ROOT / "scripts/run_hcw_lane.py")],
         cwd=ROOT,
         capture_output=True,
         text=True,
@@ -71,7 +71,7 @@ def test_fuse_refuses_implicit_rerun() -> None:
 
 
 def test_fuse_is_on_first_screen_and_rejects_checksum_tampering(tmp_path: Path) -> None:
-    dl = json.loads((ROOT / "docs/data/fuse_download.json").read_text())
+    dl = json.loads((ROOT / "docs/data/hcw_download.json").read_text())
     for page in (
         "index.html",
         "docs/index.html",
@@ -96,7 +96,7 @@ def test_fuse_is_on_first_screen_and_rejects_checksum_tampering(tmp_path: Path) 
             shutil.copytree(src, dst)
         else:
             shutil.copy2(src, dst)
-    card_p = site / "evidence/fuse_run_card_20261025.json"
+    card_p = site / "evidence/hcw_run_card_20261025.json"
     card = json.loads(card_p.read_text())
     card["raster_sha256"] = "0" * 64
     card_p.write_text(json.dumps(card))

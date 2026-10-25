@@ -11,12 +11,12 @@ from gems.validator import sha256_file
 
 def concurrent_fuse(root):
     """Validate and render the 2026-10-25 H24-FUSE (RAW / RESID / HCW) packet."""
-    report_path = root / "evidence/fuse_experiment_20261025.json"
+    report_path = root / "evidence/hcw_experiment_20261025.json"
     if not report_path.exists():
         return ""
     report = json.loads(report_path.read_text())
-    card = json.loads((root / "evidence/fuse_run_card_20261025.json").read_text())
-    dl = json.loads((root / "docs/data/fuse_download.json").read_text())
+    card = json.loads((root / "evidence/hcw_run_card_20261025.json").read_text())
+    dl = json.loads((root / "docs/data/hcw_download.json").read_text())
     name = dl["file"]
     digest = dl["sha256"]
     if (
@@ -85,7 +85,7 @@ def concurrent_fuse(root):
 <div class="actions">
 <a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download FUSE-HCW .tif (zeros outside, [0,1]-safe) — DO NOT SUBMIT</a>
 <a class="button" href="downloads/{e(dl["nan_file"])}" download="{e(dl["nan_file"])}">↓ FUSE-HCW NaN-outside twin — DO NOT SUBMIT</a>
-<a class="button" href="data/fuse_run_card.json">FUSE JSON run card</a>
+<a class="button" href="data/hcw_run_card.json">FUSE JSON run card</a>
 <a class="button" href="downloads/{e(dl["checks_file"])}">FUSE validator JSON</a>
 <a class="button" href="downloads/{e(preflight_path.name)}">FUSE preflight JSON</a>
 </div>
@@ -262,3 +262,62 @@ Not a leaderboard score.</p>
 <p><strong>H-UNIQUE-03 (PR #19):</strong> Visible-fault-guided K-modulation; HOLDOUT-DTI <code>0.05384</code> (95% CI [0.03894, 0.06866]) on <code>gems-segment-pooled-v1</code>; flagged for unit-conversion irregularity (<code>DIST_DECAY_PX=300.0</code> = 30 km instead of 300 m) and omitted proximity channel in leakage canary.</p>
 <p class="note">{e(row["note"])}</p><p class="hash">ASPC SHA-256 {e(digest)}</p></details></aside>"""
     )
+
+
+def concurrent_oj1(root):
+    """Reopen the latest fixed negative packet before showing any download."""
+    if not (root / "evidence/oj1_run_card_20261025.json").exists():
+        return ""
+    from run_oj1_lane import verify_recorded
+
+    card = verify_recorded(root)
+    e = lambda value: escape(str(value), quote=True)  # noqa: E731
+    if not card["submission_name"]:
+        return f'<aside class="card"><h2>OJ1 stopped without a TIFF</h2><p>{e(card["stopped_reason"])}</p></aside>'
+    name = card["submission_name"]
+    published = json.loads((root / "docs/data/oj1_run_card.json").read_text())
+    if published != card:
+        raise ValueError("Published OJ1 run card disagrees with experiment")
+    preflight_name = name[:-4] + ".preflight.json"
+    receipt = json.loads((root / "docs/downloads" / preflight_name).read_text())
+    if (
+        receipt.get("artifact", {}).get("sha256") != card["raster_sha256"]
+        or receipt.get("decision", {}).get("ready_to_submit") is not False
+        or receipt.get("decision", {}).get("submission_status") != "DO_NOT_SUBMIT"
+        or receipt.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1")
+        is not True
+    ):
+        raise ValueError("OJ1 preflight changed or does not fail closed")
+    result = card["holdout"]
+    lo, hi = result["ci95"]["interval"]
+    comparison = card["recorded_baseline_comparison"]["holdout"]
+    blo, bhi = comparison["ci95"]["interval"]
+    before = card["correlation_overlap_vs_registry"]["surface"]
+    after = card["correlation_overlap_vs_registry"]["final_dots"]
+    return f'''<section class="card" aria-label="Latest OJ1 research GeoTIFF">
+<div class="eyebrow">Latest fixed experiment · OJ1 · negative result</div>
+<h2>New GeoTIFF: download for research, NOT OK TO SUBMIT</h2>
+<p><strong>DOWNLOAD: YES · SUBMIT: NO. DO NOT SUBMIT.</strong>
+Computed independently from LiDAR scarp orientations, coherence, curvature and step response;
+no old submission pixels used. Different bytes do not establish scientific uniqueness:
+the literal final-dot registry gate failed. The lane stopped, with no retuning or weekly slot.</p>
+<div class="actions"><a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download OJ1 research .tif — DO NOT SUBMIT</a>
+<a class="button" href="data/oj1_run_card.json">Full JSON run card</a>
+<a class="button" href="downloads/{e(preflight_name)}">Automated preflight</a></div>
+<p class="fileline">{e(name)}</p><p class="hash">SHA-256 {e(card["raster_sha256"])}</p>
+<p><strong>HOLDOUT-DTI {result["dti"]:.5f}</strong>, 95% CI [{lo:.5f}, {hi:.5f}];
+evaluator <code>{e(result["evaluator_version"])}</code>; {result["n_withheld_positive_pixels"]:,} withheld positive pixels.
+Recorded same-protocol OOF baseline: <strong>HOLDOUT-DTI {comparison["dti"]:.5f}</strong>,
+95% CI [{blo:.5f}, {bhi:.5f}], same evaluator and positive count; not replayed in this session.
+OJ1 did not beat it. These are <strong>not leaderboard scores</strong>; OJ1 is not yet scored by the organizer.</p>
+<p>Format: single float32 band, exact template CRS/shape/transform; finite [0,1] everywhere,
+zeros outside. No local check guarantees portal acceptance.
+Source/transform canaries passed; this is not proof of geological specificity.
+Registry: {after["registry_unique_rasters"]} pinned rasters (including controls), pre-placement max absolute rank statistic
+{before["max_abs_rank_correlation"]:.4f}; final {after["max_abs_rank_correlation"]:.4f};
+maximum directional overlap within 3 px <strong>{100 * after["max_dot_overlap"]:.2f}%</strong> (limit 70%).
+Spacing-5 control retained; no exemption. No claim of global uniqueness or a vent discovery.</p>
+<div class="note" id="note-oj1">{e(card["note"])}</div>
+<button class="button" data-copy="#note-oj1" data-feedback="#fb-oj1">Copy short research note</button>
+<p id="fb-oj1" aria-live="polite"></p><p class="micro">{len(card["note"])} characters; maximum 140.
+Independent selector/quota verification is not implemented, so preflight cannot authorize any slot from card flags alone.</p></section>'''
