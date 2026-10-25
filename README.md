@@ -40,7 +40,9 @@ The shared evaluator correction is in `src/gems/holdout.py`; no private evaluato
 or writer was introduced. Historical fold-averaged/postprocessed DTI is not the
 new pooled hide-and-recover benchmark. Full input/factor AUC tests and exact-file
 checks are in the JSON run card. The scientific comparison is favorable against
-a fixed scarp control but **not certified against the current best**.
+a fixed scarp control but **not certified against the current best**. The latest
+checkout-level three-pass review is [`evidence/2026-10-25_session_review.md`](evidence/2026-10-25_session_review.md);
+older pre-experiment notes are explicitly marked superseded.
 
 ## Active owner prompt — read before every session
 

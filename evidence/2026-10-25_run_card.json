@@ -1,4 +1,7 @@
 {
+  "record_status": "historical_superseded_pre_experiment_stop",
+  "superseded_by": "evidence/aspc_run_card_20261025.json",
+  "note": "This initial run card predates the recorded ASPC run and is retained for audit history only; do not interpret its nulls as the current result.",
   "hypothesis": "Scale-consistent drainage-divide deflection; ranked first for a future test, not implemented",
   "mechanism": "DEM-derived channel offsets/deflections with orientation persistence across scales could expose subtle unmapped structures",
   "named_non_fault_mimic": "Lithologic contact or anthropogenic drainage/road ditch",
