@@ -109,10 +109,17 @@ def build_independent_site(primary):
         raise SystemExit("Current download checksum does not match the run card")
     if primary["ok_to_submit"] or card["verdict"] != "negative" or card["ok_to_submit"]:
         raise SystemExit("Stopped negative artifact cannot be presented as submit-ready")
+    from gems.submission import check_variants
+
     for key, row in checks.items():
         target = DOCS / "downloads" / row["file"]
-        if not row["format_valid"] or sha256_file(target) != row["sha256"]:
-            raise SystemExit(f"Invalid or changed download variant: {key}")
+        fresh = check_variants(target, ROOT / "data/bridge/sample_submission.tif")
+        if (
+            not fresh["format_valid"]
+            or not row["format_valid"]
+            or any(fresh.get(field) != value for field, value in row.items())
+        ):
+            raise SystemExit(f"Invalid, changed or stale download variant: {key}")
     if primary["file"] != card["submission_name"] or primary["note"] != card["note"]:
         raise SystemExit("MTR1 metadata and exact run-card identity disagree")
     if (

@@ -25,6 +25,15 @@ the owner's brief at the bottom; (2) [`knowledge/owner_brief_verbatim.md`](knowl
 [Dotting preregistration](knowledge/04_preregistered_dotting_2026-10-02.md) ·
 [Source review](knowledge/03_verified_sources_2026-10-02.md)
 
+## Exact-file release hardening (2026-10-25)
+
+Site generation now reopens the active MTR1 TIFF variants with the shared format
+validator, not just their saved receipts. Retained ASPC research can also be
+verified with `python scripts/verify_research_release.py`. Both results remain
+**NOT OK TO SUBMIT**. Install testing dependencies with
+`python -m pip install -e '.[dev]'`.
+[Three-pass review](knowledge/11_release_review_2026-10-25.md).
+
 ## Latest continuation audit (2026-10-25)
 
 The repeated owner request remains the active [project brief](knowledge/owner_brief_2026-10-25.md).
@@ -167,7 +176,8 @@ are retained. This README embeds the full current brief available to this sessio
 not a consolidated summary substituted for it.
 
 [MTR1 findings, source ledger and limitations](knowledge/11_MTR1_findings_2026-10-25.md)
-· [Three-pass review](evidence/mtr1_review_passes_20261025.json).
+· [Three-pass review](evidence/mtr1_review_passes_20261025.json) ·
+[This session's repository verification](evidence/2026-10-25_session_review.md).
 
 ## Historical standing charter — retained for provenance; current protocol governs
 

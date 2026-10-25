@@ -47,9 +47,10 @@
   "pass_3_acceptance_recheck": {
     "verification_commands": {
       "site": ".venv/bin/python scripts/build_site.py -> current MTR1 site rendered with an automated preflight link",
+      "release_revalidation": ".venv/bin/python scripts/verify_research_release.py -> both retained ASPC variants format-valid and not authorized",
       "research_receipts": ".venv/bin/python scripts/audit_research_downloads.py -> both retained ASPC variants format-valid and not authorized",
       "registry": ".venv/bin/python scripts/review_peer_registry.py -> Verified 98 references, 84 unique blobs; no slots used",
-      "tests": ".venv/bin/python -m pytest -q -> 166 passed",
+      "tests": ".venv/bin/python -m pytest -q -> 175 passed",
       "lint": ".venv/bin/python -m ruff check src scripts tests -> All checks passed",
       "syntax": ".venv/bin/python -m compileall -q src scripts tests -> success",
       "diff_whitespace": "git diff --check -> success"
