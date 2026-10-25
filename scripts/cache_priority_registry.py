@@ -13,6 +13,7 @@ import hashlib
 import json
 import subprocess
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
@@ -30,11 +31,20 @@ CACHE = ROOT / "data/research/priority_review"
 MANIFEST = ROOT / "registry/priority_rasters.json"
 
 
-def gh(endpoint):
-    return subprocess.check_output(
-        ["gh", "api", endpoint, "-H", "Accept: application/vnd.github.raw"],
-        stderr=subprocess.PIPE,
-    )
+def gh(endpoint, retries: int = 4):
+    last_exc: Exception | None = None
+    for attempt in range(retries):
+        try:
+            return subprocess.check_output(
+                ["gh", "api", endpoint, "-H", "Accept: application/vnd.github.raw"],
+                stderr=subprocess.PIPE,
+            )
+        except subprocess.CalledProcessError as exc:
+            last_exc = exc
+            if attempt + 1 < retries:
+                time.sleep(1.5 * (attempt + 1))
+    assert last_exc is not None
+    raise last_exc
 
 
 def discover(number):
@@ -133,8 +143,9 @@ def main():
         seen[key] = row["id"]
         row["positive_pixels"] = int((a[fp] > 0).sum())
         rasters.append(row)
+    existing = json.loads(MANIFEST.read_text()) if MANIFEST.exists() and not args.refresh else {}
     result = {
-        "generated_utc": datetime.now(timezone.utc).isoformat(),
+        "generated_utc": existing.get("generated_utc", datetime.now(timezone.utc).isoformat()),
         "scope": "All published docs/downloads/*.tif in the nine pinned priority repositories plus local inputs; not every unseen registry in parallel sessions",
         "sources": [{"repo": s["repo"], "ref": s["ref"]} for s in sources],
         "source_files_checked": len(cached),

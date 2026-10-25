@@ -212,3 +212,18 @@ def test_site_rejects_upload_permission_in_either_download_receipt(built, encodi
         assert "disagrees" in result.stderr or "cannot grant upload authorization" in result.stderr
     finally:
         path.write_text(original)
+
+
+def test_site_rejects_sahg1_card_checksum_tampering(built):
+    path = built / "evidence/sahg1_run_card_20261025.json"
+    original = path.read_text()
+    try:
+        altered = json.loads(original)
+        altered["raster_sha256"] = "0" * 64
+        path.write_text(json.dumps(altered))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0 and "SAHG1 checksum" in result.stderr
+    finally:
+        path.write_text(original)

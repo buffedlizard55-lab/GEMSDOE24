@@ -1,0 +1,420 @@
+{
+  "hypothesis": "H24-SAHG1 strike-aligned hydrothermal-geomorphic conduit detector (saturating strike-projected 3DEP LiDAR scarp x stable-Th K/U alteration x basement/strain step)",
+  "mechanism": "Saturating strike-projected 3DEP LiDAR antislope scarp (G_sat) with pluvial-shoreline contour-obliquity filter, multiplied by immobile-Th-controlled mobile K/U alteration (R_alt) and subsurface gravity/magnetic/basement-step + strain corroboration (B_step) inside a complete 9x9 discrete receptive-field support mask",
+  "named_non_fault_mimic": "Pleistocene pluvial Lake Lahontan tufa-cemented beach bars or welded-tuff stratigraphic ledges cutting across alluvial fan lobes",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 5512.578352784337,
+    "FP_w": 35522.140381457495,
+    "FN_w": 55475.42164721566,
+    "n_truth": 60988.0,
+    "n_emitted": 37722.0,
+    "dti": 0.09671640800067073,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.08657462373208925,
+        0.10703289778089871
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 977.3764395005725,
+        "FP_w": 8024.904784474997,
+        "FN_w": 9187.623560499427,
+        "n_truth": 10165,
+        "n_emitted": 8430,
+        "dti": 0.09840228996759033,
+        "coverage": 0.09615114997546212
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 1152.338676589226,
+        "FP_w": 9943.302295540434,
+        "FN_w": 11358.661323410774,
+        "n_truth": 12511,
+        "n_emitted": 10422,
+        "dti": 0.09423826001080808,
+        "coverage": 0.0921060408112242
+      },
+      {
+        "fold": "SW",
+        "TP_w": 1814.711735309867,
+        "FP_w": 9722.252702207052,
+        "FN_w": 18719.288264690134,
+        "n_truth": 20534,
+        "n_emitted": 10429,
+        "dti": 0.09686422043954077,
+        "coverage": 0.08837594892908673
+      },
+      {
+        "fold": "SE",
+        "TP_w": 1568.1515013846715,
+        "FP_w": 7831.680599235015,
+        "FN_w": 16209.848498615329,
+        "n_truth": 17778,
+        "n_emitted": 8441,
+        "dti": 0.097386400263202,
+        "coverage": 0.08820741936014577
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "geomorphic_only_ablation": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 4930.212562982138,
+    "FP_w": 35797.859149730895,
+    "FN_w": 56057.78743701786,
+    "n_truth": 60988.0,
+    "n_emitted": 37722.0,
+    "dti": 0.08659216174339097,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.07756871713268536,
+        0.09513693275539918
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 885.3199799763631,
+        "FP_w": 8070.808975188742,
+        "FN_w": 9279.680020023638,
+        "n_truth": 10165,
+        "n_emitted": 8430,
+        "dti": 0.08921695410452594,
+        "coverage": 0.08709493162581045
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 1007.6409061235042,
+        "FP_w": 10010.726956260261,
+        "FN_w": 11503.359093876496,
+        "n_truth": 12511,
+        "n_emitted": 10422,
+        "dti": 0.08250915755397606,
+        "coverage": 0.08054039694057263
+      },
+      {
+        "fold": "SW",
+        "TP_w": 1691.761953092273,
+        "FP_w": 9761.271599006612,
+        "FN_w": 18842.238046907725,
+        "n_truth": 20534,
+        "n_emitted": 10429,
+        "dti": 0.09038248867809226,
+        "coverage": 0.08238832926328396
+      },
+      {
+        "fold": "SE",
+        "TP_w": 1345.4897237899972,
+        "FP_w": 7955.05161927528,
+        "FN_w": 16432.510276210003,
+        "n_truth": 17778,
+        "n_emitted": 8441,
+        "dti": 0.08366168394313936,
+        "coverage": 0.07568285092755075
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "reconstructed_oof_multiphysics_baseline": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 7429.662484715415,
+    "FP_w": 34381.625470582076,
+    "FN_w": 53558.337515284584,
+    "n_truth": 60988.0,
+    "n_emitted": 37722.0,
+    "dti": 0.129996798011798,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.11565083071042537,
+        0.14396153633627826
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 1456.6306932399377,
+        "FP_w": 7723.9427407742005,
+        "FN_w": 8708.369306760062,
+        "n_truth": 10165,
+        "n_emitted": 8430,
+        "dti": 0.14612900623563396,
+        "coverage": 0.14329864173536033
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 1651.6187172079096,
+        "FP_w": 9639.200624489255,
+        "FN_w": 10859.38128279209,
+        "n_truth": 12511,
+        "n_emitted": 10422,
+        "dti": 0.13463956810512914,
+        "coverage": 0.13201332565006071
+      },
+      {
+        "fold": "SW",
+        "TP_w": 1965.139739044017,
+        "FP_w": 9562.139341806213,
+        "FN_w": 18568.860260955982,
+        "n_truth": 20534,
+        "n_emitted": 10429,
+        "dti": 0.104904491830636,
+        "coverage": 0.09570175022129235
+      },
+      {
+        "fold": "SE",
+        "TP_w": 2356.273335223551,
+        "FP_w": 7456.342763512406,
+        "FN_w": 15421.726664776448,
+        "n_truth": 17778,
+        "n_emitted": 8441,
+        "dti": 0.14558446173745873,
+        "coverage": 0.1325387183723451
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "bridge_protocol_holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "segment-hide-recover-pooled-v1",
+    "n_withheld_positives": 60988,
+    "dti": 0.09654972926468329,
+    "ci95": [
+      0.08270104798514091,
+      0.10975819521884905
+    ],
+    "recorded_aspc_dti": 0.08552612516643854,
+    "recorded_aspc_ci95": [
+      0.07439983571419555,
+      0.09648277663462658
+    ],
+    "recorded_aspc_scarp_control_dti": 0.06835904774159529,
+    "recorded_aspc_scarp_control_ci95": [
+      0.05678911286053194,
+      0.08039420198314326
+    ],
+    "delta_vs_recorded_aspc": 0.011023604098244752,
+    "delta_vs_recorded_aspc_control": 0.028190681523088
+  },
+  "paired_comparisons": {
+    "sahg1_minus_geomorphic_core_g0": {
+      "delta_dti": 0.010124246257279756,
+      "ci95": [
+        0.0037223306667480147,
+        0.017113077800515113
+      ]
+    },
+    "sahg1_minus_reconstructed_oof_hgb_d3": {
+      "delta_dti": -0.03328039001112727,
+      "ci95": [
+        -0.04657761910520343,
+        -0.020623054886867043
+      ]
+    },
+    "sahg1_minus_recorded_mtr1": {
+      "delta_dti": 0.03230484442652948,
+      "recorded_mtr1_dti": 0.06441156357414125,
+      "recorded_mtr1_ci95": [
+        0.058299401413499985,
+        0.07112431360797855
+      ]
+    }
+  },
+  "correlation_overlap_vs_registry": {
+    "total_unique_rasters_checked": 48,
+    "competing_method_rasters_checked": 46,
+    "calibration_control_rasters_checked": 2,
+    "peer_blobs_checked": 83,
+    "surface_max_abs_rank_correlation": 0.3815901569578175,
+    "final_max_abs_rank_correlation": 0.30209958978942947,
+    "method_lane_max_overlap_within_3px": 0.47683049679232276,
+    "peer_blobs_max_overlap_within_3px": 0.4593605853348179,
+    "literal_all_entries_max_overlap_within_3px": 1.0,
+    "method_lane_passed": true,
+    "literal_all_entries_passed": false,
+    "passed": false,
+    "scope": "All published docs/downloads/*.tif in the nine pinned priority repositories plus local inputs; not every unseen registry in parallel sessions + 2026-10-25 ASPC and MTR1 research rasters"
+  },
+  "exact_file_nuisance_audit": {
+    "observed_auc": 0.5825854220315849,
+    "fold_aucs": [
+      0.5317102359420327,
+      0.5916236075569669,
+      0.7210717335983774,
+      0.48593611102896284
+    ],
+    "null_p95": 0.5320417359704677,
+    "margin_vs_p95": 0.050543686061117254,
+    "raw_p_value": 0.01,
+    "holm_p_value": 0.02,
+    "strict_gate_flagged": true,
+    "strict_gate_passed": false
+  },
+  "raster_sha256": "8d5a5f99245fecf11cea72c33c41bad800cd0e41215744d7dd5d9ac6df673f11",
+  "nan_outside_artifact": "gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif",
+  "nan_outside_sha256": "80f893de18ac9a83696a572e7d0e92e93d33057dd68491807d487acfb7a7cd25",
+  "validator_output": {
+    "file": "gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif",
+    "bytes": 825406,
+    "sha256": "8d5a5f99245fecf11cea72c33c41bad800cd0e41215744d7dd5d9ac6df673f11",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37722,
+    "in_footprint_mass": 37722.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "submission_name": "gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif",
+  "note": "GEMS24 SAHG1 | strike LiDAR scarp x stable-Th K/U + basement step | research only; DO NOT SUBMIT | id 13d01f28d5db",
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "reasons": [
+    "Did not beat reconstructed same-protocol OOF multi-physics HGB baseline (0.09672 vs 0.13000)",
+    "No single assigned method-lane paragraph was supplied in the prompt (provisional lane)",
+    "Literal all-entry overlap rule still flags synthetic spacing-5 calibration lattice registry-039 (1.0 overlap within 3 px), though all 46 competing method lanes and 83 peer blobs pass (max overlap <= 0.70)",
+    "Promotion to a weekly competition slot requires a separate selector step within verified portal quota",
+    "Exact-file C2ST nuisance audit flagged accessibility/block association (AUC 0.5826, Holm p=0.020)"
+  ],
+  "organizer_confirmed_score": null,
+  "experiments_run": 1,
+  "submission_slots_used": 0
+}
