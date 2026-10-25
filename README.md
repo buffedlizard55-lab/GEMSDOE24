@@ -171,7 +171,8 @@ are retained. This README embeds the full current brief available to this sessio
 not a consolidated summary substituted for it.
 
 [MTR1 findings, source ledger and limitations](knowledge/11_MTR1_findings_2026-10-25.md)
-· [Three-pass review](evidence/mtr1_review_passes_20261025.json).
+· [Three-pass review](evidence/mtr1_review_passes_20261025.json) ·
+[This session's repository verification](evidence/2026-10-25_session_review.md).
 
 ## Historical standing charter — retained for provenance; current protocol governs
 
