@@ -222,3 +222,48 @@ def extrapolate_variant(
         raise ValueError("retention must be in [0, 1]")
     tp = implied_credit(base_dti, base_n / area, tau, phi=phi)
     return model_dti(retention * tp, variant_n / area, tau, phi=phi)
+
+
+def priority_poisson(score, eligible, budget, *, min_dist=3.0):
+    """Deterministic rank-first Poisson dots from a new physical surface.
+
+    Never adds zero-valued backfill, never reads labels or old predictions.
+    Catalogue exclusion is the caller's explicit eligibility mask.
+    """
+    score, eligible = np.asarray(score), np.asarray(eligible, bool)
+    if (
+        score.ndim != 2
+        or eligible.shape != score.shape
+        or not isinstance(budget, (int, np.integer))
+        or budget < 0
+        or not np.isfinite(min_dist)
+        or min_dist < 1
+    ):
+        raise ValueError("Aligned 2D grids, nonnegative budget and >=1 px spacing required")
+    ids = np.flatnonzero(eligible & np.isfinite(score) & (score > 0))
+    order = ids[np.lexsort((ids, -score.ravel()[ids]))]
+    r = int(np.ceil(min_dist))
+    h, w = score.shape
+    blocked = np.zeros((h + 2 * r, w + 2 * r), bool)
+    result = np.zeros(score.shape, bool)
+    offsets = [
+        (dy, dx)
+        for dy in range(-r, r + 1)
+        for dx in range(-r, r + 1)
+        if dy * dy + dx * dx < min_dist * min_dist
+    ]
+    count = 0
+    if budget == 0:
+        return result
+    for i in order:
+        y, x = divmod(int(i), w)
+        by, bx = y + r, x + r
+        if blocked[by, bx]:
+            continue
+        result[y, x] = True
+        count += 1
+        for dy, dx in offsets:
+            blocked[by + dy, bx + dx] = True
+        if count == budget:
+            break
+    return result

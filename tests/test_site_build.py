@@ -95,7 +95,7 @@ def test_site_never_links_a_missing_local_file(built):
         "docs/sources.html",
     ):
         soup = BeautifulSoup((built / page).read_text(), "html.parser")
-        for tag, attr in (("a", "href"), ("link", "href"), ("script", "src")):
+        for tag, attr in (("a", "href"), ("link", "href"), ("script", "src"), ("img", "src")):
             for t in soup.find_all(tag):
                 v = t.get(attr)
                 if not v or v.startswith(("http://", "https://", "mailto:", "#")):
@@ -106,16 +106,17 @@ def test_site_never_links_a_missing_local_file(built):
                 )
 
 
-def test_current_negative_lane_is_not_a_legacy_recommendation(built):
-    report = json.loads((built / "docs/data/active_lane.json").read_text())
-    assert not report["submission_authorized"]
+def test_current_negative_lane_has_a_hash_bound_preflight_and_no_legacy_recommendation(built):
+    row = json.loads((built / "docs/data/independent_download.json").read_text())
     preflight = json.loads(
         (
             built
-            / "docs/downloads/gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.preflight.json"
+            / "docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.preflight.json"
         ).read_text()
     )
-    assert preflight["artifact"]["sha256"] == report["artifact"]["sha256"]
+    assert preflight["artifact"]["sha256"] == row["sha256"]
+    assert preflight["run_card"]["artifact_sha256_matches"]
+    assert preflight["run_card"]["artifact_name_matches"]
     assert preflight["decision"]["submission_status"] == "DO_NOT_SUBMIT"
     assert not preflight["decision"]["ready_to_submit"]
     for name in ("index.html", "docs/index.html", "docs/executive-summary.html"):
@@ -140,5 +141,70 @@ def test_site_rejects_a_run_card_that_disagrees_with_the_exact_download(built):
             [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
         )
         assert result.returncode != 0 and "identity disagree" in result.stderr
+    finally:
+        path.write_text(original)
+
+
+def test_mtr_download_is_first_screen_and_parallel_aspc_is_not_erased(built):
+    row = json.loads((built / "docs/data/independent_download.json").read_text())
+    for page in ("index.html", "docs/index.html", "docs/executive-summary.html"):
+        html = (built / page).read_text()
+        assert 'download="' + row["file"] + '"' in html
+        assert "DOWNLOAD: YES" in html and "NOT OK TO SUBMIT" in html
+        assert "DO NOT SUBMIT" in html and "ASPC research TIFF" in html
+        if 'class="metrics"' in html:
+            assert html.index(row["file"]) < html.index('class="metrics"')
+    assert not row["ok_to_submit"] and not row["lane_uniqueness_gate_passed"]
+
+
+def test_site_rejects_mtr_card_checksum_tampering_without_falling_back_to_old_files(built):
+    path = built / "evidence/mtr1_run_card.json"
+    original = path.read_text()
+    try:
+        altered = json.loads(original)
+        altered["raster_sha256"] = "0" * 64
+        path.write_text(json.dumps(altered))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0 and "checksum" in result.stderr
+    finally:
+        path.write_text(original)
+
+
+def test_site_rejects_a_stale_or_permissive_mtr_preflight(built):
+    path = (
+        built
+        / "docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.preflight.json"
+    )
+    original = path.read_text()
+    try:
+        altered = json.loads(original)
+        altered["decision"]["ready_to_submit"] = True
+        altered["decision"]["submission_status"] = "OK_TO_SUBMIT"
+        path.write_text(json.dumps(altered))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0 and "preflight" in result.stderr
+    finally:
+        path.write_text(original)
+
+
+@pytest.mark.parametrize("encoding", ["primary", "companion"])
+def test_site_rejects_upload_permission_in_either_download_receipt(built, encoding):
+    report = json.loads((built / "evidence/aspc_run_20261025.json").read_text())
+    row = report["artifact" if encoding == "primary" else "template_convention_companion"]
+    path = (built / "docs/downloads" / row["file"]).with_suffix(".checks.json")
+    original = path.read_text()
+    checks = json.loads(original)
+    checks["ok_to_upload"] = True
+    try:
+        path.write_text(json.dumps(checks))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0
+        assert "disagrees" in result.stderr or "cannot grant upload authorization" in result.stderr
     finally:
         path.write_text(original)
