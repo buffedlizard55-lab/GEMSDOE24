@@ -228,6 +228,21 @@ Latest OJ1 research TIFF: [`gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zero
 
 **DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
 
+Highest-Holdout 2026-10-25 `H24-GVC1` INGENIOUS Hydrothermal-Upflow + Tilt + 8-Azimuth Lineament GeoTIFF:
+[`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif) (`SHA-256: b5ca6f1755af059e17f5edf0940fd7e945d43a1359e103a4789eae33c536ad41`),
+NaN-outside twin [`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.tif), and
+[`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.zip`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.zip).
+Generated independently from 30 scale-separated base features + 18 label-free OpenEI GDR INGENIOUS paleo-sinter/travertine,
+2 m shallow temperature-probe, and geothermometry upflow features + Miller–Singh `TMI` tilt + 8-azimuth lineaments + 300 m
+submodular allocation (`37,654` binary `{0.0, 1.0}` dots; zero copied submission pixels; strict `[0, 1]` PASS; 48/48 two-polarity
+leakage canaries PASS; exact-file C2ST **PASS** with AUC `0.4859`, Holm *p* = `1.000`).
+Achieves **HOLDOUT-DTI** `gems-segment-pooled-v1` = **0.14876** (95% CI **[0.13413, 0.16370]**), beating matched
+`B1: OOF-Base-Submod` (`0.13900`) by **+0.00976** (paired 95% CI **[+0.00075, +0.01951]**,
+`3/4` folds won), `B0: OOF-H24-Ridge` (`0.14179`), and `H24-RSHG1` (`0.12900`).
+Automatically marked **DOWNLOAD: YES · SUBMIT: NO (`DO_NOT_SUBMIT`)** because 3-px dot overlap reaches
+`0.7682` (> 0.70) against 161,366-px `10GEMSDOE` range-front ridges (`max |ρ| = 0.5478 ≤ 0.90`).
+[GVC1 JSON run card](evidence/gvc1_run_card_20261025.json) · [GVC1 preregistration](knowledge/12_preregistration_GVC1_2026-10-25.md) · [GVC1 findings & source ledger](knowledge/13_GVC1_findings_2026-10-25.md)
+
 Latest 2026-10-25 `H24-RSHG1` 42-channel Regime-Calibrated Multi-Physics + Strike-Hydro-Geomorph GeoTIFF:
 [`gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif`](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif) (`SHA-256: 06d28182d9fea06d1d4ac3fc603bada748306e68350ebe432e3ff9f82fd3703e`)
 and NaN-outside twin [`gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif`](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif).
