@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-25",
+  "scope": "ASPC provisional lane; one frozen scientific experiment, no weekly slot selected",
+  "passes": [
+    {
+      "pass": 1,
+      "status": "complete",
+      "work": [
+        "Read standing charter, historical brief, active pipeline, prior findings and open PR #7; baseline 105 tests passed",
+        "Fetched nine repository trees and README/source excerpts through GitHub; pinned 98 downloadable references",
+        "Preregistered four hypotheses and one fixed ASPC operator before implementation in commit 4a7c09b",
+        "Implemented the corrected shared segment hide-and-recover / pooled-component evaluator and reused existing strict writer",
+        "Ran all feature/factor canaries, full-footprint surface checks, final-dot checks and one paired holdout experiment"
+      ],
+      "known_failure": "Initial registry preflight encountered a 32x48 file explicitly named FORMAT_TEST_NOT_SUBMISSION; aborted before placement/scoring and retained failure receipt"
+    },
+    {
+      "pass": 2,
+      "status": "complete",
+      "fixes": [
+        "Explicitly excluded only the format demo from competition-grid comparisons; all valid prediction blobs retained",
+        "Aggregated quadrant portions of the same global 20 km tile before bootstrap, corrected before any outcomes observed",
+        "Removed the misleading format-only ok_to_upload authorization alias; format_acceptable and submission_authorized are separate",
+        "Generated NaN-outside convention companion via the shared writer and verified identical in-footprint predictions",
+        "Current lane record now supersedes historical website recommendations even for a negative result; old metadata marked historical",
+        "Added exact-file, complete-canary and every-registry-blob receipt tests; fixed source replay to retain an explicit recorded official-source snapshot",
+        "Added hash-bound run-card/format-sidecar checks and small-screen table/long-hash support"
+      ]
+    },
+    {
+      "pass": 3,
+      "status": "complete",
+      "checks": [
+        "119 pytest tests passed, including exact primary/twin validation and pooled metric equality",
+        "Ruff lint and format checks passed across src/scripts/tests",
+        "Python compileall, node --check docs/assets/app.js and git diff --check passed",
+        "Static site rebuilt in scratch-copy tests; all local links resolve and current first-screen download matches exact artifact",
+        "Verified no current-best OOF victory, organizer receipt, lane assignment, selector authorization or live deployment was fabricated",
+        "Re-fetched main and preserved parallel PR #9's independent review rather than overwriting it"
+      ]
+    }
+  ],
+  "limitations": [
+    "ASPC improves the fixed control, not a reconstructed current-best OOF method; promotion remains negative",
+    "Parallel method paragraph was missing; lane is provisional",
+    "Raster connected components approximate expert fault segments; CI conditional on fixed quadrants and catalogue",
+    "Uniqueness checked against downloaded artifacts in nine pinned repositories, not every unpublished parallel registry",
+    "No exact-file nuisance audit run for this promotion-blocked candidate",
+    "No organizer-confirmed score, portal acceptance, current leaderboard or current weekly cap verified",
+    "Official parent sources partly cached; derivative hash consistency is not independent authentication of official originals",
+    "Owner prompt stored as explicitly normalized requirements with repetitions consolidated, not claimed as verbatim full chat",
+    "GitHub REST rate limit observed; git and GraphQL remained available at time of review"
+  ],
+  "publication": "A successful Pages build/deployment must be verified separately; this record does not assert deployment",
+  "submission_authorized": false,
+  "slot_spent": false
+}

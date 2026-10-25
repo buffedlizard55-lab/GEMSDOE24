@@ -229,3 +229,127 @@ def gate(
         "delta_mean_dense": round(candidate["mean_dense_dti"] - baseline["mean_dense_dti"], 5),
         "delta_mean_sparse": round(candidate["mean_sparse_dti"] - baseline["mean_sparse_dti"], 5),
     }
+
+
+# Legacy Holdout above remains for reproduction of historical evidence. It is NOT
+# the authority for the parallel-run segment protocol below.
+SEGMENT_EVALUATOR_VERSION = "segment-hide-recover-pooled-v1"
+
+
+def segment_folds(footprint, labels, buffer_px=30):
+    """Hide whole 8-connected components touching each quadrant.
+
+    Components are a conservative raster proxy for segments, not expert trace IDs.
+    Components that cross quadrant boundaries can be withheld in multiple folds,
+    but each scored positive pixel belongs to only one quadrant.
+    All catalogue-based features MUST consume only the yielded visible grid.
+    """
+    from scipy.ndimage import distance_transform_edt
+
+    fp, truth = np.asarray(footprint, bool), np.asarray(labels, bool)
+    if fp.shape != truth.shape or np.any(truth & ~fp) or buffer_px < 0:
+        raise ValueError("Aligned footprint/truth, truth inside footprint and buffer >=0 required")
+    components, count = ndi_label(truth, structure=np.ones((3, 3), int))
+    if not count:
+        raise ValueError("No fault components to withhold")
+    fold_grid, names = make_quadrant_folds(fp)
+    for fold, name in enumerate(names):
+        test = fp & (fold_grid == fold)
+        ids = np.unique(components[test & truth])
+        if not len(ids):
+            raise ValueError(f"No withheld positive components in {name}")
+        selected = np.zeros(count + 1, bool)
+        selected[ids] = True
+        hidden = selected[components]
+        visible = truth & ~hidden
+        # Exclude the entire test region and a buffer from every hidden segment
+        # and test boundary when deriving/fitting any train-dependent features.
+        training = fp & (distance_transform_edt(~(test | hidden)) > buffer_px)
+        yield {
+            "name": name,
+            "fold": fold,
+            "test": test,
+            "hidden": hidden,
+            "visible": visible,
+            "training": training,
+            "n_withheld_components": int(len(ids)),
+            "n_withheld_whole_segment_pixels": int(hidden.sum()),
+            "n_withheld_positives": int((hidden & test).sum()),
+            "buffer_px": buffer_px,
+        }
+
+
+def pooled_dti(components):
+    """Ratio of SUMMED TP/FP/FN, never an average of fold scores."""
+    from .metric import ALPHA, BETA, EPS
+
+    a = np.asarray(components, dtype=np.float64)
+    if a.ndim != 2 or a.shape[1] != 3 or not np.isfinite(a).all() or np.any(a < -1e-8):
+        raise ValueError("Finite nonnegative [TP,FP,FN] rows required")
+    tp, false_positive, fn = a.sum(axis=0)
+    return float(tp / (tp + ALPHA * false_positive + BETA * fn + EPS))
+
+
+def spatial_components(prediction, truth, valid, visible, tile_px=200):
+    """Exact binary DTI decomposed by spatial tile for cluster bootstrap.
+
+    Distances are computed on the full evaluation domain BEFORE tile attribution;
+    there are no artificial tile-edge penalties. Known pixels are masked exactly.
+    Contributions are assigned to the truth pixel for TP/FN, prediction pixel for FP.
+    """
+    from scipy.spatial import cKDTree
+
+    from .metric import RADIUS_PX, dti_score_fast
+
+    if tile_px < 1:
+        raise ValueError("Positive spatial tile size required")
+    # Reference call validates inputs, masks visible faults and supplies exact
+    # components. KD-trees only attribute these same components to spatial tiles.
+    reference = dti_score_fast(prediction, truth, valid_mask=valid, catalogue_mask=visible)
+    active = np.asarray(valid, bool) & ~np.asarray(visible, bool)
+    pp = np.argwhere(active & (np.asarray(prediction) > 0))
+    gg = np.argwhere(active & np.asarray(truth, bool))
+    ncols = (active.shape[1] + tile_px - 1) // tile_px
+    nrows = (active.shape[0] + tile_px - 1) // tile_px
+    rows = np.zeros((ncols * nrows, 3), dtype=np.float64)
+
+    def tile_ids(points):
+        return (points[:, 0] // tile_px) * ncols + points[:, 1] // tile_px
+
+    credit = np.zeros(len(gg))
+    if len(pp) and len(gg):
+        credit = np.maximum(1 - cKDTree(pp).query(gg)[0] / RADIUS_PX, 0)
+    if len(gg):
+        np.add.at(rows[:, 0], tile_ids(gg), credit)
+        np.add.at(rows[:, 2], tile_ids(gg), 1 - credit)
+    penalty = np.ones(len(pp))
+    if len(gg) and len(pp):
+        penalty = 1 - np.maximum(1 - cKDTree(gg).query(pp)[0] / RADIUS_PX, 0)
+    if len(pp):
+        np.add.at(rows[:, 1], tile_ids(pp), penalty)
+    expected = [reference[k] for k in ("TP_w", "FP_w", "FN_w")]
+    if not np.allclose(rows.sum(axis=0), expected, rtol=1e-10, atol=1e-7):
+        raise AssertionError("Spatial components disagree with shared exact metric")
+    return rows, reference
+
+
+def pooled_bootstrap(rows, *, paired=None, resamples=1000, seed=20261025):
+    """Conditional spatial cluster-bootstrap CI; paired rows must use identical tiles."""
+    a = np.asarray(rows, dtype=np.float64)
+    pooled_dti(a)  # validates even when all tiles have zero contribution
+    if len(a) < 2 or resamples < 2:
+        raise ValueError("At least two clusters and two resamples required")
+    b = None if paired is None else np.asarray(paired, dtype=np.float64)
+    if b is not None:
+        pooled_dti(b)
+        if b.shape != a.shape:
+            raise ValueError("Paired cluster grids must match")
+    rng = np.random.default_rng(seed)
+    scores = []
+    for _ in range(resamples):
+        ids = rng.integers(0, len(a), len(a))
+        value = pooled_dti(a[ids])
+        if b is not None:
+            value -= pooled_dti(b[ids])
+        scores.append(value)
+    return [float(x) for x in np.quantile(scores, [0.025, 0.975])]

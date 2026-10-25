@@ -1,5 +1,14 @@
 # Standing project instructions
 
+**Current baseline (2026-10-25):** read `knowledge/owner_brief_2026-10-25.md`,
+`knowledge/09_preregistered_ASPC_2026-10-25.md` and `knowledge/10_ASPC_findings_2026-10-25.md`.
+ASPC has a negative promotion verdict despite improvement over a fixed control.
+The site must never fall back to historical recommended files when a new lane fails.
+No assigned method paragraph was supplied; the ASPC research lane is provisional.
+Current-best matched OOF evidence is missing. Do not spend a slot or rerun/tune
+the recorded confirmation folds. The zero-outside and NaN-outside TIFFs have the
+same new predictions; neither is selector-authorized.
+
 Read the entire root README, its standing owner charter and the **verbatim owner brief**
 (`README.md`, section "Owner brief") at the start of every session. Maximize P(Win) and
 Own the Outcome, without promising a score or prize.
