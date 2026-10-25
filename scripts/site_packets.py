@@ -382,8 +382,7 @@ def concurrent_aspc(root):
     row = report.get("artifact")
     if not row:
         return (
-            prefix_html
-            + "<p>Concurrent ASPC research stopped without a downloadable artifact.</p>"
+            prefix_html + "<p>Concurrent ASPC research stopped without a downloadable artifact.</p>"
         )
     name = row["file"]
     digest = row["sha256"]

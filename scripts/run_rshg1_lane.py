@@ -164,7 +164,8 @@ def verify_recorded() -> dict[str, Any]:
         or pre.get("run_card", {}).get("artifact_name_matches") is not True
         or pre.get("decision", {}).get("submission_status") != "DO_NOT_SUBMIT"
         or pre.get("decision", {}).get("ready_to_submit") is not False
-        or pre.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1") is not True
+        or pre.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1")
+        is not True
     ):
         raise SystemExit("RSHG1 preflight receipt missing, stale, or not fail-closed")
 
@@ -959,7 +960,9 @@ def main() -> None:
             fit_raw_ablation=False,
         )
         all_rows = np.arange(len(fp_ids), dtype=np.int64)
-        p_full_rows = predict_in_chunks(models_full, resid_full, cal_full, mm, nuisance_fp, all_rows)
+        p_full_rows = predict_in_chunks(
+            models_full, resid_full, cal_full, mm, nuisance_fp, all_rows
+        )
         p_full_cal = np.zeros(fp.shape, dtype=np.float32)
         p_full_cal.ravel()[fp_ids] = p_full_rows
         del models_full, resid_full, cal_full, p_full_rows, all_rows, nuisance_fp
@@ -988,7 +991,9 @@ def main() -> None:
                 },
                 EXPERIMENT_JSON,
             )
-            raise SystemExit("HALT: Pre-placement surface exceeded method-lane rank correlation 0.90")
+            raise SystemExit(
+                "HALT: Pre-placement surface exceeded method-lane rank correlation 0.90"
+            )
 
         final_dots = rshg1.emit_rshg1_dots(
             p_full_cal,

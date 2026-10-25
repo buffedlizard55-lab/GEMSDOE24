@@ -325,9 +325,7 @@ def compute_modality_sahg1_g_sat(
     step_raw = decode(lidar_bands["step_max"], *sahg1.LIDAR_SPECS["step_max"])
     step = step_raw / (step_raw + 0.05)
     del step_raw
-    coh = np.sqrt(
-        np.clip(decode(lidar_bands["coh100"], *sahg1.LIDAR_SPECS["coh100"]), 0.0, 1.0)
-    )
+    coh = np.sqrt(np.clip(decode(lidar_bands["coh100"], *sahg1.LIDAR_SPECS["coh100"]), 0.0, 1.0))
     g0 = np.where(raw_valid, anti * veto * balance * step * coh, 0.0).astype(np.float32)
     del anti, veto, balance, step, coh
 
@@ -556,9 +554,7 @@ class RegimeNuisanceCalibrator:
 
         if int((~hl).sum()) >= 32:
             self.med_gap_ = float(np.median(debiased[~hl]))
-            self.spread_gap_ = max(
-                float(np.percentile(debiased[~hl], 99.0) - self.med_gap_), 0.25
-            )
+            self.spread_gap_ = max(float(np.percentile(debiased[~hl], 99.0) - self.med_gap_), 0.25)
         else:
             self.med_gap_ = self.med_lidar_
             self.spread_gap_ = self.spread_lidar_
