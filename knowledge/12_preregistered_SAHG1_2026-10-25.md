@@ -66,9 +66,13 @@ All four candidates are evaluated for novelty against the active repository (`H2
      - Basement depth gradient $d_{\text{bg}} = \sigma(|\nabla \text{depth\_to\_base\_surf}|)$,
      - Transtensional strain rate $s_{\text{geod}} = \sigma(\text{geod\_dilaterate} + \text{geod\_shearrate})$.
      - Combined subsurface factor: $B_{\text{step}} = 0.35\,g_{\text{hg}} + 0.25\,m_{\text{hg}} + 0.25\,d_{\text{bg}} + 0.15\,s_{\text{geod}} \in [0, 1]$.
-5. **Combined `H24-SAHG1` surface:**
-   $$S_{\text{SAHG1}} = G_{\text{strike}} \cdot (0.55 + 0.25\,R_{\text{alt}} + 0.20\,B_{\text{step}}) \in [0, 1] \quad \text{on } \texttt{support}, \quad 0 \text{ outside } \texttt{support}.$$
-   - Because $G_{\text{strike}}$ is multiplicative and bounded in $[0, 1]$ while $R_{\text{alt}}$ and $B_{\text{step}}$ act as bounded $[0.55, 1.0]$ physical corroboration weights, `H24-SAHG1` preserves sharp 100 m fault-scarp localization while re-ranking candidate scarps by strike persistence, hydrothermal K/U alteration at stable Th, and subsurface basement/strain support.
+5. **Combined `H24-SAHG1` surface (saturating structural scarp gate $\times$ joint hydrothermal-basement conduit score):**
+   - Unlike `ASPC`, which ranks candidates purely by raw LiDAR scarp amplitude (causing 2 m range-front scarps and non-tectonic terrace risers with zero hydrothermal/basement signal to dominate over 15 cm intra-basin geothermal fault scarps), `H24-SAHG1` uses a **saturating strike-coherent scarp localization gate** ($\tau_G = 0.015$):
+     $$G_{\text{sat}} = \frac{G_{\text{strike}}}{G_{\text{strike}} + 0.015} \in [0, 1],$$
+     so that any strike-coherent scarp above the decimetre noise floor is placed on an equal structural footing and ranked by **joint hydrothermal K/U alteration (at stable Th) and subsurface basement-step / strain corroboration**:
+     $$H_{\text{conduit}} = \sqrt{R_{\text{alt}} \cdot B_{\text{step}}} \in [0, 1],$$
+     $$S_{\text{SAHG1}} = G_{\text{sat}} \cdot \left(0.15 + 0.85\,H_{\text{conduit}}\right) \cdot \sqrt{B_{\text{step}}} \in [0, 1] \quad \text{on } \texttt{support}, \quad 0 \text{ outside } \texttt{support}.$$
+   - Because $G_{\text{sat}}$ saturates above $\tau_G = 0.015$ while $H_{\text{conduit}} \cdot \sqrt{B_{\text{step}}}$ varies across the full $[0, 1]$ range, candidate selection is governed by the co-occurrence of a strike-coherent scarp with hydrothermal K/U enrichment (at stable Th) and a subsurface gravity/magnetic/basement-depth step.
 
 ## 5. Validation, novelty, canary, and audit gates
 
