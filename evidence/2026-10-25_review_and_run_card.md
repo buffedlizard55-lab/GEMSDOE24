@@ -1,3 +1,7 @@
+# HISTORICAL INITIAL REVIEW — SUPERSEDED
+
+> This file records an early pre-experiment stop from 2026-10-25. Its statements that no experiment was run, no registry rasters were available, and no TIFF was generated are **historical and superseded** by [`evidence/aspc_run_card_20261025.json`](aspc_run_card_20261025.json), [`evidence/aspc_run_20261025.json`](aspc_run_20261025.json), and [`knowledge/10_ASPC_findings_2026-10-25.md`](../knowledge/10_ASPC_findings_2026-10-25.md). The later record reports one preregistered ASPC experiment, a unique research-only TIFF, and a negative promotion verdict. Do not use this file as the current run card.
+
 # GEMSDOE24 repository review and experiment decision — 2026-10-25
 
 ## Scope and evidence boundary

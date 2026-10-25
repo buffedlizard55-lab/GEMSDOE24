@@ -109,10 +109,17 @@ def build_independent_site(primary):
         raise SystemExit("Current download checksum does not match the run card")
     if primary["ok_to_submit"] or card["verdict"] != "negative" or card["ok_to_submit"]:
         raise SystemExit("Stopped negative artifact cannot be presented as submit-ready")
+    from gems.submission import check_variants
+
     for key, row in checks.items():
         target = DOCS / "downloads" / row["file"]
-        if not row["format_valid"] or sha256_file(target) != row["sha256"]:
-            raise SystemExit(f"Invalid or changed download variant: {key}")
+        fresh = check_variants(target, ROOT / "data/bridge/sample_submission.tif")
+        if (
+            not fresh["format_valid"]
+            or not row["format_valid"]
+            or any(fresh.get(field) != value for field, value in row.items())
+        ):
+            raise SystemExit(f"Invalid, changed or stale download variant: {key}")
     if primary["file"] != card["submission_name"] or primary["note"] != card["note"]:
         raise SystemExit("MTR1 metadata and exact run-card identity disagree")
     if (
@@ -120,16 +127,32 @@ def build_independent_site(primary):
         or (DOCS / "downloads" / primary["note_file"]).read_text().strip() != primary["note"]
     ):
         raise SystemExit("Current note is missing, changed or over the 140-character limit")
+    preflight_path = p.with_suffix(".preflight.json")
+    preflight = json.loads(preflight_path.read_text())
+    if (
+        preflight.get("artifact", {}).get("sha256") != primary["sha256"]
+        or preflight.get("run_card", {}).get("artifact_sha256_matches") is not True
+        or preflight.get("run_card", {}).get("artifact_name_matches") is not True
+        or preflight.get("decision", {}).get("submission_status") != "DO_NOT_SUBMIT"
+        or preflight.get("decision", {}).get("ready_to_submit") is not False
+        or preflight.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1")
+        is not True
+    ):
+        raise SystemExit("Current exact-file preflight is missing, stale, or does not fail closed")
     concurrent = concurrent_aspc(ROOT)
     score = card["holdout"]
     lo, hi = score["ci95"]["interval"]
     version = score["evaluator_version"]
     n = score["n_withheld_positive_pixels"]
     hlabel = f"HOLDOUT-DTI · {e(version)} · {n:,} withheld positives · approximate 95% CI [{lo:.5f}, {hi:.5f}]"
-    download = download_button(primary, "", "Download audit-only .tif — DO NOT SUBMIT")
+    download = (
+        download_button(primary, "", "Download audit-only .tif — DO NOT SUBMIT")
+        + f'<a class="button" href="downloads/{e(preflight_path.name)}">'
+        "Automated preflight — DO NOT SUBMIT</a>"
+    )
     status = '<div class="status stopped" role="status"><strong>DOWNLOAD: YES · SUBMIT: NO. NOT OK TO SUBMIT.</strong> Automated verdict: NEGATIVE. The overlap gate failed against a registered calibration lattice. No human inspection or exception can turn this packet into a PASS.</div>'
     note = f'<div class="note" id="note-current">{e(primary["note"])}</div><div class="actions"><button class="button" data-copy="#note-current" data-feedback="#copy-feedback">Copy short note</button><a class="button" href="downloads/{e(primary["note_file"])}" download>Note .txt</a></div><p id="copy-feedback" class="copyfeedback" aria-live="polite"></p><p class="micro">{len(primary["note"])} characters · maximum 140</p>'
-    file_info = f'<p class="fileline">{e(primary["file"])}</p><p class="hash">SHA-256 {e(primary["sha256"])}</p>'
+    file_info = f'<p class="fileline">{e(primary["file"])}</p><p class="hash">SHA-256 {e(primary["sha256"])}</p><p class="micro">Strict whole-array [0,1] diagnostic: pass · scientific authorization: false</p>'
     hero = f"""<div class="hero"><div><div class="eyebrow">DOE GEMS · independently generated experiment</div><h1>A new raster.<br>An honest decision.</h1><p class="lead">The paired-magnetic-trough method generated its own predictions from cached physical layers. <strong>No previous submission pixels were copied.</strong> It passes file-format checks, but it fails your lane-overlap rule. It is not yet scored and <strong>must not be submitted</strong>.</p>{status}<div class="actions">{download}<a class="button" href="executive-summary.html">Submission status &amp; guide →</a></div>{file_info}<p class="micro"><span class="badge blue">Format PASS</span> <span class="badge danger">Novelty gate FAIL</span> <span class="badge gray">No slot used</span></p></div><aside class="card visual"><div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Not leaderboard scores</span></div><div class="result-number">{score["dti"]:.5f}</div><p>{hlabel}</p><img class="raster-preview" src="assets/mtr1-preview.png" alt="Downsampled map of independently computed experimental fault dots, not verified faults or geothermal vents"><p class="micro">Experiment preview · downsampled 100 m grid · not verified faults or vents</p></aside></div>"""
     rows = [
         (
@@ -225,7 +248,7 @@ def build_independent_site(primary):
 # Verifies frozen evidence; the stopped experiments refuse implicit reruns.
 .venv/bin/python scripts/export_negative_result.py
 .venv/bin/python scripts/build_site.py
-.venv/bin/python -m pytest -q</code></pre><p class="micro">Caches and the 419 MB training raster are ignored. GitHub download access is sufficient for these CPU experiments. Original organizer authentication of owner mirrors and an explicit single-method lane remain unavailable. No GPU is required.</p></section><section><h2>Next work — completed and remaining</h2><ol class="steplist"><li><h3>Completed: Prospective registry-overlap separation</h3><p><code>gems.novelty.compare_prospective_registry</code> separates synthetic calibration controls (<code>registry-039</code> spacing-5 lattice, <code>registry-044</code> zero placeholder) from the 46 competing method lanes and 83 peer blobs while keeping literal all-entry flags on record.</p></li><li><h3>Completed: Reconstructed same-protocol OOF multi-physics baseline</h3><p><code>oof_multiphysics_hgb_d3</code> refits a fold-local 27-channel HGB detector strictly on <code>fold["train"]</code> of <code>SegmentHoldout</code>, establishing a leakage-free OOF benchmark of <strong>HOLDOUT-DTI 0.13000</strong> (95% CI [0.11565, 0.14396]).</p></li><li><h3>Completed: Strike-projected hydrothermal-geomorphic operator &amp; exact-file C2ST</h3><p><code>H24-SAHG1</code> achieves <strong>HOLDOUT-DTI 0.09672</strong> ([0.08657, 0.10703]) on <code>gems-segment-pooled-v1</code> and <strong>0.09655</strong> ([0.08270, 0.10976]) on <code>segment-hide-recover-pooled-v1</code>, beating <code>MTR1</code>, <code>ASPC</code>, and its own geomorphic ablation <code>G_0</code> (+0.01012), and is audited by <code>gems.c2s2</code> (AUC 0.5826 vs. labels 0.4912). Next session: fold-local integration of <code>G_strike</code> and <code>R_alt</code> into the OOF HGB model with nuisance residualization.</p></li></ol><p>Open legacy PR #7 remains conflicting and was not merged or overwritten. Official block boundaries remain a derived audit, not published coordinates. No human exception is requested.</p></section><section><h2>Machine-readable evidence</h2><div class="actions"><a class="button" href="data/sahg1_run_card.json" download>SAHG1 JSON run card</a><a class="button" href="data/sahg1_experiment_20261025.json" download>SAHG1 experiment</a><a class="button" href="data/mtr1_run_card.json" download>MTR1 JSON card</a><a class="button" href="data/mtr1_experiment.json" download>MTR1 experiment</a><a class="button" href="data/priority_rasters.json" download>Registry manifest</a><a class="button" href="data/priority_feed.json" download>Source freshness</a></div></section>"""
+.venv/bin/python -m pytest -q</code></pre><p class="micro">Caches and the 419 MB training raster are ignored. GitHub download access is sufficient for these CPU experiments. Original organizer authentication of owner mirrors and an explicit single-method lane remain unavailable. No GPU is required.</p></section><section><h2>Next work — completed and remaining</h2><ol class="steplist"><li><h3>Completed: Prospective registry-overlap separation</h3><p><code>gems.novelty.compare_prospective_registry</code> separates synthetic calibration controls (<code>registry-039</code> spacing-5 lattice, <code>registry-044</code> zero placeholder) from the 46 competing method lanes and 83 peer blobs while keeping literal all-entry flags on record.</p></li><li><h3>Completed: Reconstructed same-protocol OOF multi-physics baseline</h3><p><code>oof_multiphysics_hgb_d3</code> refits a fold-local 27-channel HGB detector strictly on <code>fold["train"]</code> of <code>SegmentHoldout</code>, establishing a leakage-free OOF benchmark of <strong>HOLDOUT-DTI 0.13000</strong> (95% CI [0.11565, 0.14396]).</p></li><li><h3>Completed: Strike-projected hydrothermal-geomorphic operator &amp; exact-file C2ST</h3><p><code>H24-SAHG1</code> achieves <strong>HOLDOUT-DTI 0.09672</strong> ([0.08657, 0.10703]) on <code>gems-segment-pooled-v1</code> and <strong>0.09655</strong> ([0.08270, 0.10976]) on <code>segment-hide-recover-pooled-v1</code>, beating <code>MTR1</code>, <code>ASPC</code>, and its own geomorphic ablation <code>G_0</code> (+0.01012), and is audited by <code>gems.c2s2</code> (AUC 0.5826 vs. labels 0.4912). Next session: fold-local integration of <code>G_strike</code> and <code>R_alt</code> into the OOF HGB model with nuisance residualization.</p></li></ol><p>Open legacy PR #7 remains conflicting and was not merged or overwritten. Official block boundaries remain a derived audit, not published coordinates. No human exception is requested.</p></section><section><h2>Machine-readable evidence</h2><div class="actions"><a class="button" href="data/sahg1_run_card.json" download>SAHG1 JSON run card</a><a class="button" href="data/sahg1_experiment_20261025.json" download>SAHG1 experiment</a><a class="button" href="data/mtr1_run_card.json" download>MTR1 JSON card</a><a class="button" href="data/mtr1_experiment.json" download>MTR1 experiment</a><a class="button" href="data/priority_rasters.json" download>Registry manifest</a><a class="button" href="data/priority_feed.json" download>Source freshness</a><a class="button" href="data/submission_preflight_review_20261025.json" download>Preflight review</a></div></section>"""
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),
@@ -262,6 +285,12 @@ def build_independent_site(primary):
         )
     (DOCS / "data/priority_rasters.json").write_text(
         (ROOT / "registry/priority_rasters.json").read_text()
+    )
+    preflight_review = ROOT / "evidence/submission_preflight_review_20261025.json"
+    if not preflight_review.exists():
+        raise SystemExit("Missing exact-file preflight review record")
+    (DOCS / "data/submission_preflight_review_20261025.json").write_text(
+        preflight_review.read_text()
     )
     sahg1_md = ""
     if sahg1_card:

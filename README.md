@@ -25,6 +25,43 @@ the owner's brief at the bottom; (2) [`knowledge/owner_brief_verbatim.md`](knowl
 [Dotting preregistration](knowledge/04_preregistered_dotting_2026-10-02.md) ·
 [Source review](knowledge/03_verified_sources_2026-10-02.md)
 
+## Exact-file release hardening (2026-10-25)
+
+Site generation now reopens the active MTR1 TIFF variants with the shared format
+validator, not just their saved receipts. Retained ASPC research can also be
+verified with `python scripts/verify_research_release.py`. Both results remain
+**NOT OK TO SUBMIT**. Install testing dependencies with
+`python -m pip install -e '.[dev]'`.
+[Three-pass review](knowledge/11_release_review_2026-10-25.md).
+
+## Latest continuation audit (2026-10-25)
+
+The repeated owner request remains the active [project brief](knowledge/owner_brief_2026-10-25.md).
+Read it at each session start; no new single-method lane paragraph was supplied.
+This continuation **does not relabel or regenerate the existing TIFF as new work**.
+Both existing download encodings were independently reopened using the shared
+validator and pinned template. Their bytes and decisions match their receipts.
+**NOT OK TO SUBMIT** remains the automated scientific decision.
+
+```bash
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/pip install --no-deps -e .
+.venv/bin/python scripts/audit_research_downloads.py  # read-only; never authorizes
+# Separate FORMAT / strict-range / scientific gates; active packet must print DO_NOT_SUBMIT.
+.venv/bin/python scripts/preflight_submission.py \
+  docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif \
+  --run-card evidence/mtr1_run_card.json \
+  --output docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.preflight.json
+.venv/bin/python -m pytest -q
+```
+
+The ASPC download checks now reject inconsistent authorization, hard-requirement decisions,
+filenames or embedded receipts for **both** primary and companion downloads.
+[Three-pass review and next steps](knowledge/11_continuation_audit_2026-10-25.md) ·
+[Fresh exact-file audit](evidence/research_download_audit_20261025.json).
+No new experiment, new geological discovery, higher score or slot use is claimed.
+
 ## Current decision
 
 <!-- STATUS:START -->
@@ -145,7 +182,8 @@ are retained. This README embeds the full current brief available to this sessio
 not a consolidated summary substituted for it.
 
 [MTR1 findings, source ledger and limitations](knowledge/11_MTR1_findings_2026-10-25.md)
-· [Three-pass review](evidence/mtr1_review_passes_20261025.json).
+· [Three-pass review](evidence/mtr1_review_passes_20261025.json) ·
+[This session's repository verification](evidence/2026-10-25_session_review.md).
 
 ## Historical standing charter — retained for provenance; current protocol governs
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from html import escape
 
+from gems.receipts import research_receipt
 from gems.validator import sha256_file
 
 
@@ -51,6 +52,18 @@ def concurrent_sahg1(root):
     note_path = root / "docs/downloads" / dl["note_file"]
     if len(dl["note"]) > 140 or note_path.read_text().strip() != dl["note"]:
         raise ValueError("SAHG1 note is missing, changed, or exceeds 140 characters")
+    preflight_path = target.with_suffix(".preflight.json")
+    preflight = json.loads(preflight_path.read_text())
+    if (
+        preflight.get("artifact", {}).get("sha256") != digest
+        or preflight.get("run_card", {}).get("artifact_sha256_matches") is not True
+        or preflight.get("run_card", {}).get("artifact_name_matches") is not True
+        or preflight.get("decision", {}).get("submission_status") != "DO_NOT_SUBMIT"
+        or preflight.get("decision", {}).get("ready_to_submit") is not False
+        or preflight.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1")
+        is not True
+    ):
+        raise ValueError("SAHG1 exact-file preflight is missing, stale, or does not fail closed")
     e = lambda s: escape(str(s), quote=True)  # noqa: E731
     h_main = card["holdout"]
     lo, hi = h_main["ci95"]["interval"]
@@ -80,6 +93,7 @@ spacing-5 calibration lattice overlap if calibration controls are not separated.
 <a class="button" href="downloads/{e(dl["nan_file"])}" download="{e(dl["nan_file"])}">↓ SAHG1 NaN-outside twin — DO NOT SUBMIT</a>
 <a class="button" href="data/sahg1_run_card.json">SAHG1 JSON run card</a>
 <a class="button" href="downloads/{e(dl["checks_file"])}">SAHG1 validator JSON</a>
+<a class="button" href="downloads/{e(preflight_path.name)}">SAHG1 preflight JSON</a>
 </div>
 <details open><summary>SAHG1 HOLDOUT-DTI comparison, short note, and SHA-256 (not leaderboard scores)</summary>
 <p><strong>Primary evaluator <code>{e(h_main["evaluator_version"])}</code></strong> ({h_main["n_withheld_positive_pixels"]:,} withheld positives, 1.5 km collar, 10 km block bootstrap, 1,999 draws):
@@ -112,15 +126,9 @@ def concurrent_aspc(root):
     digest = row["sha256"]
     if card.get("raster_sha256") != digest or card.get("submission_name") != name:
         raise ValueError("Concurrent ASPC run-card and artifact identity disagree")
-    target = root / "docs/downloads" / name
-    checks = json.loads(target.with_suffix(".checks.json").read_text())
-    if (
-        sha256_file(target) != digest
-        or checks.get("sha256") != digest
-        or checks.get("format_valid") is not True
-        or checks.get("submission_authorized") is not False
-    ):
-        raise ValueError("Concurrent ASPC file or exact-file validator disagrees")
+    checks = research_receipt(root / "docs/downloads", row)
+    if card.get("validator_output") != checks:
+        raise ValueError("Concurrent ASPC validator output disagrees")
     if (
         report.get("submission_authorized") is not False
         or row.get("submission_authorized") is not False
@@ -130,15 +138,9 @@ def concurrent_aspc(root):
         raise ValueError("A negative research page cannot grant ASPC slot authorization")
     twin = report.get("template_convention_companion")
     if twin:
-        p = root / "docs/downloads" / twin["file"]
-        sidecar = json.loads(p.with_suffix(".checks.json").read_text())
-        if (
-            sha256_file(p) != twin["sha256"]
-            or sidecar.get("sha256") != twin["sha256"]
-            or sidecar.get("format_valid") is not True
-            or sidecar.get("submission_authorized") is not False
-        ):
-            raise ValueError("Concurrent ASPC template-convention companion changed")
+        research_receipt(root / "docs/downloads", twin)
+        if card.get("template_convention_companion") != twin:
+            raise ValueError("Concurrent ASPC companion identity disagrees")
     if len(row["note"]) > 140:
         raise ValueError("Concurrent lane note exceeds current limit")
     e = lambda s: escape(str(s), quote=True)  # noqa: E731
