@@ -13,6 +13,12 @@ dependencies = [
   "pyshp==3.1.6", "threadpoolctl==3.7.0", "joblib==1.6.0"
 ]
 
+[project.optional-dependencies]
+dev = [
+  "pandas==3.0.6", "requests==2.34.2", "pypdf==6.19.0",
+  "beautifulsoup4==4.15.0", "pytest==9.1.1", "ruff==0.16.10"
+]
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
