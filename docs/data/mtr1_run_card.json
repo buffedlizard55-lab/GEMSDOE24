@@ -1,0 +1,286 @@
+{
+  "hypothesis": "H24-MTR1 paired magnetic trough with local Th/K depletion",
+  "mechanism": "Paired signed RTP trough + tangent persistence, weighted by local contractor Th/K depletion; no terrain, label-derived feature or old prediction input",
+  "non_fault_mimic": "Magnetite-poor alluvial paleochannel with K-rich detritus",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 3656.1522752929345,
+    "FP_w": 36203.641167514914,
+    "FN_w": 57331.84772470707,
+    "n_truth": 60988.0,
+    "n_emitted": 37722.0,
+    "dti": 0.06441156357414125,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.058299401413499985,
+        0.07112431360797855
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 700.249706112445,
+        "FP_w": 8133.758898385713,
+        "FN_w": 9464.750293887555,
+        "n_truth": 10165,
+        "n_emitted": 8430,
+        "dti": 0.070740855898438,
+        "coverage": 0.06888831343949287
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 704.6025675861979,
+        "FP_w": 10113.668299034009,
+        "FN_w": 11806.397432413802,
+        "n_truth": 12511,
+        "n_emitted": 10422,
+        "dti": 0.05788500474493856,
+        "coverage": 0.05631864499929645
+      },
+      {
+        "fold": "SW",
+        "TP_w": 1143.6219297201112,
+        "FP_w": 9960.595551076934,
+        "FN_w": 19390.37807027989,
+        "n_truth": 20534,
+        "n_emitted": 10429,
+        "dti": 0.06132664426429019,
+        "coverage": 0.055694064951792695
+      },
+      {
+        "fold": "SE",
+        "TP_w": 1107.6780718741807,
+        "FP_w": 7995.618419018256,
+        "FN_w": 16670.32192812582,
+        "n_truth": 17778,
+        "n_emitted": 8441,
+        "dti": 0.06904406767311773,
+        "coverage": 0.062306112716513706
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "magnetic_only_ablation": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 3498.9886208122743,
+    "FP_w": 36260.67850956335,
+    "FN_w": 57489.01137918772,
+    "n_truth": 60988.0,
+    "n_emitted": 37722.0,
+    "dti": 0.06166451764562432,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.05571278278087662,
+        0.06827329304394117
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 669.9091687286318,
+        "FP_w": 8141.075846592252,
+        "FN_w": 9495.09083127137,
+        "n_truth": 10165,
+        "n_emitted": 8430,
+        "dti": 0.06770728018801261,
+        "coverage": 0.06590350897477933
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 656.7192404995884,
+        "FP_w": 10134.515302188755,
+        "FN_w": 11854.280759500412,
+        "n_truth": 12511,
+        "n_emitted": 10422,
+        "dti": 0.05397523700129471,
+        "coverage": 0.05249134685473491
+      },
+      {
+        "fold": "SW",
+        "TP_w": 1089.9144538224014,
+        "FP_w": 9978.439728588195,
+        "FN_w": 19444.085546177597,
+        "n_truth": 20534,
+        "n_emitted": 10429,
+        "dti": 0.05846907386340979,
+        "coverage": 0.05307852604569988
+      },
+      {
+        "fold": "SE",
+        "TP_w": 1082.4457577616527,
+        "FP_w": 8006.64763219415,
+        "FN_w": 16695.554242238348,
+        "n_truth": 17778,
+        "n_emitted": 8441,
+        "dti": 0.06748322946744684,
+        "coverage": 0.0608868127889331
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "paired_gain_dti": 0.0027470459285169335,
+  "correlation_overlap_vs_registry": {
+    "unique_registry_rasters": 46,
+    "surface_max_abs_rank_correlation": 0.04241557642574978,
+    "final_max_abs_rank_correlation": 0.07756090544069577,
+    "final_max_overlap_within_3px": 1.0,
+    "passed": false,
+    "scope": "All published docs/downloads/*.tif in the nine pinned priority repositories plus local inputs; not every unseen registry in parallel sessions",
+    "raw_rank_scope": "exact over all footprint pixels",
+    "kernel_sensitivity_sample_pixels": 200000,
+    "veto_geometry": {
+      "registry_id": "registry-039",
+      "lattice_file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "footprint_fraction_within_3px_of_lattice": 0.9987132726822701,
+      "supported_candidate_domain_fraction_within_3px": 1.0,
+      "interpretation": "Spacing-5 lattice covers the supported domain at radius 3: overlap alone cannot distinguish ANY detector in that domain. Gate nevertheless remains failed.",
+      "no_comparator_removed": true
+    }
+  },
+  "raster_sha256": "3f881cdcaa22557b4265c0415d1b9f436b9f5804a55aabb52edfbc4de67fee83",
+  "validator_output": {
+    "file": "gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif",
+    "bytes": 825406,
+    "sha256": "3f881cdcaa22557b4265c0415d1b9f436b9f5804a55aabb52edfbc4de67fee83",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37722,
+    "in_footprint_mass": 37722.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "submission_name": "gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif",
+  "nan_outside_artifact": "gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-nan.tif",
+  "pixel_count": 37722,
+  "note": "GEMS24 MTR1 | paired RTP trough + Th/K | NEGATIVE: lattice overlap veto; DO NOT SUBMIT | id ed7243e6d163",
+  "verdict": "negative",
+  "content_identical_to_registry": false,
+  "independently_computed": true,
+  "lane_uniqueness_gate_passed": false,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "reasons": [
+    "Duplicate-overlap stop: every candidate dot is <=3 px from the registered spacing-5 calibration lattice",
+    "No independently reconstructed comparable current-best OOF baseline",
+    "No explicit assigned lane paragraph in the brief; provisional lane only",
+    "Separate weekly-slot selector not run"
+  ],
+  "organizer_confirmed_score": null,
+  "experiments_run": 1,
+  "submission_slots_used": 0,
+  "packaging_deviation": "After duplicate stop, exported the unchanged already-tested negative artifact solely for audit. No retuning, comparator removal, new experiment or promotion."
+}

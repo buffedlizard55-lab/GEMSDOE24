@@ -1,5 +1,33 @@
 # Standing project instructions
 
+**Current precedence (2026-10-25):** read `knowledge/owner_brief_2026-10-25.md`
+and the current README decision first. It is also embedded in README. The
+current brief supersedes historic requests to submit reference subsets or seek
+an owner/human inspection exception. Read
+`knowledge/09_preregistration_magnetic_trough_2026-10-25.md` and
+`evidence/mtr1_run_card.json`. The lane STOPPED as duplicate under the literal
+overlap rule: a registered spacing-5 lattice covers the supported domain at
+radius 3. Do not remove it after the fact, retune this lane or label the negative
+TIFF submit-ready. No old submission pixels may enter a new detector.
+
+- Current shared evaluator: `gems.holdout.SegmentHoldout` /
+  `scripts/evaluate_holdout.py`: whole components hidden everywhere, buffered
+  spatial quadrants, visible-only catalogue features/masks, POOLED metric
+  components, versioned HOLDOUT-DTI with positive count and 95% CI.
+- Current shared writer: `gems.submission` / `scripts/submission_writer.py`.
+  File validity never sets `ok_to_upload=true`. Separate selector required.
+- Test every actual source/transform alone for leakage, both AUC polarities.
+- Pre-placement and final registry checks; exact raw rank correlations and
+  all-dot directional overlap. Exceed .90 rank or .70 overlap at <=3 px => STOP.
+- At most 3 experiments or 2 hours/session. Current stopped session ran 1.
+  Negative results are deliverables, not a reason to keep searching.
+- No ORGANIZER-CONFIRMED result without an artifact-linked submission-page
+  receipt. Current leaderboard claims conflict and remain unverified.
+
+The older instructions below remain for historical reproduction where they do
+not conflict with that current protocol.
+
+
 Read the entire root README, its standing owner charter and the **verbatim owner brief**
 (`README.md`, section "Owner brief") at the start of every session. Maximize P(Win) and
 Own the Outcome, without promising a score or prize.
