@@ -30,7 +30,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python scripts/refresh_priority_feed.py
-      - name: Validate current first-screen site and exact-file evidence
+      - name: Build honest static site from recorded evidence
         run: python scripts/build_site.py
       - name: Stage only the small public website, never raw training data
         run: |

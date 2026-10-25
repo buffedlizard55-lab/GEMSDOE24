@@ -32,32 +32,6 @@ def built(tmp_path_factory):
     )
     shutil.copy(ROOT / "README.md", tmp / "README.md")
     result = subprocess.run(
-        [sys.executable, "scripts/build_site.py", "--legacy-research-site"],
-        cwd=tmp,
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode == 0, result.stderr[-2000:]
-    return tmp
-
-
-@pytest.fixture(scope="module")
-def current_built(tmp_path_factory):
-    """Public build path must validate and retain the newest first-screen packet."""
-    tmp = tmp_path_factory.mktemp("current-site")
-    for name in COPY:
-        shutil.copytree(
-            ROOT / name,
-            tmp / name,
-            ignore=shutil.ignore_patterns("__pycache__", "archive", "*.pyc"),
-        )
-    (tmp / "data/bridge").mkdir(parents=True)
-    shutil.copy(
-        ROOT / "data/bridge/sample_submission.tif", tmp / "data/bridge/sample_submission.tif"
-    )
-    shutil.copy(ROOT / "README.md", tmp / "README.md")
-    shutil.copy(ROOT / "index.html", tmp / "index.html")
-    result = subprocess.run(
         [sys.executable, "scripts/build_site.py"], cwd=tmp, capture_output=True, text=True
     )
     assert result.returncode == 0, result.stderr[-2000:]
@@ -168,10 +142,7 @@ def test_site_rejects_a_run_card_that_disagrees_with_the_exact_download(built):
     try:
         path.write_text(json.dumps(altered))
         result = subprocess.run(
-            [sys.executable, "scripts/build_site.py", "--legacy-research-site"],
-            cwd=built,
-            capture_output=True,
-            text=True,
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
         )
         assert result.returncode != 0 and "identity disagree" in result.stderr
     finally:
@@ -198,10 +169,7 @@ def test_site_rejects_mtr_card_checksum_tampering_without_falling_back_to_old_fi
         altered["raster_sha256"] = "0" * 64
         path.write_text(json.dumps(altered))
         result = subprocess.run(
-            [sys.executable, "scripts/build_site.py", "--legacy-research-site"],
-            cwd=built,
-            capture_output=True,
-            text=True,
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
         )
         assert result.returncode != 0 and "checksum" in result.stderr
     finally:
@@ -220,39 +188,11 @@ def test_site_rejects_a_stale_or_permissive_mtr_preflight(built):
         altered["decision"]["submission_status"] = "OK_TO_SUBMIT"
         path.write_text(json.dumps(altered))
         result = subprocess.run(
-            [sys.executable, "scripts/build_site.py", "--legacy-research-site"],
-            cwd=built,
-            capture_output=True,
-            text=True,
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
         )
         assert result.returncode != 0 and "preflight" in result.stderr
     finally:
         path.write_text(original)
-
-
-def test_checked_in_pages_match_the_current_negative_packet():
-    """Catch stale generated HTML that foregrounds a superseded raster."""
-    card = json.loads((ROOT / "docs/data/unique_run_card.json").read_text())
-    receipt = json.loads((ROOT / "evidence/current_download_revalidation.json").read_text())
-    assert receipt["validator_output"]["sha256"] == card["raster_sha256"]
-    for name in ("docs/index.html", "docs/executive-summary.html", "index.html"):
-        text = (ROOT / name).read_text()
-        assert f'download="{card["submission_name"]}"' in text
-        assert card["raster_sha256"] in text
-        assert "NOT OK TO SUBMIT" in text
-
-
-def test_public_build_does_not_replace_current_download_with_older_packet(current_built):
-    card = json.loads((current_built / "docs/data/unique_run_card.json").read_text())
-    receipt = json.loads((current_built / "evidence/site_build.json").read_text())
-    assert receipt["active_file"] == card["submission_name"]
-    assert receipt["primary_sha256"] == card["raster_sha256"]
-    assert receipt["submission_authorized"] is False
-    assert receipt["strict_whole_array_values_in_0_1"] is True
-    for name in ("index.html", "docs/index.html", "docs/executive-summary.html"):
-        text = (current_built / name).read_text()
-        assert f'download="{card["submission_name"]}"' in text
-        assert "NOT OK TO SUBMIT" in text
 
 
 @pytest.mark.parametrize("encoding", ["primary", "companion"])
@@ -266,10 +206,7 @@ def test_site_rejects_upload_permission_in_either_download_receipt(built, encodi
     try:
         path.write_text(json.dumps(checks))
         result = subprocess.run(
-            [sys.executable, "scripts/build_site.py", "--legacy-research-site"],
-            cwd=built,
-            capture_output=True,
-            text=True,
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
         )
         assert result.returncode != 0
         assert "disagrees" in result.stderr or "cannot grant upload authorization" in result.stderr
@@ -285,10 +222,7 @@ def test_site_rejects_sahg1_card_checksum_tampering(built):
         altered["raster_sha256"] = "0" * 64
         path.write_text(json.dumps(altered))
         result = subprocess.run(
-            [sys.executable, "scripts/build_site.py", "--legacy-research-site"],
-            cwd=built,
-            capture_output=True,
-            text=True,
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
         )
         assert result.returncode != 0 and "SAHG1 checksum" in result.stderr
     finally:

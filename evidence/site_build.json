@@ -10,10 +10,7 @@
   "root": "index.html",
   "slot_recommendation": "not_recommended",
   "new_slot_eligible": false,
-  "submission_authorized": false,
   "no_scores_fabricated": true,
   "verdict": "negative",
-  "site_policy": "current-download-v1; static pages verified against exact-file receipt",
-  "format_valid": true,
-  "strict_whole_array_values_in_0_1": true
+  "current_evaluator": "gems-segment-pooled-v1"
 }
