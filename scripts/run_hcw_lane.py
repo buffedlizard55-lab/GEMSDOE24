@@ -174,9 +174,7 @@ def build_engineered_features(fp: np.ndarray) -> tuple[dict[str, np.ndarray], np
         geophys_bands[name] = arr
     del stack
 
-    surfaces, support = sahg1.build_surfaces(
-        lidar_bands, rad_bands, ext_bands, geophys_bands, fp
-    )
+    surfaces, support = sahg1.build_surfaces(lidar_bands, rad_bands, ext_bands, geophys_bands, fp)
     del lidar_bands, rad_bands, ext_bands, geophys_bands
     gc.collect()
 
@@ -329,9 +327,7 @@ def evaluate_bridge_protocol(
     }
 
 
-def run_c2st_audit(
-    dots_map: dict[str, np.ndarray], catalogue: np.ndarray, fp: np.ndarray
-) -> dict:
+def run_c2st_audit(dots_map: dict[str, np.ndarray], catalogue: np.ndarray, fp: np.ndarray) -> dict:
     """Run C2ST nuisance audit (labels first, then emitted candidates) on road/claim/4-block confounds."""
     confounds.build_all(force=False)
     with np.load(confounds.CONF / "confounds.npz") as npz:
@@ -464,7 +460,6 @@ def main() -> None:
     h_conduit = surfaces["hydrothermal_conduit_h"]
 
     # Extract compact footprint vectors (5167373 x 4 float32 = 82 MB)
-    eng_names = ["G_sat", "R_alt", "B_step", "H_conduit"]
     X_eng_fp = np.column_stack(
         [
             np.nan_to_num(g_sat.ravel()[fp_ids], nan=0.0),
@@ -509,7 +504,9 @@ def main() -> None:
     oof_hcw = np.zeros(fp.shape, dtype=np.float32)
     preds_raw, preds_resid, preds_hcw, preds_base = [], [], [], []
 
-    print("4. Running fold-local OOF training & chunked inference across 4 quadrants...", flush=True)
+    print(
+        "4. Running fold-local OOF training & chunked inference across 4 quadrants...", flush=True
+    )
     with threadpool_limits(limits=2):
         for fold in context.folds:
             fid = int(fold["id"])
@@ -541,7 +538,9 @@ def main() -> None:
             train_fp_pool = np.flatnonzero(fold["train"].ravel()[fp_ids])
             u_rng = np.random.default_rng(SEED + 100 + fid)
             u_sel = u_rng.choice(train_fp_pool, min(30000, len(train_fp_pool)), replace=False)
-            X_u_31 = np.hstack([np.asarray(stack[u_sel, :base_nc], dtype=np.float32), X_eng_fp[u_sel]])
+            X_u_31 = np.hstack(
+                [np.asarray(stack[u_sel, :base_nc], dtype=np.float32), X_eng_fp[u_sel]]
+            )
             resid = NuisanceResidualizer(distance_columns=2, alpha=100.0).fit(C_fp[u_sel], X_u_31)
             del X_u_31
             X_train_resid = resid.transform(C_fp[train_sel], X_train_31, remove=True)
@@ -598,9 +597,9 @@ def main() -> None:
     active_blocks = np.unique((yy // 100) * nx + xx // 100)
 
     def active_block_matrix(preds: list[np.ndarray]) -> np.ndarray:
-        return np.sum(
-            [context.score_fold(p, f)[1] for p, f in zip(preds, context.folds)], axis=0
-        )[active_blocks]
+        return np.sum([context.score_fold(p, f)[1] for p, f in zip(preds, context.folds)], axis=0)[
+            active_blocks
+        ]
 
     tiles_base = active_block_matrix(preds_base)
     tiles_raw = active_block_matrix(preds_raw)
@@ -614,11 +613,15 @@ def main() -> None:
         }
 
     paired_comparisons = {
-        "fuse_raw_minus_oof_base": paired_ci(tiles_raw, sum_raw["dti"], tiles_base, sum_base["dti"]),
+        "fuse_raw_minus_oof_base": paired_ci(
+            tiles_raw, sum_raw["dti"], tiles_base, sum_base["dti"]
+        ),
         "fuse_resid_minus_oof_base": paired_ci(
             tiles_resid, sum_resid["dti"], tiles_base, sum_base["dti"]
         ),
-        "fuse_hcw_minus_oof_base": paired_ci(tiles_hcw, sum_hcw["dti"], tiles_base, sum_base["dti"]),
+        "fuse_hcw_minus_oof_base": paired_ci(
+            tiles_hcw, sum_hcw["dti"], tiles_base, sum_base["dti"]
+        ),
         "fuse_resid_minus_fuse_raw": paired_ci(
             tiles_resid, sum_resid["dti"], tiles_raw, sum_raw["dti"]
         ),
@@ -667,9 +670,7 @@ def main() -> None:
         p_full_resid = np.zeros(fp.shape, dtype=np.float32)
         for begin in range(0, len(sup_in_fp), CHUNK_SIZE):
             ch = sup_in_fp[begin : begin + CHUNK_SIZE]
-            X_ch_31 = np.hstack(
-                [np.asarray(stack[ch, :base_nc], dtype=np.float32), X_eng_fp[ch]]
-            )
+            X_ch_31 = np.hstack([np.asarray(stack[ch, :base_nc], dtype=np.float32), X_eng_fp[ch]])
             pr = model_full_raw.predict_proba(X_ch_31)[:, 1].astype(np.float32)
             X_ch_res = resid_full.transform(C_fp[ch], X_ch_31, remove=True)
             del X_ch_31
