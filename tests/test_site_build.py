@@ -26,6 +26,10 @@ def built(tmp_path_factory):
         ROOT / "data/external/audit_sources/acquisition_blocks_receipt.json",
         tmp / "data/external/audit_sources/acquisition_blocks_receipt.json",
     )
+    (tmp / "data/bridge").mkdir(parents=True)
+    shutil.copy(
+        ROOT / "data/bridge/sample_submission.tif", tmp / "data/bridge/sample_submission.tif"
+    )
     shutil.copy(ROOT / "README.md", tmp / "README.md")
     result = subprocess.run(
         [sys.executable, "scripts/build_site.py"], cwd=tmp, capture_output=True, text=True

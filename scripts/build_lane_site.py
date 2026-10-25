@@ -9,6 +9,10 @@ from html import escape
 
 
 def build(root, page):
+    from gems.release_audit import verify_research_release
+
+    # Reopen both TIFFs before rendering any download link; JSON alone is not validation.
+    verify_research_release(root)
     docs = root / "docs"
     report = json.loads((root / "evidence/aspc_run_20261025.json").read_text())
     card = json.loads((root / "evidence/aspc_run_card_20261025.json").read_text())

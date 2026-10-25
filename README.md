@@ -26,6 +26,21 @@ the owner's brief at the bottom; (2) [`knowledge/owner_brief_verbatim.md`](knowl
 [Source review](knowledge/03_verified_sources_2026-10-02.md)
 
 
+## Follow-up release review (2026-10-25)
+
+**Still NOT OK TO SUBMIT.** The unique ASPC research TIFF below has now been
+reopened and revalidated independently of its stored format receipts. Site builds
+fail closed if bytes, validator receipts, run card or authorization flags disagree.
+This is verification of the frozen result, **not a new geological experiment**.
+See the [three-pass review and prioritized next steps](knowledge/11_release_review_2026-10-25.md)
+and [fresh exact-file audit](evidence/release_revalidation_20261025.json).
+
+```bash
+python -m pip install -e '.[dev]'
+python scripts/verify_research_release.py  # offline; does not rerun confirmation folds
+python -m pytest -q
+```
+
 ## Current reproducibility entry point (2026-10-25)
 
 ```bash
