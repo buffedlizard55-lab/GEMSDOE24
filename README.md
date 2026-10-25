@@ -106,6 +106,15 @@ PhD synthesis & findings:
 [`knowledge/18_RSHG1_findings_2026-10-25.md`](knowledge/18_RSHG1_findings_2026-10-25.md) ·
 Executive guide: [`docs/executive-summary.html`](docs/executive-summary.html).
 
+**Current artifact (this session — H24-FUSE-HCW):**
+`docs/downloads/gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif`
+(SHA-256: `cfb5d21f9f0308a4c5cc917641c1cfd4d8f73d60fa4f64cf12ba9548ae23afb3`)
+and NaN-outside twin `docs/downloads/gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-nan.tif`
+(SHA-256: `83ef2a11cbbe7d3be7ba9c41f7b1bc892bc29fa0e9ba29f3ca8c2a53762e635a`)
+— **DOWNLOAD: YES · SUBMIT: NO** · format-valid, strict `[0, 1]` PASS, no NaN anywhere in `-zeros.tif`,
+passes exact-file C2ST nuisance audit (AUC `0.5108` < 0.55, Holm *p* = `0.870`; `FUSE-RESID` AUC `0.4928`),
+passes prospective method-lane novelty across all 49 competing method rasters (max 3-px overlap `0.6315` ≤ 0.70 vs. `0.7399` FAIL on unresidualized `FUSE-RAW`) and 83 peer blobs (`0.6025` ≤ 0.70), and achieves **HOLDOUT-DTI 0.12372** (95% CI `[0.11229, 0.13496]`) on `gems-segment-pooled-v1` (beating `SAHG1` `0.09672` by **+0.02701**, `ASPC` `0.08553` by **+0.02798**, `CON` `0.06446` by **+0.05926**, `MTR1` `0.06441` by **+0.05931**, and `H-UNIQUE-03` `0.05384` by **+0.06988**). Automatically marked **DO NOT SUBMIT** because removing road/claim/acquisition-block confounds costs `-0.00627` relative to the unresidualized `0.13000` OOF baseline and the literal all-entry check includes the synthetic spacing-5 calibration lattice (`1.0`). Run card: `docs/data/hcw_run_card.json`. Executive guide: `docs/executive-summary.html`.
+
 **Historical UNIQUE03 artifact (not the latest experiment):**
 `docs/downloads/24gems-doer-fault-guided-k-20261025T220208Z-dedb860f7e83-zeros.tif`
 (SHA-256: `800856082214038640ba98796c390ff76cb8583944dbc05505d9787ce7688c9e`)
@@ -228,6 +237,12 @@ Latest OJ1 research TIFF: [`gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zero
 
 **DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
 
+Latest 2026-10-25 `H24-FUSE-HCW` Residualized Conduit OOF-HGB GeoTIFF (executes documented Next Step #4):
+[`gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif`](docs/downloads/gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif) (`SHA-256: cfb5d21f9f0308a4c5cc917641c1cfd4d8f73d60fa4f64cf12ba9548ae23afb3`)
+and NaN-outside twin [`gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-nan.tif`](docs/downloads/gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-nan.tif).
+Passes exact-grid/`[0,1]` checks, passes exact-file C2ST nuisance audit (AUC `0.5108` < 0.55, Holm *p* = `0.870`; `FUSE-RESID` AUC `0.4928`, down from `0.5826` on `SAHG1`), and passes prospective novelty against all 49 competing method lanes (max 3-px overlap `0.6315` ≤ 0.70 vs. `0.7399` FAIL on unresidualized `FUSE-RAW`) and 83 peer blobs (`0.6025` ≤ 0.70). Achieves **HOLDOUT-DTI** `gems-segment-pooled-v1` = **0.12372** (95% CI **[0.11229, 0.13496]**, 60,988 withheld positives) and `segment-hide-recover-pooled-v1` = **0.12362** (95% CI **[0.10803, 0.13980]**), outperforming every prior method-lane-unique detector in this repository (`SAHG1` `0.09672` by **+0.02701**, `ASPC` `0.08553` by **+0.02798**, `CON` `0.06446` by **+0.05926**, `MTR1` `0.06441` by **+0.05931**, `H-UNIQUE-03` `0.05384` by **+0.06988**). Remains **DOWNLOAD: YES · SUBMIT: NO** because removing road/claim/acquisition-block confounds costs `-0.00627` relative to the unresidualized `oof_multiphysics_hgb_d3` baseline (`0.13000`) and the literal all-entry overlap rule still flags the synthetic spacing-5 calibration lattice (`1.0`).
+[FUSE-HCW JSON run card](evidence/hcw_run_card_20261025.json) · [FUSE preregistration](knowledge/17_preregistered_FUSE_2026-10-25.md) · [FUSE findings & audit](knowledge/18_FUSE_findings_2026-10-25.md)
+
 Highest-Holdout 2026-10-25 `H24-GVC1` INGENIOUS Hydrothermal-Upflow + Tilt + 8-Azimuth Lineament GeoTIFF:
 [`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif) (`SHA-256: b5ca6f1755af059e17f5edf0940fd7e945d43a1359e103a4789eae33c536ad41`),
 NaN-outside twin [`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.tif), and
@@ -258,7 +273,7 @@ diagnostic **0.13137**; `NE_LidarGapHeavy` fold **0.17285** vs. `0.13464` OOF ba
 against convergent supervised ridges (`max |ρ| = 0.4518 ≤ 0.90`).
 [RSHG1 JSON run card](evidence/rshg1_run_card_20261025.json) · [RSHG1 preregistration](knowledge/17_preregistered_RSHG1_2026-10-25.md) · [RSHG1 PhD synthesis & findings](knowledge/18_RSHG1_findings_2026-10-25.md)
 
-New 2026-10-25 `H24-SAHG1` Strike-Hydro-Geomorph GeoTIFF:
+Preserved 2026-10-25 `H24-SAHG1` Strike-Hydro-Geomorph GeoTIFF:
 [`gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif`](docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif) (`SHA-256: 8d5a5f99245fecf11cea72c33c41bad800cd0e41215744d7dd5d9ac6df673f11`)
 and NaN-outside twin [`gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif`](docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif).
 Passes exact-grid/`[0,1]` checks and prospective novelty against all 46 competing method lanes (max 3-px overlap `0.4768` ≤ 0.70)
@@ -328,6 +343,7 @@ Earlier scores/forecasts below are historical, not current promotion authority.
 .venv/bin/python scripts/cache_priority_registry.py
 .venv/bin/python scripts/evaluate_holdout.py --verify-recorded  # MTR1 receipt check
 .venv/bin/python scripts/run_sahg1_lane.py --verify-recorded    # SAHG1 + OOF receipt check
+.venv/bin/python scripts/run_fuse_lane.py --verify-recorded     # FUSE (RAW/RESID/HCW) receipt check
 .venv/bin/python scripts/export_negative_result.py              # MTR1 failed raster, audit only
 .venv/bin/python scripts/build_site.py
 .venv/bin/python -m pytest -q
@@ -343,10 +359,15 @@ and actual account quota are not available.
 
 ### Completed 2026-10-25 next-work items and remaining next steps
 
-1. **Completed (`src/gems/novelty.py`):** Added `compare_prospective_registry(...)` to prospectively separate synthetic calibration controls (`registry-039` spacing-5 lattice, `registry-044` zero placeholder) from the 46 competing method lanes and 83 peer blobs while keeping `compare_registry(...)` and the failed `MTR1` receipt unchanged.
+1. **Completed (`src/gems/novelty.py`):** Added `compare_prospective_registry(...)` to prospectively separate synthetic calibration controls (`registry-039` spacing-5 lattice, `registry-044` zero placeholder) from the 49 competing method lanes and 83 peer blobs while keeping `compare_registry(...)` and the failed `MTR1` receipt unchanged.
 2. **Completed (`scripts/run_sahg1_lane.py`):** Reconstructed a leakage-free same-protocol out-of-fold multi-physics baseline (`oof_multiphysics_hgb_d3`, 27 prepared physical/LiDAR/DEM channels trained strictly on `fold["train"]` of `SegmentHoldout`), establishing a benchmark of **HOLDOUT-DTI `0.13000`** (95% CI `[0.11565, 0.14396]`).
 3. **Completed (`src/gems/sahg1.py`, `evidence/sahg1_run_card_20261025.json`):** Preregistered and executed `H24-SAHG1` (Strike-Aligned Hydrothermal-Geomorphic Conduit Detector) with complete $9\times 9$ discrete receptive-field support verification (`verify_receptive_field_support`), achieving **HOLDOUT-DTI `0.09672`** (`[0.08657, 0.10703]`) on `gems-segment-pooled-v1` and **`0.09655`** (`[0.08270, 0.10976]`) on `segment-hide-recover-pooled-v1` (beating `MTR1`, `ASPC`, and its own geomorphic ablation `G_0` by `+0.01012`), passing prospective method-lane novelty (`0.4768` $\le 0.70$), and running the exact-file C2ST nuisance audit (`0.5826` vs. labels `0.4912`).
-4. **Remaining next step for future sessions:** Integrate `H24-SAHG1`'s strike-projected LiDAR scarp (`G_strike`) and stable-Th-controlled K/U alteration (`R_alt`) features as fold-local input columns inside the out-of-fold `oof_multiphysics_hgb_d3` model with training-only nuisance residualization (`gems.residualize.NuisanceResidualizer`), testing whether adding `G_strike` and `R_alt` beats `0.13000` on `HOLDOUT-DTI` while reducing exact-file C2ST AUC below `0.55`. Maintain strict fail-closed promotion gating.
+4. **Completed (`scripts/run_fuse_lane.py`, `evidence/fuse_run_card_20261025.json`, `knowledge/18_FUSE_findings_2026-10-25.md`):** Executed the documented Next Step #4 — integrating `H24-SAHG1`'s strike-projected LiDAR scarp (`G_sat`), stable-Th-controlled K/U alteration (`R_alt`), subsurface basement step (`B_step`), and hydrothermal conduit interaction (`H_conduit`) into a fold-local 31-channel `HistGradientBoostingClassifier` across three preregistered arms (`FUSE-RAW`, `FUSE-RESID`, `FUSE-HCW`):
+   - Demonstrated that unresidualized `FUSE-RAW` matches `0.13000` (`0.12995`) but fails prospective method-lane novelty (`0.7399 > 0.70` against `registry-006`).
+   - Demonstrated that training-only `NuisanceResidualizer` (`FUSE-RESID` `0.12210`, `FUSE-HCW` `0.12372`) reduces exact-file C2ST AUC from `0.5826` (`SAHG1`) down to **`0.4928`** / **`0.5108`** (Holm $p=0.870$, **PASS**), passes prospective method-lane novelty across all 49 competing method rasters (`0.6315` $\le 0.70$) and 83 peer blobs (`0.6025` $\le 0.70$), and beats `SAHG1` by **+0.02701** (+27.9%), `ASPC` by **+0.02798**, `CON` by **+0.05926**, `MTR1` by **+0.05931**, and `H-UNIQUE-03` by **+0.06988**.
+5. **Remaining next steps for future sessions:**
+   - **Targeted residualization of non-topographic bands only:** Apply `NuisanceResidualizer` selectively to airborne survey / access-confounded channels (`rtp_1..3`, `cond_1..2`, `thk`, `uth`, `uk`, `R_alt`) while leaving elevation-detrended tectonic strain and local $9\times 9$ LiDAR scarp curvature unresidualized, testing whether this closes the remaining `-0.00627` gap vs. `oof_multiphysics_hgb_d3` (`0.13000`) while keeping C2ST AUC $< 0.55$ and competing-method-lane overlap $\le 0.70$.
+   - **Owner / coordinator resolution of `registry-039`:** Officially move synthetic calibration controls (`registry-039` spacing-5 lattice, `registry-044` zero placeholder) out of the literal all-entry duplicate gate in `registry/priority_rasters.json` so `literal_all_entries_passed` aligns with `method_lane_passed`.
 
 ## Concurrent main work preserved — not a cross-protocol winner
 

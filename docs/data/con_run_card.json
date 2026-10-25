@@ -317,10 +317,14 @@
     "interpretation": "AUC > .90 is leakage until explained; lower AUC does not prove independence or fault discovery."
   },
   "correlation_overlap_vs_registry": {
-    "method_lane_passed": null,
-    "literal_all_entries_passed": null,
-    "method_lane_max_abs_rank_correlation": null,
-    "method_lane_max_dot_overlap": null
+    "total_entries_checked": 46,
+    "competing_method_rasters_checked": 44,
+    "calibration_control_rasters_checked": 2,
+    "method_lane_passed": true,
+    "literal_all_entries_passed": false,
+    "method_lane_max_abs_rank_correlation": 0.05020592065890512,
+    "method_lane_max_dot_overlap": 0.3107735538942792,
+    "literal_all_entries_max_overlap_within_3px": 1.0
   },
   "raster_sha256": "e1a66877e9ce062bcc1ad400f928782ad57d052938353a2b76516b3665ae15f0",
   "validator_output": {
@@ -423,7 +427,7 @@
   "organizer_confirmed_score": null,
   "reasons": [
     "Does not beat OOF baseline 0.13000 (delta -0.06554)",
-    "Prospective novelty pending full registry",
+    "Literal all-entry overlap rule flags synthetic spacing-5 calibration lattice registry-039 (1.0 overlap within 3 px), though all 44 competing method lanes pass (max overlap 0.3489 <= 0.70)",
     "Selector not run"
   ]
 }

@@ -62,6 +62,20 @@ Executes the Next-work items from PRs #10 and #11 (`src/gems/sahg1.py`, `scripts
   (`AUC 0.5826`). Remains `DOWNLOAD: YES · SUBMIT: NO` (`verdict: "negative"`). Verify with
   `.venv/bin/python scripts/run_sahg1_lane.py --verify-recorded`.
 
+**2026-10-25 H24-FUSE residualized conduit OOF-HGB packet (`knowledge/17_preregistered_FUSE_2026-10-25.md`, `knowledge/18_FUSE_findings_2026-10-25.md`):**
+Executes documented Next Step #4 (`scripts/run_fuse_lane.py`, `evidence/fuse_run_card_20261025.json`):
+- Evaluates three preregistered 31-channel fold-local `HistGradientBoostingClassifier` arms (`FUSE-RAW`,
+  `FUSE-RESID`, `FUSE-HCW`) fusing the 27 prepared physical/LiDAR/DEM channels with `SAHG1`'s `G_sat`,
+  `R_alt`, `B_step`, and `H_conduit` inside a verified 9×9 support mask.
+- Shows that unresidualized `FUSE-RAW` matches `0.13000` (`0.12995`) but fails prospective method-lane
+  novelty (`0.7399 > 0.70` vs. `registry-006`).
+- Shows that training-only `NuisanceResidualizer` (`FUSE-RESID` `0.12210`, `FUSE-HCW` `0.12372`) reduces
+  exact-file C2ST AUC from `0.5826` down to `0.4928` / `0.5108` (`< 0.55`, Holm `p = 0.870`), passes
+  prospective novelty across all 49 competing method rasters (`0.6315 <= 0.70`) and 83 peer blobs
+  (`0.6025 <= 0.70`), and beats `SAHG1` (`+0.02701`), `ASPC` (`+0.02798`), `CON` (`+0.05926`), `MTR1`
+  (`+0.05931`), and `H-UNIQUE-03` (`+0.06988`). Remains `DOWNLOAD: YES · SUBMIT: NO` (`verdict: "negative"`).
+  Verify with `.venv/bin/python scripts/run_fuse_lane.py --verify-recorded`.
+
 Read the entire root README, its standing owner charter and the **verbatim owner brief**
 (`README.md`, section "Owner brief") at the start of every session. Maximize P(Win) and
 Own the Outcome, without promising a score or prize.

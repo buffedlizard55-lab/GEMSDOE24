@@ -9,8 +9,8 @@
   "template": {
     "file": "sample_submission.tif",
     "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
-    "expected_sha256": null,
-    "pinned_bytes_match": false,
+    "expected_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "pinned_bytes_match": true,
     "provenance_limit": "A pinned mirror verifies local byte identity, not independent organizer authentication."
   },
   "format_validation": {
@@ -106,33 +106,34 @@
     "limit": "This is a compatibility diagnostic after the reported range error, not a claim that the organizer portal will accept the file or an explanation of past rejection."
   },
   "run_card": {
-    "provided": false,
-    "path": null,
-    "readable": false,
-    "artifact_sha256_matches": false,
-    "artifact_name_matches": false,
-    "validator_sha256_matches": false,
-    "validator_format_valid": false,
+    "provided": true,
+    "path": "evidence/con_run_card_20261025.json",
+    "readable": true,
+    "artifact_sha256_matches": true,
+    "artifact_name_matches": true,
+    "validator_sha256_matches": true,
+    "validator_format_valid": true,
     "verdict_promote": false,
     "submission_authorized": false,
     "scientific_authorization": false,
     "reason_codes": [
-      "RUN_CARD_REQUIRED"
+      "RUN_CARD_NOT_PROMOTED",
+      "RUN_CARD_NOT_AUTHORIZED"
     ],
-    "note": null
+    "note": "GEMS24 CON | clay-cap saddle x strain | ded121060878 | research; DO NOT SUBMIT"
   },
   "note": {
-    "present": false,
-    "characters": null,
+    "present": true,
+    "characters": 78,
     "limit": 140,
-    "within_limit": false,
-    "value": null
+    "within_limit": true,
+    "value": "GEMS24 CON | clay-cap saddle x strain | ded121060878 | research; DO NOT SUBMIT"
   },
   "requirements": {
     "single_tif_and_footprint_format": true,
     "strict_whole_array_values_in_0_1": true,
-    "pinned_template_bytes": false,
-    "short_note_present_and_at_most_140_characters": false,
+    "pinned_template_bytes": true,
+    "short_note_present_and_at_most_140_characters": true,
     "hash_bound_scientific_promotion": false
   },
   "decision": {
@@ -140,10 +141,9 @@
     "submission_status": "DO_NOT_SUBMIT",
     "ready_to_submit": false,
     "blockers": [
-      "pinned_template_bytes",
-      "short_note_present_and_at_most_140_characters",
       "hash_bound_scientific_promotion",
-      "RUN_CARD_REQUIRED"
+      "RUN_CARD_NOT_PROMOTED",
+      "RUN_CARD_NOT_AUTHORIZED"
     ],
     "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score."
   }
