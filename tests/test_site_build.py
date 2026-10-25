@@ -34,8 +34,15 @@ def built(tmp_path_factory):
     return tmp
 
 
+def active_artifact(built):
+    lane = built / "docs/data/active_lane.json"
+    if lane.exists():
+        return json.loads(lane.read_text())["artifact"]
+    return json.loads((built / "docs/data/download.json").read_text())
+
+
 def test_download_is_on_the_first_screen_and_the_file_is_the_registered_one(built):
-    row = json.loads((built / "docs/data/download.json").read_text())
+    row = active_artifact(built)
     for page in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         html = (built / page).read_text()
         assert row["file"] in html and 'download="' + row["file"] + '"' in html
@@ -73,8 +80,8 @@ def test_guide_has_the_portal_steps_note_and_the_range_error_advice(built):
         "SHA-256",
     ):
         assert needle in html
-    row = json.loads((built / "docs/data/download.json").read_text())
-    assert row["note"] in html and len(row["note"]) <= 200
+    row = active_artifact(built)
+    assert row["note"] in html and len(row["note"]) <= 140
 
 
 def test_site_never_links_a_missing_local_file(built):
@@ -97,3 +104,31 @@ def test_site_never_links_a_missing_local_file(built):
                     page,
                     v,
                 )
+
+
+def test_current_negative_lane_is_not_a_legacy_recommendation(built):
+    report = json.loads((built / "docs/data/active_lane.json").read_text())
+    assert not report["submission_authorized"]
+    for name in ("index.html", "docs/index.html", "docs/executive-summary.html"):
+        text = (built / name).read_text()
+        assert "NOT OK TO SUBMIT" in text
+        assert "DO NOT SUBMIT" in text
+        assert "One click gets the recommended submission" not in text
+    historical = json.loads((built / "docs/data/download.json").read_text())
+    assert historical["status"] == "historical_superseded"
+    assert not historical["submission_authorized"]
+
+
+def test_site_rejects_a_run_card_that_disagrees_with_the_exact_download(built):
+    path = built / "evidence/aspc_run_card_20261025.json"
+    original = path.read_text()
+    altered = json.loads(original)
+    altered["raster_sha256"] = "tampered-not-a-real-digest"
+    try:
+        path.write_text(json.dumps(altered))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0 and "identity disagree" in result.stderr
+    finally:
+        path.write_text(original)

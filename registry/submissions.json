@@ -93,5 +93,7 @@
       "pixel_count": 44090,
       "note": "24GEMSDOE h25-1-dotted-h19-5-d2.8 | H19-5 dot-thinned sparser (44k px). Sparse +42%, dense -0.003. Unscored; dense regime + audit = owner decision | id e56ea318af89 | not yet live-scored"
     }
-  ]
+  ],
+  "active_lane_report": "evidence/aspc_run_20261025.json",
+  "current_submission_authorized": false
 }

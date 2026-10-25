@@ -319,6 +319,9 @@ def main():
         "submission_authorized": False,
         "content_id": cid,
     }
+    from package_aspc_companion import package
+
+    package(ROOT, report, card)
     finish("Promotion not established; research-only file, do not upload")
 
 

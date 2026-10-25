@@ -94,6 +94,13 @@ def pct(x):
 
 
 def main():
+    # A current lane record supersedes historical recommendations, including
+    # negative/duplicate runs. Never fall back to an old 'recommended' artifact.
+    if (ROOT / "evidence/aspc_run_20261025.json").exists():
+        from build_lane_site import build
+
+        build(ROOT, page)
+        return
     primary = load("docs/data/download.json")
     alternate = load("docs/data/alternate_download.json")
     reference = load("docs/data/reference_download.json")
