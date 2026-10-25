@@ -1,6 +1,32 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Current review: download is NOT cleared to submit
+## Latest experiment: OJ1 — DOWNLOAD YES / SUBMIT NO
+
+[**Download the newly generated research TIFF**](docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif) ·
+[Full JSON run card](evidence/oj1_run_card_20261025.json) · [Executive guide](docs/executive-summary.html).
+
+**NOT OK TO SUBMIT.** Independent computation, not copied predictions, but the literal
+novelty gate failed. **HOLDOUT-DTI 0.06362**, 95% CI [0.05591, 0.07105],
+`gems-segment-pooled-v1`, 60,988 withheld positives.
+Recorded same-protocol OOF baseline: **HOLDOUT-DTI 0.13000**, 95% CI [0.11565, 0.14396],
+same evaluator/positive count; not retrained this session. OJ1 loses that comparison.
+Strict whole-array finite [0,1], exact CRS/shape/transform PASS; registry final-dot
+3-pixel overlap **99.86%**, limit 70%, spacing-5 control retained. One experiment,
+no tuning after the duplicate and no submission slot used. No organizer score exists.
+
+Name: `gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif`
+SHA-256: `ec0139cb4e9f1641dd43ad385d1c164d639a2c854f64ff4c1f9d61e6dc86635a`
+Short comment (83 characters): `OJ1 coherent orientation junctions | research only; DO NOT SUBMIT | id 3eef450351de`
+
+**Review findings:** the historical UNIQUE03 “300 m” decay was actually 300 pixels
+(30 km); its catalogue-proximity/composite canaries were incomplete. Frozen lanes
+cannot be rerun. Preflight now refuses self-asserted promotion/authorization flags:
+an independent selector receipt verifier is **not implemented**, and current quota
+is unknown. No human inspection shortcut and no automatic portal upload.
+See [preregistered hypotheses](knowledge/17_preregistered_OJ1_2026-10-25.md) and
+[findings/next work](knowledge/18_OJ1_findings_2026-10-25.md).
+
+## Prior review: historical UNIQUE03 download is NOT cleared to submit
 
 Revalidate the first-screen research TIFF with
 `python scripts/verify_current_download.py`. This reopens the exact file using
@@ -29,7 +55,7 @@ JSON card per experiment. Budget: 3 experiments or 2 hours. Negative results are
 deliverables. Target: beat 0.3195 on the leaderboard (owner-reported high; 0.4413
 and 0.2778 appear in site snapshots but are not organizer-confirmed).
 
-**Current artifact (this session):**
+**Historical UNIQUE03 artifact (not the latest experiment):**
 `docs/downloads/24gems-doer-fault-guided-k-20261025T220208Z-dedb860f7e83-zeros.tif`
 (SHA-256: `800856082214038640ba98796c390ff76cb8583944dbc05505d9787ce7688c9e`)
 — **DOWNLOAD: YES · SUBMIT: NO** · format-valid, strict [0,1] PASS, no NaN anywhere,
@@ -146,6 +172,8 @@ path is an inventory irregularity, not evidence of an authentic organizer exampl
 ## Current decision
 
 <!-- STATUS:START -->
+Latest OJ1 research TIFF: [`gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif`](docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif). **DOWNLOAD YES / SUBMIT NO**. HOLDOUT-DTI 0.06362, 95% CI [0.05591, 0.07105], gems-segment-pooled-v1, 60,988 withheld positives. Stopped as duplicate, not a leaderboard result. No weekly slot has been spent. [OJ1 run card](evidence/oj1_run_card_20261025.json).
+
 **DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
 
 New 2026-10-25 `H24-SAHG1` Strike-Hydro-Geomorph GeoTIFF:

@@ -293,3 +293,45 @@ def test_site_rejects_sahg1_card_checksum_tampering(built):
         assert result.returncode != 0 and "SAHG1 checksum" in result.stderr
     finally:
         path.write_text(original)
+
+
+def test_latest_oj1_download_precedes_preserved_mtr_and_links_exact_file(built):
+    card = json.loads((built / "docs/data/oj1_run_card.json").read_text())
+    mtr = json.loads((built / "docs/data/independent_download.json").read_text())
+    for name in ("index.html", "docs/index.html", "docs/executive-summary.html"):
+        html = (built / name).read_text()
+        assert 'download="' + card["submission_name"] + '"' in html
+        assert html.index(card["submission_name"]) < html.index(mtr["file"])
+        assert "DO NOT SUBMIT" in html and "independent selector" in html.lower()
+    assert (built / "docs/downloads" / card["submission_name"]).is_file()
+
+
+def test_site_rejects_permissive_oj1_preflight(built):
+    card = json.loads((built / "docs/data/oj1_run_card.json").read_text())
+    path = (built / "docs/downloads" / card["submission_name"]).with_suffix(".preflight.json")
+    original = path.read_text()
+    try:
+        altered = json.loads(original)
+        altered["decision"]["ready_to_submit"] = True
+        path.write_text(json.dumps(altered))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0 and "OJ1 preflight" in result.stderr
+    finally:
+        path.write_text(original)
+
+
+def test_site_rejects_oj1_published_card_drift(built):
+    path = built / "docs/data/oj1_run_card.json"
+    original = path.read_text()
+    try:
+        altered = json.loads(original)
+        altered["verdict"] = "promote"
+        path.write_text(json.dumps(altered))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0 and "Published OJ1 run card" in result.stderr
+    finally:
+        path.write_text(original)

@@ -182,12 +182,17 @@ def compare_registry(surface, footprint, entries, root, *, dots=None, sample_siz
 
 SYNTHETIC_CALIBRATION_CONTROL_FILES = {
     "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif": "synthetic_spacing5_calibration_lattice",
-    "inputs/calibration/gemsdoe9-PLACEHOLDER-2314b599.tif": "all_zero_placeholder_control",
 }
 
 
 def classify_registry_entry(row: dict) -> str:
-    """Distinguish synthetic calibration lattices/placeholders from competing method lanes."""
+    """Classify only established controls, never infer empty content from a filename.
+
+    The historical GEMSDOE9 PLACEHOLDER actually has 147,684 positive pixels in
+    the pinned registry; its former all-zero classification was incorrect.
+    This prospective correction does not rewrite frozen comparisons or exempt
+    any comparator from the literal all-entry gate.
+    """
     file_path = str(row.get("file", ""))
     if file_path in SYNTHETIC_CALIBRATION_CONTROL_FILES:
         return SYNTHETIC_CALIBRATION_CONTROL_FILES[file_path]
