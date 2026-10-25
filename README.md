@@ -1,5 +1,18 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current review: download is NOT cleared to submit
+
+Revalidate the first-screen research TIFF with
+`python scripts/verify_current_download.py`. This reopens the exact file using
+the shared writer's validator, verifies its SHA-256 and strict whole-array [0,1]
+range, and fails closed on inconsistent authorization or identity. It never
+reruns or promotes a stopped lane. Receipt:
+[`evidence/current_download_revalidation.json`](evidence/current_download_revalidation.json).
+The existing candidate remains **DOWNLOAD: YES · SUBMIT: NO**.
+See the [corrected GEMSDOE32 analysis](knowledge/14_h33_analysis_2026-10-25.md):
+prediction ancestry does not prove the hidden-score gain came entirely from FP
+reduction. No new candidate or competition slot was used in this review.
+
 ## Prompt (owner brief, 2026-10-25) — read at every session
 
 Generate a **unique** TIF submission for the DOE GEMS / DrivenData #306 competition.
