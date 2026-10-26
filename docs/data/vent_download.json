@@ -1,0 +1,15 @@
+{
+  "artifact": "gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif",
+  "sha256": "1c8399f15fbc58f6006e49542af58ae14a29f7e07243ac7797111f008c67cf8b",
+  "sha256_nan": "15be2c151ed77ecaa74240d3c20a98bfba5b66b1740edde7bdfd71ca9eb63f5a",
+  "sha256_zip": "9d788d7c09db146b40409d39a5de1ba6ab43a4d554598a14737762e8302fa501",
+  "note": "GEMS24 VENT | vent-spring-lineament bridge | id a6e191937e80 | HOLDOUT-DTI 0.02403 | research; DO NOT SUBMIT",
+  "holdout_dti": 0.024028124671077445,
+  "ci95": [
+    0.01777160258610016,
+    0.03054252816784078
+  ],
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false
+}
