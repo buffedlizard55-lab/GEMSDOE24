@@ -1,0 +1,1028 @@
+{
+  "directed_3px_overlap_row_within_3px_of_col": {
+    "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+      "GEMSDOE25 dotted-h19-5-d2-8": 1.0,
+      "GEMSDOE27 topo-gap-closure-t-v2": 1.0,
+      "GEMSDOE28 h36-1-rung30-blind-r1": 0.934792,
+      "GEMSDOE30 d28-poisson300m": 1.0,
+      "GEMSDOE31 h27-4-solo-d28": 0.940785,
+      "GEMSDOE32 h33-h33-2-b2": 0.884766,
+      "GEMSDOE33 h33d-analog-tip-stepover": 0.962393,
+      "GEMSDOE36 anderson-geothermal-pinn": 0.885615,
+      "REPO_DPRF1_zeros": 0.529674,
+      "REPO_S3DEP1_zeros": 0.526078
+    },
+    "GEMSDOE25 dotted-h19-5-d2-8": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": 1.0,
+      "GEMSDOE27 topo-gap-closure-t-v2": 1.0,
+      "GEMSDOE28 h36-1-rung30-blind-r1": 0.931821,
+      "GEMSDOE30 d28-poisson300m": 1.0,
+      "GEMSDOE31 h27-4-solo-d28": 0.937151,
+      "GEMSDOE32 h33-h33-2-b2": 0.881719,
+      "GEMSDOE33 h33d-analog-tip-stepover": 0.960581,
+      "GEMSDOE36 anderson-geothermal-pinn": 0.882649,
+      "REPO_DPRF1_zeros": 0.517736,
+      "REPO_S3DEP1_zeros": 0.513042
+    },
+    "GEMSDOE27 topo-gap-closure-t-v2": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": 0.980188,
+      "GEMSDOE25 dotted-h19-5-d2-8": 0.980156,
+      "GEMSDOE28 h36-1-rung30-blind-r1": 0.916156,
+      "GEMSDOE30 d28-poisson300m": 0.980156,
+      "GEMSDOE31 h27-4-solo-d28": 0.922091,
+      "GEMSDOE32 h33-h33-2-b2": 0.86719,
+      "GEMSDOE33 h33d-analog-tip-stepover": 0.943289,
+      "GEMSDOE36 anderson-geothermal-pinn": 0.868037,
+      "REPO_DPRF1_zeros": 0.521328,
+      "REPO_S3DEP1_zeros": 0.517463
+    },
+    "GEMSDOE28 h36-1-rung30-blind-r1": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": 1.0,
+      "GEMSDOE25 dotted-h19-5-d2-8": 1.0,
+      "GEMSDOE27 topo-gap-closure-t-v2": 1.0,
+      "GEMSDOE30 d28-poisson300m": 1.0,
+      "GEMSDOE31 h27-4-solo-d28": 0.997557,
+      "GEMSDOE32 h33-h33-2-b2": 0.954727,
+      "GEMSDOE33 h33d-analog-tip-stepover": 0.998407,
+      "GEMSDOE36 anderson-geothermal-pinn": 0.955204,
+      "REPO_DPRF1_zeros": 0.533856,
+      "REPO_S3DEP1_zeros": 0.528651
+    },
+    "GEMSDOE30 d28-poisson300m": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": 1.0,
+      "GEMSDOE25 dotted-h19-5-d2-8": 1.0,
+      "GEMSDOE27 topo-gap-closure-t-v2": 1.0,
+      "GEMSDOE28 h36-1-rung30-blind-r1": 0.931821,
+      "GEMSDOE31 h27-4-solo-d28": 0.937151,
+      "GEMSDOE32 h33-h33-2-b2": 0.881719,
+      "GEMSDOE33 h33d-analog-tip-stepover": 0.960581,
+      "GEMSDOE36 anderson-geothermal-pinn": 0.882649,
+      "REPO_DPRF1_zeros": 0.517736,
+      "REPO_S3DEP1_zeros": 0.513042
+    },
+    "GEMSDOE31 h27-4-solo-d28": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": 1.0,
+      "GEMSDOE25 dotted-h19-5-d2-8": 1.0,
+      "GEMSDOE27 topo-gap-closure-t-v2": 1.0,
+      "GEMSDOE28 h36-1-rung30-blind-r1": 0.995622,
+      "GEMSDOE30 d28-poisson300m": 1.0,
+      "GEMSDOE32 h33-h33-2-b2": 0.953904,
+      "GEMSDOE33 h33d-analog-tip-stepover": 0.999055,
+      "GEMSDOE36 anderson-geothermal-pinn": 0.954402,
+      "REPO_DPRF1_zeros": 0.534765,
+      "REPO_S3DEP1_zeros": 0.529715
+    },
+    "GEMSDOE32 h33-h33-2-b2": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": 1.0,
+      "GEMSDOE25 dotted-h19-5-d2-8": 1.0,
+      "GEMSDOE27 topo-gap-closure-t-v2": 1.0,
+      "GEMSDOE28 h36-1-rung30-blind-r1": 0.998752,
+      "GEMSDOE30 d28-poisson300m": 1.0,
+      "GEMSDOE31 h27-4-solo-d28": 1.0,
+      "GEMSDOE33 h33d-analog-tip-stepover": 0.999841,
+      "GEMSDOE36 anderson-geothermal-pinn": 1.0,
+      "REPO_DPRF1_zeros": 0.541005,
+      "REPO_S3DEP1_zeros": 0.535136
+    },
+    "GEMSDOE33 h33d-analog-tip-stepover": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": 0.997062,
+      "GEMSDOE25 dotted-h19-5-d2-8": 0.997038,
+      "GEMSDOE27 topo-gap-closure-t-v2": 0.997086,
+      "GEMSDOE28 h36-1-rung30-blind-r1": 0.9705,
+      "GEMSDOE30 d28-poisson300m": 0.997038,
+      "GEMSDOE31 h27-4-solo-d28": 0.9748,
+      "GEMSDOE32 h33-h33-2-b2": 0.92643,
+      "GEMSDOE36 anderson-geothermal-pinn": 0.927123,
+      "REPO_DPRF1_zeros": 0.525427,
+      "REPO_S3DEP1_zeros": 0.521319
+    },
+    "GEMSDOE36 anderson-geothermal-pinn": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": 0.975678,
+      "GEMSDOE25 dotted-h19-5-d2-8": 0.974983,
+      "GEMSDOE27 topo-gap-closure-t-v2": 0.975781,
+      "GEMSDOE28 h36-1-rung30-blind-r1": 0.97313,
+      "GEMSDOE30 d28-poisson300m": 0.974983,
+      "GEMSDOE31 h27-4-solo-d28": 0.974571,
+      "GEMSDOE32 h33-h33-2-b2": 0.974031,
+      "GEMSDOE33 h33d-analog-tip-stepover": 0.975035,
+      "REPO_DPRF1_zeros": 0.532275,
+      "REPO_S3DEP1_zeros": 0.525274
+    },
+    "REPO_DPRF1_zeros": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": 0.507967,
+      "GEMSDOE25 dotted-h19-5-d2-8": 0.491183,
+      "GEMSDOE27 topo-gap-closure-t-v2": 0.510464,
+      "GEMSDOE28 h36-1-rung30-blind-r1": 0.468742,
+      "GEMSDOE30 d28-poisson300m": 0.491183,
+      "GEMSDOE31 h27-4-solo-d28": 0.473496,
+      "GEMSDOE32 h33-h33-2-b2": 0.455967,
+      "GEMSDOE33 h33d-analog-tip-stepover": 0.484092,
+      "GEMSDOE36 anderson-geothermal-pinn": 0.460562,
+      "REPO_S3DEP1_zeros": 0.625193
+    },
+    "REPO_S3DEP1_zeros": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": 0.52021,
+      "GEMSDOE25 dotted-h19-5-d2-8": 0.504488,
+      "GEMSDOE27 topo-gap-closure-t-v2": 0.522415,
+      "GEMSDOE28 h36-1-rung30-blind-r1": 0.482738,
+      "GEMSDOE30 d28-poisson300m": 0.504488,
+      "GEMSDOE31 h27-4-solo-d28": 0.486668,
+      "GEMSDOE32 h33-h33-2-b2": 0.469538,
+      "GEMSDOE33 h33d-analog-tip-stepover": 0.497105,
+      "GEMSDOE36 anderson-geothermal-pinn": 0.47331,
+      "REPO_DPRF1_zeros": 0.644526
+    }
+  },
+  "evaluator_version": "not-run (pairwise geometry only; no DTI computed here)",
+  "exact_dot_subset": {
+    "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+      "GEMSDOE25 dotted-h19-5-d2-8": {
+        "intersection": 29849,
+        "row_only": 30220,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE27 topo-gap-closure-t-v2": {
+        "intersection": 60069,
+        "row_only": 0,
+        "row_subset_of_col": true
+      },
+      "GEMSDOE28 h36-1-rung30-blind-r1": {
+        "intersection": 25435,
+        "row_only": 34634,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE30 d28-poisson300m": {
+        "intersection": 29849,
+        "row_only": 30220,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE31 h27-4-solo-d28": {
+        "intersection": 27059,
+        "row_only": 33010,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE32 h33-h33-2-b2": {
+        "intersection": 25517,
+        "row_only": 34552,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE33 h33d-analog-tip-stepover": {
+        "intersection": 28561,
+        "row_only": 31508,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE36 anderson-geothermal-pinn": {
+        "intersection": 25518,
+        "row_only": 34551,
+        "row_subset_of_col": false
+      },
+      "REPO_DPRF1_zeros": {
+        "intersection": 2361,
+        "row_only": 57708,
+        "row_subset_of_col": false
+      },
+      "REPO_S3DEP1_zeros": {
+        "intersection": 2602,
+        "row_only": 57467,
+        "row_subset_of_col": false
+      }
+    },
+    "GEMSDOE25 dotted-h19-5-d2-8": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+        "intersection": 29849,
+        "row_only": 14241,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE27 topo-gap-closure-t-v2": {
+        "intersection": 29849,
+        "row_only": 14241,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE28 h36-1-rung30-blind-r1": {
+        "intersection": 27853,
+        "row_only": 16237,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE30 d28-poisson300m": {
+        "intersection": 44090,
+        "row_only": 0,
+        "row_subset_of_col": true
+      },
+      "GEMSDOE31 h27-4-solo-d28": {
+        "intersection": 40199,
+        "row_only": 3891,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE32 h33-h33-2-b2": {
+        "intersection": 37654,
+        "row_only": 6436,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE33 h33d-analog-tip-stepover": {
+        "intersection": 34851,
+        "row_only": 9239,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE36 anderson-geothermal-pinn": {
+        "intersection": 37654,
+        "row_only": 6436,
+        "row_subset_of_col": false
+      },
+      "REPO_DPRF1_zeros": {
+        "intersection": 1779,
+        "row_only": 42311,
+        "row_subset_of_col": false
+      },
+      "REPO_S3DEP1_zeros": {
+        "intersection": 1924,
+        "row_only": 42166,
+        "row_subset_of_col": false
+      }
+    },
+    "GEMSDOE27 topo-gap-closure-t-v2": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+        "intersection": 60069,
+        "row_only": 1259,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE25 dotted-h19-5-d2-8": {
+        "intersection": 29849,
+        "row_only": 31479,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE28 h36-1-rung30-blind-r1": {
+        "intersection": 25435,
+        "row_only": 35893,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE30 d28-poisson300m": {
+        "intersection": 29849,
+        "row_only": 31479,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE31 h27-4-solo-d28": {
+        "intersection": 27059,
+        "row_only": 34269,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE32 h33-h33-2-b2": {
+        "intersection": 25517,
+        "row_only": 35811,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE33 h33d-analog-tip-stepover": {
+        "intersection": 28561,
+        "row_only": 32767,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE36 anderson-geothermal-pinn": {
+        "intersection": 25519,
+        "row_only": 35809,
+        "row_subset_of_col": false
+      },
+      "REPO_DPRF1_zeros": {
+        "intersection": 2364,
+        "row_only": 58964,
+        "row_subset_of_col": false
+      },
+      "REPO_S3DEP1_zeros": {
+        "intersection": 2609,
+        "row_only": 58719,
+        "row_subset_of_col": false
+      }
+    },
+    "GEMSDOE28 h36-1-rung30-blind-r1": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+        "intersection": 25435,
+        "row_only": 12225,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE25 dotted-h19-5-d2-8": {
+        "intersection": 27853,
+        "row_only": 9807,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE27 topo-gap-closure-t-v2": {
+        "intersection": 25435,
+        "row_only": 12225,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE30 d28-poisson300m": {
+        "intersection": 27853,
+        "row_only": 9807,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE31 h27-4-solo-d28": {
+        "intersection": 27853,
+        "row_only": 9807,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE32 h33-h33-2-b2": {
+        "intersection": 26248,
+        "row_only": 11412,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE33 h33d-analog-tip-stepover": {
+        "intersection": 27607,
+        "row_only": 10053,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE36 anderson-geothermal-pinn": {
+        "intersection": 26248,
+        "row_only": 11412,
+        "row_subset_of_col": false
+      },
+      "REPO_DPRF1_zeros": {
+        "intersection": 1654,
+        "row_only": 36006,
+        "row_subset_of_col": false
+      },
+      "REPO_S3DEP1_zeros": {
+        "intersection": 1772,
+        "row_only": 35888,
+        "row_subset_of_col": false
+      }
+    },
+    "GEMSDOE30 d28-poisson300m": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+        "intersection": 29849,
+        "row_only": 14241,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE25 dotted-h19-5-d2-8": {
+        "intersection": 44090,
+        "row_only": 0,
+        "row_subset_of_col": true
+      },
+      "GEMSDOE27 topo-gap-closure-t-v2": {
+        "intersection": 29849,
+        "row_only": 14241,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE28 h36-1-rung30-blind-r1": {
+        "intersection": 27853,
+        "row_only": 16237,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE31 h27-4-solo-d28": {
+        "intersection": 40199,
+        "row_only": 3891,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE32 h33-h33-2-b2": {
+        "intersection": 37654,
+        "row_only": 6436,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE33 h33d-analog-tip-stepover": {
+        "intersection": 34851,
+        "row_only": 9239,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE36 anderson-geothermal-pinn": {
+        "intersection": 37654,
+        "row_only": 6436,
+        "row_subset_of_col": false
+      },
+      "REPO_DPRF1_zeros": {
+        "intersection": 1779,
+        "row_only": 42311,
+        "row_subset_of_col": false
+      },
+      "REPO_S3DEP1_zeros": {
+        "intersection": 1924,
+        "row_only": 42166,
+        "row_subset_of_col": false
+      }
+    },
+    "GEMSDOE31 h27-4-solo-d28": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+        "intersection": 27059,
+        "row_only": 13140,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE25 dotted-h19-5-d2-8": {
+        "intersection": 40199,
+        "row_only": 0,
+        "row_subset_of_col": true
+      },
+      "GEMSDOE27 topo-gap-closure-t-v2": {
+        "intersection": 27059,
+        "row_only": 13140,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE28 h36-1-rung30-blind-r1": {
+        "intersection": 27853,
+        "row_only": 12346,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE30 d28-poisson300m": {
+        "intersection": 40199,
+        "row_only": 0,
+        "row_subset_of_col": true
+      },
+      "GEMSDOE32 h33-h33-2-b2": {
+        "intersection": 37654,
+        "row_only": 2545,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE33 h33d-analog-tip-stepover": {
+        "intersection": 33670,
+        "row_only": 6529,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE36 anderson-geothermal-pinn": {
+        "intersection": 37654,
+        "row_only": 2545,
+        "row_subset_of_col": false
+      },
+      "REPO_DPRF1_zeros": {
+        "intersection": 1779,
+        "row_only": 38420,
+        "row_subset_of_col": false
+      },
+      "REPO_S3DEP1_zeros": {
+        "intersection": 1924,
+        "row_only": 38275,
+        "row_subset_of_col": false
+      }
+    },
+    "GEMSDOE32 h33-h33-2-b2": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+        "intersection": 25517,
+        "row_only": 12137,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE25 dotted-h19-5-d2-8": {
+        "intersection": 37654,
+        "row_only": 0,
+        "row_subset_of_col": true
+      },
+      "GEMSDOE27 topo-gap-closure-t-v2": {
+        "intersection": 25517,
+        "row_only": 12137,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE28 h36-1-rung30-blind-r1": {
+        "intersection": 26248,
+        "row_only": 11406,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE30 d28-poisson300m": {
+        "intersection": 37654,
+        "row_only": 0,
+        "row_subset_of_col": true
+      },
+      "GEMSDOE31 h27-4-solo-d28": {
+        "intersection": 37654,
+        "row_only": 0,
+        "row_subset_of_col": true
+      },
+      "GEMSDOE33 h33d-analog-tip-stepover": {
+        "intersection": 31614,
+        "row_only": 6040,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE36 anderson-geothermal-pinn": {
+        "intersection": 37654,
+        "row_only": 0,
+        "row_subset_of_col": true
+      },
+      "REPO_DPRF1_zeros": {
+        "intersection": 1779,
+        "row_only": 35875,
+        "row_subset_of_col": false
+      },
+      "REPO_S3DEP1_zeros": {
+        "intersection": 1924,
+        "row_only": 35730,
+        "row_subset_of_col": false
+      }
+    },
+    "GEMSDOE33 h33d-analog-tip-stepover": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+        "intersection": 28561,
+        "row_only": 13304,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE25 dotted-h19-5-d2-8": {
+        "intersection": 34851,
+        "row_only": 7014,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE27 topo-gap-closure-t-v2": {
+        "intersection": 28561,
+        "row_only": 13304,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE28 h36-1-rung30-blind-r1": {
+        "intersection": 27607,
+        "row_only": 14258,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE30 d28-poisson300m": {
+        "intersection": 34851,
+        "row_only": 7014,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE31 h27-4-solo-d28": {
+        "intersection": 33670,
+        "row_only": 8195,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE32 h33-h33-2-b2": {
+        "intersection": 31614,
+        "row_only": 10251,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE36 anderson-geothermal-pinn": {
+        "intersection": 31614,
+        "row_only": 10251,
+        "row_subset_of_col": false
+      },
+      "REPO_DPRF1_zeros": {
+        "intersection": 1757,
+        "row_only": 40108,
+        "row_subset_of_col": false
+      },
+      "REPO_S3DEP1_zeros": {
+        "intersection": 1893,
+        "row_only": 39972,
+        "row_subset_of_col": false
+      }
+    },
+    "GEMSDOE36 anderson-geothermal-pinn": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+        "intersection": 25518,
+        "row_only": 13336,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE25 dotted-h19-5-d2-8": {
+        "intersection": 37654,
+        "row_only": 1200,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE27 topo-gap-closure-t-v2": {
+        "intersection": 25519,
+        "row_only": 13335,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE28 h36-1-rung30-blind-r1": {
+        "intersection": 26248,
+        "row_only": 12606,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE30 d28-poisson300m": {
+        "intersection": 37654,
+        "row_only": 1200,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE31 h27-4-solo-d28": {
+        "intersection": 37654,
+        "row_only": 1200,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE32 h33-h33-2-b2": {
+        "intersection": 37654,
+        "row_only": 1200,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE33 h33d-analog-tip-stepover": {
+        "intersection": 31614,
+        "row_only": 7240,
+        "row_subset_of_col": false
+      },
+      "REPO_DPRF1_zeros": {
+        "intersection": 1793,
+        "row_only": 37061,
+        "row_subset_of_col": false
+      },
+      "REPO_S3DEP1_zeros": {
+        "intersection": 1931,
+        "row_only": 36923,
+        "row_subset_of_col": false
+      }
+    },
+    "REPO_DPRF1_zeros": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+        "intersection": 2361,
+        "row_only": 35293,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE25 dotted-h19-5-d2-8": {
+        "intersection": 1779,
+        "row_only": 35875,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE27 topo-gap-closure-t-v2": {
+        "intersection": 2364,
+        "row_only": 35290,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE28 h36-1-rung30-blind-r1": {
+        "intersection": 1654,
+        "row_only": 36000,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE30 d28-poisson300m": {
+        "intersection": 1779,
+        "row_only": 35875,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE31 h27-4-solo-d28": {
+        "intersection": 1779,
+        "row_only": 35875,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE32 h33-h33-2-b2": {
+        "intersection": 1779,
+        "row_only": 35875,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE33 h33d-analog-tip-stepover": {
+        "intersection": 1757,
+        "row_only": 35897,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE36 anderson-geothermal-pinn": {
+        "intersection": 1793,
+        "row_only": 35861,
+        "row_subset_of_col": false
+      },
+      "REPO_S3DEP1_zeros": {
+        "intersection": 3888,
+        "row_only": 33766,
+        "row_subset_of_col": false
+      }
+    },
+    "REPO_S3DEP1_zeros": {
+      "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+        "intersection": 2602,
+        "row_only": 35052,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE25 dotted-h19-5-d2-8": {
+        "intersection": 1924,
+        "row_only": 35730,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE27 topo-gap-closure-t-v2": {
+        "intersection": 2609,
+        "row_only": 35045,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE28 h36-1-rung30-blind-r1": {
+        "intersection": 1772,
+        "row_only": 35882,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE30 d28-poisson300m": {
+        "intersection": 1924,
+        "row_only": 35730,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE31 h27-4-solo-d28": {
+        "intersection": 1924,
+        "row_only": 35730,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE32 h33-h33-2-b2": {
+        "intersection": 1924,
+        "row_only": 35730,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE33 h33d-analog-tip-stepover": {
+        "intersection": 1893,
+        "row_only": 35761,
+        "row_subset_of_col": false
+      },
+      "GEMSDOE36 anderson-geothermal-pinn": {
+        "intersection": 1931,
+        "row_only": 35723,
+        "row_subset_of_col": false
+      },
+      "REPO_DPRF1_zeros": {
+        "intersection": 3888,
+        "row_only": 33766,
+        "row_subset_of_col": false
+      }
+    }
+  },
+  "files": {
+    "GEMSDOE24 h25-1-dotted-h19-5-d1.5": {
+      "bytes": 1632732,
+      "count": 1,
+      "crs": "EPSG:32611",
+      "dots_value_eq_1": 60069,
+      "driver": "GTiff",
+      "dtype": "float32",
+      "nodata": NaN,
+      "nonfinite_cells": 7111787,
+      "outside_0_1_finite_cells": 0,
+      "owner_reported_score": 0.2477,
+      "score_evidence": "OWNER-REPORTED (prompt); not an organizer receipt",
+      "sha256": "68d0e2e4fcc594f9a23f56c44b885fee733d026d39be55e18ad2a07289525310",
+      "shape": [
+        3730,
+        3292
+      ],
+      "site": "GEMSDOE24",
+      "source_path": "docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "status": "OK",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    },
+    "GEMSDOE25 dotted-h19-5-d2-8": {
+      "bytes": 1603424,
+      "count": 1,
+      "crs": "EPSG:32611",
+      "dots_value_eq_1": 44090,
+      "driver": "GTiff",
+      "dtype": "float32",
+      "nodata": NaN,
+      "nonfinite_cells": 7111787,
+      "outside_0_1_finite_cells": 0,
+      "owner_reported_score": 0.26,
+      "score_evidence": "OWNER-REPORTED (prompt); not an organizer receipt",
+      "sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",
+      "shape": [
+        3730,
+        3292
+      ],
+      "site": "GEMSDOE25",
+      "source_path": "docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "status": "OK",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    },
+    "GEMSDOE27 topo-gap-closure-t-v2": {
+      "bytes": 1635084,
+      "count": 1,
+      "crs": "EPSG:32611",
+      "dots_value_eq_1": 61328,
+      "driver": "GTiff",
+      "dtype": "float32",
+      "nodata": NaN,
+      "nonfinite_cells": 7111787,
+      "outside_0_1_finite_cells": 0,
+      "owner_reported_score": 0.2449,
+      "score_evidence": "OWNER-REPORTED (prompt); not an organizer receipt",
+      "sha256": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d",
+      "shape": [
+        3730,
+        3292
+      ],
+      "site": "GEMSDOE27",
+      "source_path": "docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "status": "OK",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    },
+    "GEMSDOE28 h36-1-rung30-blind-r1": {
+      "bytes": 1590848,
+      "count": 1,
+      "crs": "EPSG:32611",
+      "dots_value_eq_1": 37660,
+      "driver": "GTiff",
+      "dtype": "float32",
+      "nodata": NaN,
+      "nonfinite_cells": 7111787,
+      "outside_0_1_finite_cells": 0,
+      "owner_reported_score": 0.271,
+      "score_evidence": "OWNER-REPORTED (prompt); not an organizer receipt",
+      "sha256": "5556aa1438fd67376b60d5ffc99228ec09dcc11a8408298a743ccb88d6163641",
+      "shape": [
+        3730,
+        3292
+      ],
+      "site": "GEMSDOE28",
+      "source_path": "docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
+      "status": "OK",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    },
+    "GEMSDOE30 d28-poisson300m": {
+      "bytes": 806758,
+      "count": 1,
+      "crs": "EPSG:32611",
+      "dots_value_eq_1": 44090,
+      "driver": "GTiff",
+      "dtype": "float32",
+      "nodata": null,
+      "nonfinite_cells": 0,
+      "outside_0_1_finite_cells": 0,
+      "owner_reported_score": 0.26,
+      "score_evidence": "OWNER-REPORTED (prompt); not an organizer receipt",
+      "sha256": "8cf893ead5667df21d3288a9968c35fd5385c425b029d82ee71d311715b129fd",
+      "shape": [
+        3730,
+        3292
+      ],
+      "site": "GEMSDOE30",
+      "source_path": "docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+      "status": "OK",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    },
+    "GEMSDOE31 h27-4-solo-d28": {
+      "bytes": 199214,
+      "count": 1,
+      "crs": "EPSG:32611",
+      "dots_value_eq_1": 40199,
+      "driver": "GTiff",
+      "dtype": "float32",
+      "nodata": NaN,
+      "nonfinite_cells": 7111787,
+      "outside_0_1_finite_cells": 0,
+      "owner_reported_score": 0.2708,
+      "score_evidence": "OWNER-REPORTED (prompt); not an organizer receipt",
+      "sha256": "07b6db440535404bb41ec8ddc797713e200d308e3da35937393efde5eb84bc40",
+      "shape": [
+        3730,
+        3292
+      ],
+      "site": "GEMSDOE31",
+      "source_path": "docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+      "status": "OK",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    },
+    "GEMSDOE32 h33-h33-2-b2": {
+      "bytes": 219065,
+      "count": 1,
+      "crs": "EPSG:32611",
+      "dots_value_eq_1": 37654,
+      "driver": "GTiff",
+      "dtype": "float32",
+      "nodata": null,
+      "nonfinite_cells": 0,
+      "outside_0_1_finite_cells": 0,
+      "owner_reported_score": 0.2778,
+      "score_evidence": "OWNER-REPORTED (prompt); not an organizer receipt",
+      "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+      "shape": [
+        3730,
+        3292
+      ],
+      "site": "GEMSDOE32",
+      "source_path": "docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "status": "OK",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    },
+    "GEMSDOE33 h33d-analog-tip-stepover": {
+      "bytes": 917544,
+      "count": 1,
+      "crs": "EPSG:32611",
+      "dots_value_eq_1": 41865,
+      "driver": "GTiff",
+      "dtype": "float32",
+      "nodata": null,
+      "nonfinite_cells": 0,
+      "outside_0_1_finite_cells": 0,
+      "owner_reported_score": 0.2632,
+      "score_evidence": "OWNER-REPORTED (prompt); not an organizer receipt",
+      "sha256": "87f857d505e23247e991ccfab2cbe9f49a04df4f9c8028dce7ea261554690757",
+      "shape": [
+        3730,
+        3292
+      ],
+      "site": "GEMSDOE33",
+      "source_path": "docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+      "status": "OK",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    },
+    "GEMSDOE36 anderson-geothermal-pinn": {
+      "bytes": 318190,
+      "count": 1,
+      "crs": "EPSG:32611",
+      "dots_value_eq_1": 38854,
+      "driver": "GTiff",
+      "dtype": "float32",
+      "nodata": null,
+      "nonfinite_cells": 0,
+      "outside_0_1_finite_cells": 0,
+      "owner_reported_score": 0.275,
+      "score_evidence": "OWNER-REPORTED (prompt); not an organizer receipt",
+      "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "shape": [
+        3730,
+        3292
+      ],
+      "site": "GEMSDOE36",
+      "source_path": "docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "status": "OK",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    },
+    "REPO_DPRF1_zeros": {
+      "bytes": 825872,
+      "count": 1,
+      "crs": "EPSG:32611",
+      "dots_value_eq_1": 37654,
+      "driver": "GTiff",
+      "dtype": "float32",
+      "nodata": null,
+      "nonfinite_cells": 0,
+      "outside_0_1_finite_cells": 0,
+      "sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+      "shape": [
+        3730,
+        3292
+      ],
+      "source_path": "docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+      "status": "OK",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    },
+    "REPO_S3DEP1_zeros": {
+      "bytes": 823378,
+      "count": 1,
+      "crs": "EPSG:32611",
+      "dots_value_eq_1": 37654,
+      "driver": "GTiff",
+      "dtype": "float32",
+      "nodata": null,
+      "nonfinite_cells": 0,
+      "outside_0_1_finite_cells": 0,
+      "sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "shape": [
+        3730,
+        3292
+      ],
+      "source_path": "docs/downloads/gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
+      "status": "OK",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    }
+  },
+  "generated_utc": "2026-10-26T21:54:46+00:00",
+  "statement": "Pixel-geometry evidence only. Not a leaderboard estimate and not a submission authorisation."
+}

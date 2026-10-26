@@ -281,6 +281,48 @@
       "status": "documented",
       "issue": "DPRF1 preregistration baseline table quotes 5,167,378 footprint pixels; the template/footprint actually used everywhere contains 5,167,373 (delta 5 px).",
       "resolution": "Documentation-only discrepancy; all computation uses gems.footprint.load_footprint() (5,167,373 px, verified 2026-10-26). Historical preregistration left unmodified."
+    },
+    {
+      "id": "IRR-HOLDOUT-TRUTH-IS-CATALOGUE",
+      "severity": "high",
+      "status": "open",
+      "issue": "data/bridge/labels.tif is byte-identical in content to data/bridge/existing_faults.tif (SHA-256 7ba308cc..., 60,988 positives). Local HOLDOUT-DTI therefore measures recovery of the public catalogue, while the official problem page says the scored set is a separate set of new faults and that catalogue faults are public.",
+      "resolution": "Not fixed. Any holdout claim must carry this caveat. Needs an independent, non-catalogue truth source or organizer receipts. See docs/b2-leaderboard-analysis-20261026.md section 6."
+    },
+    {
+      "id": "IRR-LEADERBOARD-MISMATCH",
+      "severity": "medium",
+      "status": "documented",
+      "issue": "Prompt cites top leaderboard 0.4413 and 'highest right now' 0.3195. Live DrivenData page (fetched 2026-10-26) shows #1 0.4437, #23 0.3217, #24 0.3169, and no 0.3195 row.",
+      "resolution": "Live page values are used. Prompt values remain owner claims. See docs/b2-leaderboard-analysis-20261026.md section 4."
+    },
+    {
+      "id": "IRR-B2-SUBSET-OF-D28",
+      "severity": "medium",
+      "status": "documented",
+      "issue": "GEMSDOE32 h33-h33-2-b2 (0.2778 owner-reported) is an exact dot subset of the GEMSDOE30 D2.8 family file; the 6,436 removed dots all lie 1-2 px from the public catalogue. Verified by bytes, not by hidden labels.",
+      "resolution": "Recorded in evidence/focus_family_verification_20261026.json via scripts/verify_focus_family.py. No new file derived from this family is cleared for submission."
+    },
+    {
+      "id": "IRR-PORTAL-RANGE-ERROR-NAN",
+      "severity": "medium",
+      "status": "open",
+      "issue": "Portal returned 'Predicted values must be in range [0, 1]'. The -nan variants contain NaN exactly outside the 5,167,373-cell footprint (official format allows null/nan outside bounds). A naive range check fails on NaN, which is a plausible but unconfirmed cause. The uploaded file name/hash is unknown.",
+      "resolution": "Not confirmed. Request the uploaded file name and SHA-256 from the user. The all-finite -zeros variants pass a naive check but use zeros outside the footprint."
+    },
+    {
+      "id": "IRR-SAMPLE-SUBMISSION-NOT-OFFICIAL",
+      "severity": "medium",
+      "status": "documented",
+      "issue": "data/bridge/sample_submission.tif has 60,988 cells equal to 1, while the official sample described on the problem page 'predicts total fault absence'. The bridge file is an owner mirror, not organizer data.",
+      "resolution": "Used only as grid/footprint template. Must not be used as a format example."
+    },
+    {
+      "id": "IRR-HUNIQUE-PACKET-OK-TO-DOWNLOAD-TEST-FAILS",
+      "severity": "high",
+      "status": "open",
+      "issue": "docs/data/unique_download.json still marks 24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.tif with ok_to_download: true and role: primary, and the file name appears 5 times in index.html, docs/index.html and docs/executive-summary.html. Test tests/test_site_build.py::test_contradictory_hunique_packet_is_quarantined_without_tiff_link (added by main commit 14b3db4) requires this packet to be quarantined without a TIFF link. The test fails on origin/main as well as on this branch.",
+      "resolution": "Not fixed in this session (site-generator change outside verified scope). Next session: make the packet ok_to_download false and remove the TIFF link from the built pages, then re-run tests/test_site_build.py. Until then, treat that file as NOT OK TO SUBMIT."
     }
   ]
 }
