@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Metric-integrity continuation — 2026-10-26
+
+**No submission-ready file.** [Corrected B2 explanation](docs/metric-integrity-20261026.md) supersedes the quarantined VENT narrative, not frozen receipts. Exact-file DPRF1 validation was repeated; its local holdout is recorded, not newly replayed. The nine-site table below is historical and does not establish a hidden-score estimate or uniqueness clearance. No method lane was assigned, no stopped lane rerun, and no submission slot used. [JSON run card](evidence/metric_integrity_review_20261026.json).
+
 ## Current continuation review — 2026-10-26
 
 **Nine-site download decisions:** [executive table](docs/executive-summary.html#nine-site-download-decisions) · [machine-readable packet](docs/data/nine_site_download_decisions.json) · [three-pass continuation audit](docs/decision-audit-20261026.md). No calibrated leaderboard estimate or approved new TIFF exists. The preserved owner brief below remains the session starting point.
@@ -60,7 +64,7 @@ All prompt leaderboard numbers below are `UNVERIFIED-OWNER-REPORT` (never `ORGAN
 | **[GEMSDOE33](https://buffedlizard55-lab.github.io/GEMSDOE33/)** | `h33d-analog-tip-stepover-r30` (`0.2632`, B2 + 6,436 px) | `gemsdoe33-a33-l1-analog-transfer-research-37654-20261025-85c94a805a34-zeros.tif` | Unscored; `GEMSDOE33` holdout FAIL (`NEGATIVE`) | `37.6%` / `38.7%` | `27.60%` | **DO NOT SUBMIT** (failed `GEMSDOE33` holdout gate) |
 | **[GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/docs/)** | `anderson-geothermal-pinn-38854` (`0.2750`, B2 + 1,200 px) | *None (`2026-10-26` review retired legacy copied/leaky code)* | No valid unique candidate | — | `46.06%` (vs `PINN`) | **DO NOT SUBMIT** (no non-copied unique candidate on `GEMSDOE36`) |
 
-**2026-10-26 `H24-VENT` integrity correction:** The concurrent historical packet is quarantined. Its runner fabricated fallback novelty/C2ST values; neither those gates nor its scientific performance claims are trusted. Exact bytes remain downloadable for research only. **DOWNLOAD YES / SUBMIT NO.** See [integrity review](docs/review-20261026.md).
+**H24-VENT integrity correction (2026-10-26):** The earlier “passes novelty/C2ST” sentence is withdrawn. The preserved runner used fabricated fallback measurements; its scientific gate claims and recorded holdout are **untrusted and not independently replayed**. Its file is quarantined research only: **DOWNLOAD YES / SUBMIT NO**. Do not use its historical PhD analysis as verified scientific evidence. Read the [corrected metric explanation and evidence limits](docs/metric-integrity-20261026.md), including why catalogue distance is not the hidden-truth distance in the scoring kernel. No new TIFF or geological experiment was generated in this integrity continuation.
 
 ## Latest lane — 2026-10-26 (`H24-EUL1`) Euler N=0 contact increment: NEGATIVE · DOWNLOAD YES / SUBMIT NO · DO NOT RETUNE
 
