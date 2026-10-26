@@ -15,7 +15,9 @@ The repository also retains an **archived, prior negative lane** for audit compl
 [Full scientific / integrity review](docs/portfolio-review-20261026.md) ·
 [Nine-site CSV](docs/data/portfolio_summary_20261026.csv) ·
 [Current artifact audit JSON](evidence/portfolio_artifact_audit_20261026.json) ·
-[Session run card](evidence/portfolio_run_card_20261026.json) · [Continuation safety review receipt](evidence/continuation_safety_review_20261026.json).
+[Session run card](evidence/portfolio_run_card_20261026.json) · [Continuation safety review receipt](evidence/continuation_safety_review_20261026.json) ·
+[2026-10-26 Arena repository review](docs/repo-review-20261026-arena-b7b2f1b6.md) ·
+[Review run card](evidence/repo_review_arena_b7b2f1b6_20261026.json).
 
 ### Nine-site scope and evidence policy
 

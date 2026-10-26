@@ -89,36 +89,78 @@ def verify_research_release(root: Path) -> dict:
 
 
 def verify_current_download(root: Path) -> dict:
-    """Revalidate the first-screen negative download without rerunning its lane.
+    """Revalidate the documented DPRF1 research download without rerunning it.
 
-    Does not certify novelty or scientific measurements; those remain frozen
-    observations. A valid TIFF alone can never authorize an upload.
+    The historical H-UNIQUE-03 metadata currently claims promotion while its
+    own validator and preflight deny authorization. It is therefore not a
+    current-download authority. This check binds only the documented DPRF1
+    exact-file receipt and independently confirms its negative selector result.
     """
-    card = json.loads((root / "docs/data/unique_run_card.json").read_text())
-    if card.get("verdict") != "negative" or card.get("ok_to_submit") is not False:
+    metadata = json.loads((root / "docs/data/dprf1_download.json").read_text())
+    card = json.loads((root / "evidence/dprf1_run_card_20261026.json").read_text())
+    selector = json.loads((root / "evidence/dprf1_selector_20261026.json").read_text())
+    if (
+        metadata.get("verdict") != "negative"
+        or metadata.get("ok_to_submit") is not False
+        or metadata.get("submission_authorized") is not False
+        or card.get("verdict") != "negative"
+        or card.get("ok_to_submit") is not False
+        or card.get("submission_authorized") is not False
+        or selector.get("decision") != "DO_NOT_SUBMIT"
+        or selector.get("ok_to_submit") is not False
+    ):
         raise ValueError("Current research download must remain negative")
-    name = card.get("submission_name", "")
-    if not name or Path(name).name != name or not name.endswith(".tif"):
-        raise ValueError("Download must be a plain TIFF filename")
-    note = card.get("note")
-    if not isinstance(note, str) or not 0 < len(note) <= 140:
-        raise ValueError("Research note must contain 1–140 characters")
+    name = metadata.get("file", "")
+    if (
+        not name
+        or Path(name).name != name
+        or not name.endswith(".tif")
+        or card.get("submission_name") != name
+    ):
+        raise ValueError("Download metadata and run-card filename disagree")
+    digest = metadata.get("sha256")
+    if digest != card.get("raster_sha256") or digest != selector.get("artifact_sha256"):
+        raise ValueError("Download metadata, run card and selector hashes disagree")
+    note = metadata.get("note")
+    if not isinstance(note, str) or not 0 < len(note) <= 140 or note != card.get("note"):
+        raise ValueError("Research note is missing, inconsistent or outside 1–140 characters")
+    note_file = metadata.get("note_file", "")
+    if not note_file or Path(note_file).name != note_file:
+        raise ValueError("Download note filename is unsafe or missing")
+    if (root / "docs/downloads" / note_file).read_text().strip() != note:
+        raise ValueError("Download note file disagrees with its receipt")
     fresh = check_variants(
         root / "docs/downloads" / name, root / "data/bridge/sample_submission.tif"
     )
-    if not fresh["format_valid"] or fresh["sha256"] != card.get("raster_sha256"):
+    if not fresh["format_valid"] or fresh["sha256"] != digest:
         raise ValueError("Current download hash or format verification failed")
     stored = card.get("validator_output", {})
     if not stored:
-        raise ValueError("Current download receipt is absent")
-    for key, value in stored.items():
-        if value != fresh.get(key):
+        raise ValueError("Current download validator receipt is absent")
+    with rasterio.open(root / "docs/downloads" / name) as dataset:
+        expected = {
+            "sha256": fresh["sha256"],
+            "format_valid": fresh["format_valid"],
+            "format_acceptable": fresh["format_acceptable"],
+            "strict_whole_array_values_in_0_1": fresh["checks"][
+                "variant_strict_whole_array_no_nan_allowed"
+            ]["pass"],
+            "no_nan_in_footprint": fresh["checks"]["footprint_all_finite"]["pass"],
+            "footprint_range_0_1": fresh["checks"]["footprint_range_0_1"]["pass"],
+            "crs": str(dataset.crs),
+            "shape": list(dataset.shape),
+            "transform": list(dataset.transform)[:6],
+            "positive_pixels": fresh["in_footprint_positive_pixels"],
+        }
+    for key, value in expected.items():
+        if stored.get(key) != value:
             raise ValueError(f"Current download receipt disagrees: {key}")
     if not fresh["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]:
         raise ValueError("First-screen download must be finite and in [0,1] everywhere")
     return {
         "audit_kind": "current exact-file revalidation; no experiment rerun",
-        "run_card": "docs/data/unique_run_card.json",
+        "run_card": "evidence/dprf1_run_card_20261026.json",
+        "selector": "evidence/dprf1_selector_20261026.json",
         "validator_output": fresh,
         "scientific_evidence": "recorded; not rerun or independently confirmed",
         "ok_to_download": True,
