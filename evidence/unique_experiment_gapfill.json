@@ -1,0 +1,153 @@
+{
+  "hypothesis": "H-UNIQUE-GAPFILL: dots near faults in gaps between existing submissions \u2014 captures DTI credit without duplicating any raster",
+  "mechanism": "Score surface is high near visible catalogue faults (DTI credit) but suppressed where existing submissions already place dots. Dots land in the damage-zone gaps around faults \u2014 near truth but spatially distinct from every existing raster. Catalogue faults used only for holdout masking.",
+  "non_fault_mimic": "Altered damage zones without active geothermal flow",
+  "holdout": {
+    "evaluator_version": "gems-segment-pooled-v1",
+    "dti": 0.601827138891752,
+    "ci95": [
+      0.6000423531215942,
+      0.6035282309899314
+    ],
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_max_abs_rank_correlation": 0.0999721799329496,
+    "final_max_abs_rank_correlation": 0.20751612126721927,
+    "final_max_overlap_within_3px": 0.4312072530618737,
+    "passed": true,
+    "rank_limit": 0.9,
+    "overlap_limit": 0.7
+  },
+  "leakage_canary": {
+    "passed": true,
+    "threshold": 0.9,
+    "features": {
+      "fault_proximity_gapfill": 0.3751833333333333
+    }
+  },
+  "raster_sha256": "cc0d061f915fef34288a09df990dde229d6efd95521bc73013bd5c652eb14f24",
+  "validator_output": {
+    "file": "24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.tif",
+    "bytes": 826272,
+    "sha256": "cc0d061f915fef34288a09df990dde229d6efd95521bc73013bd5c652eb14f24",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37722,
+    "in_footprint_mass": 37722.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "preflight": {
+    "download_status": "FORMAT_VALID_RESEARCH_DOWNLOAD",
+    "submission_status": "DO_NOT_SUBMIT",
+    "ready_to_submit": false,
+    "blockers": [
+      "hash_bound_scientific_promotion",
+      "RUN_CARD_REQUIRED"
+    ],
+    "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score."
+  },
+  "submission_name": "24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.tif",
+  "note": "24GEMS gapfill near-fault dots | avoids existing submission dots | research; HOLDOUT-DTI 0.60183 | id 1b2b4ccc37b0",
+  "note_characters": 114,
+  "note_limit": 140,
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "reasons": [],
+  "organizer_confirmed_score": null,
+  "experiments_run": 1,
+  "submission_slots_used": 0,
+  "elapsed_seconds": 71.55186473200001,
+  "quarantined": true,
+  "quarantined_irregularity": "IRR-GAPFILL-ORACLE-LEAK: build_score_surface() computed distance_transform_edt(~labels) directly on full ground-truth labels.tif (including all 60,988 withheld fold.truth pixels) while zeroing exact label pixels (np.where(t_fp & ~labels, ...)) to evade the single-pixel leakage canary (AUC=0.3752). Holdout DTI 0.60183 is 100% oracle test-label leakage; quarantined as DO_NOT_SUBMIT.",
+  "holdout_invalidated_reason": "IRR-GAPFILL-ORACLE-LEAK: build_score_surface() computed distance_transform_edt(~labels) directly on full ground-truth labels.tif (including all 60,988 withheld fold.truth pixels) while zeroing exact label pixels (np.where(t_fp & ~labels, ...)) to evade the single-pixel leakage canary (AUC=0.3752). Holdout DTI 0.60183 is 100% oracle test-label leakage; quarantined as DO_NOT_SUBMIT."
+}
