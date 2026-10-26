@@ -237,9 +237,9 @@
     "scope": "Recorded-evidence screening and exact-file validation only; positive authorization is not implemented. Not an organizer score, quota record or acceptance guarantee. The agent never uploads."
   },
   "verification": {
-    "pytest": "351 passed after concurrent-main merge and VENT quarantine",
+    "pytest": "361 passed after integrating concurrent PRs 34 and 35",
     "ruff_check": "passed",
-    "ruff_format": "146 files already formatted",
+    "ruff_format": "149 files already formatted",
     "compileall": "passed",
     "git_diff_check": "passed",
     "dprf1_verify_recorded": "passed; negative preserved",
@@ -359,5 +359,6 @@
       "ok_to_submit": false,
       "experiments_run": 0
     }
-  }
+  },
+  "concurrent_review_pr35": "Preserved current-best verification utility, tests, browser coverage and shared VENT quarantine."
 }

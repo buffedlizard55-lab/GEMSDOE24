@@ -14,7 +14,8 @@ const axeSource = path.join(modules, 'axe-core/axe.min.js');
 const base = new URL(process.argv[2]);
 
 async function main() {
-  const card = JSON.parse(await fs.readFile(path.join(root, 'evidence/tnr1_run_card_20261026.json'), 'utf8'));
+  const card = JSON.parse(await fs.readFile(path.join(root, 'evidence/dprf1_run_card_20261026.json'), 'utf8'));
+  const noteCard = JSON.parse(await fs.readFile(path.join(root, 'evidence/tnr1_run_card_20261026.json'), 'utf8'));
   const libs = await inflate(path.join(modules, '@sparticuz/chromium/bin/al2023.tar.br'));
   setupLambdaEnvironment(path.join(libs, 'lib'));
   const browser = await playwright.launch({args: chromium.args.filter(value => value !== "--single-process"), executablePath: await chromium.executablePath(), headless: true});
@@ -34,7 +35,7 @@ async function main() {
       for (const relative of ['', 'docs/index.html', 'executive-summary.html', 'docs/executive-summary.html']) {
         const response = await page.goto(new URL(relative, base).href, {waitUntil: 'networkidle'});
         assert.equal(response.status(), 200);
-        const link = page.getByRole('link', {name: /Download new research \.tif/}).first();
+        const link = page.getByRole('link', {name: /Download current point-best research TIFF/}).first();
         const box = await link.boundingBox();
         assert(box && box.x >= 0 && box.x + box.width <= viewport.width + 1);
         assert(box.y >= 0 && box.y + box.height <= viewport.height, `First-screen download off-screen: ${device} ${relative} ${JSON.stringify(box)}`);
@@ -50,7 +51,7 @@ async function main() {
         assert.equal(digest, card.raster_sha256);
         await page.locator('[data-copy="#note-tnr1"]').click();
         await page.waitForFunction(() => document.querySelector('#tnr1-feedback')?.textContent === 'Copied to clipboard.');
-        assert.equal(await page.evaluate(() => navigator.clipboard.readText()), card.note);
+        assert.equal(await page.evaluate(() => navigator.clipboard.readText()), noteCard.note);
         await page.addScriptTag({path: axeSource});
         const accessibility = await page.evaluate(async () => {
           const result = await axe.run(document.querySelector('main'), {runOnly: {type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice']}});

@@ -22,8 +22,10 @@ from gems.validator import sha256_file  # noqa: E402
 def verify_recorded(root: Path = ROOT) -> dict:
     card = json.loads((root / "evidence/vent_run_card_20261026.json").read_text())
     name = card["submission_name"]
-    if not isinstance(name, str) or Path(name).name != name:
+    if not isinstance(name, str) or Path(name).name != name or not name.endswith("-zeros.tif"):
         raise ValueError("Invalid VENT artifact name")
+    if card.get("verdict") != "negative" or card.get("ok_to_submit") is not False:
+        raise ValueError("Quarantined packet must remain negative")
     artifact = root / "docs/downloads" / name
     checks = check_variants(artifact, root / "data/bridge/sample_submission.tif")
     matched = sha256_file(artifact) == card["raster_sha256"]
@@ -32,8 +34,11 @@ def verify_recorded(root: Path = ROOT) -> dict:
         "artifact": name,
         "sha256_matches_record": matched,
         "validator_output": checks,
-        "verification_passed": matched and checks.get("format_valid") is True,
+        "verification_passed": matched
+        and checks.get("format_valid") is True
+        and checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"] is True,
         "recorded_scientific_claims_trusted": False,
+        "scientific_gate_claims_trusted": False,
         "reason": "Historical runner fabricated fallback C2ST/novelty values; quarantined",
         "verdict": "negative",
         "decision": "DO_NOT_SUBMIT",
