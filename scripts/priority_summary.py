@@ -92,7 +92,10 @@ unverified owner claim, explicitly excluded from scientific scores and promotion
         + """</tbody></table></div>
 <p>Source freshness is checked separately from scientific review. New commits do not invalidate frozen results, but their new files
 are not covered by the old novelty certificate. Do not upload an old winner, a renamed copy, or a candidate merely because it passes [0,1].
-The newer reported GEMSDOE24/25/27/28/30 results in the brief do not exceed their listed historical maxima; they also lack organizer receipts.</p>
+The newer reported GEMSDOE24/25/27/28/30 results in the 2026-10-26 brief do not exceed their listed historical maxima; they also lack organizer receipts.
+Cautionary example from that brief: this repository's holdout-best H24-GVC1 (HOLDOUT-DTI 0.14876, exported here as DO NOT SUBMIT) is
+listed at 0.0859 — dense-catalogue holdout rank does not guarantee hidden-set rank. Full owner-reported nine-site list:
+<code>registry/owner_reported_scores_2026-10-26.json</code>. The brief's leaderboard claims (0.4413 and 0.3195) conflict; neither is verified.</p>
 <p><a href="research.html">H33-B2 geometry, hypothesis history and metric limitations</a> ·
 <a href="data/priority_feed.json">Timestamped nine-source feed</a> ·
 <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/owner_brief_2026-10-25.md">Preserved owner claims</a></p></section>"""

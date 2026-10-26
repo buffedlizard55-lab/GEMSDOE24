@@ -1,0 +1,36 @@
+{
+  "diagnostic": "Post-merge selector check via schema adapter over frozen CUP1 evidence; the frozen run card itself is unchanged. Adapter maps only values already recorded in evidence/cup1_run_card_20261026.json + experiment canary.",
+  "cup_vs_crp1_parallel_lane": {
+    "cup_dots_within_3px_of_crp1": 0.7059542146916662,
+    "crp1_dots_within_3px_of_cup": 0.7162663697577011,
+    "sample_spearman": 0.11434913495821178,
+    "interpretation": "Two independent compositional-front lanes also exceed the 0.70 dot-overlap rule against each other; convergent range-front allocation, not copied pixels (disjoint sessions, different channels/models)."
+  },
+  "selector_receipt": {
+    "selector_version": "gems-selector-v1",
+    "decided_utc": "2026-10-26T01:12:41.176877+00:00",
+    "artifact": "gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif",
+    "artifact_sha256": "a9db98b61dbd1db1a2b904f47a24f830af08006ef66b316b31ce36c3b8d302fc",
+    "human_inspection_used": false,
+    "gates": {
+      "artifact_hash_matches_run_card": true,
+      "artifact_name_matches_run_card": true,
+      "g1_format_strict_0_1": true,
+      "g2_leakage_canary": true,
+      "g3_holdout_beats_recorded_best_and_paired_baseline": false,
+      "g4_registry_novelty": false,
+      "g5_exact_file_c2st": true,
+      "note_at_most_140_chars": true,
+      "budget_and_no_slot_spent": true
+    },
+    "all_gates_passed": false,
+    "ok_to_submit": false,
+    "decision": "DO_NOT_SUBMIT",
+    "quota_status": "unknown_owner_must_confirm_on_submission_page",
+    "reasons": [
+      "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.1503820121280118 vs recorded best 0.14876289156979275, paired CI lower=-0.0005286047126806332",
+      "g4_registry_novelty: surface|rho|=0.5468762589511128, final|rho|=0.8122349419788611, method overlap=0.9119615445902162, peer overlap=0.9119615445902162"
+    ],
+    "scope": "Project scientific gates only; not an organizer score, acceptance guarantee, or quota check. The agent never uploads."
+  }
+}

@@ -6,7 +6,29 @@ CUP1 (HOLDOUT-DTI 0.15038, new point best) is DOWNLOAD YES / SUBMIT NO: paired C
 B-GVC crosses 0 and 91.2% of dots sit within 3 px of parent GVC1. Do not rerun/retune CUP1,
 and do not propose another GVC18+HGB increment — it will converge to the same dots. Next lane
 must be an orthogonal surface family, judged on SegmentHoldout **and** SGMC-sparse; the
-independent selector/quota certificate is still missing and blocks any SUBMIT YES.
+independent selector now exists on main (`gems.selector`, CRP1 session) but CUP1's failed
+gates make its decision DO_NOT_SUBMIT regardless; quota remains unknown.
+
+**CRP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CRP1_2026-10-26.md`,
+`knowledge/21_CRP1_findings_2026-10-26.md` and `evidence/crp1_run_card_20261026.json` first.
+H24-CRP1 (compositional radiometric fronts + cross-depth TMI/up150 persistence +
+Hessian saddles, selective residualization) is STOPPED as duplicate/negative:
+HOLDOUT-DTI 0.13747 [0.12400, 0.15152] (`gems-segment-pooled-v1`, 60,988 withheld),
+paired Δ vs reconstructed OOF baseline +0.00747 [-0.00242, +0.01793], final-dot
+overlap 0.8070 > 0.70 (max |ρ| 0.5878), canary/C2ST/format PASS. DOWNLOAD YES /
+SUBMIT NO. Do not rerun or retune it (including residualization strength).
+New independent selector `gems.selector` (v1) now exists and is the only issuer
+of `ok_to_submit`; it fail-closes on any missing gate evidence and always records
+quota as unknown. Preflight schema v2 still requires its own selector receipt
+format — wiring the two is future work, do not change preflight semantics silently.
+Owner-reported nine-site list updated in `registry/owner_reported_scores_2026-10-26.json`
+(includes GVC1 listed live at 0.0859 vs its 0.14876 holdout — holdout rank does
+not transfer monotonically). Parallel PR #28 (`knowledge/20_repo_review_2026-10-26.md`)
+shares the `knowledge/20_` prefix with the CRP1 preregistration by coincidence;
+both files remain. Next lanes, if assigned: valley-floor blind-fault or
+drainage-deflection with a sparse-regime primary endpoint; any change to how
+dense continuous registry rasters enter the 0.70 dot-overlap rule must be
+prospective and never retroactively clear CRP1/GVC1/RSHG1.
 
 **OJ1 continuation (2026-10-25):** Read `knowledge/17_preregistered_OJ1_2026-10-25.md`,
 `knowledge/18_OJ1_findings_2026-10-25.md`, and `evidence/oj1_run_card_20261025.json` first.
