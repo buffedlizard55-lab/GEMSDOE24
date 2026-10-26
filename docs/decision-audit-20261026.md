@@ -87,6 +87,12 @@ best, and pre-placement/final registry checks before any promotion.
    The final session card records exact verification results. No claim of a fresh
    browser audit or complete scientific replay.
 
+## Safety/release follow-up — 2026-10-26 continuation
+
+The shared writer now defaults to finite zero outside the footprint, while `outside="nan"` is retained only as an explicitly labelled compatibility twin. New release notes are capped at 140 characters; the existing 142-character historical card is preserved rather than rewritten. The B2 explanation now states only the exact mask-subset relationship and a conditional pruning mechanism; it does not infer hidden-label causality. The Pages generator and README now render the four qualitative, unexecuted hypotheses and a nine-site exact-file/provenance/uniqueness/submit table. The regenerated site remains `slot_recommendation=not_recommended`, `new_slot_eligible=false`, `verdict=negative`, `no_scores_fabricated=true`.
+
+Final follow-up checks: **449 pytest tests passed**, Ruff check/format passed, compileall passed, `git diff --check` passed, and `scripts/build_site.py` passed. Machine-readable receipt: [`continuation_safety_review_20261026.json`](../evidence/continuation_safety_review_20261026.json). No experiment, intentionally new TIFF, upload or slot was created in this continuation.
+
 ## Next steps and access limits
 
 1. Project coordination must supply the missing single-method lane and prospectively

@@ -9,7 +9,7 @@
     "recorded_local_point_best_research_only": "GEMSDOE24 H24-DPRF1 gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif (SHA-256 c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1; HOLDOUT-DTI 0.16379 [0.15045, 0.17739], gems-segment-pooled-v1, 60,988 withheld; 57/57 competing-method novelty PASS <=55.78%, C2ST 0.5247 PASS, 52.3% >2 km far-field). DOWNLOAD: YES · SUBMIT: NO under gems-selector-v2-literal-quota-fail-closed (retained spacing-5 lattice registry-039, unknown live DrivenData quota, no independent replay certificate).",
     "dkrn1_disposition": "H24-DKRN1 (gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif, SHA-256 0b114a75d5a905ded84450fe55df386f9361ff39139a2e4452476563ac0fa65d) is a valid-format, strict-[0,1], non-copied research GeoTIFF (#2 local HOLDOUT-DTI in GEMSDOE24 history among non-DPRF1/EUL1 families: 0.15525 [0.14205, 0.16874], HeadA47 gap-native ablation 0.15072, winning NE_LidarGapHeavy 0.21308 > DPRF1 0.21227, +0.02525 over oof_multiphysics_hgb_d3 0.13000 on 4/4 folds) — but an honest NEGATIVE result: -0.00854 below recorded DPRF1 (0.16379), 75.68% 3-px dot overlap vs DPRF1 (>70% Rule-1 ceiling despite -10.89 pp reduction from EUL1's 86.57%), and exact-file C2ST AUC 0.5773 (holm_p=0.0200, valley wash-road correlation via unresidualized m_hydro). DOWNLOAD: YES (audit only) · SUBMIT: NO.",
     "all_eight_20261026_sibling_tifs_audited": "Fresh SHA-verified pixel forensics across all 8 sibling 2026-10-26 HEAD commits confirm zero submit-ready sibling overrides: GEMSDOE30's 2026-10-26 TIFF fails strict whole-array [0,1] (NaN outside footprint), GEMSDOE31 PGR31 suffers 69.2% apron collapse (only 7.5% >2 km), GEMSDOE27 H31-DRCG uses a non-comparable 289,180-px split (0.04730) without registry-039, and GEMSDOE25/28/32/33/36 all mark their own 2026-10-26 lanes DO NOT SUBMIT or trail DPRF1 on harmonized holdout.",
-    "can_we_beat_02778_03195_04413": "Unproven and unforecastable without organizer calibration receipts. Exact DTI deletion algebra D = T / (0.2 T + 0.2 F + 0.8 G) proves GEMSDOE32 B2 (0.2778 UNVERIFIED-OWNER-REPORT) gained +0.0178 over D2.8 (0.2600) purely by deleting 6,436 zero-marginal-credit <=200 m catalogue-halo dots (zero new geological detections). Conflicting prompt top-score snapshots (0.3195 vs 0.4413) have no receipts; surpassing ~0.28 without copying B2 requires genuine off-catalogue fault discovery inside the 31.8% LiDAR gap and sub-alluvial basins at zero <=200 m halo waste."
+    "can_we_beat_02778_03195_04413": "Unproven and unforecastable without organizer calibration receipts. Byte/pixel forensics establish only that B2 is a 37,654-dot exact subset of D2.8 after removing 6,436 public-catalogue-proximal cells; hidden T, F and N are unavailable. Pruning could help or hurt depending on hidden-label overlap, so no causal deletion algebra, zero-credit claim, new-fault claim, or threshold forecast is asserted. Conflicting prompt top-score snapshots 0.3195 vs 0.4413 have no receipts."
   },
   "sites": [
     {
@@ -24,14 +24,20 @@
       "recorded_point_best_artifact": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
       "recorded_point_best_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
       "recorded_point_best_holdout_dti": 0.1637924246971501,
-      "recorded_point_best_ci95": [0.15044621733051888, 0.1773903019943756],
+      "recorded_point_best_ci95": [
+        0.15044621733051888,
+        0.1773903019943756
+      ],
       "latest_dkrn1_20261026": {
         "artifact_file": "gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif",
         "artifact_sha256": "0b114a75d5a905ded84450fe55df386f9361ff39139a2e4452476563ac0fa65d",
         "dots": 37654,
         "whole_array_strict_0_1": true,
         "holdout_dti": 0.1552511531888172,
-        "holdout_ci95": [0.14204551992559925, 0.16873947884110158],
+        "holdout_ci95": [
+          0.14204551992559925,
+          0.16873947884110158
+        ],
         "head_a_kernel47_dti": 0.15071967484376064,
         "bridge_3km_dti": 0.15461511082791493,
         "ne_lidar_gap_heavy_dti": 0.21308452510103304,

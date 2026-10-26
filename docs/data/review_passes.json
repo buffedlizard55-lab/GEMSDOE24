@@ -53,7 +53,7 @@
   ],
   "pass_3_recheck_against_the_brief": {
     "easy_one_click_tif_at_start_of_site": "done: hero button on the overview and the guide; verified bytes",
-    "range_error_fix_unique_name_and_note": "strict writer + forensics over 148 rasters (cause of the original portal message NOT established); unique names/content ids; notes <= 200 chars",
+    "range_error_fix_unique_name_and_note": "strict writer + forensics over 148 rasters (cause of the original portal message NOT established); unique names/content ids; new release notes <= 140 chars (older frozen records may predate this limit)",
     "executive_summary_subpage": "done: six portal steps, copyable notes, troubleshooting, slot plan, rules",
     "c2st_labels_first_then_predictions_then_residualize": "done with full families; labels at chance, detectors flagged mainly via claim proximity; residualization tested and costs accuracy",
     "explain_h19_and_whether_higher_is_possible": "done (supported vs unsupported claims; emission efficiency is the lever with direct evidence)",
