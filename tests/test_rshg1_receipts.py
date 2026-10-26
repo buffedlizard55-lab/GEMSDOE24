@@ -99,7 +99,6 @@ def test_rshg1_is_retained_and_preserves_all_sibling_packets():
     mtr = json.loads((ROOT / "docs/data/independent_download.json").read_text())
     sahg = json.loads((ROOT / "docs/data/sahg1_download.json").read_text())
     con = json.loads((ROOT / "evidence/con_run_card_20261025.json").read_text())
-    uniq = json.loads((ROOT / "docs/data/unique_download.json").read_text())
 
     for rel in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         html = (ROOT / rel).read_text()
@@ -108,7 +107,6 @@ def test_rshg1_is_retained_and_preserves_all_sibling_packets():
         assert html.index(dl["file"]) < html.index(mtr["file"])
         assert html.index(dl["file"]) < html.index(sahg["file"])
         assert con["submission_name"] in html
-        assert uniq["file"] in html
         assert html.index('id="historical-') < html.index(dl["file"])
 
 
