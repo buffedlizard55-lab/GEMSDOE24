@@ -165,6 +165,30 @@ def _read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text())
 
 
+def read_stack_rows(
+    rows: np.ndarray,
+    base_mm: np.ndarray,
+    gvc_mm: np.ndarray,
+    sahg_mm: np.ndarray,
+    extra_mm: np.ndarray | None = None,
+) -> np.ndarray:
+    """Assemble a float32 block from the stack memmaps, optionally with lane extra channels.
+
+    Column order is always ``[base (30), gvc (18), sahg (4), extra...]`` so the
+    52-channel DPRF1 layout is a strict prefix; ``extra_mm=None`` reproduces the
+    original DPRF1 behaviour byte-for-byte.
+    """
+    n = len(rows)
+    n_extra = 0 if extra_mm is None else int(extra_mm.shape[1])
+    out = np.empty((n, 52 + n_extra), dtype=np.float32)
+    out[:, :30] = base_mm[rows]
+    out[:, 30:48] = gvc_mm[rows]
+    out[:, 48:52] = sahg_mm[rows]
+    if extra_mm is not None:
+        out[:, 52:] = extra_mm[rows]
+    return out
+
+
 def read_52ch_rows(
     rows: np.ndarray,
     base_mm: np.ndarray,
@@ -172,12 +196,7 @@ def read_52ch_rows(
     sahg_mm: np.ndarray,
 ) -> np.ndarray:
     """Assemble a ``(len(rows), 52)`` float32 block from the three memmaps."""
-    n = len(rows)
-    out = np.empty((n, 52), dtype=np.float32)
-    out[:, :30] = base_mm[rows]
-    out[:, 30:48] = gvc_mm[rows]
-    out[:, 48:52] = sahg_mm[rows]
-    return out
+    return read_stack_rows(rows, base_mm, gvc_mm, sahg_mm)
 
 
 class SelectiveNonTopographicResidualizer:
@@ -414,8 +433,15 @@ class TrainQuantileGateScaler:
             self.stats_[name] = (med, iqr)
         return self
 
-    def score_regime_b_multiplier(self, x_rows: np.ndarray) -> np.ndarray:
-        """Compute ``(0.30 + 0.70*H_upflow) * (0.30 + 0.70*B_sub) * (1.0 - 0.50*S_steep)``."""
+    def score_regime_b_multiplier(
+        self, x_rows: np.ndarray, *, extra_subsurface_names: tuple[str, ...] = ()
+    ) -> np.ndarray:
+        """Compute ``(0.30 + 0.70*H_upflow) * (0.30 + 0.70*B_sub) * (1.0 - 0.50*S_steep)``.
+
+        ``extra_subsurface_names`` (lane extension, e.g. EUL1 Euler-contact channels)
+        are averaged into ``B_sub`` alongside ``SUBSURFACE_STEP_NAMES``; the default
+        empty tuple reproduces the original DPRF1 multiplier exactly.
+        """
         n = len(x_rows)
 
         def sig(name: str) -> np.ndarray:
@@ -434,10 +460,11 @@ class TrainQuantileGateScaler:
             h_up += sig(nm)
         h_up /= float(len(UPFLOW_CONDUIT_NAMES))
 
+        sub_names = (*SUBSURFACE_STEP_NAMES, *extra_subsurface_names)
         b_sub = np.zeros(n, dtype=np.float32)
-        for nm in SUBSURFACE_STEP_NAMES:
+        for nm in sub_names:
             b_sub += sig(nm)
-        b_sub /= float(len(SUBSURFACE_STEP_NAMES))
+        b_sub /= float(len(sub_names))
 
         s_steep = sig(STEEP_SLOPE_NAME)
         mult = (0.30 + 0.70 * h_up) * (0.30 + 0.70 * b_sub) * (1.0 - 0.50 * s_steep)
@@ -794,12 +821,34 @@ def fit_and_predict_fold(
     neg_mode: str,
     seed: int,
     chunk_size: int = 200_000,
-) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
-    """Fit selective residualizer, 2-seed HGB, relief-conditioned calibrator, and predict ``(p_sharp, p_conduit)``."""
-    sel_indices = [all_names.index(nm) for nm in sorted(SELECTIVE_RESID_NAMES)]
+    extra_mm: np.ndarray | None = None,
+    regime_b_extra_names: tuple[str, ...] = (),
+    selective_extra_names: tuple[str, ...] = (),
+    return_legacy_conduit: bool = False,
+) -> (
+    tuple[np.ndarray, np.ndarray, dict[str, Any]]
+    | tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, Any]]
+):
+    """Fit selective residualizer, 2-seed HGB, relief-conditioned calibrator, and predict ``(p_sharp, p_conduit)``.
+
+    Lane-extension parameters (defaults reproduce DPRF1 exactly): ``extra_mm`` adds
+    trailing physical channels listed at the end of ``all_names``;
+    ``regime_b_extra_names`` are averaged into the Regime-B subsurface multiplier;
+    ``selective_extra_names`` join the selective-residualization set.
+    """
+    n_extra = 0 if extra_mm is None else int(extra_mm.shape[1])
+    if len(all_names) != 52 + n_extra:
+        raise ValueError("all_names must list the 52 DPRF1 channels plus any extra channels")
+    sel_names = sorted(set(SELECTIVE_RESID_NAMES) | set(selective_extra_names))
+    sel_indices = [all_names.index(nm) for nm in sel_names]
     gate_col_map = {
         nm: all_names.index(nm)
-        for nm in (*UPFLOW_CONDUIT_NAMES, *SUBSURFACE_STEP_NAMES, STEEP_SLOPE_NAME)
+        for nm in (
+            *UPFLOW_CONDUIT_NAMES,
+            *SUBSURFACE_STEP_NAMES,
+            STEEP_SLOPE_NAME,
+            *regime_b_extra_names,
+        )
     }
     g_sat_idx = all_names.index("sahg_g_sat")
     slope_idx = all_names.index(STEEP_SLOPE_NAME)
@@ -818,14 +867,14 @@ def fit_and_predict_fold(
         bg_disjoint = bg_pool_all
     rng_bg = np.random.default_rng(seed + 41)
     bg_sel = np.sort(rng_bg.choice(bg_disjoint, size=min(35_000, len(bg_disjoint)), replace=False))
-    x_bg = read_52ch_rows(bg_sel, base_mm, gvc_mm, sahg_mm)
+    x_bg = read_stack_rows(bg_sel, base_mm, gvc_mm, sahg_mm, extra_mm)
     c_bg = np.asarray(nuisance_fp[bg_sel], dtype=np.float32)
 
     gate_scaler = TrainQuantileGateScaler(gate_col_map).fit(x_bg)
     resid = SelectiveNonTopographicResidualizer(sel_indices, alpha=100.0).fit(c_bg, x_bg)
     x_bg_res = resid.transform_inplace(c_bg, x_bg.copy())
 
-    x_tr = read_52ch_rows(tr_rows, base_mm, gvc_mm, sahg_mm)
+    x_tr = read_stack_rows(tr_rows, base_mm, gvc_mm, sahg_mm, extra_mm)
     c_tr = np.asarray(nuisance_fp[tr_rows], dtype=np.float32)
     resid.transform_inplace(c_tr, x_tr)
 
@@ -862,11 +911,20 @@ def fit_and_predict_fold(
         pred_rows = np.flatnonzero(predict_mask.ravel()[fp_ids])
         p_cal_vec = np.empty(len(pred_rows), dtype=np.float32)
         mult_b_vec = np.empty(len(pred_rows), dtype=np.float32)
+        mult_b_legacy_vec = (
+            np.empty(len(pred_rows), dtype=np.float32) if return_legacy_conduit else None
+        )
 
         for start in range(0, len(pred_rows), chunk_size):
             sl = pred_rows[start : start + chunk_size]
-            x_raw = read_52ch_rows(sl, base_mm, gvc_mm, sahg_mm)
-            mult_b_vec[start : start + chunk_size] = gate_scaler.score_regime_b_multiplier(x_raw)
+            x_raw = read_stack_rows(sl, base_mm, gvc_mm, sahg_mm, extra_mm)
+            mult_b_vec[start : start + chunk_size] = gate_scaler.score_regime_b_multiplier(
+                x_raw, extra_subsurface_names=regime_b_extra_names
+            )
+            if mult_b_legacy_vec is not None:
+                mult_b_legacy_vec[start : start + chunk_size] = (
+                    gate_scaler.score_regime_b_multiplier(x_raw)
+                )
             has_lid = np.isfinite(x_raw[:, g_sat_idx])
             slp = x_raw[:, slope_idx].copy()
             rel = x_raw[:, rel_idx].copy()
@@ -895,4 +953,10 @@ def fit_and_predict_fold(
         "n_selective_residualized_cols": len(sel_indices),
         "relief_tier_cuts": list(calibrator.tier_cuts_),
     }
+    if return_legacy_conduit:
+        assert mult_b_legacy_vec is not None
+        mult_b_leg_2d = np.zeros(fp.shape, dtype=np.float32)
+        mult_b_leg_2d.ravel()[fp_ids[pred_rows]] = mult_b_legacy_vec
+        p_conduit_legacy_2d = (p_sharp_2d * mult_b_leg_2d).astype(np.float32)
+        return p_sharp_2d, p_conduit_2d, p_conduit_legacy_2d, meta
     return p_sharp_2d, p_conduit_2d, meta

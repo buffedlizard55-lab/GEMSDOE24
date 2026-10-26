@@ -267,6 +267,20 @@
       "status": "disclosed_and_fixed_in_TRSG1",
       "issue": "2026-10-25 H24-GVC1 (HOLDOUT-DTI 0.14876, overlap-stopped at 0.7682) received an owner-reported public score of 0.0859 in sibling ledgers. Pixel forensics proved its full-footprint deployment fitted in-sample on train_mask=fp with neg_mask=(EDT(~catalogue)>=9 px) and global radial -log1p(EDT) thermal distance fields, dumping 45.8% of dots into 2<d_cat<=5 px and 86.0% into d_cat<=15 px while leaving only 4.1% in deep concealed terrain (d_cat>30 px vs 35.8% in GEMSDOE32 H33-2-B2). SegmentHoldout (15 px collar) could not observe the <15 px halo.",
       "resolution": "Resolved independently in 2026-10-26 H24-TRSG1 via (1) 20% close-flank negatives (4<=d_vis<9 px) + 80% far negatives (>=9 px), (2) compact local DoG thermal kernels (zero global EDT), (3) 100% out-of-fold Dual-Partition Stitched-OOF deployment (0.5*Quadrant_OOF + 0.5*Rotated45_OOF), and (4) Two-Regime Concealed-Basin (26%) + Range-Front (74%) allocation, reducing 2<d_cat<=5 px halo to 18.4% and raising d_cat>30 px discovery to 32.0% while passing 137-raster novelty (max overlap 0.6293 <= 0.70; <=0.6622 vs DPRF1/TNR1/CRP1/CUP1) and C2ST (AUC 0.4727)."
+    },
+    {
+      "id": "IRR-EUL1-VG-BANDS",
+      "severity": "high",
+      "status": "worked-around",
+      "issue": "Bridge survey derivative bands are not certified derivatives of their same-prefix fields: tmi_vg = d(tmi)x0.00990/px (corr 0.9965 vs self-consistent FFT |k| derivative), iso_grav_anom_vg vs d(iso_grav_anom) corr -0.19, tmi_hg = 2.0000x|grad(tmi)|.",
+      "resolution": "EUL1 Amendment A1 (knowledge/23_EUL1_prereg_amendment_2026-10-26.md): Euler deconvolution derives Fz self-consistently per field via gems.euler.fft_vertical_derivative; *_vg bands used only for forensics. No prior lane fitted multi-band physical identities, so no recorded result changes."
+    },
+    {
+      "id": "IRR-EUL1-FOOTPRINT-COUNT",
+      "severity": "low",
+      "status": "documented",
+      "issue": "DPRF1 preregistration baseline table quotes 5,167,378 footprint pixels; the template/footprint actually used everywhere contains 5,167,373 (delta 5 px).",
+      "resolution": "Documentation-only discrepancy; all computation uses gems.footprint.load_footprint() (5,167,373 px, verified 2026-10-26). Historical preregistration left unmodified."
     }
   ]
 }
