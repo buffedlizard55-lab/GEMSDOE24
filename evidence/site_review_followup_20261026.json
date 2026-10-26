@@ -1,0 +1,130 @@
+{
+  "schema_version": "site-review-followup-v1",
+  "reviewed_utc": "2026-10-26T16:55:30Z",
+  "scope": "Repository, Pages status-order, current-mainline merge, and contradictory submission-gate review; no scientific experiment, organizer access, or TIFF generation in this continuation",
+  "finding": "The generated site and README status ordering was corrected. During PR sync, origin/main advanced to e6b2edb and introduced additional experiment artifacts. A newly merged MYHGB run card contradicted its own blocking evidence: it marked verdict=promote and ok_to_submit=true while submission_authorized=false, despite a non-positive paired comparison and zero calibration controls/peer blobs checked. The runner forced its technical gate to true. The MYHGB authorization surface was corrected fail-closed; the upstream TIFF itself was not regenerated or scientifically replayed.",
+  "fixes": [
+    "Promoted the recorded DPRF1 local point-best and newer negative-lane summaries ahead of historical TNR1 content on generated Overview, Executive Summary, and Research pages.",
+    "Wrapped TNR1 content in a closed historical-result section and replaced stale latest/new copy with historical/archive wording.",
+    "Changed the README status ordering so OJ1 and TNR1 are appended as historical results rather than prepended as latest.",
+    "Bound evidence/site_build.json primary_sha256 to the current-best exact-file review rather than the TNR1 active-lane identity.",
+    "Added regression tests for ordering, historical labels, current-best hash binding, and non-authorization status.",
+    "Synchronized with origin/main e6b2edb (merged PR #47) and reviewed its newly present experiment cards without rerunning experiments.",
+    "Corrected the MYHGB runner to derive gates from measured booleans, fail novelty closed if calibration controls or peer blobs were not checked, and never set ok_to_submit true from this provisional lane; corrected its duplicated run cards, preflight summary, download metadata, and research note.",
+    "Added a current-mainline integration decision and audit findings to README and docs/review-20261026.md; no new artifact was authorized."
+  ],
+  "current_artifact": {
+    "name": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+    "sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+    "status": "DOWNLOAD YES / SUBMIT NO",
+    "holdout_label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positive_pixels": 60988,
+    "dti": 0.1637924246971501,
+    "ci95": [
+      0.15044621733051888,
+      0.1773903019943756
+    ],
+    "organizer_confirmed_score": null,
+    "scope_note": "Existing recorded point-best; exact file revalidated, not scientifically replayed in this follow-up. Literal all-entry novelty, independent replay, and quota remain blocking."
+  },
+  "experiments_run": 0,
+  "new_tiffs_generated": 0,
+  "submission_slots_used": 0,
+  "validation": {
+    "pytest": "415 passed",
+    "ruff_check": "passed",
+    "ruff_format_check": "170 files already formatted",
+    "compileall": "passed",
+    "git_diff_check": "passed",
+    "site_build": "passed; negative / new_slot_eligible=false",
+    "dprf1_recorded_verification": "passed; no experiment rerun; selector DO_NOT_SUBMIT",
+    "tnr1_recorded_verification": "passed; no experiment rerun; negative preserved",
+    "browser_review": "12 desktop/mobile page checks passed on final rebuilt site at 2026-10-26T16:55Z; current-best download SHA and clipboard note verified; first-screen placement, no overflow, zero accessibility violations; 92 source rows shown",
+    "web_download_authorization": "false",
+    "mainline_sync": "origin/main e6b2edbfab141d13b23a79117bf957ea2040c281; PR #47 contents reviewed; no new experiment rerun",
+    "myhgb_authorization_integrity": "fail-closed correction covered by new regression tests; paired gain does not pass strict positive CI; calibration controls checked=0; peer blobs checked=0; no positive submission authorization"
+  },
+  "remaining_blockers": [
+    "No explicitly assigned single-method paragraph for a new lane",
+    "No candidate satisfies the literal all-entry 3-pixel overlap ceiling; DPRF1 exceeds it against the retained calibration lattice",
+    "No complete independent positive replay certificate",
+    "Current DrivenData weekly quota and organizer submission receipt are unavailable",
+    "The reported 0.2778 and conflicting leaderboard maxima 0.3195 / 0.4413 remain unverified owner claims"
+  ],
+  "verdict": "negative",
+  "mainline_integrity_review": {
+    "base_sha": "e6b2edbfab141d13b23a79117bf957ea2040c281",
+    "review_only": true,
+    "experiments_rerun": 0,
+    "tiffs_generated_in_this_continuation": 0,
+    "h24_myhgb": {
+      "holdout_label": "HOLDOUT-DTI",
+      "evaluator": "gems-segment-pooled-v1",
+      "withheld_positive_count": 60988,
+      "recorded_dti": 0.13265660782443048,
+      "ci95": [
+        0.11915069962456809,
+        0.14630552090708648
+      ],
+      "paired_positive_95ci_gate": false,
+      "calibration_controls_checked": 0,
+      "peer_blobs_checked": 0,
+      "previous_run_card_conflict": "verdict=promote and ok_to_submit=true while submission_authorized=false; runner forced technical_gates_passed=true",
+      "corrected_decision": "DOWNLOAD research YES / SUBMIT NO"
+    },
+    "other_recorded_hypotheses": [
+      {
+        "id": "H24-GSD",
+        "dti": 0.07223333558291511,
+        "ci95": [
+          0.06217853136492049,
+          0.08306537219650088
+        ],
+        "decision": "negative"
+      },
+      {
+        "id": "H24-PTAR",
+        "dti": 0.0687728621778164,
+        "ci95": [
+          0.06339968457908293,
+          0.07433358739456675
+        ],
+        "decision": "negative"
+      },
+      {
+        "id": "H-UNIQUE-04",
+        "dti": 0.05940233051878781,
+        "ci95": [
+          0.043413309038934755,
+          0.07611761424013325
+        ],
+        "recorded_experiment_number": 4,
+        "declared_maximum_experiments": 3,
+        "decision": "negative; protocol-count inconsistency"
+      },
+      {
+        "id": "H-UNIQUE-05/06",
+        "dti": 0.022348219779637794,
+        "ci95": [
+          0.01799309009314464,
+          0.02715698839958841
+        ],
+        "same_raster_hash": "20a619dd806be92a27961cc48df7ca63486c1120d852907fe7418b7708333aad",
+        "final_dot_overlap_within_3px": 0.9968289920724802,
+        "declared_maximum_experiments": 3,
+        "recorded_experiment_number": 5,
+        "decision": "negative; duplicate raster and overlap stop"
+      }
+    ],
+    "submission_authorized": false
+  },
+  "upstream_mainline_artifacts_reviewed": [
+    "H24-MYHGB",
+    "H24-GSD",
+    "H24-PTAR",
+    "H-UNIQUE-04",
+    "H-UNIQUE-05",
+    "H-UNIQUE-06"
+  ]
+}

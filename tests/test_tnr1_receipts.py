@@ -166,12 +166,13 @@ def test_exact_arrays_and_two_explicit_outside_conventions():
     assert not CARD["correlation_overlap_vs_registry"]["final_dots"]["passed"]
 
 
-def test_new_packet_leads_and_every_old_download_stays_historical():
+def test_current_best_leads_and_tnr1_is_historical():
     active = json.loads((ROOT / "docs/data/active_lane.json").read_text())
-    assert active["lane"] == "H24-TNR1"
+    assert active["lane"] == "H24-TNR1"  # active lane identity, not point-best selector
     assert active["artifact"]["sha256"] == CARD["raster_sha256"]
     assert active["artifact"]["file"] == CARD["submission_name"]
     assert active["ok_to_submit"] is active["submission_authorized"] is False
+    current = json.loads((ROOT / "docs/data/current_best_review.json").read_text())
     old = json.loads((ROOT / "docs/data/rshg1_download.json").read_text())
     for relative in (
         "index.html",
@@ -180,15 +181,28 @@ def test_new_packet_leads_and_every_old_download_stays_historical():
         "docs/executive-summary.html",
     ):
         html = (ROOT / relative).read_text()
-        historical = html.index('id="historical-')
-        current = html[:historical]
-        assert 'download="' + CARD["submission_name"] + '"' in current
-        assert "DOWNLOAD: YES" in current and "SUBMIT: NO" in current
-        assert "NOT OK TO SUBMIT" in current and "DO NOT SUBMIT" in current
-        assert "No human-inspector fallback" in current
-        assert old["file"] not in current and old["file"] in html[historical:]
-        assert CARD["raster_sha256"] in current
-        assert 'data-copy="#note-tnr1"' in current
+        historical = html.index('id="historical-tnr1')
+        current_section = html[:historical]
+        historical_section = html[historical:]
+        assert 'download="' + current["submission_name"] + '"' in current_section
+        assert "DOWNLOAD: YES" in current_section and "SUBMIT: NO" in current_section
+        assert "NOT OK TO SUBMIT" in current_section and "DO NOT SUBMIT" in current_section
+        assert "No human-inspector fallback" in current_section
+        assert CARD["submission_name"] not in current_section
+        assert old["file"] not in current_section and old["file"] in historical_section
+        assert current["raster_sha256"] in current_section
+        assert 'data-copy="#note-tnr1"' not in current_section
+        assert 'data-copy="#note-tnr1"' in historical_section
+
+
+def test_tnr1_render_does_not_claim_to_be_latest():
+    from tnr1_site import render
+
+    result = render(ROOT)
+    assert "Historical negative experiment · H24-TNR1" in result["overview"]
+    assert "Historical TNR1 result" in result["executive"]
+    assert "Historical **H24-TNR1** result" in result["status_md"]
+    assert "Latest **H24-TNR1**" not in result["status_md"]
 
 
 def test_current_receipt_missing_never_silently_falls_back(packet):

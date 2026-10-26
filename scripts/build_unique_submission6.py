@@ -132,9 +132,7 @@ def main():
     spring_points = read_spring_points()
     print(f"Vents: {len(vent_points)}, Springs: {len(spring_points)}", flush=True)
 
-    score, support, vent_mask, spring_mask = build_score_surface(
-        fp, vent_points, spring_points
-    )
+    score, support, vent_mask, spring_mask = build_score_surface(fp, vent_points, spring_points)
     print(f"Support pixels: {int(support.sum()):,}", flush=True)
     print(f"Score positive pixels: {int((score > 0).sum()):,}", flush=True)
 
@@ -303,9 +301,7 @@ def main():
             "surface_max_abs_rank_correlation": report["surface_novelty"][
                 "max_abs_rank_correlation"
             ],
-            "final_max_abs_rank_correlation": report["final_novelty"][
-                "max_abs_rank_correlation"
-            ],
+            "final_max_abs_rank_correlation": report["final_novelty"]["max_abs_rank_correlation"],
             "final_max_overlap_within_3px": report["final_novelty"]["max_dot_overlap"],
             "passed": report["final_novelty"]["passed"],
             "rank_limit": 0.90,

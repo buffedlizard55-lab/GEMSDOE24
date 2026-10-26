@@ -113,22 +113,23 @@
     "artifact_name_matches": true,
     "validator_sha256_matches": true,
     "validator_format_valid": true,
-    "verdict_promote": true,
+    "verdict_promote": false,
     "submission_authorized": false,
     "scientific_authorization": false,
     "independent_selector_verified": false,
     "reason_codes": [
-      "RUN_CARD_NOT_AUTHORIZED",
-      "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED"
+      "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED",
+      "RUN_CARD_NEGATIVE_GATE",
+      "RUN_CARD_NOT_AUTHORIZED"
     ],
-    "note": "GEMS24 MYHGB | 42ch NaN-HGB+res+K300 b2 3e38453a8fb9 | DTI 0.1327; OK TO SUBMIT"
+    "note": "GEMS24 MYHGB | 42ch NaN-HGB+res+K300 b2 3e38453a8fb9 | DTI 0.1327; research; DO NOT SUBMIT"
   },
   "note": {
     "present": true,
-    "characters": 79,
+    "characters": 90,
     "limit": 140,
     "within_limit": true,
-    "value": "GEMS24 MYHGB | 42ch NaN-HGB+res+K300 b2 3e38453a8fb9 | DTI 0.1327; OK TO SUBMIT"
+    "value": "GEMS24 MYHGB | 42ch NaN-HGB+res+K300 b2 3e38453a8fb9 | DTI 0.1327; research; DO NOT SUBMIT"
   },
   "requirements": {
     "single_tif_and_footprint_format": true,
@@ -142,9 +143,12 @@
     "submission_status": "DO_NOT_SUBMIT",
     "ready_to_submit": false,
     "blockers": [
-      "hash_bound_scientific_promotion",
+      "HOLDOUT_DID_NOT_BEAT_BASELINE",
+      "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED",
+      "LITERAL_NOVELTY_INCOMPLETE",
       "RUN_CARD_NOT_AUTHORIZED",
-      "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED"
+      "UNASSIGNED_METHOD_LANE",
+      "hash_bound_scientific_promotion"
     ],
     "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score."
   }

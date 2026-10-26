@@ -2348,17 +2348,18 @@
       "oof_calibrated_prob_pooled_auc": 0.6419023388260308
     },
     "correlation_overlap_vs_registry": {
-      "method_lane_passed": true,
-      "literal_all_entries_passed": true,
+      "method_lane_passed": false,
+      "literal_all_entries_passed": false,
       "competing_method_rasters_checked": 4,
       "calibration_controls_checked": 0,
       "peer_blobs_checked": 0,
       "pre_placement_max_abs_rank_correlation": 0.11215346629390595,
       "surface_max_abs_rank_correlation": 0.06461103881657604,
       "method_lane_max_overlap_within_3px": 0.23899683569130992,
-      "peer_blobs_max_abs_rank_correlation": 0.0,
-      "peer_blobs_max_overlap_within_3px": 0.0,
-      "literal_all_entries_max_overlap_within_3px": 0.23899683569130992
+      "peer_blobs_max_abs_rank_correlation": null,
+      "peer_blobs_max_overlap_within_3px": null,
+      "literal_all_entries_max_overlap_within_3px": null,
+      "registry_coverage_complete": false
     },
     "exact_file_nuisance_audit": {
       "protocol_seed": 20261002,
@@ -2578,26 +2579,29 @@
       }
     },
     "submission_name": "gems24-myhgb-regime-hydro-hgb-20261026-3e38453a8fb9-zeros.tif",
-    "note": "GEMS24 MYHGB | 42ch NaN-HGB+res+K300 b2 3e38453a8fb9 | DTI 0.1327; OK TO SUBMIT",
-    "note_length": 79,
+    "note": "GEMS24 MYHGB | 42ch NaN-HGB+res+K300 b2 3e38453a8fb9 | DTI 0.1327; research; DO NOT SUBMIT",
+    "note_length": 90,
     "technical_gate_breakdown": {
       "format_and_strict_0_1_range": true,
       "two_polarity_leakage_canary": true,
-      "method_and_peer_novelty": true,
+      "method_and_peer_novelty": false,
       "beats_oof_multiphysics_hgb_d3_with_95ci": false,
-      "exact_file_c2st_nuisance_gate": true
+      "exact_file_c2st_nuisance_gate": true,
+      "complete_literal_registry_coverage": false
     },
-    "technical_promotion_gates_passed": true,
-    "selector_candidate_if_calibration_controls_excluded": true,
-    "verdict": "promote",
+    "technical_promotion_gates_passed": false,
+    "selector_candidate_if_calibration_controls_excluded": false,
+    "verdict": "negative",
     "ok_to_download": true,
-    "ok_to_submit": true,
+    "ok_to_submit": false,
     "submission_authorized": false,
     "submission_slot_spent": false,
     "organizer_confirmed_score": null,
     "blocking_reasons": [
       "Did not beat oof_multiphysics_hgb_d3 (0.12997) with positive 95% paired CI",
-      "Provisional parallel lane without single assigned method paragraph; live weekly-slot authorization requires a separate selector step (Protocol Rule 6)"
+      "Literal novelty is incomplete: 0 calibration controls and 0 peer blobs were checked",
+      "Provisional parallel lane without an assigned single-method paragraph",
+      "Independent selector authorization is absent"
     ],
     "budget": {
       "experiments_run_this_session": 1,
@@ -2722,15 +2726,16 @@
       "artifact_name_matches": true,
       "validator_sha256_matches": true,
       "validator_format_valid": true,
-      "verdict_promote": true,
+      "verdict_promote": false,
       "submission_authorized": false,
       "scientific_authorization": false,
       "independent_selector_verified": false,
       "reason_codes": [
-        "RUN_CARD_NOT_AUTHORIZED",
-        "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED"
+        "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED",
+        "RUN_CARD_NEGATIVE_GATE",
+        "RUN_CARD_NOT_AUTHORIZED"
       ],
-      "note": "GEMS24 MYHGB | 42ch NaN-HGB+res+K300 b2 3e38453a8fb9 | DTI 0.1327; OK TO SUBMIT"
+      "note": "GEMS24 MYHGB | 42ch NaN-HGB+res+K300 b2 3e38453a8fb9 | DTI 0.1327; research; DO NOT SUBMIT"
     },
     "note": {
       "present": true,
@@ -2758,5 +2763,5 @@
       "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score."
     }
   },
-  "ok_to_submit": true
+  "ok_to_submit": false
 }

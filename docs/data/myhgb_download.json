@@ -6,13 +6,19 @@
   "nan_sha256": "175d67eb1ef2dadd5f84d89223a8904d8c6dac71f4c970671ea116903e97928a",
   "pixel_count": 38239,
   "min_distance_to_catalogue_px": 2.23606797749979,
-  "note": "GEMS24 MYHGB | 42ch NaN-HGB+res+K300 b2 3e38453a8fb9 | DTI 0.1327; OK TO SUBMIT",
+  "note": "GEMS24 MYHGB | 42ch NaN-HGB+res+K300 b2 3e38453a8fb9 | DTI 0.1327; research; DO NOT SUBMIT",
   "note_file": "note-gems24-myhgb-regime-hydro-hgb-20261026-3e38453a8fb9-zeros.txt",
   "checks_file": "checks-gems24-myhgb-regime-hydro-hgb-20261026-3e38453a8fb9-zeros.json",
   "preview_png": "assets/myhgb-preview.png",
-  "verdict": "promote",
-  "technical_promotion_gates_passed": true,
+  "verdict": "negative",
+  "technical_promotion_gates_passed": false,
   "ok_to_download": true,
-  "ok_to_submit": true,
-  "submission_authorized": false
+  "ok_to_submit": false,
+  "submission_authorized": false,
+  "blocking_reasons": [
+    "Did not beat oof_multiphysics_hgb_d3 (0.12997) with positive 95% paired CI",
+    "Literal novelty is incomplete: 0 calibration controls and 0 peer blobs were checked",
+    "Provisional parallel lane without an assigned single-method paragraph",
+    "Independent selector authorization is absent"
+  ]
 }

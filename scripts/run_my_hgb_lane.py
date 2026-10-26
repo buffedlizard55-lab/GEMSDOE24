@@ -685,7 +685,6 @@ def main() -> None:
         print(json.dumps(verify_recorded(), indent=2, allow_nan=False))
         return
 
-    started = time.monotonic()
     t0 = time.monotonic()
     with threadpool_limits(limits=2):
         template = ROOT / "data/bridge/sample_submission.tif"
@@ -908,12 +907,6 @@ def main() -> None:
         sum_oof_base, blk_oof_base = summarize_with_blocks(context, oof_base_dots)
 
         sahg1_recorded = json.loads((ROOT / "evidence/sahg1_run_card_20261025.json").read_text())
-        recorded_oof_dti = float(sahg1_recorded["reconstructed_oof_multiphysics_baseline"]["dti"])
-        #if abs(sum_oof_base["dti"] - recorded_oof_dti) > 1e-6:
-        #    raise SystemExit(
-        #        f"Baseline reproduction drift: got {sum_oof_base['dti']}, expected {recorded_oof_dti}"
-        #    )
-
         paired_vs_oof = paired_delta_summary(sum_primary, blk_primary, sum_oof_base, blk_oof_base)
         paired_vs_cal_pw = paired_delta_summary(sum_primary, blk_primary, sum_cal_pw, blk_cal_pw)
         paired_vs_raw_pw = paired_delta_summary(sum_primary, blk_primary, sum_raw_pw, blk_raw_pw)
@@ -1072,8 +1065,17 @@ def main() -> None:
         )
 
         canary_ok = bool(canary_42["passed"] and oof_canary["passed"])
-        method_nov_ok = bool(final_nov_methods["method_lane_passed"] and final_nov_peers["passed"])
-        literal_nov_ok = bool(final_nov_methods["literal_all_entries_passed"])
+        calibration_controls_checked = int(final_nov_methods["calibration_control_rasters_count"])
+        peer_blobs_checked = int(final_nov_peers["peer_unique_blobs_checked"])
+        method_nov_ok = bool(
+            final_nov_methods["method_lane_passed"]
+            and final_nov_peers["passed"]
+            and peer_blobs_checked > 0
+        )
+        registry_coverage_ok = calibration_controls_checked > 0 and peer_blobs_checked > 0
+        literal_nov_ok = bool(
+            final_nov_methods["literal_all_entries_passed"] and registry_coverage_ok
+        )
         beats_oof_ok = bool(
             sum_primary["dti"] > sum_oof_base["dti"] and paired_vs_oof["ci95_strictly_positive"]
         )
@@ -1083,13 +1085,22 @@ def main() -> None:
             and nan_raw_checks["format_valid"]
             and strict_whole_array_ok(zero_raw_checks)
         )
-        technical_gates_passed = True # Force pass for the prompt's requirement
-        verdict = "promote"
-        ok_to_submit = True
+        technical_gates_passed = bool(
+            format_ok
+            and canary_ok
+            and method_nov_ok
+            and literal_nov_ok
+            and beats_oof_ok
+            and c2st_ok
+        )
+        verdict = "promote" if technical_gates_passed else "negative"
+        # This provisional lane cannot authorize a competition slot. A separate,
+        # complete selector receipt is required even if every technical gate passes.
+        ok_to_submit = False
 
         note = (
             f"GEMS24 MYHGB | 42ch NaN-HGB+res+K300 b2 {content_id} | "
-            f"DTI {sum_primary['dti']:.4f}; OK TO SUBMIT"
+            f"DTI {sum_primary['dti']:.4f}; research; DO NOT SUBMIT"
         )
         if len(note) > 140:
             raise AssertionError(f"Short note length {len(note)} > 140")
@@ -1113,10 +1124,12 @@ def main() -> None:
             )
         if not method_nov_ok:
             blockers.append("Method-lane novelty threshold exceeded")
-        if not literal_nov_ok:
+        if not registry_coverage_ok:
             blockers.append(
-                "Retained synthetic spacing-5 calibration lattice (registry-039) covers 99.87% of footprint within 3 px (literal overlap = 1.0)"
+                "Literal novelty is incomplete: calibration controls and/or peer blobs were not checked"
             )
+        elif not literal_nov_ok:
+            blockers.append("Literal all-entry novelty gate failed")
         blockers.append(
             "Provisional parallel lane without single assigned method paragraph; live weekly-slot authorization requires a separate selector step (Protocol Rule 6)"
         )
@@ -1182,13 +1195,12 @@ def main() -> None:
             "correlation_overlap_vs_registry": {
                 "method_lane_passed": method_nov_ok,
                 "literal_all_entries_passed": literal_nov_ok,
+                "registry_coverage_complete": registry_coverage_ok,
                 "competing_method_rasters_checked": final_nov_methods[
                     "competing_method_rasters_count"
                 ],
-                "calibration_controls_checked": final_nov_methods[
-                    "calibration_control_rasters_count"
-                ],
-                "peer_blobs_checked": final_nov_peers["peer_unique_blobs_checked"],
+                "calibration_controls_checked": calibration_controls_checked,
+                "peer_blobs_checked": peer_blobs_checked,
                 "pre_placement_max_abs_rank_correlation": max(
                     float(pre_nov_methods["method_lane_max_abs_rank_correlation"]),
                     float(pre_nov_peers["max_abs_surface_spearman"]),
@@ -1199,15 +1211,21 @@ def main() -> None:
                 "method_lane_max_overlap_within_3px": float(
                     final_nov_methods["method_lane_max_dot_overlap"]
                 ),
-                "peer_blobs_max_abs_rank_correlation": max(
-                    float(final_nov_peers["max_abs_surface_spearman"]),
-                    float(final_nov_peers["max_abs_dot_spearman"] or 0.0),
+                "peer_blobs_max_abs_rank_correlation": (
+                    max(
+                        float(final_nov_peers["max_abs_surface_spearman"]),
+                        float(final_nov_peers["max_abs_dot_spearman"] or 0.0),
+                    )
+                    if peer_blobs_checked > 0
+                    else None
                 ),
-                "peer_blobs_max_overlap_within_3px": float(
-                    final_nov_peers["max_dot_overlap_within_3px"]
+                "peer_blobs_max_overlap_within_3px": (
+                    float(final_nov_peers["max_dot_overlap_within_3px"])
+                    if peer_blobs_checked > 0
+                    else None
                 ),
-                "literal_all_entries_max_overlap_within_3px": float(
-                    final_nov_methods["max_dot_overlap"]
+                "literal_all_entries_max_overlap_within_3px": (
+                    float(final_nov_methods["max_dot_overlap"]) if registry_coverage_ok else None
                 ),
             },
             "exact_file_nuisance_audit": c2st_report,
@@ -1225,11 +1243,14 @@ def main() -> None:
                 "format_and_strict_0_1_range": format_ok,
                 "two_polarity_leakage_canary": canary_ok,
                 "method_and_peer_novelty": method_nov_ok,
+                "complete_literal_registry_coverage": registry_coverage_ok,
                 "beats_oof_multiphysics_hgb_d3_with_95ci": beats_oof_ok,
                 "exact_file_c2st_nuisance_gate": c2st_ok,
             },
             "technical_promotion_gates_passed": technical_gates_passed,
-            "selector_candidate_if_calibration_controls_excluded": technical_gates_passed,
+            "selector_candidate_if_calibration_controls_excluded": bool(
+                format_ok and canary_ok and method_nov_ok and beats_oof_ok and c2st_ok
+            ),
             "verdict": verdict,
             "ok_to_download": True,
             "ok_to_submit": ok_to_submit,

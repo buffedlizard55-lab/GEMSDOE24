@@ -46,7 +46,7 @@ from pathlib import Path
 
 import numpy as np
 import rasterio
-from scipy.ndimage import distance_transform_edt, gaussian_filter
+from scipy.ndimage import gaussian_filter
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -143,8 +143,11 @@ def build_score_surface(fp):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--verify-recorded", action="store_true",
-                    help="Inspect recorded evidence; do not run a new experiment")
+    ap.add_argument(
+        "--verify-recorded",
+        action="store_true",
+        help="Inspect recorded evidence; do not run a new experiment",
+    )
     args = ap.parse_args()
 
     if args.verify_recorded:
@@ -156,9 +159,6 @@ def main():
 
     started = time.monotonic()
     fp = footprint.load_footprint()
-    with rasterio.open(TEMPLATE) as t:
-        t_profile = t.profile.copy()
-
     with rasterio.open(LABELS) as s:
         catalogue = (s.read(1) > 0) & fp
 
@@ -185,8 +185,7 @@ def main():
             fp & np.isfinite(grav_hg), norm01(grav_hg, fp & np.isfinite(grav_hg)), 0.0
         ).astype(np.float32),
         "basement_step": np.where(
-            fp & np.isfinite(depth_base),
-            norm01(depth_step, fp & np.isfinite(depth_base)), 0.0
+            fp & np.isfinite(depth_base), norm01(depth_step, fp & np.isfinite(depth_base)), 0.0
         ).astype(np.float32),
         "terrain_suppression": np.where(
             fp & lidar_valid, 1.0 - norm01(relief, fp & lidar_valid), 0.0
@@ -212,8 +211,7 @@ def main():
         "maximum_session_hours": 2,
         "input_provenance": "Pinned competition bridge + committed external mirrors",
         "inputs": {
-            str(p.relative_to(ROOT)): sha256_file(p)
-            for p in (TEMPLATE, LABELS, FEATURES, LIDAR)
+            str(p.relative_to(ROOT)): sha256_file(p) for p in (TEMPLATE, LABELS, FEATURES, LIDAR)
         },
         "code_sha256": {
             str(p.relative_to(ROOT)): sha256_file(p)
@@ -375,9 +373,7 @@ def main():
             "surface_max_abs_rank_correlation": report["surface_novelty"][
                 "max_abs_rank_correlation"
             ],
-            "final_max_abs_rank_correlation": report["final_novelty"][
-                "max_abs_rank_correlation"
-            ],
+            "final_max_abs_rank_correlation": report["final_novelty"]["max_abs_rank_correlation"],
             "final_max_overlap_within_3px": report["final_novelty"]["max_dot_overlap"],
             "passed": report["final_novelty"]["passed"],
             "rank_limit": 0.90,
