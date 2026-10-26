@@ -1,5 +1,17 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## PAIR1 session — 2026-10-26 (new unique TIF generated; NEGATIVE; SUBMIT: NO)
+
+[**⬇ Download the new unique H24-PAIR1 GeoTIFF (-zeros, strict [0,1]) — DO NOT SUBMIT**](docs/downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.tif) ·
+[Single-TIFF ZIP](docs/downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.zip) ·
+[JSON run card](evidence/pair1_run_card_20261026.json) ·
+[Findings & 9-site executive summary](knowledge/26_PAIR1_findings_and_9site_executive_2026-10-26.md) ·
+[Executive summary page](docs/pair1-executive-summary-20261026.html) ·
+[Preregistration](knowledge/25_preregistered_PAIR1_2026-10-26.md)
+
+- **DOWNLOAD: YES (research) · SUBMIT: NO.** PAIR1 (paired graben-scarp + crest/base dipole operators, 26ch stitched-OOF HGB) scored **HOLDOUT-DTI 0.12711** [0.11533, 0.14079] (`gems-segment-pooled-v1`, 60,988 withheld), paired Δ **−0.00147** [−0.00353, +0.00069], **0/4 folds** vs its own 22ch BASE (0.12858). Unique YES (max 3-px overlap 0.4490, max |ρ| 0.1471 vs 48 registry rasters; 0 copied pixels); canaries 26/26 PASS; strict whole-array [0,1] PASS (0 NaN — the fix for the portal *"Predicted values must be in range [0, 1]"* error: always upload `-zeros.tif`). SHA-256 `ecf16ef684ce2823e2888c101bd0b47d0661e7dacbba8bb6915db118925d0f93`. Note (108 chars): `GEMS24 PAIR1 | graben pair+dipole 26ch OOF | id 842a5212d85c | HOLDOUT-DTI 0.12711 | research; DO NOT SUBMIT`. **Do not retune PAIR1.**
+- **Obvious best unscored candidate remains DPRF1** (recorded HOLDOUT-DTI 0.16379; not replayable in this checkout — needs the gitignored 419 MB competition training raster). BASE replication 0.12858 vs recorded `oof_multiphysics_hgb_d3` 0.13000 confirms evaluator identity. No file is `OK_TO_SUBMIT`; no leaderboard score is forecast (all historical live values OWNER-REPORTED/UNVERIFIED; the 0.3195 vs 0.4413 "current top" claims conflict).
+
 ## Current continuation review — 2026-10-26
 
 Concurrent PR #35 review and exact-file utility are also preserved: [review](knowledge/22_current_best_review_2026-10-26.md), [receipt](docs/data/current_best_review.json), `python scripts/review_current_best.py`.

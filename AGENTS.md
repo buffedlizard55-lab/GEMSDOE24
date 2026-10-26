@@ -1,5 +1,10 @@
 # Standing project instructions
 
+## PAIR1 session — 2026-10-26 (executed lane; negative; do not retune)
+
+Read `knowledge/25_preregistered_PAIR1_2026-10-26.md`, `knowledge/26_PAIR1_findings_and_9site_executive_2026-10-26.md`, `evidence/pair1_run_card_20261026.json` first.
+H24-PAIR1 (graben pair/dipole operators on the 20 cached uint8 bands; DPRF1's 419 MB training raster absent in clean checkouts) ran its 3 preregistered experiments: BASE 0.12858, PAIR1 0.12711 (paired Δ −0.00147 [−0.00353,+0.00069], 0/4 folds), clearance-3 identical (non-discriminating, disclosed). New unique research TIFF `docs/downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.tif` (SHA `ecf16ef6…5d0f93`) is DOWNLOAD YES / SUBMIT NO. Do not rerun or retune PAIR1 (offsets/weights/seed/budget frozen). DPRF1 remains recorded point-best; selector v2 still `DO_NOT_SUBMIT`. Next cache-ready queued hypothesis: radiometric front phase-lag (knowledge/26 §2 rank 2).
+
 ## Latest continuation safety review — 2026-10-26
 
 Read `docs/review-20261026.md` and `evidence/review_continuation_20261026.json` first.
