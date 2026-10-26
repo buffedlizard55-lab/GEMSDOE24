@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 
 from gems.metric import (
     dti_components_exact,
@@ -92,3 +93,31 @@ def test_minimum_recall_bound_quoted_on_the_knowledge_page():
         assert abs(100 * t - expected_pct) < 0.06
         assert abs(t / (0.2 * t + 0.8) - s) < 1e-12  # G = 1, F = 0 reproduces the target score
     assert abs(0.35 / (0.2 * 0.35 + 0.2 * 1.17 + 0.8) - 0.3168) < 1e-3  # the page's illustration
+
+
+def test_pruning_inequality_uses_hidden_truth_not_catalogue_distance():
+    """Corrected B2 explanation: deletion may help, hurt or be neutral."""
+    truth = np.zeros((20, 20), bool)
+    truth[10, 10] = True
+    catalogue = np.zeros_like(truth)
+    catalogue[1, 1] = True
+    base = np.zeros_like(truth, dtype=float)
+    base[10, 10] = 1
+    base[1, 2] = 1  # near visible catalogue, far from hidden truth: full FP
+    base[1, 1] = 1  # exactly on catalogue: neutral
+    before = dti_components_exact(base, truth, catalogue_mask=catalogue)
+    assert before["TP_w"] == 1 and before["FP_w"] == 1
+    assert before["dti"] == pytest.approx(1 / (1 + 0.2 + 1e-7))
+    for point, improves in (((1, 2), True), ((10, 10), False), ((1, 1), False)):
+        pruned = base.copy()
+        pruned[point] = 0
+        after = dti_components_exact(pruned, truth, catalogue_mask=catalogue)
+        t = before["TP_w"] - after["TP_w"]
+        f = before["FP_w"] - after["FP_w"]
+        # Include the same numerical epsilon as the evaluator for exact agreement.
+        left = t * (0.2 * before["FP_w"] + 0.8 * before["n_truth"] + 1e-7)
+        right = 0.2 * before["TP_w"] * f
+        assert bool(left < right) is improves
+        assert bool(after["dti"] > before["dti"]) is improves
+        if point == (1, 1):
+            assert after == before

@@ -1,6 +1,6 @@
 {
   "schema_version": "site-review-followup-v1",
-  "reviewed_utc": "2026-10-26T16:27:46Z",
+  "reviewed_utc": "2026-10-26T16:35:16Z",
   "scope": "Repository and Pages status-order review; no scientific experiment or organizer access",
   "finding": "The generated site and README status block placed H24-TNR1/OJ1 research after DPRF1 in a way that still described them as latest/new, while the build receipt called TNR1 the primary artifact. This could confuse users about which raster is the current local point-best and whether a download is authorized.",
   "fixes": [
@@ -26,9 +26,9 @@
   "new_tiffs_generated": 0,
   "submission_slots_used": 0,
   "validation": {
-    "pytest": "371 passed",
+    "pytest": "392 passed",
     "ruff_check": "passed",
-    "ruff_format_check": "154 files already formatted",
+    "ruff_format_check": "158 files already formatted",
     "compileall": "passed",
     "git_diff_check": "passed",
     "site_build": "passed; negative / new_slot_eligible=false",
