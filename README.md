@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Metric-integrity continuation — 2026-10-26
+
+**No submission-ready file.** [Corrected B2 explanation](docs/metric-integrity-20261026.md) supersedes the quarantined VENT narrative, not frozen receipts. Exact-file DPRF1 validation was repeated; its local holdout is recorded, not newly replayed. The nine-site table below is historical and does not establish a hidden-score estimate or uniqueness clearance. No method lane was assigned, no stopped lane rerun, and no submission slot used. [JSON run card](evidence/metric_integrity_review_20261026.json).
+
 ## Current continuation review — 2026-10-26
 
 Concurrent PR #35 review and exact-file utility are also preserved: [review](knowledge/22_current_best_review_2026-10-26.md), [receipt](docs/data/current_best_review.json), `python scripts/review_current_best.py`.
@@ -56,7 +60,7 @@ All prompt leaderboard numbers below are `UNVERIFIED-OWNER-REPORT` (never `ORGAN
 | **[GEMSDOE33](https://buffedlizard55-lab.github.io/GEMSDOE33/)** | `h33d-analog-tip-stepover-r30` (`0.2632`, B2 + 6,436 px) | `gemsdoe33-a33-l1-analog-transfer-research-37654-20261025-85c94a805a34-zeros.tif` | Unscored; `GEMSDOE33` holdout FAIL (`NEGATIVE`) | `37.6%` / `38.7%` | `27.60%` | **DO NOT SUBMIT** (failed `GEMSDOE33` holdout gate) |
 | **[GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/docs/)** | `anderson-geothermal-pinn-38854` (`0.2750`, B2 + 1,200 px) | *None (`2026-10-26` review retired legacy copied/leaky code)* | No valid unique candidate | — | `46.06%` (vs `PINN`) | **DO NOT SUBMIT** (no non-copied unique candidate on `GEMSDOE36`) |
 
-**2026-10-26 `H24-VENT` update (this session):** `gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif` (`SHA 1c8399f15fbc58...`) — independent vent-spring-lineament unsupervised product, **HOLDOUT-DTI 0.02403** `[0.01777,0.03054]` (`gems-segment-pooled-v1`, 60,988), `0.209` apron / `0.560` far-field, `35%` overlap vs DPRF1 → **passes novelty/C2ST but fails holdout best** → `DOWNLOAD YES / SUBMIT NO`. Detailed PhD diagnosis of B2's Tversky `0.2T/(0.2T+0.2F+0.8N)` mechanism in [knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md](knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md).
+**H24-VENT integrity correction (2026-10-26):** The earlier “passes novelty/C2ST” sentence is withdrawn. The preserved runner used fabricated fallback measurements; its scientific gate claims and recorded holdout are **untrusted and not independently replayed**. Its file is quarantined research only: **DOWNLOAD YES / SUBMIT NO**. Do not use its historical PhD analysis as verified scientific evidence. Read the [corrected metric explanation and evidence limits](docs/metric-integrity-20261026.md), including why catalogue distance is not the hidden-truth distance in the scoring kernel. No new TIFF or geological experiment was generated in this integrity continuation.
 
 ## Latest lane — 2026-10-26 (`H24-EUL1`) Euler N=0 contact increment: NEGATIVE · DOWNLOAD YES / SUBMIT NO · DO NOT RETUNE
 

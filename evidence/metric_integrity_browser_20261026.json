@@ -1,0 +1,108 @@
+{
+  "checked_utc": "2026-10-26T16:17:24.299Z",
+  "base_origin": "http://127.0.0.1:8080",
+  "browser": "153.0.8010.0",
+  "experiments_run": 0,
+  "external_requests_blocked": [],
+  "errors": [],
+  "pages": [
+    {
+      "device": "desktop",
+      "page": "index.html",
+      "download_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/index.html",
+      "download_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "executive-summary.html",
+      "download_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/executive-summary.html",
+      "download_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/research.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/sources.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": [],
+      "owner_table_rows": 92
+    },
+    {
+      "device": "mobile",
+      "page": "index.html",
+      "download_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/index.html",
+      "download_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "executive-summary.html",
+      "download_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/executive-summary.html",
+      "download_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/research.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/sources.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": [],
+      "owner_table_rows": 92
+    }
+  ]
+}
