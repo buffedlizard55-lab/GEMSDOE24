@@ -242,7 +242,8 @@
     "ruff_format": "146 files already formatted",
     "compileall": "passed",
     "git_diff_check": "passed",
-    "dprf1_verify_recorded": "passed; negative preserved"
+    "dprf1_verify_recorded": "passed; negative preserved",
+    "browser": "12 desktop/mobile page checks passed; first-screen download, exact download hash, clipboard, no overflow, zero accessibility violations"
   },
   "blockers": [
     "No assigned single-method paragraph",
