@@ -153,7 +153,7 @@ Outstanding, in order:
 
 ### Final verification
 
-Three passes completed. Final suite after integrating concurrent main PR #38: **390 passed**; Ruff lint passed, formatting
+Three passes completed. Final suite after integrating concurrent main PRs #38 and #39: **392 passed**; Ruff lint passed, formatting
 passed for 158 files, compileall and JavaScript syntax checks passed, and
 `git diff --check` passed. New audit-page relative links resolve and its table
 contains all nine sites. Shared current-best review no longer repeats the inherited
