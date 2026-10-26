@@ -1,5 +1,26 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Latest session c6ea4bb7 — changed-artifact audit, not a new submission
+
+**DOWNLOAD existing research: YES / SUBMIT: NO. No new TIFF generated.**
+Read the [session review](docs/review-c6ea4bb7.md), [nine-site inventory](docs/artifact-audit.html),
+[owner brief](knowledge/owner_brief_2026-10-26.md) and its preserved delta before continuing.
+The inherited full owner prompt remains below; this is a status addendum, not a new
+verbatim transcription. Maximize P(Win) and Own the Outcome mean retaining negative
+results rather than spending a slot on an unsupported claim.
+
+Fresh Git-tree auditing found **311 added TIFF/ZIP paths and one changed ZIP** across
+the nine sites, not 311 unique predictions. Current pixel novelty remains unaudited.
+The prior H33-B2 ZIP contained an empty ZIP-named member; the current inspected ZIP
+contains a TIFF-named member with TIFF header bytes. See the linked receipt; this
+packaging repair is not a new prediction or an organizer-confirmed score.
+No assigned method paragraph was provided. Do not rerun stopped lanes or bypass
+the retained lattice veto. The existing best research file remains negative.
+
+Reproduce the immutable source audit (choose a fresh output path):
+`python scripts/audit_priority_artifacts.py --output evidence/NEW_inventory.json`.
+It never overwrites the scientific registry or authorizes a submission.
+
 ## PAIR1 session — 2026-10-26 (new unique TIF generated; NEGATIVE; SUBMIT: NO)
 
 [**⬇ Download the new unique H24-PAIR1 GeoTIFF (-zeros, strict [0,1]) — DO NOT SUBMIT**](docs/downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.tif) ·
