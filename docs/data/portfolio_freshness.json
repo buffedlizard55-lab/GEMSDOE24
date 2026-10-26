@@ -1,13 +1,13 @@
 {
   "scope": "GitHub source freshness only; not a leaderboard or scoring API",
-  "checked_utc": "2026-10-26T16:36:26.714355+00:00",
+  "checked_utc": "2026-10-26T17:22:19.173563+00:00",
   "status": "checked",
   "rows": [
     {
       "repo": "buffedlizard55-lab/GEMSDOE24",
       "pinned_ref": "46f663dad1a1c3d8231e5de5dbad4ee4d19e8d56",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE24",
-      "latest_main_ref": "d26f35baf199b30acdbd54517092c15a80d8df41",
+      "latest_main_ref": "fae5b6c2d6dd0debf9540245eabcd37ef19b8049",
       "changed_since_review": true,
       "status": "checked"
     },
@@ -15,7 +15,7 @@
       "repo": "buffedlizard55-lab/GEMSDOE25",
       "pinned_ref": "fac6dbe5852baa0f0125d00ecc5cb1c16872741a",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE25",
-      "latest_main_ref": "2465b91cf3dddb2b55ef5de322419001f9d9b7bc",
+      "latest_main_ref": "a72127311512ab68c3fce463b735c9b44cee6dc2",
       "changed_since_review": true,
       "status": "checked"
     },
@@ -47,7 +47,7 @@
       "repo": "buffedlizard55-lab/GEMSDOE31",
       "pinned_ref": "784d3ae2dc1d247323378074257eba4353b3d087",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE31",
-      "latest_main_ref": "8e91d82ae236c92b917302122237e45fc20ec337",
+      "latest_main_ref": "78f9bf3ae82e5c78ca348aa37c0660c339e72f0e",
       "changed_since_review": true,
       "status": "checked"
     },
@@ -55,7 +55,7 @@
       "repo": "buffedlizard55-lab/GEMSDOE32",
       "pinned_ref": "8b00ee91b9d6d7ef0e3762eb7bc0c92bee0928d1",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE32",
-      "latest_main_ref": "8310370d041f6737952063b197ac9967652e9629",
+      "latest_main_ref": "9155d44d9bc3d57f96fbf9f7db2d18e083ab6e2b",
       "changed_since_review": true,
       "status": "checked"
     },
@@ -81,55 +81,55 @@
       "title": "GEMSDOE24: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE24",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-26T16:36:26.714355+00:00"
+      "checked_utc": "2026-10-26T17:22:19.173563+00:00"
     },
     {
       "title": "GEMSDOE25: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE25",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-26T16:36:26.714355+00:00"
+      "checked_utc": "2026-10-26T17:22:19.173563+00:00"
     },
     {
       "title": "GEMSDOE27: pinned source unchanged",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE27",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-26T16:36:26.714355+00:00"
+      "checked_utc": "2026-10-26T17:22:19.173563+00:00"
     },
     {
       "title": "GEMSDOE28: pinned source unchanged",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE28",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-26T16:36:26.714355+00:00"
+      "checked_utc": "2026-10-26T17:22:19.173563+00:00"
     },
     {
       "title": "GEMSDOE30: pinned source unchanged",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE30",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-26T16:36:26.714355+00:00"
+      "checked_utc": "2026-10-26T17:22:19.173563+00:00"
     },
     {
       "title": "GEMSDOE31: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE31",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-26T16:36:26.714355+00:00"
+      "checked_utc": "2026-10-26T17:22:19.173563+00:00"
     },
     {
       "title": "GEMSDOE32: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE32",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-26T16:36:26.714355+00:00"
+      "checked_utc": "2026-10-26T17:22:19.173563+00:00"
     },
     {
       "title": "GEMSDOE33: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE33",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-26T16:36:26.714355+00:00"
+      "checked_utc": "2026-10-26T17:22:19.173563+00:00"
     },
     {
       "title": "GEMSDOE36: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE36",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-26T16:36:26.714355+00:00"
+      "checked_utc": "2026-10-26T17:22:19.173563+00:00"
     }
   ],
   "leaderboard": null,

@@ -193,7 +193,7 @@
   "source_evidence": "evidence/portfolio_source_claims_20261026.json",
   "artifact_audit": "evidence/portfolio_artifact_audit_20261026.json",
   "artifact_audit_sha256": "7f5937f62bc1b68736ba2680ae0126ed45da91cfcd613cb90d52b04f445bfb79",
-  "review_passes_status": "Final whole-suite and refreshed mobile-card browser pass still pending at initial card write; see final verification receipt.",
+  "review_passes_status": "Three local passes complete: 442 tests, repository-wide lint, 12 desktop/mobile browser checks; PR/CI/Pages results are verified separately.",
   "verification_receipt": "evidence/portfolio_review_passes_20261026.json",
   "goal_achieved": false,
   "verdict": "negative",
@@ -204,5 +204,13 @@
     "No independent common scientific replay or harmonized cross-site performance ranking",
     "No artifact-linked organizer receipt/calibrated hidden-score estimate/current-account quota",
     "Later source commits outside the pinned audit; original scientific surfaces not replayed"
-  ]
+  ],
+  "local_verification_completed_utc": "2026-10-26T17:27:33.325485+00:00",
+  "concurrent_main_integration": {
+    "source_ref": "fae5b6c2d6dd0debf9540245eabcd37ef19b8049",
+    "files_preserved": 10,
+    "distinct_added_contents": 7,
+    "generated_by_this_session": false,
+    "receipt": "evidence/portfolio_concurrent_local_files_20261026.json"
+  }
 }
