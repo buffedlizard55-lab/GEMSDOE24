@@ -28,6 +28,7 @@ from site_packets import (  # noqa: E402
     eul1_packet,
     gvc1_packet,
     rshg1_packet,
+    s3dep1_packet,
     trsg1_packet,
     xfront_packet,
 )
@@ -154,6 +155,11 @@ def build_independent_site(primary):
     ):
         raise SystemExit("Current exact-file preflight is missing, stale, or does not fail closed")
     concurrent = concurrent_aspc(ROOT)
+    s3dep1_hero, s3dep1_exec, s3dep1_research = s3dep1_packet(ROOT)
+    s3dep1_card_site = load("evidence/s3dep1_run_card_20261026.json")
+    if s3dep1_card_site and not s3dep1_hero:
+        raise ValueError("S3DEP1 run card exists but s3dep1_packet returned empty")
+    s3dep1_ok_submit = bool(s3dep1_card_site.get("ok_to_submit")) and bool(s3dep1_hero)
     trsg1_hero, trsg1_exec, trsg1_research = trsg1_packet(ROOT)
     dprf1_hero, dprf1_exec, dprf1_research = dprf1_packet(ROOT)
     dprf1_card_site = load("evidence/dprf1_run_card_20261026.json")
@@ -236,7 +242,9 @@ def build_independent_site(primary):
         + concurrent
         + f"""<div class="metrics"><div class="card metric"><div class="number">{primary["pixel_count"]:,}</div><div class="label">Experimental dots</div></div><div class="card metric"><div class="number">{len(registry["unique_rasters"])}</div><div class="label">Distinct registry rasters compared</div></div><div class="card metric"><div class="number">{n:,}</div><div class="label">Withheld positive pixels</div></div><div class="card metric"><div class="number">0</div><div class="label">Competition slots used</div></div></div><section><h2>The decision is automatic, not “inspection pending”.</h2>{gates}</section><section class="grid2"><article class="card"><h3>Why the overlap veto fired</h3><p>A 5-pixel lattice is within √8 pixels of every interior grid cell. Your radius-3 rule therefore marks even an unrelated detector as a duplicate in this domain. We logged the incompatibility and stopped, rather than removing the comparator.</p><a href="research.html">Method, ablation and irregularities →</a></article><article class="card"><h3>Download the evidence</h3><div class="actions"><a class="button" href="data/dprf1_run_card.json" download>DPRF1 JSON run card</a><a class="button" href="data/eul1_run_card.json" download>EUL1 JSON run card (negative)</a><a class="button" href="data/xfront_run_card.json" download>XFRONT JSON run card (negative)</a><a class="button" href="data/nine_site_executive_summary_eul1_20261026.json" download>9-Site Executive Summary (EUL1 update) JSON</a><a class="button" href="data/trsg1_run_card_20261026.json" download>TRSG1 JSON run card</a><a class="button" href="data/nine_site_executive_summary_20261026.json" download>9-Site Executive Summary JSON</a><a class="button" href="data/rshg1_run_card.json" download>RSHG1 JSON run card</a><a class="button" href="data/mtr1_run_card.json" download>MTR1 JSON run card</a><a class="button" href="downloads/{e(primary["checks_file"])}" download>Exact-file validator</a></div><p class="micro">These are local measurements, not an organizer receipt or a leaderboard projection.</p></article></section><section><h2>Source freshness — not a live leaderboard</h2><p class="micro">GitHub commits checked at {e(feed.get("checked_utc", "not checked"))}. Scientific inputs and decisions remain pinned to the experiment.</p><ul class="feed" id="source-feed-list"></ul><p class="micro" data-source-state>GitHub-only freshness feed; no scoring or promotion API</p></section>"""
     )
-    any_ok_submit = dprf1_ok_submit or dkrn1_ok_submit or eul1_ok_submit or crp1_ok_submit
+    any_ok_submit = (
+        s3dep1_ok_submit or dprf1_ok_submit or dkrn1_ok_submit or eul1_ok_submit or crp1_ok_submit
+    )
     exec_intro = (
         "<p><strong>For H24-DPRF1 above: YES — cleared automatically by the independent selector (<code>gems-selector-v1</code>: <code>OK_TO_SUBMIT</code>).</strong> "
         "It passed all 10/10 project validation gates automatically with zero human-inspector fallback; "
@@ -320,6 +328,7 @@ def build_independent_site(primary):
     source_page = f"""<div class="pagehead"><div class="eyebrow">Provenance · reproducibility · limitations</div><h1>Evidence you can trace.</h1><p>Every active performance result is HOLDOUT-DTI with an evaluator, positive count and CI. No ORGANIZER-CONFIRMED result is available for the new file.</p></div><section><h2>The nine priority repositories</h2><div class="tablewrap"><table><thead><tr><th>Project</th><th>Pinned review commit</th><th>Scope</th></tr></thead><tbody>{source_rows}</tbody></table></div><p class="micro">{len(registry["unique_rasters"])} distinct footprint contents; {len(registry["duplicate_content_variants"])} duplicate variants; {len(registry["rejected"])} rejected off-grid format-test file. This is not a claim to cover unseen parallel-session registries.</p></section><section><h2>Official sources and exact verification status</h2><div class="tablewrap"><table><thead><tr><th>Source</th><th>What is supported</th><th>Verification limit</th></tr></thead><tbody><tr><td><a href="https://github.com/drivendataorg/gems-prize-reference-solution/tree/aebe92f7c8a990f0e3443451b7a825d9afd6336b">DrivenData reference solution</a></td><td>Freshly retrieved organizer GitHub notebook; U-Net, Tversky loss weights, single-band output with label CRS/transform</td><td>Its loss is not an independent implementation of distance-weighted evaluation; no official hidden score supplied</td></tr><tr><td><a href="https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7">USGS GeoDAWN / DOI 10.5066/P93LGLVQ</a></td><td>Cached official ReadMe inspected: magnetic and radiometric channel descriptions, thk_ratio, UTM projection and grid intervals</td><td>Not freshly refetched in this session. Cached official release text and hash-pinned owner-derived grids are not independent authentication of the original download</td></tr><tr><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Competition problem description</a></td><td>Submission grid/metric follow inherited dated source review and organizer reference output</td><td>Not automatically refetched; DrivenData automation is prohibited by standing project compliance rules</td></tr><tr><td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">Prize rules PDF</a></td><td>Official rule link retained for review; AI disclosure draft maintained</td><td>Current text/quota not retrieved here; historical rules are not a current account receipt</td></tr><tr><td><a href="https://gdr.openei.org/submissions/1391">GDR INGENIOUS</a></td><td>Official source for inherited catalogue context</td><td>No thermal points or derived catalogue-distance features used in this experiment</td></tr></tbody></table></div></section><section><h2>Reproduce without guessing</h2><pre><code>.venv/bin/python scripts/restore_data.py
 .venv/bin/python scripts/prepare_data.py
 .venv/bin/python scripts/cache_priority_registry.py
+.venv/bin/python scripts/run_s3dep1_lane.py --verify-recorded
 .venv/bin/python scripts/run_dprf1_lane.py --verify-recorded
 .venv/bin/python scripts/run_dkrn1_lane.py --verify-recorded
 .venv/bin/python scripts/run_eul1_lane.py --verify-recorded
@@ -398,7 +407,7 @@ def build_independent_site(primary):
     ch = current["holdout"]
     clo, chi = ch["ci95"]["interval"]
     current_banner = (
-        '<section class="card" id="current-best-review"><h1 class="portfolio-title">DOWNLOAD: YES / SUBMIT: NO</h1><p><strong>NOT OK TO SUBMIT.</strong> Existing research download; no new TIFF in this review.</p>'
+        '<section class="card" id="current-best-review"><h1 class="portfolio-title">DOWNLOAD: YES / SUBMIT: NO</h1><p><strong>NOT OK TO SUBMIT.</strong> Latest 2026-10-26 H24-S3DEP1 research GeoTIFF (new all-time recorded HOLDOUT-DTI point-best 0.16606, zero 1 m LiDAR; audit only).</p>'
         f'<p><a class="button primary" href="downloads/{e(current["submission_name"])}" '
         f'download="{e(current["submission_name"])}">Download current point-best research TIFF — DO NOT SUBMIT</a></p>'
         f"<p>Recorded local point-best: <strong>{e(current['current_recorded_point_best']['lane'])}</strong>. "
@@ -406,8 +415,9 @@ def build_independent_site(primary):
         f"{e(ch['evaluator_version'])}, {ch['n_withheld_positive_pixels']:,} withheld positives. "
         "Exact TIFF bytes revalidated during this site build; scientific measurements were not replayed. "
         "Not a verified cross-site winner or a leaderboard prediction. "
-        "Literal novelty, quota and independent replay gates still block submission.</p>"
+        "Literal novelty, C2ST, quota and independent replay gates still block submission.</p>"
         '<p><a href="data/current_best_review.json" download>Fresh exact-file review JSON</a> · '
+        '<a href="#s3dep1-overview">Latest H24-S3DEP1 packet</a> · '
         '<a href="#portfolio-audit">Fresh nine-site artifact comparison</a></p></section>'
     )
     # Preserve the concurrent VENT negative packet through scheduled rebuilds.
@@ -463,6 +473,7 @@ def build_independent_site(primary):
     overview = (
         current_banner
         + current_note
+        + s3dep1_hero
         + portfolio["intro"]
         + portfolio["historical"]
         + '<details id="portfolio-research-files"><summary>Current research file and HOLDOUT-DTI evidence for every site</summary>'
@@ -480,6 +491,7 @@ def build_independent_site(primary):
     executive = (
         current_banner
         + current_note
+        + s3dep1_exec
         + portfolio["intro"]
         + portfolio["historical"]
         + portfolio["current"]
@@ -495,12 +507,13 @@ def build_independent_site(primary):
     )
     research = (
         '<h1 class="portfolio-title">Scientific review and next steps</h1>'
+        + s3dep1_research
         + portfolio["obstruction"]
         + (
             "<section><h2>Current scientific queue and evidence limits</h2>"
-            "<p>No new experiment or TIFF in this review. Four ideas were ranked prospectively; the cross-site audit found prior graben-pair work and corrected mistaken layer assumptions. "
-            "Read the amended, unexecuted queue rather than recycling stopped experiments.</p>"
-            '<a href="portfolio-review-20261026.md">Scientific findings, corrected hypotheses and source evidence</a></section>'
+            "<p>In addition to the newly executed 2026-10-26 H24-S3DEP1 lane above, earlier cross-site reviews found prior graben-pair work and corrected mistaken layer assumptions. "
+            "Read the unexecuted remote-sensing/MT/InSAR queue above and the historical portfolio notes below rather than recycling stopped experiments.</p>"
+            '<a href="portfolio-review-20261026.md">Historical portfolio review and source evidence</a></section>'
         )
         + '<details id="historical-all-research"><summary>Archived scientific packets and earlier hypotheses</summary>'
         + research
@@ -557,6 +570,10 @@ def build_independent_site(primary):
         )
     )
     for name in (
+        "s3dep1_run_card_20261026.json",
+        "s3dep1_experiment_20261026.json",
+        "s3dep1_selector_20261026.json",
+        "nine_site_executive_summary_s3dep1_20261026.json",
         "trsg1_run_card_20261026.json",
         "trsg1_experiment_20261026.json",
         "dprf1_run_card_20261026.json",
@@ -584,6 +601,13 @@ def build_independent_site(primary):
         src_p = ROOT / "evidence" / name
         if src_p.exists():
             (DOCS / "data" / name).write_text(src_p.read_text())
+    if (ROOT / "evidence/s3dep1_run_card_20261026.json").exists():
+        (DOCS / "data/s3dep1_run_card.json").write_text(
+            (ROOT / "evidence/s3dep1_run_card_20261026.json").read_text()
+        )
+        (DOCS / "data/s3dep1_selector.json").write_text(
+            (ROOT / "evidence/s3dep1_selector_20261026.json").read_text()
+        )
     if (ROOT / "evidence/dprf1_run_card_20261026.json").exists():
         (DOCS / "data/dprf1_run_card.json").write_text(
             (ROOT / "evidence/dprf1_run_card_20261026.json").read_text()
@@ -795,6 +819,26 @@ Passes exact-grid/strict-`[0,1]` checks, 44/44 two-polarity leakage canaries, ex
 Achieves **HOLDOUT-DTI** `{th["evaluator_version"]}` = **{th["dti"]:.5f}** (95% CI **[{tlo:.5f}, {thi:.5f}]**, paired Δ **{tp["delta_dti"]:+.5f}**, strictly positive 95% CI **[{tp["ci95"][0]:+.5f}, {tp["ci95"][1]:+.5f}]** over `oof_multiphysics_hgb_d3` `0.13000`; Arm 2 Global **0.14693**; `NE_LidarGapHeavy` **0.18760**) and `{tbr["evaluator_version"]}` = **{tbr["dti"]:.5f}** (95% CI **[{tblo:.5f}, {tbhi:.5f}]**). Held at **`DO_NOT_SUBMIT`** under `gems-selector-v2-literal-quota-fail-closed` (`evidence/trsg1_selector_20261026.json`).
 [TRSG1 JSON run card](evidence/trsg1_run_card_20261026.json) · [TRSG1 Selector v2 JSON](evidence/trsg1_selector_20261026.json) · [TRSG1 preregistration](knowledge/19_preregistered_TRSG1_2026-10-26.md) · [9-Site Executive & PhD Synthesis (`GEMSDOE32` `0.2778` → `0.4413`)](knowledge/20_TRSG1_findings_and_portfolio_executive_2026-10-26.md)
 """
+    s3dep1_md = ""
+    if s3dep1_card_site and s3dep1_hero:
+        s3h = s3dep1_card_site["holdout"]
+        s3lo, s3hi = s3h["ci95"]["interval"]
+        s3br = s3dep1_card_site["bridge_protocol_holdout"]
+        s3pr_dprf = s3dep1_card_site["paired_vs_dprf1_replay"]
+        s3pr_oof = s3dep1_card_site["paired_vs_oof_multiphysics_hgb_d3"]
+        s3nov = s3dep1_card_site["correlation_overlap_vs_registry"]
+        s3c2 = s3dep1_card_site["exact_file_nuisance_audit"]["candidate"]
+        s3dist = s3dep1_card_site["off_catalogue_distance_profile"]
+        s3arms = s3dep1_card_site["arms_same_evaluator"]
+        s3dep1_md = f"""
+Latest 2026-10-26 All-Time Recorded Point-Best `H24-S3DEP1` 61-Channel Zero-1m-LiDAR Seamless 10 m 3DEP + Crustal/Hydrothermal OOF GeoTIFF (**NEW RECORD HOLDOUT-DTI 0.16606 · NEGATIVE RESULT — DOWNLOAD: YES · SUBMIT: NO · DO NOT RETUNE**):
+[`{s3dep1_card_site["submission_name"]}`](docs/downloads/{s3dep1_card_site["submission_name"]}) (`SHA-256: {s3dep1_card_site["raster_sha256"]}`),
+Single-GeoTIFF ZIP [`{s3dep1_card_site["zip_artifact"]}`](docs/downloads/{s3dep1_card_site["zip_artifact"]}), and
+NaN-outside twin [`{s3dep1_card_site["nan_outside_artifact"]}`](docs/downloads/{s3dep1_card_site["nan_outside_artifact"]}).
+Preregistered (`knowledge/29_preregistered_S3DEP1_2026-10-26.md` @ `{s3dep1_card_site["preregistration_commit"][:12]}`, 3/3 experiment budget spent, 0 slots spent): withholds all 15 1 m LiDAR channels across 100% of the footprint and fuses 12 seamless USGS 10 m 3DEP sub-cell gradients (`ScienceBase 4f70aa9fe4b058caae3f8de5`), 6 restored `training_features.tif` crustal/seismic channels (`mag_anom`, `geod_2ndinv`, `iso_grav_anom_slope`, Bouguer `tc`, `log1p(deq/ieq)`), 6 monoclinal step/incision operators, and 37 non-LiDAR base + OpenEI GDR #1391 hydrothermal + SAHG channels via Dual-Negative (`d3+d9`) Core + 300 m Kernel Log-Odds Blending (`37,654` binary `{{0,1}}` dots; zero copied pixels; strict `[0, 1]` PASS; 61/61 two-polarity leakage canaries PASS, worst extremity `0.6111 <= 0.90`; `{100 * s3dist["frac_2_to_9px_apron"]:.1f}%` apron / `{100 * s3dist["frac_gt_20px_farfield"]:.1f}%` `>2 km` far-field).
+Achieves the **highest HOLDOUT-DTI recorded across all 9 focus repositories**: `{s3h["evaluator_version"]}` = **{s3h["dti"]:.5f}** (95% CI **[{s3lo:.5f}, {s3hi:.5f}]**; Arm 1 Core **{s3arms["arm1_s3dep1_core_dualneg_61ch"]["dti"]:.5f}**; Arm 2 Kernel300 **{s3arms["arm2_s3dep1_kernel300_reg_61ch"]["dti"]:.5f}**; `NE_LidarGapHeavy` **0.21972**; `3.0 km` Bridge **{s3br["dti"]:.5f}**), surpassing recorded `H24-DPRF1` (`0.16379`) by **{s3pr_dprf["paired_delta_dti"]:+.5f}** (paired 95% CI **[{s3pr_dprf["paired_delta_ci95"][0]:+.5f}, {s3pr_dprf["paired_delta_ci95"][1]:+.5f}]**), beating `oof_multiphysics_hgb_d3` (`0.13000`) by **{s3pr_oof["paired_delta_dti"]:+.5f}** (**4/4 folds**), and passing 3-px dot novelty against `DPRF1` (**`{100 * s3nov["dot_overlap_within_3px_vs_dprf1"]:.2f}% <= 70%`**), `GEMSDOE32 B2` (**`{100 * s3nov["dot_overlap_within_3px_vs_gemsdoe32_b2"]:.2f}%`**), all 83 peer blobs (**`<= {100 * s3nov["peer_blobs_max_3px_dot_overlap"]:.2f}%`**), and all 32 live 2026-10-26 sibling focus TIFFs (**`<= {100 * s3nov["nine_site_20261026_max_3px_dot_overlap"]:.2f}%`**). Automatically held at **`DO_NOT_SUBMIT`** (not a literal-gate-unique or submit-ready candidate): `{100 * s3nov["dot_overlap_within_3px_vs_dkrn1"]:.2f}%` (>70%) 3-px overlap vs local stopped lane `DKRN1`, exact-file C2ST AUC `{s3c2["observed_auc"]:.4f}` (Holm *p* = `{s3c2["holm_p_value"]:.3f}` via unresidualized 10 m highway cut/fill gradients), paired CI vs `DPRF1` spanning zero, and retained spacing-5 lattice `registry-039`.
+[S3DEP1 JSON run card](evidence/s3dep1_run_card_20261026.json) · [S3DEP1 Selector v2 JSON](evidence/s3dep1_selector_20261026.json) · [Live 9-Site 2026-10-26 Audit JSON](evidence/nine_site_executive_summary_s3dep1_20261026.json) · [S3DEP1 preregistration](knowledge/29_preregistered_S3DEP1_2026-10-26.md) · [S3DEP1 PhD findings & 9-site synthesis](knowledge/30_S3DEP1_findings_and_9site_executive_summary_2026-10-26.md) · [Executive guide](docs/executive-summary.html#s3dep1)
+"""
     dprf1_md = ""
     if dprf1_card_site and dprf1_hero:
         dh = dprf1_card_site["holdout"]
@@ -906,7 +950,7 @@ Preregistered (`knowledge/25_preregistered_XFRONT_2026-10-26.md` @ `3ebb375`, am
         else "**DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**"
     )
     md = f"""{status_headline}
-{dprf1_md}{dkrn1_md}{eul1_md}{trsg1_md}{xfront_md}{crp1_md}{fuse_md}{gvc1_md}{rshg1_md}{sahg1_md}
+{s3dep1_md}{dprf1_md}{dkrn1_md}{eul1_md}{trsg1_md}{xfront_md}{crp1_md}{fuse_md}{gvc1_md}{rshg1_md}{sahg1_md}
 Independently generated MTR1 audit TIFF: [`{primary["file"]}`](docs/downloads/{primary["file"]}).
 It passes exact-grid/[0,1] file checks but fails the lane overlap rule against a registered
 spacing-5 calibration lattice. Content is not copied or identical to any compared file;

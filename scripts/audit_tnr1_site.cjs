@@ -14,7 +14,10 @@ const axeSource = path.join(modules, 'axe-core/axe.min.js');
 const base = new URL(process.argv[2]);
 
 async function main() {
-  const card = JSON.parse(await fs.readFile(path.join(root, 'evidence/dprf1_run_card_20261026.json'), 'utf8'));
+  const card = JSON.parse(await fs.readFile(path.join(root, 'evidence/s3dep1_run_card_20261026.json'), 'utf8'));
+  const currentBest = JSON.parse(await fs.readFile(path.join(root, 'docs/data/current_best_review.json'), 'utf8'));
+  assert.equal(currentBest.submission_name, card.submission_name);
+  assert.equal(currentBest.raster_sha256, card.raster_sha256);
   const noteCard = card;
   const libs = await inflate(path.join(modules, '@sparticuz/chromium/bin/al2023.tar.br'));
   setupLambdaEnvironment(path.join(libs, 'lib'));
