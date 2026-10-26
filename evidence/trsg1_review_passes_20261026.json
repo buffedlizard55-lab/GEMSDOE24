@@ -1,0 +1,48 @@
+{
+  "generated_utc": "2026-10-26T02:25:00Z",
+  "lane_id": "H24-TRSG1",
+  "artifact": "gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.tif",
+  "raster_sha256": "630c79ae12db67fc2dfbd3047f6889442a209fb77a716e8f37c9b671f7676ee6",
+  "passes": [
+    {
+      "pass": 1,
+      "scope": "Implement and verify end-to-end against official sources and recorded evaluators",
+      "actions": [
+        "Audited all 9 priority repositories (GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36) and 2026-10-25 sibling runs; verified GEMSDOE32 h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros (0.2778 OWNER-REPORTED) and diagnosed GEMSDOE24 GVC1 (0.0859 OWNER-REPORTED) in-sample halo collapse.",
+        "Preregistered 4 ranked untried geological hypotheses (H24-TRSG1, H24-EULER2, H24-DRAIN3, H24-INSAR4) in commit a361bd8 before writing model code.",
+        "Implemented streaming 44-channel H24-TRSG1 feature stack, selective nuisance residualizer, terrain-relief LiDAR-gap calibrator, and Dual-Partition Stitched-OOF Two-Regime allocator; verified 3 arms on SegmentHoldout (0.14644 primary, paired +0.01644 [+0.00053, +0.03163] vs oof_multiphysics_hgb_d3), 3.0 km bridge (0.14674), 137-raster novelty (0.6293 <= 0.70), and exact-file C2ST (0.4727, Holm p=1.000).",
+        "Exported unique -zeros.tif, -nan.tif, -zeros.zip, <=140-char note, and fail-closed schema-v2 .preflight.json; integrated trsg1_packet into GitHub Pages and README."
+      ],
+      "result": "passed"
+    },
+    {
+      "pass": 2,
+      "scope": "Hunt and fix bugs, missing requirements, incorrect assumptions, and edge cases",
+      "findings_and_fixes": [
+        "Fixed Gaussian second-derivative DC leak on uniform inputs by replacing discrete gaussian_filter(..., order=2) with Gaussian smoothing (order=0, truncate=4.0) + central second differences (0.0 twist leak verified in unit test).",
+        "Added fail-closed implicit-rerun refusal guard to scripts/run_trsg1_lane.py (--run refuses to overwrite frozen evidence/trsg1_experiment_20261026.json) and tested it in tests/test_trsg1.py.",
+        "Hardened verify_recorded() in scripts/run_trsg1_lane.py to verify ZIP outer SHA-256, inner GeoTIFF SHA-256, and preregistration file existence using strictly git-tracked files (zero gitignored data/ dependency in CI).",
+        "Preserved len(registry/live_scores.json['artifacts']) == 24 contract while recording 9-site and 2026-10-25 owner-reported scores under portfolio_9site_and_20261025_owner_reports.",
+        "Reverted timestamp-only touch on frozen evidence/access_inputs.json and added root executive-summary.html to automated broken-link tests in tests/test_site_build.py."
+      ],
+      "result": "passed"
+    },
+    {
+      "pass": 3,
+      "scope": "Full re-check against original acceptance criteria, Parallel-Run Protocol Rules 1-6, and CI gates",
+      "checks": {
+        "unique_geotiff_never_copied": true,
+        "crs_shape_transform_strict_0_1_no_nan_in_footprint": true,
+        "first_screen_automated_gate_unambiguous_no_human_pending": true,
+        "note_length_le_140": 71,
+        "score_labels_strictly_HOLDOUT_DTI_or_OWNER_REPORTED": true,
+        "readme_embedded_prompt_preserved_verbatim": true,
+        "ci_verifiers_all_green": true,
+        "pytest_passed": 249,
+        "ruff_lint_and_format_clean": true,
+        "drivendata_automation_zero": true
+      },
+      "result": "passed"
+    }
+  ]
+}

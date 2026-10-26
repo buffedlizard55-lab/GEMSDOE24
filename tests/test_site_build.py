@@ -93,6 +93,7 @@ def test_site_never_links_a_missing_local_file(built):
 
     for page in (
         "index.html",
+        "executive-summary.html",
         "docs/index.html",
         "docs/executive-summary.html",
         "docs/research.html",
@@ -269,3 +270,51 @@ def test_site_rejects_oj1_published_card_drift(built):
         assert result.returncode != 0 and "Published OJ1 run card" in result.stderr
     finally:
         path.write_text(original)
+
+
+def test_trsg1_is_top_first_screen_and_9site_executive_is_rendered(built):
+    trsg1 = json.loads((built / "docs/data/trsg1_download.json").read_text())
+    rshg1 = json.loads((built / "docs/data/rshg1_download.json").read_text())
+    mtr = json.loads((built / "docs/data/independent_download.json").read_text())
+    active = json.loads((built / "docs/data/active_lane.json").read_text())
+    assert active["lane"] == "H24-TRSG1"
+    assert active["artifact"]["file"] == trsg1["file"]
+    assert active["ok_to_submit"] is False and active["verdict"] == "negative"
+    for name in ("index.html", "docs/index.html", "docs/executive-summary.html"):
+        html = (built / name).read_text()
+        assert 'download="' + trsg1["file"] + '"' in html
+        assert html.index(trsg1["file"]) < html.index(rshg1["file"]) < html.index(mtr["file"])
+        assert "7/7 Technical Gates PASS" in html and "DO_NOT_SUBMIT" in html
+    exec_html = (built / "docs/executive-summary.html").read_text()
+    for site_needle in ("GEMSDOE32", "0.2778", "GEMSDOE36", "0.2750", "GEMSDOE24", "0.2477"):
+        assert site_needle in exec_html
+
+
+def test_site_rejects_trsg1_checksum_tampering_and_permissive_preflight(built):
+    card_path = built / "evidence/trsg1_run_card_20261026.json"
+    original_card = card_path.read_text()
+    try:
+        altered = json.loads(original_card)
+        altered["raster_sha256"] = "0" * 64
+        card_path.write_text(json.dumps(altered))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0 and "TRSG1 checksum" in result.stderr
+    finally:
+        card_path.write_text(original_card)
+
+    dl = json.loads((built / "docs/data/trsg1_download.json").read_text())
+    pf_path = (built / "docs/downloads" / dl["file"]).with_suffix(".preflight.json")
+    original_pf = pf_path.read_text()
+    try:
+        altered_pf = json.loads(original_pf)
+        altered_pf["decision"]["ready_to_submit"] = True
+        altered_pf["decision"]["submission_status"] = "OK_TO_SUBMIT"
+        pf_path.write_text(json.dumps(altered_pf))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0 and "TRSG1 exact-file preflight" in result.stderr
+    finally:
+        pf_path.write_text(original_pf)

@@ -237,6 +237,16 @@ Latest OJ1 research TIFF: [`gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zero
 
 **DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
 
+Latest 2026-10-26 `H24-TRSG1` 44-channel Two-Regime Seismic-Geothermal Stitched-OOF GeoTIFF (**7/7 Technical Gates PASS**):
+[`gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.tif`](docs/downloads/gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.tif) (`SHA-256: 630c79ae12db67fc2dfbd3047f6889442a209fb77a716e8f37c9b671f7676ee6`),
+Single-TIFF ZIP [`gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.zip`](docs/downloads/gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.zip), and
+NaN-outside twin [`gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-nan.tif`](docs/downloads/gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-nan.tif)
+(Note `71 <= 140` chars: `GEMS24 TRSG1 | 44ch 2reg-StOOF 7f301fc433f0 | DTI 0.1464; DO NOT SUBMIT`).
+Generated independently from 44 physical channels (restored `ieq_n100a15`/`deq_n100a15` microseismic anisotropy, hyperbolic step-over saddle twist, scale-localized INGENIOUS sinter/`2 m`-probe/geothermometry DoGs, Quaternary vent corridors, selective nuisance residualization, terrain-relief LiDAR-gap calibration, and **100% Dual-Partition Stitched-OOF** Two-Regime allocation; `37,722` binary `{0,1}` dots; zero copied pixels).
+Passes exact-grid/strict-`[0,1]` checks, 44/44 two-polarity leakage canaries, exact-file C2ST nuisance audit (**AUC `0.4727` < 0.55**, Holm *p* = `1.000`), competing-method + peer novelty across **137** rasters (**max 3-px dot overlap `0.6293` ≤ 0.70**, max `|ρ| = 0.3894` ≤ 0.90), and cures `GVC1`'s `0.0859` in-sample halo collapse (`2<d_cat≤5 px = 18.4%` vs `45.8%`; deep concealed `d_cat > 30 px = 32.0%` vs `4.1%`).
+Achieves **HOLDOUT-DTI** `gems-segment-pooled-v1` = **0.14644** (95% CI **[0.13220, 0.16241]**, paired Δ **+0.01644**, strictly positive 95% CI **[+0.00053, +0.03163]** over `oof_multiphysics_hgb_d3` `0.13000`; Arm 2 Global **0.14693**; `NE_LidarGapHeavy` **0.18760**) and `segment-hide-recover-pooled-v1` = **0.14674** (95% CI **[0.12804, 0.16492]**). Remains fail-closed **DOWNLOAD: YES · SUBMIT: NO (`DO_NOT_SUBMIT`)** pending external weekly-slot selector clearance over the retained spacing-5 calibration lattice (`registry-039`, literal overlap `0.9905`).
+[TRSG1 JSON run card](evidence/trsg1_run_card_20261026.json) · [TRSG1 preregistration](knowledge/19_preregistered_TRSG1_2026-10-26.md) · [9-Site Executive & PhD Synthesis (`GEMSDOE32` `0.2778` → `0.4413`)](knowledge/20_TRSG1_findings_and_portfolio_executive_2026-10-26.md)
+
 Latest 2026-10-25 `H24-FUSE-HCW` Residualized Conduit OOF-HGB GeoTIFF (executes documented Next Step #4):
 [`gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif`](docs/downloads/gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif) (`SHA-256: cfb5d21f9f0308a4c5cc917641c1cfd4d8f73d60fa4f64cf12ba9548ae23afb3`)
 and NaN-outside twin [`gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-nan.tif`](docs/downloads/gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-nan.tif).

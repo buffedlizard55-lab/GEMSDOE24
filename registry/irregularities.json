@@ -246,6 +246,13 @@
       "status": "disclosed",
       "issue": "Unmerged sibling branch origin/arena/6b1d9ade-gemsdoe24 (commit e6f8414) ran GT1/GT2 experiments without opening a pull request; GT2 failed prospective method-lane novelty (0.758 > 0.70 dot overlap with registry-006) and did not run C2ST.",
       "resolution": "Recorded in knowledge/18_FUSE_findings_2026-10-25.md; sibling branch was not modified or merged."
+    },
+    {
+      "id": "IR-GVC1-INSAMPLE-HALO-COLLAPSE",
+      "severity": "high",
+      "status": "disclosed_and_fixed_in_TRSG1",
+      "issue": "2026-10-25 H24-GVC1 (HOLDOUT-DTI 0.14876, overlap-stopped at 0.7682) received an owner-reported public score of 0.0859 in sibling ledgers. Pixel forensics proved its full-footprint deployment fitted in-sample on train_mask=fp with neg_mask=(EDT(~catalogue)>=9 px) and global radial -log1p(EDT) thermal distance fields, dumping 45.8% of dots into 2<d_cat<=5 px and 86.0% into d_cat<=15 px while leaving only 4.1% in deep concealed terrain (d_cat>30 px vs 35.8% in GEMSDOE32 H33-2-B2). SegmentHoldout (15 px collar) could not observe the <15 px halo.",
+      "resolution": "Resolved in 2026-10-26 H24-TRSG1 via (1) 20% close-flank negatives (4<=d_vis<9 px) + 80% far negatives (>=9 px), (2) compact local DoG thermal kernels (zero global EDT), (3) 100% out-of-fold Dual-Partition Stitched-OOF deployment (0.5*Quadrant_OOF + 0.5*Rotated45_OOF), and (4) Two-Regime Concealed-Basin (26%) + Range-Front (74%) allocation, reducing 2<d_cat<=5 px halo to 18.4% and raising d_cat>30 px discovery to 32.0% while passing 138-raster novelty (max overlap 0.6293 <= 0.70) and C2ST (AUC 0.4727)."
     }
   ]
 }
