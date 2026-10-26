@@ -19,8 +19,18 @@ Maximize P(Win) and Own the Outcome mean preserving a failed gate, not renaming 
 The repeated brief's competition values remain **OWNER-REPORTED, UNVERIFIED**,
 not ORGANIZER-CONFIRMED. No claim is made to beat either cited leaderboard target.
 
+**Current featured research packet (not a submission):** H24-GVC1
+[`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif)
+— DOWNLOAD: YES · SUBMIT: NO. Recorded HOLDOUT-DTI **0.14876** (`gems-segment-pooled-v1`,
+60,988 withheld positives, 95% CI `[0.13413, 0.16370]`); registry surface rank-correlation
+max `0.54781`, but final-dot overlap `0.76823` exceeds the 0.70 limit. This is the highest
+recorded local holdout value among the current reviewed packets, not a leaderboard score.
+No new unique candidate was generated in this review: the prompt's assigned method paragraph
+is absent, and a new lane cannot be selected or promoted on our own. Do not submit this file.
+See [`evidence/gvc1_run_card_20261025.json`](evidence/gvc1_run_card_20261025.json) and
+[`evidence/2026-10-26_review_run_card.json`](evidence/2026-10-26_review_run_card.json).
 
-## Latest experiment: H24-RSHG1 — DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
+## Previously recorded experiment: H24-RSHG1 — DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
 
 [**Download the newly generated H24-RSHG1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif) ·
 [NaN-outside twin](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif) ·
