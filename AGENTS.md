@@ -1,3 +1,11 @@
+# Latest c6ea4bb7 continuation — 2026-10-26
+
+Read `docs/review-c6ea4bb7.md` first, then the standing instructions below.
+Git-object inventory found 311 added TIFF/ZIP paths and one repaired H33-B2 archive.
+This is NOT a pixel novelty audit or a new experiment. Registry pins are unchanged.
+No lane was supplied; no new TIFF or slot. Next: content-audit the versioned inventory,
+coordinate a distinct lane, retain literal overlap stops and independent selector requirements.
+
 # Standing project instructions
 
 ## Latest continuation safety review — 2026-10-26
