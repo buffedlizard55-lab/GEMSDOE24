@@ -10,6 +10,18 @@ The assigned method paragraph is still missing; stopped lanes must not be retune
 Fresh source checks found all nine repositories changed since registry pins; this is not a new raster or score audit.
 The following historical point-best section is not a new cross-site promotion decision.
 
+## Latest 2026-10-26 Lane: `H24-BLIND-UPWELL` — concealed-conduit / blind upwelling research · `DO_NOT_SUBMIT`
+
+**One experiment run (1 of 3 budget; ~80 s).** Generated a new unique GeoTIFF from the preregistered H1 blind-upwelling hypothesis (LiDAR `ex_mean` flexure × GeoDAWN K × low Th/K × INGENIOUS vent/spring thermal field; catalogue-independent scoring; catalogue pixels excluded from dots), validated end-to-end with zero human inspection.
+
+[**Download H24-BLIND-UPWELL research .tif (zeros outside, strict [0,1])**](docs/downloads/24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.tif) · [Validator JSON](docs/downloads/checks-24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.json) · [Preflight JSON](docs/downloads/preflight-24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.json) · [JSON run card](data/blind_upwell_run_card.json) · [Executive submission guide](docs/executive-summary.html#blind-upwell-gates).
+
+**DOWNLOAD: YES · SUBMIT: NO.** Automated NEGATIVE verdict: HOLDOUT-DTI 0.06448, 95% CI [0.05575, 0.07400] (`gems-segment-pooled-v1`, 60,988 withheld positives), does **not** beat current comparable best 0.13000 — no current-best win. Leakage canary PASS (all feature/surface pooled AUCs ≤ 0.5538, threshold 0.90). Novelty vs competing methods PASS (surface max |ρ| = 0.2962 ≤ 0.90; final-dot max 3-px overlap vs 46 competing/peer rasters ≤ 0.238 ≤ 0.70 → unique vs other methods / method-lane pass). Literal all-entry novelty FAILS on the spacing-5 calibration lattice (registry-039, 99.87% footprint coverage; overlap 0.9986) — the same lattice incompatibility as DPRF1. Selector v2 remains fail-closed on unknown quota and replay certificate. Zero competition slots spent. All numbers are HOLDOUT-DTI unless marked ORGANIZER-CONFIRMED (none exist); the agent performed no DrivenData upload.
+
+- Name: `24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.tif`
+- SHA-256: `a59b772423a42676fadbdaf6bdc556e350e51c0f13a560b96d40821822550122`
+- Short comment (116 chars ≤ 140): `24GEMS blind-upwelling LiDARxKxThKxthermal | catalogue-independent | research; HOLDOUT-DTI 0.06448 | id a23f2207f2c0`
+
 ## Concurrent VENT result — QUARANTINED / DO NOT SUBMIT
 
 The parallel PR #34 artifacts and historical source are preserved, but its runner
