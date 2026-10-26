@@ -13,6 +13,7 @@ import hashlib
 import json
 import subprocess
 import sys
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
@@ -68,13 +69,70 @@ def discover(number):
     return {"repo": repo, "ref": ref, "files": files}
 
 
+_GIT_LOCK = threading.Lock()
+_REPO_LOCKS: dict[str, threading.Lock] = {}
+
+
+def _repo_lock(repo: str) -> threading.Lock:
+    with _GIT_LOCK:
+        if repo not in _REPO_LOCKS:
+            _REPO_LOCKS[repo] = threading.Lock()
+        return _REPO_LOCKS[repo]
+
+
+def _git_repo_dir(repo: str) -> Path:
+    repo_dir = Path("/tmp/gems_git_blob_cache") / repo.replace("/", "__")
+    with _repo_lock(repo):
+        if not (repo_dir / "HEAD").exists():
+            repo_dir.parent.mkdir(parents=True, exist_ok=True)
+            subprocess.run(
+                [
+                    "git",
+                    "clone",
+                    "--bare",
+                    "--filter=blob:none",
+                    f"https://github.com/{repo}.git",
+                    str(repo_dir),
+                ],
+                check=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+    return repo_dir
+
+
+def _git_blob_bytes(repo: str, ref: str, path: str, blob_sha: str | None = None) -> bytes:
+    repo_dir = _git_repo_dir(repo)
+    spec = blob_sha if blob_sha else f"{ref}:{path}"
+    with _repo_lock(repo):
+        try:
+            return subprocess.check_output(
+                ["git", "-C", str(repo_dir), "cat-file", "blob", spec],
+                stderr=subprocess.PIPE,
+            )
+        except subprocess.CalledProcessError:
+            subprocess.run(
+                ["git", "-C", str(repo_dir), "fetch", "origin", ref],
+                check=False,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            return subprocess.check_output(
+                ["git", "-C", str(repo_dir), "show", f"{ref}:{path}"],
+                stderr=subprocess.PIPE,
+            )
+
+
 def cache_one(task):
     repo, ref, entry = task
     path = entry["path"]
     dest = CACHE / repo.split("/")[-1] / path
     if not dest.exists():
         dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_bytes(gh(f"repos/{repo}/contents/{path}?ref={ref}"))
+        try:
+            dest.write_bytes(gh(f"repos/{repo}/contents/{path}?ref={ref}", retries=1))
+        except subprocess.CalledProcessError:
+            dest.write_bytes(_git_blob_bytes(repo, ref, path, entry.get("blob_sha")))
     raw = dest.read_bytes()
     blob = hashlib.sha1(f"blob {len(raw)}\0".encode() + raw).hexdigest()
     if blob != entry["blob_sha"]:

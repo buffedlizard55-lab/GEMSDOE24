@@ -13,6 +13,7 @@ import concurrent.futures
 import hashlib
 import json
 import subprocess
+import threading
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,8 +22,63 @@ OWNER = "buffedlizard55-lab"
 REPOS = [f"GEMSDOE{n}" for n in (24, 25, 27, 28, 30, 31, 32, 33, 36)]
 
 
+_GIT_LOCK = threading.Lock()
+_REPO_LOCKS: dict[str, threading.Lock] = {}
+
+
+def _repo_lock(repo_full: str) -> threading.Lock:
+    with _GIT_LOCK:
+        if repo_full not in _REPO_LOCKS:
+            _REPO_LOCKS[repo_full] = threading.Lock()
+        return _REPO_LOCKS[repo_full]
+
+
+def _git_repo_dir(repo_full: str) -> Path:
+    repo_dir = Path("/tmp/gems_git_blob_cache") / repo_full.replace("/", "__")
+    with _repo_lock(repo_full):
+        if not (repo_dir / "HEAD").exists():
+            repo_dir.parent.mkdir(parents=True, exist_ok=True)
+            subprocess.run(
+                [
+                    "git",
+                    "clone",
+                    "--bare",
+                    "--filter=blob:none",
+                    f"https://github.com/{repo_full}.git",
+                    str(repo_dir),
+                ],
+                check=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+    return repo_dir
+
+
+def _git_blob(repo: str, row: dict) -> bytes:
+    repo_full = f"{OWNER}/{repo}"
+    repo_dir = _git_repo_dir(repo_full)
+    with _repo_lock(repo_full):
+        try:
+            return subprocess.check_output(
+                ["git", "-C", str(repo_dir), "cat-file", "blob", row["blob"]],
+                stderr=subprocess.PIPE,
+            )
+        except subprocess.CalledProcessError:
+            rev = row["revision"]
+            subprocess.run(
+                ["git", "-C", str(repo_dir), "fetch", "origin", rev],
+                check=False,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            return subprocess.check_output(
+                ["git", "-C", str(repo_dir), "show", f"{rev}:{row['path']}"],
+                stderr=subprocess.PIPE,
+            )
+
+
 def api(path):
-    return json.loads(subprocess.check_output(["gh", "api", path]))
+    return json.loads(subprocess.check_output(["gh", "api", path], stderr=subprocess.DEVNULL))
 
 
 def main():
@@ -56,8 +112,11 @@ def main():
     def restore(row):
         p = dest / (row["blob"] + ".tif")
         if not p.exists():
-            d = api(f"repos/{OWNER}/{row['repo']}/git/blobs/{row['blob']}")
-            b = base64.b64decode(d["content"], validate=False)
+            try:
+                d = api(f"repos/{OWNER}/{row['repo']}/git/blobs/{row['blob']}")
+                b = base64.b64decode(d["content"], validate=False)
+            except subprocess.CalledProcessError:
+                b = _git_blob(row["repo"], row)
             if hashlib.sha1(b"blob " + str(len(b)).encode() + b"\0" + b).hexdigest() != row["blob"]:
                 raise ValueError("Git blob identity mismatch")
             tmp = p.with_suffix(".partial")

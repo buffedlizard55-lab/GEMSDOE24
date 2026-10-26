@@ -21,12 +21,21 @@ def check(row):
     repo, ref = row["repo"], row["ref"]
     base = {"repo": repo, "pinned_ref": ref, "url": f"https://github.com/{repo}"}
     try:
-        value = subprocess.check_output(
-            ["gh", "api", f"repos/{repo}/commits/main", "--jq", ".sha"],
-            text=True,
-            stderr=subprocess.PIPE,
-            timeout=30,
-        ).strip()
+        try:
+            value = subprocess.check_output(
+                ["gh", "api", f"repos/{repo}/commits/main", "--jq", ".sha"],
+                text=True,
+                stderr=subprocess.PIPE,
+                timeout=30,
+            ).strip()
+        except subprocess.CalledProcessError:
+            ls_out = subprocess.check_output(
+                ["git", "ls-remote", f"https://github.com/{repo}.git", "refs/heads/main"],
+                text=True,
+                stderr=subprocess.PIPE,
+                timeout=30,
+            ).strip()
+            value = ls_out.split()[0] if ls_out else ""
         if len(value) != 40 or any(c not in "0123456789abcdef" for c in value):
             raise ValueError("Invalid Git commit returned")
         return {
