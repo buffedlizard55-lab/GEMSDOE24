@@ -1,0 +1,1 @@
+GEMS24 XVAR1 | 2-sided semivariogram OOF | id 7d909c75458c | HOLDOUT-DTI 0.1463 | research; DO NOT SUBMIT

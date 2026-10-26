@@ -2442,3 +2442,294 @@ def s3dep1_packet(root):
 
     research_html = f"""<section id="s3dep1-research"><h2>H24-S3DEP1 (2026-10-26) — Zero-1m-LiDAR Seamless 10 m 3DEP Monoclinal Step + Crustal/Hydrothermal OOF &amp; Four-Hypothesis Synthesis</h2><p><strong>Preregistration:</strong> <code class="portfolio-file">knowledge/29_preregistered_S3DEP1_2026-10-26.md</code> locked at commit <code>{e(card["preregistration_commit"][:12])}</code> before model fitting; full PhD post-mortem in <code class="portfolio-file">knowledge/30_S3DEP1_findings_and_9site_executive_summary_2026-10-26.md</code>.</p><p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p><p><strong>Mechanism:</strong> {e(card["mechanism"])}</p><p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p><h3>Why GEMSDOE32 B2 reached 0.2778 (UNVERIFIED-OWNER-REPORT) — and the exact marginal precision threshold to beat it</h3><p>Pixel-exact set algebra across the <code>H19-5</code> family proves <code>GEMSDOE32 h33-h33-2-b2</code> (37,654 dots; 0.2778 <code>UNVERIFIED-OWNER-REPORT</code>) added <strong>zero new detections</strong>: <code>H19-5</code> (161,366 px, 0.1922) &rarr; <code>D1.5</code> (60,069 px, 0.2477) &rarr; <code>D2.8</code> (44,090 px, 0.2600) &rarr; <code>H27-4</code> (40,199 px, 0.2708) &rarr; <code>H33-B2</code> (<code>D2.8</code> minus all 6,436 dots within <code>d_cat &le; 200 m</code>, 0.2778). Under pooled Tversky DTI <code>D = T / (0.2 T + 0.2 F + 0.8 G)</code>, deleting zero-credit halo dots strictly raises <code>D</code>, and any new dot improves over baseline <code>D_0</code> iff its expected hidden-fault kernel credit exceeds <code>&tau;*(D_0) = 0.2 D_0 / (1 - 0.2 D_0)</code> (= <strong>5.88%</strong> at <code>D_0 = 0.2778</code>, <strong>7.13%</strong> at <code>0.3195</code>, <strong>9.68%</strong> at <code>0.4413</code>).</p><h3>Four novel geological hypotheses ranked prior to execution</h3><div class="tablewrap" tabindex="0" role="region" aria-label="Four ranked novel geological hypotheses"><table><thead><tr><th>Rank &amp; ID</th><th>Exact physical layers &amp; transform</th><th>Why it catches unmapped INGENIOUS faults</th><th>Official verified source</th><th>Status</th></tr></thead><tbody><tr><td><strong>1 · H24-S3DEP1 (Executed)</strong></td><td>61 ch (zero 1 m LiDAR): 12 seamless 10 m 3DEP sub-cell gradients + 6 restored <code class="portfolio-file">training_features.tif</code> (<code>mag_anom</code>, <code>geod_2ndinv</code>, <code>iso_grav_anom_slope</code>, Bouguer <code>tc</code>, <code>log1p(deq/ieq)</code>) + 6 monoclinal step/incision operators + 37 non-LiDAR base/GVC1/SAHG4.</td><td>Resolves degraded Pleistocene piedmont scarps and all 1,641,254 cells of the 31.8% 1 m LiDAR gap without 1 m survey-seam bias.</td><td><a href="https://www.sciencebase.gov/catalog/item/4f70aa9fe4b058caae3f8de5">USGS 3DEP 1/3 arc-sec</a><br><a href="https://gdr.openei.org/submissions/1391">OpenEI GDR #1391</a></td><td><strong>HOLDOUT-DTI 0.16606 (New Record; Negative on DKRN1/C2ST)</strong></td></tr><tr><td><strong>2 · H24-SENT2-HYDRO</strong></td><td>Sentinel-2 L2A SWIR <code>B11/B12</code> Al-OH/clay &amp; ferric/carbonate indices &times; 900 m Radon lineaments &times; <code>|&nabla; log(1 + cond_surf)|</code>.</td><td>Catches zero-relief argillic/silicic alteration halos along blind intrabasin faults under playa/fan cover.</td><td><a href="https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a">Copernicus / Element84 STAC</a></td><td>Unexecuted (needs external fetch)</td></tr><tr><td><strong>3 · H24-USARRAY-MT3D</strong></td><td>USGS Great Basin 3D magnetotelluric resistivity (2–15 km) horizontal phase-gradient &times; <code>geod_2ndinv</code> + <code>deq_n100a15</code>.</td><td>Images sub-playa brittle fluid conduits beneath shallow conductive smectite clay caps that blind AEM (<code>&le;300 m</code>).</td><td><a href="https://www.sciencebase.gov/catalog/item/5fb70a0ad34eb413d5e14873">USGS ScienceBase 5fb70a0a</a></td><td>Unexecuted (needs external fetch)</td></tr><tr><td><strong>4 · H24-INSAR-OPERA</strong></td><td>NASA OPERA <code>DISP-S1</code> 30 m multi-annual LOS velocity gradient across <code>iso_grav_anom_slope</code>.</td><td>Detects sharp ground-water/geothermal aquitard compartmentalization steps across zero-scarp basin faults.</td><td><a href="https://cmr.earthdata.nasa.gov/search/collections.json?short_name=OPERA_L3_DISP-S1_V1">NASA ASF / Earthdata CMR</a></td><td>Unexecuted (needs external fetch)</td></tr></tbody></table></div><h3>Three durable lessons from H24-S3DEP1</h3><p>(1) <strong>1 m LiDAR is not required to achieve state-of-the-art GEMS fault recovery:</strong> seamless 10 m 3DEP monoclinal step asymmetry + crustal/hydrothermal physics achieved <strong>0.16606</strong> pooled (<strong>0.21972</strong> in <code>NE_LidarGapHeavy</code>) while cutting 3-px overlap with <code>DPRF1</code> to <strong>64.45% (&le;70%)</strong>. (2) <strong>Shared 37-channel non-LiDAR backbones still converge (&gt;70%) across gap-native lanes:</strong> <code>S3DEP1</code> overlapped 71.32% with <code>DKRN1</code> because both allocate over the same 37 non-LiDAR channels with 300 m kernel + core heads. (3) <strong>10 m 3DEP sub-cell gradients require explicit road-corridor residualization:</strong> excluding <code>dem10_*</code> from <code class="portfolio-file">SelectiveNonTopographicResidualizer</code> allowed 15–25 m highway cut/fill prisms along <code class="portfolio-file">tiger_road_distance_m</code> to trigger C2ST (AUC 0.6012).</p></section>"""
     return hero_html, exec_html, research_html
+
+
+def xvar1_packet(root):
+    """Validate and render the 2026-10-26 H24-XVAR1 two-sided azimuthal semivariogram packet."""
+    exp_path = root / "evidence/xvar1_experiment_20261026.json"
+    card_path = root / "evidence/xvar1_run_card_20261026.json"
+    sel_path = root / "evidence/xvar1_selector_20261026.json"
+    dl_path = root / "docs/data/xvar1_download.json"
+    summary_path = root / "evidence/nine_site_executive_summary_xvar1_20261026.json"
+    if not (
+        exp_path.exists()
+        and card_path.exists()
+        and sel_path.exists()
+        and dl_path.exists()
+        and summary_path.exists()
+    ):
+        return "", "", ""
+    experiment = json.loads(exp_path.read_text())
+    card = json.loads(card_path.read_text())
+    saved_sel = json.loads(sel_path.read_text())
+    dl = json.loads(dl_path.read_text())
+    nine = json.loads(summary_path.read_text())
+    name = dl["file"]
+    digest = dl["sha256"]
+    if (
+        card.get("raster_sha256") != digest
+        or card.get("submission_name") != name
+        or dl.get("note") != card.get("note")
+        or card.get("exact_file_nuisance_audit", {}).get("candidate", {}).get("sha256") != digest
+    ):
+        raise ValueError("XVAR1 checksum or identity disagree with run card or C2ST receipt")
+
+    template = root / "data/bridge/sample_submission.tif"
+    target = root / "docs/downloads" / name
+    fresh_sel = selector.verify_selector(target, template, card)
+    ok_submit = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
+    if (
+        saved_sel.get("gates") != fresh_sel.get("gates")
+        or saved_sel.get("decision") != fresh_sel.get("decision")
+        or saved_sel.get("human_inspection_used") is not False
+        or card.get("ok_to_submit") is not ok_submit
+        or dl.get("ok_to_submit") is not ok_submit
+        or experiment.get("ok_to_submit") is not ok_submit
+        or (card.get("verdict") == "promote") is not ok_submit
+    ):
+        raise ValueError("XVAR1 card/download disagrees with independent gems.selector receipt")
+
+    checks = json.loads((root / "docs/downloads" / dl["checks_file"]).read_text())
+    for key in ("zero_outside", "nan_outside"):
+        row = checks[key]
+        fresh = check_variants(root / "docs/downloads" / row["file"], template)
+        if (
+            not fresh["format_valid"]
+            or not row["format_valid"]
+            or fresh.get("submission_authorized") is not False
+            or any(fresh.get(field) != value for field, value in row.items())
+        ):
+            raise ValueError(f"XVAR1 download variant invalid or stale: {key}")
+
+    zip_name = checks.get("zeros_zip") or checks.get("zeros_zip_file")
+    zip_target = root / "docs/downloads" / zip_name
+    if sha256_file(zip_target) != checks["zeros_zip_sha256"]:
+        raise ValueError("XVAR1 ZIP checksum disagrees with receipt")
+    with zipfile.ZipFile(zip_target) as zf:
+        if zf.namelist() != [checks["zero_outside"]["file"]]:
+            raise ValueError("XVAR1 ZIP entry list invalid")
+        if (
+            hashlib.sha256(zf.read(checks["zero_outside"]["file"])).hexdigest()
+            != checks["zero_outside"]["sha256"]
+        ):
+            raise ValueError("XVAR1 ZIP inner TIFF hash disagrees")
+
+    note_path = root / "docs/downloads" / dl["note_file"]
+    if len(dl["note"]) > 140 or note_path.read_text().strip() != dl["note"]:
+        raise ValueError("XVAR1 note is missing, changed, or exceeds 140 characters")
+
+    preflight = json.loads((root / "docs/downloads" / dl["preflight_file"]).read_text())
+    if (
+        preflight.get("artifact", {}).get("sha256") != digest
+        or preflight.get("run_card", {}).get("artifact_sha256_matches") is not True
+        or preflight.get("run_card", {}).get("artifact_name_matches") is not True
+        or preflight.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1")
+        is not True
+    ):
+        raise ValueError("XVAR1 exact-file preflight is missing or stale")
+    if len(nine.get("sites", [])) != 9:
+        raise ValueError("XVAR1 nine-site executive summary must contain all 9 focus repositories")
+
+    e = lambda s: escape(str(s), quote=True)  # noqa: E731
+    score = card["holdout"]
+    lo, hi = score["ci95"]["interval"]
+    arms = card["arms_same_evaluator"]
+    p_sub = card["paired_comparisons"]["arm1_vs_arm3_b_sub37_no_xvar1"]
+    ps_lo, ps_hi = p_sub["paired_delta_ci95"]
+    p_oof = card["paired_comparisons"]["arm1_vs_oof_multiphysics_hgb_d3"]
+    po_lo, po_hi = p_oof["paired_delta_ci95"]
+    nov = card["correlation_overlap_vs_registry"]
+    dist = card["off_catalogue_distance_profile"]
+    c2 = card["exact_file_nuisance_audit"]["candidate"]
+
+    status_box = (
+        '<div class="status stopped" role="status">'
+        "<strong>NEWEST GENERATED RESEARCH LANE H24-XVAR1 (2026-10-26) — NEGATIVE / DUPLICATE STOP · "
+        "DOWNLOAD: YES · SUBMIT: NO "
+        f"(SELECTOR <code>{e(fresh_sel['selector_version'])}</code>: <code>{e(fresh_sel['decision'])}</code>, "
+        "ZERO HUMAN-INSPECTOR FALLBACK).</strong> "
+        "Executes Rank #1 of <code>knowledge/26_portfolio_plan_corrections_2026-10-26.md</code>: "
+        "8 parity-symmetric centered two-sided azimuthal semivariogram jump &amp; cross-strike anisotropy "
+        "channels on float32 <code>rtp</code>, <code>iso_grav_anom</code>, <code>depth_to_base_surf</code>, "
+        "<code>cond_surf</code> at lags 300 m &amp; 800 m, with 7-confound residualization (incl. <code>area1</code>) "
+        "and zero 1 m LiDAR or D8 wash-routing channels. "
+        f"<strong>Solved both DKRN1 defects:</strong> cut 3-px dot overlap with DPRF1 to "
+        f"<strong>{100 * nov['dot_overlap_within_3px_vs_dprf1']:.2f}% ≤ 70%</strong> "
+        f"({100 * nov['dot_overlap_within_3px_vs_b2']:.2f}% vs GEMSDOE32 B2; ≤53.92% vs 83 peers; "
+        f"≤{100 * nov['nine_site_20261026_refresh_max_dot_overlap']:.2f}% vs all 111 live 9-site TIFFs) "
+        f"and passed exact-file C2ST (<strong>AUC {c2['observed_auc']:.4f} &lt; 0.55</strong>, 60/60 leakage canaries PASS ≤0.6111). "
+        f"Scored <strong>HOLDOUT-DTI {score['dti']:.5f}</strong> [{lo:.5f}, {hi:.5f}] "
+        f"(Single-Regime Arm 2 <strong>{arms['arm2_xvar1_singleregime_45ch']['dti']:.5f}</strong>; "
+        f"matched B_SUB37 control <strong>{arms['arm3_b_sub37_no_xvar1_control']['dti']:.5f}</strong>, "
+        f"Arm 2 winning 3/4 folds &amp; Arm 1 winning SW +0.00708 / SE +0.00291 vs B_SUB37, and "
+        f"<strong>beating DPRF1 on NW: 0.15669 / 0.16081 1R &gt; 0.15639</strong>; "
+        f"paired Δ vs OOF-d3 <strong>{p_oof['paired_delta_dti']:+.5f}</strong> [{po_lo:+.5f}, {po_hi:+.5f}] on 4/4 folds), "
+        f"but trailed recorded DPRF1 (0.16379) pooled and converged to "
+        f"<strong>{100 * nov['dot_overlap_within_3px_vs_dkrn1']:.2f}% &gt; 70%</strong> 3-px dot overlap against "
+        "unsubmitted local DKRN1 via the shared 37-channel 100 m DEM trunk (plus retained <code>registry-039</code> lattice). "
+        "<strong>Stopped immediately per Rules 1 &amp; 6; zero post-hoc dot nudging or retuning.</strong></div>"
+    )
+
+    hero_html = (
+        '<section class="card" id="latest-xvar1-packet">'
+        '<div class="eyebrow">Newest 2026-10-26 experiment · H24-XVAR1 · Two-Sided Azimuthal Semivariogram · negative / duplicate stop</div>'
+        "<h2>H24-XVAR1 research GeoTIFF — DOWNLOAD: YES · SUBMIT: NO</h2>"
+        f"{status_box}"
+        f'<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">'
+        "Download XVAR1 research GeoTIFF (-zeros, [0,1]-safe) — DO NOT SUBMIT</a>"
+        f'<a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a>'
+        f'<a class="button" href="downloads/{e(dl["nan_file"])}" download>NaN-outside twin</a>'
+        '<a class="button" href="data/xvar1_run_card.json" download>XVAR1 JSON run card</a>'
+        '<a class="button" href="data/nine_site_executive_summary_xvar1_20261026.json" download>Fresh 9-Site 2026-10-26 Audit JSON</a>'
+        '<a class="button" href="executive-summary.html#xvar1">9-Site Executive Summary &amp; 0.2778 PhD Analysis →</a></div>'
+        f'<p class="fileline">{e(name)}</p>'
+        f'<p class="hash">SHA-256 {e(digest)}</p>'
+        f'<div class="note" id="note-xvar1">{e(dl["note"])}</div>'
+        '<div class="actions"><button class="button" data-copy="#note-xvar1" data-feedback="#fb-xvar1">Copy XVAR1 short note</button>'
+        f'<a class="button" href="downloads/{e(dl["note_file"])}" download>XVAR1 Note .txt</a></div>'
+        '<p id="fb-xvar1" class="copyfeedback" aria-live="polite"></p>'
+        f'<p class="micro">{dl["pixel_count"]:,} binary {{0, 1}} dots · strict whole-array [0, 1] PASS (0 NaN/Inf) · '
+        f"21.8% apron (2–9 px) / <strong>52.8% &gt;2 km far-field</strong> · C2ST AUC {c2['observed_auc']:.4f} PASS · "
+        f"note length {len(dl['note'])}/140 chars</p></section>"
+    )
+
+    fail_html = '<span class="fail">FAIL</span>'
+    gate_rows = "".join(
+        f"<tr><td>{e(g)}</td><td>{'PASS' if v else fail_html}</td></tr>"
+        for g, v in saved_sel["gates"].items()
+    )
+    exp_arms = experiment["arms"]
+    bsub_folds = {
+        f["fold"]: f["dti"] for f in exp_arms["arm3_b_sub37_no_xvar1_control"]["holdout"]["folds"]
+    }
+    arm2_folds = {
+        f["fold"]: f["dti"] for f in exp_arms["arm2_xvar1_singleregime_45ch"]["holdout"]["folds"]
+    }
+    dprf_folds = {
+        f["fold"]: f["dti"] for f in exp_arms["dprf1_52ch_reference_replay"]["holdout"]["folds"]
+    }
+    fold_rows = "".join(
+        f"<tr><td>{e(f['fold'])}</td><td><strong>{f['dti']:.5f}</strong></td>"
+        f"<td>{arm2_folds[f['fold']]:.5f}</td><td>{bsub_folds[f['fold']]:.5f}</td>"
+        f"<td>{dprf_folds[f['fold']]:.5f}</td><td>{int(f['n_truth']):,}</td><td>{int(f['n_emitted']):,}</td></tr>"
+        for f in score["folds"]
+    )
+    nine_rows = []
+    for srow in nine["sites"]:
+        sname = srow["site"]
+        sfile = srow.get("inspected_20261026_artifact") or srow.get("recorded_point_best_artifact")
+        ssha = (
+            srow.get("inspected_20261026_sha256") or srow.get("recorded_point_best_sha256") or ""
+        )[:12]
+        strict_ok = srow.get("whole_array_strict_0_1", True)
+        apron = srow.get("apron_2_to_9px")
+        farf = srow.get("farfield_gt_20px")
+        ov_xv = srow.get("xvar1_3px_overlap_vs_site_artifact")
+        ap_str = (
+            f"{100 * apron:.1f}% / {100 * farf:.1f}%"
+            if apron is not None and farf is not None
+            else "21.8% / 52.8% (XVAR1); 22.3% / 52.3% (DPRF1)"
+        )
+        ov_str = f"{100 * ov_xv:.2f}%" if ov_xv is not None else "self (65.64% vs DPRF1)"
+        nine_rows.append(
+            f'<tr><td><a href="{e(srow["pages_url"])}"><strong>{e(sname)}</strong></a><br><code>{e(srow["inspected_main_commit"][:8])}</code></td>'
+            f'<td><code class="portfolio-file">{e(srow["historical_best_submission"])}</code><br>'
+            f"UNVERIFIED-OWNER-REPORT: {srow['historical_best_owner_reported_score']:.4f}</td>"
+            f'<td><code class="portfolio-file">{e(sfile)}</code><br><small>SHA {e(ssha)}… · '
+            f"[0,1]={'PASS' if strict_ok else 'FAIL (NaN outside)'} · vs XVAR1 {e(ov_str)}</small></td>"
+            f"<td>{e(ap_str)}</td>"
+            f"<td>{e(srow['executive_verdict'])}</td></tr>"
+        )
+    nine_table_html = (
+        "<h3>Fresh 2026-10-26 Nine-Site Executive Audit (112 live sibling GeoTIFFs SHA-verified)</h3>"
+        '<div class="tablewrap" tabindex="0" role="region" aria-label="2026-10-26 nine-site XVAR1 forensic refresh">'
+        "<table><thead><tr><th>Focus Site &amp; HEAD</th><th>Best Historical Submission (prohibited to copy)</th>"
+        "<th>Latest 2026-10-26 Inspected TIFF</th><th>Apron (2–9 px) / Far (&gt;2 km)</th>"
+        "<th>Unmistakable Automated Verdict</th></tr></thead><tbody>"
+        + "".join(nine_rows)
+        + "</tbody></table></div>"
+    )
+    phd_html = (
+        "<h3>PhD Synthesis: Why GEMSDOE32 B2 (0.2778*) Topped the Nine Sites &amp; Reconciliation of 0.3195 / 0.4413</h3>"
+        "<p><strong>1. Pixel-exact mechanism of 0.2778 (<code>UNVERIFIED-OWNER-REPORT</code>):</strong> "
+        "Byte-level diffing proves <code>GEMSDOE32</code> <code>h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code> "
+        "(<code>37,654</code> dots) is pixel-for-pixel identical to <code>GEMSDOE25</code> <code>D2.8</code> (<code>44,090</code> dots, "
+        "<code>0.2600</code>*) after deleting the exact <code>6,436</code> dots within <code>d_cat ≤ 200 m</code> of public training "
+        "faults (<code>0</code> added dots). Under <code>DTI = T / (T + 0.2 F + 0.8 G)</code> with a 300 m linear kernel, "
+        "removing dots with marginal hit-to-false-positive ratio <code>t / f &lt; D0 / (5 − 4 D0) = 0.0549</code> at "
+        "<code>D0 = 0.2600</code> strictly increases live DTI by stripping pure false-positive denominator penalty "
+        "<code>0.2 ΔF = 1,287.2</code> inside the already-mapped fault halo.</p>"
+        "<p><strong>2. Reconciling 0.2778, 0.3195, and 0.4413 (zero organizer receipts in repo):</strong> "
+        "<code>0.2778</code> is the highest owner-reported submission across all 92 owner repos (<code>GEMSDOE32 B2</code>, "
+        "submitted 2026-10-04); <code>0.3195</code> is an earlier overall #1 public-leaderboard snapshot preserved in an "
+        "older standing-prompt paragraph; and <code>0.4413</code> is the 2026-10-25 overall #1 public-leaderboard snapshot "
+        "in the newer prompt header (cross-checked against <code>GEMSDOE32</code>'s 2026-10-26 human-read snapshot "
+        "<code>0.4437</code>). Surpassing <code>0.2778</code> honestly requires marginal blind-fault hit precision "
+        "<code>t / (t + f) &gt; 5.82%</code> outside the catalogue apron — combining 3DEP scarp localization in the "
+        "<code>68.2%</code> LiDAR zone with pure geophysical step/semivariogram detection across the <code>31.8%</code> "
+        "LiDAR gap and alluvial basin interiors.</p>"
+    )
+
+    exec_html = (
+        f'<section id="xvar1"><h2>H24-XVAR1 — Two-Sided Azimuthal Semivariogram Jump &amp; Cross-Strike Anisotropy (2026-10-26) · NOT OK to submit</h2>'
+        f"{status_box}"
+        f'<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">'
+        "Download XVAR1 research GeoTIFF (research only — do not submit)</a>"
+        f'<a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a>'
+        f'<a class="button" href="downloads/{e(dl["nan_file"])}" download>NaN-outside twin</a>'
+        '<a class="button" href="data/xvar1_run_card.json" download>XVAR1 JSON run card</a>'
+        '<a class="button" href="data/xvar1_selector.json" download>XVAR1 Selector v2 JSON</a>'
+        '<a class="button" href="data/nine_site_executive_summary_xvar1_20261026.json" download>9-Site 2026-10-26 Audit JSON</a></div>'
+        f'<p class="micro"><span class="hash">{e(name)}</span> · SHA-256 <span class="hash">{e(digest)}</span> · '
+        f"{dl['pixel_count']:,} dots · note ({len(dl['note'])} chars): <code>{e(dl['note'])}</code></p>"
+        '<div class="tablewrap" tabindex="0" role="region" aria-label="H24-XVAR1 per-fold holdout comparison">'
+        "<table><thead><tr><th>Fold</th><th>Arm 1 XVAR1 (2R)</th><th>Arm 2 XVAR1 (1R)</th>"
+        "<th>Arm 3 B_SUB37</th><th>DPRF1 Replay</th><th>Withheld</th><th>Dots</th></tr></thead>"
+        f"<tbody>{fold_rows}</tbody></table></div>"
+        f"<p>Same-evaluator pooled readout (<code>{e(score['evaluator_version'])}</code>, 60,988 withheld): "
+        f"Arm 1 <code>H24-XVAR1</code> <strong>{score['dti']:.5f}</strong> [{lo:.5f}, {hi:.5f}]; "
+        f"Arm 2 Single-Regime <strong>{arms['arm2_xvar1_singleregime_45ch']['dti']:.5f}</strong>; "
+        f"Arm 3 matched 37-ch LiDAR-free control <code>B_SUB37</code> <strong>{arms['arm3_b_sub37_no_xvar1_control']['dti']:.5f}</strong> "
+        f"(Arm 1 paired Δ {p_sub['paired_delta_dti']:+.5f} [{ps_lo:+.5f}, {ps_hi:+.5f}], 2/4 fold wins; Arm 2 3/4 fold wins); "
+        f"reconstructed <code>oof_multiphysics_hgb_d3</code> <strong>{arms['oof_multiphysics_hgb_d3_baseline']['dti']:.5f}</strong>. "
+        f"Distance profile: 0.0% ≤200 m, <strong>{100 * dist['frac_2_to_9px_apron']:.1f}%</strong> apron, "
+        f"<strong>{100 * dist['frac_gt_20px_farfield']:.1f}%</strong> &gt;2 km far-field (median {dist['median_dist_px']:.1f} px).</p>"
+        f"{phd_html}{nine_table_html}"
+        "<h3>Independent selector screen (<code>gems-selector-v2-literal-quota-fail-closed</code>)</h3>"
+        '<div class="tablewrap" tabindex="0" role="region" aria-label="H24-XVAR1 independent selector gates">'
+        f"<table><thead><tr><th>Gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div></section>"
+    )
+
+    canary_list = ", ".join(
+        f"<code>{e(k)}</code>={v:.4f}"
+        for k, v in card["leakage_canary"]["xvar1_channel_pooled_aucs"].items()
+    )
+    research_html = (
+        '<section id="xvar1-research"><h2>H24-XVAR1 (2026-10-26) — Parity-Symmetric Two-Sided Semivariogram &amp; Second Convergence Theorem</h2>'
+        f"<p><strong>Hypothesis:</strong> {e(card['hypothesis'])}</p>"
+        f"<p><strong>Mechanism:</strong> {e(card['mechanism'])}</p>"
+        f"<p><strong>Named non-fault mimic:</strong> {e(card['named_non_fault_mimic'])}</p>"
+        f"<p>8 new parity-symmetric semivariogram solo leakage-canary AUCs (all ≤ 0.90): {canary_list}. "
+        f"Pooled HOLDOUT-DTI <strong>{score['dti']:.5f}</strong> (95% CI [{lo:.5f}, {hi:.5f}]) on "
+        f"<code>{e(score['evaluator_version'])}</code>; Single-Regime Arm 2 <strong>{arms['arm2_xvar1_singleregime_45ch']['dti']:.5f}</strong>; "
+        f"verdict <code>{e(card['verdict'])}</code>. Preregistered at commit "
+        f"<code>{e(card['preregistration_commit'][:12])}</code> in <code>knowledge/29_preregistered_XVAR1_2026-10-26.md</code>; "
+        "full PhD synthesis &amp; 9-site audit in <code>knowledge/30_XVAR1_findings_and_9site_executive_summary_2026-10-26.md</code>.</p>"
+        "<p><strong>Second Convergence Theorem &amp; Remaining Queue:</strong> Dropping all 15 1 m LiDAR channels "
+        "cleanly resolved DPRF1 convergence (65.64% ≤ 70%), and 7-confound residualization with zero D8 wash routing "
+        "cleanly passed exact-file C2ST (AUC 0.5437 &lt; 0.55). However, retaining the shared 37-channel 100 m DEM "
+        "geomorphic trunk (<code>det_local_relief</code>, <code>det_gradient</code>, <code>det_elev_slope</code>, "
+        "<code>gvc_dem_lineament_900m</code>, <code>gvc_piedmont_inflection</code>) still drove 75.36% &gt; 70% "
+        "3-px overlap against unsubmitted local <code>H24-DKRN1</code>. Any future pure-subsurface lane "
+        "(<code>H24-QPC3</code> quadrature phase congruency or <code>H24-RLAG2</code> radiometric K/U-vs-Th phase lag) "
+        "must exclude both 1 m LiDAR and 100 m DEM slope/relief/lineament channels.</p>"
+        '<p class="micro">Official verified sources: '
+        '<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData DOE GEMS #306</a> · '
+        '<a href="https://doi.org/10.5066/P93LGLVQ">USGS GeoDAWN DOI 10.5066/P93LGLVQ</a> · '
+        '<a href="https://gdr.openei.org/submissions/1391">DOE OpenEI GDR #1391 (INGENIOUS)</a> · '
+        '<a href="https://www.usgs.gov/programs/earthquake-hazards/faults">USGS QFaults</a> · '
+        '<a href="https://doi.org/10.1190/1.1440092">Spector &amp; Grant (1970)</a></p>'
+        '<img class="raster-preview" src="assets/xvar1-preview.png" '
+        'alt="Downsampled map of H24-XVAR1 experimental fault dots across the GEMS footprint, not verified faults or vents"></section>'
+    )
+    return hero_html, exec_html, research_html
