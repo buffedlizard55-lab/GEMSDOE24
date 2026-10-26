@@ -869,9 +869,12 @@ def crp1_packet(root):
         else "At least one preregistered gate failed (see the selector receipt); the "
         "lane stopped with no retuning and no weekly slot was used."
     )
-    reasons = "".join(f"<li>{e(r)}</li>" for r in receipt.get("reasons", [])) or "<li>None — all gates passed.</li>"
+    reasons = (
+        "".join(f"<li>{e(r)}</li>" for r in receipt.get("reasons", []))
+        or "<li>None — all gates passed.</li>"
+    )
     gate_rows = "".join(
-        f'<tr><td>{e(k)}</td><td><strong>{"PASS" if v else "FAIL"}</strong></td></tr>'
+        f"<tr><td>{e(k)}</td><td><strong>{'PASS' if v else 'FAIL'}</strong></td></tr>"
         for k, v in receipt["gates"].items()
     )
     status_box = (
@@ -894,12 +897,12 @@ click; the independent selector receipt below states whether it may be submitted
 <a class="button" href="downloads/{e(name[:-4])}.selector.json">Selector receipt (JSON)</a></div>
 <p class="fileline">{e(name)}</p><p class="hash">SHA-256 {e(digest)}</p>
 <p class="micro"><span class="badge blue">Single-band float32 · EPSG:32611 · values in [0,1]</span>
-<span class="badge {'blue' if ok_submit else 'danger'}">{decision_label}</span> <span class="badge gray">0 slots used by this repository session</span></p></div>
+<span class="badge {"blue" if ok_submit else "danger"}">{decision_label}</span> <span class="badge gray">0 slots used by this repository session</span></p></div>
 <aside class="card visual"><div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Not a leaderboard score</span></div>
-<div class="result-number">{h['dti']:.5f}</div>
-<p>95% CI [{lo:.5f}, {hi:.5f}] · evaluator <code>{e(h['evaluator_version'])}</code> ·
-{h['n_withheld_positive_pixels']:,} withheld positives · paired Δ vs reconstructed OOF baseline
-{paired['delta_dti']:+.5f} (95% CI [{plo:+.5f}, {phi:+.5f}]) · recorded repo best {best:.5f} (GVC1).</p>
+<div class="result-number">{h["dti"]:.5f}</div>
+<p>95% CI [{lo:.5f}, {hi:.5f}] · evaluator <code>{e(h["evaluator_version"])}</code> ·
+{h["n_withheld_positive_pixels"]:,} withheld positives · paired Δ vs reconstructed OOF baseline
+{paired["delta_dti"]:+.5f} (95% CI [{plo:+.5f}, {phi:+.5f}]) · recorded repo best {best:.5f} (GVC1).</p>
 <img class="raster-preview" src="assets/crp1-preview.png" alt="Downsampled map of CRP1 experimental fault dots, not verified faults or geothermal vents">
 <p class="micro">Experiment preview · downsampled 100 m grid · not verified faults or vents</p></aside></div>"""
 
@@ -908,26 +911,26 @@ click; the independent selector receipt below states whether it may be submitted
 <h2>H24-CRP1 — is this exact file OK to download and submit?</h2>
 {status_box}
 <div class="actions"><a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download {e(name)} ({size:.2f} MiB)</a>
-<a class="button" href="downloads/{e(dl['nan_file'])}" download>NaN-outside twin</a>
+<a class="button" href="downloads/{e(dl["nan_file"])}" download>NaN-outside twin</a>
 <a class="button" href="data/crp1_run_card.json">Full JSON run card</a>
 <a class="button" href="downloads/checks-{e(name[:-4])}.json">Exact-file validator JSON</a></div>
 <p class="hash">SHA-256 {e(digest)}</p>
 <h3>Unique name and short comment (paste into the submission Note field if — and only if — the selector says OK)</h3>
-<div class="note" id="note-crp1">{e(dl['note'])}</div>
+<div class="note" id="note-crp1">{e(dl["note"])}</div>
 <div class="actions" style="margin-top:10px"><button class="button" data-copy="#note-crp1" data-feedback="#fb-crp1">Copy note</button>
-<a class="button" href="downloads/{e(dl['note_file'])}" download>Note .txt</a></div>
+<a class="button" href="downloads/{e(dl["note_file"])}" download>Note .txt</a></div>
 <p class="copyfeedback" id="fb-crp1" aria-live="polite"></p>
-<p class="micro">{len(dl['note'])} characters · maximum 140</p>
+<p class="micro">{len(dl["note"])} characters · maximum 140</p>
 <h3>Automatic gate report (independent selector, no human inspection)</h3>
 <div class="tablewrap"><table><thead><tr><th>Gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div>
 <ul>{reasons}</ul>
-<p>Measured evidence: leakage canary worst polarity extremity {canary['worst_polarity_extremity']:.4f} (limit 0.90);
-surface max |ρ| {nov['surface_max_abs_rank_correlation']:.4f} and final-dot max |ρ| {nov['final_max_abs_rank_correlation']:.4f} (limit 0.90);
-max competing-method 3-px dot overlap {nov['final_max_method_overlap_within_3px']:.4f} and peer overlap
-{nov['final_max_peer_overlap_within_3px']:.4f} (limit 0.70); literal all-entry novelty
-{'passed' if nov['literal_all_entries_passed'] else 'flagged only by calibration controls — see run card'};
-exact-file C2ST AUC {c2st['observed_auc']:.4f} (strict gate {'PASS' if c2st['strict_gate_passed'] else 'FAIL'});
-{dl['pixel_count']:,} binary dots. Every competition score quoted on this site remains
+<p>Measured evidence: leakage canary worst polarity extremity {canary["worst_polarity_extremity"]:.4f} (limit 0.90);
+surface max |ρ| {nov["surface_max_abs_rank_correlation"]:.4f} and final-dot max |ρ| {nov["final_max_abs_rank_correlation"]:.4f} (limit 0.90);
+max competing-method 3-px dot overlap {nov["final_max_method_overlap_within_3px"]:.4f} and peer overlap
+{nov["final_max_peer_overlap_within_3px"]:.4f} (limit 0.70); literal all-entry novelty
+{"passed" if nov["literal_all_entries_passed"] else "flagged only by calibration controls — see run card"};
+exact-file C2ST AUC {c2st["observed_auc"]:.4f} (strict gate {"PASS" if c2st["strict_gate_passed"] else "FAIL"});
+{dl["pixel_count"]:,} binary dots. Every competition score quoted on this site remains
 <strong>OWNER-REPORTED, UNVERIFIED</strong> unless an organizer receipt is published; CRP1 has
 <strong>no organizer score</strong>. Local validation cannot guarantee portal acceptance or a score
 above 0.2778.</p></section>"""
@@ -937,14 +940,14 @@ above 0.2778.</p></section>"""
         for f in h["folds"]
     )
     research_html = f"""<section><h2>H24-CRP1 (2026-10-26) — preregistered method and result</h2>
-<p><strong>Hypothesis:</strong> {e(card['hypothesis'])}</p>
-<p><strong>Mechanism:</strong> {e(card['mechanism'])}</p>
-<p><strong>Named non-fault mimic:</strong> {e(card['named_non_fault_mimic'])}</p>
+<p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p>
+<p><strong>Mechanism:</strong> {e(card["mechanism"])}</p>
+<p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p>
 <div class="tablewrap"><table><thead><tr><th>Fold</th><th>HOLDOUT-DTI</th><th>Withheld positives</th><th>Emitted dots</th></tr></thead>
 <tbody>{fold_rows}</tbody></table></div>
-<p>Pooled HOLDOUT-DTI <strong>{h['dti']:.5f}</strong> (95% CI [{lo:.5f}, {hi:.5f}]) on
-<code>{e(h['evaluator_version'])}</code>. Spec frozen before implementation in
+<p>Pooled HOLDOUT-DTI <strong>{h["dti"]:.5f}</strong> (95% CI [{lo:.5f}, {hi:.5f}]) on
+<code>{e(h["evaluator_version"])}</code>. Spec frozen before implementation in
 <code>knowledge/20_preregistered_CRP1_2026-10-26.md</code>; verdict
-<code>{e(card['verdict'])}</code> from the independent selector. Fault recovery is the benchmark
+<code>{e(card["verdict"])}</code> from the independent selector. Fault recovery is the benchmark
 target — this raster is not evidence of a geothermal vent, heat or permeability.</p></section>"""
     return hero_html, exec_html, research_html

@@ -1,6 +1,41 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Current review — 2026-10-26: DOWNLOAD YES / SUBMIT NO
+## Latest unique file — 2026-10-26 H24-CRP1: DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
+
+[**Download the unique H24-CRP1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif) ·
+[NaN-outside twin](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif) ·
+[Independent selector receipt](evidence/crp1_selector_20261026.json) ·
+[JSON run card](evidence/crp1_run_card_20261026.json) ·
+[Preregistration (committed before the run)](knowledge/20_preregistered_CRP1_2026-10-26.md) ·
+[Findings: why H33-B2 leads, why CRP1 stops, nine-site summary](knowledge/21_CRP1_findings_2026-10-26.md) ·
+[Executive submission guide](docs/executive-summary.html#crp1).
+
+**NOT OK TO SUBMIT.** One preregistered experiment, 0 slots used, computed from
+physical layers only — zero prior submission pixels. Validated end-to-end
+**without any human inspector**: shared format validator + strict whole-array
+[0,1] **PASS**, 40/40 two-polarity leakage canaries **PASS** (worst extremity
+0.5991), exact-file C2ST nuisance audit **PASS** (AUC 0.5273). It reaches
+**HOLDOUT-DTI 0.13747** (95% CI [0.12400, 0.15152], `gems-segment-pooled-v1`,
+60,988 withheld positives; paired Δ vs reconstructed OOF baseline 0.13000 =
++0.00747, 95% CI [−0.00242, +0.01793]). The new independent selector
+(`gems.selector`, this session) returns **DO_NOT_SUBMIT** because (a) that
+holdout result does not beat the recorded best (GVC1 0.14876) with a paired
+CI above zero, and (b) 80.7% of its dots fall within 3 px of a prior method
+raster (> 70% duplicate rule; max |ρ| = 0.5878 ≤ 0.90). Independent detectors
+keep converging on the same range-front corridors; the lane stopped with no
+retuning. **No claim to beat 0.2778 / 0.3195 / 0.4413 — all OWNER-REPORTED,
+UNVERIFIED; zero organizer receipts exist.** Best submission to submit today,
+across all nine priority sites: **NONE** (see findings table).
+
+- Name: `gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif`
+- SHA-256: `f02859b3e881b942919deb267cad23673d6a6a1bc0148b2116ff1b706cba8978`
+- Short comment (92 chars): `GEMS24 CRP1 | comp-front+xdepth+saddle | NEGATIVE gate stop; DO NOT SUBMIT | id c679a967f700`
+- Reproduce/verify: `.venv/bin/python scripts/restore_data.py && .venv/bin/python scripts/cache_priority_registry.py && .venv/bin/python scripts/prepare_data.py && .venv/bin/python scripts/run_crp1_lane.py --verify-recorded`
+- Parallel PR #28 (same prompt, review-only, merged mid-session) is preserved
+  below and in `knowledge/20_repo_review_2026-10-26.md`; its conclusion
+  (no submit-authorized TIFF) still holds after CRP1.
+
+## Prior review — 2026-10-26 (PRs #27/#28): DOWNLOAD YES / SUBMIT NO
 
 **No new submit-ready TIFF was generated in this review.** No assigned method
 paragraph was supplied; stopped lanes were not rerun and no slot was used.
@@ -94,6 +129,58 @@ The existing candidate remains **DOWNLOAD: YES · SUBMIT: NO**.
 See the [corrected GEMSDOE32 analysis](knowledge/14_h33_analysis_2026-10-25.md):
 prediction ancestry does not prove the hidden-score gain came entirely from FP
 reduction. No new candidate or competition slot was used in this review.
+
+## Owner brief (2026-10-26 session) — standing instructions, read every session
+
+This session's owner prompt (condensed faithfully; machine-readable score
+list in [`registry/owner_reported_scores_2026-10-26.json`](registry/owner_reported_scores_2026-10-26.json);
+full site-by-site list was supplied in-session):
+
+- Focus on the highest-scoring submissions from GEMSDOE24, 25, 27, 28, 30,
+  31, 32, 33, 36; give a per-site executive summary making obvious which
+  file is best to submit. It must be **unique, not an exact duplicate** of
+  any previous submission. **MUST GENERATE A UNIQUE TIF SUBMISSION** — do
+  not copy a previous submission except for learning/education. It must be
+  obvious whether the generated TIF is OK to download and OK to submit, the
+  download must be easy and first-screen, and any "inspection" must be done
+  through the project **without human intervention**.
+- Study why GEMSDOE32 `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`
+  (0.2778) scored highest and whether >0.2778 is achievable; leaderboard
+  claims in the brief: 0.4413 and 0.3195 (conflicting; both unverified).
+  Answer at PhD level, then generate the unique TIF; verify line by line,
+  no hallucinations, official verified sources with links.
+- Follow the Parallel-Run Protocol: stay in one lane (rank-corr ≤0.90 and
+  ≤70% dots within 3 px vs any registry raster, checked on surface and
+  final dots); reuse cached features + shared holdout evaluator + shared
+  submission writer; label every number HOLDOUT-DTI (evaluator, withheld
+  positives, 95% CI) or ORGANIZER-CONFIRMED (receipt only); leakage canary
+  AUC >0.90 = leakage; end with one JSON run card; max 3 experiments / 2 h;
+  promotion is a separate selector step within the weekly cap.
+- Before implementing: 3–5 untried geological hypotheses (layers, physical
+  signature, why a *missing* fault, difference from this repo), ranked by
+  expected DTI improvement vs cost; validate the top candidate on the
+  spatially blocked holdout before any weekly slot; name the free official
+  source for any external data and verify obtainability first.
+- Fix the portal error *"Predicted values must be in range [0, 1]"*; every
+  artifact needs a unique name + short comment; an executive-summary
+  subpage must explain exactly how to submit (single-band .tif or .zip
+  with one GeoTIFF, matching CRS/shape/geotransform, Note field).
+- Core values: **Maximize P(Win)**; **Own the Outcome**. Work previous
+  sessions' next steps first; three review passes; finish with a merged
+  pull request plus suggestions/limitations for the next session.
+- Competition: https://www.drivendata.org/competitions/306/competition-doe-gems/
+  (problem p.967, about p.968, data tab — login-required, never automated);
+  reference solution https://github.com/drivendataorg/gems-prize-reference-solution ;
+  rules https://docs.nlr.gov/docs/fy26osti/96647.pdf ;
+  GeoDAWN https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and (DOI 10.5066/P93LGLVQ);
+  INGENIOUS https://gdr.openei.org/submissions/1391 ;
+  EPSG:32611 https://epsg.io/32611 ; Tversky https://en.wikipedia.org/wiki/Tversky_index .
+
+Disposition this session: preregistered and ran **one** experiment
+(H24-CRP1, top-ranked hypothesis), generated the unique GeoTIFF at the top
+of this README/site, validated it fully automatically (new independent
+selector, no human inspector), verdict **negative** — so no slot may be
+spent on it. See `knowledge/21_CRP1_findings_2026-10-26.md`.
 
 ## Prompt (owner brief, 2026-10-25) — read at every session
 

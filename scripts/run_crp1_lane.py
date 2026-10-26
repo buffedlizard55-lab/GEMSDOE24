@@ -36,7 +36,17 @@ from scipy.ndimage import binary_erosion, distance_transform_edt  # noqa: E402
 from sklearn.ensemble import HistGradientBoostingClassifier  # noqa: E402
 from threadpoolctl import threadpool_limits  # noqa: E402
 
-from gems import confounds, crp1, footprint, holdout, novelty, rshg1, sahg1, selector, submission  # noqa: E402
+from gems import (  # noqa: E402
+    confounds,
+    crp1,
+    footprint,
+    holdout,
+    novelty,
+    rshg1,
+    sahg1,
+    selector,
+    submission,
+)
 from gems.validator import sha256_file  # noqa: E402
 
 # Reuse the recorded RSHG1 runner's baseline/C2ST/peer helpers verbatim
@@ -72,7 +82,10 @@ LOCAL_EXTRA_DOWNLOADS = (
         "docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif",
     ),
     ("local-oj1", "docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif"),
-    ("local-doer", "docs/downloads/24gems-doer-fault-guided-k-20261025T220208Z-dedb860f7e83-zeros.tif"),
+    (
+        "local-doer",
+        "docs/downloads/24gems-doer-fault-guided-k-20261025T220208Z-dedb860f7e83-zeros.tif",
+    ),
 )
 
 
@@ -147,9 +160,7 @@ def fit_models(mm, nuisance_fp, fp_ids, train_mask, visible_mask, *, seed_base, 
     """Selective-residualized 2-seed HGB ensemble, fit on training rows only."""
     dist_vis = distance_transform_edt(~visible_mask)
     pos_rows = np.flatnonzero((train_mask & visible_mask).ravel()[fp_ids])
-    neg_rows = np.flatnonzero(
-        (train_mask & ~visible_mask & (dist_vis >= 9.0)).ravel()[fp_ids]
-    )
+    neg_rows = np.flatnonzero((train_mask & ~visible_mask & (dist_vis >= 9.0)).ravel()[fp_ids])
     bg_rows = np.flatnonzero((train_mask & ~visible_mask).ravel()[fp_ids])
     del dist_vis
     if len(pos_rows) < 200 or len(neg_rows) < 600:
@@ -169,9 +180,7 @@ def fit_models(mm, nuisance_fp, fp_ids, train_mask, visible_mask, *, seed_base, 
         n_sel = rng.choice(neg_rows, min(90_000, len(neg_rows)), replace=False)
         tr = np.r_[p_sel, n_sel]
         y = np.r_[np.ones(len(p_sel), np.int8), np.zeros(len(n_sel), np.int8)]
-        x = resid.transform(
-            nuisance_fp[tr], np.asarray(mm[tr], dtype=np.float32), remove=True
-        )
+        x = resid.transform(nuisance_fp[tr], np.asarray(mm[tr], dtype=np.float32), remove=True)
         model = HistGradientBoostingClassifier(**HGB_PARAMS, random_state=seed_s)
         model.fit(x, y)
         models.append(model)
@@ -187,9 +196,11 @@ def sahg1_support(fp, fp_ids, prep_path, prep_names, lidar_meta, rad_meta, ext_m
     lidar_path = ROOT / "data/external/lidar_scarp_features_u8.tif"
     rad_path = ROOT / "data/external/geodawn_rad_u8.tif"
     ext_path = ROOT / "data/external/geodawn_extensions_u8.tif"
-    with rasterio.open(lidar_path) as dlid, rasterio.open(rad_path) as drad, rasterio.open(
-        ext_path
-    ) as dext:
+    with (
+        rasterio.open(lidar_path) as dlid,
+        rasterio.open(rad_path) as drad,
+        rasterio.open(ext_path) as dext,
+    ):
         rv = fp.copy()
         for bname in sahg1.LIDAR_SPECS:
             rv &= dlid.read(lidar_meta["bands"].index(bname) + 1) > 0
@@ -241,9 +252,7 @@ def novelty_card_section(surface_rep, final_rep, peers_surface, peers_final):
             "method_lane_passed": final_rep["method_lane_passed"],
             "literal_all_entries_passed": final_rep["literal_all_entries_passed"],
             "competing_method_rasters_count": final_rep["competing_method_rasters_count"],
-            "calibration_control_rasters_count": final_rep[
-                "calibration_control_rasters_count"
-            ],
+            "calibration_control_rasters_count": final_rep["calibration_control_rasters_count"],
             "literal_duplicate_rows": literal_rows,
         },
         "peers_surface": peers_surface,
@@ -274,8 +283,7 @@ def main() -> None:
 
     if EXPERIMENT_JSON.exists():
         raise SystemExit(
-            f"{EXPERIMENT_JSON} already exists; refusing implicit rerun. "
-            "Use --verify-recorded."
+            f"{EXPERIMENT_JSON} already exists; refusing implicit rerun. Use --verify-recorded."
         )
 
     t0 = time.monotonic()
@@ -346,7 +354,11 @@ def main() -> None:
         )
         if not canary["passed"]:
             save_json(
-                {"verdict": "negative", "stopped_reason": "leakage_canary_failed", "canary": canary},
+                {
+                    "verdict": "negative",
+                    "stopped_reason": "leakage_canary_failed",
+                    "canary": canary,
+                },
                 EXPERIMENT_JSON,
             )
             raise SystemExit("HALT: leakage canary exceeded 0.90")
@@ -354,7 +366,10 @@ def main() -> None:
         with np.load(conf_path) as c_npz:
             cdict = confounds.classifier_features(c_npz)
             nuisance_fp = np.column_stack(
-                [cdict[k].ravel()[fp_ids].astype(np.float32, copy=False) for k in rshg1.NUISANCE_KEYS]
+                [
+                    cdict[k].ravel()[fp_ids].astype(np.float32, copy=False)
+                    for k in rshg1.NUISANCE_KEYS
+                ]
             )
         del cdict
         gc.collect()
@@ -395,7 +410,12 @@ def main() -> None:
         oof_canary = context.canary({"crp1_oof_prob": oof_prob}, seed=SEED, max_per_class=15000)
         if not oof_canary["passed"]:
             save_json(
-                {"verdict": "negative", "stopped_reason": "oof_canary_failed", "canary": canary, "oof_canary": oof_canary},
+                {
+                    "verdict": "negative",
+                    "stopped_reason": "oof_canary_failed",
+                    "canary": canary,
+                    "oof_canary": oof_canary,
+                },
                 EXPERIMENT_JSON,
             )
             raise SystemExit("HALT: OOF surface canary flagged leakage")
@@ -446,7 +466,9 @@ def main() -> None:
             mm, nuisance_fp, fp_ids, fp, catalogue, seed_base=SEED + 900, resid_idx=resid_idx
         )
         all_rows = np.arange(len(fp_ids), dtype=np.int64)
-        p_rows = _rshg1_runner.predict_in_chunks(models_full, resid_full, None, mm, nuisance_fp, all_rows)
+        p_rows = _rshg1_runner.predict_in_chunks(
+            models_full, resid_full, None, mm, nuisance_fp, all_rows
+        )
         p_full = np.zeros(fp.shape, dtype=np.float32)
         p_full.ravel()[fp_ids] = p_rows
         del models_full, resid_full, p_rows, all_rows, nuisance_fp
@@ -456,7 +478,12 @@ def main() -> None:
         priority_reg = json.loads((ROOT / "registry/priority_rasters.json").read_text())
         extras = extra_entries(fp)
         surface_rep = novelty.compare_prospective_registry(
-            trace, fp, priority_reg["unique_rasters"], ROOT, sample_size=200_000, extra_entries=extras
+            trace,
+            fp,
+            priority_reg["unique_rasters"],
+            ROOT,
+            sample_size=200_000,
+            extra_entries=extras,
         )
         peers_surface = _rshg1_runner.check_peer_blobs(trace, None, fp)
         if (surface_rep["max_abs_rank_correlation"] or 0) > 0.90 or not peers_surface["passed"]:

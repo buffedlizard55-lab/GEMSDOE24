@@ -18,7 +18,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from site_packets import concurrent_aspc, concurrent_oj1, crp1_packet, gvc1_packet, rshg1_packet  # noqa: E402
+from site_packets import (  # noqa: E402
+    concurrent_aspc,
+    concurrent_oj1,
+    crp1_packet,
+    gvc1_packet,
+    rshg1_packet,
+)
 
 from gems import emission  # noqa: E402
 from gems.validator import sha256_file  # noqa: E402
