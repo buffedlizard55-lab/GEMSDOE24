@@ -1,0 +1,257 @@
+{
+  "schema_version": "review-continuation-v1",
+  "generated_utc": "2026-10-26T06:45:43.510648+00:00",
+  "scope": "Review and verification of an existing research artifact; no new experiment or TIFF",
+  "hypothesis": "A future independently assigned geological operator must beat the current comparable best and pass literal uniqueness before selection.",
+  "mechanism": "This review hardens shared evidence gates and verifies the existing DPRF1 artifact; it does not test a new geological mechanism.",
+  "named_non_fault_process": "Fluvial terrace banks can mimic the proposed opposite-facing scarp-pair signature; hypothesis untested.",
+  "experiments_run": 0,
+  "submission_slots_used": 0,
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 9428.538345121908,
+    "FP_w": 34439.193322528816,
+    "FN_w": 51559.4616548781,
+    "n_truth": 60988.0,
+    "n_emitted": 38104.0,
+    "dti": 0.1637924246971501,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.15044621733051888,
+        0.1773903019943756
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 1545.244785307485,
+        "FP_w": 7884.063091348148,
+        "FN_w": 8619.755214692515,
+        "n_truth": 10165,
+        "n_emitted": 8515,
+        "dti": 0.15424896557736514,
+        "coverage": 0.1520162110484491
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 2637.6005066979133,
+        "FP_w": 9445.89190864803,
+        "FN_w": 9873.399493302088,
+        "n_truth": 12511,
+        "n_emitted": 10528,
+        "dti": 0.21227321465377372,
+        "coverage": 0.21082251672111849
+      },
+      {
+        "fold": "SW",
+        "TP_w": 2404.41936266421,
+        "FP_w": 9615.412882613271,
+        "FN_w": 18129.580637335792,
+        "n_truth": 20534,
+        "n_emitted": 10535,
+        "dti": 0.12768297540973828,
+        "coverage": 0.1170945438133929
+      },
+      {
+        "fold": "SE",
+        "TP_w": 2841.2736904522985,
+        "FP_w": 7493.825439919369,
+        "FN_w": 14936.726309547701,
+        "n_truth": 17778,
+        "n_emitted": 8526,
+        "dti": 0.17442448661596,
+        "coverage": 0.15981964734235002
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "holdout_provenance": "Recorded DPRF1 result, not re-trained or independently replayed this session.",
+  "correlation_overlap_vs_registry": {
+    "surface": {
+      "max_abs_rank_correlation": 0.40996331425920324
+    },
+    "final_dots": {
+      "max_abs_rank_correlation": 0.3467641405225967,
+      "method_lane_max_dot_overlap": 0.557815902692941,
+      "method_lane_passed": true,
+      "literal_duplicate_rows": [
+        {
+          "registry_id": "registry-039",
+          "file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+          "footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817",
+          "raw_spearman": 0.00024029379692399688,
+          "kernel_spearman": 0.0013726539418121464,
+          "candidate_dot_overlap_within_3px": 0.9956445530355341,
+          "duplicate": true,
+          "entry_role": "synthetic_spacing5_calibration_lattice"
+        }
+      ]
+    },
+    "peers_final": {
+      "max_dot_overlap_within_3px": 0.5494237000053115,
+      "passed": true
+    }
+  },
+  "novelty_provenance": "Recorded registry comparisons; not recomputed against changed peer sources.",
+  "raster_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+  "submission_name": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+  "note": "DPRF1 prior research artifact revalidated; no new experiment; literal novelty fails. DO NOT SUBMIT.",
+  "validator_output": {
+    "file": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+    "bytes": 825872,
+    "sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37654,
+    "in_footprint_mass": 37654.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "selector_output": {
+    "selector_version": "gems-selector-v2-literal-quota-fail-closed",
+    "decided_utc": "2026-10-26T06:45:43.881096+00:00",
+    "artifact": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+    "artifact_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+    "human_inspection_used": false,
+    "gates": {
+      "artifact_hash_matches_run_card": true,
+      "artifact_name_matches_run_card": true,
+      "g1_format_strict_0_1": true,
+      "g2_leakage_canary": true,
+      "g3_holdout_beats_recorded_best_and_paired_baseline": false,
+      "g4_registry_novelty": false,
+      "g5_exact_file_c2st": true,
+      "note_at_most_140_chars": true,
+      "budget_and_no_slot_spent": true,
+      "current_account_quota_independently_verified": false,
+      "complete_independent_replay_certificate": false
+    },
+    "all_gates_passed": false,
+    "ok_to_submit": false,
+    "decision": "DO_NOT_SUBMIT",
+    "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
+    "recorded_scientific_screen_passed": false,
+    "current_point_best_source": "evidence/dprf1_run_card_20261026.json",
+    "reasons": [
+      "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.1637924246971501 vs recorded best 0.1637924246971501, paired CI lower=0.020856953903675257",
+      "g4_registry_novelty: surface|rho|=0.40996331425920324, final|rho|=0.3467641405225967, method overlap=0.557815902692941, peer overlap=0.5494237000053115",
+      "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
+      "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
+    ],
+    "scope": "Recorded-evidence screening and exact-file validation only; positive authorization is not implemented. Not an organizer score, quota record or acceptance guarantee. The agent never uploads."
+  },
+  "verification": {
+    "pytest": "348 passed",
+    "ruff_check": "passed",
+    "ruff_format": "144 files already formatted",
+    "compileall": "passed",
+    "git_diff_check": "passed",
+    "dprf1_verify_recorded": "passed; negative preserved"
+  },
+  "blockers": [
+    "No assigned single-method paragraph",
+    "Literal all-entry novelty fails",
+    "Complete independent replay verifier absent",
+    "Current account quota unknown",
+    "Nine peer source refs changed since registry pins"
+  ],
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false
+}

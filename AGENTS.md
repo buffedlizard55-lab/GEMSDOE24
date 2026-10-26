@@ -1,5 +1,16 @@
 # Standing project instructions
 
+## Latest continuation safety review — 2026-10-26
+
+Read `docs/review-20261026.md` and `evidence/review_continuation_20261026.json` first.
+No new lane or TIFF was run. Literal DPRF1 overlap fails; no cross-site superiority
+or hidden-score causal benefit is established. Shared selector now rejects malformed
+numeric evidence without making individual screening gates falsely green. All nine
+source refs changed since registry pins; source freshness is not an artifact audit.
+The exact-file zero variant passes strict range/grid checks, but inherited official
+NaN-outside convention differs. Sample/science footprint discrepancy is recorded,
+not repaired by changing frozen evidence. No human-inspection override.
+
 ## Latest 2026-10-26 point-best continuation: H24-DPRF1 & Nine-Site Executive Summary
 
 Read `knowledge/owner_brief_2026-10-26.md`, `knowledge/owner_brief_2026-10-25.md`, and the current README decision first.

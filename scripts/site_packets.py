@@ -129,12 +129,12 @@ def dprf1_packet(root):
         "No human-inspector fallback: strict whole-array [0,1] PASS, 52/52 two-polarity leakage canaries PASS, "
         "highest GEMSDOE24 HOLDOUT-DTI on both evaluators "
         f"(<strong>{score['dti']:.5f}</strong> [{lo:.5f}, {hi:.5f}] on <code>{e(score['evaluator_version'])}</code>, "
-        f"winning 4/4 quadrants over every baseline and beating CUP1 0.15038, GVC1 0.14876, CRP1 0.13747 &amp; TNR1 0.12352; "
+        f"winning 4/4 quadrants over every baseline and beating CUP1 0.15038, GVC1 0.14876, CRP1 0.13747 &amp; TNR1 0.13219; "
         f"<strong>{br['dti']:.5f}</strong> [{blo:.5f}, {bhi:.5f}] on 3.0 km bridge), "
         f"57/57 competing-method novelty PASS (max 3-px overlap <strong>{100 * nov['method_lane_max_dot_overlap']:.2f}% &le; 70%</strong>), "
         f"83/83 peer-blob novelty PASS (<strong>{100 * nov['peer_blobs_max_dot_overlap']:.2f}% &le; 70%</strong>), "
         f"exact-file C2ST nuisance audit PASS (AUC <strong>{c2_cand['observed_auc']:.4f}</strong> &lt; 0.55, Holm <em>p</em> = {c2_cand['holm_p_value']:.3f}), "
-        f"and Dual-Partition Stitched-OOF far-field coverage PASS (<strong>{100 * dist['frac_gt_20px_farfield']:.1f}%</strong> &gt; 2 km, curing GVC1's 70.4% apron collapse). "
+        f"and Dual-Partition Stitched-OOF far-field coverage PASS (<strong>{100 * dist['frac_gt_20px_farfield']:.1f}%</strong> &gt; 2 km, versus GVC1's 70.4%; hidden-score benefit unverified). "
         "NOT OK TO SUBMIT automatically under <code>gems-selector-v2-literal-quota-fail-closed</code>: retained spacing-5 calibration lattice (<code>registry-039</code>, 99.87% 3-px coverage), unknown live DrivenData quota, and replay certificate remain fail-closed.</div>"
     )
 
@@ -152,7 +152,7 @@ def dprf1_packet(root):
         (
             "3. Primary HOLDOUT-DTI win (gems-segment-pooled-v1)",
             "PASS",
-            f"HOLDOUT-DTI {score['dti']:.5f} [{lo:.5f}, {hi:.5f}] (60,988 withheld pos) beats oof_multiphysics_hgb_d3 (0.13000) by {paired_d3['paired_delta_dti']:+.5f} [{d3_lo:+.5f}, {d3_hi:+.5f}] (4/4 folds), B1 OOF-Base-Submod (0.13900) by {paired_b1['paired_delta_dti']:+.5f} [{b1_lo:+.5f}, {b1_hi:+.5f}] (4/4 folds), CUP1 (0.15038), GVC1 (0.14876), B0 (0.14179), CRP1 (0.13747), and TNR1 (0.12352).",
+            f"HOLDOUT-DTI {score['dti']:.5f} [{lo:.5f}, {hi:.5f}] (60,988 withheld pos) beats oof_multiphysics_hgb_d3 (0.13000) by {paired_d3['paired_delta_dti']:+.5f} [{d3_lo:+.5f}, {d3_hi:+.5f}] (4/4 folds), B1 OOF-Base-Submod (0.13900) by {paired_b1['paired_delta_dti']:+.5f} [{b1_lo:+.5f}, {b1_hi:+.5f}] (4/4 folds), CUP1 (0.15038), GVC1 (0.14876), B0 (0.14179), CRP1 (0.13747), and TNR1 (0.13219).",
         ),
         (
             "4. 3.0 km Bridge HOLDOUT-DTI win",
@@ -307,7 +307,7 @@ def dprf1_packet(root):
 <p class="micro">Stratified <code>d_vis &ge; 300 m</code> negatives beat the legacy <code>d_vis &ge; 900 m</code> dead zone by <strong>{paired_dz["paired_delta_dti"]:+.5f}</strong> (95% CI [{dz_lo:+.5f}, {dz_hi:+.5f}], 4/4 folds won), while 3-tier relief-conditioned LiDAR-gap calibration lifts <code>SW</code> from <code>0.07993</code> (<code>RSHG1</code>) to <strong><code>0.12768</code></strong> and <code>NE_LidarGapHeavy</code> to <strong><code>0.21227</code></strong>.</p></article>
 <article class="card"><h3>Why GVC1 Scored 0.0859 Live vs GEMSDOE27 H29-CELF 0.2190 — and How DPRF1 Fixes It</h3>
 <img class="raster-preview" src="assets/dprf1-preview.png" alt="Downsampled preview of H24-DPRF1 fault dots (37,654 positive cells)">
-<p class="micro">Pixel-level distance forensics proved that refitting in-sample on 100% of <code>labels.tif</code> at Stage 5 caused <code>GVC1</code> (<code>0.0859</code> owner-reported) and <code>GEMSDOE25 H66-MGD</code> (<code>0.0742</code>) to dump <strong>70.4%</strong> and <strong>69.6%</strong> of their dots into 200–900 m halos around already-mapped faults (leaving only 8.5% and 3.0% &gt;2 km). Replacing Stage-5 in-sample refits with Dual-Partition Stitched-OOF + Apron Quantile Debiasing + Two-Regime Submodular Allocation cuts 200–900 m apron dots to <strong>{100 * dist["frac_2_to_9px_apron"]:.1f}%</strong>, restores <strong>{100 * dist["frac_gt_20px_farfield"]:.1f}%</strong> &gt;2 km far-field discovery, and passes all 57 competing method rasters (max 3-px overlap <strong>{100 * nov["method_lane_max_dot_overlap"]:.2f}%</strong> &le; 70%). <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/19_preregistered_DPRF1_2026-10-26.md">DPRF1 preregistration →</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md">DPRF1 PhD synthesis &amp; 9-site review →</a></p></article></div></section>"""
+<p class="micro">Recorded distance forensics found near-catalogue clustering in <code>GVC1</code> (<code>0.0859</code> owner-reported) and <code>GEMSDOE25 H66-MGD</code> (<code>0.0742</code>) with <strong>70.4%</strong> and <strong>69.6%</strong> of their dots into 200–900 m halos around already-mapped faults (leaving only 8.5% and 3.0% &gt;2 km). DPRF1 combines multiple changes and records 200–900 m apron dots to <strong>{100 * dist["frac_2_to_9px_apron"]:.1f}%</strong>, restores <strong>{100 * dist["frac_gt_20px_farfield"]:.1f}%</strong> &gt;2 km far-field dot allocation, and passes all 57 competing method rasters (max 3-px overlap <strong>{100 * nov["method_lane_max_dot_overlap"]:.2f}%</strong> &le; 70%). <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/19_preregistered_DPRF1_2026-10-26.md">DPRF1 preregistration →</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md">DPRF1 PhD synthesis &amp; 9-site review →</a></p></article></div></section>"""
     return hero_html, exec_html, research_html
 
 
