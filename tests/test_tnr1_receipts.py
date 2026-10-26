@@ -168,12 +168,17 @@ def test_exact_arrays_and_two_explicit_outside_conventions():
 
 def test_current_download_leads_and_tnr1_packet_stays_preserved():
     active = json.loads((ROOT / "docs/data/active_lane.json").read_text())
-    assert active["lane"] == "H24-TNR1"
-    assert active["artifact"]["sha256"] == CARD["raster_sha256"]
-    assert active["artifact"]["file"] == CARD["submission_name"]
+    reviewed = json.loads((ROOT / "docs/data/current_best_review.json").read_text())
+    assert active["lane"] == "H24-S3DEP1"
+    assert active["semantics"] == "current recorded point-best review; no new lane assignment"
+    assert active["artifact"]["sha256"] == reviewed["raster_sha256"]
+    assert active["artifact"]["file"] == reviewed["submission_name"]
+    assert (
+        active["lane_assignment"]
+        == "No single-method paragraph supplied; no new experiment authorized"
+    )
     assert active["ok_to_submit"] is active["submission_authorized"] is False
     old = json.loads((ROOT / "docs/data/rshg1_download.json").read_text())
-    reviewed = json.loads((ROOT / "docs/data/current_best_review.json").read_text())
     for relative in (
         "index.html",
         "docs/index.html",

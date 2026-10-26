@@ -355,8 +355,12 @@ def test_late_concurrent_files_are_separate_preserved_negative_downloads():
         row["generated_by_this_session"] is False and row["ok_to_submit"] is False
         for row in packet["files"]
     )
+    quarantined = json.loads((ROOT / "docs/data/unique_download.json").read_text())["file"]
     for relative in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         html = (ROOT / relative).read_text()
         assert 'id="late-concurrent-files"' in html
+        assert "9 non-quarantined late-merged" in html
         for row in packet["files"]:
-            assert 'download="' + Path(row["file"]).name + '"' in html
+            name = Path(row["file"]).name
+            linked = 'download="' + name + '"' in html
+            assert linked is (name != quarantined)

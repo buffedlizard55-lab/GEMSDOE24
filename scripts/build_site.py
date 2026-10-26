@@ -407,7 +407,7 @@ def build_independent_site(primary):
     ch = current["holdout"]
     clo, chi = ch["ci95"]["interval"]
     current_banner = (
-        '<section class="card" id="current-best-review"><h1 class="portfolio-title">DOWNLOAD: YES / SUBMIT: NO</h1><p><strong>NOT OK TO SUBMIT.</strong> Latest 2026-10-26 H24-S3DEP1 research GeoTIFF (new all-time recorded HOLDOUT-DTI point-best 0.16606, zero 1 m LiDAR; audit only).</p>'
+        '<section class="card" id="current-best-review"><h1 class="portfolio-title">DOWNLOAD: YES / SUBMIT: NO</h1><p><strong>NOT OK TO SUBMIT.</strong> H24-S3DEP1 is the current recorded local HOLDOUT-DTI point-best (0.16606, zero 1 m LiDAR; research audit only).</p>'
         f'<p><a class="button primary" href="downloads/{e(current["submission_name"])}" '
         f'download="{e(current["submission_name"])}">Download current point-best research TIFF — DO NOT SUBMIT</a></p>'
         f"<p>Recorded local point-best: <strong>{e(current['current_recorded_point_best']['lane'])}</strong>. "
@@ -415,7 +415,8 @@ def build_independent_site(primary):
         f"{e(ch['evaluator_version'])}, {ch['n_withheld_positive_pixels']:,} withheld positives. "
         "Exact TIFF bytes revalidated during this site build; scientific measurements were not replayed. "
         "Not a verified cross-site winner or a leaderboard prediction. "
-        "Literal novelty, C2ST, quota and independent replay gates still block submission.</p>"
+        "Literal novelty, C2ST, quota and independent replay gates still block submission. "
+        "This review ran zero new geological experiments and used zero slots because no single assigned-method paragraph was supplied; it did not invent a lane.</p>"
         '<p><a href="data/current_best_review.json" download>Fresh exact-file review JSON</a> · '
         '<a href="#s3dep1-overview">Latest H24-S3DEP1 packet</a> · '
         '<a href="#portfolio-audit">Fresh nine-site artifact comparison</a></p></section>'
@@ -520,10 +521,13 @@ def build_independent_site(primary):
         + "</details>"
     )
     source_page = (
-        "<section><h2>Current nine-site artifact audit</h2><p>The first-screen summary now reopens the actual TIFFs at immutable refs, not only README text. "
+        "<section><h2>Immutable nine-site artifact audit and current source freshness</h2><p>The first-screen summary uses actual TIFF bytes from immutable audit refs, not only README text. "
+        "All nine GitHub sources have advanced since those refs; the current check is source provenance only and does not silently re-audit raster bytes. "
         'All original source restrictions and scientific caveats remain.</p><div class="actions">'
-        '<a class="button" href="data/portfolio_artifact_audit_20261026.json">Complete file/novelty audit</a>'
-        '<a class="button" href="data/portfolio_source_claims_20261026.json">Fresh official GitHub quotes and blocked sources</a>'
+        '<a class="button" href="data/portfolio_artifact_audit_20261026.json">Complete frozen file/novelty audit</a>'
+        '<a class="button" href="data/focus_source_refresh_20261026.json">Current focus-site GitHub source refs</a>'
+        '<a class="button" href="data/review_e452969c_20261026.json">Three-pass review receipt</a>'
+        '<a class="button" href="data/portfolio_source_claims_20261026.json">Official reference quotes and blocked sources</a>'
         '<a class="button" href="data/portfolio_freshness.json">Current audit-pin freshness</a></div></section>'
     ) + source_page
     pages = {
@@ -574,6 +578,8 @@ def build_independent_site(primary):
         "s3dep1_experiment_20261026.json",
         "s3dep1_selector_20261026.json",
         "nine_site_executive_summary_s3dep1_20261026.json",
+        "focus_source_refresh_20261026.json",
+        "review_e452969c_20261026.json",
         "trsg1_run_card_20261026.json",
         "trsg1_experiment_20261026.json",
         "dprf1_run_card_20261026.json",
@@ -696,10 +702,33 @@ def build_independent_site(primary):
             (DOCS / "data/trsg1_selector.json").write_text(
                 (ROOT / "evidence/trsg1_selector_20261026.json").read_text()
             )
-    if tnr1:
-        (DOCS / "data/active_lane.json").write_text(
-            json.dumps(tnr1["active"], indent=2, allow_nan=False) + "\n"
-        )
+    # ``active_lane`` is a compatibility filename. Its content is now the
+    # independently resolved current recorded point-best, not a stale historical
+    # experiment and not authorization to invent a new lane.
+    active_payload = {
+        "schema_version": "active-lane-view-v2",
+        "semantics": "current recorded point-best review; no new lane assignment",
+        "generated_utc": current["selector"]["decided_utc"],
+        "lane": "H24-" + current["current_recorded_point_best"]["lane"],
+        "source_run_card": current["current_recorded_point_best"]["source"],
+        "review": "docs/data/current_best_review.json",
+        "holdout": current["holdout"],
+        "correlation_overlap_vs_registry": current["correlation_overlap_vs_registry"],
+        "artifact": {
+            "file": current["submission_name"],
+            "sha256": current["raster_sha256"],
+            "note": current["note"],
+            "ok_to_download": current["ok_to_download"],
+        },
+        "selector": current["selector"],
+        "lane_assignment": current["lane_assignment"],
+        "verdict": current["verdict"],
+        "ok_to_submit": current["ok_to_submit"],
+        "submission_authorized": False,
+    }
+    (DOCS / "data/active_lane.json").write_text(
+        json.dumps(active_payload, indent=2, allow_nan=False) + "\n"
+    )
     (DOCS / "data/priority_rasters.json").write_text(
         (ROOT / "registry/priority_rasters.json").read_text()
     )
@@ -831,13 +860,13 @@ Achieves **HOLDOUT-DTI** `{th["evaluator_version"]}` = **{th["dti"]:.5f}** (95% 
         s3dist = s3dep1_card_site["off_catalogue_distance_profile"]
         s3arms = s3dep1_card_site["arms_same_evaluator"]
         s3dep1_md = f"""
-Latest 2026-10-26 All-Time Recorded Point-Best `H24-S3DEP1` 61-Channel Zero-1m-LiDAR Seamless 10 m 3DEP + Crustal/Hydrothermal OOF GeoTIFF (**NEW RECORD HOLDOUT-DTI 0.16606 · NEGATIVE RESULT — DOWNLOAD: YES · SUBMIT: NO · DO NOT RETUNE**):
+Current 2026-10-26 Recorded Local Point-Best `H24-S3DEP1` 61-Channel Zero-1m-LiDAR Seamless 10 m 3DEP + Crustal/Hydrothermal OOF GeoTIFF (**NEW RECORD HOLDOUT-DTI 0.16606 · NEGATIVE RESULT — DOWNLOAD: YES · SUBMIT: NO · DO NOT RETUNE**):
 [`{s3dep1_card_site["submission_name"]}`](docs/downloads/{s3dep1_card_site["submission_name"]}) (`SHA-256: {s3dep1_card_site["raster_sha256"]}`),
 Single-GeoTIFF ZIP [`{s3dep1_card_site["zip_artifact"]}`](docs/downloads/{s3dep1_card_site["zip_artifact"]}), and
 NaN-outside twin [`{s3dep1_card_site["nan_outside_artifact"]}`](docs/downloads/{s3dep1_card_site["nan_outside_artifact"]}).
 Preregistered (`knowledge/29_preregistered_S3DEP1_2026-10-26.md` @ `{s3dep1_card_site["preregistration_commit"][:12]}`, 3/3 experiment budget spent, 0 slots spent): withholds all 15 1 m LiDAR channels across 100% of the footprint and fuses 12 seamless USGS 10 m 3DEP sub-cell gradients (`ScienceBase 4f70aa9fe4b058caae3f8de5`), 6 restored `training_features.tif` crustal/seismic channels (`mag_anom`, `geod_2ndinv`, `iso_grav_anom_slope`, Bouguer `tc`, `log1p(deq/ieq)`), 6 monoclinal step/incision operators, and 37 non-LiDAR base + OpenEI GDR #1391 hydrothermal + SAHG channels via Dual-Negative (`d3+d9`) Core + 300 m Kernel Log-Odds Blending (`37,654` binary `{{0,1}}` dots; zero copied pixels; strict `[0, 1]` PASS; 61/61 two-polarity leakage canaries PASS, worst extremity `0.6111 <= 0.90`; `{100 * s3dist["frac_2_to_9px_apron"]:.1f}%` apron / `{100 * s3dist["frac_gt_20px_farfield"]:.1f}%` `>2 km` far-field).
-Achieves the **highest HOLDOUT-DTI recorded across all 9 focus repositories**: `{s3h["evaluator_version"]}` = **{s3h["dti"]:.5f}** (95% CI **[{s3lo:.5f}, {s3hi:.5f}]**; Arm 1 Core **{s3arms["arm1_s3dep1_core_dualneg_61ch"]["dti"]:.5f}**; Arm 2 Kernel300 **{s3arms["arm2_s3dep1_kernel300_reg_61ch"]["dti"]:.5f}**; `NE_LidarGapHeavy` **0.21972**; `3.0 km` Bridge **{s3br["dti"]:.5f}**), surpassing recorded `H24-DPRF1` (`0.16379`) by **{s3pr_dprf["paired_delta_dti"]:+.5f}** (paired 95% CI **[{s3pr_dprf["paired_delta_ci95"][0]:+.5f}, {s3pr_dprf["paired_delta_ci95"][1]:+.5f}]**), beating `oof_multiphysics_hgb_d3` (`0.13000`) by **{s3pr_oof["paired_delta_dti"]:+.5f}** (**4/4 folds**), and passing 3-px dot novelty against `DPRF1` (**`{100 * s3nov["dot_overlap_within_3px_vs_dprf1"]:.2f}% <= 70%`**), `GEMSDOE32 B2` (**`{100 * s3nov["dot_overlap_within_3px_vs_gemsdoe32_b2"]:.2f}%`**), all 83 peer blobs (**`<= {100 * s3nov["peer_blobs_max_3px_dot_overlap"]:.2f}%`**), and all 32 live 2026-10-26 sibling focus TIFFs (**`<= {100 * s3nov["nine_site_20261026_max_3px_dot_overlap"]:.2f}%`**). Automatically held at **`DO_NOT_SUBMIT`** (not a literal-gate-unique or submit-ready candidate): `{100 * s3nov["dot_overlap_within_3px_vs_dkrn1"]:.2f}%` (>70%) 3-px overlap vs local stopped lane `DKRN1`, exact-file C2ST AUC `{s3c2["observed_auc"]:.4f}` (Holm *p* = `{s3c2["holm_p_value"]:.3f}` via unresidualized 10 m highway cut/fill gradients), paired CI vs `DPRF1` spanning zero, and retained spacing-5 lattice `registry-039`.
-[S3DEP1 JSON run card](evidence/s3dep1_run_card_20261026.json) · [S3DEP1 Selector v2 JSON](evidence/s3dep1_selector_20261026.json) · [Live 9-Site 2026-10-26 Audit JSON](evidence/nine_site_executive_summary_s3dep1_20261026.json) · [S3DEP1 preregistration](knowledge/29_preregistered_S3DEP1_2026-10-26.md) · [S3DEP1 PhD findings & 9-site synthesis](knowledge/30_S3DEP1_findings_and_9site_executive_summary_2026-10-26.md) · [Executive guide](docs/executive-summary.html#s3dep1)
+Is the **current recorded local point-best within GEMSDOE24’s declared comparable evaluator/count set**: `{s3h["evaluator_version"]}` = **{s3h["dti"]:.5f}** (95% CI **[{s3lo:.5f}, {s3hi:.5f}]**; Arm 1 Core **{s3arms["arm1_s3dep1_core_dualneg_61ch"]["dti"]:.5f}**; Arm 2 Kernel300 **{s3arms["arm2_s3dep1_kernel300_reg_61ch"]["dti"]:.5f}**; `NE_LidarGapHeavy` **0.21972**; `3.0 km` Bridge **{s3br["dti"]:.5f}**), surpassing recorded `H24-DPRF1` (`0.16379`) by **{s3pr_dprf["paired_delta_dti"]:+.5f}** (paired 95% CI **[{s3pr_dprf["paired_delta_ci95"][0]:+.5f}, {s3pr_dprf["paired_delta_ci95"][1]:+.5f}]**), beating `oof_multiphysics_hgb_d3` (`0.13000`) by **{s3pr_oof["paired_delta_dti"]:+.5f}** (**4/4 folds**), and passing 3-px dot novelty against `DPRF1` (**`{100 * s3nov["dot_overlap_within_3px_vs_dprf1"]:.2f}% <= 70%`**), `GEMSDOE32 B2` (**`{100 * s3nov["dot_overlap_within_3px_vs_gemsdoe32_b2"]:.2f}%`**), all 83 peer blobs (**`<= {100 * s3nov["peer_blobs_max_3px_dot_overlap"]:.2f}%`**), and all 32 sibling focus TIFFs in the frozen 2026-10-26 audit (**`<= {100 * s3nov["nine_site_20261026_max_3px_dot_overlap"]:.2f}%`**). Automatically held at **`DO_NOT_SUBMIT`** (not a literal-gate-unique or submit-ready candidate): `{100 * s3nov["dot_overlap_within_3px_vs_dkrn1"]:.2f}%` (>70%) 3-px overlap vs local stopped lane `DKRN1`, exact-file C2ST AUC `{s3c2["observed_auc"]:.4f}` (Holm *p* = `{s3c2["holm_p_value"]:.3f}` associated with unresidualized 10 m gradients and highway cut/fill corridors), paired CI vs `DPRF1` spanning zero, and retained spacing-5 lattice `registry-039`.
+[S3DEP1 JSON run card](evidence/s3dep1_run_card_20261026.json) · [S3DEP1 Selector v2 JSON](evidence/s3dep1_selector_20261026.json) · [Frozen 9-Site 2026-10-26 Audit JSON](evidence/nine_site_executive_summary_s3dep1_20261026.json) · [S3DEP1 preregistration](knowledge/29_preregistered_S3DEP1_2026-10-26.md) · [S3DEP1 PhD findings & 9-site synthesis](knowledge/30_S3DEP1_findings_and_9site_executive_summary_2026-10-26.md) · [Executive guide](docs/executive-summary.html#s3dep1)
 """
     dprf1_md = ""
     if dprf1_card_site and dprf1_hero:
@@ -857,7 +886,7 @@ Latest 2026-10-26 Point-Best `H24-DPRF1` 52-Channel Dual-Partition Stitched-OOF 
 Single-GeoTIFF ZIP [`{dprf1_card_site["zip_artifact"]}`](docs/downloads/{dprf1_card_site["zip_artifact"]}), and
 NaN-outside twin [`{dprf1_card_site["nan_outside_artifact"]}`](docs/downloads/{dprf1_card_site["nan_outside_artifact"]}).
 Independently generated from 30 scale-separated base features + 18 OpenEI GDR INGENIOUS hydrothermal/tilt/lineament features + 4 modality-aware `SAHG1` conduit features using Stratified `d_vis >= 300 m` negative sampling, selective 9-channel non-topographic nuisance residualization, 3-tier relief-conditioned LiDAR-gap calibration, Dual-Partition Stitched-OOF (Quadrant + 45° Diamond, 0% in-sample pixels), apron quantile debiasing, and Two-Regime 300 m submodular allocation (`37,654` binary `{{0.0, 1.0}}` dots; zero copied submission pixels; strict `[0, 1]` all-finite PASS; 52/52 two-polarity leakage canaries PASS; exact-file C2ST **PASS** with AUC `{dc2st["observed_auc"]:.4f}` < 0.55, Holm *p* = `{dc2st["holm_p_value"]:.3f}`).
-Achieves the **highest HOLDOUT-DTI in `GEMSDOE24`** on both evaluators: `{dh["evaluator_version"]}` = **{dh["dti"]:.5f}** (95% CI **[{dlo:.5f}, {dhi:.5f}]**, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000` by `{dp_d3["paired_delta_dti"]:+.5f}` and over `B1: OOF-Base-Submod` `0.13900` by `{dp_b1["paired_delta_dti"]:+.5f}`, and beating `CUP1` `0.15038`, `GVC1` `0.14876`, `TRSG1` `0.14644`, `B0` `0.14179`, `CRP1` `0.13747`, `RSHG1` `0.12899`, `FUSE-HCW` `0.12372`, and `TNR1` `0.13219`) and `{dbr["evaluator_version"]}` = **{dbr["dti"]:.5f}** (95% CI **[{dblo:.5f}, {dbhi:.5f}]**).
+At execution time, achieved the **then-highest recorded local HOLDOUT-DTI in `GEMSDOE24`** on both evaluators (superseded by S3DEP1 on `gems-segment-pooled-v1`): `{dh["evaluator_version"]}` = **{dh["dti"]:.5f}** (95% CI **[{dlo:.5f}, {dhi:.5f}]**, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000` by `{dp_d3["paired_delta_dti"]:+.5f}` and over `B1: OOF-Base-Submod` `0.13900` by `{dp_b1["paired_delta_dti"]:+.5f}`, and beating `CUP1` `0.15038`, `GVC1` `0.14876`, `TRSG1` `0.14644`, `B0` `0.14179`, `CRP1` `0.13747`, `RSHG1` `0.12899`, `FUSE-HCW` `0.12372`, and `TNR1` `0.13219`) and `{dbr["evaluator_version"]}` = **{dbr["dti"]:.5f}** (95% CI **[{dblo:.5f}, {dbhi:.5f}]**).
 Passes prospective novelty across **all {dnov["competing_method_rasters_checked"]} competing method rasters** (max 3-px dot overlap `{dnov["method_lane_max_dot_overlap"]:.4f}` ≤ 0.70; `0.3613` vs `TNR1`, `0.3398` vs `CRP1`, `0.3381` vs `CUP1`, ≤ `0.4912` vs all 9 focus-site champions) and **all {dnov["peer_blobs_checked"]} peer blobs** (`{dnov["peer_blobs_max_dot_overlap"]:.4f}` ≤ 0.70), and restores **{100 * ddist["frac_gt_20px_farfield"]:.1f}%** `> 2 km` far-field dot allocation (`{100 * ddist["frac_2_to_9px_apron"]:.1f}%` in `200–900 m` apron, versus `GVC1`'s `70.4%`; no hidden-score improvement established). Held at **`{d_decision}`** under `gems-selector-v2-literal-quota-fail-closed` (`evidence/dprf1_selector_20261026.json`) due to the unseparated synthetic spacing-5 calibration lattice (`registry-039`), unknown live DrivenData quota, and replay certificate.
 [DPRF1 JSON run card](evidence/dprf1_run_card_20261026.json) · [DPRF1 Selector v2 JSON](evidence/dprf1_selector_20261026.json) · [9-Site Executive Summary JSON](evidence/nine_site_executive_summary_20261026.json) · [DPRF1 preregistration](knowledge/19_preregistered_DPRF1_2026-10-26.md) · [DPRF1 PhD synthesis & 9-site review](knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md)
 """
@@ -892,7 +921,7 @@ Latest 2026-10-26 Lane `H24-EUL1` Euler N=0 Contact 59-Channel GeoTIFF (**NEGATI
 Single-GeoTIFF ZIP [`{eul1_card_site["zip_artifact"]}`](docs/downloads/{eul1_card_site["zip_artifact"]}), and
 NaN-outside twin [`{eul1_card_site["nan_outside_artifact"]}`](docs/downloads/{eul1_card_site["nan_outside_artifact"]}).
 Preregistered (`knowledge/22_preregistered_EUL1_2026-10-26.md` @ `b841bf4`; pre-fit Amendment A1 replaced the inconsistent survey `*_vg` bands with self-consistent FFT vertical derivatives): 7 Euler-deconvolution channels (47,322 accepted RTP N=0 solutions) on the exact DPRF1 52-channel stitched-OOF stack + Euler-gated Regime B (`37,654` dots; zero copied pixels; strict `[0, 1]` PASS; 59/59 leakage canaries PASS; exact-file C2ST AUC `{ec2["observed_auc"]:.4f}` PASS).
-**HOLDOUT-DTI** `{eh["evaluator_version"]}` = **{eh["dti"]:.5f}** (95% CI **[{elo:.5f}, {ehi:.5f}]**) vs the **bit-identical same-session DPRF1 replay** **0.16379** (paired Δ **{epr["paired_delta_dti"]:+.5f}**, 95% CI **[{epr["paired_delta_ci95"][0]:+.5f}, {epr["paired_delta_ci95"][1]:+.5f}]**, {epr["fold_wins"]}/4 folds; channels alone lost 0/4). Final-dot novelty **FAIL**: `{100 * enov["dot_overlap_within_3px_vs_dprf1"]:.2f}%` within 3 px of DPRF1 (> 70% Rule-1 limit = duplicate lane) — the portfolio's parent-convergence lesson (CUP1 91.2%). **DPRF1 is the recorded local point-best, not a literal-gate-unique or submit-ready candidate**; selector `gems-selector-v2-literal-quota-fail-closed`: `DO_NOT_SUBMIT` for every file (quota/replay certificate pending). No organizer score; HOLDOUT-DTI is not a leaderboard forecast.
+**HOLDOUT-DTI** `{eh["evaluator_version"]}` = **{eh["dti"]:.5f}** (95% CI **[{elo:.5f}, {ehi:.5f}]**) vs the **bit-identical same-session DPRF1 replay** **0.16379** (paired Δ **{epr["paired_delta_dti"]:+.5f}**, 95% CI **[{epr["paired_delta_ci95"][0]:+.5f}, {epr["paired_delta_ci95"][1]:+.5f}]**, {epr["fold_wins"]}/4 folds; channels alone lost 0/4). Final-dot novelty **FAIL**: `{100 * enov["dot_overlap_within_3px_vs_dprf1"]:.2f}%` within 3 px of DPRF1 (> 70% Rule-1 limit = duplicate lane) — the portfolio's parent-convergence lesson (CUP1 91.2%). **DPRF1 was the then-recorded local parent point-best and is now superseded by S3DEP1; neither is a literal-gate-unique or submit-ready candidate**; selector `gems-selector-v2-literal-quota-fail-closed`: `DO_NOT_SUBMIT` for every file (quota/replay certificate pending). No organizer score; HOLDOUT-DTI is not a leaderboard forecast.
 [EUL1 JSON run card](evidence/eul1_run_card_20261026.json) · [EUL1 Selector v2 JSON](evidence/eul1_selector_20261026.json) · [9-Site Executive Summary (EUL1 update) JSON](evidence/nine_site_executive_summary_eul1_20261026.json) · [EUL1 preregistration](knowledge/22_preregistered_EUL1_2026-10-26.md) · [Amendment A1](knowledge/23_EUL1_prereg_amendment_2026-10-26.md) · [EUL1 PhD findings & updated executive summary](knowledge/24_EUL1_findings_and_executive_summary_2026-10-26.md) · [Executive guide](docs/executive-summary.html#eul1)
 """
     crp1_md = ""

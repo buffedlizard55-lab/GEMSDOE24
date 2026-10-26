@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build deterministic 2026-10-26 nine-site executive summary receipt for H24-S3DEP1.
+"""Build the frozen 2026-10-26 nine-site S3DEP1 forensic receipt.
 
-Audits all 9 focus repositories at their live 2026-10-26 main HEAD commits using
-SHA-verified GeoTIFF bytes, computing exact distance profiles and 3-px dot overlaps
-against H24-S3DEP1 (0.16606), H24-DPRF1 (0.16379), H24-DKRN1 (0.15525), and
-historical GEMSDOE32 H33-B2 (0.2778 UNVERIFIED-OWNER-REPORT).
+The input refs were main HEAD when the original audit ran; they are immutable
+snapshot pins, not current HEAD.  The receipt computes exact distance profiles
+and 3-px dot overlaps against S3DEP1, DPRF1, DKRN1 and historical B2.  It does
+not verify owner-reported scores or infer hidden-label credit.
 """
 
 from __future__ import annotations
@@ -219,11 +219,12 @@ def main() -> int:
             "farfield_gt_20px": round(float(s3_dist["frac_gt_20px_farfield"]), 4),
             "s3dep1_3px_overlap_vs_site_artifact": 1.0,
             "executive_verdict": (
-                "DOWNLOAD: YES (research audit) · SUBMIT: NO. H24-S3DEP1 sets a new all-time "
-                "recorded HOLDOUT-DTI point-best (0.16606 [0.15186, 0.18034], NE_LidarGapHeavy "
-                "0.21972, zero 1 m LiDAR, 64.45% <= 70% vs DPRF1, <=53.17% vs all 8 sibling "
-                "sites), but stops honestly on 71.32% overlap vs local DKRN1, C2ST 0.6012 "
-                "(10 m highway cut/fill), paired CI spanning 0 vs DPRF1, and registry-039."
+                "DOWNLOAD: YES (research audit) · SUBMIT: NO. H24-S3DEP1 is GEMSDOE24's "
+                "current recorded local HOLDOUT-DTI point-best (0.16606 [0.15186, 0.18034], "
+                "NE_LidarGapHeavy 0.21972, zero 1 m LiDAR, 64.45% <= 70% vs DPRF1, "
+                "<=53.17% vs all 8 sibling sites in this frozen audit), but stops on 71.32% "
+                "overlap vs local DKRN1, road-associated C2ST 0.6012 (highway cut/fill is a "
+                "plausible mimic), paired CI spanning 0 vs DPRF1, and registry-039."
             ),
         }
     )
@@ -286,15 +287,18 @@ def main() -> int:
     out = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "scope": (
-            "H24-S3DEP1 (0.16606 new all-time recorded HOLDOUT-DTI point-best) & fresh "
-            "2026-10-26 nine-site main HEAD forensic refresh (GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36)"
+            "H24-S3DEP1 recorded results plus a frozen 2026-10-26 nine-site forensic "
+            "snapshot at listed immutable commits; not current HEAD or score verification"
         ),
         "supersedes": "evidence/nine_site_executive_summary_dkrn1_20261026.json (kept, unmodified)",
         "score_governance": prev_nine["score_governance"],
         "cross_site_executive_conclusion": {
-            "best_historical_reference_not_for_resubmission": prev_nine[
-                "cross_site_executive_conclusion"
-            ]["best_historical_reference_not_for_resubmission"],
+            "best_historical_reference_not_for_resubmission": (
+                "GEMSDOE32 H33-B2 (0.2778 UNVERIFIED-OWNER-REPORT) is a pixel-exact "
+                "37,654-dot deletion-only subset of D2.8 with 6,436 <=200 m catalogue-halo "
+                "dots removed. Hidden credit and causal score effect are unobserved; do not "
+                "copy or perturb it."
+            ),
             "best_already_scored_unique_20261025_submission": prev_nine[
                 "cross_site_executive_conclusion"
             ]["best_already_scored_unique_20261025_submission"],
@@ -303,7 +307,7 @@ def main() -> int:
                 f"{s3_card['raster_sha256']}; HOLDOUT-DTI 0.16606 [0.15186, 0.18034], "
                 "gems-segment-pooled-v1, 60,988 withheld, zero 1 m LiDAR, NE_LidarGapHeavy "
                 "0.21972, 3.0 km Bridge 0.16257, 64.45% 3-px overlap vs DPRF1 <= 70%, "
-                "<=53.17% vs all 32 live 2026-10-26 sibling focus TIFFs, <=54.33% vs all "
+                "<=53.17% vs all 32 sibling focus TIFFs in the frozen audit, <=54.33% vs all "
                 "83 peer blobs). DOWNLOAD: YES (audit only) · SUBMIT: NO (not a literal-gate-"
                 "unique or submit-ready candidate: 71.32% 3-px overlap vs local stopped lane "
                 "DKRN1, exact-file C2ST AUC 0.6012 holm_p=0.0200, paired CI vs DPRF1 "
@@ -316,20 +320,29 @@ def main() -> int:
                 "unique or submit-ready candidate under gems-selector-v2-literal-quota-fail-closed."
             ),
             "all_eight_20261026_sibling_tifs_audited": (
-                "All 32 live 2026-10-26 GeoTIFFs across GEMSDOE25@bc3381fd, 27@f1e32af8, "
+                "Frozen audit: 32 GeoTIFFs across GEMSDOE25@bc3381fd, 27@f1e32af8, "
                 "28@9c1be21e, 30@35ce8911, 31@78f9bf3a, 32@8953b986, 33@a24fb7c5, and "
-                "36@b90418f8 were SHA-verified and audited pixel-by-pixel: zero sibling "
-                "repositories have a submit-ready override; GEMSDOE30's 2026-10-26 TIFF fails "
-                "strict whole-array [0,1] (7,111,787 outside NaNs), GEMSDOE32's "
-                "'arena47-perturb-h38-unique' is flagged as a perturbed derivative, GEMSDOE28 "
-                "has 12/44 un-manifested downloads, and S3DEP1 has <=53.17% 3-px overlap "
-                "against every single one."
+                "36@b90418f8 were SHA-verified and audited pixel-by-pixel. These refs are no "
+                "longer presented as live HEAD; newer commits need a new artifact audit."
             ),
-            "can_we_beat_02778_03195_04413": prev_nine["cross_site_executive_conclusion"][
-                "can_we_beat_02778_03195_04413"
-            ],
+            "can_we_beat_02778_03195_04413": (
+                "Unproven and unforecastable without organizer receipts and hidden labels. "
+                "Pixel algebra proves B2 is a deletion-only subset, not that its deleted dots "
+                "had zero hidden-fault credit. Break-even credit per added mass is alpha*D: "
+                "5.56%, 6.39%, and 8.83% at D=0.2778, 0.3195, and 0.4413; corresponding "
+                "true-credit/false-mass ratios are 5.88%, 6.83%, and 9.68%."
+            ),
         },
         "sites": sites_out,
+        "correction_20261026": {
+            "irregularity_id": "IRR-S3DEP1-MARGINAL-THRESHOLD-UNOBSERVED-CAUSAL",
+            "status": "corrected narrative; recorded raster measurements unchanged",
+            "detail": (
+                "Earlier prose mislabeled the delta-TP/delta-FP threshold as delta-TP/delta-N "
+                "and treated zero hidden credit as observed."
+            ),
+            "source_refresh": "evidence/focus_source_refresh_20261026.json",
+        },
     }
 
     out_path = ROOT / "evidence/nine_site_executive_summary_s3dep1_20261026.json"

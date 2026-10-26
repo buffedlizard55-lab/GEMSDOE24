@@ -286,7 +286,8 @@ def test_trsg1_is_above_historical_lanes_and_9site_executive_is_rendered(built):
     rshg1 = json.loads((built / "docs/data/rshg1_download.json").read_text())
     mtr = json.loads((built / "docs/data/independent_download.json").read_text())
     active = json.loads((built / "docs/data/active_lane.json").read_text())
-    assert active["lane"] in {"H24-TNR1", "H24-TRSG1"}
+    assert active["lane"] == "H24-S3DEP1"
+    assert active["semantics"] == "current recorded point-best review; no new lane assignment"
     assert active["ok_to_submit"] is False and active["verdict"] == "negative"
     for name in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         html = (built / name).read_text()
@@ -362,6 +363,38 @@ def test_current_portfolio_supersedes_archives_and_binds_the_first_download(buil
         assert 'id="current-download-details"' in html
         assert 'id="note-current-best"' in html
     assert 'href="docs/portfolio-review-20261026.md"' in (built / "index.html").read_text()
+
+    # Every focus site has an exact immutable research download, but every row
+    # remains an unmistakable submission NO.
+    audit = json.loads((built / "evidence/portfolio_artifact_audit_20261026.json").read_text())
+    history = {
+        row["site"]: row
+        for row in audit["named_artifact_audits"]
+        if row["role"] == "historical_owner_maximum"
+    }
+    assert len(history) == 9
+    executive = (built / "docs/executive-summary.html").read_text()
+    for row in history.values():
+        assert row["download_url"].replace("&", "&amp;") in executive
+        assert Path(row["file"]).name in executive
+    assert executive.count("historical; do not copy or resubmit") >= 9
+
+    source_refresh = json.loads(
+        (built / "docs/data/focus_source_refresh_20261026.json").read_text()
+    )
+    assert len(source_refresh["rows"]) == 9
+    assert {row["site"] for row in source_refresh["rows"]} == set(history)
+    assert all(
+        len(row["commit"]) == 40 and len(row["readme_sha256"]) == 64
+        for row in source_refresh["rows"]
+    )
+    review = json.loads((built / "docs/data/review_e452969c_20261026.json").read_text())
+    assert [row["result"] for row in review["passes"]] == [
+        "PASS after fixes",
+        "PASS after fixes",
+        "PASS",
+    ]
+    assert review["outcome"]["goal_of_new_gate_passing_submission_achieved"] is False
 
 
 def test_site_refuses_tampered_peer_scientific_source_card(built):
