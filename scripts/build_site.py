@@ -23,6 +23,7 @@ from site_packets import (  # noqa: E402
     concurrent_oj1,
     crp1_packet,
     cup1_packet,
+    dkrn1_packet,
     dprf1_packet,
     eul1_packet,
     gvc1_packet,
@@ -155,6 +156,9 @@ def build_independent_site(primary):
     trsg1_hero, trsg1_exec, trsg1_research = trsg1_packet(ROOT)
     dprf1_hero, dprf1_exec, dprf1_research = dprf1_packet(ROOT)
     dprf1_card_site = load("evidence/dprf1_run_card_20261026.json")
+    dkrn1_hero, dkrn1_exec, dkrn1_research = dkrn1_packet(ROOT)
+    dkrn1_card_site = load("evidence/dkrn1_run_card_20261026.json")
+    dkrn1_ok_submit = bool(dkrn1_card_site.get("ok_to_submit")) and bool(dkrn1_hero)
     eul1_hero, eul1_exec, eul1_research = eul1_packet(ROOT)
     eul1_card_site = load("evidence/eul1_run_card_20261026.json")
     eul1_ok_submit = bool(eul1_card_site.get("ok_to_submit")) and bool(eul1_hero)
@@ -230,7 +234,7 @@ def build_independent_site(primary):
         + concurrent
         + f"""<div class="metrics"><div class="card metric"><div class="number">{primary["pixel_count"]:,}</div><div class="label">Experimental dots</div></div><div class="card metric"><div class="number">{len(registry["unique_rasters"])}</div><div class="label">Distinct registry rasters compared</div></div><div class="card metric"><div class="number">{n:,}</div><div class="label">Withheld positive pixels</div></div><div class="card metric"><div class="number">0</div><div class="label">Competition slots used</div></div></div><section><h2>The decision is automatic, not “inspection pending”.</h2>{gates}</section><section class="grid2"><article class="card"><h3>Why the overlap veto fired</h3><p>A 5-pixel lattice is within √8 pixels of every interior grid cell. Your radius-3 rule therefore marks even an unrelated detector as a duplicate in this domain. We logged the incompatibility and stopped, rather than removing the comparator.</p><a href="research.html">Method, ablation and irregularities →</a></article><article class="card"><h3>Download the evidence</h3><div class="actions"><a class="button" href="data/dprf1_run_card.json" download>DPRF1 JSON run card</a><a class="button" href="data/eul1_run_card.json" download>EUL1 JSON run card (negative)</a><a class="button" href="data/nine_site_executive_summary_eul1_20261026.json" download>9-Site Executive Summary (EUL1 update) JSON</a><a class="button" href="data/trsg1_run_card_20261026.json" download>TRSG1 JSON run card</a><a class="button" href="data/nine_site_executive_summary_20261026.json" download>9-Site Executive Summary JSON</a><a class="button" href="data/rshg1_run_card.json" download>RSHG1 JSON run card</a><a class="button" href="data/mtr1_run_card.json" download>MTR1 JSON run card</a><a class="button" href="downloads/{e(primary["checks_file"])}" download>Exact-file validator</a></div><p class="micro">These are local measurements, not an organizer receipt or a leaderboard projection.</p></article></section><section><h2>Source freshness — not a live leaderboard</h2><p class="micro">GitHub commits checked at {e(feed.get("checked_utc", "not checked"))}. Scientific inputs and decisions remain pinned to the experiment.</p><ul class="feed" id="source-feed-list"></ul><p class="micro" data-source-state>GitHub-only freshness feed; no scoring or promotion API</p></section>"""
     )
-    any_ok_submit = dprf1_ok_submit or eul1_ok_submit or crp1_ok_submit
+    any_ok_submit = dprf1_ok_submit or dkrn1_ok_submit or eul1_ok_submit or crp1_ok_submit
     exec_intro = (
         "<p><strong>For H24-DPRF1 above: YES — cleared automatically by the independent selector (<code>gems-selector-v1</code>: <code>OK_TO_SUBMIT</code>).</strong> "
         "It passed all 10/10 project validation gates automatically with zero human-inspector fallback; "
@@ -315,6 +319,7 @@ def build_independent_site(primary):
 .venv/bin/python scripts/prepare_data.py
 .venv/bin/python scripts/cache_priority_registry.py
 .venv/bin/python scripts/run_dprf1_lane.py --verify-recorded
+.venv/bin/python scripts/run_dkrn1_lane.py --verify-recorded
 .venv/bin/python scripts/run_eul1_lane.py --verify-recorded
 .venv/bin/python scripts/evaluate_holdout.py --verify-recorded
 .venv/bin/python scripts/evaluate_holdout.py --verify-gvc1
@@ -331,6 +336,7 @@ def build_independent_site(primary):
         overview = (
             tnr1["overview"]
             + dprf1_hero
+            + dkrn1_hero
             + eul1_hero
             + trsg1_hero
             + '<details id="historical-packets"><summary>Earlier research downloads — all DO NOT SUBMIT</summary>'
@@ -340,6 +346,7 @@ def build_independent_site(primary):
         executive = (
             tnr1["executive"]
             + dprf1_exec
+            + dkrn1_exec
             + eul1_exec
             + trsg1_exec
             + '<details id="historical-executive"><summary>Historical submission packets and nine-site comparison</summary>'
@@ -349,6 +356,7 @@ def build_independent_site(primary):
         research = (
             tnr1["research"]
             + dprf1_research
+            + dkrn1_research
             + eul1_research
             + trsg1_research
             + '<details id="historical-research"><summary>Prior experiments, frozen evidence and historical proposals</summary>'
@@ -365,9 +373,9 @@ def build_independent_site(primary):
         for source_name in ("tnr1_source_review_20261026.json",):
             (DOCS / "data" / source_name).write_text((ROOT / "evidence" / source_name).read_text())
     else:
-        overview = dprf1_hero + eul1_hero + trsg1_hero + overview
-        executive = dprf1_exec + eul1_exec + trsg1_exec + executive
-        research = dprf1_research + eul1_research + trsg1_research + research
+        overview = dprf1_hero + dkrn1_hero + eul1_hero + trsg1_hero + overview
+        executive = dprf1_exec + dkrn1_exec + eul1_exec + trsg1_exec + executive
+        research = dprf1_research + dkrn1_research + eul1_research + trsg1_research + research
     # Resolve current-best from all comparable records, not the historical active_lane.
     from gems.current_review import review_current_best
 
@@ -461,10 +469,13 @@ def build_independent_site(primary):
         "trsg1_experiment_20261026.json",
         "dprf1_run_card_20261026.json",
         "dprf1_experiment_20261026.json",
+        "dkrn1_run_card_20261026.json",
+        "dkrn1_experiment_20261026.json",
         "eul1_run_card_20261026.json",
         "eul1_experiment_20261026.json",
         "nine_site_executive_summary_20261026.json",
         "nine_site_executive_summary_eul1_20261026.json",
+        "nine_site_executive_summary_dkrn1_20261026.json",
         "gvc1_run_card_20261025.json",
         "gvc1_experiment_20261025.json",
         "gvc1_c2st_audit_20261025.json",
@@ -487,6 +498,13 @@ def build_independent_site(primary):
         )
         (DOCS / "data/dprf1_selector.json").write_text(
             (ROOT / "evidence/dprf1_selector_20261026.json").read_text()
+        )
+    if (ROOT / "evidence/dkrn1_run_card_20261026.json").exists():
+        (DOCS / "data/dkrn1_run_card.json").write_text(
+            (ROOT / "evidence/dkrn1_run_card_20261026.json").read_text()
+        )
+        (DOCS / "data/dkrn1_selector.json").write_text(
+            (ROOT / "evidence/dkrn1_selector_20261026.json").read_text()
         )
     if (ROOT / "evidence/eul1_run_card_20261026.json").exists():
         (DOCS / "data/eul1_run_card.json").write_text(
@@ -692,6 +710,24 @@ Achieves the **highest HOLDOUT-DTI in `GEMSDOE24`** on both evaluators: `{dh["ev
 Passes prospective novelty across **all {dnov["competing_method_rasters_checked"]} competing method rasters** (max 3-px dot overlap `{dnov["method_lane_max_dot_overlap"]:.4f}` ≤ 0.70; `0.3613` vs `TNR1`, `0.3398` vs `CRP1`, `0.3381` vs `CUP1`, ≤ `0.4912` vs all 9 focus-site champions) and **all {dnov["peer_blobs_checked"]} peer blobs** (`{dnov["peer_blobs_max_dot_overlap"]:.4f}` ≤ 0.70), and restores **{100 * ddist["frac_gt_20px_farfield"]:.1f}%** `> 2 km` far-field dot allocation (`{100 * ddist["frac_2_to_9px_apron"]:.1f}%` in `200–900 m` apron, versus `GVC1`'s `70.4%`; no hidden-score improvement established). Held at **`{d_decision}`** under `gems-selector-v2-literal-quota-fail-closed` (`evidence/dprf1_selector_20261026.json`) due to the unseparated synthetic spacing-5 calibration lattice (`registry-039`), unknown live DrivenData quota, and replay certificate.
 [DPRF1 JSON run card](evidence/dprf1_run_card_20261026.json) · [DPRF1 Selector v2 JSON](evidence/dprf1_selector_20261026.json) · [9-Site Executive Summary JSON](evidence/nine_site_executive_summary_20261026.json) · [DPRF1 preregistration](knowledge/19_preregistered_DPRF1_2026-10-26.md) · [DPRF1 PhD synthesis & 9-site review](knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md)
 """
+    dkrn1_md = ""
+    if dkrn1_card_site and dkrn1_hero:
+        kh = dkrn1_card_site["holdout"]
+        klo, khi = kh["ci95"]["interval"]
+        kbr = dkrn1_card_site["bridge_protocol_holdout"]
+        kpr = dkrn1_card_site["paired_comparisons"]["arm1_vs_oof_multiphysics_hgb_d3"]
+        knov = dkrn1_card_site["correlation_overlap_vs_registry"]
+        kc2 = dkrn1_card_site["exact_file_nuisance_audit"]["candidate"]
+        kdist = dkrn1_card_site["off_catalogue_distance_profile"]
+        dkrn1_md = f"""
+Latest 2026-10-26 Lane `H24-DKRN1` 62-Channel Split-View D8-Knickpoint + 300 m Kernel Regression GeoTIFF (**NEGATIVE RESULT — DOWNLOAD: YES · SUBMIT: NO · DO NOT RETUNE**):
+[`{dkrn1_card_site["submission_name"]}`](docs/downloads/{dkrn1_card_site["submission_name"]}) (`SHA-256: {dkrn1_card_site["raster_sha256"]}`),
+Single-GeoTIFF ZIP [`{dkrn1_card_site["zip_artifact"]}`](docs/downloads/{dkrn1_card_site["zip_artifact"]}), and
+NaN-outside twin [`{dkrn1_card_site["nan_outside_artifact"]}`](docs/downloads/{dkrn1_card_site["nan_outside_artifact"]}).
+Preregistered (`knowledge/27_preregistered_DKRN1_2026-10-26.md` @ `86d7f622a0ef`): executes `AGENTS.md` next-step queue (`H24-DRAIN5` exact sparse D8 flow-routing + `H24-KERN6` 300 m DTI-kernel regression + Elkan prior-odds calibration + 3-regime Net-Tversky allocation; `37,654` binary `{{0,1}}` dots; zero copied pixels; strict `[0, 1]` PASS; 62/62 leakage canaries PASS; `23.8%` apron / `52.2%` `>2 km` far-field).
+**HOLDOUT-DTI** `{kh["evaluator_version"]}` = **{kh["dti"]:.5f}** (95% CI **[{klo:.5f}, {khi:.5f}]**; 3.0 km bridge **{kbr["dti"]:.5f}**; pure LiDAR-free 47-ch kernel regressor Arm 2 **{dkrn1_card_site["arms_same_evaluator"]["arm2_head_a_kernel47_ablation"]["dti"]:.5f}**), winning `NE_LidarGapHeavy` over `DPRF1` (**0.21308 > 0.21227**) and beating `oof_multiphysics_hgb_d3` (`0.13000`) on `4/4` folds by **{kpr["paired_delta_dti"]:+.5f}** (95% CI **[{kpr["paired_delta_ci95"][0]:+.5f}, {kpr["paired_delta_ci95"][1]:+.5f}]**), but trailing recorded `DPRF1` (`0.16379`) pooled by `-0.00854`, retaining `{100 * knov["dot_overlap_within_3px_vs_dprf1"]:.2f}%` 3-px dot overlap with `DPRF1` (>70% Rule-1 limit despite `-10.89` pp reduction vs `EUL1`), and flagging exact-file C2ST (AUC `{kc2["observed_auc"]:.4f}`, Holm *p* = `{kc2["holm_p_value"]:.3f}` via unresidualized `m_hydro` wash-road correlation; `{100 * kdist["frac_gt_20px_farfield"]:.1f}%` >2 km far-field).
+[DKRN1 JSON run card](evidence/dkrn1_run_card_20261026.json) · [DKRN1 Selector v2 JSON](evidence/dkrn1_selector_20261026.json) · [9-Site 2026-10-26 Audit JSON](evidence/nine_site_executive_summary_dkrn1_20261026.json) · [DKRN1 preregistration](knowledge/27_preregistered_DKRN1_2026-10-26.md) · [DKRN1 PhD findings & 9-site audit](knowledge/28_DKRN1_findings_and_9site_executive_summary_2026-10-26.md) · [Executive guide](docs/executive-summary.html#dkrn1)
+"""
     eul1_md = ""
     if eul1_card_site and eul1_hero:
         eh = eul1_card_site["holdout"]
@@ -740,7 +776,7 @@ score exists; HOLDOUT-DTI is not a leaderboard forecast. Short comment
         else "**DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**"
     )
     md = f"""{status_headline}
-{dprf1_md}{eul1_md}{trsg1_md}{crp1_md}{fuse_md}{gvc1_md}{rshg1_md}{sahg1_md}
+{dprf1_md}{dkrn1_md}{eul1_md}{trsg1_md}{crp1_md}{fuse_md}{gvc1_md}{rshg1_md}{sahg1_md}
 Independently generated MTR1 audit TIFF: [`{primary["file"]}`](docs/downloads/{primary["file"]}).
 It passes exact-grid/[0,1] file checks but fails the lane overlap rule against a registered
 spacing-5 calibration lattice. Content is not copied or identical to any compared file;

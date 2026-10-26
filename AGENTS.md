@@ -1,5 +1,15 @@
 # Standing project instructions
 
+## H24-DKRN1 session — 2026-10-26 (executed `H24-DRAIN5` + `H24-KERN6`; negative; do not retune)
+
+Read `knowledge/27_preregistered_DKRN1_2026-10-26.md` (@ `86d7f622a0ef`), `knowledge/28_DKRN1_findings_and_9site_executive_summary_2026-10-26.md`, `evidence/dkrn1_run_card_20261026.json`, and `evidence/nine_site_executive_summary_dkrn1_20261026.json` first.
+- `H24-DKRN1` (`src/gems/dkrn1.py`, `scripts/run_dkrn1_lane.py`) executed the top `AGENTS.md` next-step queue (`H24-DRAIN5` exact sparse triangular D8 flow-routing `(I - P^T)A = 1` + `H24-KERN6` Split-View 47-ch LiDAR-free 300 m DTI-kernel regressor + 62-ch Elkan Bayes core classifier + 48%/28%/24% 3-regime Net-Tversky allocation) across 3 preregistered arms:
+  - **Arm 1 (`H24-DKRN1` 62-ch Split-View):** `HOLDOUT-DTI = 0.15525` (`[0.14205, 0.16874]`, `gems-segment-pooled-v1`, `60,988` withheld; `3.0 km` bridge `0.15462`), beating `oof_multiphysics_hgb_d3` (`0.13000`) by `+0.02525` (`[+0.01006, +0.04022]`, `4/4` folds) and **winning `NE_LidarGapHeavy` (`0.21308 > 0.21227`) over `DPRF1`**.
+  - **Arm 2 (`HeadA47` pure LiDAR-free 47-ch kernel regressor):** `HOLDOUT-DTI = 0.15072` (`[0.13730, 0.16425]`), outperforming `GVC1` (`0.14876`), `TRSG1` (`0.14644`), `CRP1` (`0.14494`), `CUP1` (`0.14366`), `TNR1` (`0.13219`), `RSHG1` (`0.12899`), and `PAIR1` (`0.12711`) with zero raw 1 m LiDAR amplitude channels.
+  - **Arm 3 (`DPRF1` same-session replay):** `0.16416` (`recorded DPRF1 = 0.16379`).
+- **Automated Verdict (`DO_NOT_SUBMIT`, `verdict: "negative"`):** `gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif` (`SHA-256: 0b114a75d5a905ded84450fe55df386f9361ff39139a2e4452476563ac0fa65d`) is **DOWNLOAD: YES (audit) · SUBMIT: NO** — trailed `DPRF1` pooled (`-0.00854`), retained `75.68%` 3-px dot overlap with `DPRF1` (`>70%` Rule-1 limit despite `-10.89` pp reduction vs `EUL1`'s `86.57%`), and flagged exact-file C2ST (`AUC = 0.5773`, `holm_p = 0.0200` via unresidualized `m_hydro` valley wash-road correlation). **Do not rerun or retune `DKRN1`**; verify frozen receipts via `.venv/bin/python scripts/run_dkrn1_lane.py --verify-recorded`.
+- **Next Recommended Geological Lane (requires fresh preregistration):** `H24-DRAIN5R-PURE` — pure `HeadA` LiDAR-free 47-channel 300 m DTI-kernel regressor (dropping Head B completely so 3-px overlap vs `DPRF1` clears `<= 70%`) with fold-safe `NuisanceResidualizer` applied to **all** D8 channel-routing operators and `m_hydro` so exact-file C2ST clears `< 0.55`. `H24-DPRF1` (`0.16379`) remains the recorded local point-best (`DO_NOT_SUBMIT` pending selector v2 quota/lattice/replay resolution).
+
 ## PAIR1 session — 2026-10-26 (executed lane; negative; do not retune)
 
 Read `knowledge/25_preregistered_PAIR1_2026-10-26.md`, `knowledge/26_PAIR1_findings_and_9site_executive_2026-10-26.md`, `evidence/pair1_run_card_20261026.json` first.

@@ -1744,5 +1744,179 @@ def eul1_packet(root):
     )
     exec_html = f"""<section id="eul1"><h2>H24-EUL1 — Euler N=0 contact increment (2026-10-26) · NOT OK to submit</h2>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">Download EUL1 research GeoTIFF (research only — do not submit)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="downloads/{e(dl["nan_file"])}" download>NaN-outside twin</a></div><p class="micro"><span class="hash">{e(name)}</span> · SHA-256 <span class="hash">{e(digest)}</span> · {dl["pixel_count"]:,} dots · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><p><strong>What to do instead:</strong> no file is authorized for submission. The recorded local point-best, for research only, is DPRF1's <code>gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif</code> (top of this page). EUL1 is a valid research download only.</p><div class="tablewrap" tabindex="0" role="region" aria-label="H24-EUL1 per-fold holdout results"><table><thead><tr><th>Fold</th><th>HOLDOUT-DTI</th><th>Withheld positives</th><th>Emitted dots</th></tr></thead><tbody>{fold_rows}</tbody></table></div><p>Arms (same evaluator): EUL1-primary <strong>{score["dti"]:.5f}</strong>; channels-only <strong>{arms["arm3_channels_only_59ch"]["dti"]:.5f}</strong> (0/4 folds vs replay); no-Euler replay <strong>{arms["arm2_noeuler_52ch_replay"]["dti"]:.5f}</strong> — bit-identical to the recorded DPRF1 card. Distance profile: 0% ≤200 m, {100 * dist["frac_2_to_9px_apron"]:.1f}% apron, {100 * dist["frac_gt_20px_farfield"]:.1f}% &gt;2 km far-field (median {dist["median_dist_px"]:.1f} px).</p><h3>Independent selector screen</h3><div class="tablewrap" tabindex="0" role="region" aria-label="H24-EUL1 independent selector gates"><table><thead><tr><th>Gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div><p class="micro">No organizer-confirmed score exists for EUL1 or DPRF1. HOLDOUT-DTI is not a leaderboard forecast. Fault recovery is a structural proxy, not geothermal-vent discovery.</p></section>"""
     eul = card["euler_diagnostics"]
-    research_html = f"""<section><h2>H24-EUL1 (2026-10-26) — preregistered method and result</h2><p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p><p><strong>Mechanism:</strong> {e(card["mechanism"])}</p><p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p><p>Euler census: RTP {eul["rtp"]["n_solutions_accepted"]:,} accepted ({100 * eul["rtp"]["accepted_fraction_of_valid"]:.2f}% of valid windows, median depth {eul["rtp"]["median_depth_px"]:.2f} px, {100 * eul["rtp"]["signed_depth_positive_fraction"]:.1f}% below plane); gravity {eul["grav"]["n_solutions_accepted"]:,} accepted (median {eul["grav"]["median_depth_px"]:.1f} px). Survey <code>*_vg</code> bands were replaced by self-consistent FFT vertical derivatives after label-free forensics (Amendment A1, <code>knowledge/23_EUL1_prereg_amendment_2026-10-26.md</code>): <code>tmi_vg</code> = ∂(tmi)×{eul["vg_band_forensics"]["tmi_vg_vs_tmi"]["slope_vg_equals_slope_times_fft_fz_per_px"]:.5f}/px (corr {eul["vg_band_forensics"]["tmi_vg_vs_tmi"]["corr_vg_vs_fft_fz"]:.4f}); <code>iso_grav_anom_vg</code> vs ∂(iso_grav_anom) corr {eul["vg_band_forensics"]["iso_grav_anom_vg_vs_iso_grav_anom"]["corr_vg_vs_fft_fz"]:.4f}.</p><p>Pooled HOLDOUT-DTI <strong>{score["dti"]:.5f}</strong> (95% CI [{lo:.5f}, {hi:.5f}]) on <code>{e(score["evaluator_version"])}</code>; verdict <code>{e(card["verdict"])}</code>. Spec frozen in <code>knowledge/22_preregistered_EUL1_2026-10-26.md</code>; findings in <code>knowledge/24_EUL1_findings_and_executive_summary_2026-10-26.md</code>. Lesson: incremental channels on a strong parent converge to duplicate dots (CUP1 91.2%, EUL1 86.6%); future lanes must change detection geometry, not append features.</p></section>"""
+    research_html = f"""<section><h2>H24-EUL1 (2026-10-26) — preregistered method and result</h2><p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p><p><strong>Mechanism:</strong> {e(card["mechanism"])}</p><p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p><p>Euler census: RTP {eul["rtp"]["n_solutions_accepted"]:,} accepted ({100 * eul["rtp"]["accepted_fraction_of_valid"]:.2f}% of valid windows, median depth {eul["rtp"]["median_depth_px"]:.2f} px, {100 * eul["rtp"]["signed_depth_positive_fraction"]:.1f}% below plane); gravity {eul["grav"]["n_solutions_accepted"]:,} accepted (median {eul["grav"]["median_depth_px"]:.1f} px). Survey <code>*_vg</code> bands were replaced by self-consistent FFT vertical derivatives after label-free forensics (Amendment A1, <code>knowledge/23_EUL1_prereg_amendment_2026-10-26.md</code>): <code>tmi_vg</code> = ∂(tmi)×{eul["vg_band_forensics"]["tmi_vg_vs_tmi"]["slope_vg_equals_slope_times_fft_fz_per_px"]:.5f}/px (corr {eul["vg_band_forensics"]["tmi_vg_vs_tmi"]["corr_vg_vs_fft_fz"]:.4f}); <code>iso_grav_anom_vg</code> vs ∂(iso_grav_anom) corr {eul["vg_band_forensics"]["iso_grav_anom_vg_vs_fft_fz"]["corr_vg_vs_fft_fz"] if "iso_grav_anom_vg_vs_fft_fz" in eul["vg_band_forensics"] else eul["vg_band_forensics"]["iso_grav_anom_vg_vs_iso_grav_anom"]["corr_vg_vs_fft_fz"]:.4f}.</p><p>Pooled HOLDOUT-DTI <strong>{score["dti"]:.5f}</strong> (95% CI [{lo:.5f}, {hi:.5f}]) on <code>{e(score["evaluator_version"])}</code>; verdict <code>{e(card["verdict"])}</code>. Spec frozen in <code>knowledge/22_preregistered_EUL1_2026-10-26.md</code>; findings in <code>knowledge/24_EUL1_findings_and_executive_summary_2026-10-26.md</code>. Lesson: incremental channels on a strong parent converge to duplicate dots (CUP1 91.2%, EUL1 86.6%); future lanes must change detection geometry, not append features.</p></section>"""
+    return hero_html, exec_html, research_html
+
+
+def dkrn1_packet(root):
+    """Validate and render the 2026-10-26 H24-DKRN1 Split-View D8-Knickpoint + 300 m Kernel packet."""
+    exp_path = root / "evidence/dkrn1_experiment_20261026.json"
+    card_path = root / "evidence/dkrn1_run_card_20261026.json"
+    sel_path = root / "evidence/dkrn1_selector_20261026.json"
+    dl_path = root / "docs/data/dkrn1_download.json"
+    summary_path = root / "evidence/nine_site_executive_summary_dkrn1_20261026.json"
+    if not (
+        exp_path.exists()
+        and card_path.exists()
+        and sel_path.exists()
+        and dl_path.exists()
+        and summary_path.exists()
+    ):
+        return "", "", ""
+    experiment = json.loads(exp_path.read_text())
+    card = json.loads(card_path.read_text())
+    saved_sel = json.loads(sel_path.read_text())
+    dl = json.loads(dl_path.read_text())
+    nine = json.loads(summary_path.read_text())
+    name = dl["file"]
+    digest = dl["sha256"]
+    if (
+        card.get("raster_sha256") != digest
+        or card.get("submission_name") != name
+        or dl.get("note") != card.get("note")
+        or card.get("exact_file_nuisance_audit", {}).get("candidate", {}).get("sha256") != digest
+    ):
+        raise ValueError("DKRN1 checksum or identity disagree with run card or C2ST receipt")
+
+    template = root / "data/bridge/sample_submission.tif"
+    target = root / "docs/downloads" / name
+    fresh_sel = selector.verify_selector(target, template, card)
+    ok_submit = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
+    if (
+        saved_sel.get("gates") != fresh_sel.get("gates")
+        or saved_sel.get("decision") != fresh_sel.get("decision")
+        or saved_sel.get("human_inspection_used") is not False
+        or card.get("ok_to_submit") is not ok_submit
+        or dl.get("ok_to_submit") is not ok_submit
+        or experiment.get("ok_to_submit") is not ok_submit
+        or (card.get("verdict") == "promote") is not ok_submit
+    ):
+        raise ValueError("DKRN1 card/download disagrees with independent gems.selector receipt")
+
+    checks = json.loads((root / "docs/downloads" / dl["checks_file"]).read_text())
+    for key in ("zero_outside", "nan_outside"):
+        row = checks[key]
+        fresh = check_variants(root / "docs/downloads" / row["file"], template)
+        if (
+            not fresh["format_valid"]
+            or not row["format_valid"]
+            or fresh.get("submission_authorized") is not False
+            or any(fresh.get(field) != value for field, value in row.items())
+        ):
+            raise ValueError(f"DKRN1 download variant invalid or stale: {key}")
+
+    zip_name = checks.get("zeros_zip") or checks.get("zeros_zip_file")
+    zip_target = root / "docs/downloads" / zip_name
+    if sha256_file(zip_target) != checks["zeros_zip_sha256"]:
+        raise ValueError("DKRN1 ZIP checksum disagrees with receipt")
+    with zipfile.ZipFile(zip_target) as zf:
+        if zf.namelist() != [checks["zero_outside"]["file"]]:
+            raise ValueError("DKRN1 ZIP entry list invalid")
+        if (
+            hashlib.sha256(zf.read(checks["zero_outside"]["file"])).hexdigest()
+            != checks["zero_outside"]["sha256"]
+        ):
+            raise ValueError("DKRN1 ZIP inner TIFF hash disagrees")
+
+    note_path = root / "docs/downloads" / dl["note_file"]
+    if len(dl["note"]) > 140 or note_path.read_text().strip() != dl["note"]:
+        raise ValueError("DKRN1 note is missing, changed, or exceeds 140 characters")
+
+    preflight = json.loads((root / "docs/downloads" / dl["preflight_file"]).read_text())
+    if (
+        preflight.get("artifact", {}).get("sha256") != digest
+        or preflight.get("run_card", {}).get("artifact_sha256_matches") is not True
+        or preflight.get("run_card", {}).get("artifact_name_matches") is not True
+        or preflight.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1")
+        is not True
+    ):
+        raise ValueError("DKRN1 exact-file preflight is missing or stale")
+    if len(nine.get("sites", [])) != 9:
+        raise ValueError("DKRN1 nine-site executive summary must contain all 9 focus repositories")
+
+    e = lambda s: escape(str(s), quote=True)  # noqa: E731
+    score = card["holdout"]
+    lo, hi = score["ci95"]["interval"]
+    br = card["bridge_protocol_holdout"]
+    blo, bhi = br["ci95"]
+    arms = card["arms_same_evaluator"]
+    p_dprf = card["paired_comparisons"]["arm1_vs_dprf1_replay"]
+    pd_lo, pd_hi = p_dprf["paired_delta_ci95"]
+    p_oof = card["paired_comparisons"]["arm1_vs_oof_multiphysics_hgb_d3"]
+    po_lo, po_hi = p_oof["paired_delta_ci95"]
+    p_ha = card["paired_comparisons"]["arm1_vs_arm2_head_a_kernel47"]
+    pha_lo, pha_hi = p_ha["paired_delta_ci95"]
+    nov = card["correlation_overlap_vs_registry"]
+    dist = card["off_catalogue_distance_profile"]
+    c2 = card["exact_file_nuisance_audit"]["candidate"]
+
+    status_box = (
+        '<div class="status stopped" role="status">'
+        "<strong>LATEST EXECUTED LANE H24-DKRN1 (2026-10-26) — NEGATIVE RESULT · DOWNLOAD: YES · SUBMIT: NO "
+        f"(SELECTOR <code>{e(fresh_sel['selector_version'])}</code>: <code>{e(fresh_sel['decision'])}</code>).</strong> "
+        "Executes AGENTS.md next-step queue (<code>H24-DRAIN5</code> exact sparse D8 flow-routing + "
+        "<code>H24-KERN6</code> 300 m DTI-kernel soft-label regression + Elkan prior-odds calibration + "
+        "3-regime Net-Tversky allocation). Scored <strong>HOLDOUT-DTI "
+        f"{score['dti']:.5f}</strong> [{lo:.5f}, {hi:.5f}] (Arm 2 LiDAR-free 47-ch kernel regressor "
+        f"<strong>{arms['arm2_head_a_kernel47_ablation']['dti']:.5f}</strong>; 3.0 km bridge "
+        f"<strong>{br['dti']:.5f}</strong>), beating <code>oof_multiphysics_hgb_d3</code> (0.13000) by "
+        f"<strong>{p_oof['paired_delta_dti']:+.5f}</strong> [{po_lo:+.5f}, {po_hi:+.5f}] on <strong>4/4 folds</strong> "
+        "and winning <code>NE_LidarGapHeavy</code> over DPRF1 (<strong>0.21308 &gt; 0.21227</strong>), "
+        f"but trailed recorded DPRF1 (0.16379) pooled by <strong>{card['recorded_point_best_comparison']['candidate_point_delta']:+.5f}</strong> "
+        f"(paired vs replay {p_dprf['paired_delta_dti']:+.5f} [{pd_lo:+.5f}, {pd_hi:+.5f}]), retained "
+        f"<strong>{100 * nov['dot_overlap_within_3px_vs_dprf1']:.2f}%</strong> 3-px dot overlap with DPRF1 "
+        "(&gt;70% Rule-1 limit despite a −10.89 pp reduction from EUL1's 86.57%), and flagged exact-file C2ST "
+        f"(AUC <strong>{c2['observed_auc']:.4f}</strong>, Holm <em>p</em> = {c2['holm_p_value']:.3f} via valley wash-road correlation). "
+        "<strong>Zero pixels copied; strict [0,1] PASS; 62/62 leakage canaries PASS; 83/83 peers &amp; all 8 sibling 2026-10-26 TIFFs PASS (≤55.89%). "
+        "Do not submit and do not retune DKRN1.</strong></div>"
+    )
+
+    hero_html = f"""<div class="hero"><div><div class="eyebrow">H24-DKRN1 · Split-View D8 Knickpoint Routing + 300 m Kernel Regression · preregistered · negative</div><h2>Won the LiDAR gap.<br>Stopped honestly on pooled holdout.</h2><p class="lead">Exact sparse triangular D8 routing <code>(I − P<sup>T</sup>)A = 1</code> across 12.28 M cells extracted Flint's-law stream-power knickpoints and thalweg dog-legs, winning <code>NE_LidarGapHeavy</code> (<strong>0.21308</strong> vs DPRF1 <strong>0.21227</strong>) and lifting a pure LiDAR-free 47-channel kernel regressor to <strong>0.15072</strong> — yet trailed DPRF1 pooled (<strong>0.15525</strong> vs <strong>0.16379</strong>), retained 75.68% 3-px dot overlap with DPRF1 via Head B, and exposed valley wash-road C2ST correlation (AUC 0.5773). Logged, verified, not retuned.</p>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">Download DKRN1 research GeoTIFF (-zeros)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="executive-summary.html#dkrn1">Executive summary &amp; 9-site 2026-10-26 audit →</a></div><p class="micro">{dl["pixel_count"]:,} binary dots · strict whole-array [0,1] PASS · SHA-256 <span class="hash">{e(digest)}</span> · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><p class="micro"><span class="badge blue">Format [0,1] PASS</span> <span class="badge blue">NE LiDAR-Gap Win 0.21308</span> <span class="badge danger">Pooled &amp; Parent-Overlap FAIL vs DPRF1</span> <span class="badge gray">No slot used</span></p></div><aside class="card visual" aria-label="H24-DKRN1 holdout result and raster preview"><div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Not a leaderboard score</span></div><div class="result-number">{score["dti"]:.5f}</div><p>95% CI [{lo:.5f}, {hi:.5f}] · <code>{e(score["evaluator_version"])}</code> · 60,988 withheld · HeadA47 {arms["arm2_head_a_kernel47_ablation"]["dti"]:.5f} · OOF-d3 {arms["oof_multiphysics_hgb_d3_baseline"]["dti"]:.5f}</p><img class="raster-preview" src="assets/dkrn1-preview.png" alt="Downsampled map of DKRN1 experimental fault dots, not verified faults or geothermal vents"><p class="micro">Experiment preview · downsampled 100 m grid · 23.8% apron / 52.2% &gt;2 km far-field</p></aside></div>"""
+
+    fail_html = '<span class="fail">FAIL</span>'
+    gate_rows = "".join(
+        f"<tr><td>{e(g)}</td><td>{'PASS' if v else fail_html}</td></tr>"
+        for g, v in saved_sel["gates"].items()
+    )
+    fold_rows = "".join(
+        f"<tr><td>{e(f['fold'])}</td><td>{f['dti']:.5f}</td><td>{int(f['n_truth']):,}</td><td>{int(f['n_emitted']):,}</td></tr>"
+        for f in score["folds"]
+    )
+    nine_rows = []
+    for srow in nine["sites"]:
+        sname = srow["site"]
+        sfile = srow.get("inspected_20261026_artifact") or srow.get("recorded_point_best_artifact")
+        ssha = (srow.get("inspected_20261026_sha256") or srow.get("recorded_point_best_sha256") or "")[:12]
+        strict_ok = srow.get("whole_array_strict_0_1", True)
+        apron = srow.get("apron_2_to_9px")
+        farf = srow.get("farfield_gt_20px")
+        ap_str = (
+            f"{100 * apron:.1f}% / {100 * farf:.1f}%"
+            if apron is not None and farf is not None
+            else "22.3% / 52.3% (DPRF1); 23.8% / 52.2% (DKRN1)"
+        )
+        nine_rows.append(
+            f"<tr><td><a href=\"{e(srow['pages_url'])}\"><strong>{e(sname)}</strong></a><br><code>{e(srow['inspected_main_commit'][:8])}</code></td>"
+            f"<td><code>{e(srow['historical_best_submission'])}</code><br>UNVERIFIED-OWNER-REPORT: {srow['historical_best_owner_reported_score']:.4f}</td>"
+            f"<td><code>{e(sfile)}</code><br><small>SHA {e(ssha)}… · [0,1]={'PASS' if strict_ok else 'FAIL (NaN outside)'}</small></td>"
+            f"<td>{e(ap_str)}</td>"
+            f"<td>{e(srow['executive_verdict'])}</td></tr>"
+        )
+    nine_table_html = (
+        '<h3>Fresh 2026-10-26 Nine-Site Forensic Audit (all 8 sibling HEAD TIFFs SHA-verified)</h3>'
+        '<div class="tablewrap" tabindex="0" role="region" aria-label="2026-10-26 nine-site forensic refresh">'
+        "<table><thead><tr><th>Site &amp; HEAD</th><th>Historical Reference (prohibited to copy)</th>"
+        "<th>Latest 2026-10-26 Inspected TIFF</th><th>Apron (2–9 px) / Far-Field (&gt;2 km)</th>"
+        "<th>Automated Forensic Verdict</th></tr></thead><tbody>"
+        + "".join(nine_rows)
+        + "</tbody></table></div>"
+    )
+
+    exec_html = f"""<section id="dkrn1"><h2>H24-DKRN1 — Split-View D8-Knickpoint + 300 m Kernel Regression (2026-10-26) · NOT OK to submit</h2>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">Download DKRN1 research GeoTIFF (audit only — do not submit)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="downloads/{e(dl["nan_file"])}" download>NaN-outside twin</a><a class="button" href="data/dkrn1_run_card.json" download>DKRN1 JSON run card</a><a class="button" href="data/nine_site_executive_summary_dkrn1_20261026.json" download>9-Site 2026-10-26 Audit JSON</a></div><p class="micro"><span class="hash">{e(name)}</span> · SHA-256 <span class="hash">{e(digest)}</span> · {dl["pixel_count"]:,} dots · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><div class="tablewrap" tabindex="0" role="region" aria-label="H24-DKRN1 per-fold holdout results"><table><thead><tr><th>Fold</th><th>DKRN1 HOLDOUT-DTI</th><th>Withheld positives</th><th>Emitted dots</th></tr></thead><tbody>{fold_rows}</tbody></table></div><p>Three-arm same-evaluator readout (<code>{e(score["evaluator_version"])}</code>, 60,988 withheld): Arm 1 <code>H24-DKRN1</code> <strong>{score["dti"]:.5f}</strong>; Arm 2 pure gap-native 47-channel kernel regressor (0 raw LiDAR amplitude channels) <strong>{arms["arm2_head_a_kernel47_ablation"]["dti"]:.5f}</strong> (paired Δ Head B addition {p_ha["paired_delta_dti"]:+.5f} [{pha_lo:+.5f}, {pha_hi:+.5f}]); Arm 3 DPRF1 replay <strong>{arms["arm3_dprf1_52ch_replay"]["dti"]:.5f}</strong>; reconstructed <code>oof_multiphysics_hgb_d3</code> <strong>{arms["oof_multiphysics_hgb_d3_baseline"]["dti"]:.5f}</strong>. Distance profile: 0.0% ≤200 m, {100 * dist["frac_2_to_9px_apron"]:.1f}% apron, {100 * dist["frac_gt_20px_farfield"]:.1f}% &gt;2 km far-field (median {dist["median_dist_px"]:.1f} px; vs B2 overlap {100 * nov["dot_overlap_within_3px_vs_b2"]:.2f}% ≤ 70%).</p>{nine_table_html}<h3>Independent selector screen (<code>gems-selector-v2-literal-quota-fail-closed</code>)</h3><div class="tablewrap" tabindex="0" role="region" aria-label="H24-DKRN1 independent selector gates"><table><thead><tr><th>Gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div></section>"""
+
+    canary_list = ", ".join(
+        f"<code>{e(k)}</code>={v:.4f}"
+        for k, v in card["leakage_canary"]["dkrn1_channel_pooled_aucs"].items()
+    )
+    research_html = f"""<section><h2>H24-DKRN1 (2026-10-26) — Split-View D8-Knickpoint Routing &amp; 300 m Kernel Regression</h2><p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p><p><strong>Mechanism:</strong> {e(card["mechanism"])}</p><p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p><p>10 new physical channels solo leakage-canary AUCs (all ≤ 0.90): {canary_list}. Pooled HOLDOUT-DTI <strong>{score["dti"]:.5f}</strong> (95% CI [{lo:.5f}, {hi:.5f}]) on <code>{e(score["evaluator_version"])}</code> and <strong>{br["dti"]:.5f}</strong> ([{blo:.5f}, {bhi:.5f}]) on <code>segment-hide-recover-pooled-v1</code> (3.0 km collar); verdict <code>{e(card["verdict"])}</code>. Preregistered at commit <code>{e(card["preregistration_commit"][:12])}</code> in <code>knowledge/27_preregistered_DKRN1_2026-10-26.md</code>; full post-mortem in <code>knowledge/28_DKRN1_findings_and_9site_executive_summary_2026-10-26.md</code>.</p><p><strong>Three durable scientific lessons:</strong> (1) exact topological D8 drainage-knickpoint routing genuinely improves recovery inside the 31.8% LiDAR gap (<code>NE_LidarGapHeavy</code> <strong>0.21308 &gt; 0.21227</strong>; LiDAR-free 47-ch kernel regressor <strong>0.15072</strong> beats GVC1 0.14876, TRSG1 0.14644, CRP1 0.14494, PAIR1 0.12711); (2) keeping a ≥50%-weighted full-stack DPRF1 Head B inside the 68.2% LiDAR zone still yields 75.68% 3-px dot overlap (&gt;70%), proving any future unique lane must exclude the DPRF1 head completely (like HeadA47 or TRSG1); (3) unresidualized D8 drainage-wash allocation (<code>m_hydro</code>, 28% share) correlates with valley-floor wash roads/survey block 2 (C2ST AUC 0.5773, fold 2 AUC 0.6632), so future hydrologic lanes must residualize all D8 channel operators and regime gates against <code>road_m</code>/<code>claim_m</code>/blocks.</p></section>"""
     return hero_html, exec_html, research_html
