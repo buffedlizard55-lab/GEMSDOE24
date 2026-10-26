@@ -8,3 +8,6 @@
 
 /* Current lane: long hashes and evidence tables stay readable on small screens. */
 .pagehead .micro{font-size:12px;overflow-wrap:anywhere}.tablewrap:focus-visible{outline:3px solid #a8bcff;outline-offset:4px}
+
+/* Latest packet: readable inline code, link affordance and semantic metric label. */
+code{color:var(--ink)}main p a{text-decoration:underline;text-underline-offset:2px}.cardtop .metric-label{font-size:14px;font-weight:700;letter-spacing:0;margin:0}.grid2>*,.hero>*{min-width:0}

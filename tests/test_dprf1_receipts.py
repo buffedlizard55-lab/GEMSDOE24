@@ -87,9 +87,9 @@ def test_dprf1_recorded_artifacts_verify_and_refuse_implicit_rerun():
     payload = json.loads(res.stdout)
     assert payload["verified"] is True
     assert payload["experiment_rerun"] is False
-    assert payload["verdict"] == "promote"
-    assert payload["ok_to_submit"] is True
-    assert payload["selector_decision"] == "OK_TO_SUBMIT"
+    assert payload["verdict"] == "negative"
+    assert payload["ok_to_submit"] is False
+    assert payload["selector_decision"] == "DO_NOT_SUBMIT"
     assert payload["competing_method_novelty_passed"] is True
     assert payload["competing_method_max_3px_overlap"] <= 0.70
     assert payload["c2st_auc"] < 0.55
@@ -114,7 +114,7 @@ def test_dprf1_recorded_artifacts_verify_and_refuse_implicit_rerun():
     assert card["submission_slots_used"] == 0
     assert card["organizer_confirmed_score"] is None
     assert 0 < len(card["note"]) <= 140
-    assert card["correlation_overlap_vs_registry"]["competing_method_rasters_checked"] == 56
+    assert card["correlation_overlap_vs_registry"]["competing_method_rasters_checked"] == 57
 
     zeros = ROOT / "docs/downloads" / card["submission_name"]
     nan_p = ROOT / "docs/downloads" / card["nan_outside_artifact"]
@@ -124,8 +124,8 @@ def test_dprf1_recorded_artifacts_verify_and_refuse_implicit_rerun():
     assert sha256_file(zip_p) == card["zip_sha256"] == dl["zip_sha256"]
 
     fresh_sel = selector.verify_selector(zeros, TEMPLATE, card)
-    assert fresh_sel["ok_to_submit"] is True
-    assert fresh_sel["decision"] == "OK_TO_SUBMIT"
+    assert fresh_sel["ok_to_submit"] is False
+    assert fresh_sel["decision"] == "DO_NOT_SUBMIT"
     assert fresh_sel["human_inspection_used"] is False
     assert fresh_sel["gates"] == saved_sel["gates"]
 

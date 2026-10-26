@@ -156,12 +156,11 @@ def test_sahg1_recorded_receipt_and_artifacts():
     assert v_n["format_valid"] and not v_n["ok_to_upload"] and not v_n["submission_authorized"]
 
 
-def test_sahg1_is_on_first_screen_and_rejects_checksum_tampering(tmp_path):
+def test_sahg1_is_retained_and_rejects_checksum_tampering(tmp_path):
     dl = json.loads((ROOT / "docs/data/sahg1_download.json").read_text())
     for page in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         html = (ROOT / page).read_text()
         assert f'download="{dl["file"]}"' in html
         assert f'download="{dl["nan_file"]}"' in html
         assert "H24-SAHG1" in html and "oof_multiphysics_hgb_d3" in html
-        if 'class="metrics"' in html:
-            assert html.index(dl["file"]) < html.index('class="metrics"')
+        assert html.index('id="historical-') < html.index(dl["file"])

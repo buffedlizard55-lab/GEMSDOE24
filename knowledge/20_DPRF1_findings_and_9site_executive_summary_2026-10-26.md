@@ -12,12 +12,12 @@
 - **Single-GeoTIFF Portal ZIP (`-zeros.zip`):**
   `docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.zip`
   - **SHA-256:** `b30908d9f43cb3dedff86cd5821df97c06b2f273470a9997848ea53c254f97ba`
-- **Short Submission Note (`112 / 140` chars):**
-  `GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | selector OK_TO_SUBMIT`
+- **Short Submission Note (`115 / 140` chars):**
+  `GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; DO NOT SUBMIT`
 - **JSON Run Card:** [`evidence/dprf1_run_card_20261026.json`](../evidence/dprf1_run_card_20261026.json) (mirrored at `docs/data/dprf1_run_card.json`)
-- **Independent Selector Receipt (`gems-selector-v1`):** [`evidence/dprf1_selector_20261026.json`](../evidence/dprf1_selector_20261026.json) (`decision: "OK_TO_SUBMIT"`, `ok_to_submit: true`, `human_inspection_used: false`)
+- **Fail-Closed Selector v2 Receipt (`gems-selector-v2-literal-quota-fail-closed`):** [`evidence/dprf1_selector_20261026.json`](../evidence/dprf1_selector_20261026.json) (`decision: "DO_NOT_SUBMIT"`, `ok_to_submit: false`, `human_inspection_used: false`)
 - **Nine-Site Forensic Receipt:** [`evidence/nine_site_executive_summary_20261026.json`](../evidence/nine_site_executive_summary_20261026.json)
-- **Automated Gate Status:** **10 / 10 Technical Validation Gates PASSED** (`technical_promotion_gates_passed = true`) & **9 / 9 Independent Selector Gates PASSED** (`gems.selector.verify_selector` v1: **`OK_TO_SUBMIT`**, `verdict: "promote"`, `ok_to_submit: true`, `0` weekly competition slots spent by agent; user confirms remaining weekly quota on the DrivenData submission page before uploading).
+- **Automated Gate Status:** **10 / 10 Competing-Method Technical Gates PASSED** (`technical_promotion_gates_passed = true`; `57 / 57` competing method rasters `<= 55.78% <= 70%`) · **Automated Selector v2 Status: `DOWNLOAD: YES · SUBMIT: NO` (`DO_NOT_SUBMIT`, `verdict: "negative"`, `0` weekly slots spent; fail-closed on retained `registry-039` spacing-5 calibration lattice, unknown live DrivenData quota, and missing independent replay certificate).**
 
 ---
 

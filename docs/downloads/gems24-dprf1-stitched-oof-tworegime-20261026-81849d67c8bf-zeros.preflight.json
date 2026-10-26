@@ -113,21 +113,23 @@
     "artifact_name_matches": true,
     "validator_sha256_matches": true,
     "validator_format_valid": true,
-    "verdict_promote": true,
-    "submission_authorized": true,
+    "verdict_promote": false,
+    "submission_authorized": false,
     "scientific_authorization": false,
     "independent_selector_verified": false,
     "reason_codes": [
+      "RUN_CARD_NOT_PROMOTED",
+      "RUN_CARD_NOT_AUTHORIZED",
       "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED"
     ],
-    "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | selector OK_TO_SUBMIT"
+    "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; DO NOT SUBMIT"
   },
   "note": {
     "present": true,
-    "characters": 112,
+    "characters": 114,
     "limit": 140,
     "within_limit": true,
-    "value": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | selector OK_TO_SUBMIT"
+    "value": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; DO NOT SUBMIT"
   },
   "requirements": {
     "single_tif_and_footprint_format": true,
@@ -142,6 +144,8 @@
     "ready_to_submit": false,
     "blockers": [
       "hash_bound_scientific_promotion",
+      "RUN_CARD_NOT_PROMOTED",
+      "RUN_CARD_NOT_AUTHORIZED",
       "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED"
     ],
     "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score."

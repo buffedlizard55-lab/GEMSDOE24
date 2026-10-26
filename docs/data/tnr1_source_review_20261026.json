@@ -1,0 +1,139 @@
+{
+  "checked_utc": "2026-10-26T00:43:06.713474+00:00",
+  "transport": "public GitHub codeload archive; immutable commit; no DrivenData requests",
+  "commit": "aebe92f7c8a990f0e3443451b7a825d9afd6336b",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "cfa4d55559c9128313beb9417eae7e0a94c31677132afb1120f9e86222804239",
+      "git_blob": "a8814f99c395d12a8e1c3731c738e61d7dca06b5",
+      "source_url": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/README.md"
+    },
+    {
+      "path": "unet-mc-cv-reference-solution.ipynb",
+      "sha256": "1a7622732ba00f67237058bc0efe79b45ba4e87c449fc9c1e5d6ea659de92ca0",
+      "git_blob": "d45bf7bdb1d31a22caa38371ad195c2f6eb965ae",
+      "source_url": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/unet-mc-cv-reference-solution.ipynb"
+    }
+  ],
+  "source_extracts": [
+    {
+      "file": "README.md",
+      "line": 19,
+      "text": "   **GPU** and a **CPU-only** flavor \u2014 pick one based on your hardware (see"
+    },
+    {
+      "file": "README.md",
+      "line": 20,
+      "text": "   [Choosing GPU vs. CPU](#choosing-gpu-vs-cpu) below)."
+    },
+    {
+      "file": "README.md",
+      "line": 25,
+      "text": "   uv sync --locked --extra cu126   # NVIDIA GPU, CUDA 12.6"
+    },
+    {
+      "file": "README.md",
+      "line": 26,
+      "text": "   uv sync --locked --extra cu130   # NVIDIA GPU, CUDA 13.0"
+    },
+    {
+      "file": "README.md",
+      "line": 27,
+      "text": "   uv sync --locked --extra cpu     # CPU-only (and Apple Silicon / MPS)"
+    },
+    {
+      "file": "README.md",
+      "line": 33,
+      "text": "   conda env create -f environment.yml       # GPU where available (CUDA or Apple MPS)"
+    },
+    {
+      "file": "README.md",
+      "line": 34,
+      "text": "   conda env create -f environment-cpu.yml   # CPU-only"
+    },
+    {
+      "file": "README.md",
+      "line": 45,
+      "text": "## Choosing GPU vs. CPU"
+    },
+    {
+      "file": "README.md",
+      "line": 47,
+      "text": "Training is much faster on a GPU, so use one if you have it."
+    },
+    {
+      "file": "README.md",
+      "line": 49,
+      "text": "- **NVIDIA GPU:** Pick the option matching your installed CUDA driver. CUDA 12.6"
+    },
+    {
+      "file": "README.md",
+      "line": 54,
+      "text": "  for conda. The standard macOS PyTorch build includes the Metal (MPS) GPU backend \u2014"
+    },
+    {
+      "file": "README.md",
+      "line": 55,
+      "text": "  there are no separate \"Mac GPU\" wheels. The notebook automatically uses MPS when"
+    },
+    {
+      "file": "README.md",
+      "line": 57,
+      "text": "- **No GPU:** Use the `cpu` option (uv) or `environment-cpu.yml` (conda) for the"
+    },
+    {
+      "file": "unet-mc-cv-reference-solution.ipynb",
+      "cell_index": 0,
+      "text": "# GEMS Prize Reference Solution\n\n_author_: John Lipor, Associate Professor at Portland State University\n\n# Fault Detection Using U-Net with Monte Carlo Cross-Validation\n\nThis benchmark notebook implements a deep learning approach to geological fault detection. \nThe solution uses an ensemble of U-Net models trained across multiple train/test splits to \nproduce predictions.\n\n### Approach Overview:\n\n1. Load and pre-process multi-channel geospatial features (elevation, gradients, etc.) and fault labels\n\n1. Split feature and fault label rasters into patches\n\n1. Train U-Net models on patches with data augmentation, applying random train/test splits for cross-validation, and using a Tversky loss function weighted to penalize false negatives more than false positives\n\n1. Average predictions from best model across each iteration for final output\n\n### Steps to run this notebook\n\n1. Create a python environment and install the required dependencies using your chosen package manager.\n1. Download the feature data and fault label GeoTIFFs from the [data download page](https://www.drivendata.org/competitions/306/competition-doe-gems/data/) into the `data/` directory.\n1. Run the notebook!"
+    },
+    {
+      "file": "unet-mc-cv-reference-solution.ipynb",
+      "cell_index": 5,
+      "text": "# Load feature data, print out band information\nbands = []\nwith rasterio.open(FEATURE_DATA_PATH) as src:\n    feature_meta = src.meta.copy()\n    feature_nodata = src.nodata\n    feature_transform = src.transform\n    feature_crs = src.crs\n    print(\"Feature data metadata:\")\n    print(f\"  Width: {src.width}\")\n    print(f\"  Height: {src.height}\")\n    print(f\"  CRS: {src.crs}\")\n    print(f\"  Resolution: {src.res[0]} x {src.res[1]}\")\n    print(f\"  Data type: {src.dtypes[0]}\")\n    print(f\"  nodata value: {src.nodata}\")\n    print(\"Feature data bands:\")\n    for i in range(1, src.count + 1):\n        band_meta = src.tags(i)\n        print(\n            f\"Band {i}: {band_meta['description']} (Category: {band_meta['data_category']})\"\n        )\n        bands.append(band_meta)\n\n    feature_data = src.read()\n\nX_orig = feature_data\nX_orig[X_orig < -1e38] = np.nan\n\n# reshape to (height, width, n_features)\nX_orig = np.moveaxis(X_orig, 0, -1)\n\n\n# normalize all channels to [0, 1]\nX_orig = (X_orig - np.nanmin(X_orig, axis=(0, 1))) / (\n    np.nanmax(X_orig, axis=(0, 1)) - np.nanmin(X_orig, axis=(0, 1))\n)\nn_features = X_orig.shape[-1]\nprint(f\"Feature data shape after loading: {X_orig.shape}\")"
+    },
+    {
+      "file": "unet-mc-cv-reference-solution.ipynb",
+      "cell_index": 6,
+      "text": "# Load fault label data\nwith rasterio.open(FAULT_LABELS_PATH) as src:\n    label_meta = src.meta.copy()\n    label_nodata = src.nodata\n    label_transform = src.transform\n    label_crs = src.crs\n    print(\"Fault label data metadata:\")\n    print(f\"  Width: {src.width}\")\n    print(f\"  Height: {src.height}\")\n    print(f\"  CRS: {src.crs}\")\n    print(f\"  Resolution: {src.res[0]} x {src.res[1]}\")\n    print(f\"  Data type: {src.dtypes[0]}\")\n    print(f\"  nodata value: {src.nodata}\")\n    print(\"Fault label data bands:\")\n    band_meta = src.tags(1)\n    print(\n        f\"Band {i}: {band_meta['description']} (Category: {band_meta['data_category']})\"\n    )\n    fault_labels = src.read(1).astype(np.float32)\n    print(f\"Shape: {fault_labels.shape}\")\n\n\ny_orig = fault_labels\ny_orig[y_orig < 1] = 0"
+    },
+    {
+      "file": "unet-mc-cv-reference-solution.ipynb",
+      "cell_index": 8,
+      "text": "# show known faults\nplt.figure(figsize=(10, 10))\nplt.imshow(y_orig, cmap=\"gray_r\", vmin=-0.1, vmax=1)\nplt.title(\"Known Faults\")"
+    },
+    {
+      "file": "unet-mc-cv-reference-solution.ipynb",
+      "cell_index": 12,
+      "text": "def make_patches(X, y, patch_size, test_proportion=0.3, seed=None, train_step=32):\n    \"\"\"\n    Split images into patches for training and testing a neural network model.\n\n    This function takes input features (X) and labels (y), pads them to be divisible by\n    the patch size, and creates two sets of patches:\n    - Test set: non-overlapping patches randomly selected\n    - Training set: overlapping patches (with custom step size) from remaining areas\n\n    Parameters:\n    -----------\n    X : numpy.ndarray\n        Input features array of shape (height, width, n_features)\n    y : numpy.ndarray\n        Label array of shape (height, width)\n    patch_size : int\n        Size of square patches (patch_size x patch_size)\n    test_proportion : float, optional (default=0.3)\n        Proportion of valid patches to use for testing (0.0 to 1.0)\n    seed : int, optional (default=None)\n        Random seed for reproducibility. If None, uses seed=0\n    train_step : int, optional (default=32)\n        Step size for creating overlapping training patches. Smaller values create more overlap\n\n    Returns:\n    --------\n    X_train : torch.Tensor\n        Training features of shape (n_train, n_features, patch_size, patch_size)\n    y_train : torch.Tensor\n        Training labels of shape (n_train, patch_size, patch_size)\n    X_test : torch.Tensor\n        Test features of shape (n_test, n_features, patch_size, patch_size)\n    y_test : torch.Tensor\n        Test labels of shape (n_test, patch_size, patch_size)\n    test_inds : list of tuples\n        List of (row, col) indices indicating which patches were used for testing\n\n    Notes:\n    ------\n    - Only patches containing labels (y > 0) and valid elevation data (channel 4) are included\n    - NaN values in features are replaced with 0\n    - Output tensors are in PyTorch format (channels first)\n    \"\"\"\n\n    if seed is None:\n        seed = 0\n    rng = np.random.default_rng(seed)\n\n    n_features = X.shape[-1]\n\n    # pad image to be divisible by patch_size\n    pad = patch_size - np.array(X.shape[:2]) % patch_size\n    X = np.pad(\n        X, ((0, pad[0]), (0, pad[1]), (0, 0)), mode=\"constant\", constant_values=np.nan\n    )\n    y = np.pad(y, ((0, pad[0]), (0, pad[1])), mode=\"constant\", constant_values=0)\n\n    # create patches\n    patch_shape_labels = (patch_size, patch_size)\n    patch_shape_features = (patch_size, patch_size, n_features)\n    step = patch_size\n    X_patches = patchify(X, patch_shape_features, step)\n    y_patches = patchify(y, patch_shape_labels, step)\n\n    # find patches within the study area and containing elevation (channel 4)\n    good_inds = []\n    for ii in range(y_patches.shape[0]):\n        for jj in range(y_patches.shape[1]):\n            if np.any(y_patches[ii, jj]) and not np.all(\n                np.isnan(X_patches[ii, jj, 0, :, :, 4])\n            ):  # check if all values are NaN\n                good_inds.append((ii, jj))\n\n    # split out test set\n    n_test = int(test_proportion * len(good_inds))\n    test_inds = rng.choice(range(len(good_inds)), n_test, replace=False)\n    test_inds = [good_inds[i] for i in test_inds]\n\n    # create test set\n    X_test = np.zeros((n_test, patch_size, patch_size, n_features))\n    y_test = np.zeros((n_test, patch_size, patch_size))\n    for i, (ii, jj) in enumerate(test_inds):\n        X_test[i] = X_patches[ii, jj]\n        y_test[i] = y_patches[ii, jj]\n        X_patches[ii, jj] = 0\n        y_patches[ii, jj] = 0\n\n    # recombine to generate training set with overlap\n    X_recovered = unpatchify(X_patches, (X.shape[0], X.shape[1], n_features))\n    y_recovered = unpatchify(y_patches, (X.shape[0], X.shape[1]))\n\n    # generate new patches\n    patch_shape_features = (patch_size, patch_size, n_features)\n    patch_shape_labels = (patch_size, patch_size)\n    X_patches = patchify(X_recovered, patch_shape_features, train_step)\n    y_patches = patchify(y_recovered, patch_shape_labels, train_step)\n\n    # find patches within the study area and containing elevation (channel 4)\n    good_inds = []\n    for ii in range(y_patches.shape[0]):\n        for jj in range(y_patches.shape[1]):\n            if np.any(y_patches[ii, jj]) and not np.all(\n                np.isnan(X_patches[ii, jj, 0, :, :, 4])\n            ):  # check if all values are NaN\n                good_inds.append((ii, jj))\n\n    # create training set\n    X_train = np.zeros((len(good_inds), patch_size, patch_size, n_features))\n    y_train = np.zeros((len(good_inds), patch_size, patch_size))\n    for i, (ii, jj) in enumerate(good_inds):\n        X_train[i] = X_patches[ii, jj]\n        y_train[i] = y_patches[ii, jj]\n\n    # reshape to channels x height x width, which is the format expected by PyTorch\n    X_train = torch.from_numpy(X_train).float()\n    y_train = torch.from_numpy(y_train).float()\n    X_test = torch.from_numpy(X_test).float()\n    y_test = torch.from_numpy(y_test).float()\n    X_train = X_train.permute(0, 3, 1, 2)\n    X_train = torch.nan_to_num(X_train)\n    X_test = X_test.permute(0, 3, 1, 2)\n    X_test = torch.nan_to_num(X_test)\n    y_train = torch.nan_to_num(y_train)\n    y_test = torch.nan_to_num(y_test)\n\n    return X_train, y_train, X_test, y_test, test_inds"
+    },
+    {
+      "file": "unet-mc-cv-reference-solution.ipynb",
+      "cell_index": 14,
+      "text": "# custom dataset class\nclass ImageDataset(Dataset):\n    def __init__(self, X, y, transform=None):\n        self.X = X\n        self.y = y\n        self.transform = transform\n\n    def __len__(self):\n        return self.X.shape[0]\n\n    def __getitem__(self, idx):\n        # for some image transformations to work correctly, we need to cast the faults as a Mask object\n        if self.transform:\n            return self.transform(self.X[idx], tv_tensors.Mask(self.y[idx]))\n        else:\n            return self.X[idx], tv_tensors.Mask(self.y[idx])"
+    },
+    {
+      "file": "unet-mc-cv-reference-solution.ipynb",
+      "cell_index": 19,
+      "text": "# match size to original image\ny_final = y_combined[: y_orig.shape[0], : y_orig.shape[1]]\n\n# get CRS and georeferencing from faults.tif\nfname_out = \"predicted_faults_example.tif\"\nfault_dataset = rasterio.open(FAULT_LABELS_PATH)\n\nnew_dataset = rasterio.open(\n    fname_out,\n    \"w\",\n    driver=\"GTiff\",\n    height=y_final.shape[0],\n    width=y_final.shape[1],\n    count=1,\n    dtype=y_final.dtype,\n    crs=fault_dataset.crs,\n    transform=fault_dataset.transform,\n)\nnew_dataset.write(y_final, 1)\nnew_dataset.close()"
+    }
+  ],
+  "cached_usgs_files": [
+    {
+      "path": "data/external/audit_sources/GeoDAWN_ReadMe.pdf",
+      "sha256": "d799ddef5f653723a12bec5d044b97ae7dc92228341daf10023d3bde77d37fdf",
+      "freshly_fetched": false
+    },
+    {
+      "path": "data/external/audit_sources/GeoDAWN_ReadMe.pdf.txt",
+      "sha256": "c97899470f7ae4fc35112087ffa3c15a83e261655cf67c87a4ec34b285e11963",
+      "freshly_fetched": false
+    }
+  ],
+  "not_verified": [
+    "Current DrivenData leaderboard/weekly quota/portal acceptance",
+    "Original organizer authentication of owner feature mirror",
+    "Independent distance-weighted evaluation service implementation",
+    "New external USGS/GDR/NLR literature or data availability"
+  ]
+}

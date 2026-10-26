@@ -2637,7 +2637,7 @@
     "final_dots_methods": {
       "stage": "final_dots",
       "passed": false,
-      "registry_unique_rasters": 57,
+      "registry_unique_rasters": 58,
       "raw_rank_scope": "exact over all footprint pixels",
       "raw_rank_pixels": 5167373,
       "kernel_rank_sample_size": 200000,
@@ -3218,11 +3218,21 @@
           "candidate_dot_overlap_within_3px": 0.33813140702183037,
           "duplicate": false,
           "entry_role": "competing_method_lane"
+        },
+        {
+          "registry_id": "local-20261026-tnr1",
+          "file": "docs/downloads/gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif",
+          "footprint_sha256": "3b8f54427892125995b0b672881aaf905d0e262031824536cde6f0e0cb9753c8",
+          "raw_spearman": 0.034002106252145954,
+          "kernel_spearman": 0.27215982348424034,
+          "candidate_dot_overlap_within_3px": 0.361289637223137,
+          "duplicate": false,
+          "entry_role": "competing_method_lane"
         }
       ],
       "method_lane_passed": true,
       "literal_all_entries_passed": false,
-      "competing_method_rasters_count": 56,
+      "competing_method_rasters_count": 57,
       "calibration_control_rasters_count": 1,
       "method_lane_max_abs_rank_correlation": 0.3467641405225967,
       "method_lane_max_dot_overlap": 0.557815902692941,
@@ -3776,7 +3786,7 @@
     ],
     "distance_units": "metres on a 100 m seed raster; boundary/PLSS uncertainty retained"
   },
-  "ok_to_submit": true,
+  "ok_to_submit": false,
   "run_card": {
     "schema_version": 2,
     "generated_utc": "2026-10-26T01:27:03.623601+00:00",
@@ -3996,6 +4006,13 @@
           0.16459534044563684
         ],
         "competing_3px_overlap": 0.9119615445902162
+      },
+      "H24_TNR1_recorded_overlap_failed": {
+        "dti": 0.13219180093505795,
+        "ci95": [
+          0.1179079641652387,
+          0.1454617440443537
+        ]
       }
     },
     "paired_comparisons": {
@@ -4317,8 +4334,8 @@
       "oof_surface_auc": 0.6882861171754373
     },
     "correlation_overlap_vs_registry": {
-      "total_registry_entries_checked": 57,
-      "competing_method_rasters_checked": 56,
+      "total_registry_entries_checked": 58,
+      "competing_method_rasters_checked": 57,
       "calibration_control_rasters_checked": 1,
       "peer_blobs_checked": 83,
       "pre_placement_surface_max_abs_rank_correlation": 0.40996331425920324,
@@ -4472,7 +4489,7 @@
       "peer_blobs_83_novelty_passed": true,
       "exact_file_c2st_nuisance_passed": true,
       "stitched_oof_apron_debiasing_verified": true,
-      "competing_method_novelty_56_rasters_passed": true
+      "competing_method_novelty_57_rasters_passed": true
     },
     "technical_promotion_gates_passed": true,
     "raster_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
@@ -4503,18 +4520,19 @@
       "positive_pixels": 37654
     },
     "submission_name": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
-    "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | selector OK_TO_SUBMIT",
-    "note_length": 112,
-    "verdict": "promote",
+    "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; DO NOT SUBMIT",
+    "note_length": 114,
+    "verdict": "negative",
     "ok_to_download": true,
-    "ok_to_submit": true,
-    "submission_authorized": true,
+    "ok_to_submit": false,
+    "submission_authorized": false,
     "submission_slots_used": 0,
     "organizer_confirmed_score": null,
     "governance_hold_reasons": [
-      "Independent selector (gems-selector-v1) PASSED all gates (decision: OK_TO_SUBMIT); user must still confirm remaining weekly quota on DrivenData submission page (quota_status: unknown_owner_must_confirm_on_submission_page)",
-      "gems.preflight schema v2 stays format-only (INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED) while gems.selector.verify_selector provides the independent scientific authorization",
-      "Retained synthetic spacing-5 calibration lattice (registry-039) covers 99.87% of footprint at 3 px and is classified as a calibration control by gems.novelty.classify_registry_entry"
+      "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.1637924246971501 vs recorded best 0.1637924246971501, paired CI lower=0.020856953903675257",
+      "g4_registry_novelty: surface|rho|=0.40996331425920324, final|rho|=0.3467641405225967, method overlap=0.557815902692941, peer overlap=0.5494237000053115",
+      "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
+      "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
     ],
     "paired_vs_baseline": {
       "ci95": [
@@ -4559,8 +4577,8 @@
       "holm_p_value": 0.1
     },
     "selector_receipt": {
-      "selector_version": "gems-selector-v1",
-      "decided_utc": "2026-10-26T01:47:34.552319+00:00",
+      "selector_version": "gems-selector-v2-literal-quota-fail-closed",
+      "decided_utc": "2026-10-26T02:05:29.868653+00:00",
       "artifact": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
       "artifact_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
       "human_inspection_used": false,
@@ -4569,23 +4587,32 @@
         "artifact_name_matches_run_card": true,
         "g1_format_strict_0_1": true,
         "g2_leakage_canary": true,
-        "g3_holdout_beats_recorded_best_and_paired_baseline": true,
-        "g4_registry_novelty": true,
+        "g3_holdout_beats_recorded_best_and_paired_baseline": false,
+        "g4_registry_novelty": false,
         "g5_exact_file_c2st": true,
         "note_at_most_140_chars": true,
-        "budget_and_no_slot_spent": true
+        "budget_and_no_slot_spent": true,
+        "current_account_quota_independently_verified": false,
+        "complete_independent_replay_certificate": false
       },
-      "all_gates_passed": true,
-      "ok_to_submit": true,
-      "decision": "OK_TO_SUBMIT",
-      "quota_status": "unknown_owner_must_confirm_on_submission_page",
-      "reasons": [],
-      "scope": "Project scientific gates only; not an organizer score, acceptance guarantee, or quota check. The agent never uploads."
+      "all_gates_passed": false,
+      "ok_to_submit": false,
+      "decision": "DO_NOT_SUBMIT",
+      "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
+      "recorded_scientific_screen_passed": false,
+      "current_point_best_source": "evidence/dprf1_run_card_20261026.json",
+      "reasons": [
+        "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.1637924246971501 vs recorded best 0.1637924246971501, paired CI lower=0.020856953903675257",
+        "g4_registry_novelty: surface|rho|=0.40996331425920324, final|rho|=0.3467641405225967, method overlap=0.557815902692941, peer overlap=0.5494237000053115",
+        "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
+        "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
+      ],
+      "scope": "Recorded-evidence screening and exact-file validation only; positive authorization is not implemented. Not an organizer score, quota record or acceptance guarantee. The agent never uploads."
     }
   },
   "selector_receipt": {
-    "selector_version": "gems-selector-v1",
-    "decided_utc": "2026-10-26T01:47:34.552319+00:00",
+    "selector_version": "gems-selector-v2-literal-quota-fail-closed",
+    "decided_utc": "2026-10-26T02:05:29.868653+00:00",
     "artifact": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
     "artifact_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
     "human_inspection_used": false,
@@ -4594,17 +4621,26 @@
       "artifact_name_matches_run_card": true,
       "g1_format_strict_0_1": true,
       "g2_leakage_canary": true,
-      "g3_holdout_beats_recorded_best_and_paired_baseline": true,
-      "g4_registry_novelty": true,
+      "g3_holdout_beats_recorded_best_and_paired_baseline": false,
+      "g4_registry_novelty": false,
       "g5_exact_file_c2st": true,
       "note_at_most_140_chars": true,
-      "budget_and_no_slot_spent": true
+      "budget_and_no_slot_spent": true,
+      "current_account_quota_independently_verified": false,
+      "complete_independent_replay_certificate": false
     },
-    "all_gates_passed": true,
-    "ok_to_submit": true,
-    "decision": "OK_TO_SUBMIT",
-    "quota_status": "unknown_owner_must_confirm_on_submission_page",
-    "reasons": [],
-    "scope": "Project scientific gates only; not an organizer score, acceptance guarantee, or quota check. The agent never uploads."
+    "all_gates_passed": false,
+    "ok_to_submit": false,
+    "decision": "DO_NOT_SUBMIT",
+    "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
+    "recorded_scientific_screen_passed": false,
+    "current_point_best_source": "evidence/dprf1_run_card_20261026.json",
+    "reasons": [
+      "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.1637924246971501 vs recorded best 0.1637924246971501, paired CI lower=0.020856953903675257",
+      "g4_registry_novelty: surface|rho|=0.40996331425920324, final|rho|=0.3467641405225967, method overlap=0.557815902692941, peer overlap=0.5494237000053115",
+      "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
+      "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
+    ],
+    "scope": "Recorded-evidence screening and exact-file validation only; positive authorization is not implemented. Not an organizer score, quota record or acceptance guarantee. The agent never uploads."
   }
 }

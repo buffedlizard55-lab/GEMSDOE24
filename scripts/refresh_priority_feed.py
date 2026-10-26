@@ -21,21 +21,12 @@ def check(row):
     repo, ref = row["repo"], row["ref"]
     base = {"repo": repo, "pinned_ref": ref, "url": f"https://github.com/{repo}"}
     try:
-        try:
-            value = subprocess.check_output(
-                ["gh", "api", f"repos/{repo}/commits/main", "--jq", ".sha"],
-                text=True,
-                stderr=subprocess.PIPE,
-                timeout=30,
-            ).strip()
-        except subprocess.CalledProcessError:
-            ls_out = subprocess.check_output(
-                ["git", "ls-remote", f"https://github.com/{repo}.git", "refs/heads/main"],
-                text=True,
-                stderr=subprocess.PIPE,
-                timeout=30,
-            ).strip()
-            value = ls_out.split()[0] if ls_out else ""
+        value = subprocess.check_output(
+            ["gh", "api", f"repos/{repo}/commits/main", "--jq", ".sha"],
+            text=True,
+            stderr=subprocess.PIPE,
+            timeout=30,
+        ).strip()
         if len(value) != 40 or any(c not in "0123456789abcdef" for c in value):
             raise ValueError("Invalid Git commit returned")
         return {
@@ -95,6 +86,11 @@ def validate_feed(data, sources):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--offline", action="store_true")
+    ap.add_argument(
+        "--from-owner-snapshot",
+        type=Path,
+        help="Reuse an already checked all-owner source snapshot; keep its original timestamp",
+    )
     args = ap.parse_args()
     path = ROOT / "docs/data/priority_feed.json"
     sources = json.loads((ROOT / "registry/priority_rasters.json").read_text())["sources"]
@@ -102,9 +98,29 @@ def main():
         validate_feed(json.loads(path.read_text()), sources)
         print("Offline priority feed schema valid; source timestamps unchanged")
         return
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        rows = list(pool.map(check, sources))
-    now = datetime.now(timezone.utc).isoformat()
+    if args.from_owner_snapshot:
+        from review_owner_sites import validate
+
+        snapshot = validate(json.loads(args.from_owner_snapshot.read_text()))
+        if snapshot.get("refresh_status") == "error":
+            raise ValueError("Cannot convert a stale all-owner snapshot into fresh priority checks")
+        by_repo = {row["repo"]: row for row in snapshot["rows"]}
+        rows = [
+            {
+                "repo": row["repo"],
+                "pinned_ref": row["ref"],
+                "url": "https://github.com/" + row["repo"],
+                "latest_main_ref": by_repo[row["repo"]]["commit"],
+                "changed_since_review": by_repo[row["repo"]]["commit"] != row["ref"],
+                "status": "checked",
+            }
+            for row in sources
+        ]
+        now = snapshot["checked_utc"]  # never advance freshness without a new request
+    else:
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            rows = list(pool.map(check, sources))
+        now = datetime.now(timezone.utc).isoformat()
     feed = {
         "scope": "GitHub source freshness only; not a leaderboard or scoring API",
         "checked_utc": now,

@@ -1,24 +1,24 @@
 {
-  "generated_utc": "2026-10-25T22:36:16.097157+00:00",
-  "lane": "H24-RSHG1",
-  "preregistration": "knowledge/17_preregistered_RSHG1_2026-10-25.md",
+  "lane": "H24-TNR1",
+  "generated_utc": "2026-10-26T00:42:08.535281+00:00",
+  "preregistration": "knowledge/20_preregistered_TNR1_2026-10-26.md",
   "evaluator_version": "gems-segment-pooled-v1",
   "holdout": {
     "label": "HOLDOUT-DTI",
     "evaluator_version": "gems-segment-pooled-v1",
-    "TP_w": 7367.113487172009,
-    "FP_w": 34240.5615897306,
-    "FN_w": 53620.88651282799,
+    "TP_w": 7558.366861977947,
+    "FP_w": 34376.004626293725,
+    "FN_w": 53429.63313802205,
     "n_truth": 60988.0,
     "n_emitted": 37722.0,
-    "dti": 0.12899428963797338,
+    "dti": 0.13219180093505795,
     "n_withheld_positive_pixels": 60988,
     "n_unique_withheld_components": 3199,
     "ci95": {
       "level": 0.95,
       "interval": [
-        0.11578285218857734,
-        0.14304979986280458
+        0.1179079641652387,
+        0.1454617440443537
       ],
       "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
       "block_pixels": 100,
@@ -31,43 +31,43 @@
     "folds": [
       {
         "fold": "NW",
-        "TP_w": 1336.1146322356221,
-        "FP_w": 7758.96226891462,
-        "FN_w": 8828.885367764378,
+        "TP_w": 1460.56620493653,
+        "FP_w": 7722.144164965046,
+        "FN_w": 8704.433795063469,
         "n_truth": 10165,
         "n_emitted": 8430,
-        "dti": 0.13426917567394078,
-        "coverage": 0.13144265934437996
+        "dti": 0.14651753426754532,
+        "coverage": 0.1436858047158416
       },
       {
         "fold": "NE_LidarGapHeavy",
-        "TP_w": 2128.2359657007605,
-        "FP_w": 9392.540820613996,
-        "FN_w": 10382.76403429924,
+        "TP_w": 1679.851755955808,
+        "FP_w": 9642.324818823265,
+        "FN_w": 10831.148244044192,
         "n_truth": 12511,
         "n_emitted": 10422,
-        "dti": 0.17284525964175684,
-        "coverage": 0.1701091811766254
+        "dti": 0.13687114382098592,
+        "coverage": 0.1342699828915201
       },
       {
         "fold": "SW",
-        "TP_w": 1492.7165036129977,
-        "FP_w": 9745.272009671262,
-        "FN_w": 19041.283496387,
+        "TP_w": 1929.0285866364784,
+        "FP_w": 9575.870092910474,
+        "FN_w": 18604.97141336352,
         "n_truth": 20534,
         "n_emitted": 10429,
-        "dti": 0.07993213781333956,
-        "coverage": 0.07269487209569483
+        "dti": 0.10300139222433138,
+        "coverage": 0.09394314729894217
       },
       {
         "fold": "SE",
-        "TP_w": 2410.046385622628,
-        "FP_w": 7343.786490530716,
-        "FN_w": 15367.953614377373,
+        "TP_w": 2488.920314449131,
+        "FP_w": 7435.665549594936,
+        "FN_w": 15289.079685550869,
         "n_truth": 17778,
         "n_emitted": 8441,
-        "dti": 0.14901512170775083,
-        "coverage": 0.1355634146485897
+        "dti": 0.15356769340020457,
+        "coverage": 0.14000001768754253
       }
     ],
     "protocol": {
@@ -81,75 +81,17 @@
       "triangular_kernel_radius_m": 300
     }
   },
-  "exact_file_nuisance_audit": {
-    "protocol_seed": 20261002,
-    "features": [
-      "block_1",
-      "block_2",
-      "block_3",
-      "block_4",
-      "claim_m",
-      "road_m"
-    ],
-    "samples_per_class": 12000,
-    "grouped_permutations": 199,
-    "shift_diagnostics": 99,
-    "labels_first": {
-      "observed_auc": 0.4957985306011384,
-      "null_p95": 0.5199812271889039,
-      "p_value": 0.625,
-      "holm_p_value": 0.7
-    },
-    "observed_auc": 0.5087925513508402,
-    "null_p95": 0.5223069817221934,
-    "margin_vs_p95": -0.013514430371353137,
-    "p_value": 0.35,
-    "holm_p_value": 0.7,
-    "shift_diagnostic_p_value": 0.55,
-    "single_feature_auc_descriptive": {
-      "block_1": 0.49216591586505687,
-      "block_2": 0.48626879788124133,
-      "block_3": 0.5157550818073513,
-      "block_4": 0.48857139502515484,
-      "claim_m": 0.5071422410590558,
-      "road_m": 0.5200443077662801
-    },
-    "flagged_association": false,
-    "strict_gate_passed": true,
-    "recorded_sahg1_auc": 0.5825909290437927,
-    "delta_auc_vs_sahg1": -0.0737983776929525
-  },
-  "correlation_overlap_vs_registry": {
-    "method_lane_passed": false,
-    "literal_all_entries_passed": false,
-    "competing_method_rasters_checked": 48,
-    "calibration_controls_checked": 2,
-    "peer_blobs_checked": 83,
-    "pre_placement_max_abs_rank_correlation": 0.46532725258553564,
-    "surface_max_abs_rank_correlation": 0.45176204563607275,
-    "method_lane_max_overlap_within_3px": 0.7268702613859286,
-    "peer_blobs_max_abs_rank_correlation": 0.1602990371468894,
-    "peer_blobs_max_overlap_within_3px": 0.723344467419543,
-    "literal_all_entries_max_overlap_within_3px": 0.9981708286941308
-  },
   "artifact": {
-    "lane_id": "H24-RSHG1",
-    "file": "gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif",
-    "sha256": "06d28182d9fea06d1d4ac3fc603bada748306e68350ebe432e3ff9f82fd3703e",
-    "nan_file": "gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif",
-    "nan_sha256": "2641944cf4fa7ae7960243f738e89a8fe020c09b22275c00f033155e0197ef4a",
-    "pixel_count": 37722,
-    "min_distance_to_catalogue_px": 2.23606797749979,
-    "note": "GEMS24 RSHG1 | 42ch NaN-HGB+res+K300 b2 98f69d77e868 | DTI 0.1290; DO NOT SUBMIT",
-    "note_file": "note-gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.txt",
-    "checks_file": "checks-gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.json",
-    "preview_png": "assets/rshg1-preview.png",
-    "verdict": "negative",
-    "technical_promotion_gates_passed": false,
+    "file": "gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif",
+    "sha256": "c8cb320c2c776e64c2d198bfc2e28338e7e354b6d827550f09464b413f0a8a90",
+    "note": "TNR1 selective survey/access residuals; terrain intact | id 56dfd14b88db | research; DO NOT SUBMIT",
+    "note_file": "gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.note.txt",
     "ok_to_download": true,
     "ok_to_submit": false,
-    "submission_authorized": false
+    "submission_authorized": false,
+    "verdict": "negative"
   },
   "verdict": "negative",
-  "ok_to_submit": false
+  "ok_to_submit": false,
+  "submission_authorized": false
 }

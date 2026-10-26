@@ -1,37 +1,36 @@
-"""Independent, fail-closed submission selector (no human inspector).
+"""Fail-closed recorded-evidence selector screen, never a quota bypass.
 
-The format validator (``gems.submission``) and exact-file preflight
-(``gems.preflight``) deliberately never authorize a competition slot.
-This module is the separate scientific selector the project protocol
-requires: it re-reads the exact artifact bytes, re-runs the shared format
-validator, and mechanically re-checks every preregistered gate value in a
-hash-bound run card (leakage canary, pooled holdout win, registry novelty,
-exact-file C2ST nuisance audit, note length, experiment budget).
-
-``ok_to_submit`` is True only if **every** gate passes on independently
-re-derived evidence.  Missing, mistyped or inconsistent evidence fails
-closed.  The organizer-account weekly quota cannot be read without
-automating DrivenData access (prohibited), so it is always recorded as
-unknown; a PASS means "scientifically cleared by the project gates", and
-the account holder still confirms remaining quota on the submission page.
-This module never uploads anything.
+Exact bytes and recorded gate values are checked mechanically. This is NOT a
+complete independent retraining/leakage/novelty replay certificate. In particular,
+no legitimate current-account quota verifier is wired into the project, so this
+version can issue negative decisions only. A human inspection/confirmation or a
+self-asserted flag cannot override that blocker. Never uploads or contacts a
+competition portal. Historical v1 receipts remain immutable research evidence.
 """
 
 from __future__ import annotations
 
+import math
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from . import novelty, submission
+from . import submission
+from .benchmarks import EVALUATOR, recorded_point_best
 from .validator import sha256_file
 
-SELECTOR_VERSION = "gems-selector-v1"
+SELECTOR_VERSION = "gems-selector-v2-literal-quota-fail-closed"
 
-# Recorded current best on gems-segment-pooled-v1 in this repository
-# (H24-GVC1, evidence/gvc1_run_card_20261025.json, 60,988 withheld positives).
-RECORDED_BEST_DTI = 0.14876289156979275
-RECORDED_BEST_EVALUATOR = "gems-segment-pooled-v1"
+# Read the highest currently recorded declared-comparable point estimate.
+# This is a conservative floor, not certification that its method is promotable.
+try:
+    RECORDED_BEST_EVIDENCE = recorded_point_best(Path(__file__).resolve().parents[2])
+except (OSError, ValueError, KeyError, TypeError):
+    RECORDED_BEST_EVIDENCE = None
+RECORDED_BEST_DTI = (
+    RECORDED_BEST_EVIDENCE["holdout"]["dti"] if RECORDED_BEST_EVIDENCE is not None else float("inf")
+)
+RECORDED_BEST_EVALUATOR = EVALUATOR
 
 MAX_RANK_CORRELATION = 0.90
 MAX_DOT_OVERLAP = 0.70
@@ -42,28 +41,27 @@ MAX_EXPERIMENTS = 3
 def _strict_ok(checks: dict[str, Any]) -> bool:
     try:
         return bool(
-            checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
-            and checks["checks"]["footprint_range_0_1"]["pass"]
-            and checks["checks"]["footprint_all_finite"]["pass"]
+            checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"] is True
+            and checks["checks"]["footprint_range_0_1"]["pass"] is True
+            and checks["checks"]["footprint_all_finite"]["pass"] is True
         )
     except (KeyError, TypeError):
         return False
 
 
-def _literal_failures_are_controls_only(run_card: dict[str, Any]) -> bool:
-    """True iff every literal-duplicate registry row is a calibration control."""
+def _literal_novelty_passed(run_card: dict[str, Any]) -> bool:
+    """All entries means ALL entries; no control exception, no vacuous success."""
     try:
-        rows = run_card["novelty"]["final_dots"]["literal_duplicate_rows"]
-    except (KeyError, TypeError):
+        novelty_result = run_card["novelty"]
+        surface, final = novelty_result["surface"], novelty_result["final_dots"]
+        return (
+            surface.get("literal_all_entries_passed") is True
+            and final.get("literal_all_entries_passed") is True
+            and isinstance(final.get("literal_duplicate_rows"), list)
+            and not final["literal_duplicate_rows"]
+        )
+    except (KeyError, TypeError, AttributeError):
         return False
-    if not isinstance(rows, list):
-        return False
-    for row in rows:
-        if not isinstance(row, dict) or "file" not in row:
-            return False
-        if novelty.classify_registry_entry(row) == "competing_method_lane":
-            return False
-    return True
 
 
 def verify_selector(
@@ -81,7 +79,10 @@ def verify_selector(
         reasons.append(f"{name}: {why}")
 
     # --- identity: exact bytes must be the run card's raster -----------------
-    actual_sha = sha256_file(artifact) if artifact.exists() else None
+    try:
+        actual_sha = sha256_file(artifact) if artifact.is_file() else None
+    except OSError:
+        actual_sha = None
     if actual_sha is not None and actual_sha == run_card.get("raster_sha256"):
         gates["artifact_hash_matches_run_card"] = True
     else:
@@ -95,7 +96,7 @@ def verify_selector(
     # --- G1: format + strict whole-array [0,1], re-run on the exact bytes ---
     try:
         checks = submission.check_variants(artifact, template)
-        if checks.get("format_valid") and _strict_ok(checks):
+        if checks.get("format_valid") is True and _strict_ok(checks):
             gates["g1_format_strict_0_1"] = True
         else:
             fail("g1_format_strict_0_1", "shared validator or strict [0,1] variant failed")
@@ -106,7 +107,7 @@ def verify_selector(
     try:
         canary = run_card["leakage_canary"]
         worst = float(canary["worst_polarity_extremity"])
-        if canary.get("passed") is True and worst <= 0.90:
+        if canary.get("passed") is True and math.isfinite(worst) and 0.5 <= worst <= 0.90:
             gates["g2_leakage_canary"] = True
         else:
             fail("g2_leakage_canary", f"passed={canary.get('passed')}, worst extremity={worst}")
@@ -121,12 +122,32 @@ def verify_selector(
         ci_lo = float(paired["ci95"][0])
         n_pos = int(holdout["n_withheld_positive_pixels"])
         ok = (
-            holdout.get("label") == "HOLDOUT-DTI"
+            type(holdout.get("dti")) in (float, int)
+            and holdout.get("label") == "HOLDOUT-DTI"
             and holdout.get("evaluator_version") == RECORDED_BEST_EVALUATOR
-            and dti > RECORDED_BEST_DTI
-            and ci_lo > 0.0
-            and n_pos > 0
+            and math.isfinite(dti)
+            and RECORDED_BEST_DTI < dti <= 1
+            and math.isfinite(ci_lo)
+            and 0 < ci_lo <= 1
+            and n_pos == 60988
             and run_card.get("baseline_reproduced") is True
+        )
+        current_pair = run_card.get("paired_vs_current_best", {})
+        current_ci = current_pair.get("ci95", [])
+        ok = ok and (
+            current_pair.get("baseline_dti") == RECORDED_BEST_DTI
+            and current_pair.get("evaluator_version") == RECORDED_BEST_EVALUATOR
+            and current_pair.get("n_withheld_positive_pixels") == 60988
+            and current_pair.get("baseline_replayed") is True
+            and isinstance(current_ci, list)
+            and len(current_ci) == 2
+            and all(
+                isinstance(value, (float, int))
+                and not isinstance(value, bool)
+                and math.isfinite(value)
+                for value in current_ci
+            )
+            and 0 < current_ci[0] <= current_ci[1] <= 1
         )
         if ok:
             gates["g3_holdout_beats_recorded_best_and_paired_baseline"] = True
@@ -153,7 +174,7 @@ def verify_selector(
             and peer_overlap <= MAX_DOT_OVERLAP
             and fin.get("method_lane_passed") is True
             and nov["peers_final"].get("passed") is True
-            and _literal_failures_are_controls_only(run_card)
+            and _literal_novelty_passed(run_card)
         )
         if ok:
             gates["g4_registry_novelty"] = True
@@ -185,7 +206,8 @@ def verify_selector(
 
     try:
         if (
-            int(run_card["experiments_run"]) <= MAX_EXPERIMENTS
+            type(run_card["experiments_run"]) is int
+            and 1 <= run_card["experiments_run"] <= MAX_EXPERIMENTS
             and int(run_card["submission_slots_used"]) == 0
         ):
             gates["budget_and_no_slot_spent"] = True
@@ -194,6 +216,18 @@ def verify_selector(
     except (KeyError, TypeError, ValueError):
         fail("budget_and_no_slot_spent", "budget evidence missing or malformed")
 
+    recorded_scientific_screen_passed = bool(gates) and all(gates.values())
+    # No positive authorization path until legitimate, independently verified
+    # current-account allowance AND the complete replay certificate are wired.
+    # Merely adding quota_confirmed=true to an arbitrary card is not evidence.
+    fail(
+        "current_account_quota_independently_verified",
+        "unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
+    )
+    fail(
+        "complete_independent_replay_certificate",
+        "not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate",
+    )
     ok_to_submit = bool(gates) and all(gates.values())
     return {
         "selector_version": SELECTOR_VERSION,
@@ -205,10 +239,14 @@ def verify_selector(
         "all_gates_passed": ok_to_submit,
         "ok_to_submit": ok_to_submit,
         "decision": "OK_TO_SUBMIT" if ok_to_submit else "DO_NOT_SUBMIT",
-        "quota_status": "unknown_owner_must_confirm_on_submission_page",
+        "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
+        "recorded_scientific_screen_passed": recorded_scientific_screen_passed,
+        "current_point_best_source": RECORDED_BEST_EVIDENCE["source"]
+        if RECORDED_BEST_EVIDENCE
+        else None,
         "reasons": reasons,
         "scope": (
-            "Project scientific gates only; not an organizer score, acceptance "
-            "guarantee, or quota check. The agent never uploads."
+            "Recorded-evidence screening and exact-file validation only; positive authorization "
+            "is not implemented. Not an organizer score, quota record or acceptance guarantee. The agent never uploads."
         ),
     }

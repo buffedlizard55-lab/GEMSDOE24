@@ -9,7 +9,7 @@
   "checks_file": "checks-gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.json",
   "preflight_file": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.preflight.json",
   "note_file": "note-gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.txt",
-  "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | selector OK_TO_SUBMIT",
+  "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; DO NOT SUBMIT",
   "pixel_count": 37654,
   "holdout_dti": 0.1637924246971501,
   "holdout_ci95": [
@@ -26,10 +26,10 @@
   "farfield_gt20px_fraction": 0.5229988845806555,
   "technical_promotion_gates_passed": true,
   "ok_to_download": true,
-  "ok_to_submit": true,
-  "submission_authorized": true,
-  "verdict": "promote",
-  "selector_decision": "OK_TO_SUBMIT",
+  "ok_to_submit": false,
+  "submission_authorized": false,
+  "verdict": "negative",
+  "selector_decision": "DO_NOT_SUBMIT",
   "selector_file": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.selector.json",
-  "competing_method_rasters_checked": 56
+  "competing_method_rasters_checked": 57
 }
