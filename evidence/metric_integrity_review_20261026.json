@@ -276,14 +276,15 @@
     "Rebuilt generated Pages; full tests, lint, format, compile and diff checks; desktop/mobile browser checks verified downloads, clipboard, overflow and accessibility."
   ],
   "verification": {
-    "pytest_passed": 371,
+    "pytest_passed": 372,
     "ruff_check": "passed",
     "ruff_format_check": "passed",
     "compileall": "passed",
     "git_diff_check": "passed",
     "browser_page_checks": 12,
     "browser_errors": [],
-    "browser_receipt": "evidence/metric_integrity_browser_20261026.json"
+    "browser_receipt": "evidence/metric_integrity_browser_20261026.json",
+    "concurrent_main_integration": "Integrated PR #38; full suite 372 passed and browser 12 checks passed again"
   },
   "fresh_official_reference_head": "aebe92f7c8a990f0e3443451b7a825d9afd6336b",
   "source_limits": "Only GitHub reference identity remotely checked; no fresh portal, USGS, OpenEI or prize-document retrieval."
