@@ -23,10 +23,10 @@ and `knowledge/21_TNR1_findings_2026-10-26.md`.
   authorize this file. New bytes are not scientific lane uniqueness.
 - Verification only: `.venv/bin/python scripts/evaluate_holdout.py --verify-tnr1`
   or `scripts/run_tnr1_lane.py --verify-recorded`; exact-file preflight remains
-  negative. No assigned single-method paragraph/independent selector/quota
-  receipt exists. No slot was used.
+  negative. No assigned single-method paragraph/verified replay-and-quota
+  authorization receipt exists. No slot was used.
 - All 92 owner-listed READMEs were retrieved at immutable commits, byte-identity
-  checked and inventoried (119 owner claims). This does not verify every claim,
+  checked and inventoried (118 historical artifact claims). This does not verify every claim,
   organizer score or every current raster. The frozen TNR1 raster union covers
   117 contents / 167 aliases, not all current TIFFs in 92 repositories.
 - A single-output broadcast bug was fixed centrally in `gems.residualize` and
@@ -43,9 +43,9 @@ HOLDOUT-DTI 0.13747 [0.12400, 0.15152] (`gems-segment-pooled-v1`, 60,988 withhel
 paired Δ vs reconstructed OOF baseline +0.00747 [-0.00242, +0.01793], final-dot
 overlap 0.8070 > 0.70 (max |ρ| 0.5878), canary/C2ST/format PASS. DOWNLOAD YES /
 SUBMIT NO. Do not rerun or retune it (including residualization strength).
-New independent selector `gems.selector` (v1) now exists and is the only issuer
-of `ok_to_submit`; it fail-closes on any missing gate evidence and always records
-quota as unknown. Preflight schema v2 still requires its own selector receipt
+The parallel PR #29 selector v1 is preserved historically. Current `gems.selector`
+v2 is a negative-only recorded-evidence screen: literal controls are retained,
+unknown quota blocks, and complete independent positive replay is not implemented. Preflight schema v2 still requires its own selector receipt
 format — wiring the two is future work, do not change preflight semantics silently.
 Owner-reported nine-site list updated in `registry/owner_reported_scores_2026-10-26.json`
 (includes GVC1 listed live at 0.0859 vs its 0.14876 holdout — holdout rank does
@@ -64,7 +64,7 @@ Historical UNIQUE01/02/03, CON and FUSE entrypoints are retired; source/evidence
 remain for education. UNIQUE03 executed a 30 km decay, not its advertised 300 m;
 its proximity/composite canaries were not run. Never present it as catalogue-independent.
 Shared preflight schema v2 refuses to authorize from promote booleans alone;
-independent selector verification is missing, not a human-inspection pending state.
+complete independent selector/quota verification is missing, not a human-inspection pending state.
 
 
 **Current precedence (2026-10-25):** read `knowledge/owner_brief_2026-10-25.md`

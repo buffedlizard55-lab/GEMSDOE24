@@ -115,7 +115,8 @@ def verify_selector(
         ci_lo = float(paired["ci95"][0])
         n_pos = int(holdout["n_withheld_positive_pixels"])
         ok = (
-            holdout.get("label") == "HOLDOUT-DTI"
+            type(holdout.get("dti")) in (float, int)
+            and holdout.get("label") == "HOLDOUT-DTI"
             and holdout.get("evaluator_version") == RECORDED_BEST_EVALUATOR
             and math.isfinite(dti)
             and RECORDED_BEST_DTI < dti <= 1

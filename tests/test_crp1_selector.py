@@ -146,6 +146,7 @@ def test_selector_fails_closed_on_each_broken_gate(tmp_path, monkeypatch):
         receipt = selector.verify_selector(artifact, tmp_path / "t.tif", card)
         assert receipt["ok_to_submit"] is False, receipt["reasons"]
         assert receipt["decision"] == "DO_NOT_SUBMIT"
+        assert receipt["recorded_scientific_screen_passed"] is False
 
 
 def test_selector_missing_evidence_fails_closed(tmp_path, monkeypatch):
@@ -154,3 +155,54 @@ def test_selector_missing_evidence_fails_closed(tmp_path, monkeypatch):
     receipt = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", card)
     assert receipt["ok_to_submit"] is False
     assert any("g4" in r for r in receipt["reasons"])
+
+
+def test_literal_calibration_duplicates_cannot_be_excluded(tmp_path, monkeypatch):
+    card = _passing_card(tmp_path, monkeypatch)
+    card["novelty"]["final_dots"]["literal_duplicate_rows"] = [
+        {
+            "file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+            "registry_id": "registry-039",
+        }
+    ]
+    result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", card)
+    assert result["gates"]["g4_registry_novelty"] is False
+    assert result["recorded_scientific_screen_passed"] is False
+
+
+def test_easy_baseline_win_cannot_replace_current_best_paired_evidence(tmp_path, monkeypatch):
+    card = _passing_card(tmp_path, monkeypatch)
+    del card["paired_vs_current_best"]
+    result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", card)
+    assert result["gates"]["g3_holdout_beats_recorded_best_and_paired_baseline"] is False
+
+
+def test_quota_flags_and_human_confirmation_never_override_missing_verifier(tmp_path, monkeypatch):
+    card = _passing_card(tmp_path, monkeypatch)
+    card.update(quota_confirmed=True, human_inspected=True, independent_selector_verified=True)
+    result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", card)
+    assert result["recorded_scientific_screen_passed"] is True
+    assert not result["gates"]["current_account_quota_independently_verified"]
+    assert not result["gates"]["complete_independent_replay_certificate"]
+    assert result["ok_to_submit"] is False
+
+
+def test_unknown_or_false_literal_gate_is_not_vacuously_successful(tmp_path, monkeypatch):
+    card = _passing_card(tmp_path, monkeypatch)
+    del card["novelty"]["surface"]["literal_all_entries_passed"]
+    result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", card)
+    assert result["gates"]["g4_registry_novelty"] is False
+
+
+def test_nonfinite_performance_and_negative_experiment_count_fail_named_gates(
+    tmp_path, monkeypatch
+):
+    for field in (float("nan"), float("inf"), -1, True):
+        card = _passing_card(tmp_path, monkeypatch)
+        card["holdout"]["dti"] = field
+        result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", card)
+        assert result["gates"]["g3_holdout_beats_recorded_best_and_paired_baseline"] is False
+    card = _passing_card(tmp_path, monkeypatch)
+    card["experiments_run"] = -1
+    result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", card)
+    assert result["gates"]["budget_and_no_slot_spent"] is False

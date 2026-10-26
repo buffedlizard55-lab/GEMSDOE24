@@ -20,7 +20,7 @@ def test_all_owner_sites_and_each_claim_preserved_without_score_confirmation():
     assert sites.validate(DATA) == DATA
     parsed = sites.owner_sites(sites.BRIEF.read_text())
     assert len(parsed) == 92
-    assert DATA["owner_reported_claims"] == 119
+    assert DATA["owner_reported_claims"] == 118
     assert all(row["source_status"] == "readme_retrieved" for row in DATA["rows"])
     assert DATA["organizer_confirmed_receipts"] == [] and DATA["leaderboard"] is None
     assert all("UNVERIFIED" in claim["status"] for row in DATA["rows"] for claim in row["claims"])
@@ -46,7 +46,7 @@ def test_all_owner_sites_and_each_claim_preserved_without_score_confirmation():
         lambda d: d["rows"].pop(),
         lambda d: d["rows"].append(copy.deepcopy(d["rows"][0])),
         lambda d: d.update(site_count=93),
-        lambda d: d.update(owner_reported_claims=120),
+        lambda d: d.update(owner_reported_claims=119),
         lambda d: d.update(leaderboard={"best_score": 0.9}),
         lambda d: d.update(organizer_confirmed_receipts=["invented"]),
         lambda d: d.update(checked_utc="2026-10-26"),

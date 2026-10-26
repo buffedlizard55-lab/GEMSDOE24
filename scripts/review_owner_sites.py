@@ -39,6 +39,8 @@ def owner_sites(text):
             name, {"repo": "buffedlizard55-lab/" + name, "site_url": match[0].strip(), "claims": []}
         )
         for submission_name, score in claims:
+            if "leaderboard" in submission_name.casefold():
+                continue  # global leaderboard prose is not a GEMSDOE32 artifact claim
             claim = {
                 "submission_name_as_reported": submission_name.strip(),
                 "value_as_reported": score,
@@ -202,6 +204,7 @@ def main():
         "brief_sha256": hashlib.sha256(BRIEF.read_bytes()).hexdigest(),
         "site_count": len(rows),
         "owner_reported_claims": sum(len(row["claims"]) for row in rows),
+        "claim_basis": "Historical owner claims retained from the full 2026-10-25 brief, consolidated with current task requirements; source freshness is not score freshness",
         "rows": rows,
         "organizer_confirmed_receipts": [],
         "leaderboard": None,
@@ -210,7 +213,7 @@ def main():
     validate(data)
     OUTPUT.write_text(json.dumps(data, indent=2, allow_nan=False) + "\n")
     stream = io.StringIO()
-    writer = csv.writer(stream)
+    writer = csv.writer(stream, lineterminator="\n")
     writer.writerow(
         [
             "repository",

@@ -1,6 +1,50 @@
-# Owner brief — 2026-10-26
+# Current requirements and preserved owner brief — 2026-10-26
 
-Current request, with link markup and whitespace normalized and the Arena branch-status wrapper omitted. Read this and the current README decision at every session start. Scores within are owner claims, not receipts. No assigned single-method paragraph was present. The full request is also embedded in README.
+This working requirements record consolidates the current task and retains the
+full available owner-brief body below (links/whitespace normalized). That body
+comes from the preserved `owner_brief_2026-10-25.md`; its score catalogue is
+**historical owner-reported context**, not a fresh leaderboard or a claim that
+all score entries in later parallel sessions are identical. This is not claimed
+to be a byte-for-byte transcription of an unavailable uncondensed message.
+The original dated brief remains unchanged. Read this record, README's current
+decision, and AGENTS at every session start.
+
+## Current acceptance requirements
+
+- Independently compute a new competition-grid TIFF from physical evidence, not
+  copied predictions; provide an obvious first-screen download and automated
+  SUBMIT YES/NO decision. Unique bytes/names alone do not satisfy scientific novelty.
+- Rank three to five geological hypotheses prospectively, including exact
+  layers/transforms, physical mechanism, missing-catalogue rationale, distinction
+  from previous work, expected benefit without score forecasts, cost and
+  verified free official dependencies. Follow genuine previous next steps.
+- Use one assigned method lane; none was explicitly supplied. TNR1 was therefore
+  declared unassigned negative research, never slot/coordinator authorization.
+  Reuse shared cached stack, evaluator and writer; centrally fix shared defects.
+- Hide complete fault segments with a spatial buffer; all catalogue features
+  visible-only; visible pixels masked exactly. Score pooled distance-weighted
+  Tversky with alpha 0.2, beta 0.8, a 300 m triangle. Report evaluator, withheld
+  count and 95% CI for every HOLDOUT-DTI number. Only artifact-linked organizer
+  receipts may be called ORGANIZER-CONFIRMED.
+- Test each actual input/transform alone, both AUC polarities. Treat AUC above
+  0.90 as suspected leakage. Check surfaces before placement and final dots;
+  stop if rank correlation exceeds 0.90 or any all-entry 3-px overlap exceeds
+  70%. No control exclusions or retuning to escape a failure.
+- Maximum three experiments or two hours per session; no slot unless the top
+  idea beats the current comparable best and every gate passes under the actual
+  account allowance. No human-inspector exception or automatic DrivenData access.
+- Keep one JSON scientific run card: hypothesis/mechanism, named non-fault mimic,
+  holdout/CI, registry statistics, raster SHA-256, validator outputs, unique
+  filename, <=140-character note, promote/negative verdict.
+- Audit sources honestly, including all owner-listed sites, score/provenance
+  irregularities and unknowns. Analyze the unconfirmed H33-B2 0.2778 report
+  without claiming hidden-score causality. The 0.3195/0.4413 leader claims conflict.
+- Clean the site and executive submission guide; explain [0,1] checks and provide
+  timestamped feeds. Preserve the brief; do three review passes, PR and merge
+  only when permitted, verify actual deployment and distinguish completion from
+  limitations. Maximize P(Win), Own the Outcome; no invented score or guarantee.
+
+## Full preserved owner-brief body (historical claims, normalized links)
 
 ---
 
