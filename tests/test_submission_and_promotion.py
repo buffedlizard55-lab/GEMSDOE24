@@ -32,7 +32,7 @@ def template(tmp_path):
     return p, np.isfinite(a)
 
 
-def test_writer_preserves_source_does_not_mutate_and_nan_outside_is_explicit(tmp_path):
+def test_writer_defaults_to_all_finite_zero_outside_and_preserves_source(tmp_path):
     t, fp = template(tmp_path)
     a = np.full(fp.shape, 0.7, np.float32)
     old = a.copy()
@@ -40,9 +40,24 @@ def test_writer_preserves_source_does_not_mutate_and_nan_outside_is_explicit(tmp
     with rasterio.open(p) as d:
         b = d.read(1)
         assert d.count == 1 and d.dtypes == ("float32",) and d.crs.to_epsg() == 32611
+        assert np.isfinite(b).all() and np.all(b[~fp] == 0)
+        assert d.nodata is None
+    checks = submission.check_variants(p, t)
+    assert checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
+    assert np.array_equal(a, old)
+
+
+def test_writer_nan_outside_is_explicit_compatibility_twin(tmp_path):
+    t, fp = template(tmp_path)
+    p = submission.write_submission(
+        np.full(fp.shape, 0.7, np.float32), t, tmp_path / "nan-twin.tif", outside="nan"
+    )
+    with rasterio.open(p) as d:
+        b = d.read(1)
         assert np.isfinite(b[fp]).all() and np.isnan(b[~fp]).all()
         assert np.isnan(d.nodata)
-    assert np.array_equal(a, old)
+    checks = submission.check_variants(p, t)
+    assert not checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
 
 
 @pytest.mark.parametrize("value", [np.nan, np.inf, -np.inf, -0.01, 1.01])
@@ -106,8 +121,15 @@ def test_zip_has_one_flat_tif_with_identical_bytes_and_note_is_not_inside(tmp_pa
 
 def test_note_names_reference_and_never_falsely_calls_it_a_new_score():
     note = submission.make_note("reference-h19-5", "x" * 500, "123456789abc", reference=True)
-    assert len(note) <= 200 and "reference, no new score" in note
+    assert len(note) <= 140 and "reference, no new score" in note
     assert "not yet live-scored" not in note
+
+
+def test_note_helper_enforces_the_project_140_character_limit():
+    note = submission.make_note("h24-safe", "x" * 500, "123456789abc")
+    assert len(note) == 140
+    with pytest.raises(ValueError, match="140-character"):
+        submission.make_note("x" * 200, "summary", "y" * 64)
 
 
 def complete_evidence():

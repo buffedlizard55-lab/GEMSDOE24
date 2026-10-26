@@ -95,7 +95,7 @@ def note_block(row, ident):
         f'data-feedback="#fb-{ident}">Copy note</button>'
         f'<a class="button" href="downloads/{e(row["note_file"])}" download>Note .txt</a></div>'
         f'<p class="copyfeedback" id="fb-{ident}" aria-live="polite"></p>'
-        f'<p class="micro">{len(row["note"])} characters (kept ≤ 200; the portal\'s limit is not documented).</p>'
+        f'<p class="micro">{len(row["note"])} characters (project limit: ≤ 140; portal acceptance is not guaranteed).</p>'
     )
 
 
@@ -281,7 +281,7 @@ def build_independent_site(primary):
 <tr><td><code>H24-FUSE-RESID</code> (31-ch train-only <code>NuisanceResidualizer</code>)</td><td>{farms["fuse_resid"]["dti"]:.5f}</td><td>[{farms["fuse_resid"]["ci95"][0]:.5f}, {farms["fuse_resid"]["ci95"][1]:.5f}]</td><td><strong><code>{farms["fuse_resid"]["method_lane_max_overlap_within_3px"]:.4f}</code> (PASS)</strong></td><td><strong><code>{farms["fuse_resid"]["c2st_auc"]:.4f}</code> (PASS)</strong></td></tr>
 </tbody></table></div>
 <p class="micro">60,988 withheld positives across all four quadrants. On the bridge protocol (<code>{e(fbr["evaluator_version"])}</code>), <code>H24-FUSE-HCW</code> achieves <strong>HOLDOUT-DTI {fbr["dti"]:.5f}</strong> (95% CI [{fblo:.5f}, {fbhi:.5f}]), beating <code>SAHG1</code> (<code>0.09655</code>) by <strong>+0.01696</strong> and <code>ASPC</code> (<code>0.08553</code>) by <strong>+{fbr["delta_vs_recorded_aspc"]:.5f}</strong>.</p></article>
-<article class="card"><h3>FUSE-HCW preview, C2ST breakthrough &amp; prospective novelty</h3>
+<article class="card"><h3>FUSE-HCW preview, C2ST audit &amp; prospective novelty</h3>
 <img class="raster-preview" src="assets/fuse-preview.png" alt="Downsampled preview of H24-FUSE-HCW experimental fault dots (37,722 positive cells)">
 <p class="micro">Competing method lanes passed: <strong>{fnov["competing_method_rasters_checked"]}/{fnov["competing_method_rasters_checked"]}</strong> (max 3-px overlap <code>{fnov["method_lane_max_overlap_within_3px"]:.4f}</code> ≤ 0.70; peer blobs <code>{fnov["peer_blobs_max_overlap_within_3px"]:.4f}</code> ≤ 0.70; max |ρ| <code>{fnov["surface_max_abs_rank_correlation"]:.4f}</code> ≤ 0.90; literal all-entry overlap <code>{fnov["literal_all_entries_max_overlap_within_3px"]:.4f}</code> fails against the retained spacing-5 calibration lattice). Exact-file C2ST AUC reduced from <code>0.5826</code> (SAHG1) to <strong><code>{fc2st["observed_auc"]:.4f}</code></strong> (null p95 <code>{fc2st["null_p95"]:.4f}</code>, Holm <em>p</em> = <code>{fc2st["holm_p_value"]:.3f}</code>). <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/17_preregistered_FUSE_2026-10-25.md">FUSE preregistration →</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/18_FUSE_findings_2026-10-25.md">FUSE findings &amp; audit →</a></p></article></div></section>"""
     sahg1_card = load("evidence/sahg1_run_card_20261025.json")
@@ -1136,7 +1136,7 @@ def main():
     alt_block = ""
     if alternate:
         alt_block = f"""<article class="card"><h3>Alternate · sparse-optimal</h3><span class="badge amber">{e(REC_LABEL.get(alternate.get("slot_recommendation"), "Owner decision required"))}</span><p class="fileline">{e(alternate["file"])}</p><ul class="checks"><li>{alternate.get("pixel_count", 0):,} pixels · {100 * (alt.get("pixel_fraction") or 0):.0f}% of H19-5</li><li>Highest sparse DTI ({fmt(sp(alt))} vs {fmt(sp(solid))}); fails the dense-regime criterion by {fmt(abs(alt.get("selection", {}).get("paired_dense_gain_abs") or 0), 4)}</li><li>Same pixel set as the earlier session's frozen d*=2.8 candidate</li></ul><div class="actions">{download_button(alternate, "", "Alternate .tif", False)}<a class="button" href="downloads/{e(alternate["zip"])}" download>ZIP</a></div>{note_block(alternate, "alt")}</article>"""
-    steps = f"""<ol class="steplist"><li><h3>1 · Download the file</h3><p>Use the green button. It is one single-band GeoTIFF. Do <em>not</em> upload the 19-band feature stack, a raw layer, a folder, or the reference file. Check that the SHA-256 shown on this page matches.</p></li><li><h3>2 · Open the portal</h3><p>Sign in at {link(COMP, "DrivenData · GEMS")}, click <strong>Submit</strong> in the sidebar, then <strong>Make new submission</strong> (competition page, “How to compete”, step 6).</p></li><li><h3>3 · Choose the file</h3><p>“File to submit”: the portal accepts <em>“a single-band GeoTIFF (.tif) file, or a .zip file containing a single GeoTIFF… It must match the submission format's CRS, shape, and geotransform.”</em> Choose the <code>-nan.tif</code> (official: NaN outside the footprint) or its single-file ZIP.</p></li><li><h3>4 · Paste the note</h3><p>The “Note (optional)” box is for “a short comment to help you or your team tell submissions apart later”. Paste the copyable note below (it carries the content id).</p></li><li><h3>5 · Submit, then record the result</h3><p>Wait for the score. Record the score, time and SHA-256 with <code>python scripts/record_live_score.py</code>. Nothing here uploads for you, and automating DrivenData is not permitted by its terms.</p></li><li><h3>6 · If you see “Predicted values must be in range [0, 1]”</h3><p>Stop and do not rescale. (a) Confirm you chose the single-band file from this page by SHA-256. (b) Try the <code>-allfinite.tif</code> fallback (zeros outside): the owner's 12GEMSDOE record shows both conventions were accepted and scored identically (0.1294). (c) Send the checks JSON to the organizers (<a href="mailto:gemsprize@nlr.gov">gemsprize@nlr.gov</a>). The cause of the original message is <strong>not established</strong> — see the forensics on the Sources page.</p></li></ol>"""
+    steps = f"""<ol class="steplist"><li><h3>1 · Download the file</h3><p>Use the green button. It is one single-band GeoTIFF. Do <em>not</em> upload the 19-band feature stack, a raw layer, a folder, or the reference file. Check that the SHA-256 shown on this page matches.</p></li><li><h3>2 · Open the portal</h3><p>Sign in at {link(COMP, "DrivenData · GEMS")}, click <strong>Submit</strong> in the sidebar, then <strong>Make new submission</strong> (competition page, “How to compete”, step 6).</p></li><li><h3>3 · Choose the file</h3><p>“File to submit”: the portal accepts <em>“a single-band GeoTIFF (.tif) file, or a .zip file containing a single GeoTIFF… It must match the submission format's CRS, shape, and geotransform.”</em> Choose the finite <code>-zeros.tif</code> or its single-file ZIP; retain <code>-nan.tif</code> only as an explicitly labelled audit twin.</p></li><li><h3>4 · Paste the note</h3><p>The “Note (optional)” box is for “a short comment to help you or your team tell submissions apart later”. Paste the copyable note below (it carries the content id).</p></li><li><h3>5 · Submit, then record the result</h3><p>Wait for the score. Record the score, time and SHA-256 with <code>python scripts/record_live_score.py</code>. Nothing here uploads for you, and automating DrivenData is not permitted by its terms.</p></li><li><h3>6 · If you see “Predicted values must be in range [0, 1]”</h3><p>Stop and do not rescale. (a) Confirm the finite single-band <code>-zeros.tif</code> by SHA-256 and rerun strict whole-array checks. (b) Do not infer that a local format PASS guarantees portal acceptance; the cause of the original message is <strong>not established</strong>. (c) Preserve the checks JSON and seek organizer guidance manually if a future authorized upload is rejected. No current artifact is authorized.</p></li></ol>"""
     executive = f"""<div class="pagehead"><div class="eyebrow">Executive summary · exact submission instructions</div><h1>Submit in six steps.</h1><p>The file below is a new, label-free re-emission of H19-5. It has no leaderboard score yet. Weekly limit: <strong>three submissions</strong>; one final submission is chosen without seeing private scores.</p><div class="actions">{download_button(primary, "")}<a class="button" href="index.html">Overview</a></div></div><div class="status">{banner}</div>
 <section class="narrow"><h2>The submission</h2><div class="grid2"><article class="card"><h3>Primary · recommended download</h3><span class="badge blue">{e(REC_LABEL.get(primary.get("slot_recommendation"), ""))}</span><p class="fileline">{e(primary["file"])}</p><ul class="checks"><li>Single band · float32 · EPSG:32611 · 3730 × 3292 · 100 m · exact template transform</li><li>All {5167373:,} in-footprint values finite and in [0,1]; NaN outside</li><li>{primary.get("pixel_count", 0):,} positive pixels; none on a catalogue pixel</li><li>Exact recomputation from pinned H19-5 verified (label-free)</li></ul><p class="small">SHA-256</p><div class="note hash" id="file-sha">{e(primary["sha256"])}</div><div class="actions" style="margin-top:12px"><a class="button" href="downloads/{e(primary["zip"])}" download>Single-TIFF ZIP</a><a class="button" href="downloads/{e(primary["fallback"])}" download>Zeros-outside fallback</a><a class="button" href="downloads/{e(primary["checks_file"])}" download>Checks JSON</a></div>{note_block(primary, "primary")}</article>{alt_block}</div></section>
 <section class="narrow"><h2>Step by step</h2>{steps}<a class="button" href="{COMP}" target="_blank" rel="noopener noreferrer">Official competition ↗</a></section>
@@ -1195,54 +1195,46 @@ def main():
 <section><h2>Refit on the corrected nuisance sources (previous sessions' next step)</h2><div class="tablewrap"><table><thead><tr><th>Arm</th><th>Dense DTI</th><th>Sparse DTI</th><th>Note</th></tr></thead><tbody>{refit_rows}</tbody></table></div><p class="micro">Frozen H24-2A protocol: four spatial quadrants, 1.5 km collar, whole-component exclusion, training-only residualization, one truth draw. Nuisance = buffered Census roads, closed claims and the four derived blocks (the earlier run had only Area 1 and clipped roads). {refit_verdict}</p></section>
 <section><div class="grid2"><article class="card"><h3>Why H19-4 / H19-5 scored best (supported)</h3><ul class="prose"><li>Same family: ≈90% topographic/scarp terms, Jaccard 0.777, ridge-thinned, no pixel on a catalogue cell.</li><li>≈23% of emitted pixels lie within 300 m of the catalogue; files that hug it (≥45% within 300 m) never exceeded 0.046 ({geom.get("halo_heavy_files_ge45pct_within_3px", {}).get("n", 0)} files).</li><li>Distance-to-catalogue alone does not explain scores (Spearman {fmt(geom.get("spearman_score_vs_share_within_3px_of_catalogue"), 2)}): method skill matters.</li><li>Not supported: attributing the +0.0028 H19-4→H19-5 gain to any named physical line.</li></ul></article><article class="card"><h3>Is a higher score possible?</h3><p>Already: H19-5 exceeded 0.1894. Beyond it, the lever with direct evidence is emission efficiency (model central {fmt(model_lo, 2)}). The 0.3195 leader needs new information or a much better detector; thinning alone does not get there.</p><p class="micro">Phase 2 re-scores on an expanded, denser label set, which favours less aggressive thinning — hence the primary is the gate-passing 50% file, not the sparsest.</p></article></div></section>"""
 
-    # ranked hypotheses (merged with knowledge/05)
+    # Current prospective queue: qualitative only; no score projection is permitted.
     hyp_rows = [
         (
             "1",
-            "H25-1 / H24-E1 · calibrated dotted H19",
-            "none (transform of pinned H19-5)",
-            "Not geology: lowers the cost of every candidate trace",
-            "same detections, ~½ the false-positive mass",
-            "<span class='badge blue'>Validated on holdout (this page)</span>",
+            "H24-TEX1 · multi-scale magnetic–gravity texture front",
+            "RTP/TMI, isostatic gravity, quantized upward continuation; directional texture persistence",
+            "Covered basement step; mimic intrusive/remanent contact or levelling seam",
+            "Texture persistence is distinct from trough/edge channels; local layers present, acquisition confounding untested",
+            "highest qualitative potential · medium cost · <span class='badge amber'>Not implemented</span>",
         ),
         (
             "2",
-            "H25-2 · strike-compatibility prior",
-            "emitted-ridge orientation; training-region catalogue strike field",
-            "Raises precision for lineaments compatible with the local Andersonian strike family",
-            "no orientation prior in the pipeline",
-            "+0.00–0.01 · ≈1 day · <span class='badge amber'>Not yet tested</span>",
+            "H24-RADLAG · radiometric alteration-front phase lag",
+            "Valid-mask-aware K/Th/U ranks; tangent-coherent signed spatial lag",
+            "Displaced alteration front along a concealed permeable structure; mimic hillslope transport",
+            "Differs from compositional magnitude channels; GeoDAWN ranks locally present",
+            "moderate qualitative potential · low–medium cost · <span class='badge amber'>Not implemented</span>",
         ),
         (
             "3",
-            "H25-3 · scarp cross-profile template",
-            "1 m 3DEP (706/716 tiles processed on CI)",
-            "Short Quaternary scarps unlisted in the catalogue",
-            "per-100 m maxima lose profile shape",
-            "+0.01–0.03 · ≈2 days · CI re-run",
+            "H24-PHASE · cross-modality phase congruency",
+            "RTP/TMI/gravity local quadrature or monogenic phase and orientation agreement",
+            "Low-amplitude buried discontinuity; mimic dike, caldera margin or acquisition boundary",
+            "Differs from amplitude edges; FFT and edge effects need fold-local canaries",
+            "moderate but uncertain · medium-high cost · <span class='badge amber'>Not implemented</span>",
         ),
         (
             "4",
-            "H25-6 · map-scale correction corridor",
-            "INGENIOUS <code>MAPSCALE</code> per trace (82% of length at 1:250k) + lidar scarps",
-            "Staff: new truth may lie within 300 m of a known trace; Qfaults can be ≈400 m off (Hermant 2025)",
-            "catalogue geometry is used as a positional-uncertainty prior, not a halo (halos fail)",
-            "unknown · needs a per-pixel map-scale raster (free GDR 1391) · <span class='badge amber'>Not yet tested</span>",
-        ),
-        (
-            "5",
-            "H25-4 · concealed basin-margin step",
-            "depth_to_base_surf, iso_grav_anom_hg, tmi_hg",
-            "Buried range-front faults without a scarp",
-            "geophysics only as raw GBM channels",
-            "small/uncertain · ≈2 days",
+            "H24-DRAIN-ABS · multi-catchment channel-offset graph",
+            "Absolute USGS 3DEP elevation/LiDAR; directed thalweg offsets and repeated knickpoints",
+            "Concealed structure perturbing several washes; mimic avulsion, capture or lithologic resistance",
+            "Absolute DEM receipt is missing; 3DEP dependency is blocked in this sandbox",
+            "potentially high, presently unknown · high/deferred · <span class='badge amber'>Not implemented</span>",
         ),
     ]
     hyp_html = "".join(
         f"<tr><td><strong>{r[0]}</strong></td><td>{r[1]}</td><td>{r[2]}</td><td>{r[3]}</td><td>{r[4]}</td><td>{r[5]}</td></tr>"
         for r in hyp_rows
     )
-    research += f"""<section><h2>Ranked hypotheses</h2><div class="tablewrap"><table><thead><tr><th>#</th><th>Hypothesis</th><th>Layers</th><th>Why it can catch missing faults</th><th>Difference from the repo</th><th>Expected DTI · cost · status</th></tr></thead><tbody>{hyp_html}</tbody></table></div><p class="micro">Ranking = expected DTI gain × probability the local proxy can validate it ÷ cost. Item 1 is not a geological hypothesis; the top <em>geological</em> hypothesis (H25-2) is untested. Novelty is relative to reviewed code, not to unseen competitors.</p></section>
+    research += f"""<section><h2>Ranked prospective hypotheses — no score projections</h2><div class="tablewrap"><table><thead><tr><th>#</th><th>Hypothesis</th><th>Layers / physical signature</th><th>Missing-fault rationale / named mimic</th><th>Difference, source readiness and cost</th><th>Expected benefit (not a score)</th></tr></thead><tbody>{hyp_html}</tbody></table></div><p class="micro">No numerical DTI gain is projected. Any future candidate must first pass feature-only/two-polarity leakage canaries, buffered whole-segment holdout with evaluator/count/95% CI, pre-placement/final novelty checks and the independent selector. Novelty is relative to reviewed code, not unseen competitors.</p></section>
 <section><h2>Keep the caveats</h2><ul class="prose"><li>The as-emitted harness is leaky for H19 (its mask excluded <em>all</em> catalogue pixels), so absolute DTI is inflated; the paired comparison cancels the shared leak.</li><li>Proxy-vs-live rank correlations are weak (SGMC-minus-catalogue ρ≈+0.33, n=24); a holdout win is necessary, not sufficient.</li><li>The calibration assumes a blind lattice, FP mass ≈ N(1−φ), and that public-subset truth density transfers to the private subset; Phase 2 is expected to be denser.</li><li>Hidden test sources and fault types are undisclosed by the organizers.</li></ul></section>"""
 
     # ------------------------------------------------------------------ sources
