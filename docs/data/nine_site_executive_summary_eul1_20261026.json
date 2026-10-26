@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-26T07:19:59.865888+00:00",
+  "generated_utc": "2026-10-26T07:32:29.584512+00:00",
   "scope": "EUL1 update of the nine-site executive summary (GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36)",
   "supersedes": "evidence/nine_site_executive_summary_20261026.json (kept, unmodified)",
   "score_governance": "All public leaderboard numbers in the owner prompt (including GEMSDOE32 0.2778, GEMSDOE27 H29-CELF 0.2190, and conflicting top-score snapshots 0.3195 vs 0.4413) are UNVERIFIED-OWNER-REPORT, never ORGANIZER-CONFIRMED. Local measurements are labeled HOLDOUT-DTI with evaluator version, withheld positive count, and 95% CI.",
@@ -31,8 +31,8 @@
       "inspected_frac_gt_20px": 0.523,
       "dprf1_3px_overlap_vs_site_artifact": 1.0,
       "dprf1_spearman_vs_site_artifact": 1.0,
-      "current_holdout_and_gate_summary": "HOLDOUT-DTI 0.16379 [0.15045, 0.17739] (gems-segment-pooled-v1, 60,988 pos; 4/4 folds won; beats CUP1 0.15038, GVC1 0.14876, CRP1 0.13747, TNR1 0.12352, B0 0.14179, B1 0.13900, d3 0.13000) & 0.16290 (3.0 km bridge); 57/57 method novelty <=55.8%, 83/83 peers <=54.9%, C2ST 0.5247 PASS, 52.3% >2 km far-field.",
-      "executive_verdict": "STRONGEST UNSCORED UNIQUE CANDIDATE ACROSS ALL 9 SITES (10/10 competing-method technical gates PASS) \u2014 held at DO_NOT_SUBMIT under gems-selector-v2-literal-quota-fail-closed (unseparated spacing-5 lattice registry-039 + unknown portal quota).",
+      "current_holdout_and_gate_summary": "HOLDOUT-DTI 0.16379 [0.15045, 0.17739] (gems-segment-pooled-v1, 60,988 pos; 4/4 folds won; beats CUP1 0.15038, GVC1 0.14876, CRP1 0.13747, TNR1 0.13219, B0 0.14179, B1 0.13900, d3 0.13000) & 0.16290 (3.0 km bridge); 57/57 method novelty <=55.8%, 83/83 peers <=54.9%, C2ST 0.5247 PASS, 52.3% >2 km far-field.",
+      "executive_verdict": "RECORDED LOCAL POINT-BEST ONLY \u2014 DO NOT SUBMIT. Literal registry uniqueness fails; independent replay and current quota unavailable. Cross-site holdouts are not established comparable.",
       "eul1_3px_overlap_vs_site_artifact": 0.8656981993944867,
       "eul1_spearman_vs_site_artifact": 0.3383025298613659,
       "eul1_overlap_source": "docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
