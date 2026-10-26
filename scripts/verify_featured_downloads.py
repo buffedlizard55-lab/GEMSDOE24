@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Revalidate featured GVC1/RSHG1 research downloads; never grant authorization."""
+
 import json
 import sys
 from pathlib import Path
