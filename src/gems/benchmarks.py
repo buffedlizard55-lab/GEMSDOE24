@@ -20,6 +20,7 @@ RECORDS = (
     ("CRP1", "evidence/crp1_run_card_20261026.json", "holdout"),
     ("CUP1", "evidence/cup1_run_card_20261026.json", "holdout_dti"),
     ("TNR1", "evidence/tnr1_run_card_20261026.json", "holdout"),
+    ("DPRF1", "evidence/dprf1_run_card_20261026.json", "holdout"),
 )
 
 

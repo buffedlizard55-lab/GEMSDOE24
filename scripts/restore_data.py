@@ -13,7 +13,7 @@ import argparse
 import json
 import subprocess
 import sys
-import time
+import threading
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -25,7 +25,40 @@ CORE_REF = "c0c06ac82178f26b94fce3397036ef8f12a2f3a0"
 CORE_HASH = "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5"
 
 
-def gh_bytes(repo: str, path: str, ref: str, dest: Path, retries: int = 4) -> Path:
+_GIT_LOCK = threading.Lock()
+_REPO_LOCKS: dict[str, threading.Lock] = {}
+
+
+def _repo_lock(repo: str) -> threading.Lock:
+    with _GIT_LOCK:
+        if repo not in _REPO_LOCKS:
+            _REPO_LOCKS[repo] = threading.Lock()
+        return _REPO_LOCKS[repo]
+
+
+def _git_repo_dir(repo: str) -> Path:
+    cache_root = Path("/tmp/gems_git_blob_cache")
+    repo_dir = cache_root / repo.replace("/", "__")
+    with _repo_lock(repo):
+        if not (repo_dir / "HEAD").exists():
+            repo_dir.parent.mkdir(parents=True, exist_ok=True)
+            subprocess.run(
+                [
+                    "git",
+                    "clone",
+                    "--bare",
+                    "--filter=blob:none",
+                    f"https://github.com/{repo}.git",
+                    str(repo_dir),
+                ],
+                check=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+    return repo_dir
+
+
+def gh_bytes(repo: str, path: str, ref: str, dest: Path, retries: int = 1) -> Path:
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_suffix(dest.suffix + ".partial")
     last_exc: Exception | None = None
@@ -41,6 +74,7 @@ def gh_bytes(repo: str, path: str, ref: str, dest: Path, retries: int = 4) -> Pa
                         "Accept: application/vnd.github.raw",
                     ],
                     stdout=out,
+                    stderr=subprocess.DEVNULL,
                     check=True,
                 )
             tmp.replace(dest)
@@ -48,10 +82,21 @@ def gh_bytes(repo: str, path: str, ref: str, dest: Path, retries: int = 4) -> Pa
         except subprocess.CalledProcessError as exc:
             last_exc = exc
             tmp.unlink(missing_ok=True)
-            if attempt + 1 < retries:
-                time.sleep(1.5 * (attempt + 1))
-    assert last_exc is not None
-    raise last_exc
+    # Fallback to Git smart HTTP on github.com when api.github.com is rate-limited
+    try:
+        repo_dir = _git_repo_dir(repo)
+        with _repo_lock(repo):
+            with tmp.open("wb") as out:
+                subprocess.run(
+                    ["git", "-C", str(repo_dir), "show", f"{ref}:{path}"],
+                    stdout=out,
+                    check=True,
+                )
+        tmp.replace(dest)
+        return dest
+    except subprocess.CalledProcessError as exc:
+        tmp.unlink(missing_ok=True)
+        raise last_exc or exc
 
 
 def main() -> None:

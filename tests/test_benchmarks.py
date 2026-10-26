@@ -22,13 +22,13 @@ def _seed(root):
 
 def test_later_cup_point_best_is_recorded_but_never_mistaken_for_promotion():
     result = recorded_point_best(ROOT)
-    assert result["lane"] == "CUP1"
-    assert result["holdout"]["dti"] == 0.1503820121280118
+    assert result["lane"] == "DPRF1"
+    assert result["holdout"]["dti"] == 0.1637924246971501
     assert result["source_sha256"] == sha256_file(ROOT / result["source"])
     assert result["ok_to_submit"] is False
     assert "no independent" in result["scope"]
     rows = recorded_points(ROOT)
-    assert {"GVC1", "TNR1", "CRP1", "CUP1"} <= {row["lane"] for row in rows}
+    assert {"GVC1", "TNR1", "CRP1", "CUP1", "DPRF1"} <= {row["lane"] for row in rows}
     assert [row["holdout"]["dti"] for row in rows] == sorted(
         (row["holdout"]["dti"] for row in rows), reverse=True
     )
@@ -46,7 +46,7 @@ def test_new_records_are_discovered_without_changing_a_hardcoded_floor(tmp_path)
     assert result["ok_to_submit"] is False
     card["holdout"]["evaluator_version"] = "different-protocol"
     (evidence / "future_run_card_fixture.json").write_text(json.dumps(card))
-    assert recorded_point_best(tmp_path)["lane"] == "CUP1"
+    assert recorded_point_best(tmp_path)["lane"] == "DPRF1"
 
 
 def test_bad_known_benchmark_cannot_silently_lower_the_current_best(tmp_path):

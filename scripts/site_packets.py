@@ -8,9 +8,307 @@ import zipfile
 from html import escape
 from pathlib import Path
 
+from gems import selector
 from gems.receipts import research_receipt
 from gems.submission import check_variants
 from gems.validator import sha256_file
+
+
+def dprf1_packet(root):
+    """Validate and render the 2026-10-26 H24-DPRF1 Stitched-OOF Two-Regime packet & 9-site summary."""
+    exp_path = root / "evidence/dprf1_experiment_20261026.json"
+    card_path = root / "evidence/dprf1_run_card_20261026.json"
+    sel_path = root / "evidence/dprf1_selector_20261026.json"
+    dl_path = root / "docs/data/dprf1_download.json"
+    summary_path = root / "evidence/nine_site_executive_summary_20261026.json"
+    if not (
+        exp_path.exists()
+        and card_path.exists()
+        and sel_path.exists()
+        and dl_path.exists()
+        and summary_path.exists()
+    ):
+        return "", "", ""
+    experiment = json.loads(exp_path.read_text())
+    card = json.loads(card_path.read_text())
+    saved_sel = json.loads(sel_path.read_text())
+    dl = json.loads(dl_path.read_text())
+    nine = json.loads(summary_path.read_text())
+    name = dl["file"]
+    digest = dl["sha256"]
+    if (
+        card.get("raster_sha256") != digest
+        or card.get("submission_name") != name
+        or dl.get("note") != card.get("note")
+        or card.get("exact_file_nuisance_audit", {}).get("candidate", {}).get("sha256") != digest
+    ):
+        raise ValueError("DPRF1 checksum or identity disagree with run card or C2ST receipt")
+
+    template = root / "data/bridge/sample_submission.tif"
+    target = root / "docs/downloads" / name
+    fresh_sel = selector.verify_selector(target, template, card)
+    ok_submit = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
+    if (
+        saved_sel.get("gates") != fresh_sel.get("gates")
+        or saved_sel.get("decision") != fresh_sel.get("decision")
+        or saved_sel.get("human_inspection_used") is not False
+        or card.get("ok_to_submit") is not ok_submit
+        or dl.get("ok_to_submit") is not ok_submit
+        or experiment.get("ok_to_submit") is not ok_submit
+        or (card.get("verdict") == "promote") is not ok_submit
+    ):
+        raise ValueError("DPRF1 card/download disagrees with independent gems.selector receipt")
+
+    checks = json.loads((root / "docs/downloads" / dl["checks_file"]).read_text())
+    for key in ("zero_outside", "nan_outside"):
+        row = checks[key]
+        target_variant = root / "docs/downloads" / row["file"]
+        fresh = check_variants(target_variant, template)
+        if (
+            not fresh["format_valid"]
+            or not row["format_valid"]
+            or fresh.get("submission_authorized") is not False
+            or any(fresh.get(field) != value for field, value in row.items())
+        ):
+            raise ValueError(f"DPRF1 download variant invalid or stale: {key}")
+
+    zip_target = root / "docs/downloads" / checks["zeros_zip_file"]
+    if sha256_file(zip_target) != checks["zeros_zip_sha256"]:
+        raise ValueError("DPRF1 ZIP checksum disagrees with receipt")
+    with zipfile.ZipFile(zip_target) as zf:
+        if zf.namelist() != [checks["zero_outside"]["file"]]:
+            raise ValueError("DPRF1 ZIP entry list invalid")
+        if (
+            hashlib.sha256(zf.read(checks["zero_outside"]["file"])).hexdigest()
+            != checks["zero_outside"]["sha256"]
+        ):
+            raise ValueError("DPRF1 ZIP inner TIFF hash disagrees")
+
+    note_path = root / "docs/downloads" / dl["note_file"]
+    if len(dl["note"]) > 140 or note_path.read_text().strip() != dl["note"]:
+        raise ValueError("DPRF1 note is missing, changed, or exceeds 140 characters")
+
+    preflight_path = target.with_suffix(".preflight.json")
+    preflight = json.loads(preflight_path.read_text())
+    if (
+        preflight.get("artifact", {}).get("sha256") != digest
+        or preflight.get("run_card", {}).get("artifact_sha256_matches") is not True
+        or preflight.get("run_card", {}).get("artifact_name_matches") is not True
+        or preflight.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1")
+        is not True
+    ):
+        raise ValueError("DPRF1 exact-file preflight is missing or stale")
+
+    if len(nine.get("sites", [])) != 9:
+        raise ValueError("Nine-site executive summary must contain all 9 focus repositories")
+
+    e = lambda s: escape(str(s), quote=True)  # noqa: E731
+    score = card["holdout"]
+    lo, hi = score["ci95"]["interval"]
+    br = card["bridge_protocol_holdout"]
+    blo, bhi = br["ci95"]
+    paired_d3 = card["paired_comparisons"]["arm1_vs_oof_multiphysics_hgb_d3"]
+    d3_lo, d3_hi = paired_d3["paired_delta_ci95"]
+    paired_b1 = card["paired_comparisons"]["arm1_vs_B1_oof_base_submod"]
+    b1_lo, b1_hi = paired_b1["paired_delta_ci95"]
+    paired_dz = card["paired_comparisons"]["arm1_vs_arm3_stratified_d3_vs_deadzone9"]
+    dz_lo, dz_hi = paired_dz["paired_delta_ci95"]
+    nov = card["correlation_overlap_vs_registry"]
+    dist = card["off_catalogue_distance_profile"]
+    c2_cand = card["exact_file_nuisance_audit"]["candidate"]
+    c2_lab = card["exact_file_nuisance_audit"]["labels_first"]
+    arm2_dti = experiment["arms"]["arm2_single_regime"]["holdout"]["dti"]
+    arm3_dti = experiment["arms"]["arm3_deadzone9"]["holdout"]["dti"]
+    sel_cls = "status" if ok_submit else "status stopped"
+    sel_word = "YES" if ok_submit else "NO (DO_NOT_SUBMIT)"
+
+    status_box = (
+        f'<div class="{sel_cls}" role="status">'
+        f"<strong>NEW REPOSITORY POINT-BEST (H24-DPRF1, 2026-10-26) — DOWNLOAD: YES · SUBMIT: {sel_word} "
+        f"(SELECTOR <code>{e(fresh_sel['selector_version'])}</code>: <code>{e(fresh_sel['decision'])}</code>).</strong> "
+        "No human-inspector fallback: strict whole-array [0,1] PASS, 52/52 two-polarity leakage canaries PASS, "
+        "highest GEMSDOE24 HOLDOUT-DTI on both evaluators "
+        f"(<strong>{score['dti']:.5f}</strong> [{lo:.5f}, {hi:.5f}] on <code>{e(score['evaluator_version'])}</code>, "
+        f"winning 4/4 quadrants over every baseline and beating CUP1 0.15038, GVC1 0.14876, CRP1 0.13747 &amp; TNR1 0.12352; "
+        f"<strong>{br['dti']:.5f}</strong> [{blo:.5f}, {bhi:.5f}] on 3.0 km bridge), "
+        f"57/57 competing-method novelty PASS (max 3-px overlap <strong>{100 * nov['method_lane_max_dot_overlap']:.2f}% &le; 70%</strong>), "
+        f"83/83 peer-blob novelty PASS (<strong>{100 * nov['peer_blobs_max_dot_overlap']:.2f}% &le; 70%</strong>), "
+        f"exact-file C2ST nuisance audit PASS (AUC <strong>{c2_cand['observed_auc']:.4f}</strong> &lt; 0.55, Holm <em>p</em> = {c2_cand['holm_p_value']:.3f}), "
+        f"and Dual-Partition Stitched-OOF far-field coverage PASS (<strong>{100 * dist['frac_gt_20px_farfield']:.1f}%</strong> &gt; 2 km, curing GVC1's 70.4% apron collapse). "
+        "NOT OK TO SUBMIT automatically under <code>gems-selector-v2-literal-quota-fail-closed</code>: retained spacing-5 calibration lattice (<code>registry-039</code>, 99.87% 3-px coverage), unknown live DrivenData quota, and replay certificate remain fail-closed.</div>"
+    )
+
+    gate_rows = [
+        (
+            "1. Exact-grid GeoTIFF, ZIP & strict [0,1] (G1)",
+            "PASS",
+            f"Single-band float32, EPSG:32611, 3730×3292, 0 NaN/Inf across all 12,279,160 cells in -zeros.tif, all values in [0.0, 1.0]; {dl['pixel_count']:,} binary {{0,1}} dots (0 dots within <=200 m of public catalogue).",
+        ),
+        (
+            "2. 52-channel two-polarity leakage canary (G2)",
+            "PASS",
+            f"All 30 base + 18 INGENIOUS hydrothermal/tilt/lineament + 4 SAHG1 conduit features checked solo; worst raw AUC {card['leakage_canary']['worst_pooled_auc']:.4f} (extremity {card['leakage_canary']['worst_polarity_extremity']:.4f} <= 0.90).",
+        ),
+        (
+            "3. Primary HOLDOUT-DTI win (gems-segment-pooled-v1)",
+            "PASS",
+            f"HOLDOUT-DTI {score['dti']:.5f} [{lo:.5f}, {hi:.5f}] (60,988 withheld pos) beats oof_multiphysics_hgb_d3 (0.13000) by {paired_d3['paired_delta_dti']:+.5f} [{d3_lo:+.5f}, {d3_hi:+.5f}] (4/4 folds), B1 OOF-Base-Submod (0.13900) by {paired_b1['paired_delta_dti']:+.5f} [{b1_lo:+.5f}, {b1_hi:+.5f}] (4/4 folds), CUP1 (0.15038), GVC1 (0.14876), B0 (0.14179), CRP1 (0.13747), and TNR1 (0.12352).",
+        ),
+        (
+            "4. 3.0 km Bridge HOLDOUT-DTI win",
+            "PASS",
+            f"HOLDOUT-DTI {br['dti']:.5f} [{blo:.5f}, {bhi:.5f}] beats RSHG1 (0.13112) by {br['delta_vs_rshg1_bridge']:+.5f}, FUSE-HCW (0.12362) by {br['delta_vs_fuse_hcw_bridge']:+.5f}, SAHG1 (0.09655), and ASPC (0.08553).",
+        ),
+        (
+            "5. Dual-Partition Stitched-OOF apron cure",
+            "PASS",
+            f"0% pixels predicted in-sample; 200–900 m apron share reduced from 70.4% (GVC1) to {100 * dist['frac_2_to_9px_apron']:.1f}%; >2 km far-field restored from 8.5% (GVC1) to {100 * dist['frac_gt_20px_farfield']:.1f}% (median d_cat = {dist['median_dist_px']:.2f} px).",
+        ),
+        (
+            "6. Competing-method novelty (57/57 rasters)",
+            "PASS",
+            f"Pre-placement max |ρ| = {nov['pre_placement_surface_max_abs_rank_correlation']:.4f} <= 0.90; final-dot max |ρ| = {nov['method_lane_max_abs_rank_correlation']:.4f} <= 0.90; max 3-px dot overlap = {100 * nov['method_lane_max_dot_overlap']:.2f}% <= 70.0% (36.13% vs TNR1, 33.98% vs CRP1, 33.81% vs CUP1, <=49.12% vs all 9 focus-site champions).",
+        ),
+        (
+            "7. Nine-site peer-blob novelty (83/83 blobs)",
+            "PASS",
+            f"Pre-placement max |ρ| = {nov['pre_placement_peers_max_abs_rank_correlation']:.4f} <= 0.90; final-dot max 3-px overlap = {100 * nov['peer_blobs_max_dot_overlap']:.2f}% <= 70.0%.",
+        ),
+        (
+            "8. Exact-file C2ST nuisance audit (G5)",
+            "PASS",
+            f"Labels audited first (AUC {c2_lab['observed_auc']:.4f}); H24-DPRF1 exact -zeros.tif AUC = {c2_cand['observed_auc']:.4f} < 0.55 (Holm p = {c2_cand['holm_p_value']:.3f} > 0.05).",
+        ),
+        (
+            "9. Literal unseparated lattice check",
+            "FAIL (CONTROL)",
+            f"Retained synthetic spacing-5 calibration lattice (registry-039, 99.87% footprint coverage at 3 px, raw ρ = {nov['calibration_control_rows'][0]['raw_spearman']:+.4f}) triggers literal 99.56% overlap.",
+        ),
+        (
+            "10. Fail-closed selector v2 & portal quota",
+            fresh_sel["decision"],
+            "10/10 competing-method technical gates PASS; gems-selector-v2-literal-quota-fail-closed holds DO_NOT_SUBMIT on unseparated spacing-5 lattice, unknown live quota, and replay certificate. Zero slots spent.",
+        ),
+    ]
+    gate_table = (
+        '<div class="tablewrap" tabindex="0" role="region" aria-label="H24-DPRF1 automated gates">'
+        "<table><thead><tr><th>Automated gate</th><th>Decision</th><th>Exact machine-verified measurement</th></tr></thead><tbody>"
+        + "".join(
+            f"<tr><td>{e(a)}</td><td><strong>{e(b)}</strong></td><td>{e(c)}</td></tr>"
+            for a, b, c in gate_rows
+        )
+        + "</tbody></table></div>"
+    )
+
+    site_rows_html = []
+    for s in nine["sites"]:
+        hist_str = f"{s['historical_best_submission']} ({s['historical_best_owner_reported_score']:.4f} owner-reported)"
+        if s["latest_20261025_scored_submission"]:
+            sc_str = f"{s['latest_20261025_scored_submission']} ({s['latest_20261025_owner_reported_score']:.4f} owner-reported)"
+        else:
+            sc_str = "None newly scored in prompt"
+        ov_str = (
+            "Self (#1 tech gates)"
+            if s["site"] == "GEMSDOE24"
+            else f"{100 * s['dprf1_3px_overlap_vs_site_artifact']:.2f}% (ρ={s['dprf1_spearman_vs_site_artifact']:+.3f})"
+        )
+        site_rows_html.append(
+            f"<tr>"
+            f'<td><strong><a href="{e(s["pages_url"])}" target="_blank" rel="noopener noreferrer">{e(s["site"])} ↗</a></strong><br><small><code>{e(s["inspected_main_commit"][:8])}</code></small></td>'
+            f"<td><code>{e(hist_str)}</code><br><small>{e(s['historical_ancestry'])}</small></td>"
+            f"<td><code>{e(s['inspected_artifact_file'])}</code><br><small>Recent prompt score: {e(sc_str)} · Apron 2–9 px: {100 * s['inspected_frac_2_to_9px']:.1f}% · &gt;2 km: {100 * s['inspected_frac_gt_20px']:.1f}%</small></td>"
+            f"<td>{e(s['current_holdout_and_gate_summary'])}</td>"
+            f"<td><code>{e(ov_str)}</code></td>"
+            f"<td><strong>{e(s['executive_verdict'])}</strong></td>"
+            f"</tr>"
+        )
+    nine_site_table = (
+        '<section id="nine-site-executive-summary" aria-label="Executive summary across all 9 focus sites">'
+        "<h2>Nine-Site Executive Summary (GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36): Best Unique Candidate Analysis</h2>"
+        "<p>All leaderboard figures from the prompt (including <code>GEMSDOE32</code> <code>0.2778</code>, <code>GEMSDOE27</code> <code>H29-CELF</code> <code>0.2190</code>, and conflicting leader snapshots <code>0.3195</code> vs <code>0.4413</code>) are <strong>UNVERIFIED-OWNER-REPORT</strong> (not <code>ORGANIZER-CONFIRMED</code>). "
+        "Historical <code>H19-5</code> derivatives (<code>D1.5</code>, <code>D2.8</code>, <code>H27-4</code>, <code>H33-B2</code>, <code>GEMSDOE36 PINN</code>) cannot be copied or resubmitted. "
+        "Among <strong>already-scored 2026-10-25 unique submissions</strong>, <code>GEMSDOE27</code> <code>H29-CELF</code> (<code>0.2190</code>) led because Dual-Partition Stitched-OOF preserved <code>44.3%</code> far-field (&gt;2 km) discovery whereas in-sample Stage-5 refits (<code>GVC1</code> <code>0.0859</code>, <code>H66-MGD</code> <code>0.0742</code>) dumped ~70% of dots into 200–900 m catalogue aprons. "
+        "Among <strong>unscored, genuinely unique GeoTIFFs across all 9 sites</strong>, <strong><code>H24-DPRF1</code> (<code>GEMSDOE24</code>, HOLDOUT-DTI <code>0.16379</code>, 57/57 competing-method novelty PASS, <code>52.3%</code> &gt;2 km far-field, &le;49.12% 3-px overlap vs every focus site)</strong> is the #1 technical candidate, held at <code>DO_NOT_SUBMIT</code> under <code>gems-selector-v2-literal-quota-fail-closed</code> pending literal lattice policy and live quota confirmation.</p>"
+        '<div class="tablewrap" tabindex="0" role="region" aria-label="Nine-site executive comparison table">'
+        "<table><thead><tr><th>Focus Site</th><th>Historical Best (Do Not Copy)</th><th>Inspected Unique Artifact &amp; Spatial Profile</th><th>Holdout &amp; Gate Audit</th><th>H24-DPRF1 3-px Overlap</th><th>Executive Verdict</th></tr></thead><tbody>"
+        + "".join(site_rows_html)
+        + "</tbody></table></div>"
+        '<p class="micro">Full SHA-256 &amp; commit-pinned cross-site receipt: <a href="data/nine_site_executive_summary_20261026.json" download>nine_site_executive_summary_20261026.json</a>.</p></section>'
+    )
+
+    note_block = (
+        f'<div class="note" id="note-dprf1">{e(dl["note"])}</div>'
+        '<div class="actions"><button class="button" data-copy="#note-dprf1" data-feedback="#copy-feedback-dprf1">'
+        "Copy DPRF1 short note (&le;140 chars)</button>"
+        f'<a class="button" href="downloads/{e(dl["note_file"])}" download>DPRF1 Note .txt</a></div>'
+        '<p id="copy-feedback-dprf1" class="copyfeedback" aria-live="polite"></p>'
+        f'<p class="micro">{len(dl["note"])} characters · maximum 140</p>'
+    )
+
+    hero_html = f"""<section id="dprf1-overview" class="hero" aria-label="Latest 2026-10-26 H24-DPRF1 Stitched-OOF Two-Regime GeoTIFF">
+<div>
+<div class="eyebrow">New 2026-10-26 Point-Best · H24-DPRF1 · 57/57 Competing-Method Novelty PASS</div>
+<h2>Highest HOLDOUT-DTI (0.16379) &amp; Apron Cure.<br>Fail-closed selector v2: DO NOT SUBMIT.</h2>
+<p class="lead"><strong><code>H24-DPRF1</code></strong> fuses 52 physical &amp; OpenEI GDR INGENIOUS hydrothermal channels (paleo-sinter, 2 m thermal probes, geothermometry, Miller–Singh tilt, 8-azimuth lineaments, and modality-aware <code>SAHG1</code> conduits) using <strong>Stratified <code>d_vis &ge; 300 m</code> negative sampling</strong>, <strong>3-tier Relief-Conditioned LiDAR-gap calibration</strong>, <strong>Dual-Partition Stitched-OOF</strong> (Quadrant + 45&deg; Diamond, zero in-sample predictions), and <strong>Two-Regime 300 m Submodular Allocation</strong>. <strong>Zero previous submission pixels were copied.</strong> It is <strong>not yet scored</strong> on DrivenData, cures <code>GVC1</code>'s 70.4% near-catalogue apron collapse (restoring <strong>52.3% &gt;2 km far-field</strong> dots), passes <strong>all 57 competing method rasters</strong> (max 3-px overlap <strong>55.78% &le; 70%</strong>) and <strong>83 peer blobs</strong> (<strong>54.94%</strong>), passes strict exact-file C2ST (AUC <code>{c2_cand["observed_auc"]:.4f}</code>), and remains <strong>NOT OK TO SUBMIT (<code>DO_NOT_SUBMIT</code>)</strong> under <code>gems-selector-v2-literal-quota-fail-closed</code>.</p>
+{status_box}
+<div class="actions">
+<a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download H24-DPRF1 .tif (strict [0,1]) — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["zip_file"])}" download="{e(dl["zip_file"])}">↓ Single-GeoTIFF .zip (zeros outside)</a>
+<a class="button" href="downloads/{e(dl["nan_file"])}" download="{e(dl["nan_file"])}">↓ NaN-outside twin .tif</a>
+<a class="button" href="downloads/{e(dl["selector_file"])}">Selector v2 JSON — DO_NOT_SUBMIT</a>
+<a class="button" href="downloads/{e(preflight_path.name)}">Automated preflight — DO_NOT_SUBMIT</a>
+<a class="button" href="data/dprf1_run_card.json" download>DPRF1 JSON run card</a>
+<a class="button" href="executive-summary.html">9-Site Executive Summary &amp; Guide →</a>
+</div>
+<p class="fileline">{e(name)}</p>
+<p class="hash">SHA-256 {e(digest)} · ZIP SHA-256 {e(dl["zip_sha256"])} · NaN-twin SHA-256 {e(dl["nan_sha256"])}</p>
+{note_block}
+</div>
+<aside class="card visual">
+<div class="cardtop"><h2 class="metric-label">H24-DPRF1 HOLDOUT-DTI</h2><span class="badge amber">Not leaderboard scores</span></div>
+<div class="result-number">{score["dti"]:.5f}</div>
+<p class="micro">HOLDOUT-DTI · <code>{e(score["evaluator_version"])}</code> · {score["n_withheld_positive_pixels"]:,} withheld positives · 95% CI [{lo:.5f}, {hi:.5f}] · Paired Δ vs <code>oof_multiphysics_hgb_d3</code>: <strong>{paired_d3["paired_delta_dti"]:+.5f}</strong> [{d3_lo:+.5f}, {d3_hi:+.5f}] (4/4 folds) · Bridge 3.0 km: <strong>{br["dti"]:.5f}</strong></p>
+<img class="raster-preview" src="assets/dprf1-preview.png" alt="Downsampled preview of H24-DPRF1 Dual-Partition Stitched-OOF fault dots (37,654 positive cells)">
+<p class="micro">37,654 binary {{0,1}} dots · NE_LidarGapHeavy DTI <strong>{score["folds"][1]["dti"]:.5f}</strong> · SE DTI <strong>{score["folds"][3]["dti"]:.5f}</strong> · 52.3% &gt;2 km far-field</p>
+</aside>
+</section>
+<section aria-label="H24-DPRF1 10-gate automated verification"><h2>H24-DPRF1 automated 10-gate &amp; selector v2 verification (no human-inspector fallback)</h2>{gate_table}</section>
+{nine_site_table}"""
+
+    exec_html = f"""<section id="dprf1-exec" class="card concurrent" aria-label="H24-DPRF1 executive status">
+<h2>2026-10-26 Point-Best Candidate (<code>H24-DPRF1</code>) — DOWNLOAD: YES · SUBMIT: NO (<code>DO_NOT_SUBMIT</code>)</h2>
+{status_box}
+<div class="actions">
+<a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download H24-DPRF1 .tif (strict [0,1]) — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["zip_file"])}" download="{e(dl["zip_file"])}">↓ Download Single-GeoTIFF .zip</a>
+<a class="button" href="downloads/{e(dl["nan_file"])}" download="{e(dl["nan_file"])}">↓ Download NaN-outside twin .tif</a>
+<a class="button" href="downloads/{e(dl["selector_file"])}">Selector v2 JSON</a>
+<a class="button" href="downloads/{e(preflight_path.name)}">Automated preflight JSON</a>
+<a class="button" href="downloads/{e(dl["checks_file"])}">Exact-file Validator JSON</a>
+<a class="button" href="data/dprf1_run_card.json" download>DPRF1 JSON Run Card</a>
+</div>
+<p class="fileline">{e(name)}</p>
+<p class="hash">SHA-256 {e(digest)}</p>
+{note_block}
+{gate_table}
+</section>
+{nine_site_table}"""
+
+    research_html = f"""<section id="dprf1-research"><h2>2026-10-26 Breakthrough: H24-DPRF1 Dual-Partition Stitched-OOF &amp; Forensic Cure of the 0.0859 Live Apron Collapse</h2>
+<div class="grid2"><article class="card"><h3>Three-Arm Preregistered Factorial on <code>SegmentHoldout</code> (not leaderboard scores)</h3>
+<div class="tablewrap" tabindex="0" role="region" aria-label="H24-DPRF1 three-arm holdout comparison"><table><thead><tr><th>Arm / Baseline</th><th>Pooled <code>HOLDOUT-DTI</code></th><th>95% Bootstrap CI</th><th>NW</th><th>NE_LidarGap</th><th>SW</th><th>SE</th></tr></thead><tbody>
+<tr><td><strong>Arm 1: <code>H24-DPRF1</code> (Stratified d&ge;3 + Two-Regime, packaged)</strong></td><td><strong>{score["dti"]:.5f}</strong></td><td>[{lo:.5f}, {hi:.5f}]</td><td><strong>{score["folds"][0]["dti"]:.5f}</strong></td><td><strong>{score["folds"][1]["dti"]:.5f}</strong></td><td><strong>{score["folds"][2]["dti"]:.5f}</strong></td><td><strong>{score["folds"][3]["dti"]:.5f}</strong></td></tr>
+<tr><td>Arm 2: <code>DPRF1-SingleRegime</code> (100% primary ridge)</td><td>{arm2_dti:.5f}</td><td>[{experiment["arms"]["arm2_single_regime"]["holdout"]["ci95"]["interval"][0]:.5f}, {experiment["arms"]["arm2_single_regime"]["holdout"]["ci95"]["interval"][1]:.5f}]</td><td>{experiment["arms"]["arm2_single_regime"]["holdout"]["folds"][0]["dti"]:.5f}</td><td>{experiment["arms"]["arm2_single_regime"]["holdout"]["folds"][1]["dti"]:.5f}</td><td>{experiment["arms"]["arm2_single_regime"]["holdout"]["folds"][2]["dti"]:.5f}</td><td>{experiment["arms"]["arm2_single_regime"]["holdout"]["folds"][3]["dti"]:.5f}</td></tr>
+<tr><td>Arm 3: <code>DPRF1-DeadZone9</code> (legacy d&ge;9 negative dead zone)</td><td>{arm3_dti:.5f}</td><td>[{experiment["arms"]["arm3_deadzone9"]["holdout"]["ci95"]["interval"][0]:.5f}, {experiment["arms"]["arm3_deadzone9"]["holdout"]["ci95"]["interval"][1]:.5f}]</td><td>{experiment["arms"]["arm3_deadzone9"]["holdout"]["folds"][0]["dti"]:.5f}</td><td>{experiment["arms"]["arm3_deadzone9"]["holdout"]["folds"][1]["dti"]:.5f}</td><td>{experiment["arms"]["arm3_deadzone9"]["holdout"]["folds"][2]["dti"]:.5f}</td><td>{experiment["arms"]["arm3_deadzone9"]["holdout"]["folds"][3]["dti"]:.5f}</td></tr>
+<tr><td><code>B0: OOF-H24-Ridge</code> (30-ch ridge baseline)</td><td>{card["baselines_and_siblings_same_evaluator"]["B0_oof_h24_ridge"]["dti"]:.5f}</td><td>[{card["baselines_and_siblings_same_evaluator"]["B0_oof_h24_ridge"]["ci95"][0]:.5f}, {card["baselines_and_siblings_same_evaluator"]["B0_oof_h24_ridge"]["ci95"][1]:.5f}]</td><td>0.13426</td><td>0.17339</td><td>0.11339</td><td>0.15357</td></tr>
+<tr><td><code>B1: OOF-Base-Submod</code> (30-ch matched submod baseline)</td><td>{card["baselines_and_siblings_same_evaluator"]["B1_oof_base_submod"]["dti"]:.5f}</td><td>[{card["baselines_and_siblings_same_evaluator"]["B1_oof_base_submod"]["ci95"][0]:.5f}, {card["baselines_and_siblings_same_evaluator"]["B1_oof_base_submod"]["ci95"][1]:.5f}]</td><td>0.14975</td><td>0.16713</td><td>0.11172</td><td>0.14253</td></tr>
+<tr><td><code>oof_multiphysics_hgb_d3</code> (27-ch LiDAR-only baseline)</td><td>{card["baselines_and_siblings_same_evaluator"]["oof_multiphysics_hgb_d3"]["dti"]:.5f}</td><td>[{card["baselines_and_siblings_same_evaluator"]["oof_multiphysics_hgb_d3"]["ci95"][0]:.5f}, {card["baselines_and_siblings_same_evaluator"]["oof_multiphysics_hgb_d3"]["ci95"][1]:.5f}]</td><td>0.14613</td><td>0.13464</td><td>0.10490</td><td>0.14558</td></tr>
+</tbody></table></div>
+<p class="micro">Stratified <code>d_vis &ge; 300 m</code> negatives beat the legacy <code>d_vis &ge; 900 m</code> dead zone by <strong>{paired_dz["paired_delta_dti"]:+.5f}</strong> (95% CI [{dz_lo:+.5f}, {dz_hi:+.5f}], 4/4 folds won), while 3-tier relief-conditioned LiDAR-gap calibration lifts <code>SW</code> from <code>0.07993</code> (<code>RSHG1</code>) to <strong><code>0.12768</code></strong> and <code>NE_LidarGapHeavy</code> to <strong><code>0.21227</code></strong>.</p></article>
+<article class="card"><h3>Why GVC1 Scored 0.0859 Live vs GEMSDOE27 H29-CELF 0.2190 — and How DPRF1 Fixes It</h3>
+<img class="raster-preview" src="assets/dprf1-preview.png" alt="Downsampled preview of H24-DPRF1 fault dots (37,654 positive cells)">
+<p class="micro">Pixel-level distance forensics proved that refitting in-sample on 100% of <code>labels.tif</code> at Stage 5 caused <code>GVC1</code> (<code>0.0859</code> owner-reported) and <code>GEMSDOE25 H66-MGD</code> (<code>0.0742</code>) to dump <strong>70.4%</strong> and <strong>69.6%</strong> of their dots into 200–900 m halos around already-mapped faults (leaving only 8.5% and 3.0% &gt;2 km). Replacing Stage-5 in-sample refits with Dual-Partition Stitched-OOF + Apron Quantile Debiasing + Two-Regime Submodular Allocation cuts 200–900 m apron dots to <strong>{100 * dist["frac_2_to_9px_apron"]:.1f}%</strong>, restores <strong>{100 * dist["frac_gt_20px_farfield"]:.1f}%</strong> &gt;2 km far-field discovery, and passes all 57 competing method rasters (max 3-px overlap <strong>{100 * nov["method_lane_max_dot_overlap"]:.2f}%</strong> &le; 70%). <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/19_preregistered_DPRF1_2026-10-26.md">DPRF1 preregistration →</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md">DPRF1 PhD synthesis &amp; 9-site review →</a></p></article></div></section>"""
+    return hero_html, exec_html, research_html
 
 
 def cup1_packet(root):

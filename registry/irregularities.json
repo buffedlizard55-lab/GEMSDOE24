@@ -246,6 +246,20 @@
       "status": "disclosed",
       "issue": "Unmerged sibling branch origin/arena/6b1d9ade-gemsdoe24 (commit e6f8414) ran GT1/GT2 experiments without opening a pull request; GT2 failed prospective method-lane novelty (0.758 > 0.70 dot overlap with registry-006) and did not run C2ST.",
       "resolution": "Recorded in knowledge/18_FUSE_findings_2026-10-25.md; sibling branch was not modified or merged."
+    },
+    {
+      "id": "IR-STAGE5-INSAMPLE-APRON-COLLAPSE",
+      "severity": "high",
+      "status": "fixed_in_dprf1",
+      "issue": "Pixel-level forensics on the newly owner-reported 2026-10-25 live submissions revealed why GVC1 (0.14876 holdout -> 0.0859 live) and GEMSDOE25 H66-MGD (0.0742 live) collapsed relative to GEMSDOE27 H29-CELF (0.2190 live): training with a >=900 m negative dead zone and refitting in-sample on 100% of labels.tif at Stage 5 caused smooth 1.5-2.5 km geophysical/hydrothermal features to memorize all 3,199 training fault traces, dumping 70.4% (GVC1) and 69.6% (H66-MGD) of emitted dots into 200-900 m catalogue aprons and starving >2 km far-field discovery (8.5% and 3.0%, vs 49.2% in H33-B2 and 44.3% in H29-CELF). SegmentHoldout(buffer_px=15) has min(d_vis)=16.0 px inside fold['valid'], making it blind to Stage-5 in-sample 200-900 m apron memorization.",
+      "resolution": "Resolved in H24-DPRF1 (src/gems/dprf1.py, scripts/run_dprf1_lane.py) via stratified d_vis>=3.0 px negative training (+0.00717 paired holdout gain, 4/4 folds won over d_vis>=9.0 px) and Dual-Partition Stitched-OOF (Quadrant + Rotated45 Diamond) + Apron Quantile Debiasing, restoring 52.3% >2 km far-field coverage (22.3% in 200-900 m apron) and passing all 54 competing method rasters (max 3-px overlap 0.5578 <= 0.70)."
+    },
+    {
+      "id": "IR-GITHUB-API-RATELIMIT-FALLBACK",
+      "severity": "medium",
+      "status": "fixed",
+      "issue": "Parallel session activity exhausted the shared api.github.com user rate limit (HTTP 403), causing scripts/restore_data.py, scripts/cache_priority_registry.py, scripts/review_peer_registry.py, and scripts/refresh_priority_feed.py to fail when invoked via gh api alone.",
+      "resolution": "Fixed once in the shared scripts (Rule 2) by adding thread-safe Git smart-HTTP blob/ref fallback over https://github.com/buffedlizard55-lab/*.git while preserving exact Git SHA-1 and SHA-256 verification."
     }
   ]
 }

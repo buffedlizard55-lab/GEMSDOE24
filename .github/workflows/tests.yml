@@ -34,6 +34,7 @@ jobs:
       - run: python scripts/run_sahg1_lane.py --verify-recorded
       - run: python scripts/run_rshg1_lane.py --verify-recorded
       - run: python scripts/run_hcw_lane.py --verify-recorded
+      - run: python scripts/run_dprf1_lane.py --verify-recorded
       - run: python -m pytest -q
       - run: ruff check src scripts tests
       - run: ruff format --check src scripts tests
