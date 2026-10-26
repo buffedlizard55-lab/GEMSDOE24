@@ -1,5 +1,7 @@
 # Standing project instructions
 
+Read `knowledge/22_current_best_review_2026-10-26.md` and the README current continuation review first. `scripts/review_current_best.py` revalidates the recorded local point-best without retraining or promotion. No new lane was assigned or experiment run in that continuation. The literal uniqueness failure remains binding; current-best/cross-site superiority and scientific replay are distinct. Historical `active_lane.json` is lane identity, not the current-best selector.
+
 ## Latest 2026-10-26 point-best continuation: H24-DPRF1 & Nine-Site Executive Summary
 
 Read `knowledge/owner_brief_2026-10-26.md`, `knowledge/owner_brief_2026-10-25.md`, and the current README decision first.

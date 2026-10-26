@@ -360,6 +360,28 @@ def build_independent_site(primary):
         overview = dprf1_hero + trsg1_hero + overview
         executive = dprf1_exec + trsg1_exec + executive
         research = dprf1_research + trsg1_research + research
+    # Resolve current-best from all comparable records, not the historical active_lane.
+    from gems.current_review import review_current_best
+
+    current = review_current_best(ROOT)
+    (DOCS / "data/current_best_review.json").write_text(
+        json.dumps(current, indent=2, allow_nan=False) + "\n"
+    )
+    ch = current["holdout"]
+    clo, chi = ch["ci95"]["interval"]
+    current_banner = (
+        '<section class="card" id="current-best-review"><h2>Current decision: DOWNLOAD YES / SUBMIT NO</h2>'
+        f"<p>Recorded local point-best: <strong>{e(current['current_recorded_point_best']['lane'])}</strong>. "
+        f"HOLDOUT-DTI {ch['dti']:.5f}, 95% CI [{clo:.5f}, {chi:.5f}], "
+        f"{e(ch['evaluator_version'])}, {ch['n_withheld_positive_pixels']:,} withheld positives. "
+        "Exact TIFF bytes revalidated during this site build; scientific measurements were not replayed. "
+        "Not a verified cross-site winner or a leaderboard prediction. "
+        "Literal novelty, quota and independent replay gates still block submission.</p>"
+        '<p><a href="data/current_best_review.json" download>Fresh exact-file review JSON</a> · '
+        '<a href="#nine-site-executive-summary">Nine-site executive comparison</a></p></section>'
+    )
+    overview = current_banner + overview
+    executive = current_banner + executive
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),
@@ -611,7 +633,7 @@ Latest 2026-10-26 Point-Best `H24-DPRF1` 52-Channel Dual-Partition Stitched-OOF 
 Single-GeoTIFF ZIP [`{dprf1_card_site["zip_artifact"]}`](docs/downloads/{dprf1_card_site["zip_artifact"]}), and
 NaN-outside twin [`{dprf1_card_site["nan_outside_artifact"]}`](docs/downloads/{dprf1_card_site["nan_outside_artifact"]}).
 Independently generated from 30 scale-separated base features + 18 OpenEI GDR INGENIOUS hydrothermal/tilt/lineament features + 4 modality-aware `SAHG1` conduit features using Stratified `d_vis >= 300 m` negative sampling, selective 9-channel non-topographic nuisance residualization, 3-tier relief-conditioned LiDAR-gap calibration, Dual-Partition Stitched-OOF (Quadrant + 45° Diamond, 0% in-sample pixels), apron quantile debiasing, and Two-Regime 300 m submodular allocation (`37,654` binary `{{0.0, 1.0}}` dots; zero copied submission pixels; strict `[0, 1]` all-finite PASS; 52/52 two-polarity leakage canaries PASS; exact-file C2ST **PASS** with AUC `{dc2st["observed_auc"]:.4f}` < 0.55, Holm *p* = `{dc2st["holm_p_value"]:.3f}`).
-Achieves the **highest HOLDOUT-DTI in `GEMSDOE24`** on both evaluators: `{dh["evaluator_version"]}` = **{dh["dti"]:.5f}** (95% CI **[{dlo:.5f}, {dhi:.5f}]**, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000` by `{dp_d3["paired_delta_dti"]:+.5f}` and over `B1: OOF-Base-Submod` `0.13900` by `{dp_b1["paired_delta_dti"]:+.5f}`, and beating `CUP1` `0.15038`, `GVC1` `0.14876`, `TRSG1` `0.14644`, `B0` `0.14179`, `CRP1` `0.13747`, `RSHG1` `0.12899`, `FUSE-HCW` `0.12372`, and `TNR1` `0.12352`) and `{dbr["evaluator_version"]}` = **{dbr["dti"]:.5f}** (95% CI **[{dblo:.5f}, {dbhi:.5f}]**).
+Achieves the **highest HOLDOUT-DTI in `GEMSDOE24`** on both evaluators: `{dh["evaluator_version"]}` = **{dh["dti"]:.5f}** (95% CI **[{dlo:.5f}, {dhi:.5f}]**, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000` by `{dp_d3["paired_delta_dti"]:+.5f}` and over `B1: OOF-Base-Submod` `0.13900` by `{dp_b1["paired_delta_dti"]:+.5f}`, and beating `CUP1` `0.15038`, `GVC1` `0.14876`, `TRSG1` `0.14644`, `B0` `0.14179`, `CRP1` `0.13747`, `RSHG1` `0.12899`, `FUSE-HCW` `0.12372`, and `TNR1` `0.13219`) and `{dbr["evaluator_version"]}` = **{dbr["dti"]:.5f}** (95% CI **[{dblo:.5f}, {dbhi:.5f}]**).
 Passes prospective novelty across **all {dnov["competing_method_rasters_checked"]} competing method rasters** (max 3-px dot overlap `{dnov["method_lane_max_dot_overlap"]:.4f}` ≤ 0.70; `0.3613` vs `TNR1`, `0.3398` vs `CRP1`, `0.3381` vs `CUP1`, ≤ `0.4912` vs all 9 focus-site champions) and **all {dnov["peer_blobs_checked"]} peer blobs** (`{dnov["peer_blobs_max_dot_overlap"]:.4f}` ≤ 0.70), and restores **{100 * ddist["frac_gt_20px_farfield"]:.1f}%** `> 2 km` far-field discovery (`{100 * ddist["frac_2_to_9px_apron"]:.1f}%` in `200–900 m` apron, curing `GVC1`'s `70.4%` in-sample apron collapse). Held at **`{d_decision}`** under `gems-selector-v2-literal-quota-fail-closed` (`evidence/dprf1_selector_20261026.json`) due to the unseparated synthetic spacing-5 calibration lattice (`registry-039`), unknown live DrivenData quota, and replay certificate.
 [DPRF1 JSON run card](evidence/dprf1_run_card_20261026.json) · [DPRF1 Selector v2 JSON](evidence/dprf1_selector_20261026.json) · [9-Site Executive Summary JSON](evidence/nine_site_executive_summary_20261026.json) · [DPRF1 preregistration](knowledge/19_preregistered_DPRF1_2026-10-26.md) · [DPRF1 PhD synthesis & 9-site review](knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md)
 """
