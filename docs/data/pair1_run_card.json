@@ -1,0 +1,99 @@
+{
+  "schema": "run-card-v1 (Parallel-Run Protocol Rule 5)",
+  "lane": "H24-PAIR1",
+  "date": "2026-10-26",
+  "hypothesis": "Narrow intrabasin grabens missing from the USGS/INGENIOUS catalogue preserve paired opposite-facing scarps and crest->base dipoles in 100 m LiDAR scarp aggregates; two-sided pairing operators min(upface(x),downface(x+o*d)) and min(lapneg(x),lappos(x+o*d)) detect them where pointwise scarp channels cannot.",
+  "mechanism": "Paired conjugate normal faults bound a subsided graben floor; each side keeps a low-relief scarp facing the other even under thin alluvium, while catalogue mapping is biased to single range-front scarps.",
+  "named_non_fault_mimic": "Fluvial terrace pairs, irrigation banks/levees, road cuts, Lake Lahontan shoreline ridges.",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "n_withheld_positives": 60988,
+    "exp1_base_22ch": {
+      "dti": 0.12857587416200994,
+      "ci95": [
+        0.11701627342836526,
+        0.1420583223200481
+      ]
+    },
+    "exp2_pair1_26ch": {
+      "dti": 0.12710753415298898,
+      "ci95": [
+        0.11532602376679188,
+        0.14078791947249708
+      ]
+    },
+    "exp3_pair1_clearance3px": {
+      "dti": 0.12710753415298898,
+      "ci95": [
+        0.11532602376679188,
+        0.14078791947249708
+      ],
+      "note": "Identical to exp2: zero fold dots fell in the 2<d_visible<=3 px band, so the clearance ablation did not discriminate (disclosed; budget spent)."
+    },
+    "paired_delta_pair1_minus_base": -0.001468340009020963,
+    "paired_delta_ci95": [
+      -0.003527049600612932,
+      0.0006881649924409093
+    ],
+    "fold_wins": 0,
+    "recorded_repo_best": {
+      "lane": "H24-DPRF1",
+      "dti": 0.16379,
+      "ci95": [
+        0.15045,
+        0.17739
+      ],
+      "note": "Not replayable in this checkout: DPRF1 needs the gitignored 419 MB competition training_features.tif (30 base channels). BASE replication 0.12858 vs recorded oof_multiphysics_hgb_d3 0.13000 confirms evaluator identity."
+    }
+  },
+  "leakage_canary": {
+    "passed": true,
+    "worst_feature": "rad_K",
+    "worst_two_polarity_auc": 0.5882228119383905,
+    "threshold": 0.9
+  },
+  "correlation_overlap_vs_registry": {
+    "n_competing_references_checked": 48,
+    "max_abs_spearman_rho": 0.14710564271424634,
+    "max_candidate_dots_within_3px": 0.44900940139161843,
+    "thresholds": {
+      "abs_rho_max": 0.9,
+      "overlap_max": 0.7
+    },
+    "spacing5_lattice_control_overlap": 0.994,
+    "lattice_note": "Synthetic calibration lattice covers 99.87% of footprint at 3 px (pigeonhole); reported separately, never deleted. Literal all-entry gate therefore still fails, as for every lane."
+  },
+  "raster_sha256": "ecf16ef684ce2823e2888c101bd0b47d0661e7dacbba8bb6915db118925d0f93",
+  "validator_output": {
+    "tool": "gems.submission.check_variants vs data/bridge/sample_submission.tif",
+    "format_valid": true,
+    "strict_whole_array_0_1_no_nan": true,
+    "single_band_float32": true,
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "nan_or_inf_inside_footprint": 0,
+    "dots": 37654,
+    "official_format_compliant_nan_outside": false,
+    "note": "-zeros.tif fills outside-footprint with 0 (fixes the portal 'Predicted values must be in range [0, 1]' strict-check failure mode); -nan.tif twin matches the sample's NaN-outside convention. Local format PASS is not organizer acceptance."
+  },
+  "submission_name": "gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.tif",
+  "submission_note_le_140": "GEMS24 PAIR1 | graben pair+dipole 26ch OOF | id 842a5212d85c | HOLDOUT-DTI 0.12711 | research; DO NOT SUBMIT",
+  "note_chars": 108,
+  "organizer_confirmed_score": null,
+  "slot_spent": false,
+  "verdict": "negative",
+  "download": "YES (research)",
+  "submit": "NO \u2014 paired holdout does not beat its own BASE (delta -0.00147, 95% CI [-0.00353, +0.00069], 0/4 folds) and is below recorded DPRF1 0.16379. Do not retune PAIR1."
+}

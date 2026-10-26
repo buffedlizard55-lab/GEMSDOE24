@@ -73,7 +73,7 @@ def page(title, active, body, prefix=""):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="DOE GEMS fault research: independent GeoTIFF downloads, automated negative submission gates, and reproducible evidence."><meta name="source-feed" content="{prefix}data/source_health.json"><title>{e(title)} · GEMS DOE 24</title><link rel="stylesheet" href="{prefix}assets/style.css"></head>
 <body><header><div class="nav"><a class="brand" href="{prefix}index.html"><span class="mark" aria-hidden="true">∿</span><span>GEMS DOE 24<small>Geologic mapping · evidence first</small></span></a><nav class="navlinks" aria-label="Main navigation">{"".join(nav)}</nav></div></header>
-<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}review-20261026.md">Review &amp; blockers</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
+<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}review-20261026.md">Review &amp; blockers</a> · <a href="{prefix}artifact-audit.html">Nine-site changed-file audit</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone. <a href="{prefix}metric-integrity-20261026.md">Corrected B2 metric explanation</a>.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
 
 
 def download_button(row, prefix, label="Download submission .tif", primary=True):
@@ -418,8 +418,15 @@ def build_independent_site(primary):
             f'<a class="button" href="downloads/{e(vname)}" download="{e(vname)}">Download VENT research TIFF — DO NOT SUBMIT</a>'
             '<p><a href="data/vent_run_card.json" download>Frozen VENT run card</a></p></section>'
         )
-    overview = current_banner + vent_html + overview
-    executive = current_banner + vent_html + executive
+    from gems.executive_decisions import build_decisions, render_decisions
+
+    decisions = build_decisions(ROOT, current)
+    (DOCS / "data/nine_site_download_decisions.json").write_text(
+        json.dumps(decisions, indent=2, allow_nan=False) + "\n"
+    )
+    decision_table = render_decisions(decisions)
+    overview = current_banner + decision_table + vent_html + overview
+    executive = current_banner + decision_table + vent_html + executive
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),
@@ -698,7 +705,7 @@ Latest 2026-10-26 Lane `H24-EUL1` Euler N=0 Contact 59-Channel GeoTIFF (**NEGATI
 Single-GeoTIFF ZIP [`{eul1_card_site["zip_artifact"]}`](docs/downloads/{eul1_card_site["zip_artifact"]}), and
 NaN-outside twin [`{eul1_card_site["nan_outside_artifact"]}`](docs/downloads/{eul1_card_site["nan_outside_artifact"]}).
 Preregistered (`knowledge/22_preregistered_EUL1_2026-10-26.md` @ `b841bf4`; pre-fit Amendment A1 replaced the inconsistent survey `*_vg` bands with self-consistent FFT vertical derivatives): 7 Euler-deconvolution channels (47,322 accepted RTP N=0 solutions) on the exact DPRF1 52-channel stitched-OOF stack + Euler-gated Regime B (`37,654` dots; zero copied pixels; strict `[0, 1]` PASS; 59/59 leakage canaries PASS; exact-file C2ST AUC `{ec2["observed_auc"]:.4f}` PASS).
-**HOLDOUT-DTI** `{eh["evaluator_version"]}` = **{eh["dti"]:.5f}** (95% CI **[{elo:.5f}, {ehi:.5f}]**) vs the **bit-identical same-session DPRF1 replay** **0.16379** (paired Δ **{epr["paired_delta_dti"]:+.5f}**, 95% CI **[{epr["paired_delta_ci95"][0]:+.5f}, {epr["paired_delta_ci95"][1]:+.5f}]**, {epr["fold_wins"]}/4 folds; channels alone lost 0/4). Final-dot novelty **FAIL**: `{100 * enov["dot_overlap_within_3px_vs_dprf1"]:.2f}%` within 3 px of DPRF1 (> 70% Rule-1 limit = duplicate lane) — the portfolio's parent-convergence lesson (CUP1 91.2%). **DPRF1 above remains the single best unscored unique candidate**; selector `gems-selector-v2-literal-quota-fail-closed`: `DO_NOT_SUBMIT` for every file (quota/replay certificate pending). No organizer score; HOLDOUT-DTI is not a leaderboard forecast.
+**HOLDOUT-DTI** `{eh["evaluator_version"]}` = **{eh["dti"]:.5f}** (95% CI **[{elo:.5f}, {ehi:.5f}]**) vs the **bit-identical same-session DPRF1 replay** **0.16379** (paired Δ **{epr["paired_delta_dti"]:+.5f}**, 95% CI **[{epr["paired_delta_ci95"][0]:+.5f}, {epr["paired_delta_ci95"][1]:+.5f}]**, {epr["fold_wins"]}/4 folds; channels alone lost 0/4). Final-dot novelty **FAIL**: `{100 * enov["dot_overlap_within_3px_vs_dprf1"]:.2f}%` within 3 px of DPRF1 (> 70% Rule-1 limit = duplicate lane) — the portfolio's parent-convergence lesson (CUP1 91.2%). **DPRF1 is the recorded local point-best, not a literal-gate-unique or submit-ready candidate**; selector `gems-selector-v2-literal-quota-fail-closed`: `DO_NOT_SUBMIT` for every file (quota/replay certificate pending). No organizer score; HOLDOUT-DTI is not a leaderboard forecast.
 [EUL1 JSON run card](evidence/eul1_run_card_20261026.json) · [EUL1 Selector v2 JSON](evidence/eul1_selector_20261026.json) · [9-Site Executive Summary (EUL1 update) JSON](evidence/nine_site_executive_summary_eul1_20261026.json) · [EUL1 preregistration](knowledge/22_preregistered_EUL1_2026-10-26.md) · [Amendment A1](knowledge/23_EUL1_prereg_amendment_2026-10-26.md) · [EUL1 PhD findings & updated executive summary](knowledge/24_EUL1_findings_and_executive_summary_2026-10-26.md) · [Executive guide](docs/executive-summary.html#eul1)
 """
     crp1_md = ""
@@ -792,6 +799,11 @@ Earlier scores/forecasts below are historical, not current promotion authority.
 
 
 def main():
+    from artifact_audit_site import render as render_artifact_audit
+
+    (DOCS / "artifact-audit.html").write_text(
+        page("Nine-site artifact audit", "Sources & audit", render_artifact_audit(ROOT))
+    )
     # Both negative lanes supersede historical recommendations. MTR has its own
     # packet; never overwrite the incoming historical metadata or ASPC receipt.
     primary = load("docs/data/independent_download.json")
