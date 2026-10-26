@@ -1,5 +1,7 @@
 # Repository review — Arena branch `arena/b7b2f1b6-gemsdoe24` — 2026-10-26
 
+> **Post-merge addendum:** this review was first written before PR #56's S3DEP1 packet became part of `main`. The DPRF1 references below are a historical review snapshot, not the current point-best. The current repository point-best is S3DEP1; see the post-merge follow-up at the end for the CI diagnosis, corrected current-download audit, and latest verification.
+
 ## Executive decision
 
 **No new TIFF or geological experiment was produced in this review. Nothing is authorized to submit.** The required single-method lane paragraph is not present in the active request, so no experiment was assigned or run. The retained spacing-5 calibration lattice also imposes a documented minimum 3-pixel overlap of **82.34%** for a 37,654-dot candidate, above the 70% stop rule. This is a geometric feasibility obstruction at that budget, not a reason to remove controls, move dots, or lower the budget to evade a gate.
@@ -47,6 +49,16 @@ The tests establish repository behavior, not scientific replay, novelty against 
 3. Resolve the standard-budget lattice obstruction through a prospectively approved policy change—not by deleting controls or evading the limit. Until then, no standard-budget unique candidate can pass.
 4. Keep all score claims separate: HOLDOUT-DTI with evaluator, withheld count and CI; organizer-confirmed only with an artifact-linked receipt. No numeric hidden-score estimate is supportable.
 5. A real submission still requires an independently replayed scientific selector and current account allowance, followed by the user's own portal action. A local format pass is not organizer acceptance.
+
+## Post-merge follow-up — main Reliability checks run `40407836076`
+
+The failed pytest job was retrieved locally against the merged `main` commit (`a433b43`). Root cause: `test_contradictory_hunique_packet_is_quarantined_without_tiff_link` read `docs/data/unique_download.json` and asserted that its TIFF filename did not occur anywhere in any generated page. PR #56 had added a separate historical H-UNIQUE research raster to the collapsed portfolio inventory, so the old assertion was broader than the actual quarantine contract. This was a stale test expectation, not evidence that the quarantined gapfill artifact was being recommended. The corrected test now targets `unique_gapfill_quarantined_download.json` (the actual oracle-leakage artifact) and confirms that it is absent from generated pages and has no link inside the explicit H-UNIQUE quarantine alert.
+
+The same integration review found that `verify_current_download()` still treated DPRF1 as first-screen current after PR #56 had made S3DEP1 the current recorded point-best. The audit now binds to S3DEP1's exact download metadata, run card, negative selector and note, and freshly checks the file hash, finite whole-array `[0,1]` values, CRS, shape, and template transform. It remains a format/evidence revalidation only; the scientific holdout result was not replayed and submission remains unauthorized.
+
+Current recorded point-best: H24-S3DEP1, **HOLDOUT-DTI 0.166060**, 95% CI `[0.151858, 0.180339]`, evaluator `gems-segment-pooled-v1`, `60,988` withheld positives. Its exact TIFF SHA-256 is `86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071`. It is **research download only / DO_NOT_SUBMIT**; the recorded selector blocks submission, including because the final-dot overlap with DKRN1 is `71.32%` (>70%). This is not organizer-confirmed, a leaderboard estimate, or an independently replayed score. No TIFF was generated, no experiment or promotion step was performed, and no weekly slot was used in this follow-up.
+
+**Three follow-up passes:** (1) reproduced and traced the main pytest failure without presuming a cause; (2) scoped the quarantine assertion to the actually quarantined leakage TIFF and aligned the exact-file audit with the current S3DEP1 packet; (3) reran the full suite (**455 passed**), Ruff check and format check (**184 files**), compileall, `git diff --check`, and `scripts/verify_current_download.py` successfully. The failed CI run itself remains recorded as failed; a new branch check is still required to verify this fix in GitHub Actions.
 
 ### Official/manual-review links
 

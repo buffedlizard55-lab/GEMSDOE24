@@ -89,16 +89,16 @@ def verify_research_release(root: Path) -> dict:
 
 
 def verify_current_download(root: Path) -> dict:
-    """Revalidate the documented DPRF1 research download without rerunning it.
+    """Revalidate the current S3DEP1 research download without rerunning it.
 
-    The historical H-UNIQUE-03 metadata currently claims promotion while its
-    own validator and preflight deny authorization. It is therefore not a
-    current-download authority. This check binds only the documented DPRF1
-    exact-file receipt and independently confirms its negative selector result.
+    H24-S3DEP1 is the repository's recorded local point-best. It remains a
+    negative, research-only artifact; its current metadata, run card and
+    selector must bind to the same exact TIFF. This audit does not replay the
+    scientific measurement or confer submission authorization.
     """
-    metadata = json.loads((root / "docs/data/dprf1_download.json").read_text())
-    card = json.loads((root / "evidence/dprf1_run_card_20261026.json").read_text())
-    selector = json.loads((root / "evidence/dprf1_selector_20261026.json").read_text())
+    metadata = json.loads((root / "docs/data/s3dep1_download.json").read_text())
+    card = json.loads((root / "evidence/s3dep1_run_card_20261026.json").read_text())
+    selector = json.loads((root / "evidence/s3dep1_selector_20261026.json").read_text())
     if (
         metadata.get("verdict") != "negative"
         or metadata.get("ok_to_submit") is not False
@@ -152,15 +152,26 @@ def verify_current_download(root: Path) -> dict:
             "transform": list(dataset.transform)[:6],
             "positive_pixels": fresh["in_footprint_positive_pixels"],
         }
+    # S3DEP1's frozen run card records format, CRS and shape, but not a
+    # transform field. check_variants independently reopens the exact TIFF and
+    # verifies both shape and geotransform against the submission template.
+    required = set(expected) - {"transform"}
+    if not required.issubset(stored):
+        raise ValueError("Current download validator receipt is incomplete")
+    if (
+        not fresh["checks"]["shape_matches_template"]["pass"]
+        or not fresh["checks"]["geotransform_matches_template"]["pass"]
+    ):
+        raise ValueError("Current download shape or transform differs from template")
     for key, value in expected.items():
-        if stored.get(key) != value:
+        if key in stored and stored[key] != value:
             raise ValueError(f"Current download receipt disagrees: {key}")
     if not fresh["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]:
         raise ValueError("First-screen download must be finite and in [0,1] everywhere")
     return {
         "audit_kind": "current exact-file revalidation; no experiment rerun",
-        "run_card": "evidence/dprf1_run_card_20261026.json",
-        "selector": "evidence/dprf1_selector_20261026.json",
+        "run_card": "evidence/s3dep1_run_card_20261026.json",
+        "selector": "evidence/s3dep1_selector_20261026.json",
         "validator_output": fresh,
         "scientific_evidence": "recorded; not rerun or independently confirmed",
         "ok_to_download": True,
