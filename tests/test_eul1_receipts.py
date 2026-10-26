@@ -75,8 +75,15 @@ def test_eul1_nine_site_update_and_first_screen_order():
     nine = json.loads(NINE.read_text())
     old = json.loads(NINE_OLD.read_text())
     expected = [
-        "GEMSDOE24", "GEMSDOE25", "GEMSDOE27", "GEMSDOE28", "GEMSDOE30",
-        "GEMSDOE31", "GEMSDOE32", "GEMSDOE33", "GEMSDOE36",
+        "GEMSDOE24",
+        "GEMSDOE25",
+        "GEMSDOE27",
+        "GEMSDOE28",
+        "GEMSDOE30",
+        "GEMSDOE31",
+        "GEMSDOE32",
+        "GEMSDOE33",
+        "GEMSDOE36",
     ]
     assert [r["site"] for r in nine["sites"]] == expected
     # Every site artifact was re-fetched and SHA-verified against the earlier receipt.
@@ -95,7 +102,12 @@ def test_eul1_nine_site_update_and_first_screen_order():
     card = json.loads(CARD.read_text())
     eul1_file = card["submission_name"]
     dprf1_dl = json.loads((ROOT / "docs/data/dprf1_download.json").read_text())
-    for rel in ("index.html", "executive-summary.html", "docs/index.html", "docs/executive-summary.html"):
+    for rel in (
+        "index.html",
+        "executive-summary.html",
+        "docs/index.html",
+        "docs/executive-summary.html",
+    ):
         html = (ROOT / rel).read_text()
         assert eul1_file in html
         # DPRF1 remains ahead of EUL1: it is still the best candidate.

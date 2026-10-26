@@ -49,7 +49,10 @@ def load_raster_by_basename(
     if cand.exists() and (expected_sha is None or sha256_file(cand) == expected_sha):
         with rasterio.open(cand) as ds:
             if ds.shape == fp.shape:
-                return ds.read(1), f"sha-verified re-fetch at pinned commit: data/research/nine_site_eul1/{basename}"
+                return (
+                    ds.read(1),
+                    f"sha-verified re-fetch at pinned commit: data/research/nine_site_eul1/{basename}",
+                )
     entries = json.loads(PEER_REG.read_text())["entries"]
     for row in entries:
         if Path(str(row.get("path", ""))).name == basename:
@@ -88,7 +91,9 @@ def main() -> None:
         if arr is None:
             entry["eul1_3px_overlap_vs_site_artifact"] = None
             entry["eul1_spearman_vs_site_artifact"] = None
-            entry["eul1_overlap_source"] = "inspected artifact not in this session's local cache; not recomputed"
+            entry["eul1_overlap_source"] = (
+                "inspected artifact not in this session's local cache; not recomputed"
+            )
         else:
             ov = novelty.dot_overlap(eul1_dots, fp & np.isfinite(arr) & (arr > 0))[
                 "candidate_within_3px_of_reference"
@@ -133,12 +138,12 @@ def main() -> None:
         "supersedes": "evidence/nine_site_executive_summary_20261026.json (kept, unmodified)",
         "score_governance": nine["score_governance"],
         "cross_site_executive_conclusion": {
-            "best_historical_reference_not_for_resubmission": nine["cross_site_executive_conclusion"][
-                "best_historical_reference_not_for_resubmission"
-            ],
-            "best_already_scored_unique_20261025_submission": nine["cross_site_executive_conclusion"][
-                "best_already_scored_unique_20261025_submission"
-            ],
+            "best_historical_reference_not_for_resubmission": nine[
+                "cross_site_executive_conclusion"
+            ]["best_historical_reference_not_for_resubmission"],
+            "best_already_scored_unique_20261025_submission": nine[
+                "cross_site_executive_conclusion"
+            ]["best_already_scored_unique_20261025_submission"],
             "best_unscored_unique_candidate": (
                 "GEMSDOE24 DPRF1 gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif "
                 "(SHA-256 c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1; "
@@ -173,7 +178,12 @@ def main() -> None:
     OUT_D.write_text(payload)
     print(f"Wrote {OUT_E.relative_to(ROOT)} and {OUT_D.relative_to(ROOT)}")
     for s in sites_out:
-        print(s["site"], "eul1_overlap=", s["eul1_3px_overlap_vs_site_artifact"], s["eul1_overlap_source"])
+        print(
+            s["site"],
+            "eul1_overlap=",
+            s["eul1_3px_overlap_vs_site_artifact"],
+            s["eul1_overlap_source"],
+        )
 
 
 if __name__ == "__main__":

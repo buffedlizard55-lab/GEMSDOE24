@@ -174,20 +174,53 @@ def run_batched_canary(
 
 
 LOCAL_LANE_CANDIDATES: list[tuple[str, str]] = [
-    ("local-aspc", "docs/downloads/gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.tif"),
-    ("local-mtr1", "docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif"),
-    ("local-sahg1", "docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif"),
-    ("local-con", "docs/downloads/gems24-con-claycap-strain-saddle-20261025-ded121060878-zeros.tif"),
-    ("local-unique03", "docs/downloads/24gems-doer-fault-guided-k-20261025T220208Z-dedb860f7e83-zeros.tif"),
+    (
+        "local-aspc",
+        "docs/downloads/gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.tif",
+    ),
+    (
+        "local-mtr1",
+        "docs/downloads/gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif",
+    ),
+    (
+        "local-sahg1",
+        "docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif",
+    ),
+    (
+        "local-con",
+        "docs/downloads/gems24-con-claycap-strain-saddle-20261025-ded121060878-zeros.tif",
+    ),
+    (
+        "local-unique03",
+        "docs/downloads/24gems-doer-fault-guided-k-20261025T220208Z-dedb860f7e83-zeros.tif",
+    ),
     ("local-oj1", "docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif"),
     ("local-fuse-hcw", "docs/downloads/gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif"),
     ("local-rshg1", "docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif"),
-    ("local-gvc1", "docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif"),
-    ("local-crp1", "docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif"),
-    ("local-cup1", "docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif"),
-    ("local-tnr1", "docs/downloads/gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif"),
-    ("local-trsg1", "docs/downloads/gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.tif"),
-    ("local-dprf1", "docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif"),
+    (
+        "local-gvc1",
+        "docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif",
+    ),
+    (
+        "local-crp1",
+        "docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif",
+    ),
+    (
+        "local-cup1",
+        "docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif",
+    ),
+    (
+        "local-tnr1",
+        "docs/downloads/gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif",
+    ),
+    (
+        "local-trsg1",
+        "docs/downloads/gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.tif",
+    ),
+    (
+        "local-dprf1",
+        "docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+    ),
 ]
 
 
@@ -303,14 +336,26 @@ def run_exact_file_c2st(
         cfeat = confounds.classifier_features(npz)
     fold_grid, _ = holdout.make_quadrant_folds(fp)
     label_res = c2s2.c2s2_test(
-        "training_labels_first", catalogue, cfeat, fold_grid, fp,
-        n_per_class=8000, n_null=99, seed=GVC_BASE_SEED,
+        "training_labels_first",
+        catalogue,
+        cfeat,
+        fold_grid,
+        fp,
+        n_per_class=8000,
+        n_null=99,
+        seed=GVC_BASE_SEED,
     )
     with rasterio.open(zeros_tif_path) as ds:
         cand_mask = (ds.read(1) > 0.5) & fp
     cand_res = c2s2.c2s2_test(
-        "h24_eul1_exact_file", cand_mask, cfeat, fold_grid, fp,
-        n_per_class=8000, n_null=99, seed=GVC_BASE_SEED,
+        "h24_eul1_exact_file",
+        cand_mask,
+        cfeat,
+        fold_grid,
+        fp,
+        n_per_class=8000,
+        n_null=99,
+        seed=GVC_BASE_SEED,
     )
     adj_p = c2s2.holm_adjust([label_res.p_value, cand_res.p_value])
     flagged = bool(
@@ -348,8 +393,13 @@ def run_exact_file_c2st(
 def verify_recorded() -> dict[str, Any]:
     """Verify frozen EUL1 receipts, GeoTIFF variants, ZIP, selector, preflight, note."""
     for p in (
-        EXPERIMENT_JSON, RUN_CARD_JSON, SELECTOR_JSON,
-        DOCS_RUN_CARD_JSON, DOCS_SELECTOR_JSON, DOCS_DOWNLOAD_JSON, PREVIEW_PNG,
+        EXPERIMENT_JSON,
+        RUN_CARD_JSON,
+        SELECTOR_JSON,
+        DOCS_RUN_CARD_JSON,
+        DOCS_SELECTOR_JSON,
+        DOCS_DOWNLOAD_JSON,
+        PREVIEW_PNG,
     ):
         if not p.exists():
             raise SystemExit(f"Missing recorded EUL1 artifact: {p}")
@@ -396,7 +446,10 @@ def verify_recorded() -> dict[str, Any]:
 
     if sha256_file(zeros_path) != card["raster_sha256"] or dl["sha256"] != card["raster_sha256"]:
         raise SystemExit("EUL1 zero-outside GeoTIFF SHA-256 mismatch")
-    if sha256_file(nan_path) != card["nan_outside_sha256"] or dl["nan_sha256"] != card["nan_outside_sha256"]:
+    if (
+        sha256_file(nan_path) != card["nan_outside_sha256"]
+        or dl["nan_sha256"] != card["nan_outside_sha256"]
+    ):
         raise SystemExit("EUL1 NaN-outside GeoTIFF SHA-256 mismatch")
     if sha256_file(zip_path) != card["zip_sha256"] or dl["zip_sha256"] != card["zip_sha256"]:
         raise SystemExit("EUL1 ZIP SHA-256 mismatch")
@@ -429,7 +482,8 @@ def verify_recorded() -> dict[str, Any]:
         or pre.get("run_card", {}).get("artifact_name_matches") is not True
         or pre.get("decision", {}).get("submission_status") != "DO_NOT_SUBMIT"
         or pre.get("decision", {}).get("ready_to_submit") is not False
-        or pre.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1") is not True
+        or pre.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1")
+        is not True
     ):
         raise SystemExit("EUL1 preflight receipt missing, stale, or not fail-closed")
 
@@ -443,8 +497,12 @@ def verify_recorded() -> dict[str, Any]:
         "arm3_channels_only_dti": exp["arms"]["arm3_channels_only"]["holdout"]["dti"],
         "beats_recorded_dprf1_point": bool(card["holdout"]["dti"] > RECORDED_DPRF1_DTI),
         "c2st_auc": card["exact_file_nuisance_audit"]["candidate"]["observed_auc"],
-        "competing_method_novelty_passed": card["correlation_overlap_vs_registry"]["method_lane_passed"],
-        "competing_method_max_3px_overlap": card["correlation_overlap_vs_registry"]["method_lane_max_dot_overlap"],
+        "competing_method_novelty_passed": card["correlation_overlap_vs_registry"][
+            "method_lane_passed"
+        ],
+        "competing_method_max_3px_overlap": card["correlation_overlap_vs_registry"][
+            "method_lane_max_dot_overlap"
+        ],
         "farfield_gt20px_fraction": card["off_catalogue_distance_profile"]["frac_gt_20px_farfield"],
         "verdict": card["verdict"],
         "ok_to_submit": card["ok_to_submit"],
@@ -548,7 +606,10 @@ def main() -> None:
     selective_extra = tuple(euler_names)
     total_offcat = int((fp & (~catalogue)).sum())
 
-    print("[3/8] 4-fold SegmentHoldout: Arm1 EUL1 (59ch+EulerRegimeB), Arm3 channelsOnly, Arm2 noEuler replay...", flush=True)
+    print(
+        "[3/8] 4-fold SegmentHoldout: Arm1 EUL1 (59ch+EulerRegimeB), Arm3 channelsOnly, Arm2 noEuler replay...",
+        flush=True,
+    )
     oof_quad_sharp = np.zeros(fp.shape, dtype=np.float32)
     oof_quad_cond = np.zeros(fp.shape, dtype=np.float32)
     preds_arm1: list[np.ndarray] = []
@@ -565,9 +626,18 @@ def main() -> None:
 
         # Arm 1 + Arm 3 share one 59-channel fit; they differ only in the Regime-B multiplier.
         p_s1, p_c1, p_c1_legacy, m_a1 = dprf1.fit_and_predict_fold(
-            base_mm, gvc_mm, sahg_mm, nuisance_fp, names59, fp, fp_ids,
-            train_mask=fold["train"], visible_mask=fold["visible"], predict_mask=fold["valid"],
-            neg_mode="stratified_d3", seed=SEED + 10 * fid,
+            base_mm,
+            gvc_mm,
+            sahg_mm,
+            nuisance_fp,
+            names59,
+            fp,
+            fp_ids,
+            train_mask=fold["train"],
+            visible_mask=fold["visible"],
+            predict_mask=fold["valid"],
+            neg_mode="stratified_d3",
+            seed=SEED + 10 * fid,
             extra_mm=euler_mm,
             regime_b_extra_names=euler.EUL1_REGIME_B_NAMES,
             selective_extra_names=selective_extra,
@@ -579,12 +649,24 @@ def main() -> None:
         oof_quad_sharp += p_s1
         oof_quad_cond += p_c1
         d_arm1 = dprf1.two_regime_submodular_allocate(
-            p_s1, p_c1, fold["valid"], fold["visible"], budget=k_fold,
-            primary_share=0.68, min_spacing_px=2.8, catalogue_clearance_px=2.0,
+            p_s1,
+            p_c1,
+            fold["valid"],
+            fold["visible"],
+            budget=k_fold,
+            primary_share=0.68,
+            min_spacing_px=2.8,
+            catalogue_clearance_px=2.0,
         )
         d_arm3 = dprf1.two_regime_submodular_allocate(
-            p_s1, p_c1_legacy, fold["valid"], fold["visible"], budget=k_fold,
-            primary_share=0.68, min_spacing_px=2.8, catalogue_clearance_px=2.0,
+            p_s1,
+            p_c1_legacy,
+            fold["valid"],
+            fold["visible"],
+            budget=k_fold,
+            primary_share=0.68,
+            min_spacing_px=2.8,
+            catalogue_clearance_px=2.0,
         )
         preds_arm1.append((d_arm1 > 0.5).astype(np.uint8))
         preds_arm3.append((d_arm3 > 0.5).astype(np.uint8))
@@ -593,15 +675,30 @@ def main() -> None:
 
         # Arm 2: exact 52-channel DPRF1 configuration through the same code path.
         p_s2, p_c2, m_a2 = dprf1.fit_and_predict_fold(
-            base_mm, gvc_mm, sahg_mm, nuisance_fp, names52, fp, fp_ids,
-            train_mask=fold["train"], visible_mask=fold["visible"], predict_mask=fold["valid"],
-            neg_mode="stratified_d3", seed=SEED + 10 * fid,
+            base_mm,
+            gvc_mm,
+            sahg_mm,
+            nuisance_fp,
+            names52,
+            fp,
+            fp_ids,
+            train_mask=fold["train"],
+            visible_mask=fold["visible"],
+            predict_mask=fold["valid"],
+            neg_mode="stratified_d3",
+            seed=SEED + 10 * fid,
         )
         p_s2 = dprf1.debiased_apron_surface(p_s2, fold["valid"], fold["visible"])
         p_c2 = dprf1.debiased_apron_surface(p_c2, fold["valid"], fold["visible"])
         d_arm2 = dprf1.two_regime_submodular_allocate(
-            p_s2, p_c2, fold["valid"], fold["visible"], budget=k_fold,
-            primary_share=0.68, min_spacing_px=2.8, catalogue_clearance_px=2.0,
+            p_s2,
+            p_c2,
+            fold["valid"],
+            fold["visible"],
+            budget=k_fold,
+            primary_share=0.68,
+            min_spacing_px=2.8,
+            catalogue_clearance_px=2.0,
         )
         preds_arm2.append((d_arm2 > 0.5).astype(np.uint8))
         del p_s2, p_c2, d_arm2
@@ -616,15 +713,23 @@ def main() -> None:
             f"({time.monotonic() - tf0:.1f}s, RSS={peak_rss_mib():.1f} MiB)",
             flush=True,
         )
-        fold_meta.append({"fold": fname, "k_fold_budget": k_fold, "arm1_59ch": m_a1, "arm2_52ch": m_a2})
+        fold_meta.append(
+            {"fold": fname, "k_fold_budget": k_fold, "arm1_59ch": m_a1, "arm2_52ch": m_a2}
+        )
 
     sum_arm1 = context.summarize(preds_arm1, ci_draws=1999)
     sum_arm2 = context.summarize(preds_arm2, ci_draws=1999)
     sum_arm3 = context.summarize(preds_arm3, ci_draws=1999)
     paired = {
-        "arm1_vs_arm2_noeuler_replay": context.compare_paired(preds_arm1, preds_arm2, ci_draws=1999, seed=SEED),
-        "arm3_vs_arm2_channel_effect": context.compare_paired(preds_arm3, preds_arm2, ci_draws=1999, seed=SEED),
-        "arm1_vs_arm3_regime_gating_effect": context.compare_paired(preds_arm1, preds_arm3, ci_draws=1999, seed=SEED),
+        "arm1_vs_arm2_noeuler_replay": context.compare_paired(
+            preds_arm1, preds_arm2, ci_draws=1999, seed=SEED
+        ),
+        "arm3_vs_arm2_channel_effect": context.compare_paired(
+            preds_arm3, preds_arm2, ci_draws=1999, seed=SEED
+        ),
+        "arm1_vs_arm3_regime_gating_effect": context.compare_paired(
+            preds_arm1, preds_arm3, ci_draws=1999, seed=SEED
+        ),
     }
     print(
         f"      POOLED HOLDOUT-DTI | Arm1(EUL1)={sum_arm1['dti']:.5f} {sum_arm1['ci95']['interval']} | "
@@ -648,9 +753,18 @@ def main() -> None:
     for rfold in rot45_folds:
         rfid = int(rfold["id"])
         ps_r, pc_r, _m = dprf1.fit_and_predict_fold(
-            base_mm, gvc_mm, sahg_mm, nuisance_fp, names59, fp, fp_ids,
-            train_mask=rfold["train"], visible_mask=rfold["visible"], predict_mask=rfold["valid"],
-            neg_mode="stratified_d3", seed=SEED + 500 + 17 * rfid,
+            base_mm,
+            gvc_mm,
+            sahg_mm,
+            nuisance_fp,
+            names59,
+            fp,
+            fp_ids,
+            train_mask=rfold["train"],
+            visible_mask=rfold["visible"],
+            predict_mask=rfold["valid"],
+            neg_mode="stratified_d3",
+            seed=SEED + 500 + 17 * rfid,
             extra_mm=euler_mm,
             regime_b_extra_names=euler.EUL1_REGIME_B_NAMES,
             selective_extra_names=selective_extra,
@@ -674,8 +788,12 @@ def main() -> None:
     existing_shas = {e["footprint_sha256"] for e in priority_reg["unique_rasters"]}
     extra_locals = local_lane_entries(fp, existing_shas)
     pre_nov_methods = novelty.compare_prospective_registry(
-        pre_placement_surface, fp, priority_reg["unique_rasters"], ROOT,
-        sample_size=200_000, extra_entries=extra_locals,
+        pre_placement_surface,
+        fp,
+        priority_reg["unique_rasters"],
+        ROOT,
+        sample_size=200_000,
+        extra_entries=extra_locals,
     )
     pre_nov_peers = check_peer_blobs(pre_placement_surface, None, fp)
     print(
@@ -686,16 +804,30 @@ def main() -> None:
         flush=True,
     )
     if not pre_nov_methods["method_lane_passed"] or not pre_nov_peers["passed"]:
-        raise SystemExit("HALT: Pre-placement surface exceeded 0.90 rank-correlation limit (duplicate lane)")
+        raise SystemExit(
+            "HALT: Pre-placement surface exceeded 0.90 rank-correlation limit (duplicate lane)"
+        )
 
     print("[6/8] Final 37,654-dot allocation + final-dot novelty audit...", flush=True)
     final_dots = dprf1.two_regime_submodular_allocate(
-        stitched_sharp, stitched_cond, fp, catalogue, budget=FULL_DOT_BUDGET,
-        primary_share=0.68, min_spacing_px=2.8, catalogue_clearance_px=2.0,
+        stitched_sharp,
+        stitched_cond,
+        fp,
+        catalogue,
+        budget=FULL_DOT_BUDGET,
+        primary_share=0.68,
+        min_spacing_px=2.8,
+        catalogue_clearance_px=2.0,
     )
     dots_undebiased_diag = dprf1.two_regime_submodular_allocate(
-        stitched_sharp_raw, stitched_cond_raw, fp, catalogue, budget=FULL_DOT_BUDGET,
-        primary_share=0.68, min_spacing_px=2.8, catalogue_clearance_px=2.0,
+        stitched_sharp_raw,
+        stitched_cond_raw,
+        fp,
+        catalogue,
+        budget=FULL_DOT_BUDGET,
+        primary_share=0.68,
+        min_spacing_px=2.8,
+        catalogue_clearance_px=2.0,
     )
     dist_profile = compute_distance_profile(final_dots > 0.5, catalogue, fp)
     dist_profile_undebiased = compute_distance_profile(dots_undebiased_diag > 0.5, catalogue, fp)
@@ -703,8 +835,13 @@ def main() -> None:
     gc.collect()
 
     final_nov_methods = novelty.compare_prospective_registry(
-        pre_placement_surface, fp, priority_reg["unique_rasters"], ROOT,
-        dots=final_dots > 0.5, sample_size=200_000, extra_entries=extra_locals,
+        pre_placement_surface,
+        fp,
+        priority_reg["unique_rasters"],
+        ROOT,
+        dots=final_dots > 0.5,
+        sample_size=200_000,
+        extra_entries=extra_locals,
     )
     final_nov_peers = check_peer_blobs(pre_placement_surface, final_dots, fp)
     comp_nov_ok = bool(final_nov_methods["method_lane_passed"] and final_nov_peers["passed"])
@@ -774,7 +911,8 @@ def main() -> None:
 
     comp_rows_sorted = sorted(
         [
-            r for r in final_nov_methods["rows"]
+            r
+            for r in final_nov_methods["rows"]
             if r.get("entry_role") == "competing_method_lane"
             and r.get("candidate_dot_overlap_within_3px") is not None
         ],
@@ -839,9 +977,18 @@ def main() -> None:
         ),
         "holdout": sum_arm1,
         "arms_same_evaluator": {
-            "arm1_eul1_primary_59ch": {"dti": sum_arm1["dti"], "ci95": sum_arm1["ci95"]["interval"]},
-            "arm3_channels_only_59ch": {"dti": sum_arm3["dti"], "ci95": sum_arm3["ci95"]["interval"]},
-            "arm2_noeuler_52ch_replay": {"dti": sum_arm2["dti"], "ci95": sum_arm2["ci95"]["interval"]},
+            "arm1_eul1_primary_59ch": {
+                "dti": sum_arm1["dti"],
+                "ci95": sum_arm1["ci95"]["interval"],
+            },
+            "arm3_channels_only_59ch": {
+                "dti": sum_arm3["dti"],
+                "ci95": sum_arm3["ci95"]["interval"],
+            },
+            "arm2_noeuler_52ch_replay": {
+                "dti": sum_arm2["dti"],
+                "ci95": sum_arm2["ci95"]["interval"],
+            },
         },
         "paired_comparisons": paired,
         "recorded_point_best_comparison": {
@@ -869,8 +1016,11 @@ def main() -> None:
             "ci95": paired_ci,
             "baseline_identity": (
                 "Arm2 in-session replay of the DPRF1 configuration"
-                + (" (bit-identical pooled DTI to recorded DPRF1)" if replay_matches_recorded
-                   else f" (recorded DPRF1 {RECORDED_DPRF1_DTI}; replay differs, see experiment record)")
+                + (
+                    " (bit-identical pooled DTI to recorded DPRF1)"
+                    if replay_matches_recorded
+                    else f" (recorded DPRF1 {RECORDED_DPRF1_DTI}; replay differs, see experiment record)"
+                )
             ),
         },
         "leakage_canary": {
@@ -886,13 +1036,21 @@ def main() -> None:
         "correlation_overlap_vs_registry": {
             "total_registry_entries_checked": final_nov_methods["registry_unique_rasters"],
             "competing_method_rasters_checked": final_nov_methods["competing_method_rasters_count"],
-            "calibration_control_rasters_checked": final_nov_methods["calibration_control_rasters_count"],
+            "calibration_control_rasters_checked": final_nov_methods[
+                "calibration_control_rasters_count"
+            ],
             "peer_blobs_checked": final_nov_peers["peer_unique_blobs_checked"],
             "peer_blobs_missing_from_cache": final_nov_peers["peer_blobs_missing_from_cache"],
-            "pre_placement_surface_max_abs_rank_correlation": pre_nov_methods["method_lane_max_abs_rank_correlation"],
-            "pre_placement_peers_max_abs_rank_correlation": pre_nov_peers["max_abs_surface_spearman"],
+            "pre_placement_surface_max_abs_rank_correlation": pre_nov_methods[
+                "method_lane_max_abs_rank_correlation"
+            ],
+            "pre_placement_peers_max_abs_rank_correlation": pre_nov_peers[
+                "max_abs_surface_spearman"
+            ],
             "method_lane_passed": final_nov_methods["method_lane_passed"],
-            "method_lane_max_abs_rank_correlation": final_nov_methods["method_lane_max_abs_rank_correlation"],
+            "method_lane_max_abs_rank_correlation": final_nov_methods[
+                "method_lane_max_abs_rank_correlation"
+            ],
             "method_lane_max_dot_overlap": final_nov_methods["method_lane_max_dot_overlap"],
             "dot_overlap_within_3px_vs_dprf1": dprf1_overlap,
             "peer_blobs_passed": final_nov_peers["passed"],
@@ -909,7 +1067,9 @@ def main() -> None:
                 "literal_all_entries_passed": bool(pre_nov_methods["literal_all_entries_passed"]),
             },
             "final_dots": {
-                "max_abs_rank_correlation": final_nov_methods["method_lane_max_abs_rank_correlation"],
+                "max_abs_rank_correlation": final_nov_methods[
+                    "method_lane_max_abs_rank_correlation"
+                ],
                 "method_lane_max_dot_overlap": final_nov_methods["method_lane_max_dot_overlap"],
                 "method_lane_passed": bool(final_nov_methods["method_lane_passed"]),
                 "literal_all_entries_passed": bool(final_nov_methods["literal_all_entries_passed"]),
@@ -980,10 +1140,16 @@ def main() -> None:
     preflight_out = downloads / f"{zeros_name[:-4]}.preflight.json"
     subprocess.run(
         [
-            sys.executable, str(ROOT / "scripts/preflight_submission.py"), str(zeros_path),
-            "--run-card", str(RUN_CARD_JSON), "--output", str(preflight_out),
+            sys.executable,
+            str(ROOT / "scripts/preflight_submission.py"),
+            str(zeros_path),
+            "--run-card",
+            str(RUN_CARD_JSON),
+            "--output",
+            str(preflight_out),
         ],
-        cwd=ROOT, check=True,
+        cwd=ROOT,
+        check=True,
     )
 
     download_record = {

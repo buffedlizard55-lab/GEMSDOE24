@@ -825,7 +825,10 @@ def fit_and_predict_fold(
     regime_b_extra_names: tuple[str, ...] = (),
     selective_extra_names: tuple[str, ...] = (),
     return_legacy_conduit: bool = False,
-) -> tuple[np.ndarray, np.ndarray, dict[str, Any]] | tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, Any]]:
+) -> (
+    tuple[np.ndarray, np.ndarray, dict[str, Any]]
+    | tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, Any]]
+):
     """Fit selective residualizer, 2-seed HGB, relief-conditioned calibrator, and predict ``(p_sharp, p_conduit)``.
 
     Lane-extension parameters (defaults reproduce DPRF1 exactly): ``extra_mm`` adds
