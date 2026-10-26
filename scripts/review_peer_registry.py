@@ -13,9 +13,13 @@ import concurrent.futures
 import hashlib
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+from gems.github_archive import cache_archive  # noqa: E402
+
 REGISTRY = ROOT / "registry/peer_rasters_20261025.json"
 OWNER = "buffedlizard55-lab"
 REPOS = [f"GEMSDOE{n}" for n in (24, 25, 27, 28, 30, 31, 32, 33, 36)]
@@ -28,7 +32,12 @@ def api(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--snapshot", action="store_true")
+    parser.add_argument("--transport", choices=("api", "archive"), default="api")
     args = parser.parse_args()
+    if args.snapshot and args.transport == "archive":
+        raise ValueError(
+            "Archive transport restores immutable peer pins; use versioned priority discovery for a new snapshot"
+        )
     if args.snapshot:
         rows = []
         for repo in REPOS:
@@ -52,6 +61,32 @@ def main():
         rows = json.loads(REGISTRY.read_text())["entries"]
     dest = ROOT / "data/research/peer_review/rasters"
     dest.mkdir(parents=True, exist_ok=True)
+
+    if args.transport == "archive":
+        grouped = {}
+        for row in rows:
+            p = dest / (row["blob"] + ".tif")
+            if p.exists() and hashlib.sha256(p.read_bytes()).hexdigest() == row.get("sha256"):
+                continue
+            grouped.setdefault((row["repo"], row["revision"]), {})[row["path"]] = row
+
+        def restore_group(item):
+            (repo, ref), group = item
+            files = cache_archive(
+                f"{OWNER}/{repo}",
+                ref,
+                ROOT / "data/research/peer_review/archive-cache",
+                requested={path: row["blob"] for path, row in group.items()},
+            )
+            for entry in files:
+                row = group[entry["path"]]
+                raw = entry["cache_path"].read_bytes()
+                if hashlib.sha256(raw).hexdigest() != row["sha256"]:
+                    raise ValueError("Peer archive SHA256 mismatch")
+                (dest / (row["blob"] + ".tif")).write_bytes(raw)
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+            list(pool.map(restore_group, grouped.items()))
 
     def restore(row):
         p = dest / (row["blob"] + ".tif")
