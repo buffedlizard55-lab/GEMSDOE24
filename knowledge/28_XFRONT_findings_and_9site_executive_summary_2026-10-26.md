@@ -19,7 +19,8 @@
 
 ## 0. The obvious answer first (what to submit, per site)
 
-**The single best unscored unique file across all nine focus sites remains DPRF1**, generated 2026-10-26 in this repo:
+**The highest-scoring recorded local artifact across all nine focus sites remains DPRF1** (HOLDOUT-DTI 0.16379),
+generated 2026-10-26 in this repo — and it is **not a literal-gate-unique or submit-ready candidate**:
 
 > **File:** `gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`
 > **SHA-256:** `c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1`
@@ -27,8 +28,8 @@
 > **Status today: DOWNLOAD YES · SUBMIT NO** — not because of any science gate (its competing-method technical
 > gates PASS), but because the separate selector step has not authorized a slot: live DrivenData weekly quota is
 > unknown from the sandbox, the literal registry retains the synthetic spacing-5 lattice (`registry-039`), and no
-> independent replay certificate exists. **If you override that governance hold manually, this — and only this —
-> is the file the local evidence supports.**
+> independent replay certificate exists. **No manual override of that hold is requested or supported here: every
+> file in this portfolio stays at `DO_NOT_SUBMIT` until the selector step is complete.
 
 **XFRONT (today's new file) must not be submitted.** HOLDOUT-DTI `0.06584` is **2.5× worse** than DPRF1's
 `0.16379`, and it is also worse than every serious lane in the portfolio (EUL1 0.16005, CUP1 0.15038,
@@ -164,7 +165,7 @@ evidence that today's file is unique against every one of them.
 
 | Site | Historical best (owner-reported) | Latest unique artifact examined | Status | XFRONT 3-px overlap | Obvious verdict |
 |---|---|---|---|---:|---|
-| **GEMSDOE24** | `h25-1-dotted-h19-5-d1-5` 0.2477 | **DPRF1** `…81849d67c8bf-zeros` HOLDOUT-DTI **0.16379**; XFRONT 0.06584 (negative) | DPRF1 unscored; XFRONT unscored | 0.2996 | **#1 candidate portfolio-wide = DPRF1 file above (selector step pending). DO NOT SUBMIT XFRONT.** |
+| **GEMSDOE24** | `h25-1-dotted-h19-5-d1-5` 0.2477 | **DPRF1** `…81849d67c8bf-zeros` HOLDOUT-DTI **0.16379**; XFRONT 0.06584 (negative) | DPRF1 unscored; XFRONT unscored | 0.2996 | **Highest recorded local artifact = DPRF1 file above, still held at `DO_NOT_SUBMIT`. DO NOT SUBMIT XFRONT.** |
 | GEMSDOE25 | `dotted-h19-5-d2-8` 0.2600 | `h66-mgd…da617550a0e9` scored 0.0742 | already scored | ≤0.3230 | DO NOT RESUBMIT (apron collapse) |
 | GEMSDOE27 | `topo-gap-closure…d1-5` 0.2449 | `h29-…celf…511898747886` scored **0.2190** | already scored | 0.2656 | Best already-scored 2026-10-25 unique method; do not duplicate |
 | GEMSDOE28 | `h36-1-rung30-blind-r1` 0.2710 | `s18-mxtp…3e95505c011a` scored 0.0217 | already scored, holdout FAIL | 0.2642 | DO NOT SUBMIT |
@@ -179,7 +180,7 @@ site prefix, excluding the synthetic spacing-5 calibration lattice `registry-039
 All values are far below the 0.70 Rule-1 ceiling: XFRONT is unique against every one of the nine sites.
 
 **Bottom line unchanged across all nine sites: no site today has a submit-authorized unique artifact.**
-GEMSDOE24/DPRF1 is the best unscored unique file; GEMSDOE32's 0.2778 is the highest owner-reported score and is
+GEMSDOE24/DPRF1 is the highest-scoring recorded local artifact (still not literal-gate-unique); GEMSDOE32's 0.2778 is the highest owner-reported score and is
 prohibited to copy; the gaps among the top owner-reported scores (31 +0.0070, 28 +0.0068, 36 +0.0028 vs 0.2778)
 are inside bootstrap noise.
 
