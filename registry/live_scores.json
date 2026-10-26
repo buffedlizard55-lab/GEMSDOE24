@@ -319,5 +319,30 @@
   "GEMSDOE (0.1563), 5GEMSDOE (0.1563) and 8GEMSDOE Hedge-v2 (0.1563) are the same scored pixels (8GEMSDOE only adds catalogue pixels, which are masked).",
   "GEMSDOE21 h19-4-reference is byte-identical to 19GEMSDOE h19-4 (0.1894); 17GEMSDOE A-verified-01563 matches ens12 on scored pixels.",
   "Account ownership of leaderboard rows is unverified."
- ]
+ ],
+ "portfolio_9site_and_20261025_owner_reports": {
+  "updated_utc": "2026-10-26T02:15:00Z",
+  "provenance_note": "All scores below are OWNER-REPORTED in sibling GitHub repositories; none carries an artifact-linked DrivenData submission-page receipt, so none is labelled ORGANIZER-CONFIRMED. The 24 historical calibration rows in 'artifacts' above remain frozen at 2026-10-02.",
+  "priority_9_sites_best_owner_reported": [
+   {"rank": 1, "repo": "buffedlizard55-lab/GEMSDOE32", "head_main_sha": "7a97c5a889", "best_artifact": "h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif", "positive_pixels": 37654, "owner_reported_public_score": 0.2778},
+   {"rank": 2, "repo": "buffedlizard55-lab/GEMSDOE36", "head_main_sha": "d519364018", "best_artifact": "h35-1-pinn-b2-p1200-20261004T193800Z-f7a8dae1.tif", "positive_pixels": 38854, "owner_reported_public_score": 0.2750},
+   {"rank": 3, "repo": "buffedlizard55-lab/GEMSDOE28", "head_main_sha": "10c26af3dc", "best_artifact": "h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif", "positive_pixels": 39964, "owner_reported_public_score": 0.2710},
+   {"rank": 4, "repo": "buffedlizard55-lab/GEMSDOE31", "head_main_sha": "3c1be4993a", "best_artifact": "h27-4-20261003T081907Z-7f95c1c9.tif", "positive_pixels": 40199, "owner_reported_public_score": 0.2708},
+   {"rank": 5, "repo": "buffedlizard55-lab/GEMSDOE33", "head_main_sha": "b542e5ce41", "best_artifact": "h38-3-b2-matched44090-20261004T093000Z-6930b98e.tif", "positive_pixels": 44090, "owner_reported_public_score": 0.2632},
+   {"rank": 6, "repo": "buffedlizard55-lab/GEMSDOE25", "head_main_sha": "0a45b3ca64", "best_artifact": "dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif", "positive_pixels": 44090, "owner_reported_public_score": 0.2600},
+   {"rank": 6, "repo": "buffedlizard55-lab/GEMSDOE30", "head_main_sha": "78ae70817a", "best_artifact": "d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif", "positive_pixels": 44090, "owner_reported_public_score": 0.2600},
+   {"rank": 8, "repo": "buffedlizard55-lab/GEMSDOE24", "head_main_sha": "fc2bc6f350", "best_artifact": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif", "positive_pixels": 60069, "owner_reported_public_score": 0.2477},
+   {"rank": 9, "repo": "buffedlizard55-lab/GEMSDOE27", "head_main_sha": "927322eadb", "best_artifact": "topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif", "positive_pixels": 59075, "owner_reported_public_score": 0.2449}
+  ],
+  "independent_20261025_sibling_owner_reports": [
+   {"repo": "buffedlizard55-lab/GEMSDOE70", "artifact": "gems70-p8-oof38k-zeros.tif", "positive_pixels": 37654, "owner_reported_public_score": 0.2478, "mechanism_note": "Strictly stitched OOF multi-physics + 38k submodular cover; heavy steep-slope bias (50.2%)"},
+   {"repo": "buffedlizard55-lab/GEMSDOE76", "artifact": "gems76-ptcf-tiltworm-zeros.tif", "positive_pixels": 37654, "owner_reported_public_score": 0.2343, "mechanism_note": "Potential-field tilt worming + OOF cover"},
+   {"repo": "buffedlizard55-lab/GEMSDOE63", "artifact": "gems63-cvarlw-thin-zeros.tif", "positive_pixels": 37654, "owner_reported_public_score": 0.2303, "mechanism_note": "CVaR long-wavelength residualized thinning"},
+   {"repo": "buffedlizard55-lab/GEMSDOE27", "artifact": "gems27-h29-hydrothermal-piedmont-celf-20261025-88c3163b3f04-zeros.tif", "positive_pixels": 37654, "owner_reported_public_score": 0.2190, "mechanism_note": "Stitched OOF hydrothermal piedmont + CELF submodular cover (d>30px=32.6%)"},
+   {"repo": "buffedlizard55-lab/GEMSDOE30", "artifact": "gems30-MSDB1-edge44090-zeros.tif", "positive_pixels": 44090, "owner_reported_public_score": 0.1462, "mechanism_note": "18.2% of dots wasted inside d_cat<=2 px"},
+   {"repo": "buffedlizard55-lab/GEMSDOE24", "artifact": "gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif", "positive_pixels": 37654, "owner_reported_public_score": 0.0859, "mechanism_note": "In-sample train_mask=fp + neg>=9px halo collapse (86.0% within <=15 px, only 4.1% at d>30 px); fixed in H24-TRSG1"},
+   {"repo": "buffedlizard55-lab/GEMSDOE25", "artifact": "gems25-h66-mgd-flank-zeros.tif", "positive_pixels": 37654, "owner_reported_public_score": 0.0742, "mechanism_note": "Near-catalogue flank concentration"},
+   {"repo": "buffedlizard55-lab/GEMSDOE28", "artifact": "gems28-s18-mxtp-zeros.tif", "positive_pixels": 37654, "owner_reported_public_score": 0.0217, "mechanism_note": "Unsupervised magneto-thermal experimental probe"}
+  ]
+ }
 }

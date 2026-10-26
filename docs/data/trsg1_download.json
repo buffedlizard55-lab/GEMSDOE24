@@ -1,0 +1,20 @@
+{
+  "lane_id": "H24-TRSG1",
+  "file": "gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.tif",
+  "sha256": "630c79ae12db67fc2dfbd3047f6889442a209fb77a716e8f37c9b671f7676ee6",
+  "nan_file": "gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-nan.tif",
+  "nan_sha256": "0338f33acecbc24348e432ee0edd3276464c4aef32587044d3b2bcabdd0dbf51",
+  "zip_file": "gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.zip",
+  "zip_sha256": "caae3c2052ee9e4e087c0f52749648e0c96b7787c98f7e46803ffced3944957d",
+  "pixel_count": 37722,
+  "min_distance_to_catalogue_px": 2.23606797749979,
+  "note": "GEMS24 TRSG1 | 44ch 2reg-StOOF 7f301fc433f0 | DTI 0.1464; DO NOT SUBMIT",
+  "note_file": "note-gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.txt",
+  "checks_file": "checks-gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.json",
+  "preview_png": "assets/trsg1-preview.png",
+  "verdict": "negative",
+  "technical_promotion_gates_passed": true,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "submission_authorized": false
+}

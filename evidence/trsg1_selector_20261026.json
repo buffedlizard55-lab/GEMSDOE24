@@ -1,0 +1,36 @@
+{
+  "selector_version": "gems-selector-v2-literal-quota-fail-closed",
+  "decided_utc": "2026-10-26T02:31:06.284105+00:00",
+  "artifact": "gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.tif",
+  "artifact_sha256": "630c79ae12db67fc2dfbd3047f6889442a209fb77a716e8f37c9b671f7676ee6",
+  "human_inspection_used": false,
+  "gates": {
+    "artifact_hash_matches_run_card": true,
+    "artifact_name_matches_run_card": true,
+    "g1_format_strict_0_1": true,
+    "g2_leakage_canary": false,
+    "g3_holdout_beats_recorded_best_and_paired_baseline": false,
+    "g4_registry_novelty": false,
+    "g5_exact_file_c2st": false,
+    "note_at_most_140_chars": true,
+    "budget_and_no_slot_spent": false,
+    "current_account_quota_independently_verified": false,
+    "complete_independent_replay_certificate": false
+  },
+  "all_gates_passed": false,
+  "ok_to_submit": false,
+  "decision": "DO_NOT_SUBMIT",
+  "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
+  "recorded_scientific_screen_passed": false,
+  "current_point_best_source": "evidence/dprf1_run_card_20261026.json",
+  "reasons": [
+    "g2_leakage_canary: canary evidence missing or malformed",
+    "g3_holdout_beats_recorded_best_and_paired_baseline: holdout evidence malformed",
+    "g4_registry_novelty: novelty evidence missing or malformed",
+    "g5_exact_file_c2st: C2ST evidence missing or malformed",
+    "budget_and_no_slot_spent: budget evidence missing or malformed",
+    "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
+    "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
+  ],
+  "scope": "Recorded-evidence screening and exact-file validation only; positive authorization is not implemented. Not an organizer score, quota record or acceptance guarantee. The agent never uploads."
+}

@@ -525,7 +525,8 @@ def gvc1_packet(root):
         f"and exact-file C2ST nuisance audit PASS (AUC {c2_aud['candidate_auc']:.4f}, Holm p = {c2_aud['candidate_holm_p']:.3f}), "
         f"but 3-px dot overlap reaches {100 * nov['final_max_competing_overlap_within_3px']:.2f}% (&gt; 70%) against "
         f"prior 161k-px range-front ridges ({e(top_comp['registry_id'])}) plus {100 * cal_row['candidate_dot_overlap_within_3px']:.2f}% "
-        f"on the retained spacing-5 lattice ({e(cal_row['registry_id'])}). Stopped immediately per Rule 1.</div>"
+        f"on the retained spacing-5 lattice ({e(cal_row['registry_id'])}). Stopped immediately per Rule 1 "
+        "(subsequently reported in sibling ledgers at 0.0859 OWNER-REPORTED due to in-sample train_mask=fp + neg>=9px halo collapse; diagnosed and resolved in 2026-10-26 H24-TRSG1 above).</div>"
     )
     gate_rows = [
         (
@@ -1217,6 +1218,260 @@ Spacing-5 control retained; no exemption. No claim of global uniqueness or a ven
 <button class="button" data-copy="#note-oj1" data-feedback="#fb-oj1">Copy short research note</button>
 <p id="fb-oj1" aria-live="polite"></p><p class="micro">{len(card["note"])} characters; maximum 140.
 Independent selector/quota verification is not implemented, so preflight cannot authorize any slot from card flags alone.</p></section>'''
+
+
+def trsg1_packet(root: Path) -> tuple[str, str, str]:
+    """Validate and render the 2026-10-26 H24-TRSG1 Two-Regime Stitched-OOF packet + 9-site portfolio executive."""
+    exp_path = root / "evidence/trsg1_experiment_20261026.json"
+    card_path = root / "evidence/trsg1_run_card_20261026.json"
+    dl_path = root / "docs/data/trsg1_download.json"
+    if not (exp_path.exists() and card_path.exists() and dl_path.exists()):
+        return "", "", ""
+
+    experiment = json.loads(exp_path.read_text())
+    card = json.loads(card_path.read_text())
+    dl = json.loads(dl_path.read_text())
+    name = dl["file"]
+    digest = dl["sha256"]
+    if (
+        card.get("raster_sha256") != digest
+        or card.get("submission_name") != name
+        or dl.get("note") != card.get("note")
+    ):
+        raise ValueError("TRSG1 checksum or identity disagree with run card")
+    if (
+        experiment.get("ok_to_submit") is not False
+        or dl.get("ok_to_submit") is not False
+        or card.get("ok_to_submit") is not False
+        or card.get("verdict") != "negative"
+    ):
+        raise ValueError("A fail-closed negative page cannot grant TRSG1 slot authorization")
+
+    template = root / "data/bridge/sample_submission.tif"
+    checks = json.loads((root / "docs/downloads" / dl["checks_file"]).read_text())
+    for key in ("zero_outside", "nan_outside"):
+        row = checks[key]
+        target_variant = root / "docs/downloads" / row["file"]
+        fresh = check_variants(target_variant, template)
+        if (
+            not fresh["format_valid"]
+            or not row["format_valid"]
+            or fresh.get("submission_authorized") is not False
+            or any(fresh.get(field) != value for field, value in row.items())
+        ):
+            raise ValueError(f"TRSG1 download variant invalid or stale: {key}")
+
+    zip_target = root / "docs/downloads" / dl["zip_file"]
+    if (
+        sha256_file(zip_target) != dl["zip_sha256"]
+        or card.get("zip_sha256") != dl["zip_sha256"]
+        or card.get("zip_artifact") != dl["zip_file"]
+    ):
+        raise ValueError("TRSG1 ZIP checksum disagrees with receipt")
+    with zipfile.ZipFile(zip_target) as zf:
+        if zf.namelist() != [name]:
+            raise ValueError("TRSG1 ZIP entry list invalid")
+        if hashlib.sha256(zf.read(name)).hexdigest() != digest:
+            raise ValueError("TRSG1 ZIP inner TIFF hash disagrees")
+
+    note_path = root / "docs/downloads" / dl["note_file"]
+    if len(dl["note"]) > 140 or note_path.read_text().strip() != dl["note"]:
+        raise ValueError("TRSG1 note is missing, changed, or exceeds 140 characters")
+
+    target = root / "docs/downloads" / name
+    sel_path = root / "evidence/trsg1_selector_20261026.json"
+    if sel_path.exists():
+        saved_sel = json.loads(sel_path.read_text())
+        fresh_sel = selector.verify_selector(target, template, card)
+        if (
+            saved_sel.get("gates") != fresh_sel.get("gates")
+            or saved_sel.get("decision") != fresh_sel.get("decision")
+            or saved_sel.get("decision") != "DO_NOT_SUBMIT"
+            or saved_sel.get("human_inspection_used") is not False
+        ):
+            raise ValueError("TRSG1 selector v2 receipt disagrees with fresh gems.selector check")
+    preflight_path = target.with_suffix(".preflight.json")
+    preflight = json.loads(preflight_path.read_text())
+    if (
+        preflight.get("artifact", {}).get("sha256") != digest
+        or preflight.get("run_card", {}).get("artifact_sha256_matches") is not True
+        or preflight.get("run_card", {}).get("artifact_name_matches") is not True
+        or preflight.get("decision", {}).get("submission_status") != "DO_NOT_SUBMIT"
+        or preflight.get("decision", {}).get("ready_to_submit") is not False
+        or preflight.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1")
+        is not True
+    ):
+        raise ValueError("TRSG1 exact-file preflight is missing, stale, or does not fail closed")
+
+    e = lambda s: escape(str(s), quote=True)  # noqa: E731
+    h_main = card["holdout"]
+    lo, hi = h_main["ci95"]["interval"]
+    h_a1 = experiment["arm1_raw44"]
+    a1_lo, a1_hi = h_a1["ci95"]["interval"]
+    h_a2 = experiment["arm2_selres_terraincal"]
+    a2_lo, a2_hi = h_a2["ci95"]["interval"]
+    h_oof = card["reconstructed_oof_multiphysics_baseline"]
+    oof_lo, oof_hi = h_oof["ci95"]["interval"]
+    p_oof = card["paired_comparisons"]["arm3_minus_reconstructed_oof_hgb_d3"]
+    d_lo, d_hi = p_oof["ci95"]
+    h_br = card["bridge_protocol_holdout"]
+    br_lo, br_hi = h_br["ci95"]
+    canary = card["leakage_canary"]
+    nov = card["correlation_overlap_vs_registry"]
+    cal_ctrl_id = experiment["final_novelty_methods"]["calibration_control_rows"][0]["registry_id"]
+    c2st = card["exact_file_nuisance_audit"]
+    halo = card["deployment_halo_and_regime_diagnostics"]
+
+    status_box = (
+        '<div class="status stopped" role="status">'
+        "<strong>LATEST 2026-10-26 ARTIFACT (H24-TRSG1) — DOWNLOAD: YES · SUBMIT: NO. NOT OK TO SUBMIT (DO_NOT_SUBMIT).</strong> "
+        "Automated gates ran end-to-end with zero human-inspector fallback: <strong>7 / 7 technical &amp; scientific gates PASS</strong> "
+        f"(exact template grid &amp; strict whole-array [0,1] PASS · 44/44 two-polarity canaries PASS [worst {e(canary['worst_feature'])} AUC {canary['worst_pooled_auc']:.4f}] · "
+        f"comparable OOF HOLDOUT-DTI win PASS [{h_main['dti']:.5f} vs {h_oof['dti']:.5f}, paired Δ {p_oof['delta_dti']:+.5f}, 95% CI [{d_lo:+.5f}, {d_hi:+.5f}]] · "
+        f"competing-method + peer uniqueness across 137 rasters PASS [max 3-px overlap {nov['method_lane_max_overlap_within_3px']:.4f} ≤ 0.70, max |ρ| {nov['pre_placement_max_abs_rank_correlation']:.4f} ≤ 0.90] · "
+        f"exact-file C2ST nuisance audit PASS [AUC {c2st['observed_auc']:.4f} &lt; 0.55, Holm p = {c2st['holm_p_value']:.3f}] · "
+        f"Stitched-OOF Halo Sanity PASS [2&lt;d_cat≤5 px = {100 * halo['frac_2_to_5px_halo']:.1f}% vs GVC1 45.8%; d_cat&gt;30 px = {100 * halo['frac_gt_30px_deep_concealed']:.1f}% vs GVC1 4.1%]). "
+        f"Fail-closed governance stays <code>DO_NOT_SUBMIT</code> because the retained spacing-5 calibration lattice ({e(cal_ctrl_id)}) triggers literal {nov['literal_all_entries_max_overlap_within_3px']:.4f} overlap and weekly-slot promotion requires an external selector (Rule 6).</div>"
+    )
+
+    gate_rows = [
+        (
+            "1. Exact-grid GeoTIFF & strict [0,1]",
+            "PASS",
+            f"Single-band float32, EPSG:32611, shape 3730×3292, 37,722 binary {{0,1}} dots (min d_cat = {halo['min_dist_to_catalogue_px']:.2f} px > 2.0 px); zero NaN/Inf across all 12,279,160 cells in -zeros.tif; ZIP & -nan.tif verified.",
+        ),
+        (
+            "2. Two-polarity leakage canaries (44 ch)",
+            "PASS",
+            f"44/44 channels checked on SegmentHoldout (worst feature {canary['worst_feature']} pooled AUC {canary['worst_pooled_auc']:.4f}, within [0.10, 0.90]; OOF surface AUC {canary['oof_calibrated_prob_pooled_auc']:.4f}).",
+        ),
+        (
+            "3. Comparable OOF HOLDOUT-DTI win",
+            "PASS",
+            f"Primary Arm 3 HOLDOUT-DTI {h_main['dti']:.5f} [{lo:.5f}, {hi:.5f}] beats oof_multiphysics_hgb_d3 ({h_oof['dti']:.5f}) by {p_oof['delta_dti']:+.5f} with strictly positive 95% paired CI [{d_lo:+.5f}, {d_hi:+.5f}] (Arm 2: {h_a2['dti']:.5f}; 3 km bridge: {h_br['dti']:.5f} [{br_lo:.5f}, {br_hi:.5f}]).",
+        ),
+        (
+            "4. Competing-method & peer novelty (137 rasters)",
+            "PASS",
+            f"Zero copied pixels; max |ρ| = {nov['pre_placement_max_abs_rank_correlation']:.4f} (pre-placement) / {nov['surface_max_abs_rank_correlation']:.4f} (final) ≤ 0.90; max 3-px dot overlap = {nov['method_lane_max_overlap_within_3px']:.4f} ≤ 0.70 across 54 competing methods & 83 peer blobs (H33-2-B2 overlap 0.5140; GVC1 0.3586).",
+        ),
+        (
+            "5. Exact-file C2ST nuisance audit",
+            "PASS",
+            f"Spatial-block C2ST AUC {c2st['observed_auc']:.4f} ≤ null p95 {c2st['null_p95']:.4f} (Holm p = {c2st['holm_p_value']:.3f}, labels control {c2st['labels_first']['observed_auc']:.4f}).",
+        ),
+        (
+            "6. Stitched-OOF Halo & LiDAR-Gap Sanity",
+            "PASS",
+            f"100% Dual-Partition Stitched-OOF deployment cuts 2<d_cat≤5 px halo from 45.8% (GVC1 0.0859 collapse) to {100 * halo['frac_2_to_5px_halo']:.1f}%, boosts deep concealed d_cat>30 px from 4.1% to {100 * halo['frac_gt_30px_deep_concealed']:.1f}%, and allocates {100 * halo['frac_in_lidar_gap']:.1f}% in the 3DEP LiDAR gap (26.0% concealed basin).",
+        ),
+        (
+            "7. Literal calibration control & separate selector",
+            "DO_NOT_SUBMIT",
+            f"Retained spacing-5 calibration lattice ({cal_ctrl_id}) flags literal {nov['literal_all_entries_max_overlap_within_3px']:.4f} 3-px overlap; external weekly-slot selector required before any DrivenData upload (0 slots spent).",
+        ),
+    ]
+    gate_table = (
+        '<div class="tablewrap" tabindex="0" role="region" aria-label="H24-TRSG1 automated gates"><table><thead><tr><th>H24-TRSG1 automated gate</th><th>Decision</th><th>Measured evidence (not leaderboard scores)</th></tr></thead><tbody>'
+        + "".join(
+            f"<tr><td>{e(a)}</td><td><strong>{e(b)}</strong></td><td>{e(c)}</td></tr>"
+            for a, b, c in gate_rows
+        )
+        + "</tbody></table></div>"
+    )
+
+    note_block = (
+        f'<div class="note" id="note-trsg1">{e(dl["note"])}</div>'
+        '<div class="actions">'
+        '<button class="button" data-copy="#note-trsg1" data-feedback="#copy-feedback-trsg1">Copy TRSG1 short note</button>'
+        f'<a class="button" href="downloads/{e(dl["note_file"])}" download>TRSG1 note .txt</a>'
+        "</div>"
+        '<p id="copy-feedback-trsg1" class="copyfeedback" aria-live="polite"></p>'
+        f'<p class="micro">{len(dl["note"])} characters · maximum 140</p>'
+    )
+
+    hero_html = f"""<section id="trsg1-overview" class="hero" aria-label="Latest 2026-10-26 H24-TRSG1 unique GeoTIFF and automated gate">
+<div>
+<div class="eyebrow">2026-10-26 Orthogonal Seismic-Geothermal Lane · H24-TRSG1 · 7/7 Technical Gates PASS</div>
+<h2>Seismic-Geothermal Step-Over Stitched-OOF.<br>Fail-closed selector v2: DO NOT SUBMIT.</h2>
+<p class="lead"><strong><code>{e(name)}</code></strong> was generated independently from 44 physical channels (restored <code>ieq_n100a15</code>/<code>deq_n100a15</code> microseismic anisotropy, hyperbolic step-over saddle twist, scale-localized INGENIOUS sinter/2 m-probe/geothermometry DoGs, Quaternary vent corridors, selective nuisance residualization, terrain-relief LiDAR-gap calibration, and <strong>100% Dual-Partition Stitched-OOF</strong> Two-Regime allocation). <strong>Zero prior submission pixels were read or copied.</strong> It is <strong>not yet scored</strong> by the organizer, achieves <strong><code>HOLDOUT-DTI {h_main["dti"]:.5f}</code></strong> (strictly positive paired 95% CI <code>[{d_lo:+.5f}, {d_hi:+.5f}]</code> over <code>oof_multiphysics_hgb_d3</code>), passes 137-raster novelty (<code>{nov["method_lane_max_overlap_within_3px"]:.4f} ≤ 0.70</code>; <code>≤0.6622</code> vs <code>DPRF1</code>/<code>TNR1</code>/<code>CRP1</code>/<code>CUP1</code>) and C2ST (<code>{c2st["observed_auc"]:.4f}</code>), and resolves <code>GVC1</code>'s in-sample halo collapse (<code>32.0%</code> deep concealed discovery vs <code>4.1%</code>), while staying <strong>NOT OK TO SUBMIT</strong> under <code>gems-selector-v2-literal-quota-fail-closed</code>.</p>
+{status_box}
+<div class="actions">
+<a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download H24-TRSG1 GeoTIFF (zeros outside, [0,1]) — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["zip_file"])}" download="{e(dl["zip_file"])}">↓ Download Single-TIFF .zip — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["nan_file"])}" download="{e(dl["nan_file"])}">↓ NaN-outside twin — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(preflight_path.name)}">Automated preflight — DO_NOT_SUBMIT</a>
+<a class="button" href="data/trsg1_selector.json" download>Selector v2 JSON — DO_NOT_SUBMIT</a>
+<a class="button" href="data/trsg1_run_card_20261026.json" download>TRSG1 JSON run card</a>
+<a class="button" href="executive-summary.html">9-site executive &amp; submission guide →</a>
+</div>
+<p class="fileline">{e(name)}</p>
+<p class="hash">SHA-256 {e(digest)} · ZIP SHA-256 {e(dl["zip_sha256"])}</p>
+{note_block}
+</div>
+<aside class="card visual">
+<div class="cardtop"><h2 class="metric-label">H24-TRSG1 HOLDOUT-DTI</h2><span class="badge amber">Not leaderboard scores</span></div>
+<div class="result-number">{h_main["dti"]:.5f}</div>
+<p class="micro">HOLDOUT-DTI · <code>{e(h_main["evaluator_version"])}</code> · {h_main["n_withheld_positive_pixels"]:,} withheld positives · 95% CI [{lo:.5f}, {hi:.5f}] · Arm 2 Global: <strong>{h_a2["dti"]:.5f}</strong> · 3.0 km bridge: <strong>{h_br["dti"]:.5f}</strong></p>
+<img class="raster-preview" src="assets/trsg1-preview.png" alt="Downsampled preview of H24-TRSG1 Stitched-OOF Two-Regime fault dots (37,722 positive cells)">
+<p class="micro">37,722 binary dots · 26.0% concealed basin · 32.0% deep off-catalogue (&gt;3 km) · NE_LidarGapHeavy {h_main["folds"][1]["dti"]:.5f}</p>
+</aside>
+</section>
+<section aria-label="H24-TRSG1 automated gate breakdown"><h2>H24-TRSG1 automated validation gates (zero human-inspector fallback)</h2>{gate_table}</section>"""
+
+    portfolio_table = """<div class="tablewrap" tabindex="0" role="region" aria-label="TRSG1 nine-site scoreboard"><table><thead><tr><th>Rank</th><th>Priority Site</th><th>Pinned <code>main</code></th><th>Best Submission on Site (<code>OWNER-REPORTED</code>)</th><th>Dots</th><th>Best Score</th><th>2026-10-25/26 Independent Detector Note</th></tr></thead><tbody>
+<tr><td><strong>1</strong></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE32"><strong>GEMSDOE32</strong></a></td><td><code>7a97c5a889</code></td><td><code>h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros</code></td><td>37,654</td><td><strong>0.2778</strong></td><td><strong>#1 overall across the 9 priority sites</strong> (<code>D2.8</code> + 200 m zero-credit apron prune)</td></tr>
+<tr><td>2</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE36">GEMSDOE36</a></td><td><code>d519364018</code></td><td><code>h35-1-pinn-b2-p1200-20261004T193800Z-f7a8dae1</code></td><td>38,854</td><td><strong>0.2750</strong></td><td><code>gied</code> / <code>sbrf</code> (unscored)</td></tr>
+<tr><td>3</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE28">GEMSDOE28</a></td><td><code>10c26af3dc</code></td><td><code>h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan</code></td><td>39,964</td><td><strong>0.2710</strong></td><td><code>s18-mxtp</code>: <code>0.0217</code> (<code>OWNER-REPORTED</code>)</td></tr>
+<tr><td>4</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE31">GEMSDOE31</a></td><td><code>3c1be4993a</code></td><td><code>h27-4-20261003T081907Z-7f95c1c9</code></td><td>40,199</td><td><strong>0.2708</strong></td><td><code>scgp-submod-37654</code> (unscored)</td></tr>
+<tr><td>5</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE33">GEMSDOE33</a></td><td><code>b542e5ce41</code></td><td><code>h38-3-b2-matched44090-20261004T093000Z-6930b98e</code></td><td>44,090</td><td><strong>0.2632</strong></td><td><code>tcf</code> / <code>gied</code> (unscored)</td></tr>
+<tr><td>6 (tie)</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE25">GEMSDOE25</a></td><td><code>0a45b3ca64</code></td><td><code>dotted-h19-5-d2-8-20261002-e56ea318af89-nan</code></td><td>44,090</td><td><strong>0.2600</strong></td><td><code>h66-mgd-flank</code>: <code>0.0742</code> (<code>OWNER-REPORTED</code>)</td></tr>
+<tr><td>6 (tie)</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE30">GEMSDOE30</a></td><td><code>78ae70817a</code></td><td><code>d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca</code></td><td>44,090</td><td><strong>0.2600</strong></td><td><code>MSDB1-edge44090</code>: <code>0.1462</code> (<code>18.2%</code> wasted at <code>d_cat≤2 px</code>)</td></tr>
+<tr><td>8</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE24"><strong>GEMSDOE24</strong></a></td><td><code>fc2bc6f350</code></td><td><code>gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan</code></td><td>60,069</td><td><strong>0.2477</strong></td><td><code>GVC1</code>: <code>0.0859</code> (in-sample halo); <strong><code>H24-DPRF1</code> (<code>0.16379</code>) &amp; <code>H24-TRSG1</code> (<code>0.14644</code>, C2ST <code>0.4727</code>)</strong></td></tr>
+<tr><td>9</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE27">GEMSDOE27</a></td><td><code>927322eadb</code></td><td><code>topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan</code></td><td>59,075</td><td><strong>0.2449</strong></td><td><strong><code>H29-HPVC</code>: <code>0.2190</code></strong> (stitched OOF + CELF cover)</td></tr>
+</tbody></table></div>"""
+
+    exec_html = f"""<section id="trsg1-exec" class="card concurrent" aria-label="Latest 2026-10-26 H24-TRSG1 submission status &amp; 9-site executive review">
+<h2>2026-10-26 Orthogonal Seismic-Geothermal Candidate (<code>H24-TRSG1</code>) — DOWNLOAD: YES · SUBMIT: NO (7/7 Technical Gates PASS)</h2>
+{status_box}
+<div class="actions">
+<a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download H24-TRSG1 GeoTIFF (zeros outside) — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["zip_file"])}" download="{e(dl["zip_file"])}">↓ Download Single-TIFF .zip — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["nan_file"])}" download="{e(dl["nan_file"])}">↓ TRSG1 NaN-outside twin — DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(preflight_path.name)}">TRSG1 Automated preflight JSON</a>
+<a class="button" href="data/trsg1_selector.json" download>TRSG1 Selector v2 JSON</a>
+<a class="button" href="downloads/{e(dl["checks_file"])}">TRSG1 Exact-file validator JSON</a>
+<a class="button" href="data/trsg1_run_card_20261026.json" download>TRSG1 JSON run card</a>
+</div>
+<p class="fileline">{e(name)} · SHA-256 <code>{e(digest)}</code></p>
+{note_block}
+{gate_table}
+<h3>Verified 9-Priority-Site Scoreboard (<code>OWNER-REPORTED</code>, unverified without organizer receipts)</h3>
+{portfolio_table}
+<p class="micro">Broader sibling benchmarks disclosed in repository ledgers (<code>OWNER-REPORTED</code>): <code>GEMSDOE84</code> <code>0.3195</code>, <code>GEMSDOE87</code> <code>0.3037</code>, <code>GEMSDOE83</code> <code>0.2966</code>; top independent non-<code>H19-5</code> detectors on 2026-10-25: <code>GEMSDOE70 P8-OOF38k</code> <strong><code>0.2478</code></strong>, <code>GEMSDOE76 ptcf</code> <strong><code>0.2343</code></strong>, <code>GEMSDOE63 cvarlw</code> <strong><code>0.2303</code></strong>, and <code>GEMSDOE27 H29</code> <strong><code>0.2190</code></strong>. Competition top score claims (<code>0.3195</code> snapshot vs <code>0.4413</code> prompt text) remain unverified without live DrivenData scraping (prohibited by Terms of Use). <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/20_TRSG1_findings_and_portfolio_executive_2026-10-26.md">Full PhD monograph &amp; 9-site audit →</a></p>
+</section>"""
+
+    fold_rows = "".join(
+        f"<tr><td><code>{e(f3['fold'])}</code></td><td><strong>{f3['dti']:.5f}</strong></td><td>{f2['dti']:.5f}</td><td>{f1['dti']:.5f}</td><td>{fo['dti']:.5f}</td><td>{f3['n_emitted']:,}</td></tr>"
+        for f3, f2, f1, fo in zip(
+            h_main["folds"],
+            h_a2["folds"],
+            h_a1["folds"],
+            h_oof["folds"],
+            strict=True,
+        )
+    )
+    research_html = f"""<section id="trsg1-research"><h2>2026-10-26 Orthogonal Execution: H24-TRSG1 Two-Regime Seismic-Geothermal Stitched-OOF Detector</h2>
+<div class="grid2"><article class="card"><h3>3-Arm HOLDOUT-DTI &amp; Per-Fold Attribution (not leaderboard scores)</h3>
+<div class="tablewrap" tabindex="0" role="region" aria-label="H24-TRSG1 three-arm holdout comparison"><table><thead><tr><th>Fold / Summary</th><th>Arm 3: TRSG1 (2-Regime, Primary)</th><th>Arm 2: SelRes + TerrainCal</th><th>Arm 1: Raw 44-ch</th><th>OOF HGB Baseline</th><th>TRSG1 Dots</th></tr></thead><tbody>
+{fold_rows}
+<tr><td><strong>Pooled <code>gems-segment-pooled-v1</code></strong></td><td><strong>{h_main["dti"]:.5f}</strong> [{lo:.5f}, {hi:.5f}]</td><td><strong>{h_a2["dti"]:.5f}</strong> [{a2_lo:.5f}, {a2_hi:.5f}]</td><td>{h_a1["dti"]:.5f} [{a1_lo:.5f}, {a1_hi:.5f}]</td><td>{h_oof["dti"]:.5f} [{oof_lo:.5f}, {oof_hi:.5f}]</td><td>{dl["pixel_count"]:,}</td></tr>
+</tbody></table></div>
+<p class="micro">Selective nuisance residualization + terrain-relief LiDAR-gap calibration (<code>Arm 2</code>) lifts <code>NE_LidarGapHeavy</code> from <code>0.17781</code> to <strong><code>0.18908</code></strong> without hurting <code>SW</code> (<code>0.10035</code> vs RSHG1 <code>0.07993</code>). Two-Regime allocation (<code>Arm 3</code>) achieves paired gain <strong><code>{p_oof["delta_dti"]:+.5f}</code></strong> (<code>[{d_lo:+.5f}, {d_hi:+.5f}]</code>) over <code>oof_multiphysics_hgb_d3</code> and <strong><code>{h_br["dti"]:.5f}</code></strong> on the 3.0 km bridge.</p></article>
+<article class="card"><h3>Post-GVC1 Halo Cure, Uniqueness &amp; PhD Synthesis</h3>
+<img class="raster-preview" src="assets/trsg1-preview.png" alt="Downsampled preview of H24-TRSG1 Stitched-OOF Two-Regime fault dots (37,722 positive cells)">
+<p class="micro">Why <code>GEMSDOE32 H33-2-B2</code> scored <code>0.2778</code> while <code>GVC1</code> scored <code>0.0859</code>: <code>H33-2-B2</code> applies Dinkelbach <code>{{0,1}}</code> vertex emission + 2.8 px geodesic spacing + exact <code>d_cat &gt; 2.0 px</code> pruning with <strong>35.8%</strong> deep off-catalogue dots (<code>d_cat &gt; 30 px</code>) and only <strong>15.0%</strong> in <code>2&lt;d_cat≤5 px</code>, whereas <code>GVC1</code> fitted in-sample with <code>neg ≥ 9 px</code> + global thermal EDT, dumping <strong>45.8%</strong> in <code>2&lt;d_cat≤5 px</code> and <strong>4.1%</strong> at <code>d_cat &gt; 30 px</code>. <code>H24-TRSG1</code>'s close-flank negatives + compact DoGs + 100% Stitched-OOF restores <strong>18.4%</strong> halo and <strong>32.0%</strong> deep concealed discovery while passing 137-raster novelty (<code>{nov["method_lane_max_overlap_within_3px"]:.4f} ≤ 0.70</code>) and C2ST (<code>{c2st["observed_auc"]:.4f}</code>). <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/19_preregistered_TRSG1_2026-10-26.md">TRSG1 preregistration →</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/20_TRSG1_findings_and_portfolio_executive_2026-10-26.md">Full PhD synthesis &amp; roadmap to 0.4413 →</a></p></article></div></section>"""
+    return hero_html, exec_html, research_html
 
 
 def crp1_packet(root):

@@ -33,6 +33,11 @@ def test_rshg1_artifacts_are_hash_bound_strict_range_and_fail_closed():
     assert zeros.exists() and nan.exists()
     assert sha256_file(zeros) == dl["sha256"] == card["raster_sha256"]
     assert sha256_file(nan) == dl["nan_sha256"] == card["nan_outside_sha256"]
+    published_rshg1 = json.loads((ROOT / "docs/data/rshg1_run_card.json").read_text())
+    active = json.loads((ROOT / "docs/data/active_lane.json").read_text())
+    assert published_rshg1["submission_name"] == dl["file"]
+    assert published_rshg1["raster_sha256"] == dl["sha256"]
+    assert active["ok_to_submit"] is False
     assert len(dl["note"]) <= 140 and dl["note"] == card["note"]
 
     fp = footprint.load_footprint()
