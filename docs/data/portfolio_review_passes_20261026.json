@@ -1,0 +1,97 @@
+{
+  "schema": "portfolio-three-pass-review-v1",
+  "checked_utc": "2026-10-26T17:27:33.325485+00:00",
+  "branch": "arena/e78615fb-gemsdoe24",
+  "integrated_main_commit": "fae5b6c2d6dd0debf9540245eabcd37ef19b8049",
+  "pass_1": {
+    "status": "complete",
+    "preregistration_commit": "47beec9",
+    "work": [
+      "Read current instructions/preserved prompt/core scientific and submission modules",
+      "Pin and cache nine sources without rewriting frozen registries",
+      "Shared format validation of 326 TIFFs; 18 complete saved-dot comparisons",
+      "Restore pinned raw source and prepare/hash-check the 30-channel CPU cache",
+      "Publish conservative executive downloads, exact filenames, estimates unavailable, and scientific limitations"
+    ]
+  },
+  "pass_2": {
+    "status": "complete",
+    "fixes": [
+      "Cache directory ignored by API transport fixed; immutable refs/blob hashes and safe paths",
+      "Frozen manifests are restored without rewritten IDs/bytes; explicit footprint identity",
+      "Prepared-cache reuse rejects stale bytes/input hashes/layout/dtype",
+      "Lattice bound validates masks/parameters; exhaustive tiny-grid mathematical test",
+      "Peer-source denominator/footprint/dot-count conflicts recorded without invented scores",
+      "Rank-domain roundoff handled without altering 0.90/0.70 stop thresholds",
+      "Old TNR-first UI test updated to require current download plus preserved historical packet",
+      "Concurrent main records retained; syntax/import/style lint defects corrected without running or retuning stopped lanes"
+    ]
+  },
+  "pass_3": {
+    "status": "complete locally",
+    "pytest": {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -m pytest -q",
+      "passed": 442,
+      "failed": 0,
+      "seconds": 119.16
+    },
+    "ruff_check": "passed across src/scripts/tests",
+    "ruff_format_check": "177 files formatted",
+    "javascript_syntax": "passed for app.js and browser audit",
+    "git_diff_check": "passed",
+    "browser": {
+      "receipt": "evidence/portfolio_browser_20261026.json",
+      "viewports": [
+        "1440x1000 desktop",
+        "390x844 mobile"
+      ],
+      "page_checks": 12,
+      "accessibility_violations": 0,
+      "console_errors": 0,
+      "external_network_requests": 0,
+      "exact_download_sha256_checked": true,
+      "clipboard_note_checked": true,
+      "first_screen_download": true,
+      "responsive_nine_site_cards": true,
+      "owner_source_rows": 92
+    },
+    "real_cache_reuse": "Fresh registry revalidation left the versioned manifest byte-identical",
+    "concurrent_local_files": {
+      "format_checks": 10,
+      "distinct_contents": 7,
+      "newly_generated_by_this_session": 0,
+      "scope": "Separate local delta, not silent expansion of frozen cross-site audit"
+    }
+  },
+  "frozen_scientific_records_unchanged_from_initial_main": {
+    "registry/priority_rasters.json": "0844816e4cb8e9f6fa64970b339412dd97d12cb0b507c67b0b9bb3f2f3ea2974",
+    "registry/priority_source_snapshot.json": "128d4746b248c050449fd8bad0b519d39c7a3199cb946b47561092334104249d",
+    "registry/priority_rasters_20261026_tnr1.json": "054cca879a774697900d766d19d584ff708a2ab54f030d96b4892c38bdd2cea0",
+    "registry/priority_source_snapshot_20261026_tnr1.json": "e2a34b2c98fe61d9eacf4cd7d73889021ef7c61891ee00f88ddcecbc506ecd38",
+    "evidence/dprf1_run_card_20261026.json": "d49550099b221fa0deaf7451eea74b3fa2e339a31b03db0ef077c824c71b66f1",
+    "evidence/tnr1_run_card_20261026.json": "df3b1003940d7d5aa6294669d17ec9236bbba07937714583463614200670a945",
+    "evidence/eul1_run_card_20261026.json": "c95505f9744934cf2179b04a91533d22d0cce23762d6ecda58e1b67e496c6fd4"
+  },
+  "artifact_audit_sha256": "7f5937f62bc1b68736ba2680ae0126ed45da91cfcd613cb90d52b04f445bfb79",
+  "budget": {
+    "new_experiments": 0,
+    "new_tiffs_generated_by_this_session": 0,
+    "submission_slots_used": 0,
+    "start_utc_approximate": "2026-10-26T16:12:00Z",
+    "cap_utc_approximate": "2026-10-26T18:12:00Z",
+    "within_cap_at_local_completion": true
+  },
+  "central_goal_achieved": false,
+  "verdict": "negative",
+  "ok_to_submit": false,
+  "publication_status_at_recording": "Local verification complete. PR/CI/merge/Pages outcomes must be checked separately; not claimed by this receipt.",
+  "limitations": [
+    "No assigned method paragraph or new geological experiment",
+    "Original pre-placement surfaces and scientific training not independently replayed",
+    "No calibrated hidden-score estimate or organizer submission-page receipt",
+    "Literal lattice obstruction at standard budget; DPRF1 also fails EUL1 overlap",
+    "No current-account weekly quota or positive independent selector path",
+    "Six source refs changed after the frozen pins; only local main delta additionally inspected",
+    "Raw data are hash-pinned owner mirrors; blocked official hosts not described as freshly fetched"
+  ]
+}

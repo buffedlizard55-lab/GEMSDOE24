@@ -236,5 +236,6 @@
     }
   ],
   "ok_to_submit": false,
-  "verdict": "negative"
+  "verdict": "negative",
+  "superseded_by_artifact_audit": "data/portfolio_artifact_audit_20261026.json"
 }

@@ -88,7 +88,9 @@
     "scope": "Recorded point estimate; no independent protocol/paired-gain/novelty certification"
   },
   "hypothesis": "52-channel Dual-Partition Stitched-OOF hydrothermal-structural fusion (30 scale-separated base + 18 OpenEI GDR INGENIOUS paleo-sinter/2m-probe/geothermometry/Miller-Singh tilt/8-azimuth lineaments + 4 modality-aware SAHG1 conduit channels) with selective 9-channel non-topographic nuisance residualization, relief-conditioned LiDAR-gap log-odds calibration, 8-azimuth ridge sharpening, visible-catalogue apron quantile debiasing, and Two-Regime 300 m submodular allocation (68% primary ridge + 32% low-relief intrabasin/step-over hydrothermal-subsurface conduit).",
-  "mechanism": "Eliminates the Stage-5 in-sample 200-900 m catalogue-apron memorization bug that caused GVC1 (0.14876 holdout -> 0.0859 owner-reported live, 70.4% dots in 2-9 px, 76.82% range-front overlap) to collapse, while preserving multi-physics + INGENIOUS hydrothermal recall across both 3DEP LiDAR gaps (via relief-conditioned tail matching) and concealed intrabasin/step-over geothermal conduits (via Two-Regime submodular 300 m coverage allocation).",
+  "mechanism": "Recorded fault-recovery hypothesis only; this review validates artifact identity and format, not the causal mechanism or any hidden-leaderboard improvement. See the original run card for its unverified mechanistic interpretation.",
+  "mechanism_source": "evidence/dprf1_run_card_20261026.json",
+  "mechanism_causally_verified": false,
   "non_fault_mimic": "Coincidence of a Tertiary welded ash-flow tuff cooling-joint hogback or diabase dike swarm with lateral hot-spring travertine apron outflow or arkosic K-feldspar alluvial fan detritus, plus Pleistocene Lake Lahontan shorezone tufa benches.",
   "submission_name": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
   "raster_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
@@ -340,7 +342,7 @@
   },
   "selector": {
     "selector_version": "gems-selector-v2-literal-quota-fail-closed",
-    "decided_utc": "2026-10-26T18:52:33.214977+00:00",
+    "decided_utc": "2026-10-26T19:01:31.468529+00:00",
     "artifact": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
     "artifact_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
     "human_inspection_used": false,

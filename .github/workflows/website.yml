@@ -30,6 +30,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python scripts/refresh_priority_feed.py
+      - name: Check freshness of the complete nine-site artifact audit pins
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/refresh_priority_feed.py --registry registry/priority_rasters_20261026_portfolio.json --output docs/data/portfolio_freshness.json
       - name: Refresh every owner-listed GitHub README (not scores; preserve stale failure markers)
         env:
           GH_TOKEN: ${{ github.token }}

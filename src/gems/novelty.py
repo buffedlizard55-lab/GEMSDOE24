@@ -94,10 +94,30 @@ def classify_space_filling_control(
     overlap at radius ``radius_px`` cannot distinguish an unrelated detector from a copy,
     whereas full-footprint Spearman rank correlation (``|rho| <= 0.90``) remains informative.
     """
-    fp = np.asarray(footprint, bool)
-    ref = np.asarray(reference_dots, bool) & fp
-    if fp.ndim != 2 or fp.shape != ref.shape or not fp.any():
-        raise ValueError("Aligned nonempty 2D footprint and reference masks required")
+    fp_raw, ref_raw = np.asarray(footprint), np.asarray(reference_dots)
+    if (
+        fp_raw.ndim != 2
+        or fp_raw.shape != ref_raw.shape
+        or not np.isin(fp_raw, [0, 1]).all()
+        or not np.isin(ref_raw, [0, 1]).all()
+        or not fp_raw.any()
+    ):
+        raise ValueError("Aligned nonempty finite binary footprint and reference masks required")
+    if (
+        type(radius_px) not in (int, float)
+        or not np.isfinite(radius_px)
+        or radius_px < 0
+        or type(coverage_threshold) not in (int, float)
+        or not np.isfinite(coverage_threshold)
+        or not 0 <= coverage_threshold <= 1
+    ):
+        raise ValueError("Finite nonnegative radius and [0,1] coverage threshold required")
+    fp = fp_raw.astype(bool)
+    ref = ref_raw.astype(bool) & fp
+    if candidate_dot_count is not None and (
+        type(candidate_dot_count) is not int or not 1 <= candidate_dot_count <= int(fp.sum())
+    ):
+        raise ValueError("Candidate count must be a positive integer no larger than the footprint")
     n_fp = int(fp.sum())
     if not ref.any():
         cov_px = 0
@@ -108,8 +128,8 @@ def classify_space_filling_control(
     uncovered = n_fp - cov_px
     coverage = cov_px / n_fp
     pigeonhole_lb = (
-        max(0.0, 1.0 - uncovered / int(candidate_dot_count))
-        if candidate_dot_count and candidate_dot_count > 0
+        max(0, candidate_dot_count - uncovered) / candidate_dot_count
+        if candidate_dot_count is not None
         else None
     )
     return {

@@ -1,0 +1,1371 @@
+{
+  "session": "S20-NCHC",
+  "hypothesis_id": "H43-1",
+  "date_utc": "2026-10-26T01:26:42Z",
+  "lane": "S20-NCHC: Multi-scale nematic 4-modality lineament concordance + hydrothermal clay-cap/silica-disequilibrium corridor + 300 m submodular kernel allocation",
+  "hypothesis": "Concealed Great Basin and Walker Lane faults lacking mapped Quaternary scarps exhibit multi-scale Frangi-Hessian tubular edges co-aligned in nematic strike across magnetics, gravity, conductive base, and piedmont topography, flanked by smectite clay-cap gradients, K-metasomatic Th/K lows, and silica geothermometry disequilibrium.",
+  "mechanism": "28 level-invariant derivative/Hessian/nematic/hydrothermal features -> spatially purged prior-calibrated HistGBM -> B=2 clearance -> 300 m Minoux submodular kernel coverage.",
+  "non_fault_mimic": "GeoDAWN E-W flight-line micro-leveling stripes and steep-terrain helicopter drape anomalies, Lake Lahontan wave-cut shorelines, curved pluton aureoles, and uncorroborated lateral thermal outflow plumes.",
+  "raster_sha256": "1d629d6c953c94681ecfe51111d4210361f7014b1df41f5fcfa8d81c4f54f853",
+  "submission_file": "docs/downloads/gems28-s20-nchc-20261026-d432a1d5d6ee-allfinite.tif",
+  "submission_nan_twin_file": "docs/downloads/gems28-s20-nchc-20261026-d432a1d5d6ee-nan.tif",
+  "submission_zip_file": "docs/downloads/gems28-s20-nchc-20261026-d432a1d5d6ee-nan.zip",
+  "submission_note_file": "docs/downloads/gems28-s20-nchc-20261026-d432a1d5d6ee.note.txt",
+  "submission_name": "GEMSDOE28-S20-NCHC-20261026-d432a1d5d6ee",
+  "content_id": "d432a1d5d6ee",
+  "note": "S20-NCHC nematic+claycap 300m submod B2 40071d | HOLDOUT-DTI 0.1313 vs 0.1444 | DO NOT SUBMIT",
+  "experiments_run": 3,
+  "elapsed_seconds": 487.28,
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "raster_sha256": "1d629d6c953c94681ecfe51111d4210361f7014b1df41f5fcfa8d81c4f54f853",
+    "baseline_sha256": "529d9e1bd80b54957ca16398e47bfc51b1e32eaee8fc89d6dfbddbd7036c5ffc",
+    "baseline_name": "B0_32band_h38_vis (retrained visible-only 32-band + H38 heatflow/Euler)",
+    "withheld_positives": 60988,
+    "dti": 0.13126268185597795,
+    "ci95": [
+      0.12034550140435778,
+      0.1418380930119638
+    ],
+    "baseline_dti": 0.14443325231268564,
+    "baseline_ci95": [
+      0.13152046403284837,
+      0.15792560306830267
+    ],
+    "paired_gain": -0.013170570456707692,
+    "paired_gain_ci95": [
+      -0.027720891365402105,
+      -0.0004165453205771382
+    ],
+    "folds_improved_vs_b0": "1/4",
+    "b1_b2_d28_retrained_dti": 0.1460818472861555,
+    "b1_b2_d28_retrained_ci95": [
+      0.13305354699490515,
+      0.15968401735548893
+    ],
+    "paired_gain_vs_b1": -0.014819165430177555,
+    "paired_gain_vs_b1_ci95": [
+      -0.029390353066190596,
+      -0.001848751570264977
+    ],
+    "folds_improved_vs_b1": "1/4",
+    "whole_segments": true,
+    "buffered": true,
+    "buffer_m": 1500,
+    "visible_only_features": true,
+    "pixel_exact_visible_mask": true,
+    "pooled": true,
+    "alpha": 0.2,
+    "beta": 0.8,
+    "kernel_m": 300,
+    "kernel": "triangular"
+  },
+  "feature_canaries": {
+    "mag_tubular_150m": 0.5137187528475966,
+    "mag_tubular_400m": 0.5177877088237528,
+    "mag_tubular_1000m": 0.5235538390348545,
+    "grav_tubular_400m": 0.5289287477535627,
+    "grav_tubular_1000m": 0.537990892753183,
+    "em_cb_tubular_400m": 0.5201941515111246,
+    "em_cb_tubular_1000m": 0.5220136648252208,
+    "topo_tubular_150m": 0.5554114573050345,
+    "topo_tubular_400m": 0.5843269680056699,
+    "topo_tubular_1000m": 0.6009539703406992,
+    "nematic_order_400m": 0.5207818527412864,
+    "nematic_order_1000m": 0.5154329253360164,
+    "top2_harmonic_400m": 0.5689251453856279,
+    "top2_harmonic_1000m": 0.5829472482724579,
+    "geodawn_ew_stripe_150m": 0.4966373460715822,
+    "mag_up150_step_300m": 0.5091060731326095,
+    "claycap_margin_400m": 0.5023800780557877,
+    "rad_k_metasom_local": 0.5172020619763587,
+    "rad_uth_redox_step_300m": 0.5481238071734122,
+    "rad_valid_flag": 0.4996135912623079,
+    "hydro_qtz_diseq_1500m": 0.5231452432480321,
+    "hydro_temp_anom_1500m": 0.4964209920077455,
+    "hydro_hf_resid_1500m": 0.49366872563722886,
+    "strain_2ndinv_grad_1000m": 0.5231790111562509,
+    "strain_dilate_norm": 0.5224475518578986,
+    "seis_ieq_norm": 0.548537459500848,
+    "lidar_scarp_composite": 0.561924460380439,
+    "lidar_valid_flag": 0.5149545637481965
+  },
+  "registry": {
+    "complete": true,
+    "manifest_path": "evidence/s20_registry_manifest.json",
+    "manifest_sha256": "6a70ecd111828f86ba313ca0b4b46204d10d197e2848d74a95e106d815e49030",
+    "member_count": 112,
+    "max_abs_surface_spearman": 0.12797921411665644,
+    "max_abs_dots_spearman": 0.05834510964500765,
+    "max_dots_within_3px_fraction": 0.5363479823313618,
+    "max_dots_within_3px_member": "GEMSDOE28__gems28-h37-1-probe-union-pool-r1-20261003-52a13184267e-allfinite.tif",
+    "prospective_method_lane_passed": true,
+    "prospective_literal_all_entries_passed": false,
+    "prospective_calibration_controls_count": 2,
+    "members": [
+      "800856082214038640ba98796c390ff76cb8583944dbc05505d9787ce7688c9e",
+      "de1c22230f12011fb1f30cb137b7bef912ea250df4539a0bef8d0d25276c9218",
+      "dd2c7403439dc89223028590ee2057528b0225a0a45f0e7ab2dc653fe672c06a",
+      "8aca8f26d3fb87bd37f9aa88a8d85962c0bfb66dc1977886ebb04cc9a6216b3e",
+      "b537611d648d0f4fd40115f1d4b8eb97fe0febccc4686b80e7db21ee9c287a96",
+      "ef2ae808eb7179861b9f1ff753fd3ded625ace7b7c158e29cec45bbd8fa3cfaa",
+      "3e0730e8d4f7db095dd80246a98cba3bc0fc9a28f436b91db27ca34df4d0d1ce",
+      "3e78737f0da8dd2ca66cc6caac0ce8eeefcd6715707f8d1bd3091845cd9bcc30",
+      "e7fafd54ed71536ecee6896c0fd4aecc00be6af1cd91048503c692b8ff1884cb",
+      "ec0139cb4e9f1641dd43ad385d1c164d639a2c854f64ff4c1f9d61e6dc86635a",
+      "2641944cf4fa7ae7960243f738e89a8fe020c09b22275c00f033155e0197ef4a",
+      "80f893de18ac9a83696a572e7d0e92e93d33057dd68491807d487acfb7a7cd25",
+      "a0b58cca87ad98f9579c8744e6dd216b7eb4a3e5b075a4bd7af3cf3004ab5cf0",
+      "ad4bc4933d0b7636f0f32918c1fd8b8b08cd1964aee32d69e45419a9b54178a7",
+      "51d0b3414896a18de24de969467c6e8947678d80e32ab12d2812a1f6b2bed467",
+      "41461ce0d0a6cb2d765e53fa490114d3f6e6344ca6f459b811f55bddbf7d2858",
+      "22a9d729bec45b72a7309380a0da7d147d79fadcdf1472259ca5eecea524893d",
+      "2165bb8e229ee27e25edf57e990191d8f7836ab4b07e2779f15023f7c34a3ab2",
+      "3ebd1aabff726c59a47b018308a1c30574bce0b1c0a217d6650bae69304551af",
+      "c103482fb70b4eb447a4fd9ae5b4a82baa2bcf41b161e34170f86cf5fdce8778",
+      "ee71642cd603418ceaf6c789ab05a9d742d8dce096ee9816118fdeb90a475a73",
+      "4c35c74a34ce97671d3f2be158574726c6f5775a4da29467f0757bc19dd75e37",
+      "d81c69cace45144ea29d6d1f208efec3f38ff45265171f5f6c9bbbfdd43eabcf",
+      "077668cad7cec6ea5d9b3eed56b2fc8eaf2bc2703851af9e387b4f62eacfc4bd",
+      "a27a036ac86e468a47b492801fca0257417fd8ebbcdfea859a87c25193a477d8",
+      "77990b107784119d68feb63f61314cf5c5403d6c35cfa9226f3840bf30387399",
+      "672a14fb0023eeef64f36c63732e9ec7bda23a078810204882af7b434812156f",
+      "15073e72f04a6371d8f4169a93d7ffd9e98f546bc436a53c7b47d32e0502e032",
+      "f881810d6713a4bd8d6f9fd15bca99cc928ea052473bbd6a82c738d54dd4067b",
+      "40b88a6477b1914a525c587ef139f1016f3d52188442099e5fa5eeab716008c2",
+      "074df9bddaf11e8d5df5bc02293e5df5332d463f756595aace73dcce43e63c44",
+      "60a7930a5ac229bb8a3a81656de49c1e228eab8398e0b26316972d516a2951f5",
+      "fa2a8525f5235a55ad3dc16e62b0912ec8391e6076bbd372b126ac8d8ad0b3f9",
+      "40dc48a9f512c6b92415e5b2349e809be33107f9fec6661cc67c3a9871b8c84f",
+      "ad7d90f43c5d913f029b748d9b15ae9a4e9368e3d2e953aafac67ce91ced460a",
+      "8585c5e870f197f84fda5bac7f22047d646fb73d455eb8b1129486c79bb976cf",
+      "047f383d9f764fb314738e8e97288511f2e315ede605dee1675b24bf5ceb55c8",
+      "deb8b4f10eda333b8965813e3ab6c8cd3c134193f36a06ccb1cbbfdc19994eb3",
+      "d648a3cc02713612eb5c59637a4732418ae555aa4037ac9dbc815d2e7ab00528",
+      "a9bf76b57453a5b3af74c8eef837df53c29a0931162aa540b8763220b36ba3bb",
+      "61843240c45576772badb6c45128b10d64295c6197af380639e1b3fa2cf70dd8",
+      "19fc681f3c6d1894efb5d44d6552a34d9989fe43ea8a6da13fcfb8a03bec92af",
+      "defe8b2184d5e9732d53362eb4dd0b337198a493d76087ecdaf84c01f99f4ea1",
+      "8a73f01776d0c53ff99ab05bac8612768f186476846708412096ef927ea0b983",
+      "553bbd6db1ae0f3a8fc41a81ed8bc1f438e5af6bd74d43c5d260d6889d0e6537",
+      "7ae6f90df568a2578294968ec5e4a8a088653b569e5ab3c149afbe132ba29238",
+      "2fc94a38d77f74d4f4ed1a97a83e7bb71a1ceea090515ec641e6681cc47c44c8",
+      "26748e4b4721277b093c776f7ca72920023d0ee6e9514ee38e677c8010f4068e",
+      "8aaa2a9b6a78419b4366935f74d731d6f1e669ca866b73280c91420bb60dd675",
+      "7c74270ad48fa0b865163853046a6d3815967c5bf37bbda5b74ca7fa22583a32",
+      "b733cfdbf0d479e1c0eea06f75ef61ba55f14409f2fa9a5876ef7234f294e7df",
+      "8a59bc5ea68df8c64f2467fd5e8b3652a324fa3d5e364b9e974d993401c2ec1f",
+      "529d9e1bd80b54957ca16398e47bfc51b1e32eaee8fc89d6dfbddbd7036c5ffc",
+      "64fe7b27512ad5d22a4c6ef166afd6b901259d1536ff42d573f2e944bbcf92d2",
+      "aeaa72057b85c4e07fee9c3beaa99e87e4a41a1a8eba396251281f46595fe972",
+      "93abd1dbd2b06961eeafb25dbb428848d15d3c5e36ab9505d165f150fc9e9316",
+      "f0f50442dfe682911a2f49ee56d59a468b3f6b6f2ad35e90932532d3715abcc4",
+      "89fd98a638a0aebe2e9be6da6948eb879154f05312d6fff24e083794b9f41515",
+      "d62d5ed1852afd1eb5ce6f3fd4736c61d15434d366f2e008dafc0aaa4d04d22a",
+      "ce043566a96a1bf0abae366ba706ed6be5907297248b1d14deace8596500b186",
+      "f877c27878d35e138ca3e5e3e14a7e60dc9aef543c41c27cd1e1df2134d23c52",
+      "f5d137b9c010873f0b4fc11e841d923f359d33c7272ded0da9ac9b7c1efc7cc2",
+      "22850984a68c393f60c6cc9aeafd8d74fd8a3479654bdfcfd3626a4b99ff0381",
+      "9556e3ddd8ea7658ca510ab02d5b5304ac4c3332c54e7f86df5a24769bd03cdb",
+      "fb2d0d2d74bad2b52c6fcd48db5d8e2855c938fd222798e03fc01a96dbdc6d0e",
+      "51ca48a5157a737f33f53bbf2985fdfa93816adc5913a87736366390e063fcf3",
+      "12bd6196cdebfbaa39960d0d6f600fde498f1fb7675321222ba49489dec69b22",
+      "837f555efe1c55f53258aa2fa8b5528684395cc1226a233cf8013690b6ac63ff",
+      "a9f5b93ed286d5e0ef18f7312397106e10de87c9d50c7ad0936074429b2bdba1",
+      "d7977d7b93287f17fbf3cb85f10fdbee4acc5c8453a7faa451e760363433a286",
+      "41b1b9809b8603dc6a75a55f4c98b0caf2d9f43c686369702e8ecbd6bc9e4fdb",
+      "deda0533e4aa041e3877f58a8d6b9d0f8930fec6db1f66934f649a6583c71201",
+      "28213ba2b1a800753d8750002371194f308fb6369b323ac237ca334df62b26c4",
+      "e7463b56aedc30263a08e9318bd8f336ab424f2c236734017e5b5cba75b89882",
+      "7906d5744a8456f09cb17193f4a3f7169a893d3c5ccddcb75b1c28fdb68e662a",
+      "1cce914c6daa274ce84cfe215540cdb03bef88f880c952e528807378b826262d",
+      "f9cd56a71550b42f00f3cd37a4bf1464c151a9a2ea0438afb8ceef95868351ab",
+      "b469962c01f9ee546d7331e4ae4d2a72ac0bd84375ed072cbc986db8ea374e41",
+      "825b67192d451f2d1847a47632b417c43865613df943cfa5e889ff379e809fa6",
+      "8434ac7c248bcd3f1b06859320c87f891488e601b6aeaffd961fe6756daa64f0",
+      "1ceb1b3e3cd79ab3368f761e934eb066f88c9e0828fb0d6b8aae503f6ac8d6b3",
+      "d526159a7c96320db73e794835e1475fead3db6eb80b3bd270953eae3f2a8f98",
+      "07c939198a9145ae8281012bcba2c2167e3a6a482dd15c04ce3872b5b94e1041",
+      "88860b14b2808e910ad72544996e41ccb59a80e2e190cda1467d7f0eb16a2ed6",
+      "b44248ee7ca46405326b81998c5e4c417971d0596c01d3f995f6dd73f3997707",
+      "1e404763feb330b9f9735767bd8bfd96ee50d5c0185ace5c40fef34a5c70306a",
+      "f43ea85e2b7f20101d719277ccfe24c22a01b65effb9ea4ad39ea193fb843fe5",
+      "d6462b76bce1a54920bd4e9d61700f3a1cc2f8dedf89d93651f74d10144c0243",
+      "da4193e3a2e0470908b5bd1e28de97f25ee1ce15c57c959d0b623414d200692a",
+      "f042f48e76d8ee2552838456a2e53f1a642e2fad2c2eee8123f0ff6d48f1a3b9",
+      "2ba153e5d86e32745aa0014757d44cc829def41ce8b4a3b3be86b953cc23fee4",
+      "d4a4496f12b0f29f3d9f43c700cbd5a30a229b75a6ecc005be59fed0e7a3797c",
+      "c3339375ccb4075f63fec017ceaec89426ac5a9bb316f8626e88f3a6de10c600",
+      "564d569b8500e3c615457d0325f063c25f827ebb0703f249d7a043b2b25cdba9",
+      "1a3b1d63e1759ac71b7a187b893bad93abe09273178c8e64dcbb327c37f2a035",
+      "c09ebb73c49ef8553bf4834ef93856c870cdea72551e4268769299c2a4d31d4d",
+      "cc03eb8472e3c08dc7eea3e67a1d943191be78561fa850e7a0fd4225843f77be",
+      "c3a0cbb14ca60f66934223e4455b970481d0229d2b8095afb3f023233e607621",
+      "baeae3219bba6a19bc8cfe79224e28555c50184b7c1ca65c2a822f54807c77dd",
+      "a99f68ea3de6a8e464a73a819429486ac619d9b94d725a393d2e0e5d911ab60d",
+      "8fa6b4cd1622359e18fb3cce1555fd2e722faa5a68ce2a3bfd386a5755c8f1cf",
+      "7a588bbe44c51c865790f010f0c2883d05aa2373d5983093850020d6c0ec5946",
+      "55beb48c40c76cecd72211739573d79983994da7d9b929721a34cf4277b6e6bb",
+      "20318b52084a60be13040bcce5b8099208fc75b8e85640bf61e7d0c3309693e4",
+      "18604d71f11db269a3f70007433d1dd74e4f09eb195861dc2aeda4d98aa8efe7",
+      "bc3af2a5fcb4b49bc5845a2d7dc3da23daf41ce75e4c64da3337c0c8c93cc12c",
+      "06b926a77820df27ce2a8f1c94323169ff1bf606ca52fce45808ce7f13dc31cb",
+      "59a68dcd752fc31d774b856e46fddbb9b0e3a9e9c7ab4abb06f77e99b218b10d",
+      "5f818e716b0df0ffa6921db2012b9c723ec19189b660fe5f034335019c6bb353",
+      "c88237daa47c4f4f8bf9061677c1f05a52239c4d7a7c677f7329861de27af836",
+      "96d451d5ffc819fc3834052f22ab66190621f206c0bf8990446082a3363dc2ef",
+      "45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7"
+    ],
+    "surface": [
+      {
+        "raster_sha256": "800856082214038640ba98796c390ff76cb8583944dbc05505d9787ce7688c9e",
+        "spearman": 0.002408260616591006,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "de1c22230f12011fb1f30cb137b7bef912ea250df4539a0bef8d0d25276c9218",
+        "spearman": 0.027796156332318706,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "dd2c7403439dc89223028590ee2057528b0225a0a45f0e7ab2dc653fe672c06a",
+        "spearman": -0.007630865257429323,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "8aca8f26d3fb87bd37f9aa88a8d85962c0bfb66dc1977886ebb04cc9a6216b3e",
+        "spearman": 0.07615976520119017,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "b537611d648d0f4fd40115f1d4b8eb97fe0febccc4686b80e7db21ee9c287a96",
+        "spearman": 0.08831127521307357,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "ef2ae808eb7179861b9f1ff753fd3ded625ace7b7c158e29cec45bbd8fa3cfaa",
+        "spearman": 0.11628081011301752,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "3e0730e8d4f7db095dd80246a98cba3bc0fc9a28f436b91db27ca34df4d0d1ce",
+        "spearman": 0.07834409974526775,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "3e78737f0da8dd2ca66cc6caac0ce8eeefcd6715707f8d1bd3091845cd9bcc30",
+        "spearman": 0.06589091986256485,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "e7fafd54ed71536ecee6896c0fd4aecc00be6af1cd91048503c692b8ff1884cb",
+        "spearman": 0.007850004685095335,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "ec0139cb4e9f1641dd43ad385d1c164d639a2c854f64ff4c1f9d61e6dc86635a",
+        "spearman": 0.006354995653706108,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "2641944cf4fa7ae7960243f738e89a8fe020c09b22275c00f033155e0197ef4a",
+        "spearman": 0.07553544139275406,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "80f893de18ac9a83696a572e7d0e92e93d33057dd68491807d487acfb7a7cd25",
+        "spearman": 0.044083380423998696,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "a0b58cca87ad98f9579c8744e6dd216b7eb4a3e5b075a4bd7af3cf3004ab5cf0",
+        "spearman": 0.07868863075373668,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "ad4bc4933d0b7636f0f32918c1fd8b8b08cd1964aee32d69e45419a9b54178a7",
+        "spearman": 0.025229913485330956,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "51d0b3414896a18de24de969467c6e8947678d80e32ab12d2812a1f6b2bed467",
+        "spearman": 0.03183496686635131,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "41461ce0d0a6cb2d765e53fa490114d3f6e6344ca6f459b811f55bddbf7d2858",
+        "spearman": 0.07554897884255825,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "22a9d729bec45b72a7309380a0da7d147d79fadcdf1472259ca5eecea524893d",
+        "spearman": 0.07550942755330599,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "2165bb8e229ee27e25edf57e990191d8f7836ab4b07e2779f15023f7c34a3ab2",
+        "spearman": 0.07804862340818476,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "3ebd1aabff726c59a47b018308a1c30574bce0b1c0a217d6650bae69304551af",
+        "spearman": 0.07940266907726813,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "c103482fb70b4eb447a4fd9ae5b4a82baa2bcf41b161e34170f86cf5fdce8778",
+        "spearman": 0.059720744111911236,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "ee71642cd603418ceaf6c789ab05a9d742d8dce096ee9816118fdeb90a475a73",
+        "spearman": 0.07918947547649928,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "4c35c74a34ce97671d3f2be158574726c6f5775a4da29467f0757bc19dd75e37",
+        "spearman": 0.0792923644858649,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "d81c69cace45144ea29d6d1f208efec3f38ff45265171f5f6c9bbbfdd43eabcf",
+        "spearman": 0.08302123321644084,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "077668cad7cec6ea5d9b3eed56b2fc8eaf2bc2703851af9e387b4f62eacfc4bd",
+        "spearman": 0.08174383298846459,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "a27a036ac86e468a47b492801fca0257417fd8ebbcdfea859a87c25193a477d8",
+        "spearman": 0.0727991606794685,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "77990b107784119d68feb63f61314cf5c5403d6c35cfa9226f3840bf30387399",
+        "spearman": 0.04581142727029956,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "672a14fb0023eeef64f36c63732e9ec7bda23a078810204882af7b434812156f",
+        "spearman": 0.07862619871272163,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "15073e72f04a6371d8f4169a93d7ffd9e98f546bc436a53c7b47d32e0502e032",
+        "spearman": 0.0792605310662111,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "f881810d6713a4bd8d6f9fd15bca99cc928ea052473bbd6a82c738d54dd4067b",
+        "spearman": 0.058020108880220266,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "40b88a6477b1914a525c587ef139f1016f3d52188442099e5fa5eeab716008c2",
+        "spearman": 0.0843102025525531,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "074df9bddaf11e8d5df5bc02293e5df5332d463f756595aace73dcce43e63c44",
+        "spearman": 0.09442654737567711,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "60a7930a5ac229bb8a3a81656de49c1e228eab8398e0b26316972d516a2951f5",
+        "spearman": 0.10806872067066163,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "fa2a8525f5235a55ad3dc16e62b0912ec8391e6076bbd372b126ac8d8ad0b3f9",
+        "spearman": 0.10707739633815488,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "40dc48a9f512c6b92415e5b2349e809be33107f9fec6661cc67c3a9871b8c84f",
+        "spearman": 0.08434481702760338,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "ad7d90f43c5d913f029b748d9b15ae9a4e9368e3d2e953aafac67ce91ced460a",
+        "spearman": 0.08049551324927337,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "8585c5e870f197f84fda5bac7f22047d646fb73d455eb8b1129486c79bb976cf",
+        "spearman": 0.05645377571577455,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "047f383d9f764fb314738e8e97288511f2e315ede605dee1675b24bf5ceb55c8",
+        "spearman": 0.06828530909188638,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "deb8b4f10eda333b8965813e3ab6c8cd3c134193f36a06ccb1cbbfdc19994eb3",
+        "spearman": 0.08431176295797355,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "d648a3cc02713612eb5c59637a4732418ae555aa4037ac9dbc815d2e7ab00528",
+        "spearman": 0.06090101337680413,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "a9bf76b57453a5b3af74c8eef837df53c29a0931162aa540b8763220b36ba3bb",
+        "spearman": 0.07875142800873566,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "61843240c45576772badb6c45128b10d64295c6197af380639e1b3fa2cf70dd8",
+        "spearman": 0.0664098133301637,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "19fc681f3c6d1894efb5d44d6552a34d9989fe43ea8a6da13fcfb8a03bec92af",
+        "spearman": 0.06881115850187884,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "defe8b2184d5e9732d53362eb4dd0b337198a493d76087ecdaf84c01f99f4ea1",
+        "spearman": 0.0179695815741894,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "8a73f01776d0c53ff99ab05bac8612768f186476846708412096ef927ea0b983",
+        "spearman": 0.041268229374791895,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "553bbd6db1ae0f3a8fc41a81ed8bc1f438e5af6bd74d43c5d260d6889d0e6537",
+        "spearman": 0.010421839344982638,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "7ae6f90df568a2578294968ec5e4a8a088653b569e5ab3c149afbe132ba29238",
+        "spearman": 0.06828906231202858,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "2fc94a38d77f74d4f4ed1a97a83e7bb71a1ceea090515ec641e6681cc47c44c8",
+        "spearman": 0.05736095057616811,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "26748e4b4721277b093c776f7ca72920023d0ee6e9514ee38e677c8010f4068e",
+        "spearman": 0.061818995143072014,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "8aaa2a9b6a78419b4366935f74d731d6f1e669ca866b73280c91420bb60dd675",
+        "spearman": 0.06047476548318211,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "7c74270ad48fa0b865163853046a6d3815967c5bf37bbda5b74ca7fa22583a32",
+        "spearman": 0.05535592363727802,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "b733cfdbf0d479e1c0eea06f75ef61ba55f14409f2fa9a5876ef7234f294e7df",
+        "spearman": 0.0640649916304878,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "8a59bc5ea68df8c64f2467fd5e8b3652a324fa3d5e364b9e974d993401c2ec1f",
+        "spearman": 0.08454262368194504,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "529d9e1bd80b54957ca16398e47bfc51b1e32eaee8fc89d6dfbddbd7036c5ffc",
+        "spearman": 0.0558157097924174,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "64fe7b27512ad5d22a4c6ef166afd6b901259d1536ff42d573f2e944bbcf92d2",
+        "spearman": 0.07707235897894127,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "aeaa72057b85c4e07fee9c3beaa99e87e4a41a1a8eba396251281f46595fe972",
+        "spearman": 0.06408347955345807,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "93abd1dbd2b06961eeafb25dbb428848d15d3c5e36ab9505d165f150fc9e9316",
+        "spearman": 0.08480674772338857,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "f0f50442dfe682911a2f49ee56d59a468b3f6b6f2ad35e90932532d3715abcc4",
+        "spearman": 0.05533765610596948,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "89fd98a638a0aebe2e9be6da6948eb879154f05312d6fff24e083794b9f41515",
+        "spearman": 0.055031374472948216,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "d62d5ed1852afd1eb5ce6f3fd4736c61d15434d366f2e008dafc0aaa4d04d22a",
+        "spearman": 0.07725871926600482,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "ce043566a96a1bf0abae366ba706ed6be5907297248b1d14deace8596500b186",
+        "spearman": 0.001122706240587565,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "f877c27878d35e138ca3e5e3e14a7e60dc9aef543c41c27cd1e1df2134d23c52",
+        "spearman": 0.06545022407371856,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "f5d137b9c010873f0b4fc11e841d923f359d33c7272ded0da9ac9b7c1efc7cc2",
+        "spearman": 0.08289325843842542,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "22850984a68c393f60c6cc9aeafd8d74fd8a3479654bdfcfd3626a4b99ff0381",
+        "spearman": 0.09095527439610304,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "9556e3ddd8ea7658ca510ab02d5b5304ac4c3332c54e7f86df5a24769bd03cdb",
+        "spearman": 0.032552449798919136,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "fb2d0d2d74bad2b52c6fcd48db5d8e2855c938fd222798e03fc01a96dbdc6d0e",
+        "spearman": 0.0724995509027828,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "51ca48a5157a737f33f53bbf2985fdfa93816adc5913a87736366390e063fcf3",
+        "spearman": 0.11494379022472731,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "12bd6196cdebfbaa39960d0d6f600fde498f1fb7675321222ba49489dec69b22",
+        "spearman": 0.11905979640326828,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "837f555efe1c55f53258aa2fa8b5528684395cc1226a233cf8013690b6ac63ff",
+        "spearman": 0.03303065085894033,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "a9f5b93ed286d5e0ef18f7312397106e10de87c9d50c7ad0936074429b2bdba1",
+        "spearman": 0.03692362765043775,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "d7977d7b93287f17fbf3cb85f10fdbee4acc5c8453a7faa451e760363433a286",
+        "spearman": 0.03990201532719877,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "41b1b9809b8603dc6a75a55f4c98b0caf2d9f43c686369702e8ecbd6bc9e4fdb",
+        "spearman": -0.017750929938020056,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "deda0533e4aa041e3877f58a8d6b9d0f8930fec6db1f66934f649a6583c71201",
+        "spearman": 0.08083531060474765,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "28213ba2b1a800753d8750002371194f308fb6369b323ac237ca334df62b26c4",
+        "spearman": 0.031744236857948374,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "e7463b56aedc30263a08e9318bd8f336ab424f2c236734017e5b5cba75b89882",
+        "spearman": 0.04918257886056231,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "7906d5744a8456f09cb17193f4a3f7169a893d3c5ccddcb75b1c28fdb68e662a",
+        "spearman": 0.020792555708267872,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "1cce914c6daa274ce84cfe215540cdb03bef88f880c952e528807378b826262d",
+        "spearman": 0.06215236102578677,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "f9cd56a71550b42f00f3cd37a4bf1464c151a9a2ea0438afb8ceef95868351ab",
+        "spearman": 0.04639919531409654,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "b469962c01f9ee546d7331e4ae4d2a72ac0bd84375ed072cbc986db8ea374e41",
+        "spearman": 0.034021869019292925,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "825b67192d451f2d1847a47632b417c43865613df943cfa5e889ff379e809fa6",
+        "spearman": 0.05370172460943678,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "8434ac7c248bcd3f1b06859320c87f891488e601b6aeaffd961fe6756daa64f0",
+        "spearman": 0.048190576279323494,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "1ceb1b3e3cd79ab3368f761e934eb066f88c9e0828fb0d6b8aae503f6ac8d6b3",
+        "spearman": -0.0021117208393117005,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "d526159a7c96320db73e794835e1475fead3db6eb80b3bd270953eae3f2a8f98",
+        "spearman": 0.06416286358472094,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "07c939198a9145ae8281012bcba2c2167e3a6a482dd15c04ce3872b5b94e1041",
+        "spearman": 0.046126197825642264,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "88860b14b2808e910ad72544996e41ccb59a80e2e190cda1467d7f0eb16a2ed6",
+        "spearman": 0.06400579080814052,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "b44248ee7ca46405326b81998c5e4c417971d0596c01d3f995f6dd73f3997707",
+        "spearman": 0.11812998570603123,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "1e404763feb330b9f9735767bd8bfd96ee50d5c0185ace5c40fef34a5c70306a",
+        "spearman": 0.030003697049049108,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "f43ea85e2b7f20101d719277ccfe24c22a01b65effb9ea4ad39ea193fb843fe5",
+        "spearman": 0.06689993722516668,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "d6462b76bce1a54920bd4e9d61700f3a1cc2f8dedf89d93651f74d10144c0243",
+        "spearman": 0.06589091986256687,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "da4193e3a2e0470908b5bd1e28de97f25ee1ce15c57c959d0b623414d200692a",
+        "spearman": 0.06060999254851824,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "f042f48e76d8ee2552838456a2e53f1a642e2fad2c2eee8123f0ff6d48f1a3b9",
+        "spearman": 0.05792065388965139,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "2ba153e5d86e32745aa0014757d44cc829def41ce8b4a3b3be86b953cc23fee4",
+        "spearman": 0.08309197750106428,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "d4a4496f12b0f29f3d9f43c700cbd5a30a229b75a6ecc005be59fed0e7a3797c",
+        "spearman": 0.06604799874360849,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "c3339375ccb4075f63fec017ceaec89426ac5a9bb316f8626e88f3a6de10c600",
+        "spearman": 0.06749378065820759,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "564d569b8500e3c615457d0325f063c25f827ebb0703f249d7a043b2b25cdba9",
+        "spearman": 0.06734134129102493,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "1a3b1d63e1759ac71b7a187b893bad93abe09273178c8e64dcbb327c37f2a035",
+        "spearman": 0.06783611379867363,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "c09ebb73c49ef8553bf4834ef93856c870cdea72551e4268769299c2a4d31d4d",
+        "spearman": 0.06721458643629985,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "cc03eb8472e3c08dc7eea3e67a1d943191be78561fa850e7a0fd4225843f77be",
+        "spearman": 0.06715722334012518,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "c3a0cbb14ca60f66934223e4455b970481d0229d2b8095afb3f023233e607621",
+        "spearman": 0.06870869767705716,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "baeae3219bba6a19bc8cfe79224e28555c50184b7c1ca65c2a822f54807c77dd",
+        "spearman": 0.05189001616207489,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "a99f68ea3de6a8e464a73a819429486ac619d9b94d725a393d2e0e5d911ab60d",
+        "spearman": 0.05104472786973108,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "8fa6b4cd1622359e18fb3cce1555fd2e722faa5a68ce2a3bfd386a5755c8f1cf",
+        "spearman": 0.05432606428993328,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "7a588bbe44c51c865790f010f0c2883d05aa2373d5983093850020d6c0ec5946",
+        "spearman": 0.04886243314037971,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "55beb48c40c76cecd72211739573d79983994da7d9b929721a34cf4277b6e6bb",
+        "spearman": 0.02447980392786794,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "20318b52084a60be13040bcce5b8099208fc75b8e85640bf61e7d0c3309693e4",
+        "spearman": 0.0010082394516376305,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "18604d71f11db269a3f70007433d1dd74e4f09eb195861dc2aeda4d98aa8efe7",
+        "spearman": 0.05750275972591963,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "bc3af2a5fcb4b49bc5845a2d7dc3da23daf41ce75e4c64da3337c0c8c93cc12c",
+        "spearman": 0.05990442038104198,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "06b926a77820df27ce2a8f1c94323169ff1bf606ca52fce45808ce7f13dc31cb",
+        "spearman": 0.042925021139187815,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "59a68dcd752fc31d774b856e46fddbb9b0e3a9e9c7ab4abb06f77e99b218b10d",
+        "spearman": 0.03423605361096587,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "5f818e716b0df0ffa6921db2012b9c723ec19189b660fe5f034335019c6bb353",
+        "spearman": 0.0641818531262141,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "c88237daa47c4f4f8bf9061677c1f05a52239c4d7a7c677f7329861de27af836",
+        "spearman": 0.003049570097299405,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "96d451d5ffc819fc3834052f22ab66190621f206c0bf8990446082a3363dc2ef",
+        "spearman": 0.05234406568839021,
+        "within_3px_fraction": null
+      },
+      {
+        "raster_sha256": "45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7",
+        "spearman": 0.12797921411665644,
+        "within_3px_fraction": null
+      }
+    ],
+    "dots": [
+      {
+        "raster_sha256": "800856082214038640ba98796c390ff76cb8583944dbc05505d9787ce7688c9e",
+        "spearman": -0.0008946139889372487,
+        "within_3px_fraction": 0.127249132789299
+      },
+      {
+        "raster_sha256": "de1c22230f12011fb1f30cb137b7bef912ea250df4539a0bef8d0d25276c9218",
+        "spearman": 0.0023087941553828948,
+        "within_3px_fraction": 0.2876893514012628
+      },
+      {
+        "raster_sha256": "dd2c7403439dc89223028590ee2057528b0225a0a45f0e7ab2dc653fe672c06a",
+        "spearman": -0.0009723621744477474,
+        "within_3px_fraction": 0.12769833545456813
+      },
+      {
+        "raster_sha256": "8aca8f26d3fb87bd37f9aa88a8d85962c0bfb66dc1977886ebb04cc9a6216b3e",
+        "spearman": 0.015277008597246483,
+        "within_3px_fraction": 0.3932270220358863
+      },
+      {
+        "raster_sha256": "b537611d648d0f4fd40115f1d4b8eb97fe0febccc4686b80e7db21ee9c287a96",
+        "spearman": 0.039246329561203684,
+        "within_3px_fraction": 0.4391455167078436
+      },
+      {
+        "raster_sha256": "ef2ae808eb7179861b9f1ff753fd3ded625ace7b7c158e29cec45bbd8fa3cfaa",
+        "spearman": 0.024244100134292144,
+        "within_3px_fraction": 0.38963340071373315
+      },
+      {
+        "raster_sha256": "3e0730e8d4f7db095dd80246a98cba3bc0fc9a28f436b91db27ca34df4d0d1ce",
+        "spearman": 0.015543336031144878,
+        "within_3px_fraction": 0.36662424197050236
+      },
+      {
+        "raster_sha256": "3e78737f0da8dd2ca66cc6caac0ce8eeefcd6715707f8d1bd3091845cd9bcc30",
+        "spearman": 0.012571274732834358,
+        "within_3px_fraction": 0.35232462379276785
+      },
+      {
+        "raster_sha256": "e7fafd54ed71536ecee6896c0fd4aecc00be6af1cd91048503c692b8ff1884cb",
+        "spearman": 3.836423718873586e-05,
+        "within_3px_fraction": 0.16091437698085898
+      },
+      {
+        "raster_sha256": "ec0139cb4e9f1641dd43ad385d1c164d639a2c854f64ff4c1f9d61e6dc86635a",
+        "spearman": -0.001101942483631912,
+        "within_3px_fraction": 0.25639489905417884
+      },
+      {
+        "raster_sha256": "2641944cf4fa7ae7960243f738e89a8fe020c09b22275c00f033155e0197ef4a",
+        "spearman": 0.029504926545667748,
+        "within_3px_fraction": 0.38002545481769856
+      },
+      {
+        "raster_sha256": "80f893de18ac9a83696a572e7d0e92e93d33057dd68491807d487acfb7a7cd25",
+        "spearman": 0.006828372438438956,
+        "within_3px_fraction": 0.3118963839185446
+      },
+      {
+        "raster_sha256": "a0b58cca87ad98f9579c8744e6dd216b7eb4a3e5b075a4bd7af3cf3004ab5cf0",
+        "spearman": 0.02616358188046976,
+        "within_3px_fraction": 0.47261111527039507
+      },
+      {
+        "raster_sha256": "ad4bc4933d0b7636f0f32918c1fd8b8b08cd1964aee32d69e45419a9b54178a7",
+        "spearman": 0.0025524498578873385,
+        "within_3px_fraction": 0.14666467021037657
+      },
+      {
+        "raster_sha256": "51d0b3414896a18de24de969467c6e8947678d80e32ab12d2812a1f6b2bed467",
+        "spearman": 0.0019079758475406,
+        "within_3px_fraction": 0.15512465373961218
+      },
+      {
+        "raster_sha256": "41461ce0d0a6cb2d765e53fa490114d3f6e6344ca6f459b811f55bddbf7d2858",
+        "spearman": 0.024727395629090862,
+        "within_3px_fraction": 0.47520650844750567
+      },
+      {
+        "raster_sha256": "22a9d729bec45b72a7309380a0da7d147d79fadcdf1472259ca5eecea524893d",
+        "spearman": 0.028805035534818186,
+        "within_3px_fraction": 0.4440867460258042
+      },
+      {
+        "raster_sha256": "2165bb8e229ee27e25edf57e990191d8f7836ab4b07e2779f15023f7c34a3ab2",
+        "spearman": 0.02655676633114897,
+        "within_3px_fraction": 0.46814404432132967
+      },
+      {
+        "raster_sha256": "3ebd1aabff726c59a47b018308a1c30574bce0b1c0a217d6650bae69304551af",
+        "spearman": 0.027066494405630772,
+        "within_3px_fraction": 0.4767787177759477
+      },
+      {
+        "raster_sha256": "c103482fb70b4eb447a4fd9ae5b4a82baa2bcf41b161e34170f86cf5fdce8778",
+        "spearman": 0.015278434396190758,
+        "within_3px_fraction": 0.36028549324948217
+      },
+      {
+        "raster_sha256": "ee71642cd603418ceaf6c789ab05a9d742d8dce096ee9816118fdeb90a475a73",
+        "spearman": 0.026729657688853097,
+        "within_3px_fraction": 0.4742581917097153
+      },
+      {
+        "raster_sha256": "4c35c74a34ce97671d3f2be158574726c6f5775a4da29467f0757bc19dd75e37",
+        "spearman": 0.02779065603307029,
+        "within_3px_fraction": 0.47296049512115995
+      },
+      {
+        "raster_sha256": "d81c69cace45144ea29d6d1f208efec3f38ff45265171f5f6c9bbbfdd43eabcf",
+        "spearman": 0.028008687022477156,
+        "within_3px_fraction": 0.4875096703351551
+      },
+      {
+        "raster_sha256": "077668cad7cec6ea5d9b3eed56b2fc8eaf2bc2703851af9e387b4f62eacfc4bd",
+        "spearman": 0.026966536113946973,
+        "within_3px_fraction": 0.4282398742232537
+      },
+      {
+        "raster_sha256": "a27a036ac86e468a47b492801fca0257417fd8ebbcdfea859a87c25193a477d8",
+        "spearman": 0.026104578308727158,
+        "within_3px_fraction": 0.46489980284994137
+      },
+      {
+        "raster_sha256": "77990b107784119d68feb63f61314cf5c5403d6c35cfa9226f3840bf30387399",
+        "spearman": 0.012119037708956365,
+        "within_3px_fraction": 0.3727883007661401
+      },
+      {
+        "raster_sha256": "672a14fb0023eeef64f36c63732e9ec7bda23a078810204882af7b434812156f",
+        "spearman": 0.02672458672393724,
+        "within_3px_fraction": 0.4722367797160041
+      },
+      {
+        "raster_sha256": "15073e72f04a6371d8f4169a93d7ffd9e98f546bc436a53c7b47d32e0502e032",
+        "spearman": 0.02657689441620655,
+        "within_3px_fraction": 0.475331286965636
+      },
+      {
+        "raster_sha256": "f881810d6713a4bd8d6f9fd15bca99cc928ea052473bbd6a82c738d54dd4067b",
+        "spearman": 0.013992053414733382,
+        "within_3px_fraction": 0.3416186269371865
+      },
+      {
+        "raster_sha256": "40b88a6477b1914a525c587ef139f1016f3d52188442099e5fa5eeab716008c2",
+        "spearman": 0.03484197405385815,
+        "within_3px_fraction": 0.4783758828080158
+      },
+      {
+        "raster_sha256": "074df9bddaf11e8d5df5bc02293e5df5332d463f756595aace73dcce43e63c44",
+        "spearman": 0.0216356310759206,
+        "within_3px_fraction": 0.39597214943475334
+      },
+      {
+        "raster_sha256": "60a7930a5ac229bb8a3a81656de49c1e228eab8398e0b26316972d516a2951f5",
+        "spearman": 0.03386591143643684,
+        "within_3px_fraction": 0.5188789897931172
+      },
+      {
+        "raster_sha256": "fa2a8525f5235a55ad3dc16e62b0912ec8391e6076bbd372b126ac8d8ad0b3f9",
+        "spearman": 0.03261018424713855,
+        "within_3px_fraction": 0.5146864315839386
+      },
+      {
+        "raster_sha256": "40dc48a9f512c6b92415e5b2349e809be33107f9fec6661cc67c3a9871b8c84f",
+        "spearman": 0.035642449522293056,
+        "within_3px_fraction": 0.47770207881011206
+      },
+      {
+        "raster_sha256": "ad7d90f43c5d913f029b748d9b15ae9a4e9368e3d2e953aafac67ce91ced460a",
+        "spearman": 0.034093142164031955,
+        "within_3px_fraction": 0.46532404981158443
+      },
+      {
+        "raster_sha256": "8585c5e870f197f84fda5bac7f22047d646fb73d455eb8b1129486c79bb976cf",
+        "spearman": 0.023579004150307788,
+        "within_3px_fraction": 0.2617853310374086
+      },
+      {
+        "raster_sha256": "047f383d9f764fb314738e8e97288511f2e315ede605dee1675b24bf5ceb55c8",
+        "spearman": 0.029290289353422542,
+        "within_3px_fraction": 0.4188315739562277
+      },
+      {
+        "raster_sha256": "deb8b4f10eda333b8965813e3ab6c8cd3c134193f36a06ccb1cbbfdc19994eb3",
+        "spearman": 0.0348161522645538,
+        "within_3px_fraction": 0.4773776546629732
+      },
+      {
+        "raster_sha256": "d648a3cc02713612eb5c59637a4732418ae555aa4037ac9dbc815d2e7ab00528",
+        "spearman": 0.018909930053073166,
+        "within_3px_fraction": 0.38436774724863365
+      },
+      {
+        "raster_sha256": "a9bf76b57453a5b3af74c8eef837df53c29a0931162aa540b8763220b36ba3bb",
+        "spearman": 0.015634154499968474,
+        "within_3px_fraction": 0.3747847570562252
+      },
+      {
+        "raster_sha256": "61843240c45576772badb6c45128b10d64295c6197af380639e1b3fa2cf70dd8",
+        "spearman": 0.012678469210450514,
+        "within_3px_fraction": 0.360609917396621
+      },
+      {
+        "raster_sha256": "19fc681f3c6d1894efb5d44d6552a34d9989fe43ea8a6da13fcfb8a03bec92af",
+        "spearman": 0.01723539178381367,
+        "within_3px_fraction": 0.35801452421951035
+      },
+      {
+        "raster_sha256": "defe8b2184d5e9732d53362eb4dd0b337198a493d76087ecdaf84c01f99f4ea1",
+        "spearman": -0.00038783411679510515,
+        "within_3px_fraction": 0.06548376631479125
+      },
+      {
+        "raster_sha256": "8a73f01776d0c53ff99ab05bac8612768f186476846708412096ef927ea0b983",
+        "spearman": 0.004567036564249648,
+        "within_3px_fraction": 0.12827231663796762
+      },
+      {
+        "raster_sha256": "553bbd6db1ae0f3a8fc41a81ed8bc1f438e5af6bd74d43c5d260d6889d0e6537",
+        "spearman": 0.0006227409240778727,
+        "within_3px_fraction": 0.28838811110279255
+      },
+      {
+        "raster_sha256": "7ae6f90df568a2578294968ec5e4a8a088653b569e5ab3c149afbe132ba29238",
+        "spearman": 0.017172756150581937,
+        "within_3px_fraction": 0.34957949639390085
+      },
+      {
+        "raster_sha256": "2fc94a38d77f74d4f4ed1a97a83e7bb71a1ceea090515ec641e6681cc47c44c8",
+        "spearman": 0.013918315237188297,
+        "within_3px_fraction": 0.33305882059344666
+      },
+      {
+        "raster_sha256": "26748e4b4721277b093c776f7ca72920023d0ee6e9514ee38e677c8010f4068e",
+        "spearman": 0.012953818390564559,
+        "within_3px_fraction": 0.34546180529560033
+      },
+      {
+        "raster_sha256": "8aaa2a9b6a78419b4366935f74d731d6f1e669ca866b73280c91420bb60dd675",
+        "spearman": 0.01339593222592632,
+        "within_3px_fraction": 0.34024606323775297
+      },
+      {
+        "raster_sha256": "7c74270ad48fa0b865163853046a6d3815967c5bf37bbda5b74ca7fa22583a32",
+        "spearman": 0.01348635058296816,
+        "within_3px_fraction": 0.32926555364228494
+      },
+      {
+        "raster_sha256": "b733cfdbf0d479e1c0eea06f75ef61ba55f14409f2fa9a5876ef7234f294e7df",
+        "spearman": 0.015882254231122477,
+        "within_3px_fraction": 0.3462603878116344
+      },
+      {
+        "raster_sha256": "8a59bc5ea68df8c64f2467fd5e8b3652a324fa3d5e364b9e974d993401c2ec1f",
+        "spearman": 0.02566811010021878,
+        "within_3px_fraction": 0.5363479823313618
+      },
+      {
+        "raster_sha256": "529d9e1bd80b54957ca16398e47bfc51b1e32eaee8fc89d6dfbddbd7036c5ffc",
+        "spearman": 0.013643645162868513,
+        "within_3px_fraction": 0.33403209303486314
+      },
+      {
+        "raster_sha256": "64fe7b27512ad5d22a4c6ef166afd6b901259d1536ff42d573f2e944bbcf92d2",
+        "spearman": 0.029417140804526492,
+        "within_3px_fraction": 0.4271168675600809
+      },
+      {
+        "raster_sha256": "aeaa72057b85c4e07fee9c3beaa99e87e4a41a1a8eba396251281f46595fe972",
+        "spearman": 0.028480437850505753,
+        "within_3px_fraction": 0.40800079858251603
+      },
+      {
+        "raster_sha256": "93abd1dbd2b06961eeafb25dbb428848d15d3c5e36ab9505d165f150fc9e9316",
+        "spearman": 0.03431767038988896,
+        "within_3px_fraction": 0.45973397219934614
+      },
+      {
+        "raster_sha256": "f0f50442dfe682911a2f49ee56d59a468b3f6b6f2ad35e90932532d3715abcc4",
+        "spearman": 0.013479911536387574,
+        "within_3px_fraction": 0.3293404207531631
+      },
+      {
+        "raster_sha256": "89fd98a638a0aebe2e9be6da6948eb879154f05312d6fff24e083794b9f41515",
+        "spearman": 0.013452510786536247,
+        "within_3px_fraction": 0.33181103541214346
+      },
+      {
+        "raster_sha256": "d62d5ed1852afd1eb5ce6f3fd4736c61d15434d366f2e008dafc0aaa4d04d22a",
+        "spearman": 0.029329828248493055,
+        "within_3px_fraction": 0.44288887225175316
+      },
+      {
+        "raster_sha256": "ce043566a96a1bf0abae366ba706ed6be5907297248b1d14deace8596500b186",
+        "spearman": 0.001004522217243623,
+        "within_3px_fraction": 0.05999351151705722
+      },
+      {
+        "raster_sha256": "f877c27878d35e138ca3e5e3e14a7e60dc9aef543c41c27cd1e1df2134d23c52",
+        "spearman": 0.02572202910274027,
+        "within_3px_fraction": 0.40785106436075963
+      },
+      {
+        "raster_sha256": "f5d137b9c010873f0b4fc11e841d923f359d33c7272ded0da9ac9b7c1efc7cc2",
+        "spearman": 0.014766411871880223,
+        "within_3px_fraction": 0.3608844301365077
+      },
+      {
+        "raster_sha256": "22850984a68c393f60c6cc9aeafd8d74fd8a3479654bdfcfd3626a4b99ff0381",
+        "spearman": 0.02307734159023313,
+        "within_3px_fraction": 0.49247585535674177
+      },
+      {
+        "raster_sha256": "9556e3ddd8ea7658ca510ab02d5b5304ac4c3332c54e7f86df5a24769bd03cdb",
+        "spearman": 0.0034564222081504906,
+        "within_3px_fraction": 0.22569938359412042
+      },
+      {
+        "raster_sha256": "fb2d0d2d74bad2b52c6fcd48db5d8e2855c938fd222798e03fc01a96dbdc6d0e",
+        "spearman": 0.018577939712309886,
+        "within_3px_fraction": 0.5079733473085274
+      },
+      {
+        "raster_sha256": "51ca48a5157a737f33f53bbf2985fdfa93816adc5913a87736366390e063fcf3",
+        "spearman": 0.05162287624086819,
+        "within_3px_fraction": 0.5054029098350428
+      },
+      {
+        "raster_sha256": "12bd6196cdebfbaa39960d0d6f600fde498f1fb7675321222ba49489dec69b22",
+        "spearman": 0.05596816171870061,
+        "within_3px_fraction": 0.5227720795587831
+      },
+      {
+        "raster_sha256": "837f555efe1c55f53258aa2fa8b5528684395cc1226a233cf8013690b6ac63ff",
+        "spearman": 0.0050125578802891185,
+        "within_3px_fraction": 0.16438321978488182
+      },
+      {
+        "raster_sha256": "a9f5b93ed286d5e0ef18f7312397106e10de87c9d50c7ad0936074429b2bdba1",
+        "spearman": 0.004374446200350141,
+        "within_3px_fraction": 0.4159367123356043
+      },
+      {
+        "raster_sha256": "d7977d7b93287f17fbf3cb85f10fdbee4acc5c8453a7faa451e760363433a286",
+        "spearman": 0.008486644651542046,
+        "within_3px_fraction": 0.46637218936387914
+      },
+      {
+        "raster_sha256": "41b1b9809b8603dc6a75a55f4c98b0caf2d9f43c686369702e8ecbd6bc9e4fdb",
+        "spearman": 0.0038249483758264124,
+        "within_3px_fraction": 0.1275236455291857
+      },
+      {
+        "raster_sha256": "deda0533e4aa041e3877f58a8d6b9d0f8930fec6db1f66934f649a6583c71201",
+        "spearman": 0.024230667197925874,
+        "within_3px_fraction": 0.3578148785905019
+      },
+      {
+        "raster_sha256": "28213ba2b1a800753d8750002371194f308fb6369b323ac237ca334df62b26c4",
+        "spearman": 0.007290124866114909,
+        "within_3px_fraction": 0.29058421302188614
+      },
+      {
+        "raster_sha256": "e7463b56aedc30263a08e9318bd8f336ab424f2c236734017e5b5cba75b89882",
+        "spearman": 0.011515914123385401,
+        "within_3px_fraction": 0.2758353921788825
+      },
+      {
+        "raster_sha256": "7906d5744a8456f09cb17193f4a3f7169a893d3c5ccddcb75b1c28fdb68e662a",
+        "spearman": 0.005302329228295463,
+        "within_3px_fraction": 0.29672331611389785
+      },
+      {
+        "raster_sha256": "1cce914c6daa274ce84cfe215540cdb03bef88f880c952e528807378b826262d",
+        "spearman": 0.021192590345999143,
+        "within_3px_fraction": 0.3314616555613786
+      },
+      {
+        "raster_sha256": "f9cd56a71550b42f00f3cd37a4bf1464c151a9a2ea0438afb8ceef95868351ab",
+        "spearman": 0.01356644188440412,
+        "within_3px_fraction": 0.3089765665942951
+      },
+      {
+        "raster_sha256": "b469962c01f9ee546d7331e4ae4d2a72ac0bd84375ed072cbc986db8ea374e41",
+        "spearman": 0.00962367125119853,
+        "within_3px_fraction": 0.28274812208330213
+      },
+      {
+        "raster_sha256": "825b67192d451f2d1847a47632b417c43865613df943cfa5e889ff379e809fa6",
+        "spearman": 0.009674560036655322,
+        "within_3px_fraction": 0.3579396571086322
+      },
+      {
+        "raster_sha256": "8434ac7c248bcd3f1b06859320c87f891488e601b6aeaffd961fe6756daa64f0",
+        "spearman": 0.011283785202021935,
+        "within_3px_fraction": 0.2633076289585985
+      },
+      {
+        "raster_sha256": "1ceb1b3e3cd79ab3368f761e934eb066f88c9e0828fb0d6b8aae503f6ac8d6b3",
+        "spearman": -0.0009595551853006865,
+        "within_3px_fraction": 0.17264355768510894
+      },
+      {
+        "raster_sha256": "d526159a7c96320db73e794835e1475fead3db6eb80b3bd270953eae3f2a8f98",
+        "spearman": 0.020206897687697744,
+        "within_3px_fraction": 0.26038781163434904
+      },
+      {
+        "raster_sha256": "07c939198a9145ae8281012bcba2c2167e3a6a482dd15c04ce3872b5b94e1041",
+        "spearman": 0.017846423163870712,
+        "within_3px_fraction": 0.23890095081230817
+      },
+      {
+        "raster_sha256": "88860b14b2808e910ad72544996e41ccb59a80e2e190cda1467d7f0eb16a2ed6",
+        "spearman": 0.014811527347521674,
+        "within_3px_fraction": 0.23400963290159965
+      },
+      {
+        "raster_sha256": "b44248ee7ca46405326b81998c5e4c417971d0596c01d3f995f6dd73f3997707",
+        "spearman": 0.03070298590926729,
+        "within_3px_fraction": 0.4006638217164533
+      },
+      {
+        "raster_sha256": "1e404763feb330b9f9735767bd8bfd96ee50d5c0185ace5c40fef34a5c70306a",
+        "spearman": 0.004417534331726512,
+        "within_3px_fraction": 0.3172618601981483
+      },
+      {
+        "raster_sha256": "f43ea85e2b7f20101d719277ccfe24c22a01b65effb9ea4ad39ea193fb843fe5",
+        "spearman": 0.01451417750783276,
+        "within_3px_fraction": 0.34027101894137907
+      },
+      {
+        "raster_sha256": "d6462b76bce1a54920bd4e9d61700f3a1cc2f8dedf89d93651f74d10144c0243",
+        "spearman": 0.012571274732834481,
+        "within_3px_fraction": 0.35232462379276785
+      },
+      {
+        "raster_sha256": "da4193e3a2e0470908b5bd1e28de97f25ee1ce15c57c959d0b623414d200692a",
+        "spearman": 0.011933973845448587,
+        "within_3px_fraction": 0.3525991365326545
+      },
+      {
+        "raster_sha256": "f042f48e76d8ee2552838456a2e53f1a642e2fad2c2eee8123f0ff6d48f1a3b9",
+        "spearman": 0.02381245767464233,
+        "within_3px_fraction": 0.3133438147288563
+      },
+      {
+        "raster_sha256": "2ba153e5d86e32745aa0014757d44cc829def41ce8b4a3b3be86b953cc23fee4",
+        "spearman": 0.031438606136237356,
+        "within_3px_fraction": 0.4154625539667091
+      },
+      {
+        "raster_sha256": "d4a4496f12b0f29f3d9f43c700cbd5a30a229b75a6ecc005be59fed0e7a3797c",
+        "spearman": 0.01263959217133279,
+        "within_3px_fraction": 0.350827281575204
+      },
+      {
+        "raster_sha256": "c3339375ccb4075f63fec017ceaec89426ac5a9bb316f8626e88f3a6de10c600",
+        "spearman": 0.013130680501234181,
+        "within_3px_fraction": 0.37386139602206087
+      },
+      {
+        "raster_sha256": "564d569b8500e3c615457d0325f063c25f827ebb0703f249d7a043b2b25cdba9",
+        "spearman": 0.012520594755147408,
+        "within_3px_fraction": 0.36779716004092733
+      },
+      {
+        "raster_sha256": "1a3b1d63e1759ac71b7a187b893bad93abe09273178c8e64dcbb327c37f2a035",
+        "spearman": 0.012748682864843085,
+        "within_3px_fraction": 0.3702927304035337
+      },
+      {
+        "raster_sha256": "c09ebb73c49ef8553bf4834ef93856c870cdea72551e4268769299c2a4d31d4d",
+        "spearman": 0.013266022862038103,
+        "within_3px_fraction": 0.37186493973197576
+      },
+      {
+        "raster_sha256": "cc03eb8472e3c08dc7eea3e67a1d943191be78561fa850e7a0fd4225843f77be",
+        "spearman": 0.012883098634994594,
+        "within_3px_fraction": 0.3612088542836465
+      },
+      {
+        "raster_sha256": "c3a0cbb14ca60f66934223e4455b970481d0229d2b8095afb3f023233e607621",
+        "spearman": 0.013154145337622134,
+        "within_3px_fraction": 0.3749095355743555
+      },
+      {
+        "raster_sha256": "baeae3219bba6a19bc8cfe79224e28555c50184b7c1ca65c2a822f54807c77dd",
+        "spearman": 0.014889345188966521,
+        "within_3px_fraction": 0.3114471812532754
+      },
+      {
+        "raster_sha256": "a99f68ea3de6a8e464a73a819429486ac619d9b94d725a393d2e0e5d911ab60d",
+        "spearman": 0.014690719800518642,
+        "within_3px_fraction": 0.3125701879164483
+      },
+      {
+        "raster_sha256": "8fa6b4cd1622359e18fb3cce1555fd2e722faa5a68ce2a3bfd386a5755c8f1cf",
+        "spearman": 0.01819303279053087,
+        "within_3px_fraction": 0.2819994509745202
+      },
+      {
+        "raster_sha256": "7a588bbe44c51c865790f010f0c2883d05aa2373d5983093850020d6c0ec5946",
+        "spearman": 0.012425113543213028,
+        "within_3px_fraction": 0.2787302537995059
+      },
+      {
+        "raster_sha256": "55beb48c40c76cecd72211739573d79983994da7d9b929721a34cf4277b6e6bb",
+        "spearman": 0.00876767499530521,
+        "within_3px_fraction": 0.2188365650969529
+      },
+      {
+        "raster_sha256": "20318b52084a60be13040bcce5b8099208fc75b8e85640bf61e7d0c3309693e4",
+        "spearman": 0.008430464349044205,
+        "within_3px_fraction": 0.2249008010780864
+      },
+      {
+        "raster_sha256": "18604d71f11db269a3f70007433d1dd74e4f09eb195861dc2aeda4d98aa8efe7",
+        "spearman": 0.013717427417044724,
+        "within_3px_fraction": 0.33725137880262535
+      },
+      {
+        "raster_sha256": "bc3af2a5fcb4b49bc5845a2d7dc3da23daf41ce75e4c64da3337c0c8c93cc12c",
+        "spearman": 0.013199787446884263,
+        "within_3px_fraction": 0.3426418107858551
+      },
+      {
+        "raster_sha256": "06b926a77820df27ce2a8f1c94323169ff1bf606ca52fce45808ce7f13dc31cb",
+        "spearman": 0.01629006633497377,
+        "within_3px_fraction": 0.2882882882882883
+      },
+      {
+        "raster_sha256": "59a68dcd752fc31d774b856e46fddbb9b0e3a9e9c7ab4abb06f77e99b218b10d",
+        "spearman": 0.007869929746418468,
+        "within_3px_fraction": 0.24381722442664272
+      },
+      {
+        "raster_sha256": "5f818e716b0df0ffa6921db2012b9c723ec19189b660fe5f034335019c6bb353",
+        "spearman": 0.02695111061291783,
+        "within_3px_fraction": 0.34149384841905617
+      },
+      {
+        "raster_sha256": "c88237daa47c4f4f8bf9061677c1f05a52239c4d7a7c677f7329861de27af836",
+        "spearman": 0.002551472242924471,
+        "within_3px_fraction": 0.06238925906515934
+      },
+      {
+        "raster_sha256": "96d451d5ffc819fc3834052f22ab66190621f206c0bf8990446082a3363dc2ef",
+        "spearman": 0.014881373021316821,
+        "within_3px_fraction": 0.31673779042200095
+      },
+      {
+        "raster_sha256": "45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7",
+        "spearman": 0.05834510964500765,
+        "within_3px_fraction": 0.4787003069551546
+      }
+    ]
+  },
+  "validator": {
+    "raster_sha256": "1d629d6c953c94681ecfe51111d4210361f7014b1df41f5fcfa8d81c4f54f853",
+    "no_nan_inside": true,
+    "no_nan_whole_array": true,
+    "range_0_1": true,
+    "crs_match": true,
+    "shape_match": true,
+    "transform_match": true,
+    "single_band": true,
+    "emitted_positive_pixels": 40071,
+    "catalogue_overlap_pixels": 0
+  },
+  "promotion_gate": {
+    "verdict": "negative",
+    "promotion_eligible": false,
+    "evidence_schema_passed": false,
+    "submission_ready": false,
+    "failures": [
+      "no positive paired gain CI over frozen current best"
+    ],
+    "slot_selected": false,
+    "scope": "Evidence schema eligibility only; no independent evidence authentication, slot selection, cap check or organizer acceptance."
+  },
+  "verdict": "negative",
+  "submission_ready": false,
+  "slot_selected": false
+}

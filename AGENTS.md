@@ -10,6 +10,46 @@ Read `knowledge/27_preregistered_DKRN1_2026-10-26.md` (@ `86d7f622a0ef`), `knowl
 - **Automated Verdict (`DO_NOT_SUBMIT`, `verdict: "negative"`):** `gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif` (`SHA-256: 0b114a75d5a905ded84450fe55df386f9361ff39139a2e4452476563ac0fa65d`) is **DOWNLOAD: YES (audit) · SUBMIT: NO** — trailed `DPRF1` pooled (`-0.00854`), retained `75.68%` 3-px dot overlap with `DPRF1` (`>70%` Rule-1 limit despite `-10.89` pp reduction vs `EUL1`'s `86.57%`), and flagged exact-file C2ST (`AUC = 0.5773`, `holm_p = 0.0200` via unresidualized `m_hydro` valley wash-road correlation). **Do not rerun or retune `DKRN1`**; verify frozen receipts via `.venv/bin/python scripts/run_dkrn1_lane.py --verify-recorded`.
 - **Next Recommended Geological Lane (requires fresh preregistration):** `H24-DRAIN5R-PURE` — pure `HeadA` LiDAR-free 47-channel 300 m DTI-kernel regressor (dropping Head B completely so 3-px overlap vs `DPRF1` clears `<= 70%`) with fold-safe `NuisanceResidualizer` applied to **all** D8 channel-routing operators and `m_hydro` so exact-file C2ST clears `< 0.55`. `H24-DPRF1` (`0.16379`) remains the recorded local point-best (`DO_NOT_SUBMIT` pending selector v2 quota/lattice/replay resolution).
 
+## Latest portfolio continuation — 2026-10-26 e78615fb (read first)
+
+Read the README and `knowledge/owner_brief_2026-10-26_portfolio.md` first.
+The new immutable artifact audit is `evidence/portfolio_artifact_audit_20261026.json`;
+findings/limits are `docs/portfolio-review-20261026.md`. It reopens 326 TIFFs,
+retains all rejects/controls and checks 18 named artifacts against 166/167
+comparators. All final-dot gates fail. **DPRF1 additionally overlaps EUL1 by
+86.66% in the DPRF1→EUL1 direction**, so a lattice exception would not fix it.
+No new TIFF or experiment was run; no submission is authorized. Original
+pre-placement surfaces and scientific training runs were not independently
+replayed. Do not reinterpret geometric audit numbers as HOLDOUT-DTI.
+
+The raw source and 30-channel cache were restored and hash-checked here; bulk
+caches are ignored and can be absent in a fresh sandbox. The current committed
+footprint and sample mask are identical (5,167,373 cells), not five cells apart.
+GEMSDOE36 already implemented graben-pair features; read the corrected queue in
+`knowledge/26_portfolio_plan_corrections_2026-10-26.md`. No lane assignment exists.
+Never retune stopped methods or remove controls to pass novelty.
+
+Use new versioned snapshot/registry paths for new source pins. The shared API
+cache now honors `--cache-dir` and immutable refs; restoring a frozen registry
+must not rewrite its IDs/content. Cached feature reuse must verify checksums
+and layout. Run site generation/tests against preserved source-card bytes.
+Old review sections below remain historical; newer negative gates take precedence.
+
+
+## Concurrent records preserved below
+
+The dated snapshot above remains the audited scope; subsequent concurrent files are not silently included.
+
+# Latest c6ea4bb7 continuation — 2026-10-26
+
+Read `docs/review-c6ea4bb7.md` first, then the standing instructions below.
+Git-object inventory found 311 added TIFF/ZIP paths and one repaired H33-B2 archive.
+This is NOT a pixel novelty audit or a new experiment. Registry pins are unchanged.
+No lane was supplied; no new TIFF or slot. Next: content-audit the versioned inventory,
+coordinate a distinct lane, retain literal overlap stops and independent selector requirements.
+
+# Standing project instructions
+
 ## PAIR1 session — 2026-10-26 (executed lane; negative; do not retune)
 
 Read `knowledge/25_preregistered_PAIR1_2026-10-26.md`, `knowledge/26_PAIR1_findings_and_9site_executive_2026-10-26.md`, `evidence/pair1_run_card_20261026.json` first.
@@ -247,3 +287,33 @@ Own the Outcome, without promising a score or prize.
   DPRF1 stays the strongest unscored unique candidate; everything else SUBMIT: NO.
 - Verify: `.venv/bin/python scripts/run_eul1_lane.py --verify-recorded` and
   `.venv/bin/python scripts/run_dprf1_lane.py --verify-recorded`.
+
+## Continuation — 2026-10-26 H24-XFRONT (cross-modal oriented-step corroboration): NEGATIVE
+
+- XFRONT (prereg `knowledge/25_…` @ `3ebb375`, amendments `knowledge/26_…` ≥2-layer
+  corroboration and `knowledge/27_…` pre-specified ablation arm, findings
+  `knowledge/28_…`) is a label-free six-layer detector: across-strike step percentile
+  weights and structure-tensor orientations for `rtp`, `iso_grav_anom`,
+  `depth_to_base_surf`, `cond_surf`, `det_elev`, `geod_shearrate` at σ ∈ {1.2, 3.0};
+  C = Σw/6; R = |Σw·e^{2iθ}|/Σw; E_R = excess over a 19-draw translation null
+  (seed 20261026); arm A = C·E_R, arm B = C alone; zero where Σw < 2.0.
+- Result: **HOLDOUT-DTI 0.06584** [0.05497, 0.07904] at the selected arm **B** /
+  budget **45,000** (`gems-segment-pooled-v1`, 60,988 withheld positives, 39,456 dots)
+  — far below DPRF1's 0.16379. Pre-specified ablation: arm B beats arm A by
+  **+0.00644** [+0.00132, +0.01243] (4/4 folds), i.e. the rotation-null orientation
+  factor is actively harmful. Arm×budget sweep is monotone in budget over
+  15k–45k: a boundary optimum, so the detector is under-emitting throughout.
+- Novelty **PASS** (max |ρ| 0.1304; max 3-px dot overlap 0.4532 over 61 competing
+  method rasters and 83 peer blobs; only 0.2483 vs DPRF1) — the least
+  parent-convergent lane run to date and still 2.5× worse than DPRF1. Divergence
+  from the parent is therefore necessary but nowhere near sufficient.
+- Exact-file C2ST **FAILED** (AUC 0.5835, Holm p 0.02, nuisance families only;
+  labels-first 0.5040): part of the "corroboration" is road/claim/access structure.
+  Do not reframe this flag as noise.
+- **Do not rerun or retune XFRONT** (no new null, no new σ, no reweighting, no budget
+  extension) without a new preregistration. A rotation/strike-permutation null — not
+  translation — would be the correct test of the orientation idea.
+- Sparse-simulated DTI is sampling-density dependent (0.05283 / 0.02931 / 0.02302 at
+  20% / 10% / 5% truth sampling): always state the fraction.
+- Verify: `.venv/bin/python scripts/run_xfront_lane.py --verify-recorded` (frozen
+  experiment file `evidence/xfront_experiment_20261026.json` + card + selector).
