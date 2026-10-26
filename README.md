@@ -19,6 +19,34 @@ and `archive/legacy/vent/run_vent_lane.py.txt`. The active `scripts/run_vent_lan
 now only verifies existing file hash/format with `--verify-recorded`; no rerun is allowed.
 No VENT result is used here to justify promotion or a leaderboard forecast.
 
+## Latest lane — 2026-10-26 (`H24-XFRONT`) cross-modal oriented-step corroboration: NEGATIVE · DOWNLOAD YES / SUBMIT NO · DO NOT RETUNE
+
+[**Download the newly generated unique H24-XFRONT research GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.tif) ·
+[Single-GeoTIFF ZIP](docs/downloads/gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.zip) ·
+[NaN-outside twin](docs/downloads/gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-nan.tif) ·
+[SHA-256 `04d2359a58ab85d1e66076d0543e1fbb1cd89a22312d4474f8dd8c30bb523edf`](docs/downloads/checks-gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.json)
+
+**THE OBVIOUS VERDICT (unchanged by XFRONT): DOWNLOAD YES · SUBMIT NO.** A label-free, six-layer
+cross-modal detector (RTP magnetics, isostatic gravity, AEM depth-to-basement, AEM conductivity, DEM and GNSS
+shear-strain rate) scored **HOLDOUT-DTI 0.06584** (95% CI [0.05497, 0.07904], `gems-segment-pooled-v1`,
+60,988 withheld positives, 39,456 dots) — far below DPRF1's **0.16379**, so **no submission slot may be spent on
+it**. It is **not** a duplicate of any prior GEMSDOE submission (max 3-px dot overlap 0.4532 across 61 competing
+method rasters; only 0.2483 vs DPRF1), it passes strict `[0,1]`/grid format, and it is a clean negative
+measurement. Pre-specified mechanism ablation: arm B (corroboration alone) beats arm A (corroboration ×
+rotation-null excess orientation coherence) by **+0.00644** (95% CI [+0.00132, +0.01243], 4/4 folds) — the
+orientation refinement is actively harmful. Exact-file C2ST **FAILED** (AUC 0.5835, Holm p 0.02): the dots are
+partly predictable from road/claim/access features, i.e. some "corroboration" is human access, not structure.
+**DPRF1 in the next section remains the single best unscored unique candidate.** Lane stopped — one experiment
+of the three-experiment budget used; do not rerun or retune.
+
+[Findings & 9-site executive summary](knowledge/28_XFRONT_findings_and_9site_executive_summary_2026-10-26.md) ·
+[Preregistration](knowledge/25_preregistered_XFRONT_2026-10-26.md) ·
+[Amendment A1 (≥2-layer corroboration)](knowledge/26_XFRONT_prereg_amendment_2026-10-26.md) ·
+[Amendment A2 (pre-specified ablation arm)](knowledge/27_XFRONT_prereg_amendment2_2026-10-26.md) ·
+[XFRONT JSON run card](evidence/xfront_run_card_20261026.json) ·
+[XFRONT Selector v2 JSON](evidence/xfront_selector_20261026.json) ·
+[Executive guide](docs/executive-summary.html#xfront)
+
 ## Latest 2026-10-26 Point-Best Candidate: `H24-DPRF1` — 10/10 Competing-Method Gates PASS · Selector v2: `DO_NOT_SUBMIT`
 
 [**Download the newly generated H24-DPRF1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) ·
