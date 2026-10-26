@@ -1,0 +1,97 @@
+{
+  "schema": "gems-repository-review-run-card-v1",
+  "reviewed_date": "2026-10-26",
+  "branch": "arena/b7b2f1b6-gemsdoe24",
+  "hypothesis": "No geological hypothesis was assigned or tested in this review; the active request omitted the required single-method paragraph.",
+  "mechanism": "Code and evidence integrity review only: quarantine contradictory H-UNIQUE-03 promotion metadata; bind current exact-file verification to the documented DPRF1 run card and negative selector.",
+  "named_non_fault_process_that_could_mimic_it": "Not applicable to a new detector; in historical geophysical feature work, intrusive/remanent contacts and survey leveling seams can mimic faults.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "ci95": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "status": "NOT RUN: review-only; no new experiment or score"
+  },
+  "recorded_reference_not_replayed": {
+    "label": "HOLDOUT-DTI",
+    "value": 0.1637924246971501,
+    "ci95": [
+      0.15044621733051888,
+      0.1773903019943756
+    ],
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "lane": "DPRF1",
+    "status": "source-recorded historical measurement; not independently replayed in this review; not an organizer score or leaderboard estimate"
+  },
+  "correlation_overlap_vs_registry": {
+    "new_preplacement_surface": null,
+    "new_final_dots": null,
+    "new_candidate_status": "NOT RUN: no new candidate",
+    "existing_dprf1_source_audit": {
+      "scope": "source-recorded audit over 166 comparators; not independently replayed in this review",
+      "max_abs_tested_rank_correlation": 0.7578512135229795,
+      "max_inclusive_3px_directed_overlap": 0.9956445530355341,
+      "literal_gate": "FAIL: overlap exceeds 0.70"
+    }
+  },
+  "raster_sha256": null,
+  "reviewed_existing_artifact": {
+    "submission_name": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+    "sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+    "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; DO NOT SUBMIT",
+    "validator_output": {
+      "format_valid": true,
+      "single_band_float32": true,
+      "crs": "EPSG:32611",
+      "shape": [3730, 3292],
+      "transform": [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0],
+      "no_nan_inf_inside_footprint": true,
+      "all_values_in_0_1": true,
+      "format_scope_only": true,
+      "ok_to_download_for_research": true,
+      "ok_to_submit": false,
+      "submission_authorized": false
+    }
+  },
+  "contradictory_hunique_packet": {
+    "status": "QUARANTINED",
+    "claimed_verdict": "promote",
+    "claimed_ok_to_submit": true,
+    "validator_ok_to_upload": false,
+    "validator_submission_authorized": false,
+    "preflight_submission_status": "DO_NOT_SUBMIT",
+    "preflight_ready_to_submit": false,
+    "independent_selector_receipt_present": false,
+    "reported_holdout_dti": 0.601827138891752,
+    "reported_score_status": "untrusted contradictory packet; not accepted as HOLDOUT-DTI evidence"
+  },
+  "submission_name": null,
+  "submission_note": "No new submission generated; research-only DPRF1 is DO NOT SUBMIT.",
+  "submission_note_characters": 58,
+  "new_tif_generated": false,
+  "submission_slots_used": 0,
+  "organizer_confirmed_score": null,
+  "leaderboard_estimate": null,
+  "goal_achieved": false,
+  "verdict": "negative",
+  "ok_to_submit": false,
+  "validation": {
+    "pytest": "451 passed",
+    "ruff_check": "passed; quarantined source-hashed runner excluded without changing its source",
+    "ruff_format_check": "passed; 180 files",
+    "compileall": "passed",
+    "git_diff_check": "passed",
+    "site_generation": "passed in test scratch copy; H-UNIQUE-03 TIFF not linked",
+    "current_download_revalidation": "passed; DPRF1 exact file; format valid; not authorized"
+  },
+  "limitations": [
+    "The assigned method paragraph was absent; no experiment ran.",
+    "No new TIFF was generated; the central unique submit-ready goal remains unmet.",
+    "The 37,654-dot lattice geometry lower bound exceeds the literal 70% overlap cap.",
+    "No leaderboard score, live quota, or artifact-linked organizer receipt was obtained.",
+    "Scientific holdout evidence was not independently replayed in this review.",
+    "H-UNIQUE-03's reported 0.601827 value conflicts with its validator and preflight and is quarantined."
+  ]
+}

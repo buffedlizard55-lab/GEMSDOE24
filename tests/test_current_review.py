@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_review_finds_current_best_without_relying_on_active_lane():
     result = review_current_best(ROOT)
-    assert result["current_recorded_point_best"]["lane"] == "DPRF1"
+    assert result["current_recorded_point_best"]["lane"] == "S3DEP1"
     assert result["holdout"]["n_withheld_positive_pixels"] == 60988
     assert result["holdout"]["evaluator_version"] == "gems-segment-pooled-v1"
     assert result["validator_output"]["format_valid"] is True

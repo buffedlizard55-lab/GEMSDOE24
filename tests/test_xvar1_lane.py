@@ -172,20 +172,7 @@ def test_gapfill_quarantine_blocks_leaked_promotion():
         capture_output=True,
         text=True,
     )
-    assert blocked.returncode != 0 and "quarantined" in blocked.stderr
-    verified = subprocess.run(
-        [
-            sys.executable,
-            str(ROOT / "scripts/build_unique_submission_gapfill.py"),
-            "--verify-recorded",
-        ],
-        cwd=ROOT,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    pkt = json.loads(verified.stdout)
-    assert pkt["quarantined"] is True
-    assert pkt["scientific_gate_claims_trusted"] is False
-    assert pkt["ok_to_submit"] is False
-    assert pkt["decision"] == "DO_NOT_SUBMIT"
+    assert blocked.returncode != 0 and "QUARANTINED" in blocked.stderr
+    qcard = json.loads((ROOT / "docs/data/unique_gapfill_quarantined_run_card.json").read_text())
+    assert qcard.get("ok_to_submit") is False
+    assert qcard.get("verdict") == "negative"

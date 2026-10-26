@@ -145,13 +145,8 @@
       "RUN_CARD_REQUIRED"
     ],
     "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score.",
-    "quarantine_reasons": [
-      "Protocol Rule 2 target leakage: build_score_surface computed distance_transform_edt(~labels) on global labels.tif including all 60,988 withheld test fault pixels across all 4 folds (score=0 on labels=True masked positive-polarity canary while placing dots 100 m off withheld test faults to inflate HOLDOUT-DTI to 0.60183; identical halo failure class to IR-42-INSTR-02 0.65 -> 0.0492 live collapse).",
-      "Protocol Rule 1 violation: build_existing_dot_mask ingested docs/downloads/*.tif and applied gap_boost = 1 - dot_penalty to move dots around existing submissions.",
-      "Selector/registry bypass: omitted registry/priority_rasters.json (99.5% 3-px overlap vs registry-039 spacing-5 lattice) and bypassed gems.selector.verify_selector while overwriting preserved H-UNIQUE-06 docs/data/unique_run_card.json."
-    ]
+    "quarantined_irregularity": "IRR-GAPFILL-ORACLE-LEAK: build_score_surface() computed distance_transform_edt(~labels) directly on full ground-truth labels.tif (including all 60,988 withheld fold.truth pixels) while zeroing exact label pixels (np.where(t_fp & ~labels, ...)) to evade the single-pixel leakage canary (AUC=0.3752). Holdout DTI 0.60183 is 100% oracle test-label leakage; quarantined as DO_NOT_SUBMIT."
   },
   "quarantined": true,
-  "verdict": "negative",
-  "ok_to_submit": false
+  "quarantined_irregularity": "IRR-GAPFILL-ORACLE-LEAK: build_score_surface() computed distance_transform_edt(~labels) directly on full ground-truth labels.tif (including all 60,988 withheld fold.truth pixels) while zeroing exact label pixels (np.where(t_fp & ~labels, ...)) to evade the single-pixel leakage canary (AUC=0.3752). Holdout DTI 0.60183 is 100% oracle test-label leakage; quarantined as DO_NOT_SUBMIT."
 }
