@@ -88,7 +88,9 @@
     "scope": "Recorded point estimate; no independent protocol/paired-gain/novelty certification"
   },
   "hypothesis": "D8 drainage-network topology on the 100 m DEM \u2014 aligned channel knickpoints (downstream jumps in normalised steepness k_sn = slope * A^0.45) and flow-azimuth deflections across adjacent ephemeral washes \u2014 traces oblique/strike-slip and sheetwash-eroded piedmont faults whose interfluve scarps have been erased and that surface mapping and local-filter geomorphology miss. Seven label-free drainage channels (log flow accumulation, k_sn, knickpoint jump, knickpoint co-linearity lineament, channel distance, HAND, azimuth bend) added to the 52-channel DPRF1 stitched-OOF stack \u2014 and gating its concealed Regime-B allocation \u2014 recover held-out whole fault segments better than the identical pipeline without them.",
-  "mechanism": "D8 steepest-descent routing (O'Callaghan & Mark 1984) on the Gaussian-smoothed (sigma 2 px) DEM with no depression filling (endorheic sinks terminate accumulation; sink census recorded in drainage_diagnostics) yields exact upslope area A by descending-elevation propagation. Stream-power steepness k_sn = S * A^0.45 (Flint 1974; Wobus et al. 2006) jumps downstream where a wash crosses an uplifting or laterally offset fault block; co-linear jumps across >=3 neighbouring washes and systematic azimuth bends localise the buried trace even where the scarp itself is gone. Supervised stitched-OOF, stratified near+far negatives, selective residualization (drainage channels protected as terrain), relief calibration, ridge sharpening, apron debiasing and the two-regime 300 m submodular allocator are reused unchanged from DPRF1, isolating the drainage increment.",
+  "mechanism": "Recorded fault-recovery hypothesis only; this review validates artifact identity and format, not the causal mechanism or any hidden-leaderboard improvement. See the original run card for its unverified mechanistic interpretation.",
+  "mechanism_source": "evidence/drain5_run_card_20261026.json",
+  "mechanism_causally_verified": false,
   "non_fault_mimic": "Resistant lithologic hogbacks (welded ash-flow tuff or dike ribs) producing lithologic knickpoints across parallel gullies, alluvial fan-lobe avulsion channels, Pleistocene Lake Lahontan recessional strandlines, and road borrow ditches \u2014 all of which bend or steepen ephemeral washes without any Quaternary faulting or geothermal upflow.",
   "submission_name": "gems24-drain5-negative-drainage-knickpoint-20261026-ff95d6fb3205-zeros.tif",
   "raster_sha256": "4b171e8d92d49a595684b58d188fe4117b653ec9cda8263919c25802d6539e32",
@@ -342,7 +344,7 @@
   },
   "selector": {
     "selector_version": "gems-selector-v2-literal-quota-fail-closed",
-    "decided_utc": "2026-10-26T17:10:08.879745+00:00",
+    "decided_utc": "2026-10-26T17:25:53.016738+00:00",
     "artifact": "gems24-drain5-negative-drainage-knickpoint-20261026-ff95d6fb3205-zeros.tif",
     "artifact_sha256": "4b171e8d92d49a595684b58d188fe4117b653ec9cda8263919c25802d6539e32",
     "human_inspection_used": false,

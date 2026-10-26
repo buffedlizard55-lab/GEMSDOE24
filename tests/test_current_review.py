@@ -20,6 +20,9 @@ def test_review_finds_current_best_without_relying_on_active_lane():
     assert result["validator_output"]["format_valid"] is True
     assert result["validator_output"]["sha256"] == result["raster_sha256"]
     assert result["non_fault_mimic"]
+    assert result["mechanism_causally_verified"] is False
+    assert "not the causal mechanism" in result["mechanism"]
+    assert result["mechanism_source"] == result["current_recorded_point_best"]["source"]
     assert result["ok_to_submit"] is False and result["verdict"] == "negative"
     assert result["new_experiments"] == result["submission_slots_used"] == 0
     assert result["selector"]["gates"]["g4_registry_novelty"] is False

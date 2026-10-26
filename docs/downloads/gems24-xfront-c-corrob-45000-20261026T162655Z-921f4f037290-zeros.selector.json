@@ -1,0 +1,34 @@
+{
+  "selector_version": "gems-selector-v2-literal-quota-fail-closed",
+  "decided_utc": "2026-10-26T16:33:22.310656+00:00",
+  "artifact": "gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.tif",
+  "artifact_sha256": "04d2359a58ab85d1e66076d0543e1fbb1cd89a22312d4474f8dd8c30bb523edf",
+  "human_inspection_used": false,
+  "gates": {
+    "artifact_hash_matches_run_card": true,
+    "artifact_name_matches_run_card": true,
+    "g1_format_strict_0_1": true,
+    "g2_leakage_canary": true,
+    "g3_holdout_beats_recorded_best_and_paired_baseline": false,
+    "g4_registry_novelty": false,
+    "g5_exact_file_c2st": false,
+    "note_at_most_140_chars": true,
+    "budget_and_no_slot_spent": true,
+    "current_account_quota_independently_verified": false,
+    "complete_independent_replay_certificate": false
+  },
+  "all_gates_passed": false,
+  "ok_to_submit": false,
+  "decision": "DO_NOT_SUBMIT",
+  "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
+  "recorded_scientific_screen_passed": false,
+  "current_point_best_source": "evidence/dprf1_run_card_20261026.json",
+  "reasons": [
+    "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.06584109933014508 vs recorded best 0.1637924246971501, paired CI lower=0.0013214304026682587",
+    "g4_registry_novelty: surface|rho|=0.12451287495195174, final|rho|=0.13039102427111587, method overlap=0.45321370640713704, peer overlap=0.45321370640713704",
+    "g5_exact_file_c2st: strict C2ST gate not passed on the exact file",
+    "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
+    "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
+  ],
+  "scope": "Recorded-evidence screening and exact-file validation only; positive authorization is not implemented. Not an organizer score, quota record or acceptance guarantee. The agent never uploads."
+}

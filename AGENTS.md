@@ -1,3 +1,11 @@
+# Latest c6ea4bb7 continuation — 2026-10-26
+
+Read `docs/review-c6ea4bb7.md` first, then the standing instructions below.
+Git-object inventory found 311 added TIFF/ZIP paths and one repaired H33-B2 archive.
+This is NOT a pixel novelty audit or a new experiment. Registry pins are unchanged.
+No lane was supplied; no new TIFF or slot. Next: content-audit the versioned inventory,
+coordinate a distinct lane, retain literal overlap stops and independent selector requirements.
+
 # Standing project instructions
 
 ## Latest continuation — 2026-10-26 H24-DRAIN5: BEST LOCAL MEASUREMENT, DUPLICATE LANE (frozen; do not retune)
@@ -8,6 +16,14 @@ Read `knowledge/27_DRAIN5_findings_and_executive_summary_2026-10-26.md` and `evi
 - Standing measurement (3× now: CUP1 91.2%, EUL1 86.6%, DRAIN5 83.5%): appending channels to the DPRF1 parent converges to duplicate dots at the shared allocator even when the science is real. **The next lane (future session, fresh preregistration) must change target/allocator geometry** — queued candidate `H24-KERN6` (DTI-kernel soft labels + rank allocation, drainage channels built in from the start, novelty checked against DPRF1+DRAIN5+EUL1 surfaces), then `H24-SEGBAL7`; `H24-INSAR4`/`H24-3DEP8` remain sandbox-unreachable (only github/pypi respond; do not retry fetching here).
 - Immediate next step remains the DPRF1 selector/quota authorization step (live-quota receipt, prospective lattice policy separation, independent replay certificate). **OK TO SUBMIT TODAY: NOTHING.**
 - Verify without rerunning: `.venv/bin/python scripts/run_drain5_lane.py --verify-recorded` (G3-aware: DRAIN5 is now its own recorded point-best), plus the DPRF1/EUL1 verifiers below.
+
+## PAIR1 session — 2026-10-26 (executed lane; negative; do not retune)
+
+Read `knowledge/25_preregistered_PAIR1_2026-10-26.md`, `knowledge/26_PAIR1_findings_and_9site_executive_2026-10-26.md`, `evidence/pair1_run_card_20261026.json` first.
+H24-PAIR1 (graben pair/dipole operators on the 20 cached uint8 bands; DPRF1's 419 MB training raster absent in clean checkouts) ran its 3 preregistered experiments: BASE 0.12858, PAIR1 0.12711 (paired Δ −0.00147 [−0.00353,+0.00069], 0/4 folds), clearance-3 identical (non-discriminating, disclosed). New unique research TIFF `docs/downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.tif` (SHA `ecf16ef6…5d0f93`) is DOWNLOAD YES / SUBMIT NO. Do not rerun or retune PAIR1 (offsets/weights/seed/budget frozen). DPRF1 remains recorded point-best; selector v2 still `DO_NOT_SUBMIT`. Next cache-ready queued hypothesis: radiometric front phase-lag (knowledge/26 §2 rank 2).
+Read `docs/metric-integrity-20261026.md` and `evidence/metric_integrity_review_20261026.json` at session start. The VENT narrative is quarantined; never reuse its metric equations, geological generalizations or projected improvements as verified evidence. No new method lane or submission-ready TIFF was established in that integrity continuation.
+*(Point-best bookkeeping updated by the DRAIN5 note above: DRAIN5 0.16950 is now the recorded point-best measurement; DPRF1 remains the #1 unscored unique-lane candidate.)*
+
 
 ## Latest continuation safety review — 2026-10-26
 
@@ -242,3 +258,33 @@ Own the Outcome, without promising a score or prize.
   DPRF1 stays the strongest unscored unique candidate; everything else SUBMIT: NO.
 - Verify: `.venv/bin/python scripts/run_eul1_lane.py --verify-recorded` and
   `.venv/bin/python scripts/run_dprf1_lane.py --verify-recorded`.
+
+## Continuation — 2026-10-26 H24-XFRONT (cross-modal oriented-step corroboration): NEGATIVE
+
+- XFRONT (prereg `knowledge/25_…` @ `3ebb375`, amendments `knowledge/26_…` ≥2-layer
+  corroboration and `knowledge/27_…` pre-specified ablation arm, findings
+  `knowledge/28_…`) is a label-free six-layer detector: across-strike step percentile
+  weights and structure-tensor orientations for `rtp`, `iso_grav_anom`,
+  `depth_to_base_surf`, `cond_surf`, `det_elev`, `geod_shearrate` at σ ∈ {1.2, 3.0};
+  C = Σw/6; R = |Σw·e^{2iθ}|/Σw; E_R = excess over a 19-draw translation null
+  (seed 20261026); arm A = C·E_R, arm B = C alone; zero where Σw < 2.0.
+- Result: **HOLDOUT-DTI 0.06584** [0.05497, 0.07904] at the selected arm **B** /
+  budget **45,000** (`gems-segment-pooled-v1`, 60,988 withheld positives, 39,456 dots)
+  — far below DPRF1's 0.16379. Pre-specified ablation: arm B beats arm A by
+  **+0.00644** [+0.00132, +0.01243] (4/4 folds), i.e. the rotation-null orientation
+  factor is actively harmful. Arm×budget sweep is monotone in budget over
+  15k–45k: a boundary optimum, so the detector is under-emitting throughout.
+- Novelty **PASS** (max |ρ| 0.1304; max 3-px dot overlap 0.4532 over 61 competing
+  method rasters and 83 peer blobs; only 0.2483 vs DPRF1) — the least
+  parent-convergent lane run to date and still 2.5× worse than DPRF1. Divergence
+  from the parent is therefore necessary but nowhere near sufficient.
+- Exact-file C2ST **FAILED** (AUC 0.5835, Holm p 0.02, nuisance families only;
+  labels-first 0.5040): part of the "corroboration" is road/claim/access structure.
+  Do not reframe this flag as noise.
+- **Do not rerun or retune XFRONT** (no new null, no new σ, no reweighting, no budget
+  extension) without a new preregistration. A rotation/strike-permutation null — not
+  translation — would be the correct test of the orientation idea.
+- Sparse-simulated DTI is sampling-density dependent (0.05283 / 0.02931 / 0.02302 at
+  20% / 10% / 5% truth sampling): always state the fraction.
+- Verify: `.venv/bin/python scripts/run_xfront_lane.py --verify-recorded` (frozen
+  experiment file `evidence/xfront_experiment_20261026.json` + card + selector).
