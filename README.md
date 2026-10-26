@@ -38,6 +38,8 @@ It never overwrites the scientific registry or authorizes a submission.
 
 ## Current continuation review — 2026-10-26
 
+**Nine-site download decisions:** [executive table](docs/executive-summary.html#nine-site-download-decisions) · [machine-readable packet](docs/data/nine_site_download_decisions.json) · [three-pass continuation audit](docs/decision-audit-20261026.md). No calibrated leaderboard estimate or approved new TIFF exists. The preserved owner brief below remains the session starting point.
+
 Latest wording audit: [three-pass review](knowledge/25_submission_wording_review_2026-10-26.md). Removed contradictory DPRF1 “unique/submit” language from the EUL1 generator. **No new TIFF, experiment, or authorized submission.**
 
 Concurrent PR #35 review and exact-file utility are also preserved: [review](knowledge/22_current_best_review_2026-10-26.md), [receipt](docs/data/current_best_review.json), `python scripts/review_current_best.py`.
