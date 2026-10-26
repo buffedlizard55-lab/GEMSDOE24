@@ -32,3 +32,18 @@ def test_historical_vent_source_preserved_for_audit():
     assert "Dummy pass" in text
     assert "Dummy but plausible" in text
     assert "Dummy pass" not in SCRIPT.read_text()
+
+
+def test_current_readme_withdraws_vent_pass_and_quarantines_narrative():
+    text = (ROOT / "README.md").read_text()
+    assert "passes novelty/C2ST but fails holdout best" not in text
+    assert "earlier “passes novelty/C2ST” sentence is withdrawn" in text
+    narrative = ROOT / "knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md"
+    assert narrative.read_text().startswith("> **QUARANTINED HISTORICAL NARRATIVE")
+    for page in (
+        "index.html",
+        "executive-summary.html",
+        "docs/index.html",
+        "docs/executive-summary.html",
+    ):
+        assert "metric-integrity-20261026.md" in (ROOT / page).read_text()
