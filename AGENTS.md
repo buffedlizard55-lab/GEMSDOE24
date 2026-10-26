@@ -245,3 +245,33 @@ Own the Outcome, without promising a score or prize.
   DPRF1 stays the strongest unscored unique candidate; everything else SUBMIT: NO.
 - Verify: `.venv/bin/python scripts/run_eul1_lane.py --verify-recorded` and
   `.venv/bin/python scripts/run_dprf1_lane.py --verify-recorded`.
+
+## Continuation — 2026-10-26 H24-XFRONT (cross-modal oriented-step corroboration): NEGATIVE
+
+- XFRONT (prereg `knowledge/25_…` @ `3ebb375`, amendments `knowledge/26_…` ≥2-layer
+  corroboration and `knowledge/27_…` pre-specified ablation arm, findings
+  `knowledge/28_…`) is a label-free six-layer detector: across-strike step percentile
+  weights and structure-tensor orientations for `rtp`, `iso_grav_anom`,
+  `depth_to_base_surf`, `cond_surf`, `det_elev`, `geod_shearrate` at σ ∈ {1.2, 3.0};
+  C = Σw/6; R = |Σw·e^{2iθ}|/Σw; E_R = excess over a 19-draw translation null
+  (seed 20261026); arm A = C·E_R, arm B = C alone; zero where Σw < 2.0.
+- Result: **HOLDOUT-DTI 0.06584** [0.05497, 0.07904] at the selected arm **B** /
+  budget **45,000** (`gems-segment-pooled-v1`, 60,988 withheld positives, 39,456 dots)
+  — far below DPRF1's 0.16379. Pre-specified ablation: arm B beats arm A by
+  **+0.00644** [+0.00132, +0.01243] (4/4 folds), i.e. the rotation-null orientation
+  factor is actively harmful. Arm×budget sweep is monotone in budget over
+  15k–45k: a boundary optimum, so the detector is under-emitting throughout.
+- Novelty **PASS** (max |ρ| 0.1304; max 3-px dot overlap 0.4532 over 61 competing
+  method rasters and 83 peer blobs; only 0.2483 vs DPRF1) — the least
+  parent-convergent lane run to date and still 2.5× worse than DPRF1. Divergence
+  from the parent is therefore necessary but nowhere near sufficient.
+- Exact-file C2ST **FAILED** (AUC 0.5835, Holm p 0.02, nuisance families only;
+  labels-first 0.5040): part of the "corroboration" is road/claim/access structure.
+  Do not reframe this flag as noise.
+- **Do not rerun or retune XFRONT** (no new null, no new σ, no reweighting, no budget
+  extension) without a new preregistration. A rotation/strike-permutation null — not
+  translation — would be the correct test of the orientation idea.
+- Sparse-simulated DTI is sampling-density dependent (0.05283 / 0.02931 / 0.02302 at
+  20% / 10% / 5% truth sampling): always state the fraction.
+- Verify: `.venv/bin/python scripts/run_xfront_lane.py --verify-recorded` (frozen
+  experiment file `evidence/xfront_experiment_20261026.json` + card + selector).

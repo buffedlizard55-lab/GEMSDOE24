@@ -59,6 +59,37 @@ and `archive/legacy/vent/run_vent_lane.py.txt`. The active `scripts/run_vent_lan
 now only verifies existing file hash/format with `--verify-recorded`; no rerun is allowed.
 No VENT result is used here to justify promotion or a leaderboard forecast.
 
+## Latest lane — 2026-10-26 (`H24-XFRONT`) cross-modal oriented-step corroboration: NEGATIVE · DOWNLOAD YES / SUBMIT NO · DO NOT RETUNE
+
+[**Download the newly generated unique H24-XFRONT research GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.tif) ·
+[Single-GeoTIFF ZIP](docs/downloads/gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.zip) ·
+[NaN-outside twin](docs/downloads/gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-nan.tif) ·
+[SHA-256 `04d2359a58ab85d1e66076d0543e1fbb1cd89a22312d4474f8dd8c30bb523edf`](docs/downloads/checks-gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.json)
+
+**THE OBVIOUS VERDICT (unchanged by XFRONT): DOWNLOAD YES · SUBMIT NO.** A label-free, six-layer
+cross-modal detector (RTP magnetics, isostatic gravity, AEM depth-to-basement, AEM conductivity, DEM and GNSS
+shear-strain rate) scored **HOLDOUT-DTI 0.06584** (95% CI [0.05497, 0.07904], `gems-segment-pooled-v1`,
+60,988 withheld positives, 39,456 dots) — far below DPRF1's **0.16379**, so **no submission slot may be spent on
+it**. It is **not** a duplicate of any prior GEMSDOE submission (max 3-px dot overlap 0.4532 across 61 competing
+method rasters; only 0.2483 vs DPRF1), it passes strict `[0,1]`/grid format, and it is a clean negative
+measurement. Pre-specified mechanism ablation: arm B (corroboration alone) beats arm A (corroboration ×
+rotation-null excess orientation coherence) by **+0.00644** (95% CI [+0.00132, +0.01243], 4/4 folds) — the
+orientation refinement is actively harmful. Exact-file C2ST **FAILED** (AUC 0.5835, Holm p 0.02): the dots are
+partly predictable from road/claim/access features, i.e. some "corroboration" is human access, not structure.
+**DPRF1 in the next section remains the highest-scoring recorded local artifact (HOLDOUT-DTI 0.16379) and is
+still not a literal-gate-unique or submit-ready candidate:** the separate selector step holds every file in the
+portfolio at `DO_NOT_SUBMIT` (synthetic spacing-5 lattice `registry-039`, unknown live quota, no replay
+certificate), and XFRONT changes none of that. Lane stopped — one experiment of the three-experiment budget
+used; do not rerun or retune. No weekly slot has been spent.
+
+[Findings & 9-site executive summary](knowledge/28_XFRONT_findings_and_9site_executive_summary_2026-10-26.md) ·
+[Preregistration](knowledge/25_preregistered_XFRONT_2026-10-26.md) ·
+[Amendment A1 (≥2-layer corroboration)](knowledge/26_XFRONT_prereg_amendment_2026-10-26.md) ·
+[Amendment A2 (pre-specified ablation arm)](knowledge/27_XFRONT_prereg_amendment2_2026-10-26.md) ·
+[XFRONT JSON run card](evidence/xfront_run_card_20261026.json) ·
+[XFRONT Selector v2 JSON](evidence/xfront_selector_20261026.json) ·
+[Executive guide](docs/executive-summary.html#xfront)
+
 ## Latest 2026-10-26 Point-Best Candidate: `H24-DPRF1` — 10/10 Competing-Method Gates PASS · Selector v2: `DO_NOT_SUBMIT`
 
 [**Download the newly generated H24-DPRF1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) ·
@@ -634,6 +665,13 @@ Generated independently from 44 physical channels (restored `ieq_n100a15`/`deq_n
 Passes exact-grid/strict-`[0,1]` checks, 44/44 two-polarity leakage canaries, exact-file C2ST nuisance audit (**AUC `0.4727` < 0.55**, Holm *p* = `1.000`), competing-method + peer novelty across **141** rasters (**max 3-px dot overlap `0.6293` ≤ 0.70** vs prior lanes & `≤0.6622` vs `DPRF1`/`TNR1`/`CRP1`/`CUP1`, max `|ρ| = 0.3894` ≤ 0.90), and cures `GVC1`'s `0.0859` in-sample halo collapse (`2<d_cat≤5 px = 18.4%` vs `45.8%`; deep concealed `d_cat > 30 px = 32.0%` vs `4.1%`).
 Achieves **HOLDOUT-DTI** `gems-segment-pooled-v1` = **0.14644** (95% CI **[0.13220, 0.16241]**, paired Δ **+0.01644**, strictly positive 95% CI **[+0.00053, +0.03163]** over `oof_multiphysics_hgb_d3` `0.13000`; Arm 2 Global **0.14693**; `NE_LidarGapHeavy` **0.18760**) and `segment-hide-recover-pooled-v1` = **0.14674** (95% CI **[0.12804, 0.16492]**). Held at **`DO_NOT_SUBMIT`** under `gems-selector-v2-literal-quota-fail-closed` (`evidence/trsg1_selector_20261026.json`).
 [TRSG1 JSON run card](evidence/trsg1_run_card_20261026.json) · [TRSG1 Selector v2 JSON](evidence/trsg1_selector_20261026.json) · [TRSG1 preregistration](knowledge/19_preregistered_TRSG1_2026-10-26.md) · [9-Site Executive & PhD Synthesis (`GEMSDOE32` `0.2778` → `0.4413`)](knowledge/20_TRSG1_findings_and_portfolio_executive_2026-10-26.md)
+
+Latest 2026-10-26 Lane `H24-XFRONT` Cross-Modal Oriented-Step Corroboration GeoTIFF (**NEGATIVE RESULT — DOWNLOAD: YES · SUBMIT: NO · DO NOT RETUNE**):
+[`gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.tif`](docs/downloads/gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.tif) (`SHA-256: 04d2359a58ab85d1e66076d0543e1fbb1cd89a22312d4474f8dd8c30bb523edf`),
+Single-GeoTIFF ZIP [`gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.zip`](docs/downloads/gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.zip), and NaN-outside twin [`gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-nan.tif`](docs/downloads/gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-nan.tif).
+Preregistered (`knowledge/25_preregistered_XFRONT_2026-10-26.md` @ `3ebb375`, amendments `26` ≥2-layer corroboration and `27` pre-specified ablation arm, both filed before the run): label-free six-layer corroboration of across-strike steps (`rtp`, `iso_grav_anom`, `depth_to_base_surf`, `cond_surf`, `det_elev`, `geod_shearrate`) at σ ∈ {1.2, 3.0} with a 19-draw translation null (seed 20261026) for the orientation-coherence factor (`39,456` binary `{0.0, 1.0}` dots at budget cap `45,000`; zero copied pixels; strict `[0,1]` all-finite PASS; 12/12 two-polarity leakage canaries PASS, worst extremity `0.59617`).
+**HOLDOUT-DTI** `gems-segment-pooled-v1` = **0.06584** (95% CI **[0.05497, 0.07904]**), selected (arm **B**, budget `45,000`) on the pre-specified 20 % sparse-simulated DTI (`0.05283`); the arm × budget sweep is monotone in budget over 15k–45k, so this is a boundary optimum, not an interior one. Pre-specified mechanism ablation: arm B beats arm A by **+0.00644** (95% CI **[+0.00132, +0.01243]**, **4/4** folds). Novelty **PASS**: max `|ρ|` `0.1304`, max 3-px dot overlap `0.4532` over `61` competing method rasters and `0.4532` over `83` peer blobs — the least parent-convergent lane run to date (`0.2483` vs `DPRF1`) and still far below `DPRF1`'s recorded `0.16379`. Exact-file C2ST **FAILED**: AUC `0.5835` (Holm *p* = `0.020`, nuisance families only) vs labels-first `0.5040`; `23.7%` of dots in the 200–900 m apron, `52.3%` beyond 2 km. Held at **`DO_NOT_SUBMIT`** under `gems-selector-v2-literal-quota-fail-closed` (`evidence/xfront_selector_20261026.json`). No weekly slot has been spent; HOLDOUT-DTI is not a leaderboard forecast.
+[XFRONT JSON run card](evidence/xfront_run_card_20261026.json) · [XFRONT Selector v2 JSON](evidence/xfront_selector_20261026.json) · [XFRONT preregistration](knowledge/25_preregistered_XFRONT_2026-10-26.md) · [Amendment A1](knowledge/26_XFRONT_prereg_amendment_2026-10-26.md) · [Amendment A2](knowledge/27_XFRONT_prereg_amendment2_2026-10-26.md) · [XFRONT findings & 9-site executive summary](knowledge/28_XFRONT_findings_and_9site_executive_summary_2026-10-26.md) · [Executive guide](docs/executive-summary.html#xfront)
 
 Prior 2026-10-26 `H24-CRP1` GeoTIFF:
 [`gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif`](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif)
