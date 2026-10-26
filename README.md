@@ -1,10 +1,23 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## PAIR1 session — 2026-10-26 (new research TIF generated; strict novelty FAIL; NEGATIVE; SUBMIT: NO)
+
+[**⬇ Download the new H24-PAIR1 research GeoTIFF (-zeros, strict [0,1]) — DO NOT SUBMIT (strict duplicate gate failed)**](docs/downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.tif) ·
+[Single-TIFF ZIP](docs/downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.zip) ·
+[JSON run card](evidence/pair1_run_card_20261026.json) ·
+[Findings & 9-site executive summary](knowledge/26_PAIR1_findings_and_9site_executive_2026-10-26.md) ·
+[Executive summary page](docs/pair1-executive-summary-20261026.html) ·
+[Preregistration](knowledge/25_preregistered_PAIR1_2026-10-26.md)
+
+- **DOWNLOAD: YES (research) · SUBMIT: NO.** PAIR1 (paired graben-scarp + crest/base dipole operators, 26ch stitched-OOF HGB) scored **HOLDOUT-DTI 0.12711** [0.11533, 0.14079] (`gems-segment-pooled-v1`, 60,988 withheld), paired Δ **−0.00147** [−0.00353, +0.00069], **0/4 folds** vs its own 22ch BASE (0.12858). Method-only uniqueness PASS (max 3-px overlap 0.4490, max |ρ| 0.1471 vs 48 competing rasters; 0 copied pixels), but **STRICT ALL-REGISTRY UNIQUENESS FAILS**: 99.4% of final dots are within 3 px of registry-039's spacing-5 lattice (>70% literal Rule-1 stop). Treat PAIR1 as a duplicate under the user's stated rule; method-only screening cannot exempt it. Canaries 26/26 PASS; strict whole-array [0,1] PASS (0 NaN — use `-zeros.tif` for range-strict readers). SHA-256 `ecf16ef684ce2823e2888c101bd0b47d0661e7dacbba8bb6915db118925d0f93`. Note (108 chars): `GEMS24 PAIR1 | graben pair+dipole 26ch OOF | id 842a5212d85c | HOLDOUT-DTI 0.12711 | research; DO NOT SUBMIT`. **Do not retune PAIR1.**
+- **Obvious best unscored candidate remains DPRF1** (recorded HOLDOUT-DTI 0.16379; not replayable in this checkout — needs the gitignored 419 MB competition training raster). BASE replication 0.12858 vs recorded `oof_multiphysics_hgb_d3` 0.13000 confirms evaluator identity. No file is `OK_TO_SUBMIT`; no leaderboard score is forecast (all historical live values OWNER-REPORTED/UNVERIFIED; the 0.3195 vs 0.4413 "current top" claims conflict).
 ## Metric-integrity continuation — 2026-10-26
 
 **No submission-ready file.** [Corrected B2 explanation](docs/metric-integrity-20261026.md) supersedes the quarantined VENT narrative, not frozen receipts. Exact-file DPRF1 validation was repeated; its local holdout is recorded, not newly replayed. The nine-site table below is historical and does not establish a hidden-score estimate or uniqueness clearance. No method lane was assigned, no stopped lane rerun, and no submission slot used. [JSON run card](evidence/metric_integrity_review_20261026.json).
 
 ## Current continuation review — 2026-10-26
+
+**Nine-site download decisions:** [executive table](docs/executive-summary.html#nine-site-download-decisions) · [machine-readable packet](docs/data/nine_site_download_decisions.json) · [three-pass continuation audit](docs/decision-audit-20261026.md). No calibrated leaderboard estimate or approved new TIFF exists. The preserved owner brief below remains the session starting point.
 
 Latest wording audit: [three-pass review](knowledge/25_submission_wording_review_2026-10-26.md). Removed contradictory DPRF1 “unique/submit” language from the EUL1 generator. **No new TIFF, experiment, or authorized submission.**
 
@@ -12,7 +25,7 @@ Concurrent PR #35 review and exact-file utility are also preserved: [review](kno
 
 **No new experiment or TIFF in this review. DOWNLOAD existing research: YES / SUBMIT: NO.**
 Read the [latest three-pass repo review](docs/repo-review-20261026-followup.md), [review and next-step queue](docs/review-20261026.md), [owner brief](knowledge/owner_brief_2026-10-26.md), and [prompt delta](knowledge/owner_brief_2026-10-26_delta.md) at every session start. The full inherited prompt remains embedded below.
-The assigned method paragraph is still missing; stopped lanes must not be retuned. The prepared feature cache is also absent in this checkout; no new candidate was validated.
+H24-PAIR1 was preregistered and executed in a concurrent continuation; its result is negative and strict literal uniqueness fails. Do not retune stopped lanes or invent another lane. The gitignored 419 MB training raster remains absent, so DPRF1 cannot be independently replayed from this checkout.
 Fresh source checks found all nine repositories changed since registry pins; this is not a new raster or score audit.
 The following historical point-best section is not a new cross-site promotion decision.
 

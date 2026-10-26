@@ -73,7 +73,7 @@ def page(title, active, body, prefix=""):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="DOE GEMS fault research: independent GeoTIFF downloads, automated negative submission gates, and reproducible evidence."><meta name="source-feed" content="{prefix}data/source_health.json"><title>{e(title)} · GEMS DOE 24</title><link rel="stylesheet" href="{prefix}assets/style.css"></head>
 <body><header><div class="nav"><a class="brand" href="{prefix}index.html"><span class="mark" aria-hidden="true">∿</span><span>GEMS DOE 24<small>Geologic mapping · evidence first</small></span></a><nav class="navlinks" aria-label="Main navigation">{"".join(nav)}</nav></div></header>
-<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}review-20261026.md">Review &amp; blockers</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone. <a href="{prefix}metric-integrity-20261026.md">Corrected B2 metric explanation</a>.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
+<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}pair1-executive-summary-20261026.html">PAIR1 negative result (strict duplicate)</a> · <a href="{prefix}repo-review-20261026-followup.md">Three-pass review</a> · <a href="{prefix}review-20261026.md">Full blockers</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone. <a href="{prefix}metric-integrity-20261026.md">Corrected B2 metric explanation</a>.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
 
 
 def download_button(row, prefix, label="Download submission .tif", primary=True):
@@ -407,19 +407,24 @@ def build_independent_site(primary):
             or vent.get("verdict") != "negative"
         ):
             raise ValueError("VENT negative packet identity/format mismatch")
-        vh = vent["holdout"]
-        vlo, vhi = vh["ci95"]["interval"]
         vent_html = (
             '<section class="card" id="vent-packet"><h2>QUARANTINED H24-VENT research — DO NOT SUBMIT</h2>'
-            f"<p>Recorded HOLDOUT-DTI {vh['dti']:.5f}, 95% CI [{vlo:.5f}, {vhi:.5f}], "
-            f"{e(vh['evaluator_version'])}, {vh['n_withheld_positive_pixels']:,} withheld positives. "
-            "Scientific gate claims untrusted: original code supplied dummy C2ST and registry fallbacks. Below the recorded local best. Preserved from concurrent "
-            "PR #34, not generated or scientifically replayed by this review.</p>"
+            "<p>Scientific gate claims untrusted: the archived runner used dummy C2ST and registry fallbacks. "
+            "Its recorded holdout and gate metrics are not independently replayed; do not treat them as comparable "
+            "performance or a leaderboard estimate. Preserved from concurrent PR #34; this build does not replay "
+            "the experiment.</p>"
             f'<a class="button" href="downloads/{e(vname)}" download="{e(vname)}">Download VENT research TIFF — DO NOT SUBMIT</a>'
-            '<p><a href="data/vent_run_card.json" download>Frozen VENT run card</a></p></section>'
+            '<p><a href="data/vent_run_card.json" download>Quarantined historical run card</a></p></section>'
         )
-    overview = current_banner + vent_html + overview
-    executive = current_banner + vent_html + executive
+    from gems.executive_decisions import build_decisions, render_decisions
+
+    decisions = build_decisions(ROOT, current)
+    (DOCS / "data/nine_site_download_decisions.json").write_text(
+        json.dumps(decisions, indent=2, allow_nan=False) + "\n"
+    )
+    decision_table = render_decisions(decisions)
+    overview = current_banner + decision_table + vent_html + overview
+    executive = current_banner + decision_table + vent_html + executive
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),

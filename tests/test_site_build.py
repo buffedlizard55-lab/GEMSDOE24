@@ -88,6 +88,15 @@ def test_guide_has_the_portal_steps_note_and_the_range_error_advice(built):
     assert row["note"] in html and len(row["note"]) <= 140
 
 
+def test_site_exposes_pair1_negative_and_literal_duplicate_status(built):
+    text = (built / "docs/index.html").read_text()
+    assert "pair1-executive-summary-20261026.html" in text
+    assert "Scientific gate claims untrusted" in text
+    summary = (built / "docs/pair1-executive-summary-20261026.html").read_text()
+    assert "NO under literal Rule 1" in summary
+    assert "99.4% within 3 px of registry-039" in summary
+
+
 def test_site_never_links_a_missing_local_file(built):
     from bs4 import BeautifulSoup
 

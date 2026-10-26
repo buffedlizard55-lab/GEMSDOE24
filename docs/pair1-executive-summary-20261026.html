@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Executive summary 2026-10-26 (PAIR1 session) · GEMS DOE 24</title>
+<link rel="stylesheet" href="assets/style.css"></head>
+<body><header><div class="nav"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">∿</span><span>GEMS DOE 24<small>Geologic mapping · evidence first</small></span></a>
+<nav class="navlinks" aria-label="Main navigation"><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a class="active" href="pair1-executive-summary-20261026.html">Executive summary 2026-10-26</a><a href="research.html">Research</a><a href="sources.html">Sources &amp; audit</a></nav></div></header>
+<main>
+<section class="card"><h2>⬇ DOWNLOAD FIRST — but read the verdict: SUBMIT: NO for every file below</h2>
+<p><strong>New independently computed research GeoTIFF (H24-PAIR1 — research only, strict uniqueness FAIL, DO NOT SUBMIT):</strong></p>
+<p><a class="button primary" href="downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.tif" download>⬇ Download PAIR1 GeoTIFF (-zeros, strict [0,1]) — DO NOT SUBMIT</a>
+<a class="button" href="downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.zip" download>⬇ Single-TIFF .zip</a>
+<a class="button" href="data/pair1_run_card.json" download>JSON run card</a></p>
+<p class="micro">SHA-256 <span class="hash">ecf16ef684ce2823e2888c101bd0b47d0661e7dacbba8bb6915db118925d0f93</span> · 37,654 dots · EPSG:32611 · 3730×3292 · verified <code>((a&gt;=0)&amp;(a&lt;=1)).all() == True</code>, 0 NaN — this is the exact fix for the portal error “Predicted values must be in range [0, 1]” (upload <code>-zeros.tif</code>, never the <code>-nan.tif</code> twin).<br>
+Note (108 chars, format reference only): <code>GEMS24 PAIR1 | graben pair+dipole 26ch OOF | id 842a5212d85c | HOLDOUT-DTI 0.12711 | research; DO NOT SUBMIT</code></p>
+<p><strong>Highest recorded local holdout candidate (method-lane distinct; strict literal uniqueness FAIL; SUBMIT: NO):</strong>
+<a class="button" href="downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif" download>⬇ DPRF1 GeoTIFF — DO NOT SUBMIT</a>
+<span class="micro">HOLDOUT-DTI 0.16379 [0.15045, 0.17739] · SHA c1257c1d…f0567f1</span></p>
+</section>
+
+<section><h2>Executive table — what to download, estimated score, uniqueness</h2>
+<p class="micro">Estimates are <strong>HOLDOUT-DTI</strong> (<code>gems-segment-pooled-v1</code>, 60,988 withheld positives, α=0.2 β=0.8, 300 m kernel) — never a leaderboard forecast. Historical live values are <strong>OWNER-REPORTED / UNVERIFIED</strong>; no organizer receipts exist in this repo.</p>
+<div class="tablewrap" tabindex="0"><table><thead><tr><th>File to download</th><th>Estimated score (labelled)</th><th>Unique vs other focus-site submissions?</th><th>OK to submit?</th></tr></thead><tbody>
+<tr><td><code>gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif</code></td><td>HOLDOUT-DTI <strong>0.16379</strong> [0.15045, 0.17739] (recorded; not replayable in this checkout — needs gitignored 419 MB training raster)</td><td>Method-unique YES (57/57 ≤55.8% overlap); literal NO vs synthetic lattice</td><td><strong>NO</strong> — selector v2 <code>DO_NOT_SUBMIT</code> (literal lattice overlap, unknown quota, missing independent replay); no manual override.</td></tr>
+<tr><td><code>gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.tif</code> (NEW)</td><td>HOLDOUT-DTI <strong>0.12711</strong> [0.11533, 0.14079]; paired Δ vs own BASE −0.00147, 0/4 folds</td><td><strong>NO under literal Rule 1</strong> — method-only max overlap 0.4490 vs 48 competing rasters, but 99.4% within 3 px of registry-039 spacing-5 lattice (>70%); stop as duplicate. Zero copied pixels does not override this proximity gate.</td><td><strong>NO</strong> — negative result, worse than BASE and DPRF1. Research only; do not retune.</td></tr>
+<tr><td>Historical winners: H33-B2 0.2778 · PINN 0.2750 · H36-1 0.2710 · H27-4 0.2708 · H33D 0.2632 · D2.8/D28 0.2600 · D1.5 0.2477</td><td>OWNER-REPORTED live values, unverified</td><td>NO — one H19-5 ancestry (subsets/supersets, pixel-verified)</td><td><strong>NO — DO NOT COPY / RESUBMIT</strong> (wastes a weekly slot re-measuring a known number)</td></tr>
+</tbody></table></div></section>
+
+<section><h2>Per-site verdict — GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36</h2>
+<div class="tablewrap" tabindex="0"><table><thead><tr><th>Site</th><th>Best historical (owner-reported)</th><th>Verdict</th></tr></thead><tbody>
+<tr><td>GEMSDOE24</td><td>h25-1-dotted-h19-5-d1-5 · 0.2477</td><td><strong>DPRF1 is the only unscored candidate; SUBMIT NO (selector).</strong> PAIR1 negative.</td></tr>
+<tr><td>GEMSDOE25</td><td>dotted-h19-5-d2-8 · 0.2600</td><td>DO NOT RESUBMIT (latest scored 0.0742)</td></tr>
+<tr><td>GEMSDOE27</td><td>topo-gap-closure-t-v2 · 0.2449; H29-CELF scored 0.2190</td><td>Best already-scored unique method — DO NOT RESUBMIT</td></tr>
+<tr><td>GEMSDOE28</td><td>h36-1-rung30-blind-r1 · 0.2710</td><td>DO NOT SUBMIT (latest 0.0217)</td></tr>
+<tr><td>GEMSDOE30</td><td>d28-poisson300m · 0.2600 (= D2.8)</td><td>DO NOT RESUBMIT (latest 0.1462)</td></tr>
+<tr><td>GEMSDOE31</td><td>h27-4-solo-d28 · 0.2708</td><td>Sibling research only (holdouts not harmonized)</td></tr>
+<tr><td>GEMSDOE32</td><td><strong>h33-h33-2-b2 · 0.2778</strong> (highest listed)</td><td>DO NOT COPY — B2 = D2.8 minus ≤200 m dots, zero new geology</td></tr>
+<tr><td>GEMSDOE33</td><td>h33d-analog-tip-stepover · 0.2632</td><td>DO NOT SUBMIT (holdout FAIL)</td></tr>
+<tr><td>GEMSDOE36</td><td>anderson-geothermal-pinn · 0.2750 (= B2 + 1,200 dots)</td><td>DO NOT SUBMIT (no unique candidate)</td></tr>
+</tbody></table></div>
+<p><strong>Why 0.2778 leads:</strong> emission geometry, not discovery — deleting ≤200 m near-catalogue dots cuts FP mass in the distance-weighted Tversky (α=0.2, β=0.8) where hidden-hit probability is lowest. Full derivation in the repo: <code>knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md</code>; this session: <code>knowledge/26_PAIR1_findings_and_9site_executive_2026-10-26.md</code>. Beating it is unproven and unforecastable from local data; the brief's two “current top” claims (0.3195 vs 0.4413) conflict and are unverified.</p></section>
+
+<section><h2>How a submission would be made (only if a future selector says OK_TO_SUBMIT)</h2>
+<ol><li>Confirm the packet banner reads OK_TO_SUBMIT (today: none does — automated gates only, no human-inspector fallback).</li>
+<li>Download the <code>-zeros.tif</code> or its single-TIFF <code>.zip</code>; verify SHA-256 against the run card.</li>
+<li>On <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData</a> → Submit → choose the file → paste the ≤140-character note from the packet → confirm weekly quota → submit manually (this project never automates the portal).</li>
+<li>Save the submission-page receipt; only then may a score be called ORGANIZER-CONFIRMED.</li></ol>
+<p class="micro">Sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">problem &amp; metric</a> · <a href="https://github.com/drivendataorg/gems-prize-reference-solution">reference solution</a> · <a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN (DOI 10.5066/P93LGLVQ)</a> · <a href="https://gdr.openei.org/submissions/1391">OpenEI INGENIOUS</a> · <a href="https://gbcge.org/current-projects/ingenious/">GBCGE INGENIOUS</a> · <a href="https://epsg.io/32611">EPSG:32611</a> · <a href="https://en.wikipedia.org/wiki/Tversky_index">Tversky index</a> · <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">prize rules (PDF)</a></p></section>
+</main></body></html>
