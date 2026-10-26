@@ -1,5 +1,25 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current review — 2026-10-26: DOWNLOAD YES / SUBMIT NO
+
+**No new submit-ready TIFF was generated in this review.** No assigned method
+paragraph was supplied; stopped lanes were not rerun and no slot was used.
+The prior full owner prompt remains embedded below and must be read each session.
+Maximize P(Win) and Own the Outcome mean preserving a failed gate, not renaming it.
+
+- [Nine-site executive comparison](docs/executive-summary.html#priority-summary):
+  highest listed historical artifact for every priority site; **none cleared to submit**.
+- [Current findings, ranked unexecuted hypotheses and next steps](knowledge/19_priority_review_2026-10-26.md).
+- [Fresh exact-file checks for the featured GVC1 and RSHG1 downloads](evidence/featured_download_revalidation_20261026.json).
+  Run `python scripts/verify_featured_downloads.py`; the older
+  `verify_current_download.py` deliberately checks historical UNIQUE03 only.
+- [GitHub-only freshness feed](docs/data/priority_feed.json): all nine sources changed
+  since pinned review. This is not current scoring or renewed scientific validation.
+
+The repeated brief's competition values remain **OWNER-REPORTED, UNVERIFIED**,
+not ORGANIZER-CONFIRMED. No claim is made to beat either cited leaderboard target.
+
+
 ## Latest experiment: H24-RSHG1 — DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
 
 [**Download the newly generated H24-RSHG1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif) ·
