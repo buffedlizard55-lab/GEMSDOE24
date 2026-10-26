@@ -1,0 +1,33 @@
+{
+  "selector_version": "gems-selector-v2-literal-quota-fail-closed",
+  "decided_utc": "2026-10-26T06:41:24.091759+00:00",
+  "artifact": "gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif",
+  "artifact_sha256": "1c8399f15fbc58f6006e49542af58ae14a29f7e07243ac7797111f008c67cf8b",
+  "human_inspection_used": false,
+  "gates": {
+    "artifact_hash_matches_run_card": true,
+    "artifact_name_matches_run_card": true,
+    "g1_format_strict_0_1": true,
+    "g2_leakage_canary": true,
+    "g3_holdout_beats_recorded_best_and_paired_baseline": false,
+    "g4_registry_novelty": false,
+    "g5_exact_file_c2st": true,
+    "note_at_most_140_chars": true,
+    "budget_and_no_slot_spent": true,
+    "current_account_quota_independently_verified": false,
+    "complete_independent_replay_certificate": false
+  },
+  "all_gates_passed": false,
+  "ok_to_submit": false,
+  "decision": "DO_NOT_SUBMIT",
+  "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
+  "recorded_scientific_screen_passed": false,
+  "current_point_best_source": "evidence/dprf1_run_card_20261026.json",
+  "reasons": [
+    "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.024028124671077445 vs recorded best 0.1637924246971501, paired CI lower=0.01777160258610016",
+    "g4_registry_novelty: novelty evidence missing or malformed",
+    "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
+    "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
+  ],
+  "scope": "Recorded-evidence screening and exact-file validation only; positive authorization is not implemented. Not an organizer score, quota record or acceptance guarantee. The agent never uploads."
+}

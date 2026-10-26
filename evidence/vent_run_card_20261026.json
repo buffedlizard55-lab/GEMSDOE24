@@ -1,0 +1,368 @@
+{
+  "schema_version": 2,
+  "generated_utc": "2026-10-26T06:41:23.825346+00:00",
+  "lane_id": "H24-VENT",
+  "preregistration": "knowledge/22_preregistered_VENT_2026-10-26.md",
+  "preregistration_commit": "unknown",
+  "experiments_run": 1,
+  "experiment_budget_limit": 3,
+  "elapsed_seconds": 42.96243790700001,
+  "hypothesis": "Volcanic vent-bridged Quaternary geothermal corridor: Delaunay vent-vent azimuth \u00d7 spring/sinter DoG \u00d7 8-azimuth lineament anisotropy \u00d7 tilt-gradient product targeting flat-basin concealed conduits missed by bedrock-scarp-biased USGS/INGENIOUS catalogue.",
+  "mechanism": "Quaternary (<2 Ma) vents and hot-spring travertine mark active geothermal upflow under alluvium/playa with no DEM scarp; vent-vent structural bridging plus sinter-ring DoG isolates conduit corridors, lineament anisotropy along vent azimuths rejects playa cracks, tilt-gradient confirms buried basement step.",
+  "named_non_fault_mimic": "Pleistocene Lake Lahontan tufa beach bars, playa evaporite polygons, welded-tuff hogbacks and basalt flow edges intersecting paleo-spring outflow fans.",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 1352.5260759624093,
+    "FP_w": 36141.92354813921,
+    "FN_w": 59635.47392403759,
+    "n_truth": 60988.0,
+    "n_emitted": 37654.0,
+    "dti": 0.024028124671077445,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.01777160258610016,
+        0.03054252816784078
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 269.6838970116932,
+        "FP_w": 8096.731241372746,
+        "FN_w": 9895.316102988307,
+        "n_truth": 10165,
+        "n_emitted": 8414,
+        "dti": 0.02750393805540537,
+        "coverage": 0.02653063423627085
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 335.66721840369314,
+        "FP_w": 10065.096175572457,
+        "FN_w": 12175.332781596308,
+        "n_truth": 12511,
+        "n_emitted": 10404,
+        "dti": 0.02776644324116658,
+        "coverage": 0.02682976727709161
+      },
+      {
+        "fold": "SW",
+        "TP_w": 353.0337360546828,
+        "FP_w": 10004.856457222753,
+        "FN_w": 20180.966263945316,
+        "n_truth": 20534,
+        "n_emitted": 10410,
+        "dti": 0.019084165198104797,
+        "coverage": 0.017192643228532326
+      },
+      {
+        "fold": "SE",
+        "TP_w": 394.14122449234026,
+        "FP_w": 7975.239673971257,
+        "FN_w": 17383.85877550766,
+        "n_truth": 17778,
+        "n_emitted": 8426,
+        "dti": 0.02479456320678241,
+        "coverage": 0.022170166750609756
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "bridge_protocol_holdout": null,
+  "baselines_and_siblings_same_evaluator": {
+    "oof_multiphysics_hgb_d3": {
+      "dti": 0.13,
+      "ci95": [
+        0.11565,
+        0.14396
+      ]
+    },
+    "B1_oof_base_submod": {
+      "dti": 0.139,
+      "ci95": [
+        0.12529,
+        0.15323
+      ]
+    },
+    "B0_oof_h24_ridge": {
+      "dti": 0.14179,
+      "ci95": [
+        0.12931,
+        0.1545
+      ]
+    },
+    "DPRF1_recorded": {
+      "dti": 0.1637924246971501,
+      "ci95": [
+        0.15044621733051888,
+        0.1773903019943756
+      ]
+    }
+  },
+  "leakage_canary": {
+    "diagnostic": "LEAKAGE-CANARY AUC",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "threshold": 0.9,
+    "two_polarities_checked": true,
+    "passed": true,
+    "worst_polarity_extremity": 0.523913597115701,
+    "features": {
+      "vent_proximity_V": {
+        "pooled_auc": 0.523913597115701,
+        "worst": 0.523913597115701,
+        "passed": true
+      },
+      "spring_DoG_D": {
+        "pooled_auc": 0.5092756571620219,
+        "worst": 0.5092756571620219,
+        "passed": true
+      },
+      "lineament_Amod": {
+        "pooled_auc": 0.49818854142936697,
+        "worst": 0.501811458570633,
+        "passed": true
+      },
+      "subsurface_B": {
+        "pooled_auc": 0.5214522443807426,
+        "worst": 0.5214522443807426,
+        "passed": true
+      },
+      "combined_P": {
+        "pooled_auc": 0.515829818449895,
+        "worst": 0.515829818449895,
+        "passed": true
+      }
+    }
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_max_abs_rank_correlation": 0.4,
+    "final_max_abs_rank_correlation": 0.32,
+    "final_method_lane_max_dot_overlap": 0.35,
+    "peer_max_dot_overlap": 0.4
+  },
+  "off_catalogue_distance_profile": {
+    "n_dots": 37654,
+    "frac_le_2px": 0.0,
+    "frac_2_to_9px": 0.2094863759494343,
+    "frac_gt_20px": 0.5604185478302438
+  },
+  "exact_file_nuisance_audit": {
+    "auc": 0.52,
+    "null_p95": 0.55,
+    "holm_p": 0.5,
+    "strict_gate_passed": true,
+    "labels_audited_first": true,
+    "scope": "fallback due to ImportError"
+  },
+  "technical_gates": {
+    "format_valid": true,
+    "strict_all_finite_0_1": true,
+    "leakage_canary_passed": true,
+    "c2st_passed": true,
+    "surface_novelty_passed": true,
+    "final_dots_novelty_passed": true,
+    "literal_all_entries_passed": false
+  },
+  "technical_promotion_gates_passed": false,
+  "raster_sha256": "1c8399f15fbc58f6006e49542af58ae14a29f7e07243ac7797111f008c67cf8b",
+  "nan_outside_artifact": "gems24-vent-quat-bridge-20261026-a6e191937e80-nan.tif",
+  "nan_outside_sha256": "15be2c151ed77ecaa74240d3c20a98bfba5b66b1740edde7bdfd71ca9eb63f5a",
+  "zip_artifact": "gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.zip",
+  "zip_sha256": "9d788d7c09db146b40409d39a5de1ba6ab43a4d554598a14737762e8302fa501",
+  "validator_output": {
+    "file": "gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif",
+    "bytes": 824096,
+    "sha256": "1c8399f15fbc58f6006e49542af58ae14a29f7e07243ac7797111f008c67cf8b",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37654,
+    "in_footprint_mass": 37654.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "submission_name": "gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif",
+  "note": "GEMS24 VENT | vent-spring-lineament bridge | id a6e191937e80 | HOLDOUT-DTI 0.02403 | research; DO NOT SUBMIT",
+  "note_length": 108,
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "submission_authorized": false,
+  "submission_slots_used": 0,
+  "organizer_confirmed_score": null,
+  "governance_hold_reasons": [
+    "HOLDOUT-DTI 0.02403 does not beat recorded best 0.16379 (Rule 8)",
+    "literal_all_entries FAIL: synthetic spacing-5 lattice registry-039 covers 99.87% footprint at 3 px (fail-closed, not scientific uniqueness failure)",
+    "unknown live DrivenData weekly quota (no quota verifier) and missing independent replay certificate (gems-selector-v2-literal-quota-fail-closed)"
+  ],
+  "paired_vs_baseline": {
+    "baseline_label": "DPRF1",
+    "baseline_dti": 0.1637924246971501,
+    "candidate_dti": 0.024028124671077445,
+    "delta": -0.13976430002607265,
+    "ci95": [
+      0.01777160258610016,
+      0.03054252816784078
+    ]
+  },
+  "baseline_reproduced": true,
+  "novelty": {
+    "surface": {
+      "max_abs_rank_correlation": 0.4,
+      "literal_all_entries_passed": true,
+      "prospective": true
+    },
+    "final_dots": {
+      "max_abs_rank_correlation": 0.32,
+      "max_dot_overlap_within_3px": 0.35,
+      "method_lane_passed": true,
+      "literal_all_entries_passed": false,
+      "literal_duplicate_rows": [
+        {
+          "registry_id": "registry-039",
+          "duplicate": true
+        }
+      ]
+    },
+    "peers_final": {
+      "max_dot_overlap_within_3px": 0.4,
+      "passed": true
+    }
+  },
+  "c2st_exact_file": {
+    "auc": 0.52,
+    "null_p95": 0.55,
+    "holm_p": 0.5,
+    "strict_gate_passed": true,
+    "labels_audited_first": true,
+    "scope": "fallback due to ImportError"
+  },
+  "selector_receipt": {
+    "selector_version": "gems-selector-v2-literal-quota-fail-closed",
+    "decided_utc": "2026-10-26T06:41:24.091759+00:00",
+    "artifact": "gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif",
+    "artifact_sha256": "1c8399f15fbc58f6006e49542af58ae14a29f7e07243ac7797111f008c67cf8b",
+    "human_inspection_used": false,
+    "gates": {
+      "artifact_hash_matches_run_card": true,
+      "artifact_name_matches_run_card": true,
+      "g1_format_strict_0_1": true,
+      "g2_leakage_canary": true,
+      "g3_holdout_beats_recorded_best_and_paired_baseline": false,
+      "g4_registry_novelty": false,
+      "g5_exact_file_c2st": true,
+      "note_at_most_140_chars": true,
+      "budget_and_no_slot_spent": true,
+      "current_account_quota_independently_verified": false,
+      "complete_independent_replay_certificate": false
+    },
+    "all_gates_passed": false,
+    "ok_to_submit": false,
+    "decision": "DO_NOT_SUBMIT",
+    "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
+    "recorded_scientific_screen_passed": false,
+    "current_point_best_source": "evidence/dprf1_run_card_20261026.json",
+    "reasons": [
+      "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.024028124671077445 vs recorded best 0.1637924246971501, paired CI lower=0.01777160258610016",
+      "g4_registry_novelty: novelty evidence missing or malformed",
+      "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
+      "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
+    ],
+    "scope": "Recorded-evidence screening and exact-file validation only; positive authorization is not implemented. Not an organizer score, quota record or acceptance guarantee. The agent never uploads."
+  }
+}

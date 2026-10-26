@@ -1,6 +1,26 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Latest 2026-10-26 Point-Best Candidate: `H24-DPRF1` — 10/10 Competing-Method Gates PASS · Selector v2: `DO_NOT_SUBMIT`
+## Latest 2026-10-26 Experiment: `H24-VENT` — Vent-Bridged Quaternary Corridor — DOWNLOAD YES / SUBMIT NO (NEGATIVE)
+
+[**Download H24-VENT GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif) ·
+[NaN-outside twin](docs/downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-nan.tif) ·
+[Single-GeoTIFF ZIP](docs/downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.zip) ·
+[JSON run card](evidence/vent_run_card_20261026.json) ·
+[Selector receipt](evidence/vent_selector_20261026.json) ·
+[Preregistration](knowledge/22_preregistered_VENT_2026-10-26.md) ·
+[PhD Analysis: Why GEMSDOE32 0.2778 Leads & How to Beat It](knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md) ·
+[Executive guide](docs/executive-summary.html).
+
+**DOWNLOAD: YES · SUBMIT: NO (`DO_NOT_SUBMIT`, `verdict: "negative"`).** Independently computed from 21 Quaternary volcanic vents + 928 hot-spring points + 8-azimuth LiDAR lineament anisotropy + subsurface tilt-gradient (no catalogue distance, no prior submission pixels copied; `0%` in-sample). **HOLDOUT-DTI 0.02403** (95% CI `[0.01777, 0.03054]`, `gems-segment-pooled-v1`, `60,988` withheld, `0/4` folds vs DPRF1) — **does NOT beat current best**, so no slot is authorized. Passes format/strict `[0,1]`/`4/4` canaries/C2ST (`0.52`) and competing-method novelty (`35% ≤70%`), but fails holdout best and literal lattice (`registry-039`). Negative is deliverable (Parallel-Run Protocol Rule 5).
+
+- Name: `gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif`
+- SHA-256: `1c8399f15fbc58f6006e49542af58ae14a29f7e07243ac7797111f008c67cf8b`
+- Short comment (119 chars): `GEMS24 VENT | vent-spring-lineament bridge | id a6e191937e80 | HOLDOUT-DTI 0.02403 | research; DO NOT SUBMIT`
+- Verified: `.venv/bin/python scripts/run_vent_lane.py --verify-recorded` · `.venv/bin/python -m pytest -q`
+
+> **Why GEMSDOE32 `h33-h33-2-b2` (0.2778) is highest among nine:** It is `44,090 → 37,654` by deleting all `6,436` dots at `d_cat ≤200 m` (D2.8 minus 200 m); Tversky `0.2T/(0.2T+0.2F+0.8N)` with 300 m kernel rewards removing low-`p_hit` near-catalogue `F` at `0.2×` penalty while `F` dominates `T`. This is **emission-policy refinement, not new geology** — zero new dots. It beats GEMSDOE31 `0.2708` by `+0.0070` via extra `100–200 m` clearance, but remains `UNVERIFIED-OWNER-REPORT`. **How to beat it:** Keep `>200 m` clearance + replace H19-5 backbone with DPRF1-style **Stitched-OOF multi-physics + INGENIOUS** (`0.2190` live already proved on GEMSDOE27) + `32%` concealed intrabasin allocation to lift `>20 px` far-field from `49.2%` → `52.3%` without `200–900 m` apron.
+
+## Retained Point-Best: `H24-DPRF1` — 10/10 Competing-Method Gates PASS · Selector v2: `DO_NOT_SUBMIT`
 
 [**Download the newly generated H24-DPRF1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) ·
 [Single-GeoTIFF ZIP](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.zip) ·
@@ -36,6 +56,8 @@ All prompt leaderboard numbers below are `UNVERIFIED-OWNER-REPORT` (never `ORGAN
 | **[GEMSDOE32](https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html)** | **`h33-h33-2-b2-...-zeros` (`0.2778`, D2.8 minus $\le 2\text{ px}$)** | `gemsdoe32-h-geo-conduit-37654-20261025T235617Z-2d0d0c5e-zeros.tif` | Unscored; repo top header: `DO NOT SUBMIT` | `63.6%` / `13.1%` | `29.50%` (`45.6%` vs `B2`) | **DO NOT SUBMIT** (`H33-B2` prohibited to copy; `H-GEO-CONDUIT` `63.6%` apron) |
 | **[GEMSDOE33](https://buffedlizard55-lab.github.io/GEMSDOE33/)** | `h33d-analog-tip-stepover-r30` (`0.2632`, B2 + 6,436 px) | `gemsdoe33-a33-l1-analog-transfer-research-37654-20261025-85c94a805a34-zeros.tif` | Unscored; `GEMSDOE33` holdout FAIL (`NEGATIVE`) | `37.6%` / `38.7%` | `27.60%` | **DO NOT SUBMIT** (failed `GEMSDOE33` holdout gate) |
 | **[GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/docs/)** | `anderson-geothermal-pinn-38854` (`0.2750`, B2 + 1,200 px) | *None (`2026-10-26` review retired legacy copied/leaky code)* | No valid unique candidate | — | `46.06%` (vs `PINN`) | **DO NOT SUBMIT** (no non-copied unique candidate on `GEMSDOE36`) |
+
+**2026-10-26 `H24-VENT` update (this session):** `gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif` (`SHA 1c8399f15fbc58...`) — independent vent-spring-lineament unsupervised product, **HOLDOUT-DTI 0.02403** `[0.01777,0.03054]` (`gems-segment-pooled-v1`, 60,988), `0.209` apron / `0.560` far-field, `35%` overlap vs DPRF1 → **passes novelty/C2ST but fails holdout best** → `DOWNLOAD YES / SUBMIT NO`. Detailed PhD diagnosis of B2's Tversky `0.2T/(0.2T+0.2F+0.8N)` mechanism in [knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md](knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md).
 
 ## Concurrent decision — 2026-10-26 (`H24-TNR1`, PR #31)
 
