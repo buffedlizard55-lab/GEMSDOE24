@@ -1,5 +1,22 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## 2026-10-26 B2 verification session — SUBMIT: NO for all nine focus sites · DOWNLOAD: research only
+
+> **Verdict (automated gates, no human inspector):** no file on GEMSDOE24/25/27/28/30/31/32/33/36 and no file in this repo is OK to submit. Nothing new was generated and no slot was spent.
+> - **Highest owner-reported focus score:** GEMSDOE32 `h33-h33-2-b2` = **0.2778** (OWNER-REPORTED, not an organizer receipt). Verified by bytes: it is an **exact subset** of the GEMSDOE30 D2.8 family file (B2 ∩ D2.8 = 37,654 = all of B2). The 6,436 dots removed from D2.8 all lie **1–2 px from the public catalogue**. Hypothesis: catalogue-misregistration halo penalty; the hidden-label effect is not observable here.
+> - **Cannot beat 0.2778 defensibly from here:** every D2.8/B2 variant is a near-duplicate (>95% 3-px overlap). The repo's local holdout truth (`labels.tif`) is byte-identical in content to the **catalogue**, so holdout numbers do not measure the official new-fault test set (`IRR-HOLDOUT-TRUTH-IS-CATALOGUE`).
+> - **Live leaderboard (fetched 2026-10-26):** #1 = 0.4437, #23 = 0.3217, #24 = 0.3169. The prompt's 0.4413 and 0.3195 do not match this page (`IRR-LEADERBOARD-MISMATCH`).
+> - **Portal error "Predicted values must be in range [0, 1]":** official format allows NaN outside bounds; the `-nan` files are NaN exactly outside the footprint (7,111,787 cells); a naive range check fails on NaN. Plausible, **not confirmed**. Send the uploaded file name and SHA-256 to settle it.
+
+- **Full analysis, nine-site table, irregularities, hypotheses and run card:** [`docs/b2-leaderboard-analysis-20261026.md`](docs/b2-leaderboard-analysis-20261026.md)
+- **Reproducible byte-level evidence (generated):** [`evidence/focus_family_verification_20261026.json`](evidence/focus_family_verification_20261026.json) via [`scripts/verify_focus_family.py`](scripts/verify_focus_family.py)
+- **Irregularities register (new IDs added):** [`registry/irregularities.json`](registry/irregularities.json)
+- **Official sources:** [problem description & metric](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) · [official rules PDF](https://docs.nlr.gov/docs/fy26osti/96647.pdf) (3 submissions/week; public vs private scoring; GenAI disclosure) · [live leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) · [reference solution `aebe92f`](https://github.com/drivendataorg/gems-prize-reference-solution)
+
+**Next steps (not started):** (1) replace the catalogue-proxy holdout with an independent truth source before any further holdout claim; (2) obtain the uploaded file name/hash for the portal error; (3) decide whether ScienceBase 3DEP bulk tiles can be fetched through an allowed route; (4) include the GenAI disclosure in any submission narrative.
+
+---
+
 ## H24-S3DEP1 (New All-Time Recorded `HOLDOUT-DTI = 0.166060`, Zero 1 m LiDAR) & Live `2026-10-26` Nine-Site Forensic Executive Summary (`DOWNLOAD: YES · SUBMIT: NO`)
 
 > **UNMISTAKABLE AUTOMATED VERDICT (ZERO HUMAN-INSPECTOR FALLBACK):**
