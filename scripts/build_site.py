@@ -418,8 +418,15 @@ def build_independent_site(primary):
             f'<a class="button" href="downloads/{e(vname)}" download="{e(vname)}">Download VENT research TIFF — DO NOT SUBMIT</a>'
             '<p><a href="data/vent_run_card.json" download>Frozen VENT run card</a></p></section>'
         )
-    overview = current_banner + vent_html + overview
-    executive = current_banner + vent_html + executive
+    from gems.executive_decisions import build_decisions, render_decisions
+
+    decisions = build_decisions(ROOT, current)
+    (DOCS / "data/nine_site_download_decisions.json").write_text(
+        json.dumps(decisions, indent=2, allow_nan=False) + "\n"
+    )
+    decision_table = render_decisions(decisions)
+    overview = current_banner + decision_table + vent_html + overview
+    executive = current_banner + decision_table + vent_html + executive
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),
