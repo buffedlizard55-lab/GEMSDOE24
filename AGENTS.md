@@ -1,9 +1,32 @@
 # Standing project instructions
 
-**2026-10-26 H24-DPRF1 & Nine-Site Executive Summary packet (`knowledge/19_preregistered_DPRF1_2026-10-26.md`, `knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md`, `evidence/dprf1_run_card_20261026.json`, `evidence/nine_site_executive_summary_20261026.json`):**
+**2026-10-26 H24-DPRF1 & Nine-Site Executive Summary packet (`knowledge/19_preregistered_DPRF1_2026-10-26.md`, `knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md`, `evidence/dprf1_run_card_20261026.json`, `evidence/dprf1_selector_20261026.json`, `evidence/nine_site_executive_summary_20261026.json`):**
 Read `knowledge/owner_brief_2026-10-25.md`, `knowledge/owner_brief_2026-10-26_delta.md`, and the current README decision first.
 - Diagnoses and cures the Stage-5 in-sample `200-900 m` catalogue-apron memorization trap (`IR-STAGE5-INSAMPLE-APRON-COLLAPSE`) that caused `GVC1` (`0.14876` holdout -> `0.0859` owner-reported live, `70.4%` dots in `2-9 px`, `8.5%` `>2 km`) and `GEMSDOE25` `H66-MGD` (`0.0742` live, `69.6%` in `2-9 px`) to collapse relative to Dual-Partition Stitched-OOF `GEMSDOE27` `H29-CELF` (`0.2190` live, `44.3%` `>2 km`).
-- `H24-DPRF1` (`src/gems/dprf1.py`, `scripts/run_dprf1_lane.py`, `gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`, SHA-256 `c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1`) achieves **`HOLDOUT-DTI 0.16379`** (`[0.15045, 0.17739]` on `gems-segment-pooled-v1`, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000`, `B1` `0.13900`, `B0` `0.14179`, and beating `GVC1` `0.14876`) and **`0.16290`** (`[0.14449, 0.18118]`) on `3.0 km` `segment-hide-recover-pooled-v1`, passes **54/54** competing method rasters (`max 3-px overlap = 0.5578 <= 0.70`) and **83/83** peer blobs (`0.5494 <= 0.70`), passes exact-file C2ST (`AUC = 0.5247 < 0.55`, Holm `p = 0.100`), and restores **`52.3%`** `>2 km` far-field discovery (`22.3%` in `2-9 px`). Remains `DOWNLOAD: YES · SUBMIT: NO` (`verdict: "negative"`) solely pending the separate weekly-slot selector step (Rule 6) and retained spacing-5 calibration lattice (`registry-039`). Verify without rerunning via `.venv/bin/python scripts/run_dprf1_lane.py --verify-recorded`.
+- `H24-DPRF1` (`src/gems/dprf1.py`, `scripts/run_dprf1_lane.py`, `gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`, SHA-256 `c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1`) achieves **`HOLDOUT-DTI 0.16379`** (`[0.15045, 0.17739]` on `gems-segment-pooled-v1`, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000`, `B1` `0.13900`, `B0` `0.14179`, and beating `CUP1` `0.15038`, `GVC1` `0.14876`, and `CRP1` `0.13747`) and **`0.16290`** (`[0.14449, 0.18118]`) on `3.0 km` `segment-hide-recover-pooled-v1`, passes **56/56** competing method rasters (`max 3-px overlap = 0.5578 <= 0.70`, incl. `0.3398` vs `CRP1` and `0.3381` vs `CUP1`) and **83/83** peer blobs (`0.5494 <= 0.70`), passes exact-file C2ST (`AUC = 0.5247 < 0.55`, Holm `p = 0.100`), restores **`52.3%`** `>2 km` far-field discovery (`22.3%` in `2-9 px`), and clears `gems.selector.verify_selector` (`gems-selector-v1`: **`OK_TO_SUBMIT`**, `verdict: "promote"`, `quota_status: "unknown_owner_must_confirm_on_submission_page"`). Verify without rerunning via `.venv/bin/python scripts/run_dprf1_lane.py --verify-recorded`.
+
+**CUP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CUP1_2026-10-26.md`,
+`knowledge/21_CUP1_findings_2026-10-26.md` and `evidence/cup1_run_card_20261026.json` first.
+CUP1 (HOLDOUT-DTI 0.15038, prior point best before DPRF1) is DOWNLOAD YES / SUBMIT NO: paired CI vs matched
+B-GVC crosses 0 and 91.2% of dots sit within 3 px of parent GVC1. Do not rerun/retune CUP1.
+
+**CRP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CRP1_2026-10-26.md`,
+`knowledge/21_CRP1_findings_2026-10-26.md` and `evidence/crp1_run_card_20261026.json` first.
+H24-CRP1 (compositional radiometric fronts + cross-depth TMI/up150 persistence +
+Hessian saddles, selective residualization) is STOPPED as duplicate/negative:
+HOLDOUT-DTI 0.13747 [0.12400, 0.15152] (`gems-segment-pooled-v1`, 60,988 withheld),
+paired Δ vs reconstructed OOF baseline +0.00747 [-0.00242, +0.01793], final-dot
+overlap 0.8070 > 0.70 (max |ρ| 0.5878), canary/C2ST/format PASS. DOWNLOAD YES /
+SUBMIT NO. Do not rerun or retune it (including residualization strength).
+New independent selector `gems.selector` (v1) now exists and is the only issuer
+of `ok_to_submit`; it fail-closes on any missing gate evidence and always records
+quota as unknown. Preflight schema v2 still requires its own selector receipt
+format — wiring the two is future work, do not change preflight semantics silently.
+Owner-reported nine-site list updated in `registry/owner_reported_scores_2026-10-26.json`
+(includes GVC1 listed live at 0.0859 vs its 0.14876 holdout — holdout rank does
+not transfer monotonically when Stage-5 refits in-sample). Parallel PR #28 (`knowledge/20_repo_review_2026-10-26.md`)
+shares the `knowledge/20_` prefix with the CRP1 preregistration by coincidence;
+both files remain.
 
 **OJ1 continuation (2026-10-25):** Read `knowledge/17_preregistered_OJ1_2026-10-25.md`,
 `knowledge/18_OJ1_findings_2026-10-25.md`, and `evidence/oj1_run_card_20261025.json` first.

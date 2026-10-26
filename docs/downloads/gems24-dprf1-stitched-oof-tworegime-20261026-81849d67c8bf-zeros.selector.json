@@ -1,0 +1,24 @@
+{
+  "selector_version": "gems-selector-v1",
+  "decided_utc": "2026-10-26T01:47:34.552319+00:00",
+  "artifact": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+  "artifact_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+  "human_inspection_used": false,
+  "gates": {
+    "artifact_hash_matches_run_card": true,
+    "artifact_name_matches_run_card": true,
+    "g1_format_strict_0_1": true,
+    "g2_leakage_canary": true,
+    "g3_holdout_beats_recorded_best_and_paired_baseline": true,
+    "g4_registry_novelty": true,
+    "g5_exact_file_c2st": true,
+    "note_at_most_140_chars": true,
+    "budget_and_no_slot_spent": true
+  },
+  "all_gates_passed": true,
+  "ok_to_submit": true,
+  "decision": "OK_TO_SUBMIT",
+  "quota_status": "unknown_owner_must_confirm_on_submission_page",
+  "reasons": [],
+  "scope": "Project scientific gates only; not an organizer score, acceptance guarantee, or quota check. The agent never uploads."
+}

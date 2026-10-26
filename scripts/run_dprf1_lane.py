@@ -70,6 +70,7 @@ from gems import (  # noqa: E402
     holdout,
     novelty,
     sahg1,
+    selector,
     submission,
 )
 from gems.validator import sha256_file  # noqa: E402
@@ -84,7 +85,9 @@ GVC_MEMMAP = ROOT / "data/prepared/gvc1_features.npy"
 SAHG4_MEMMAP = ROOT / "data/prepared/sahg4_features.npy"
 EXPERIMENT_JSON = ROOT / "evidence/dprf1_experiment_20261026.json"
 RUN_CARD_JSON = ROOT / "evidence/dprf1_run_card_20261026.json"
+SELECTOR_JSON = ROOT / "evidence/dprf1_selector_20261026.json"
 DOCS_RUN_CARD_JSON = ROOT / "docs/data/dprf1_run_card.json"
+DOCS_SELECTOR_JSON = ROOT / "docs/data/dprf1_selector.json"
 DOCS_DOWNLOAD_JSON = ROOT / "docs/data/dprf1_download.json"
 PREVIEW_PNG = ROOT / "docs/assets/dprf1-preview.png"
 
@@ -560,22 +563,26 @@ def run_exact_file_c2st(
 
 
 def verify_recorded() -> dict[str, Any]:
-    """Verify frozen DPRF1 receipts, GeoTIFF variants, ZIP, preflight, and <=140-char note."""
-    for p in (EXPERIMENT_JSON, RUN_CARD_JSON, DOCS_RUN_CARD_JSON, DOCS_DOWNLOAD_JSON, PREVIEW_PNG):
+    """Verify frozen DPRF1 receipts, GeoTIFF variants, ZIP, selector, preflight, and <=140-char note."""
+    for p in (
+        EXPERIMENT_JSON,
+        RUN_CARD_JSON,
+        SELECTOR_JSON,
+        DOCS_RUN_CARD_JSON,
+        DOCS_SELECTOR_JSON,
+        DOCS_DOWNLOAD_JSON,
+        PREVIEW_PNG,
+    ):
         if not p.exists():
             raise SystemExit(f"Missing recorded DPRF1 artifact: {p}")
     exp = json.loads(EXPERIMENT_JSON.read_text())
     card = json.loads(RUN_CARD_JSON.read_text())
     docs_card = json.loads(DOCS_RUN_CARD_JSON.read_text())
+    saved_sel = json.loads(SELECTOR_JSON.read_text())
+    docs_sel = json.loads(DOCS_SELECTOR_JSON.read_text())
     dl = json.loads(DOCS_DOWNLOAD_JSON.read_text())
-    if card != docs_card:
-        raise SystemExit("Evidence and docs/data DPRF1 run cards disagree")
-    if (
-        card["verdict"] != "negative"
-        or card["ok_to_submit"] is not False
-        or dl["ok_to_submit"] is not False
-    ):
-        raise SystemExit("Recorded DPRF1 packet must remain fail-closed until separate selector")
+    if card != docs_card or saved_sel != docs_sel:
+        raise SystemExit("Evidence and docs/data DPRF1 run cards or selector receipts disagree")
 
     template = ROOT / "data/bridge/sample_submission.tif"
     zeros_path = ROOT / "docs/downloads" / card["submission_name"]
@@ -584,6 +591,19 @@ def verify_recorded() -> dict[str, Any]:
     checks_path = ROOT / "docs/downloads" / dl["checks_file"]
     note_path = ROOT / "docs/downloads" / dl["note_file"]
     preflight_path = zeros_path.with_suffix(".preflight.json")
+    dl_sel_path = zeros_path.with_suffix(".selector.json")
+
+    fresh_sel = selector.verify_selector(zeros_path, template, card)
+    ok_sel = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
+    if (
+        saved_sel.get("gates") != fresh_sel.get("gates")
+        or saved_sel.get("decision") != fresh_sel.get("decision")
+        or json.loads(dl_sel_path.read_text()) != saved_sel
+        or card.get("ok_to_submit") is not ok_sel
+        or dl.get("ok_to_submit") is not ok_sel
+        or (card.get("verdict") == "promote") is not ok_sel
+    ):
+        raise SystemExit("DPRF1 run card/download disagrees with independent gems.selector receipt")
 
     if sha256_file(zeros_path) != card["raster_sha256"] or dl["sha256"] != card["raster_sha256"]:
         raise SystemExit("DPRF1 zero-outside GeoTIFF SHA-256 mismatch")
@@ -646,6 +666,8 @@ def verify_recorded() -> dict[str, Any]:
         "farfield_gt20px_fraction": card["off_catalogue_distance_profile"]["frac_gt_20px_farfield"],
         "verdict": card["verdict"],
         "ok_to_submit": card["ok_to_submit"],
+        "selector_decision": fresh_sel["decision"],
+        "selector_version": fresh_sel["selector_version"],
         "preregistration": exp["preregistration"],
     }
 

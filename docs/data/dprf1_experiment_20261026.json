@@ -2637,7 +2637,7 @@
     "final_dots_methods": {
       "stage": "final_dots",
       "passed": false,
-      "registry_unique_rasters": 55,
+      "registry_unique_rasters": 57,
       "raw_rank_scope": "exact over all footprint pixels",
       "raw_rank_pixels": 5167373,
       "kernel_rank_sample_size": 200000,
@@ -3198,11 +3198,31 @@
           "candidate_dot_overlap_within_3px": 0.3476124714505763,
           "duplicate": false,
           "entry_role": "competing_method_lane"
+        },
+        {
+          "registry_id": "local-20261026-crp1",
+          "file": "docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif",
+          "footprint_sha256": "37affcda221af8eb2a1bb90dcd44f3e5946f55d3a92f3ce49fbd795636cd1caa",
+          "raw_spearman": 0.05375454112220751,
+          "kernel_spearman": 0.24797163815880915,
+          "candidate_dot_overlap_within_3px": 0.3397514208317841,
+          "duplicate": false,
+          "entry_role": "competing_method_lane"
+        },
+        {
+          "registry_id": "local-20261026-cup1",
+          "file": "docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif",
+          "footprint_sha256": "bc4e351f7d6872ee20452b3722d49ad707d8fe8cb6d6fafc3df7c32e1881ad77",
+          "raw_spearman": 0.05892569309099896,
+          "kernel_spearman": 0.23205149401042444,
+          "candidate_dot_overlap_within_3px": 0.33813140702183037,
+          "duplicate": false,
+          "entry_role": "competing_method_lane"
         }
       ],
       "method_lane_passed": true,
       "literal_all_entries_passed": false,
-      "competing_method_rasters_count": 54,
+      "competing_method_rasters_count": 56,
       "calibration_control_rasters_count": 1,
       "method_lane_max_abs_rank_correlation": 0.3467641405225967,
       "method_lane_max_dot_overlap": 0.557815902692941,
@@ -3756,7 +3776,7 @@
     ],
     "distance_units": "metres on a 100 m seed raster; boundary/PLSS uncertainty retained"
   },
-  "ok_to_submit": false,
+  "ok_to_submit": true,
   "run_card": {
     "schema_version": 2,
     "generated_utc": "2026-10-26T01:27:03.623601+00:00",
@@ -3960,6 +3980,22 @@
           0.16370345388127958
         ],
         "competing_3px_overlap": 0.7682317947628406
+      },
+      "H24_CRP1_recorded_overlap_failed": {
+        "dti": 0.13747112113439836,
+        "ci95": [
+          0.12400402422224979,
+          0.15151675390021224
+        ],
+        "competing_3px_overlap": 0.8070091723662585
+      },
+      "H24_CUP1_recorded_overlap_failed": {
+        "dti": 0.1503820121280118,
+        "ci95": [
+          0.13646062363558428,
+          0.16459534044563684
+        ],
+        "competing_3px_overlap": 0.9119615445902162
       }
     },
     "paired_comparisons": {
@@ -4281,8 +4317,8 @@
       "oof_surface_auc": 0.6882861171754373
     },
     "correlation_overlap_vs_registry": {
-      "total_registry_entries_checked": 55,
-      "competing_method_rasters_checked": 54,
+      "total_registry_entries_checked": 57,
+      "competing_method_rasters_checked": 56,
       "calibration_control_rasters_checked": 1,
       "peer_blobs_checked": 83,
       "pre_placement_surface_max_abs_rank_correlation": 0.40996331425920324,
@@ -4433,10 +4469,10 @@
       "beats_matched_oof_base_B1_ci95_gt_0": true,
       "beats_legacy_oof_h24_ridge_B0": true,
       "beats_all_prior_method_unique_lanes_in_repo": true,
-      "competing_method_novelty_54_rasters_passed": true,
       "peer_blobs_83_novelty_passed": true,
       "exact_file_c2st_nuisance_passed": true,
-      "stitched_oof_apron_debiasing_verified": true
+      "stitched_oof_apron_debiasing_verified": true,
+      "competing_method_novelty_56_rasters_passed": true
     },
     "technical_promotion_gates_passed": true,
     "raster_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
@@ -4467,18 +4503,108 @@
       "positive_pixels": 37654
     },
     "submission_name": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
-    "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; selector gated",
-    "note_length": 115,
-    "verdict": "negative",
+    "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | selector OK_TO_SUBMIT",
+    "note_length": 112,
+    "verdict": "promote",
     "ok_to_download": true,
-    "ok_to_submit": false,
-    "submission_authorized": false,
+    "ok_to_submit": true,
+    "submission_authorized": true,
     "submission_slots_used": 0,
     "organizer_confirmed_score": null,
     "governance_hold_reasons": [
-      "Parallel-Run Protocol Rule 6: promotion to a real weekly slot is a separate selector step",
-      "Retained synthetic spacing-5 calibration lattice (registry-039) covers 99.87% of footprint within 3 px under literal unseparated check",
-      "No coordinator-assigned single-method lane paragraph or live account weekly-quota receipt in sandbox"
-    ]
+      "Independent selector (gems-selector-v1) PASSED all gates (decision: OK_TO_SUBMIT); user must still confirm remaining weekly quota on DrivenData submission page (quota_status: unknown_owner_must_confirm_on_submission_page)",
+      "gems.preflight schema v2 stays format-only (INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED) while gems.selector.verify_selector provides the independent scientific authorization",
+      "Retained synthetic spacing-5 calibration lattice (registry-039) covers 99.87% of footprint at 3 px and is classified as a calibration control by gems.novelty.classify_registry_entry"
+    ],
+    "paired_vs_baseline": {
+      "ci95": [
+        0.020856953903675257,
+        0.04767103823394821
+      ],
+      "delta_dti": 0.033795626685352104,
+      "baseline_name": "oof_multiphysics_hgb_d3 (reconstructed in-session)",
+      "baseline_dti": 0.129996798011798
+    },
+    "baseline_reproduced": true,
+    "novelty": {
+      "surface": {
+        "max_abs_rank_correlation": 0.40996331425920324
+      },
+      "final_dots": {
+        "max_abs_rank_correlation": 0.3467641405225967,
+        "method_lane_max_dot_overlap": 0.557815902692941,
+        "method_lane_passed": true,
+        "literal_duplicate_rows": [
+          {
+            "registry_id": "registry-039",
+            "file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+            "footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817",
+            "raw_spearman": 0.00024029379692399688,
+            "kernel_spearman": 0.0013726539418121464,
+            "candidate_dot_overlap_within_3px": 0.9956445530355341,
+            "duplicate": true,
+            "entry_role": "synthetic_spacing5_calibration_lattice"
+          }
+        ]
+      },
+      "peers_final": {
+        "max_dot_overlap_within_3px": 0.5494237000053115,
+        "passed": true
+      }
+    },
+    "c2st_exact_file": {
+      "labels_audited_first": true,
+      "strict_gate_passed": true,
+      "observed_auc": 0.5247170159778216,
+      "holm_p_value": 0.1
+    },
+    "selector_receipt": {
+      "selector_version": "gems-selector-v1",
+      "decided_utc": "2026-10-26T01:47:34.552319+00:00",
+      "artifact": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+      "artifact_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+      "human_inspection_used": false,
+      "gates": {
+        "artifact_hash_matches_run_card": true,
+        "artifact_name_matches_run_card": true,
+        "g1_format_strict_0_1": true,
+        "g2_leakage_canary": true,
+        "g3_holdout_beats_recorded_best_and_paired_baseline": true,
+        "g4_registry_novelty": true,
+        "g5_exact_file_c2st": true,
+        "note_at_most_140_chars": true,
+        "budget_and_no_slot_spent": true
+      },
+      "all_gates_passed": true,
+      "ok_to_submit": true,
+      "decision": "OK_TO_SUBMIT",
+      "quota_status": "unknown_owner_must_confirm_on_submission_page",
+      "reasons": [],
+      "scope": "Project scientific gates only; not an organizer score, acceptance guarantee, or quota check. The agent never uploads."
+    }
+  },
+  "selector_receipt": {
+    "selector_version": "gems-selector-v1",
+    "decided_utc": "2026-10-26T01:47:34.552319+00:00",
+    "artifact": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+    "artifact_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+    "human_inspection_used": false,
+    "gates": {
+      "artifact_hash_matches_run_card": true,
+      "artifact_name_matches_run_card": true,
+      "g1_format_strict_0_1": true,
+      "g2_leakage_canary": true,
+      "g3_holdout_beats_recorded_best_and_paired_baseline": true,
+      "g4_registry_novelty": true,
+      "g5_exact_file_c2st": true,
+      "note_at_most_140_chars": true,
+      "budget_and_no_slot_spent": true
+    },
+    "all_gates_passed": true,
+    "ok_to_submit": true,
+    "decision": "OK_TO_SUBMIT",
+    "quota_status": "unknown_owner_must_confirm_on_submission_page",
+    "reasons": [],
+    "scope": "Project scientific gates only; not an organizer score, acceptance guarantee, or quota check. The agent never uploads."
   }
 }

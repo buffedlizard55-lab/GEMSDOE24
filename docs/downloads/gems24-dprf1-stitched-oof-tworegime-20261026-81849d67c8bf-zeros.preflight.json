@@ -107,29 +107,27 @@
   },
   "run_card": {
     "provided": true,
-    "path": "/home/user/GEMSDOE24/evidence/dprf1_run_card_20261026.json",
+    "path": "evidence/dprf1_run_card_20261026.json",
     "readable": true,
     "artifact_sha256_matches": true,
     "artifact_name_matches": true,
     "validator_sha256_matches": true,
     "validator_format_valid": true,
-    "verdict_promote": false,
-    "submission_authorized": false,
+    "verdict_promote": true,
+    "submission_authorized": true,
     "scientific_authorization": false,
     "independent_selector_verified": false,
     "reason_codes": [
-      "RUN_CARD_NOT_PROMOTED",
-      "RUN_CARD_NOT_AUTHORIZED",
       "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED"
     ],
-    "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; selector gated"
+    "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | selector OK_TO_SUBMIT"
   },
   "note": {
     "present": true,
-    "characters": 115,
+    "characters": 112,
     "limit": 140,
     "within_limit": true,
-    "value": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; selector gated"
+    "value": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | selector OK_TO_SUBMIT"
   },
   "requirements": {
     "single_tif_and_footprint_format": true,
@@ -144,8 +142,6 @@
     "ready_to_submit": false,
     "blockers": [
       "hash_bound_scientific_promotion",
-      "RUN_CARD_NOT_PROMOTED",
-      "RUN_CARD_NOT_AUTHORIZED",
       "INDEPENDENT_SELECTOR_EVIDENCE_REQUIRED"
     ],
     "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score."

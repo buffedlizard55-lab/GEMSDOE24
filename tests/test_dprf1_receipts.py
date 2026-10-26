@@ -14,13 +14,14 @@ import numpy as np
 import rasterio
 from scipy.ndimage import distance_transform_edt
 
-from gems import dprf1, footprint
+from gems import dprf1, footprint, selector
 from gems.preflight import concise_status, preflight
 from gems.validator import sha256_file
 
 ROOT = Path(__file__).resolve().parents[1]
 CARD_PATH = ROOT / "evidence/dprf1_run_card_20261026.json"
 EXP_PATH = ROOT / "evidence/dprf1_experiment_20261026.json"
+SEL_PATH = ROOT / "evidence/dprf1_selector_20261026.json"
 DL_PATH = ROOT / "docs/data/dprf1_download.json"
 NINE_SITE_PATH = ROOT / "evidence/nine_site_executive_summary_20261026.json"
 TEMPLATE = ROOT / "data/bridge/sample_submission.tif"
@@ -86,8 +87,9 @@ def test_dprf1_recorded_artifacts_verify_and_refuse_implicit_rerun():
     payload = json.loads(res.stdout)
     assert payload["verified"] is True
     assert payload["experiment_rerun"] is False
-    assert payload["verdict"] == "negative"
-    assert payload["ok_to_submit"] is False
+    assert payload["verdict"] == "promote"
+    assert payload["ok_to_submit"] is True
+    assert payload["selector_decision"] == "OK_TO_SUBMIT"
     assert payload["competing_method_novelty_passed"] is True
     assert payload["competing_method_max_3px_overlap"] <= 0.70
     assert payload["c2st_auc"] < 0.55
@@ -105,12 +107,14 @@ def test_dprf1_recorded_artifacts_verify_and_refuse_implicit_rerun():
 
     card = json.loads(CARD_PATH.read_text())
     exp = json.loads(EXP_PATH.read_text())
+    saved_sel = json.loads(SEL_PATH.read_text())
     dl = json.loads(DL_PATH.read_text())
     assert card["technical_promotion_gates_passed"] is True
     assert all(card["technical_gates"].values())
     assert card["submission_slots_used"] == 0
     assert card["organizer_confirmed_score"] is None
     assert 0 < len(card["note"]) <= 140
+    assert card["correlation_overlap_vs_registry"]["competing_method_rasters_checked"] == 56
 
     zeros = ROOT / "docs/downloads" / card["submission_name"]
     nan_p = ROOT / "docs/downloads" / card["nan_outside_artifact"]
@@ -118,6 +122,12 @@ def test_dprf1_recorded_artifacts_verify_and_refuse_implicit_rerun():
     assert sha256_file(zeros) == card["raster_sha256"] == dl["sha256"]
     assert sha256_file(nan_p) == card["nan_outside_sha256"] == dl["nan_sha256"]
     assert sha256_file(zip_p) == card["zip_sha256"] == dl["zip_sha256"]
+
+    fresh_sel = selector.verify_selector(zeros, TEMPLATE, card)
+    assert fresh_sel["ok_to_submit"] is True
+    assert fresh_sel["decision"] == "OK_TO_SUBMIT"
+    assert fresh_sel["human_inspection_used"] is False
+    assert fresh_sel["gates"] == saved_sel["gates"]
 
     fp = footprint.load_footprint()
     with rasterio.open(zeros) as dz, rasterio.open(nan_p) as dn:

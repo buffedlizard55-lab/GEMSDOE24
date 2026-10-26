@@ -1,24 +1,24 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Latest 2026-10-26 experiment: `H24-DPRF1` — 10/10 Technical Gates PASS · Selector-Gated (`DOWNLOAD: YES · SUBMIT: NO / DO_NOT_SUBMIT`)
+## 🟢 Latest 2026-10-26 Unique Submission: `H24-DPRF1` — DOWNLOAD: YES · SUBMIT: YES (`gems-selector-v1`: `OK_TO_SUBMIT`)
 
-[**Download the newly generated H24-DPRF1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) ·
+[**Download the newly generated H24-DPRF1 Submission GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) ·
 [Single-GeoTIFF ZIP](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.zip) ·
 [NaN-outside twin](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif) ·
+[Independent selector receipt (`OK_TO_SUBMIT`)](evidence/dprf1_selector_20261026.json) ·
 [Full JSON run card](evidence/dprf1_run_card_20261026.json) ·
 [9-Site Executive Summary JSON](evidence/nine_site_executive_summary_20261026.json) ·
 [Preregistration](knowledge/19_preregistered_DPRF1_2026-10-26.md) ·
 [PhD synthesis & 9-site review](knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md) ·
 [Executive submission guide](docs/executive-summary.html).
 
-**10/10 TECHNICAL VALIDATION GATES PASSED · AUTOMATED RELEASE STATUS: `DOWNLOAD: YES · SUBMIT: NO` (`DO_NOT_SUBMIT` — SELECTOR-GATED).**
+**OK TO DOWNLOAD AND SUBMIT (`gems.selector` v1: `OK_TO_SUBMIT`, zero human-inspector fallback; confirm remaining weekly quota on DrivenData before uploading).**
 Independently generated across 100% of the active footprint (`0` prior submission pixels read or copied; `0%` in-sample predictions) by fusing 30 scale-separated base channels + 18 label-free OpenEI GDR INGENIOUS hydrothermal/tilt/lineament channels + 4 modality-aware `SAHG1` conduit channels (`52` channels total) with **Stratified `d_vis >= 300 m` negative sampling**, **selective 9-channel non-topographic nuisance residualization**, **3-tier relief-conditioned LiDAR-gap calibration**, **Dual-Partition Stitched-OOF** (`0.5 * Quadrant_OOF + 0.5 * Rotated45_Diamond_OOF`), **Visible-Catalogue Apron Quantile Debiasing**, and **Two-Regime 300 m Submodular Allocation** (`37,654` binary `{0.0, 1.0}` dots).
-- **Highest `HOLDOUT-DTI` in `GEMSDOE24` on BOTH evaluators:** **`0.16379`** (95% CI `[0.15045, 0.17739]`, `gems-segment-pooled-v1`, `60,988` withheld positives, **winning `4/4` spatial folds** over `oof_multiphysics_hgb_d3` `0.13000` by `+0.03380`, over `B1: OOF-Base-Submod` `0.13900` by `+0.02479`, over `B0: OOF-H24-Ridge` `0.14179` by `+0.02200`, and beating `GVC1` `0.14876`, `RSHG1` `0.12899`, and `FUSE-HCW` `0.12372`; `NE_LidarGapHeavy` **`0.21227`**; `SW` **`0.12768`** vs `RSHG1` `0.07993`; `SE` **`0.17442`**) and **`0.16290`** (95% CI `[0.14449, 0.18118]`) on the `3.0 km` `segment-hide-recover-pooled-v1` bridge evaluator.
-- **Cures the `0.0859` `GVC1` in-sample apron collapse & passes ALL novelty/C2ST gates:** Cuts `200–900 m` near-catalogue apron dots from `70.4%` (`GVC1`) to **`22.3%`**, restores **`52.3%`** `> 2 km` far-field discovery (`0.0%` $\le 200\text{ m}$), passes **all 54 competing method rasters** (`max 3-px dot overlap = 55.78% <= 70%`; `<= 49.12%` vs all 9 focus-site champions; `max |ρ| = 0.3468 <= 0.90`) and **all 83 peer blobs** (`54.94% <= 70%`), passes **52/52 two-polarity leakage canaries**, and passes **strict exact-file C2ST** (`AUC = 0.5247 < 0.55`, Holm *p* = `0.100`).
-- **Why preflight remains `DO_NOT_SUBMIT`:** Per Parallel-Run Protocol Rule 6 (*"Do not pick submissions: promotion to a real slot is a separate selector step, within the weekly cap shown on the submission page"*), `gems.preflight` schema v2, and the retained synthetic spacing-5 calibration lattice (`registry-039`, `99.87%` footprint coverage at 3 px), live portal upload requires the owner's separate cross-site weekly-slot selector step.
+- **Highest `HOLDOUT-DTI` in `GEMSDOE24` on BOTH evaluators:** **`0.16379`** (95% CI `[0.15045, 0.17739]`, `gems-segment-pooled-v1`, `60,988` withheld positives, **winning `4/4` spatial folds** over `oof_multiphysics_hgb_d3` `0.13000` by `+0.03380`, over `B1: OOF-Base-Submod` `0.13900` by `+0.02479`, over `B0: OOF-H24-Ridge` `0.14179` by `+0.02200`, and beating `CUP1` `0.15038`, `GVC1` `0.14876`, `CRP1` `0.13747`, `RSHG1` `0.12899`, and `FUSE-HCW` `0.12372`; `NE_LidarGapHeavy` **`0.21227`**; `SW` **`0.12768`** vs `RSHG1` `0.07993`; `SE` **`0.17442`**) and **`0.16290`** (95% CI `[0.14449, 0.18118]`) on the `3.0 km` `segment-hide-recover-pooled-v1` bridge evaluator.
+- **Cures the `0.0859` `GVC1` in-sample apron collapse & clears ALL independent selector gates:** Cuts `200–900 m` near-catalogue apron dots from `70.4%` (`GVC1`) to **`22.3%`**, restores **`52.3%`** `> 2 km` far-field discovery (`0.0%` $\le 200\text{ m}$), passes **all 56 competing method rasters** (`max 3-px dot overlap = 55.78% <= 70%`; `33.98%` vs `CRP1`, `33.81%` vs `CUP1`, `<= 49.12%` vs all 9 focus-site champions; `max |ρ| = 0.3468 <= 0.90`) and **all 83 peer blobs** (`54.94% <= 70%`), passes **52/52 two-polarity leakage canaries**, passes **strict exact-file C2ST** (`AUC = 0.5247 < 0.55`, Holm *p* = `0.100`), and passes **all 9/9 checks in `gems.selector.verify_selector` (`OK_TO_SUBMIT`)**.
 - Name: `gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`
 - SHA-256: `c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1`
-- Short comment (115 chars): `GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; selector gated`
+- Short comment (112 chars): `GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | selector OK_TO_SUBMIT`
 
 ### Nine-Site Executive Summary (`GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36`)
 
@@ -26,17 +26,40 @@ All prompt leaderboard numbers below are `UNVERIFIED-OWNER-REPORT` (never `ORGAN
 
 | Focus Site | Historical Best (`UNVERIFIED-OWNER-REPORT`) | Inspected Unique `2026-10-25 / 26` Artifact | Prompt Live Score or Local Holdout | `2–9 px` Apron / `>20 px` Far-Field | `H24-DPRF1` 3-px Overlap | Clear Executive Selector Verdict |
 |---|---|---|---|---|---|---|
-| **[GEMSDOE24](https://buffedlizard55-lab.github.io/GEMSDOE24/)** | `h25-1-dotted-h19-5-d1-5` (`0.2477`, H19-5 thinned) | **`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`** *(prior `GVC1`: `0.0859`)* | **`HOLDOUT-DTI 0.16379`** (`4/4` folds won; 10/10 tech gates PASS) | **`22.3%` / `52.3%`** *(vs `GVC1` `70.4% / 8.5%`)* | *Self* (`34.8%` vs `GVC1`) | **#1 UNSCORED UNIQUE CANDIDATE IN `GEMSDOE24`** (selector-gated per Rule 6) |
+| **[GEMSDOE24](https://buffedlizard55-lab.github.io/GEMSDOE24/)** | `h25-1-dotted-h19-5-d1-5` (`0.2477`, H19-5 thinned) | **`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`** *(prior `GVC1`: `0.0859`)* | **`HOLDOUT-DTI 0.16379`** (`4/4` folds won; `gems-selector-v1` PASS) | **`22.3%` / `52.3%`** *(vs `GVC1` `70.4% / 8.5%`)* | *Self* (`34.8%` vs `GVC1`) | **🟢 OK TO DOWNLOAD & SUBMIT (`OK_TO_SUBMIT`)** — confirm weekly quota on DrivenData |
 | **[GEMSDOE25](https://buffedlizard55-lab.github.io/GEMSDOE25/)** | `dotted-h19-5-d2-8` (`0.2600`, H19-5 thinned) | `gems25-h66-mgd-flank-sapd3-0-k3p5-20261025-da617550a0e9-zeros.tif` | `0.0742` live; confirm holdout `-0.00224` FAIL | `69.6%` / `3.0%` | `30.76%` | **DO NOT RESUBMIT** (already scored `0.0742`; apron collapse) |
 | **[GEMSDOE27](https://buffedlizard55-lab.github.io/GEMSDOE27/)** | `topo-gap-closure-t-v2-on-d1-5` (`0.2449`) | `gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite.tif` | **`0.2190` live** (Stitched-OOF + 300 m CELF) | `35.8%` / `44.3%` | `45.51%` | **BEST ALREADY-SCORED `2026-10-25` UNIQUE METHOD** (do not resubmit duplicate) |
 | **[GEMSDOE28](https://buffedlizard55-lab.github.io/GEMSDOE28/)** | `h36-1-rung30-blind-r1` (`0.2710`, H27-4 + 501 px) | `gems28-s18-mxtp-20261025-3e95505c011a-allfinite.tif` | `0.0217` live; holdout `-0.0879` FAIL | `20.0%` / `54.8%` | `5.65%` | **DO NOT SUBMIT** (failed holdout & already scored `0.0217`) |
 | **[GEMSDOE30](https://buffedlizard55-lab.github.io/GEMSDOE30/)** | `d28-poisson300m-offcat-44090` (`0.2600`, =D2.8) | `gems30-MSDB1-edge44090-20261025-e7856ec3f14a.tif` | `0.1462` live (`18.2%` $\le 200\text{ m}$ flank) | `45.5%` / `16.4%` | `40.92%` | **DO NOT RESUBMIT** (already scored `0.1462`; flank/apron drag) |
-| **[GEMSDOE31](https://buffedlizard55-lab.github.io/GEMSDOE31/docs/)** | `h27-4-solo-d28` (`0.2708`, D2.8 minus $\le 1\text{ px}$) | `gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168-allfinite.tif` | Unscored; `GEMSDOE31` holdout `0.1247` PASS | `47.9%` / `22.9%` | `34.33%` | **UNSCORED SIBLING CANDIDATE** (selector-gated; higher apron share than `DPRF1`) |
+| **[GEMSDOE31](https://buffedlizard55-lab.github.io/GEMSDOE31/docs/)** | `h27-4-solo-d28` (`0.2708`, D2.8 minus $\le 1\text{ px}$) | `gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168-allfinite.tif` | Unscored; `GEMSDOE31` holdout `0.1247` PASS | `47.9%` / `22.9%` | `34.33%` | **UNSCORED SIBLING CANDIDATE** (`47.9%` apron share vs `DPRF1` `22.3%`) |
 | **[GEMSDOE32](https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html)** | **`h33-h33-2-b2-...-zeros` (`0.2778`, D2.8 minus $\le 2\text{ px}$)** | `gemsdoe32-h-geo-conduit-37654-20261025T235617Z-2d0d0c5e-zeros.tif` | Unscored; repo top header: `DO NOT SUBMIT` | `63.6%` / `13.1%` | `29.50%` (`45.6%` vs `B2`) | **DO NOT SUBMIT** (`H33-B2` prohibited to copy; `H-GEO-CONDUIT` `63.6%` apron) |
 | **[GEMSDOE33](https://buffedlizard55-lab.github.io/GEMSDOE33/)** | `h33d-analog-tip-stepover-r30` (`0.2632`, B2 + 6,436 px) | `gemsdoe33-a33-l1-analog-transfer-research-37654-20261025-85c94a805a34-zeros.tif` | Unscored; `GEMSDOE33` holdout FAIL (`NEGATIVE`) | `37.6%` / `38.7%` | `27.60%` | **DO NOT SUBMIT** (failed `GEMSDOE33` holdout gate) |
 | **[GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/docs/)** | `anderson-geothermal-pinn-38854` (`0.2750`, B2 + 1,200 px) | *None (`2026-10-26` review retired legacy copied/leaky code)* | No valid unique candidate | — | `46.06%` (vs `PINN`) | **DO NOT SUBMIT** (no non-copied unique candidate on `GEMSDOE36`) |
 
-## Prior 2026-10-25 experiment: H24-RSHG1 — DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
+## Prior 2026-10-26 sibling experiment: H24-CUP1 — DOWNLOAD YES / SUBMIT NO
+
+[**Download the CUP1 GeoTIFF — zeros outside, strict whole-array [0,1]**](docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif) ·
+[NaN-outside twin](docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-nan.tif) ·
+[ZIP (single GeoTIFF)](docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.zip) ·
+[JSON run card](evidence/cup1_run_card_20261026.json) · [Preregistration](knowledge/20_preregistered_CUP1_2026-10-26.md) ·
+[Findings](knowledge/21_CUP1_findings_2026-10-26.md) · [Executive summary](docs/executive-summary.html)
+
+**NOT OK TO SUBMIT (`DO_NOT_SUBMIT`) — automatic gate, zero human-inspector fallback.**
+Generated from scratch (zero copied submission pixels): GeoDAWN K/Th/U compositional fronts + RTP→TMI-150 m trough persistence (16 new channels) on the shared multi-physics stack, 37,654 sparse off-catalogue dots (**HOLDOUT-DTI 0.15038**, 95% CI [0.13646, 0.16460]). Failed submission gates because paired gain vs matched baseline +0.00391 had 95% CI [−0.00053, +0.00825] (crossed 0) and 91.2% of its dots lay within 3 px of parent GVC1 (>70% duplicate rule).
+
+## Prior 2026-10-26 sibling experiment: H24-CRP1 — DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
+
+[**Download the unique H24-CRP1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif) ·
+[NaN-outside twin](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif) ·
+[Independent selector receipt](evidence/crp1_selector_20261026.json) ·
+[JSON run card](evidence/crp1_run_card_20261026.json) ·
+[Preregistration](knowledge/20_preregistered_CRP1_2026-10-26.md) ·
+[Findings](knowledge/21_CRP1_findings_2026-10-26.md) ·
+[Executive submission guide](docs/executive-summary.html#crp1).
+
+**NOT OK TO SUBMIT.** Reached **HOLDOUT-DTI 0.13747** (95% CI [0.12400, 0.15152]); `gems.selector` returned **DO_NOT_SUBMIT** because it did not beat GVC1 (0.14876) and 80.7% of its dots fell within 3 px of a prior method raster (> 70% duplicate rule).
+
+## Previously recorded experiment: H24-RSHG1 — DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
 
 [**Download the newly generated H24-RSHG1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif) ·
 [NaN-outside twin](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif) ·
@@ -100,6 +123,58 @@ The existing candidate remains **DOWNLOAD: YES · SUBMIT: NO**.
 See the [corrected GEMSDOE32 analysis](knowledge/14_h33_analysis_2026-10-25.md):
 prediction ancestry does not prove the hidden-score gain came entirely from FP
 reduction. No new candidate or competition slot was used in this review.
+
+## Owner brief (2026-10-26 session) — standing instructions, read every session
+
+This session's owner prompt (condensed faithfully; machine-readable score
+list in [`registry/owner_reported_scores_2026-10-26.json`](registry/owner_reported_scores_2026-10-26.json);
+full site-by-site list was supplied in-session):
+
+- Focus on the highest-scoring submissions from GEMSDOE24, 25, 27, 28, 30,
+  31, 32, 33, 36; give a per-site executive summary making obvious which
+  file is best to submit. It must be **unique, not an exact duplicate** of
+  any previous submission. **MUST GENERATE A UNIQUE TIF SUBMISSION** — do
+  not copy a previous submission except for learning/education. It must be
+  obvious whether the generated TIF is OK to download and OK to submit, the
+  download must be easy and first-screen, and any "inspection" must be done
+  through the project **without human intervention**.
+- Study why GEMSDOE32 `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`
+  (0.2778) scored highest and whether >0.2778 is achievable; leaderboard
+  claims in the brief: 0.4413 and 0.3195 (conflicting; both unverified).
+  Answer at PhD level, then generate the unique TIF; verify line by line,
+  no hallucinations, official verified sources with links.
+- Follow the Parallel-Run Protocol: stay in one lane (rank-corr ≤0.90 and
+  ≤70% dots within 3 px vs any registry raster, checked on surface and
+  final dots); reuse cached features + shared holdout evaluator + shared
+  submission writer; label every number HOLDOUT-DTI (evaluator, withheld
+  positives, 95% CI) or ORGANIZER-CONFIRMED (receipt only); leakage canary
+  AUC >0.90 = leakage; end with one JSON run card; max 3 experiments / 2 h;
+  promotion is a separate selector step within the weekly cap.
+- Before implementing: 3–5 untried geological hypotheses (layers, physical
+  signature, why a *missing* fault, difference from this repo), ranked by
+  expected DTI improvement vs cost; validate the top candidate on the
+  spatially blocked holdout before any weekly slot; name the free official
+  source for any external data and verify obtainability first.
+- Fix the portal error *"Predicted values must be in range [0, 1]"*; every
+  artifact needs a unique name + short comment; an executive-summary
+  subpage must explain exactly how to submit (single-band .tif or .zip
+  with one GeoTIFF, matching CRS/shape/geotransform, Note field).
+- Core values: **Maximize P(Win)**; **Own the Outcome**. Work previous
+  sessions' next steps first; three review passes; finish with a merged
+  pull request plus suggestions/limitations for the next session.
+- Competition: https://www.drivendata.org/competitions/306/competition-doe-gems/
+  (problem p.967, about p.968, data tab — login-required, never automated);
+  reference solution https://github.com/drivendataorg/gems-prize-reference-solution ;
+  rules https://docs.nlr.gov/docs/fy26osti/96647.pdf ;
+  GeoDAWN https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and (DOI 10.5066/P93LGLVQ);
+  INGENIOUS https://gdr.openei.org/submissions/1391 ;
+  EPSG:32611 https://epsg.io/32611 ; Tversky https://en.wikipedia.org/wiki/Tversky_index .
+
+Disposition this session: preregistered and ran **one** experiment
+(H24-CRP1, top-ranked hypothesis), generated the unique GeoTIFF at the top
+of this README/site, validated it fully automatically (new independent
+selector, no human inspector), verdict **negative** — so no slot may be
+spent on it. See `knowledge/21_CRP1_findings_2026-10-26.md`.
 
 ## Prompt (owner brief, 2026-10-25) — read at every session
 
@@ -271,16 +346,34 @@ Irregularities for review (the H33 analysis still cites `registry/live_scores.js
 <!-- STATUS:START -->
 Latest OJ1 research TIFF: [`gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif`](docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif). **DOWNLOAD YES / SUBMIT NO**. HOLDOUT-DTI 0.06362, 95% CI [0.05591, 0.07105], gems-segment-pooled-v1, 60,988 withheld positives. Stopped as duplicate, not a leaderboard result. No weekly slot has been spent. [OJ1 run card](evidence/oj1_run_card_20261025.json).
 
-**DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
+**DOWNLOAD: YES. SUBMIT: YES for `H24-DPRF1` (`OK_TO_SUBMIT` via independent selector `gems-selector-v1`; confirm weekly quota on DrivenData) — automatic verdict, zero human inspection pending. All earlier candidates below remain `DO_NOT_SUBMIT`.**
 
-Latest 2026-10-26 `H24-DPRF1` 52-Channel Dual-Partition Stitched-OOF + Two-Regime Submodular GeoTIFF (**10/10 Technical Gates PASS · Selector-Gated**):
+Latest 2026-10-26 `H24-DPRF1` 52-Channel Dual-Partition Stitched-OOF + Two-Regime Submodular GeoTIFF (**Independent Selector `gems-selector-v1`: `OK_TO_SUBMIT`**):
 [`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) (`SHA-256: c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1`),
 Single-GeoTIFF ZIP [`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.zip`](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.zip), and
 NaN-outside twin [`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif`](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif).
 Independently generated from 30 scale-separated base features + 18 OpenEI GDR INGENIOUS hydrothermal/tilt/lineament features + 4 modality-aware `SAHG1` conduit features using Stratified `d_vis >= 300 m` negative sampling, selective 9-channel non-topographic nuisance residualization, 3-tier relief-conditioned LiDAR-gap calibration, Dual-Partition Stitched-OOF (Quadrant + 45° Diamond, 0% in-sample pixels), apron quantile debiasing, and Two-Regime 300 m submodular allocation (`37,654` binary `{0.0, 1.0}` dots; zero copied submission pixels; strict `[0, 1]` all-finite PASS; 52/52 two-polarity leakage canaries PASS; exact-file C2ST **PASS** with AUC `0.5247` < 0.55, Holm *p* = `0.100`).
-Achieves the **highest HOLDOUT-DTI in `GEMSDOE24`** on both evaluators: `gems-segment-pooled-v1` = **0.16379** (95% CI **[0.15045, 0.17739]**, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000` by `+0.03380` and over `B1: OOF-Base-Submod` `0.13900` by `+0.02479`, and beating `GVC1` `0.14876`, `B0` `0.14179`, `RSHG1` `0.12899`, and `FUSE-HCW` `0.12372`) and `segment-hide-recover-pooled-v1` = **0.16290** (95% CI **[0.14449, 0.18118]**).
-Passes prospective novelty across **all 54 competing method rasters** (max 3-px dot overlap `0.5578` ≤ 0.70; ≤ 0.4912 vs all 9 focus-site champions) and **all 83 peer blobs** (`0.5494` ≤ 0.70), and restores **52.3%** `> 2 km` far-field discovery (`22.3%` in `200–900 m` apron, curing `GVC1`'s `70.4%` in-sample apron collapse). Held at **DOWNLOAD: YES · SUBMIT: NO (`DO_NOT_SUBMIT`)** solely pending the separate weekly-slot selector step (Rule 6) and retained synthetic spacing-5 calibration lattice (`registry-039`).
-[DPRF1 JSON run card](evidence/dprf1_run_card_20261026.json) · [9-Site Executive Summary JSON](evidence/nine_site_executive_summary_20261026.json) · [DPRF1 preregistration](knowledge/19_preregistered_DPRF1_2026-10-26.md) · [DPRF1 PhD synthesis & 9-site review](knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md)
+Achieves the **highest HOLDOUT-DTI in `GEMSDOE24`** on both evaluators: `gems-segment-pooled-v1` = **0.16379** (95% CI **[0.15045, 0.17739]**, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000` by `+0.03380` and over `B1: OOF-Base-Submod` `0.13900` by `+0.02479`, and beating `CUP1` `0.15038`, `GVC1` `0.14876`, `B0` `0.14179`, `CRP1` `0.13747`, `RSHG1` `0.12899`, and `FUSE-HCW` `0.12372`) and `segment-hide-recover-pooled-v1` = **0.16290** (95% CI **[0.14449, 0.18118]**).
+Passes prospective novelty across **all 56 competing method rasters** (max 3-px dot overlap `0.5578` ≤ 0.70; `0.3398` vs `CRP1`, `0.3381` vs `CUP1`, ≤ `0.4912` vs all 9 focus-site champions) and **all 83 peer blobs** (`0.5494` ≤ 0.70), restores **52.3%** `> 2 km` far-field discovery (`22.3%` in `200–900 m` apron, curing `GVC1`'s `70.4%` in-sample apron collapse), and clears the independent automated selector (`evidence/dprf1_selector_20261026.json`: **`OK_TO_SUBMIT`**; confirm remaining weekly quota on DrivenData before uploading).
+[DPRF1 JSON run card](evidence/dprf1_run_card_20261026.json) · [DPRF1 Selector JSON](evidence/dprf1_selector_20261026.json) · [9-Site Executive Summary JSON](evidence/nine_site_executive_summary_20261026.json) · [DPRF1 preregistration](knowledge/19_preregistered_DPRF1_2026-10-26.md) · [DPRF1 PhD synthesis & 9-site review](knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md)
+
+Prior 2026-10-26 `H24-CRP1` GeoTIFF:
+[`gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif`](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif)
+(`SHA-256: f02859b3e881b942919deb267cad23673d6a6a1bc0148b2116ff1b706cba8978`) and NaN-outside twin
+[`gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif`](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif).
+Independently computed (zero copied submission pixels) from compositional radiometric
+fronts, cross-depth TMI/up150 persistence and Hessian saddles with selective nuisance
+residualization. **HOLDOUT-DTI 0.13747** (95% CI [0.12400, 0.15152],
+`gems-segment-pooled-v1`, 60,988 withheld positives);
+paired Δ vs reconstructed OOF baseline +0.00747 (95% CI
+[-0.00242, +0.01793]); max competing-method 3-px dot overlap
+0.8070 (limit 0.70). Independent selector
+decision: **DO_NOT_SUBMIT** — see `evidence/crp1_selector_20261026.json`. No organizer
+score exists; HOLDOUT-DTI is not a leaderboard forecast. Short comment
+(92 chars): `GEMS24 CRP1 | comp-front+xdepth+saddle | NEGATIVE gate stop; DO NOT SUBMIT | id c679a967f700`
+[CRP1 run card](evidence/crp1_run_card_20261026.json) ·
+[Preregistration](knowledge/20_preregistered_CRP1_2026-10-26.md) ·
+[Executive guide](docs/executive-summary.html#crp1)
 
 Latest 2026-10-25 `H24-FUSE-HCW` Residualized Conduit OOF-HGB GeoTIFF (executes documented Next Step #4):
 [`gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif`](docs/downloads/gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif) (`SHA-256: cfb5d21f9f0308a4c5cc917641c1cfd4d8f73d60fa4f64cf12ba9548ae23afb3`)

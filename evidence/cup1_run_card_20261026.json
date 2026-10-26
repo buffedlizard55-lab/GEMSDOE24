@@ -1,0 +1,255 @@
+{
+  "hypothesis": "H24-CUP1: multi-scale K/Th/U compositional ratio-grid fronts + RTP-to-TMI_up150 paired-trough persistence, as learned HGB channels on base30+GVC18, emitted by the shared 300 m submodular allocator (37,654 dots, 2.5 px spacing, 2 px catalogue clearance)",
+  "mechanism": "Hydrothermal K-metasomatism/U remobilisation along blind faults creates narrow compositional fronts cross-cutting lithology; deep-seated demagnetised fault zones persist under 150 m upward continuation while surficial noise attenuates. Neither needs a scarp or catalogue tip.",
+  "named_non_fault_mimic": "Transported arkosic sediment front / lithologic contact (radiometrics); magnetite-poor palaeochannel persisting with depth (magnetics)",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "dti": 0.1503820121280118,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.13646062363558428,
+        0.16459534044563684
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "n_withheld_positive_pixels": 60988,
+    "matched_baseline_bgvc_dti": 0.14646986683748117,
+    "paired_delta": 0.003912145290530633,
+    "paired_delta_ci95": [
+      -0.0005286047126806332,
+      0.008249513206177764
+    ],
+    "recorded_current_best": 0.14876
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_method_lane_max_abs_rho": 0.5468762589511128,
+    "final_method_lane_max_abs_rho": 0.8122349419788611,
+    "final_max_competing_overlap_within_3px": 0.9119615445902162,
+    "method_lane_passed": false,
+    "literal_all_entries_passed": false
+  },
+  "raster_sha256": "a9db98b61dbd1db1a2b904f47a24f830af08006ef66b316b31ce36c3b8d302fc",
+  "nan_companion_sha256": "bb7896cb6419c7a380491e8b106b8c100c6322a3fabba42dbb9d7afceed46190",
+  "validator_output": {
+    "file": "gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif",
+    "bytes": 826824,
+    "sha256": "a9db98b61dbd1db1a2b904f47a24f830af08006ef66b316b31ce36c3b8d302fc",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37654,
+    "in_footprint_mass": 37654.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "nan_validator_output": {
+    "file": "gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-nan.tif",
+    "bytes": 1591456,
+    "sha256": "bb7896cb6419c7a380491e8b106b8c100c6322a3fabba42dbb9d7afceed46190",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": true,
+    "in_footprint_positive_pixels": 37654,
+    "in_footprint_mass": 37654.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": true,
+        "detail": "7,111,787 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": true,
+        "detail": "nodata=nan",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": false,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": true,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "c2st_nuisance_audit": {
+    "candidate_auc": 0.510713298025121,
+    "candidate_holm_p": 0.5,
+    "strict_c2st_gate_passed": true
+  },
+  "sgmc_sparse_diagnostic": {
+    "cup1": 0.028579287771299786,
+    "bgvc_matched": 0.02916119325453881,
+    "gvc1_frozen_file": 0.029647153641234294
+  },
+  "technical_gates": {
+    "format_and_unit_range_valid": true,
+    "leakage_canary_passed": true,
+    "paired_cup_minus_bgvc_ci95_gt_0": false,
+    "pooled_holdout_beats_recorded_best_0.14876": true,
+    "competing_method_uniqueness_passed": false,
+    "strict_c2st_nuisance_audit_passed": true
+  },
+  "governance_gates": {
+    "literal_all_entries_uniqueness_incl_spacing5_lattice": false,
+    "assigned_coordinator_lane_present": false,
+    "independent_selector_quota_certificate_implemented": false
+  },
+  "submission_name": "gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif",
+  "nan_submission_name": "gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-nan.tif",
+  "zip_submission_name": "gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.zip",
+  "note": "GEMS24 CUP1 | comp-front+upcont submod | NEGATIVE gate stop; DO NOT SUBMIT | id 35a808f4514a",
+  "note_length": 92,
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "submit_state": "DO_NOT_SUBMIT: automatic gate failure, see reasons",
+  "reasons": [
+    "Technical gate failed: paired_cup_minus_bgvc_ci95_gt_0",
+    "Technical gate failed: competing_method_uniqueness_passed",
+    "Max competing 3px overlap 0.9120 vs local-gems24-gvc1-negative-geothermal-lineamen (docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.tif)",
+    "Separate selector/quota certificate not implemented; weekly cap unknown (no slot is spent by this session)."
+  ],
+  "organizer_score": null,
+  "score_labelling": "No organizer-confirmed score exists for this artifact; HOLDOUT-DTI is local only, never a leaderboard projection."
+}
