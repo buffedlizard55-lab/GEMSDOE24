@@ -1,5 +1,14 @@
 # Standing project instructions
 
+**CUP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CUP1_2026-10-26.md`,
+`knowledge/21_CUP1_findings_2026-10-26.md` and `evidence/cup1_run_card_20261026.json` first.
+CUP1 (HOLDOUT-DTI 0.15038, new point best) is DOWNLOAD YES / SUBMIT NO: paired CI vs matched
+B-GVC crosses 0 and 91.2% of dots sit within 3 px of parent GVC1. Do not rerun/retune CUP1,
+and do not propose another GVC18+HGB increment — it will converge to the same dots. Next lane
+must be an orthogonal surface family, judged on SegmentHoldout **and** SGMC-sparse; the
+independent selector now exists on main (`gems.selector`, CRP1 session) but CUP1's failed
+gates make its decision DO_NOT_SUBMIT regardless; quota remains unknown.
+
 **CRP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CRP1_2026-10-26.md`,
 `knowledge/21_CRP1_findings_2026-10-26.md` and `evidence/crp1_run_card_20261026.json` first.
 H24-CRP1 (compositional radiometric fronts + cross-depth TMI/up150 persistence +

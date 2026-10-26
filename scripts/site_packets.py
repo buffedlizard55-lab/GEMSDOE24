@@ -13,6 +13,112 @@ from gems.submission import check_variants
 from gems.validator import sha256_file
 
 
+def cup1_packet(root):
+    """Validate and render the 2026-10-26 H24-CUP1 packet from its exact receipts."""
+    exp_path = root / "evidence/cup1_experiment_20261026.json"
+    card_path = root / "evidence/cup1_run_card_20261026.json"
+    if not (exp_path.exists() and card_path.exists()):
+        return "", "", ""
+    experiment = json.loads(exp_path.read_text())
+    card = json.loads(card_path.read_text())
+    name = card["submission_name"]
+    target = root / "docs/downloads" / name
+    if not target.exists() or sha256_file(target) != card["raster_sha256"]:
+        raise ValueError("CUP1 exact-file SHA-256 disagrees with run card")
+    if card.get("ok_to_submit") is not False or card.get("ok_to_download") is not True:
+        raise ValueError("CUP1 packet must stay fail-closed (selector is a separate step)")
+    note_path = root / "docs/downloads" / f"note-{name[:-4]}.txt"
+    if len(card["note"]) > 140 or note_path.read_text().strip() != card["note"]:
+        raise ValueError("CUP1 note missing, changed, or >140 characters")
+    checks = json.loads((root / "docs/downloads" / f"checks-{name[:-4]}.json").read_text())
+    template = root / "data/bridge/sample_submission.tif"
+    for key in ("zero_outside", "nan_outside"):
+        row = checks[key]
+        fresh = check_variants(root / "docs/downloads" / row["file"], template)
+        if not fresh["format_valid"] or not row["format_valid"] or fresh.get("sha256") != row.get("sha256"):
+            raise ValueError(f"CUP1 download variant invalid or stale: {key}")
+    preflight_path = target.with_suffix(".preflight.json")
+    preflight = json.loads(preflight_path.read_text())
+    if (
+        preflight.get("artifact", {}).get("sha256") != card["raster_sha256"]
+        or preflight.get("decision", {}).get("ready_to_submit") is not False
+        or preflight.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1") is not True
+    ):
+        raise ValueError("CUP1 exact-file preflight missing, stale, or does not fail closed")
+
+    e = lambda s: escape(str(s), quote=True)  # noqa: E731
+    h = card["holdout_dti"]
+    ci = h["ci95"]
+    lo, hi = (ci["interval"] if isinstance(ci, dict) else ci)
+    gates = card["technical_gates"]
+    nov = card["correlation_overlap_vs_registry"]
+    c2 = card["c2st_nuisance_audit"]
+    eligible = card["verdict"] == "promote"
+    verdict_word = "SELECTOR-ELIGIBLE" if eligible else "DO_NOT_SUBMIT"
+    status_box = (
+        '<div class="status stopped" role="status"><strong>'
+        f"NEWEST UNIQUE CANDIDATE (H24-CUP1, 2026-10-26) — DOWNLOAD: YES · SUBMIT: "
+        f"{'SELECTOR STEP REQUIRED' if eligible else 'NO'} ({verdict_word}).</strong> "
+        f"{e(card['submit_state'])}. Automated validation only — zero human-inspector fallback. "
+        "No organizer-confirmed score exists; HOLDOUT-DTI below is a local measurement, not a leaderboard result or projection.</div>"
+    )
+    gate_rows = "".join(
+        f"<tr><td>{e(k)}</td><td><strong>{'PASS' if v else 'FAIL'}</strong></td></tr>"
+        for k, v in gates.items()
+    )
+    reasons = "".join(f"<li>{e(r)}</li>" for r in card["reasons"])
+    hero = f"""<section class="hero" aria-label="H24-CUP1 unique GeoTIFF and automated gate">
+<div>
+<div class="eyebrow">Newest unique submission candidate · H24-CUP1 compositional fronts + upward-continuation persistence</div>
+<h1>Download the new .tif.<br>Read the gate before submitting.</h1>
+<p class="lead"><strong><code>{e(name)}</code></strong> was generated in this repository on 2026-10-26 from physical layers only —
+GeoDAWN K/Th/U ratio-grid compositional fronts plus RTP→TMI-150 m paired-trough persistence, fused with the shared
+multi-physics stack and emitted as 37,654 sparse off-catalogue dots. <strong>Zero previous submission pixels were copied;</strong>
+uniqueness was checked against every pinned registry raster before and after placement.</p>
+{status_box}
+<div class="actions">
+<a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download CUP1 GeoTIFF (zeros outside, strict [0,1])</a>
+<a class="button" href="downloads/{e(card['nan_submission_name'])}" download>↓ NaN-outside official-text .tif</a>
+<a class="button" href="downloads/{e(card['zip_submission_name'])}" download>↓ Zeros .zip (single GeoTIFF)</a>
+<a class="button" href="downloads/{e(preflight_path.name)}">Automated preflight receipt</a>
+<a class="button" href="executive-summary.html">Executive summary &amp; how to submit →</a>
+</div>
+<p class="fileline">{e(name)}</p><p class="hash">SHA-256 {e(card['raster_sha256'])}</p>
+<p class="micro"><strong>Portal note (≤140 chars):</strong></p>
+<div class="note" id="note-cup1">{e(card['note'])}</div>
+<div class="actions"><button class="button" data-copy="#note-cup1" data-feedback="#copy-feedback-cup1">Copy short note</button>
+<a class="button" href="downloads/note-{e(name[:-4])}.txt" download>Note .txt</a></div>
+<p id="copy-feedback-cup1" class="copyfeedback" aria-live="polite"></p>
+</div>
+<aside class="card visual"><div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Local only — not a leaderboard score</span></div>
+<div class="result-number">{h['dti']:.5f}</div>
+<p>HOLDOUT-DTI · {e(h['evaluator_version'])} · {h['n_withheld_positive_pixels']:,} withheld positives · 95% CI [{lo:.5f}, {hi:.5f}]<br>
+Matched B-GVC baseline {h['matched_baseline_bgvc_dti']:.5f} · paired Δ {h['paired_delta']:+.5f} (95% CI [{h['paired_delta_ci95'][0]:+.5f}, {h['paired_delta_ci95'][1]:+.5f}]) · recorded prior best (GVC1) 0.14876</p>
+<p class="micro">Max competing 3-px dot overlap {nov['final_max_competing_overlap_within_3px']:.4f} (gate ≤0.70) · max |ρ| {nov['final_method_lane_max_abs_rho']:.4f} (gate ≤0.90) · C2ST AUC {c2['candidate_auc']:.4f}</p>
+</aside></section>"""
+    exec_html = f"""<section aria-label="H24-CUP1 executive gate report"><h2>Newest candidate: H24-CUP1 (2026-10-26)</h2>
+{status_box}
+<div class="actions"><a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download CUP1 .tif</a>
+<a class="button" href="downloads/checks-{e(name[:-4])}.json" download>Exact-file validator JSON</a>
+<a class="button" href="data/cup1_download.json" download>Run-card download JSON</a></div>
+<p class="fileline">{e(name)}</p><p class="hash">SHA-256 {e(card['raster_sha256'])}</p>
+<div class="tablewrap"><table><thead><tr><th>Automated technical gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div>
+<p><strong>Why this state:</strong></p><ul>{reasons}</ul>
+<p class="micro">Hypothesis: {e(card['hypothesis'])}<br>Named non-fault mimic: {e(card['named_non_fault_mimic'])}.
+SGMC sparse off-catalogue diagnostic (not a gate, not a score): CUP1 {card['sgmc_sparse_diagnostic']['cup1']:.5f} vs matched B-GVC {card['sgmc_sparse_diagnostic']['bgvc_matched']:.5f}.</p>
+</section>"""
+    aucs = [v["pooled_auc"] for v in experiment["canary"]["features"].values()]
+    research = f"""<section><h2>2026-10-26 H24-CUP1 — compositional fronts + upward-continuation persistence</h2>
+<p>Preregistered before implementation (<code>knowledge/20_preregistered_CUP1_2026-10-26.md</code>, commit {e(experiment['preregistration_commit'])}).
+Channels: 16 CUP + 18 GVC + 30 prepared base; fold-local calibrated HGB; shared submodular allocator
+(37,654 dots, 2.5 px spacing, 2 px catalogue clearance). Leakage canary over {len(aucs)} features:
+pooled AUC [{min(aucs):.4f}, {max(aucs):.4f}] (both polarities, gate 0.90).</p>
+{exec_html}
+<p><a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/20_preregistered_CUP1_2026-10-26.md">CUP1 preregistration →</a> ·
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/evidence/cup1_run_card_20261026.json">CUP1 JSON run card →</a></p></section>"""
+    return hero, exec_html, research
+
+
 def gvc1_packet(root):
     """Validate and render the 2026-10-25 H24-GVC1 hydrothermal+tilt+lineament packet."""
     exp_path = root / "evidence/gvc1_experiment_20261025.json"
