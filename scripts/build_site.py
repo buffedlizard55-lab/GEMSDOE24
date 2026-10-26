@@ -380,8 +380,36 @@ def build_independent_site(primary):
         '<p><a href="data/current_best_review.json" download>Fresh exact-file review JSON</a> · '
         '<a href="#nine-site-executive-summary">Nine-site executive comparison</a></p></section>'
     )
-    overview = current_banner + overview
-    executive = current_banner + executive
+    # Preserve the concurrent VENT negative packet through scheduled rebuilds.
+    vent_html = ""
+    vent = load("evidence/vent_run_card_20261026.json")
+    if vent:
+        from gems.submission import check_variants
+
+        vname = vent["submission_name"]
+        if Path(vname).name != vname or not vname.endswith("-zeros.tif"):
+            raise ValueError("Unsafe VENT filename")
+        vf = check_variants(DOCS / "downloads" / vname, ROOT / "data/bridge/sample_submission.tif")
+        if (
+            not vf["format_valid"]
+            or vf["sha256"] != vent["raster_sha256"]
+            or vent.get("ok_to_submit") is not False
+            or vent.get("verdict") != "negative"
+        ):
+            raise ValueError("VENT negative packet identity/format mismatch")
+        vh = vent["holdout"]
+        vlo, vhi = vh["ci95"]["interval"]
+        vent_html = (
+            '<section class="card" id="vent-packet"><h2>QUARANTINED H24-VENT research — DO NOT SUBMIT</h2>'
+            f"<p>Recorded HOLDOUT-DTI {vh['dti']:.5f}, 95% CI [{vlo:.5f}, {vhi:.5f}], "
+            f"{e(vh['evaluator_version'])}, {vh['n_withheld_positive_pixels']:,} withheld positives. "
+            "Scientific gate claims untrusted: original code supplied dummy C2ST and registry fallbacks. Below the recorded local best. Preserved from concurrent "
+            "PR #34, not generated or scientifically replayed by this review.</p>"
+            f'<a class="button" href="downloads/{e(vname)}" download="{e(vname)}">Download VENT research TIFF — DO NOT SUBMIT</a>'
+            '<p><a href="data/vent_run_card.json" download>Frozen VENT run card</a></p></section>'
+        )
+    overview = current_banner + vent_html + overview
+    executive = current_banner + vent_html + executive
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),

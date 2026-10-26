@@ -105,3 +105,35 @@ def test_current_pages_disclaim_cross_site_rank_and_causal_proof():
         assert "not unique under the literal all-entry rule" in text
         assert "plausible, unproven explanation" in text
         assert "unscored, genuinely unique GeoTIFFs across all 9 sites" not in text
+
+
+def test_concurrent_vent_packet_survives_generated_site():
+    card = json.loads((ROOT / "evidence/vent_run_card_20261026.json").read_text())
+    for page in ("index.html", "docs/index.html", "docs/executive-summary.html"):
+        text = (ROOT / page).read_text()
+        assert 'id="vent-packet"' in text
+        assert f'download="{card["submission_name"]}"' in text
+        assert "not generated or scientifically replayed by this review" in text
+
+
+def test_vent_quarantine_refuses_execution_and_disclaims_dummy_audits():
+    import subprocess
+    import sys
+
+    blocked = subprocess.run(
+        [sys.executable, "scripts/run_vent_lane.py"], cwd=ROOT, capture_output=True, text=True
+    )
+    assert blocked.returncode != 0 and "quarantined" in blocked.stderr
+    verified = subprocess.run(
+        [sys.executable, "scripts/run_vent_lane.py", "--verify-recorded"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    packet = json.loads(verified.stdout)
+    assert packet["scientific_gate_claims_trusted"] is False
+    assert packet["ok_to_submit"] is False
+    assert packet["validator_output"]["format_valid"] is True
+    for page in ("docs/index.html", "docs/executive-summary.html"):
+        assert "Scientific gate claims untrusted" in (ROOT / page).read_text()

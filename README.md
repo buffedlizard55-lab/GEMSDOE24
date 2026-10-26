@@ -24,6 +24,33 @@ review does not replace or weaken the original prompt. Maximize P(Win); Own the
 Outcome means reporting failed gates rather than manufacturing a ready label.
 
 
+## Latest 2026-10-26 Experiment: `H24-VENT` — Vent-Bridged Quaternary Corridor — DOWNLOAD YES / SUBMIT NO (NEGATIVE)
+
+[**Download H24-VENT GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif) ·
+[NaN-outside twin](docs/downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-nan.tif) ·
+[Single-GeoTIFF ZIP](docs/downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.zip) ·
+[JSON run card](evidence/vent_run_card_20261026.json) ·
+[Selector receipt](evidence/vent_selector_20261026.json) ·
+[Preregistration](knowledge/22_preregistered_VENT_2026-10-26.md) ·
+[PhD Analysis: Why GEMSDOE32 0.2778 Leads & How to Beat It](knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md) ·
+[Executive guide](docs/executive-summary.html).
+
+**QUARANTINED: DOWNLOAD FOR RESEARCH ONLY / SUBMIT NO.** The concurrent
+VENT code contained dummy C2ST and plausible registry-statistic fallbacks on audit
+failure. Its scientific gate PASS claims are **untrusted**, not validation.
+Historical receipts are preserved unchanged. The entrypoint now refuses execution
+except exact-file verification; original source is archived as non-executable text.
+The archived **HOLDOUT-DTI 0.02403**, 95% CI **[0.01777, 0.03054]**,
+`gems-segment-pooled-v1`, **60,988 withheld positives**, is recorded, not
+independently replayed. No promotion or slot is authorized.
+
+- Name: `gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif`
+- SHA-256: `1c8399f15fbc58f6006e49542af58ae14a29f7e07243ac7797111f008c67cf8b`
+- Short comment (119 chars): `GEMS24 VENT | vent-spring-lineament bridge | id a6e191937e80 | HOLDOUT-DTI 0.02403 | research; DO NOT SUBMIT`
+- Verified: `.venv/bin/python scripts/run_vent_lane.py --verify-recorded` · `.venv/bin/python -m pytest -q`
+
+> Concurrent VENT research is retained, not a new experiment by this review. The apparent H33-B2 leaderboard improvement is an unverified causal explanation; see the current review for scope and correct metric interpretation.
+
 ## Latest 2026-10-26 Point-Best Candidate: `H24-DPRF1` — 10/10 Competing-Method Gates PASS · Selector v2: `DO_NOT_SUBMIT`
 
 [**Download the newly generated H24-DPRF1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) ·
@@ -60,6 +87,8 @@ All prompt leaderboard numbers below are `UNVERIFIED-OWNER-REPORT` (never `ORGAN
 | **[GEMSDOE32](https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html)** | **`h33-h33-2-b2-...-zeros` (`0.2778`, D2.8 minus $\le 2\text{ px}$)** | `gemsdoe32-h-geo-conduit-37654-20261025T235617Z-2d0d0c5e-zeros.tif` | Unscored; repo top header: `DO NOT SUBMIT` | `63.6%` / `13.1%` | `29.50%` (`45.6%` vs `B2`) | **DO NOT SUBMIT** (`H33-B2` prohibited to copy; `H-GEO-CONDUIT` `63.6%` apron) |
 | **[GEMSDOE33](https://buffedlizard55-lab.github.io/GEMSDOE33/)** | `h33d-analog-tip-stepover-r30` (`0.2632`, B2 + 6,436 px) | `gemsdoe33-a33-l1-analog-transfer-research-37654-20261025-85c94a805a34-zeros.tif` | Unscored; `GEMSDOE33` holdout FAIL (`NEGATIVE`) | `37.6%` / `38.7%` | `27.60%` | **DO NOT SUBMIT** (failed `GEMSDOE33` holdout gate) |
 | **[GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/docs/)** | `anderson-geothermal-pinn-38854` (`0.2750`, B2 + 1,200 px) | *None (`2026-10-26` review retired legacy copied/leaky code)* | No valid unique candidate | — | `46.06%` (vs `PINN`) | **DO NOT SUBMIT** (no non-copied unique candidate on `GEMSDOE36`) |
+
+**2026-10-26 `H24-VENT` update (this session):** `gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif` (`SHA 1c8399f15fbc58...`) — independent vent-spring-lineament unsupervised product, **HOLDOUT-DTI 0.02403** `[0.01777,0.03054]` (`gems-segment-pooled-v1`, 60,988), `0.209` apron / `0.560` far-field, `35%` overlap vs DPRF1 → **passes novelty/C2ST but fails holdout best** → `DOWNLOAD YES / SUBMIT NO`. Detailed PhD diagnosis of B2's Tversky `0.2T/(0.2T+0.2F+0.8N)` mechanism in [knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md](knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md).
 
 ## Concurrent decision — 2026-10-26 (`H24-TNR1`, PR #31)
 

@@ -115,3 +115,24 @@ independent replay certificate and legitimate machine-verifiable quota integrati
 before implementing positive authorization. Harmonize sibling holdouts before
 claiming a cross-site winner. Assign one new geological lane only after these
 protocol contradictions are resolved. No projected leaderboard score is promised.
+
+### Concurrent-main integration
+
+While PR #35 was being prepared, PR #34 added a separate negative H24-VENT
+experiment on main. This continuation merged main **into the same Arena branch**,
+preserved all VENT code/data/receipts, reopened its exact TIFF and verified its
+recorded hash and format without rerunning it. The site builder now preserves its
+negative download packet (previously inserted only into generated HTML). DPRF1
+remains the recorded local point-best. The concurrent README's hidden-score causal
+claim and incorrect shorthand Tversky expression were not adopted in the current
+summary. New experiments and slots **in this review** remain zero.
+
+**Critical integration irregularity — VENT quarantine:** Source inspection found
+`check_c2st` catching any exception and returning `auc=0.52` with PASS. Registry
+exception paths likewise supply plausible constants rather than measurements.
+The recorded VENT C2ST/novelty PASS claims are untrusted; this review does not
+endorse them. Preserve historical receipts without rewriting their contents.
+Original source is retained as non-executable text in
+`archive/legacy/vent/run_vent_lane.py.txt`; the shared entrypoint now refuses
+all execution except exact-file verification, which explicitly disclaims those
+audits. No private evaluator fork or replacement experiment was created.
