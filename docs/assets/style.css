@@ -25,6 +25,6 @@ code{color:var(--ink)}main p a{text-decoration:underline;text-underline-offset:2
   .portfolio-mobile { display: grid; gap: 1rem; }
   .portfolio-mobile article { padding: 1rem; border: 1px solid #d7dfeb; border-radius: .6rem; background: #fff; }
   .portfolio-mobile h3 { margin-top: 0; }
-  .portfolio-mobile p, .portfolio-mobile code { overflow-wrap: anywhere; }
+  .portfolio-mobile p, .portfolio-mobile code, #xvar1-research code, #xvar1 code, #latest-xvar1-packet code { overflow-wrap: anywhere; word-break: break-word; }
   .portfolio-mobile .portfolio-file { max-width: 100%; }
 }
