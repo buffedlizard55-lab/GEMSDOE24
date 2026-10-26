@@ -225,8 +225,10 @@ def test_trsg1_artifacts_are_hash_bound_strict_range_and_fail_closed():
     assert sha256_file(zeros) == dl["sha256"] == card["raster_sha256"]
     assert sha256_file(nan_p) == dl["nan_sha256"] == card["nan_outside_sha256"]
     assert sha256_file(zip_p) == dl["zip_sha256"] == card["zip_sha256"]
-    assert active["lane"] == "H24-TRSG1"
-    assert active["artifact"]["file"] == dl["file"]
+    assert active["lane"] in {"H24-TNR1", "H24-TRSG1"}
+    assert active["ok_to_submit"] is False
+    sel = json.loads((ROOT / "evidence/trsg1_selector_20261026.json").read_text())
+    assert sel["decision"] == "DO_NOT_SUBMIT" and sel["ok_to_submit"] is False
     assert len(dl["note"]) <= 140 and dl["note"] == card["note"]
 
     fp = footprint.load_footprint()

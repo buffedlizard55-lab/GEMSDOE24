@@ -70,7 +70,7 @@ def test_fuse_refuses_implicit_rerun() -> None:
     assert "already recorded" in res.stderr
 
 
-def test_fuse_is_on_first_screen_and_rejects_checksum_tampering(tmp_path: Path) -> None:
+def test_fuse_is_retained_and_rejects_checksum_tampering(tmp_path: Path) -> None:
     dl = json.loads((ROOT / "docs/data/hcw_download.json").read_text())
     for page in (
         "index.html",
@@ -83,12 +83,20 @@ def test_fuse_is_on_first_screen_and_rejects_checksum_tampering(tmp_path: Path) 
         assert f'download="{dl["nan_file"]}"' in html
         assert "H24-FUSE-HCW" in html
         assert "DOWNLOAD: YES" in html and "SUBMIT: NO" in html
-        if 'class="metrics"' in html:
-            assert html.index(dl["file"]) < html.index('class="metrics"')
+        assert html.index('id="historical-') < html.index(dl["file"])
 
     # Verify tampering with FUSE run card fails site build
     site = tmp_path / "repo"
-    for rel in ("scripts", "src", "docs", "evidence", "registry", "data/bridge", "README.md"):
+    for rel in (
+        "scripts",
+        "src",
+        "docs",
+        "evidence",
+        "registry",
+        "knowledge",
+        "data/bridge",
+        "README.md",
+    ):
         src = ROOT / rel
         dst = site / rel
         dst.parent.mkdir(parents=True, exist_ok=True)

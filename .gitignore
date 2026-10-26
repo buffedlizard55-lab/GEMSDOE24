@@ -25,3 +25,6 @@ data/prepared/
 
 *.egg-info/
 .site/
+
+# CUP1 regenerable work caches
+data/work_cup1/

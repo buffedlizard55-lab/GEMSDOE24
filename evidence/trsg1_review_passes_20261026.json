@@ -29,16 +29,24 @@
     },
     {
       "pass": 3,
-      "scope": "Full re-check against original acceptance criteria, Parallel-Run Protocol Rules 1-6, and CI gates",
+      "scope": "Full re-check against original acceptance criteria, Parallel-Run Protocol Rules 1-6, merged origin/main (df2f1e2), and browser/CI gates",
       "checks": {
         "unique_geotiff_never_copied": true,
         "crs_shape_transform_strict_0_1_no_nan_in_footprint": true,
         "first_screen_automated_gate_unambiguous_no_human_pending": true,
+        "selector_v2_verified": "gems-selector-v2-literal-quota-fail-closed (DO_NOT_SUBMIT)",
+        "merged_20261026_lane_overlap_max_3px": {
+          "DPRF1": 0.6622395419118817,
+          "TNR1": 0.3929537139964011,
+          "CRP1": 0.381130374847569,
+          "CUP1": 0.35488574306770584
+        },
         "note_length_le_140": 71,
         "score_labels_strictly_HOLDOUT_DTI_or_OWNER_REPORTED": true,
         "readme_embedded_prompt_preserved_verbatim": true,
         "ci_verifiers_all_green": true,
-        "pytest_passed": 249,
+        "pytest_passed": 345,
+        "chromium_playwright_axe_pages_passed": 12,
         "ruff_lint_and_format_clean": true,
         "drivendata_automation_zero": true
       },

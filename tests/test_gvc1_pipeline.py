@@ -199,11 +199,11 @@ def test_gvc1_recorded_artifacts_and_fail_closed_verdict():
         assert zf.namelist() == [card["nan_submission_name"]]
 
 
-def test_first_screen_surfaces_gvc1_and_tamper_fails_site_build(tmp_path):
+def test_historical_packet_retains_gvc1_and_tamper_fails_site_build(tmp_path):
     dl = json.loads((ROOT / "docs/data/gvc1_download.json").read_text())
     for rel in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         html = (ROOT / rel).read_text()
-        first_screen = html.split('class="metrics"', 1)[0] if 'class="metrics"' in html else html
+        first_screen = html.split('id="historical-', 1)[1]
         assert dl["file"] in first_screen
         assert "NOT OK TO SUBMIT" in first_screen
         assert "DO NOT SUBMIT" in first_screen

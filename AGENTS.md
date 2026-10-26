@@ -1,5 +1,79 @@
 # Standing project instructions
 
+## Latest 2026-10-26 point-best continuation: H24-DPRF1 & Nine-Site Executive Summary
+
+Read `knowledge/owner_brief_2026-10-26.md`, `knowledge/owner_brief_2026-10-25.md`, and the current README decision first.
+- `H24-DPRF1` (`src/gems/dprf1.py`, `scripts/run_dprf1_lane.py`, `knowledge/19_preregistered_DPRF1_2026-10-26.md`, `knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md`, `evidence/dprf1_run_card_20261026.json`, `evidence/dprf1_selector_20261026.json`) achieves the repository point-best **`HOLDOUT-DTI 0.16379`** (`[0.15045, 0.17739]` on `gems-segment-pooled-v1`, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000`, `B1` `0.13900`, `B0` `0.14179`, and exceeding `CUP1` `0.15038`, `GVC1` `0.14876`, `CRP1` `0.13747`, and `TNR1` `0.13219`) and **`0.16290`** (`[0.14449, 0.18118]`) on `3.0 km` `segment-hide-recover-pooled-v1`.
+- Passes **57/57** competing method rasters (`max 3-px overlap = 0.5578 <= 0.70`, incl. `0.3613` vs `TNR1`, `0.3398` vs `CRP1`, `0.3381` vs `CUP1`), **83/83** peer blobs (`0.5494 <= 0.70`), **52/52** two-polarity leakage canaries (`<= 0.6111 <= 0.90`), strict exact-file C2ST (`AUC = 0.5247 < 0.55`, Holm `p = 0.100`), and Dual-Partition Stitched-OOF far-field coverage (`52.3%` `>2 km` vs `22.3%` in `2-9 px`).
+- Remains **`DOWNLOAD: YES · SUBMIT: NO` (`DO_NOT_SUBMIT`, `verdict: "negative"`)** under `gems-selector-v2-literal-quota-fail-closed` (retained `registry-039` spacing-5 calibration lattice, unknown live DrivenData quota, and missing independent replay certificate). Verify without rerunning via `.venv/bin/python scripts/run_dprf1_lane.py --verify-recorded`.
+
+## Concurrent continuation decision (2026-10-26): TNR1 stopped; verification only
+
+Read the README current decision and full `knowledge/owner_brief_2026-10-26.md`
+**every session**. Latest preregistration/findings: `knowledge/20_preregistered_TNR1_2026-10-26.md`
+and `knowledge/21_TNR1_findings_2026-10-26.md`.
+
+- TNR1 already ran once with its fixed matched raw control. It is negative and
+  stopped as duplicate. Do not rerun, reweight, move dots, remove controls or
+  change the seed/budget/threshold to escape the result.
+- Newly generated exact research TIFF: `docs/downloads/gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif`.
+  SHA-256 `c8cb320c2c776e64c2d198bfc2e28338e7e354b6d827550f09464b413f0a8a90`.
+  **DOWNLOAD YES / SUBMIT NO**, not human inspection pending. The requested
+  fully unique, submit-ready prediction remains unachieved.
+- TNR1 HOLDOUT-DTI 0.13219, 95% CI [0.11791,0.14546],
+  `gems-segment-pooled-v1`, 60,988 withheld positives. No detected paired benefit
+  over its matched control and below GVC1 at execution. Later CUP1 (`0.15038`) and DPRF1 (`0.16379`)
+  recorded point-bests on the same evaluator/count remain negative under v2;
+  do not use an outdated/easier best for future screening.
+- Protected 19 deformation/terrain channels; residualized exactly 12. Fixed
+  HGB; no HCW weights. Do not recast another residualization rerun as untested.
+- Final 3-px overlap fails against real competing methods (74.89% maximum) as
+  well as the retained lattice (100%). Changing only the control policy cannot
+  authorize this file. New bytes are not scientific lane uniqueness.
+- Verification only: `.venv/bin/python scripts/evaluate_holdout.py --verify-tnr1`
+  or `scripts/run_tnr1_lane.py --verify-recorded`; exact-file preflight remains
+  negative. No assigned single-method paragraph/verified replay-and-quota
+  authorization receipt exists. No slot was used.
+- All 92 owner-listed READMEs were retrieved at immutable commits, byte-identity
+  checked and inventoried (118 historical artifact claims). This does not verify every claim,
+  organizer score or every current raster. The frozen TNR1 raster union covers
+  117 contents / 167 aliases, not all current TIFFs in 92 repositories.
+- A single-output broadcast bug was fixed centrally in `gems.residualize` and
+  regression-tested before science. Old stopped lanes remain untouched.
+
+The older dated continuation notes below are historical, not newer authority.
+
+
+**CUP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CUP1_2026-10-26.md`,
+`knowledge/21_CUP1_findings_2026-10-26.md` and `evidence/cup1_run_card_20261026.json` first.
+CUP1 (HOLDOUT-DTI 0.15038) is DOWNLOAD YES / SUBMIT NO: paired CI vs matched
+B-GVC crosses 0 and 91.2% of dots sit within 3 px of parent GVC1. Do not rerun/retune CUP1,
+and do not treat a minor increment as a fresh assigned lane. One negative result does
+not prove inevitable convergence of every future model. Prospectively prioritize
+orthogonal hypotheses; SGMC-sparse is an additional diagnostic, not a replacement
+for the mandated spatially blocked primary endpoint. The current selector is
+negative-only: positive replay certification and actual account quota remain
+unverified, so no slot can be authorized from card booleans.
+
+**CRP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CRP1_2026-10-26.md`,
+`knowledge/21_CRP1_findings_2026-10-26.md` and `evidence/crp1_run_card_20261026.json` first.
+H24-CRP1 (compositional radiometric fronts + cross-depth TMI/up150 persistence +
+Hessian saddles, selective residualization) is STOPPED as duplicate/negative:
+HOLDOUT-DTI 0.13747 [0.12400, 0.15152] (`gems-segment-pooled-v1`, 60,988 withheld),
+paired Δ vs reconstructed OOF baseline +0.00747 [-0.00242, +0.01793], final-dot
+overlap 0.8070 > 0.70 (max |ρ| 0.5878), canary/C2ST/format PASS. DOWNLOAD YES /
+SUBMIT NO. Do not rerun or retune it (including residualization strength).
+The parallel PR #29 selector v1 is preserved historically. Current `gems.selector`
+v2 is a negative-only recorded-evidence screen: literal controls are retained,
+unknown quota blocks, and complete independent positive replay is not implemented. Preflight schema v2 still requires its own selector receipt
+format — wiring the two is future work, do not change preflight semantics silently.
+Owner-reported nine-site list updated in `registry/owner_reported_scores_2026-10-26.json`
+(includes an unverified 0.0859 claim from the 2026-10-26 brief; no artifact-linked
+organizer receipt establishes a live score; pixel-distance forensics on GVC1's
+Stage-5 in-sample apron clustering are recorded in `knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md`). Parallel PR #28 (`knowledge/20_repo_review_2026-10-26.md`)
+shares the `knowledge/20_` prefix with the CRP1 preregistration by coincidence;
+both files remain.
+
 **OJ1 continuation (2026-10-25):** Read `knowledge/17_preregistered_OJ1_2026-10-25.md`,
 `knowledge/18_OJ1_findings_2026-10-25.md`, and `evidence/oj1_run_card_20261025.json` first.
 OJ1 stopped as duplicate-final-dots (spacing-5 control retained), loses the recorded
@@ -8,7 +82,7 @@ Historical UNIQUE01/02/03, CON and FUSE entrypoints are retired; source/evidence
 remain for education. UNIQUE03 executed a 30 km decay, not its advertised 300 m;
 its proximity/composite canaries were not run. Never present it as catalogue-independent.
 Shared preflight schema v2 refuses to authorize from promote booleans alone;
-independent selector verification is missing, not a human-inspection pending state.
+complete independent selector/quota verification is missing, not a human-inspection pending state.
 
 
 **Current precedence (2026-10-25):** read `knowledge/owner_brief_2026-10-25.md`

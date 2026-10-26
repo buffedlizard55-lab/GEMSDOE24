@@ -65,6 +65,15 @@ class NuisanceResidualizer:
         if not remove:
             return z
         c = np.asarray(nuisance, np.float32)
+        if c.ndim != 2 or z.ndim != 2 or len(c) != len(z):
+            raise ValueError("Aligned 2D nuisance and geological inference matrices required")
         if np.any(~np.isfinite(c)):
             raise ValueError("Missing nuisance feature at inference")
-        return np.clip(z - self.model.predict(self._basis(c)), -8, 8).astype(np.float32)
+        conditional = np.asarray(self.model.predict(self._basis(c)))
+        # Ridge returns (n,) for a single output in some sklearn versions. Keep
+        # the channel axis explicit or subtraction broadcasts to an n-by-n matrix.
+        if conditional.ndim == 1:
+            conditional = conditional[:, None]
+        if conditional.shape != z.shape:
+            raise ValueError("Nuisance conditional mean has the wrong channel shape")
+        return np.clip(z - conditional, -8, 8).astype(np.float32)
