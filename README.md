@@ -19,34 +19,6 @@ and `archive/legacy/vent/run_vent_lane.py.txt`. The active `scripts/run_vent_lan
 now only verifies existing file hash/format with `--verify-recorded`; no rerun is allowed.
 No VENT result is used here to justify promotion or a leaderboard forecast.
 
-## Latest lane — 2026-10-26 (`H24-EUL1`) Euler N=0 contact increment: NEGATIVE · DOWNLOAD YES / SUBMIT NO · DO NOT RETUNE
-
-[**Download the newly generated unique H24-EUL1 research GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-eul1-negative-euler-contact-20261026-eda170f04847-zeros.tif) ·
-[Single-GeoTIFF ZIP](docs/downloads/gems24-eul1-negative-euler-contact-20261026-eda170f04847-zeros.zip) ·
-[NaN-outside twin](docs/downloads/gems24-eul1-negative-euler-contact-20261026-eda170f04847-nan.tif) ·
-[JSON run card](evidence/eul1_run_card_20261026.json) ·
-[Executive summary (EUL1 update)](evidence/nine_site_executive_summary_eul1_20261026.json) ·
-[Findings](knowledge/24_EUL1_findings_and_executive_summary_2026-10-26.md) ·
-[Preregistration](knowledge/22_preregistered_EUL1_2026-10-26.md) ·
-[Amendment A1](knowledge/23_EUL1_prereg_amendment_2026-10-26.md)
-
-**THE OBVIOUS DECISION (unchanged by EUL1):** DPRF1's file in the section below remains the local
-recorded point-best unscored candidate — its HOLDOUT-DTI was **replayed bit-identically** inside
-this EUL1 session (`0.1637924246971501`, same CI) as Arm 2. EUL1 scored **worse**
-(**HOLDOUT-DTI 0.16005** [0.14729, 0.17278]; paired Δ **−0.00375** [−0.00825, +0.00074], 1/4 folds;
-Euler channels alone lost 0/4 folds) and **86.57%** of its dots fall within 3 px of DPRF1's
-(>70% Rule-1 ceiling = duplicate lane), so it is a valid-format **research download only**.
-Format strict-[0,1] PASS · 59/59 leakage canaries PASS · exact-file C2ST AUC 0.5184 PASS ·
-selector v2 `DO_NOT_SUBMIT` · **zero slots spent, zero human-inspector fallback.**
-
-Pre-fit band forensics also proved the bridge `*_vg` bands are **not** certified derivatives
-(`tmi_vg` = ∂(`tmi`)×0.00990/px, corr 0.9965; `iso_grav_anom_vg` vs ∂(`iso_grav_anom`) corr −0.19),
-so Euler used self-consistent FFT derivatives (Amendment A1, `IRR-EUL1-VG-BANDS`). Portfolio lesson:
-incremental channels on a strong parent re-converge to duplicate dots (CUP1 91.2%, EUL1 86.6%) —
-the next lane must change detection geometry (candidate preregs: `H24-DRAIN5` flow-routing,
-`H24-KERN6` DTI-kernel soft labels, `H24-INSAR4` on an unrestricted machine), and the immediate
-next step is the **selector/quota authorization step for DPRF1**, not another experiment.
-
 ## Latest 2026-10-26 Point-Best Candidate: `H24-DPRF1` — 10/10 Competing-Method Gates PASS · Selector v2: `DO_NOT_SUBMIT`
 
 [**Download the newly generated H24-DPRF1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) ·
@@ -85,6 +57,34 @@ All prompt leaderboard numbers below are `UNVERIFIED-OWNER-REPORT` (never `ORGAN
 | **[GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/docs/)** | `anderson-geothermal-pinn-38854` (`0.2750`, B2 + 1,200 px) | *None (`2026-10-26` review retired legacy copied/leaky code)* | No valid unique candidate | — | `46.06%` (vs `PINN`) | **DO NOT SUBMIT** (no non-copied unique candidate on `GEMSDOE36`) |
 
 **2026-10-26 `H24-VENT` update (this session):** `gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif` (`SHA 1c8399f15fbc58...`) — independent vent-spring-lineament unsupervised product, **HOLDOUT-DTI 0.02403** `[0.01777,0.03054]` (`gems-segment-pooled-v1`, 60,988), `0.209` apron / `0.560` far-field, `35%` overlap vs DPRF1 → **passes novelty/C2ST but fails holdout best** → `DOWNLOAD YES / SUBMIT NO`. Detailed PhD diagnosis of B2's Tversky `0.2T/(0.2T+0.2F+0.8N)` mechanism in [knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md](knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md).
+
+## Latest lane — 2026-10-26 (`H24-EUL1`) Euler N=0 contact increment: NEGATIVE · DOWNLOAD YES / SUBMIT NO · DO NOT RETUNE
+
+[**Download the newly generated unique H24-EUL1 research GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-eul1-negative-euler-contact-20261026-eda170f04847-zeros.tif) ·
+[Single-GeoTIFF ZIP](docs/downloads/gems24-eul1-negative-euler-contact-20261026-eda170f04847-zeros.zip) ·
+[NaN-outside twin](docs/downloads/gems24-eul1-negative-euler-contact-20261026-eda170f04847-nan.tif) ·
+[JSON run card](evidence/eul1_run_card_20261026.json) ·
+[Executive summary (EUL1 update)](evidence/nine_site_executive_summary_eul1_20261026.json) ·
+[Findings](knowledge/24_EUL1_findings_and_executive_summary_2026-10-26.md) ·
+[Preregistration](knowledge/22_preregistered_EUL1_2026-10-26.md) ·
+[Amendment A1](knowledge/23_EUL1_prereg_amendment_2026-10-26.md)
+
+**THE OBVIOUS DECISION (unchanged by EUL1):** DPRF1's file in the section below remains the local
+recorded point-best unscored candidate — its HOLDOUT-DTI was **replayed bit-identically** inside
+this EUL1 session (`0.1637924246971501`, same CI) as Arm 2. EUL1 scored **worse**
+(**HOLDOUT-DTI 0.16005** [0.14729, 0.17278]; paired Δ **−0.00375** [−0.00825, +0.00074], 1/4 folds;
+Euler channels alone lost 0/4 folds) and **86.57%** of its dots fall within 3 px of DPRF1's
+(>70% Rule-1 ceiling = duplicate lane), so it is a valid-format **research download only**.
+Format strict-[0,1] PASS · 59/59 leakage canaries PASS · exact-file C2ST AUC 0.5184 PASS ·
+selector v2 `DO_NOT_SUBMIT` · **zero slots spent, zero human-inspector fallback.**
+
+Pre-fit band forensics also proved the bridge `*_vg` bands are **not** certified derivatives
+(`tmi_vg` = ∂(`tmi`)×0.00990/px, corr 0.9965; `iso_grav_anom_vg` vs ∂(`iso_grav_anom`) corr −0.19),
+so Euler used self-consistent FFT derivatives (Amendment A1, `IRR-EUL1-VG-BANDS`). Portfolio lesson:
+incremental channels on a strong parent re-converge to duplicate dots (CUP1 91.2%, EUL1 86.6%) —
+the next lane must change detection geometry (candidate preregs: `H24-DRAIN5` flow-routing,
+`H24-KERN6` DTI-kernel soft labels, `H24-INSAR4` on an unrestricted machine), and the immediate
+next step is the **selector/quota authorization step for DPRF1**, not another experiment.
 
 ## Concurrent decision — 2026-10-26 (`H24-TNR1`, PR #31)
 
