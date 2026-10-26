@@ -340,7 +340,7 @@
   },
   "selector": {
     "selector_version": "gems-selector-v2-literal-quota-fail-closed",
-    "decided_utc": "2026-10-26T07:49:07.250915+00:00",
+    "decided_utc": "2026-10-26T16:19:27.339397+00:00",
     "artifact": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
     "artifact_sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
     "human_inspection_used": false,

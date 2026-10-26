@@ -2,6 +2,8 @@
 
 ## Current continuation review — 2026-10-26
 
+**Nine-site download decisions:** [executive table](docs/executive-summary.html#nine-site-download-decisions) · [machine-readable packet](docs/data/nine_site_download_decisions.json) · [three-pass continuation audit](docs/decision-audit-20261026.md). No calibrated leaderboard estimate or approved new TIFF exists. The preserved owner brief below remains the session starting point.
+
 Concurrent PR #35 review and exact-file utility are also preserved: [review](knowledge/22_current_best_review_2026-10-26.md), [receipt](docs/data/current_best_review.json), `python scripts/review_current_best.py`.
 
 **No new experiment or TIFF in this review. DOWNLOAD existing research: YES / SUBMIT: NO.**
@@ -56,7 +58,7 @@ All prompt leaderboard numbers below are `UNVERIFIED-OWNER-REPORT` (never `ORGAN
 | **[GEMSDOE33](https://buffedlizard55-lab.github.io/GEMSDOE33/)** | `h33d-analog-tip-stepover-r30` (`0.2632`, B2 + 6,436 px) | `gemsdoe33-a33-l1-analog-transfer-research-37654-20261025-85c94a805a34-zeros.tif` | Unscored; `GEMSDOE33` holdout FAIL (`NEGATIVE`) | `37.6%` / `38.7%` | `27.60%` | **DO NOT SUBMIT** (failed `GEMSDOE33` holdout gate) |
 | **[GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/docs/)** | `anderson-geothermal-pinn-38854` (`0.2750`, B2 + 1,200 px) | *None (`2026-10-26` review retired legacy copied/leaky code)* | No valid unique candidate | — | `46.06%` (vs `PINN`) | **DO NOT SUBMIT** (no non-copied unique candidate on `GEMSDOE36`) |
 
-**2026-10-26 `H24-VENT` update (this session):** `gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif` (`SHA 1c8399f15fbc58...`) — independent vent-spring-lineament unsupervised product, **HOLDOUT-DTI 0.02403** `[0.01777,0.03054]` (`gems-segment-pooled-v1`, 60,988), `0.209` apron / `0.560` far-field, `35%` overlap vs DPRF1 → **passes novelty/C2ST but fails holdout best** → `DOWNLOAD YES / SUBMIT NO`. Detailed PhD diagnosis of B2's Tversky `0.2T/(0.2T+0.2F+0.8N)` mechanism in [knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md](knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md).
+**2026-10-26 `H24-VENT` integrity correction:** The concurrent historical packet is quarantined. Its runner fabricated fallback novelty/C2ST values; neither those gates nor its scientific performance claims are trusted. Exact bytes remain downloadable for research only. **DOWNLOAD YES / SUBMIT NO.** See [integrity review](docs/review-20261026.md).
 
 ## Latest lane — 2026-10-26 (`H24-EUL1`) Euler N=0 contact increment: NEGATIVE · DOWNLOAD YES / SUBMIT NO · DO NOT RETUNE
 
