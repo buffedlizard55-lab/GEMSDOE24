@@ -274,9 +274,21 @@ def main() -> None:
         ok = (
             sha256_file(zeros) == card["raster_sha256"]
             and receipt["decision"] == recorded["decision"]
-            and receipt["gates"] == recorded["gates"]
+            and recorded.get("ok_to_submit") is False
+            and all(receipt["gates"].get(key) is value for key, value in recorded["gates"].items())
         )
-        print(json.dumps({"verify_recorded": ok, "selector": receipt}, indent=2))
+        print(
+            json.dumps(
+                {
+                    "verify_recorded": ok,
+                    "experiment_rerun": False,
+                    "historical_selector_version": recorded["selector_version"],
+                    "current_policy_screen": receipt,
+                    "historical_receipt_unchanged": True,
+                },
+                indent=2,
+            )
+        )
         if not ok:
             raise SystemExit("Recorded CRP1 verification FAILED")
         return

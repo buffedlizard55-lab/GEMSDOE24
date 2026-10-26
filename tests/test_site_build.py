@@ -149,15 +149,14 @@ def test_site_rejects_a_run_card_that_disagrees_with_the_exact_download(built):
         path.write_text(original)
 
 
-def test_mtr_download_is_first_screen_and_parallel_aspc_is_not_erased(built):
+def test_mtr_download_is_retained_and_parallel_aspc_is_not_erased(built):
     row = json.loads((built / "docs/data/independent_download.json").read_text())
     for page in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         html = (built / page).read_text()
         assert 'download="' + row["file"] + '"' in html
         assert "DOWNLOAD: YES" in html and "NOT OK TO SUBMIT" in html
         assert "DO NOT SUBMIT" in html and "ASPC research TIFF" in html
-        if 'class="metrics"' in html:
-            assert html.index(row["file"]) < html.index('class="metrics"')
+        assert html.index('id="historical-') < html.index(row["file"])
     assert not row["ok_to_submit"] and not row["lane_uniqueness_gate_passed"]
 
 

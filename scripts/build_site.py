@@ -26,6 +26,8 @@ from site_packets import (  # noqa: E402
     gvc1_packet,
     rshg1_packet,
 )
+from tnr1_site import all_sites_table  # noqa: E402
+from tnr1_site import render as render_tnr1  # noqa: E402
 
 from gems import emission  # noqa: E402
 from gems.validator import sha256_file  # noqa: E402
@@ -311,6 +313,35 @@ def build_independent_site(primary):
 .venv/bin/python scripts/export_negative_result.py
 .venv/bin/python scripts/build_site.py
 .venv/bin/python -m pytest -q</code></pre><p class="micro">Caches and the 419 MB training raster are ignored. GitHub download access is sufficient for these CPU experiments. Original organizer authentication of owner mirrors and an explicit single-method lane remain unavailable. No GPU is required.</p></section><section><h2>Next work — completed and remaining</h2><ol class="steplist"><li><h3>Completed: Prospective registry-overlap separation</h3><p><code>gems.novelty.compare_prospective_registry</code> separates synthetic calibration controls (<code>registry-039</code> spacing-5 lattice, <code>registry-044</code> zero placeholder) from the competing method lanes and 83 peer blobs while keeping literal all-entry flags on record.</p></li><li><h3>Completed: Reconstructed same-protocol OOF multi-physics baseline</h3><p><code>oof_multiphysics_hgb_d3</code> refits a fold-local 27-channel HGB detector strictly on <code>fold["train"]</code> of <code>SegmentHoldout</code>, establishing a leakage-free OOF benchmark of <strong>HOLDOUT-DTI 0.13000</strong> (95% CI [0.11565, 0.14396]).</p></li><li><h3>Completed: Strike-projected hydrothermal-geomorphic operator &amp; exact-file C2ST</h3><p><code>H24-SAHG1</code> achieves <strong>HOLDOUT-DTI 0.09672</strong> ([0.08657, 0.10703]) on <code>gems-segment-pooled-v1</code> and <strong>0.09655</strong> ([0.08270, 0.10976]) on <code>segment-hide-recover-pooled-v1</code>, beating <code>MTR1</code>, <code>ASPC</code>, and its own geomorphic ablation <code>G_0</code> (+0.01012), and is audited by <code>gems.c2s2</code> (AUC 0.5826 vs. labels 0.4912).</p></li><li><h3>Completed: Fold-local SAHG1 × OOF HGB fusion &amp; training-only nuisance residualization (<code>H24-FUSE</code> &amp; <code>H24-RSHG1</code>)</h3><p><code>H24-FUSE-HCW</code> integrates <code>G_sat</code>, <code>R_alt</code>, <code>B_step</code>, and <code>H_conduit</code> into a fold-local 31-channel HGB model with training-only <code>NuisanceResidualizer</code> on roads, claims, and acquisition blocks, reducing exact-file C2ST AUC from <code>0.5826</code> to <strong><code>0.5108</code></strong> (<code>0.4928</code> on <code>FUSE-RESID</code>, Holm <em>p</em> = <code>0.870</code>), passing prospective method-lane novelty across all 49 competing method rasters (max 3-px overlap <code>0.6315</code> ≤ 0.70 vs. <code>0.7399</code> FAIL on unresidualized <code>FUSE-RAW</code>), and reaching <strong>HOLDOUT-DTI 0.12372</strong> ([0.11229, 0.13496]). Parallel 42-channel <code>H24-RSHG1</code> unlocks the 31.8% LiDAR gap (<code>NE_LidarGapHeavy</code> DTI <strong>0.17285</strong>), passes C2ST (AUC <strong>0.5088</strong>), and reaches <strong>0.12899</strong> primary (<strong>0.13137</strong> calibrated pointwise).</p></li></ol><p>Open legacy PR #7 remains conflicting and was not merged or overwritten. Official block boundaries remain a derived audit, not published coordinates. No human exception is requested.</p></section><section><h2>Machine-readable evidence</h2><div class="actions"><a class="button" href="data/hcw_run_card.json" download>FUSE-HCW JSON run card</a><a class="button" href="data/hcw_experiment_20261025.json" download>FUSE-HCW experiment</a><a class="button" href="data/fuse_run_card.json" download>Stopped unresidualized FUSE card</a><a class="button" href="data/rshg1_run_card.json" download>RSHG1 JSON run card</a><a class="button" href="data/rshg1_experiment_20261025.json" download>RSHG1 experiment</a><a class="button" href="data/oj1_run_card.json" download>OJ1 JSON run card</a><a class="button" href="data/sahg1_run_card.json" download>SAHG1 JSON run card</a><a class="button" href="data/sahg1_experiment_20261025.json" download>SAHG1 experiment</a><a class="button" href="data/con_run_card.json" download>CON JSON run card</a><a class="button" href="data/unique_run_card.json" download>H-UNIQUE-03 JSON run card</a><a class="button" href="data/mtr1_run_card.json" download>MTR1 JSON card</a><a class="button" href="data/mtr1_experiment.json" download>MTR1 experiment</a><a class="button" href="data/priority_rasters.json" download>Registry manifest</a><a class="button" href="data/priority_feed.json" download>Source freshness</a><a class="button" href="data/submission_preflight_review_20261025.json" download>Preflight review</a><a class="button" href="data/data_readiness_20261025.json" download>Data readiness / next gate</a><a class="button" href="data/2026-10-25_data_readiness_run_card.json" download>Readiness run card</a></div></section>"""
+    tnr1 = render_tnr1(ROOT)
+    if tnr1:
+        overview = (
+            tnr1["overview"]
+            + '<details id="historical-packets"><summary>Earlier research downloads — all DO NOT SUBMIT</summary>'
+            + overview
+            + "</details>"
+        )
+        executive = (
+            tnr1["executive"]
+            + '<details id="historical-executive"><summary>Historical submission packets and nine-site comparison</summary>'
+            + executive
+            + "</details>"
+        )
+        research = (
+            tnr1["research"]
+            + '<details id="historical-research"><summary>Prior experiments, frozen evidence and historical proposals</summary>'
+            + research
+            + "</details>"
+        )
+        source_page = (
+            '<div class="pagehead"><div class="eyebrow">Source audit, not score verification</div><h1>92 repositories.<br>Zero verified scores.</h1><p>Immutable source text, explicit owner-claim labels and honest freshness. No automated DrivenData access. Sources refresh on the six-hour site schedule; this is not a live leaderboard.</p><p class="micro"><span data-source-state>GitHub source freshness only</span> · <span data-source-time>See timestamped snapshot below</span></p></div>'
+            + all_sites_table(ROOT)
+            + '<details id="historical-sources"><summary>Official data links, earlier source evidence and nine-site freshness feed</summary>'
+            + source_page
+            + "</details>"
+        )
+        for source_name in ("tnr1_source_review_20261026.json",):
+            (DOCS / "data" / source_name).write_text((ROOT / "evidence" / source_name).read_text())
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),
@@ -399,6 +430,10 @@ def build_independent_site(primary):
             "ok_to_submit": rshg1_card["ok_to_submit"],
         }
         (DOCS / "data/active_lane.json").write_text(json.dumps(active_payload, indent=2) + "\n")
+    if tnr1:
+        (DOCS / "data/active_lane.json").write_text(
+            json.dumps(tnr1["active"], indent=2, allow_nan=False) + "\n"
+        )
     (DOCS / "data/priority_rasters.json").write_text(
         (ROOT / "registry/priority_rasters.json").read_text()
     )
@@ -561,6 +596,8 @@ Earlier scores/forecasts below are historical, not current promotion authority.
             "Stopped as duplicate, not a leaderboard result. No weekly slot has been spent. "
             "[OJ1 run card](evidence/oj1_run_card_20261025.json).\n\n" + md
         )
+    if tnr1:
+        md = tnr1["status_md"] + md
     readme = ROOT / "README.md"
     readme.write_text(
         re.sub(
@@ -572,7 +609,7 @@ Earlier scores/forecasts below are historical, not current promotion authority.
     )
     receipt = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "primary_sha256": primary["sha256"],
+        "primary_sha256": tnr1["active"]["artifact"]["sha256"] if tnr1 else primary["sha256"],
         "pages": [str((DOCS / p).relative_to(ROOT)) for p in pages],
         "root": "index.html",
         "slot_recommendation": "not_recommended",

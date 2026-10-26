@@ -30,6 +30,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python scripts/refresh_priority_feed.py
+      - name: Refresh every owner-listed GitHub README (not scores; preserve stale failure markers)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/review_owner_sites.py --allow-stale
       - name: Build honest static site from recorded evidence
         run: python scripts/build_site.py
       - name: Stage only the small public website, never raw training data

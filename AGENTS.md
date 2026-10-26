@@ -1,13 +1,52 @@
 # Standing project instructions
 
+## Current continuation decision (2026-10-26): TNR1 stopped; verification only
+
+Read the README current decision and full `knowledge/owner_brief_2026-10-26.md`
+**every session**. Latest preregistration/findings: `knowledge/20_preregistered_TNR1_2026-10-26.md`
+and `knowledge/21_TNR1_findings_2026-10-26.md`.
+
+- TNR1 already ran once with its fixed matched raw control. It is negative and
+  stopped as duplicate. Do not rerun, reweight, move dots, remove controls or
+  change the seed/budget/threshold to escape the result.
+- Newly generated exact research TIFF: `docs/downloads/gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif`.
+  SHA-256 `c8cb320c2c776e64c2d198bfc2e28338e7e354b6d827550f09464b413f0a8a90`.
+  **DOWNLOAD YES / SUBMIT NO**, not human inspection pending. The requested
+  fully unique, submit-ready prediction remains unachieved.
+- TNR1 HOLDOUT-DTI 0.13219, 95% CI [0.11791,0.14546],
+  `gems-segment-pooled-v1`, 60,988 withheld positives. No detected paired benefit
+  over its matched control and below GVC1 at execution. Later CUP1 recorded
+  point-best HOLDOUT-DTI 0.15038 [0.13646,0.16460], same evaluator/count, remains
+  negative; do not use an outdated/easier best for future screening.
+- Protected 19 deformation/terrain channels; residualized exactly 12. Fixed
+  HGB; no HCW weights. Do not recast another residualization rerun as untested.
+- Final 3-px overlap fails against real competing methods (74.89% maximum) as
+  well as the retained lattice (100%). Changing only the control policy cannot
+  authorize this file. New bytes are not scientific lane uniqueness.
+- Verification only: `.venv/bin/python scripts/evaluate_holdout.py --verify-tnr1`
+  or `scripts/run_tnr1_lane.py --verify-recorded`; exact-file preflight remains
+  negative. No assigned single-method paragraph/verified replay-and-quota
+  authorization receipt exists. No slot was used.
+- All 92 owner-listed READMEs were retrieved at immutable commits, byte-identity
+  checked and inventoried (118 historical artifact claims). This does not verify every claim,
+  organizer score or every current raster. The frozen TNR1 raster union covers
+  117 contents / 167 aliases, not all current TIFFs in 92 repositories.
+- A single-output broadcast bug was fixed centrally in `gems.residualize` and
+  regression-tested before science. Old stopped lanes remain untouched.
+
+The older dated continuation notes below are historical, not newer authority.
+
+
 **CUP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CUP1_2026-10-26.md`,
 `knowledge/21_CUP1_findings_2026-10-26.md` and `evidence/cup1_run_card_20261026.json` first.
 CUP1 (HOLDOUT-DTI 0.15038, new point best) is DOWNLOAD YES / SUBMIT NO: paired CI vs matched
 B-GVC crosses 0 and 91.2% of dots sit within 3 px of parent GVC1. Do not rerun/retune CUP1,
-and do not propose another GVC18+HGB increment — it will converge to the same dots. Next lane
-must be an orthogonal surface family, judged on SegmentHoldout **and** SGMC-sparse; the
-independent selector now exists on main (`gems.selector`, CRP1 session) but CUP1's failed
-gates make its decision DO_NOT_SUBMIT regardless; quota remains unknown.
+and do not treat a minor increment as a fresh assigned lane. One negative result does
+not prove inevitable convergence of every future model. Prospectively prioritize
+orthogonal hypotheses; SGMC-sparse is an additional diagnostic, not a replacement
+for the mandated spatially blocked primary endpoint. The current selector is
+negative-only: positive replay certification and actual account quota remain
+unverified, so no slot can be authorized from card booleans.
 
 **CRP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CRP1_2026-10-26.md`,
 `knowledge/21_CRP1_findings_2026-10-26.md` and `evidence/crp1_run_card_20261026.json` first.
@@ -17,13 +56,14 @@ HOLDOUT-DTI 0.13747 [0.12400, 0.15152] (`gems-segment-pooled-v1`, 60,988 withhel
 paired Δ vs reconstructed OOF baseline +0.00747 [-0.00242, +0.01793], final-dot
 overlap 0.8070 > 0.70 (max |ρ| 0.5878), canary/C2ST/format PASS. DOWNLOAD YES /
 SUBMIT NO. Do not rerun or retune it (including residualization strength).
-New independent selector `gems.selector` (v1) now exists and is the only issuer
-of `ok_to_submit`; it fail-closes on any missing gate evidence and always records
-quota as unknown. Preflight schema v2 still requires its own selector receipt
+The parallel PR #29 selector v1 is preserved historically. Current `gems.selector`
+v2 is a negative-only recorded-evidence screen: literal controls are retained,
+unknown quota blocks, and complete independent positive replay is not implemented. Preflight schema v2 still requires its own selector receipt
 format — wiring the two is future work, do not change preflight semantics silently.
 Owner-reported nine-site list updated in `registry/owner_reported_scores_2026-10-26.json`
-(includes GVC1 listed live at 0.0859 vs its 0.14876 holdout — holdout rank does
-not transfer monotonically). Parallel PR #28 (`knowledge/20_repo_review_2026-10-26.md`)
+(includes an unverified 0.0859 claim from a parallel brief, not this session’s
+original owner list; no artifact-linked organizer receipt establishes a live score
+or a monotonic/nonmonotonic mapping to holdout). Parallel PR #28 (`knowledge/20_repo_review_2026-10-26.md`)
 shares the `knowledge/20_` prefix with the CRP1 preregistration by coincidence;
 both files remain. Next lanes, if assigned: valley-floor blind-fault or
 drainage-deflection with a sparse-regime primary endpoint; any change to how
@@ -38,7 +78,7 @@ Historical UNIQUE01/02/03, CON and FUSE entrypoints are retired; source/evidence
 remain for education. UNIQUE03 executed a 30 km decay, not its advertised 300 m;
 its proximity/composite canaries were not run. Never present it as catalogue-independent.
 Shared preflight schema v2 refuses to authorize from promote booleans alone;
-independent selector verification is missing, not a human-inspection pending state.
+complete independent selector/quota verification is missing, not a human-inspection pending state.
 
 
 **Current precedence (2026-10-25):** read `knowledge/owner_brief_2026-10-25.md`

@@ -19,7 +19,6 @@ ROOT = Path(__file__).resolve().parents[1]
 CARD_PATH = ROOT / "evidence/rshg1_run_card_20261025.json"
 EXP_PATH = ROOT / "evidence/rshg1_experiment_20261025.json"
 DL_PATH = ROOT / "docs/data/rshg1_download.json"
-ACTIVE_PATH = ROOT / "docs/data/active_lane.json"
 TEMPLATE = ROOT / "data/bridge/sample_submission.tif"
 TEMPLATE_SHA = "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
 
@@ -28,15 +27,12 @@ def test_rshg1_artifacts_are_hash_bound_strict_range_and_fail_closed():
     card = json.loads(CARD_PATH.read_text())
     exp = json.loads(EXP_PATH.read_text())
     dl = json.loads(DL_PATH.read_text())
-    active = json.loads(ACTIVE_PATH.read_text())
 
     zeros = ROOT / "docs/downloads" / dl["file"]
     nan = ROOT / "docs/downloads" / dl["nan_file"]
     assert zeros.exists() and nan.exists()
     assert sha256_file(zeros) == dl["sha256"] == card["raster_sha256"]
     assert sha256_file(nan) == dl["nan_sha256"] == card["nan_outside_sha256"]
-    assert active["artifact"]["file"] == dl["file"]
-    assert active["artifact"]["sha256"] == dl["sha256"]
     assert len(dl["note"]) <= 140 and dl["note"] == card["note"]
 
     fp = footprint.load_footprint()
@@ -93,7 +89,7 @@ def test_rshg1_verify_recorded_succeeds_without_rerun():
     assert payload["ok_to_submit"] is False
 
 
-def test_rshg1_leads_first_screen_and_preserves_all_sibling_packets():
+def test_rshg1_is_retained_and_preserves_all_sibling_packets():
     dl = json.loads(DL_PATH.read_text())
     mtr = json.loads((ROOT / "docs/data/independent_download.json").read_text())
     sahg = json.loads((ROOT / "docs/data/sahg1_download.json").read_text())
@@ -108,8 +104,7 @@ def test_rshg1_leads_first_screen_and_preserves_all_sibling_packets():
         assert html.index(dl["file"]) < html.index(sahg["file"])
         assert con["submission_name"] in html
         assert uniq["file"] in html
-        if 'class="metrics"' in html:
-            assert html.index(dl["file"]) < html.index('class="metrics"')
+        assert html.index('id="historical-') < html.index(dl["file"])
 
 
 def test_site_build_rejects_rshg1_checksum_or_preflight_tampering(tmp_path):
