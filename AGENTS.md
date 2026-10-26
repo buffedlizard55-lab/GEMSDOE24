@@ -15,7 +15,9 @@ and `knowledge/21_TNR1_findings_2026-10-26.md`.
   fully unique, submit-ready prediction remains unachieved.
 - TNR1 HOLDOUT-DTI 0.13219, 95% CI [0.11791,0.14546],
   `gems-segment-pooled-v1`, 60,988 withheld positives. No detected paired benefit
-  over its matched control and below recorded GVC1 current highest.
+  over its matched control and below GVC1 at execution. Later CUP1 recorded
+  point-best HOLDOUT-DTI 0.15038 [0.13646,0.16460], same evaluator/count, remains
+  negative; do not use an outdated/easier best for future screening.
 - Protected 19 deformation/terrain channels; residualized exactly 12. Fixed
   HGB; no HCW weights. Do not recast another residualization rerun as untested.
 - Final 3-px overlap fails against real competing methods (74.89% maximum) as
@@ -34,6 +36,15 @@ and `knowledge/21_TNR1_findings_2026-10-26.md`.
 
 The older dated continuation notes below are historical, not newer authority.
 
+
+**CUP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CUP1_2026-10-26.md`,
+`knowledge/21_CUP1_findings_2026-10-26.md` and `evidence/cup1_run_card_20261026.json` first.
+CUP1 (HOLDOUT-DTI 0.15038, new point best) is DOWNLOAD YES / SUBMIT NO: paired CI vs matched
+B-GVC crosses 0 and 91.2% of dots sit within 3 px of parent GVC1. Do not rerun/retune CUP1,
+and do not propose another GVC18+HGB increment — it will converge to the same dots. Next lane
+must be an orthogonal surface family, judged on SegmentHoldout **and** SGMC-sparse; the
+independent selector now exists on main (`gems.selector`, CRP1 session) but CUP1's failed
+gates make its decision DO_NOT_SUBMIT regardless; quota remains unknown.
 
 **CRP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CRP1_2026-10-26.md`,
 `knowledge/21_CRP1_findings_2026-10-26.md` and `evidence/crp1_run_card_20261026.json` first.

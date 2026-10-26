@@ -16,14 +16,21 @@ from pathlib import Path
 from typing import Any
 
 from . import submission
+from .benchmarks import EVALUATOR, recorded_point_best
 from .validator import sha256_file
 
 SELECTOR_VERSION = "gems-selector-v2-literal-quota-fail-closed"
 
-# Recorded current best on gems-segment-pooled-v1 in this repository
-# (H24-GVC1, evidence/gvc1_run_card_20261025.json, 60,988 withheld positives).
-RECORDED_BEST_DTI = 0.14876289156979275
-RECORDED_BEST_EVALUATOR = "gems-segment-pooled-v1"
+# Read the highest currently recorded declared-comparable point estimate.
+# This is a conservative floor, not certification that its method is promotable.
+try:
+    RECORDED_BEST_EVIDENCE = recorded_point_best(Path(__file__).resolve().parents[2])
+except (OSError, ValueError, KeyError, TypeError):
+    RECORDED_BEST_EVIDENCE = None
+RECORDED_BEST_DTI = (
+    RECORDED_BEST_EVIDENCE["holdout"]["dti"] if RECORDED_BEST_EVIDENCE is not None else float("inf")
+)
+RECORDED_BEST_EVALUATOR = EVALUATOR
 
 MAX_RANK_CORRELATION = 0.90
 MAX_DOT_OVERLAP = 0.70
@@ -234,6 +241,9 @@ def verify_selector(
         "decision": "OK_TO_SUBMIT" if ok_to_submit else "DO_NOT_SUBMIT",
         "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
         "recorded_scientific_screen_passed": recorded_scientific_screen_passed,
+        "current_point_best_source": RECORDED_BEST_EVIDENCE["source"]
+        if RECORDED_BEST_EVIDENCE
+        else None,
         "reasons": reasons,
         "scope": (
             "Recorded-evidence screening and exact-file validation only; positive authorization "

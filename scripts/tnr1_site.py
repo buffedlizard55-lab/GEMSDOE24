@@ -7,6 +7,7 @@ from html import escape
 
 from run_tnr1_lane import verify_recorded
 
+from gems.benchmarks import recorded_point_best
 from gems.novelty import SYNTHETIC_CALIBRATION_CONTROL_FILES
 
 
@@ -36,6 +37,9 @@ def render(root):
     delta_low, delta_high = paired["paired_delta_ci95"]
     best = card["recorded_baseline_comparisons"]["recorded_current_highest_gvc1"]["holdout"]
     best_low, best_high = best["ci95"]["interval"]
+    current = recorded_point_best(root)
+    current_score = current["holdout"]
+    current_low, current_high = current_score["ci95"]["interval"]
     count = sum(
         len(card[key]["features"]) for key in ("raw_feature_canary", "oof_transform_canary")
     )
@@ -91,9 +95,9 @@ alt="Downsampled map of frozen TNR1 research dots; not verified faults or geothe
             f"Paired HOLDOUT-DTI delta {paired['paired_delta_dti']:+.5f}, 95% CI [{delta_low:+.5f}, {delta_high:+.5f}]; {paired['fold_wins']}/{paired['n_folds']} folds won.",
         ),
         (
-            "Recorded current best",
+            "Current recorded point-best",
             "FAIL",
-            f"TNR1 HOLDOUT-DTI {holdout['dti']:.5f} is below this repository’s recorded GVC1 {best['dti']:.5f}, same declared evaluator/protocol. No new independent GVC1 replay is claimed.",
+            f"TNR1 HOLDOUT-DTI {holdout['dti']:.5f} is below later {current['lane']} {current_score['dti']:.5f} (95% CI [{current_low:.5f}, {current_high:.5f}]); same declared evaluator/count. A point-best is not a certified paired win; no independent best-model replay is claimed.",
         ),
         (
             "Exact-file nuisance audit",
@@ -148,7 +152,8 @@ all-entry novelty and current account allowance. No human inspection exception r
 <div class="tablewrap" tabindex="0" role="region" aria-label="Comparable holdout results"><table><thead><tr><th>Arm / record</th><th>HOLDOUT-DTI</th><th>95% CI</th><th>Status</th></tr></thead><tbody>
 <tr><td>TNR1 fixed candidate</td><td>{holdout["dti"]:.5f}</td><td>[{low:.5f}, {high:.5f}]</td><td>New measurement; negative</td></tr>
 <tr><td>Matched raw 31-channel control</td><td>{raw["dti"]:.5f}</td><td>[{raw_low:.5f}, {raw_high:.5f}]</td><td>New control measurement; not a submission choice</td></tr>
-<tr><td>GVC1 recorded current highest</td><td>{best["dti"]:.5f}</td><td>[{best_low:.5f}, {best_high:.5f}]</td><td>Recorded, not retrained here; novelty failed</td></tr></tbody></table></div>
+<tr><td>GVC1 execution-time comparator</td><td>{best["dti"]:.5f}</td><td>[{best_low:.5f}, {best_high:.5f}]</td><td>Recorded, not retrained here; novelty failed</td></tr>
+<tr><td>{current["lane"]} later recorded point-best</td><td>{current_score["dti"]:.5f}</td><td>[{current_low:.5f}, {current_high:.5f}]</td><td>Parallel record, not a certified paired win or submit authorization</td></tr></tbody></table></div>
 <p class="micro">All rows: {escape(holdout["evaluator_version"])} · {holdout["n_withheld_positive_pixels"]:,} withheld positives. CIs are internal spatial-bootstrap uncertainty, not hidden-score estimates. Repeated use of this public holdout can itself overfit research decisions.</p>
 <p><strong>Named alternative:</strong> {escape(card["named_non_fault_mimic"])}. A fault-proxy raster is not proof of a vent, heat, fluid supply or permeability. Frozen SAHG1 physical preprocessing uses survey-wide statistics; the new nuisance fit alone is training-only. The complete support mask covers {100 * report["support_pixels"] / 5167373:.2f}% of the footprint, limiting recall.</p>
 <p><a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/20_preregistered_TNR1_2026-10-26.md">Four ranked preregistered hypotheses</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/21_TNR1_findings_2026-10-26.md">Findings and next work</a> · <a href="data/tnr1_run_card.json">Full numerical evidence</a></p></section>"""
@@ -204,7 +209,7 @@ all-entry novelty and current account allowance. No human inspection exception r
             "ok_to_submit": False,
             "submission_authorized": False,
         },
-        "status_md": f"Latest **H24-TNR1**: [`{card['submission_name']}`](docs/downloads/{card['submission_name']}). **DOWNLOAD YES / SUBMIT NO — NOT OK TO SUBMIT**. HOLDOUT-DTI **{holdout['dti']:.5f}**, 95% CI **[{low:.5f}, {high:.5f}]**, `{holdout['evaluator_version']}`, **{holdout['n_withheld_positive_pixels']:,} withheld positives**. Matched raw control **HOLDOUT-DTI {raw['dti']:.5f}** (95% CI [{raw_low:.5f}, {raw_high:.5f}]); paired delta {paired['paired_delta_dti']:+.5f} (95% CI [{delta_low:+.5f}, {delta_high:+.5f}]). Recorded GVC1 current highest **HOLDOUT-DTI {best['dti']:.5f}** (95% CI [{best_low:.5f}, {best_high:.5f}], same evaluator/positives; not retrained). Exact file [0,1]/grid and {count} leakage-canary checks pass; C2ST diagnostic AUC {audit['observed_auc']:.4f}, Holm p {audit['holm_p_value']:.3f}, not flagged. Final competing-method 3-px overlap **{100 * method_overlap:.2f}%** exceeds 70%; retained lattice overlap **100%**. Stopped as duplicate; no retuning. New bytes, not gate-passing scientific uniqueness, and not a leaderboard result. No weekly slot has been spent. [JSON run card](evidence/tnr1_run_card_20261026.json) · [Executive guide](docs/executive-summary.html) · [Current owner brief](knowledge/owner_brief_2026-10-26.md).\n\nEarlier packets below are historical, not current submission authority.\n\n",
+        "status_md": f"Latest **H24-TNR1**: [`{card['submission_name']}`](docs/downloads/{card['submission_name']}). **DOWNLOAD YES / SUBMIT NO — NOT OK TO SUBMIT**. HOLDOUT-DTI **{holdout['dti']:.5f}**, 95% CI **[{low:.5f}, {high:.5f}]**, `{holdout['evaluator_version']}`, **{holdout['n_withheld_positive_pixels']:,} withheld positives**. Matched raw control **HOLDOUT-DTI {raw['dti']:.5f}** (95% CI [{raw_low:.5f}, {raw_high:.5f}]); paired delta {paired['paired_delta_dti']:+.5f} (95% CI [{delta_low:+.5f}, {delta_high:+.5f}]). Execution-time GVC1 comparator **HOLDOUT-DTI {best['dti']:.5f}** (95% CI [{best_low:.5f}, {best_high:.5f}], same evaluator/positives; not retrained). Later recorded {current['lane']} point-best **HOLDOUT-DTI {current_score['dti']:.5f}** (95% CI [{current_low:.5f}, {current_high:.5f}], same evaluator/positives) also is not a certified paired win. Exact file [0,1]/grid and {count} leakage-canary checks pass; C2ST diagnostic AUC {audit['observed_auc']:.4f}, Holm p {audit['holm_p_value']:.3f}, not flagged. Final competing-method 3-px overlap **{100 * method_overlap:.2f}%** exceeds 70%; retained lattice overlap **100%**. Stopped as duplicate; no retuning. New bytes, not gate-passing scientific uniqueness, and not a leaderboard result. No weekly slot has been spent. [JSON run card](evidence/tnr1_run_card_20261026.json) · [Executive guide](docs/executive-summary.html) · [Current owner brief](knowledge/owner_brief_2026-10-26.md).\n\nEarlier packets below are historical, not current submission authority.\n\n",
     }
 
 

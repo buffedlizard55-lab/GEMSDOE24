@@ -40,6 +40,39 @@ No claimed guarantee of a score, winning, vent discovery, or full task completio
 
 ## Retained parallel result (PR #29) — 2026-10-26 H24-CRP1: DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
 
+## ⭐ Newest unique TIFF (2026-10-26, H24-CUP1): DOWNLOAD YES / SUBMIT NO
+
+[**Download the CUP1 GeoTIFF — zeros outside, strict whole-array [0,1]**](docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif) ·
+[NaN-outside twin](docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-nan.tif) ·
+[ZIP (single GeoTIFF)](docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.zip) ·
+[JSON run card](evidence/cup1_run_card_20261026.json) · [Preregistration](knowledge/20_preregistered_CUP1_2026-10-26.md) ·
+[Findings](knowledge/21_CUP1_findings_2026-10-26.md) · [Executive summary](docs/executive-summary.html)
+
+**NOT OK TO SUBMIT (`DO_NOT_SUBMIT`) — automatic gate, zero human-inspector fallback.**
+Generated from scratch in this session (zero copied submission pixels): GeoDAWN
+K/Th/U compositional fronts + RTP→TMI-150 m trough persistence (16 new channels) on the
+shared multi-physics stack, 37,654 sparse off-catalogue dots. It is the repo's highest
+pooled **HOLDOUT-DTI 0.15038** (95% CI [0.13646, 0.16460], `gems-segment-pooled-v1`,
+60,988 withheld positives; matched B-GVC 0.14647; prior best GVC1 0.14876) and passes
+format/strict-[0,1], 64-feature leakage canaries and exact-file C2ST (AUC 0.5107).
+It **fails** submission gates: paired gain vs matched baseline +0.00391 has 95% CI
+[−0.00053, +0.00825] (crosses 0), and 91.2% of its dots lie within 3 px of its parent
+GVC1 file (>70% duplicate rule). No organizer score exists; no slot was used.
+
+- Name: `gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif`
+- SHA-256: `a9db98b61dbd1db1a2b904f47a24f830af08006ef66b316b31ce36c3b8d302fc`
+- Short comment (92 chars): `GEMS24 CUP1 | comp-front+upcont submod | NEGATIVE gate stop; DO NOT SUBMIT | id 35a808f4514a`
+- Reproduce: `.venv/bin/python scripts/run_cup1_lane.py` refuses to rerun (frozen receipt);
+  verify bytes with `scripts/preflight_submission.py` (receipt beside the TIFF).
+
+**Why GEMSDOE32's 0.2778 leads:** it is an emission-policy result, not a new detector —
+H27-4's dots minus those within 200 m of the catalogue (exact forensics in
+[`knowledge/21 §2`](knowledge/21_CUP1_findings_2026-10-26.md)). Beating it needs a better
+*ranking surface* in catalogue-incomplete terrain, not more thinning. CUP1 shows an
+incremental HGB stack cannot supply that (its dots converge to its parent's).
+
+## Latest unique file — 2026-10-26 H24-CRP1: DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
+
 [**Download the unique H24-CRP1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif) ·
 [NaN-outside twin](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif) ·
 [Independent selector receipt](evidence/crp1_selector_20261026.json) ·
@@ -73,12 +106,12 @@ across all nine priority sites: **NONE** (see findings table).
   below and in `knowledge/20_repo_review_2026-10-26.md`; its conclusion
   (no submit-authorized TIFF) still holds after CRP1.
 
-## Prior review — 2026-10-26 (PRs #27/#28): DOWNLOAD YES / SUBMIT NO
+## Prior review — 2026-10-26 (PRs #27/#28; superseded by CUP1/CRP1 above)
 
-**No new submit-ready TIFF was generated in this review.** No assigned method
-paragraph was supplied; stopped lanes were not rerun and no slot was used.
-The prior full owner prompt remains embedded below and must be read each session.
-Maximize P(Win) and Own the Outcome mean preserving a failed gate, not renaming it.
+No assigned method paragraph was supplied in that review; stopped lanes were not rerun
+and no slot was used. The prior full owner prompt remains embedded below and must be
+read each session. Maximize P(Win) and Own the Outcome mean preserving a failed gate,
+not renaming it.
 
 - [Nine-site executive comparison](docs/executive-summary.html#priority-summary):
   highest listed historical artifact for every priority site; **none cleared to submit**.
@@ -388,7 +421,7 @@ Irregularities for review (the H33 analysis still cites `registry/live_scores.js
 ## Current decision
 
 <!-- STATUS:START -->
-Latest **H24-TNR1**: [`gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif`](docs/downloads/gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif). **DOWNLOAD YES / SUBMIT NO — NOT OK TO SUBMIT**. HOLDOUT-DTI **0.13219**, 95% CI **[0.11791, 0.14546]**, `gems-segment-pooled-v1`, **60,988 withheld positives**. Matched raw control **HOLDOUT-DTI 0.13223** (95% CI [0.11639, 0.14880]); paired delta -0.00004 (95% CI [-0.01020, +0.01021]). Recorded GVC1 current highest **HOLDOUT-DTI 0.14876** (95% CI [0.13413, 0.16370], same evaluator/positives; not retrained). Exact file [0,1]/grid and 79 leakage-canary checks pass; C2ST diagnostic AUC 0.5267, Holm p 0.240, not flagged. Final competing-method 3-px overlap **74.89%** exceeds 70%; retained lattice overlap **100%**. Stopped as duplicate; no retuning. New bytes, not gate-passing scientific uniqueness, and not a leaderboard result. No weekly slot has been spent. [JSON run card](evidence/tnr1_run_card_20261026.json) · [Executive guide](docs/executive-summary.html) · [Current owner brief](knowledge/owner_brief_2026-10-26.md).
+Latest **H24-TNR1**: [`gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif`](docs/downloads/gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif). **DOWNLOAD YES / SUBMIT NO — NOT OK TO SUBMIT**. HOLDOUT-DTI **0.13219**, 95% CI **[0.11791, 0.14546]**, `gems-segment-pooled-v1`, **60,988 withheld positives**. Matched raw control **HOLDOUT-DTI 0.13223** (95% CI [0.11639, 0.14880]); paired delta -0.00004 (95% CI [-0.01020, +0.01021]). Execution-time GVC1 comparator **HOLDOUT-DTI 0.14876** (95% CI [0.13413, 0.16370], same evaluator/positives; not retrained). Later recorded CUP1 point-best **HOLDOUT-DTI 0.15038** (95% CI [0.13646, 0.16460], same evaluator/positives) also is not a certified paired win. Exact file [0,1]/grid and 79 leakage-canary checks pass; C2ST diagnostic AUC 0.5267, Holm p 0.240, not flagged. Final competing-method 3-px overlap **74.89%** exceeds 70%; retained lattice overlap **100%**. Stopped as duplicate; no retuning. New bytes, not gate-passing scientific uniqueness, and not a leaderboard result. No weekly slot has been spent. [JSON run card](evidence/tnr1_run_card_20261026.json) · [Executive guide](docs/executive-summary.html) · [Current owner brief](knowledge/owner_brief_2026-10-26.md).
 
 Earlier packets below are historical, not current submission authority.
 
