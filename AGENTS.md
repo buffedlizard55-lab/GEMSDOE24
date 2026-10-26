@@ -1,5 +1,40 @@
 # Standing project instructions
 
+## Current continuation decision (2026-10-26): TNR1 stopped; verification only
+
+Read the README current decision and full `knowledge/owner_brief_2026-10-26.md`
+**every session**. Latest preregistration/findings: `knowledge/20_preregistered_TNR1_2026-10-26.md`
+and `knowledge/21_TNR1_findings_2026-10-26.md`.
+
+- TNR1 already ran once with its fixed matched raw control. It is negative and
+  stopped as duplicate. Do not rerun, reweight, move dots, remove controls or
+  change the seed/budget/threshold to escape the result.
+- Newly generated exact research TIFF: `docs/downloads/gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif`.
+  SHA-256 `c8cb320c2c776e64c2d198bfc2e28338e7e354b6d827550f09464b413f0a8a90`.
+  **DOWNLOAD YES / SUBMIT NO**, not human inspection pending. The requested
+  fully unique, submit-ready prediction remains unachieved.
+- TNR1 HOLDOUT-DTI 0.13219, 95% CI [0.11791,0.14546],
+  `gems-segment-pooled-v1`, 60,988 withheld positives. No detected paired benefit
+  over its matched control and below recorded GVC1 current highest.
+- Protected 19 deformation/terrain channels; residualized exactly 12. Fixed
+  HGB; no HCW weights. Do not recast another residualization rerun as untested.
+- Final 3-px overlap fails against real competing methods (74.89% maximum) as
+  well as the retained lattice (100%). Changing only the control policy cannot
+  authorize this file. New bytes are not scientific lane uniqueness.
+- Verification only: `.venv/bin/python scripts/evaluate_holdout.py --verify-tnr1`
+  or `scripts/run_tnr1_lane.py --verify-recorded`; exact-file preflight remains
+  negative. No assigned single-method paragraph/independent selector/quota
+  receipt exists. No slot was used.
+- All 92 owner-listed READMEs were retrieved at immutable commits, byte-identity
+  checked and inventoried (119 owner claims). This does not verify every claim,
+  organizer score or every current raster. The frozen TNR1 raster union covers
+  117 contents / 167 aliases, not all current TIFFs in 92 repositories.
+- A single-output broadcast bug was fixed centrally in `gems.residualize` and
+  regression-tested before science. Old stopped lanes remain untouched.
+
+The older dated continuation notes below are historical, not newer authority.
+
+
 **OJ1 continuation (2026-10-25):** Read `knowledge/17_preregistered_OJ1_2026-10-25.md`,
 `knowledge/18_OJ1_findings_2026-10-25.md`, and `evidence/oj1_run_card_20261025.json` first.
 OJ1 stopped as duplicate-final-dots (spacing-5 control retained), loses the recorded

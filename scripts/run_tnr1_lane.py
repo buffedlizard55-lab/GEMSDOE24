@@ -169,6 +169,145 @@ def nuisance_audit(name, reference, nuisance, nuisance_names, fp_ids, context):
     return result
 
 
+def verify_diagnostic_algebra(card, report, root):
+    """Verify recorded diagnostic arithmetic, never refit or rerun a canary/model."""
+    registry_path = root / REGISTRY.relative_to(ROOT)
+    if sha256_file(registry_path) != report["inputs"][REGISTRY.relative_to(ROOT).as_posix()]:
+        raise ValueError("Frozen TNR1 registry changed")
+    entries = json.loads(registry_path.read_text())["unique_rasters"]
+    expected = {row["id"]: (row["file"], row["footprint_sha256"]) for row in entries}
+    if len(expected) != report["registry_unique_rasters"]:
+        raise ValueError("TNR1 comparator count changed")
+    for stage, result in card["correlation_overlap_vs_registry"].items():
+        rows = result["rows"]
+        identities = {row["registry_id"]: (row["file"], row["footprint_sha256"]) for row in rows}
+        if (
+            identities != expected
+            or len(rows) != len(expected)
+            or result["registry_unique_rasters"] != len(expected)
+            or result["stage"] != stage
+        ):
+            raise ValueError("TNR1 omitted/replaced a frozen comparator")
+        if (result["rank_limit"], result["overlap_limit"], result["overlap_distance_px"]) != (
+            0.90,
+            0.70,
+            3,
+        ):
+            raise ValueError("TNR1 novelty thresholds changed")
+        rank_values, overlaps = [], []
+        for row in rows:
+            ranks = [
+                row[key] for key in ("raw_spearman", "kernel_spearman") if row[key] is not None
+            ]
+            overlap = row["candidate_dot_overlap_within_3px"]
+            if any(not np.isfinite(value) or abs(value) > 1 for value in ranks):
+                raise ValueError("Invalid TNR1 correlation")
+            if stage == "final_dots":
+                if overlap is None or not np.isfinite(overlap) or not 0 <= overlap <= 1:
+                    raise ValueError("Invalid TNR1 final overlap")
+                overlaps.append(overlap)
+            elif overlap is not None:
+                raise ValueError("Pre-placement TNR1 receipt contains placed-dot overlap")
+            duplicate = any(abs(value) > 0.90 for value in ranks) or (
+                overlap is not None and overlap > 0.70
+            )
+            if row["duplicate"] is not duplicate:
+                raise ValueError("TNR1 literal duplicate flag disagrees")
+            rank_values.extend(abs(value) for value in ranks)
+        if result["passed"] is not (not any(row["duplicate"] for row in rows)):
+            raise ValueError("TNR1 novelty summary disagrees")
+        maximum = max(rank_values, default=None)
+        if result["max_abs_rank_correlation"] != maximum or result["max_dot_overlap"] != max(
+            overlaps, default=None
+        ):
+            raise ValueError("TNR1 maximum correlation/overlap disagrees")
+    for key in ("raw_feature_canary", "oof_transform_canary"):
+        result = card.get(key)
+        if result is None:
+            continue
+        if (
+            result["threshold"] != 0.90
+            or result["two_polarities_checked"] is not True
+            or result["feature_count"] != len(result["features"])
+        ):
+            raise ValueError("TNR1 canary scope/threshold changed")
+        for row in result["features"].values():
+            aucs = [row["pooled_auc"], *[fold["auc"] for fold in row["folds"]]]
+            if any(not np.isfinite(value) or not 0 <= value <= 1 for value in aucs):
+                raise ValueError("Invalid recorded TNR1 AUC")
+            flagged = any(max(value, 1 - value) > 0.90 for value in aucs)
+            if row["leakage_suspected"] is not flagged:
+                raise ValueError("TNR1 canary must check both AUC polarities")
+        if result["passed"] is not (
+            not any(row["leakage_suspected"] for row in result["features"].values())
+        ):
+            raise ValueError("TNR1 canary summary disagrees")
+    paired = card.get("paired_comparison")
+    if paired:
+        delta = card["holdout"]["dti"] - card["matched_control_holdout"]["dti"]
+        if (
+            not np.isclose(paired["paired_delta_dti"], delta, atol=1e-14)
+            or paired["candidate_dti"] != card["holdout"]["dti"]
+            or paired["baseline_dti"] != card["matched_control_holdout"]["dti"]
+            or paired["ci95_strictly_positive"] is not (paired["paired_delta_ci95"][0] > 0)
+        ):
+            raise ValueError("TNR1 paired comparison disagrees")
+    for result in card.get("recorded_baseline_comparisons", {}).values():
+        baseline_path = root / result["source"]
+        safe_relative(result["source"])
+        if sha256_file(baseline_path) != result["source_sha256"]:
+            raise ValueError("TNR1 recorded comparator source changed")
+        source = json.loads(baseline_path.read_text())
+        field = (
+            "holdout" if "gvc1" in result["source"] else "reconstructed_oof_multiphysics_baseline"
+        )
+        if (
+            result["holdout"] != source[field]
+            or result["baseline_replayed_this_session"] is not False
+        ):
+            raise ValueError("TNR1 baseline provenance disagrees")
+        comparable = (
+            result["holdout"]["protocol"] == card["holdout"]["protocol"]
+            and result["holdout"]["evaluator_version"] == card["holdout"]["evaluator_version"]
+            and result["holdout"]["n_withheld_positive_pixels"]
+            == card["holdout"]["n_withheld_positive_pixels"]
+        )
+        if result["same_declared_protocol"] is not comparable or result[
+            "candidate_point_estimate_higher"
+        ] is not (comparable and card["holdout"]["dti"] > result["holdout"]["dti"]):
+            raise ValueError("TNR1 current-best comparison disagrees")
+    audit = card.get("exact_file_nuisance_audit")
+    if audit:
+        if audit["candidate_sha256"] != card["raster_sha256"]:
+            raise ValueError("TNR1 nuisance audit names another artifact")
+        results = [audit["labels_first"], audit["candidate"]]
+        for result, adjusted in zip(results, c2s2.holm_adjust([r["p_value"] for r in results])):
+            flagged = bool(
+                adjusted <= 0.05
+                and result["observed_auc"] >= 0.55
+                and result["margin_vs_p95"] >= 0.02
+            )
+            if (
+                not np.isclose(result["holm_p_value"], adjusted, atol=1e-14)
+                or result["n_null"] != 99
+                or result["null_kind"] != "grouped"
+                or not np.isclose(
+                    result["margin_vs_p95"],
+                    result["observed_auc"] - result["null_auc_p95"],
+                    atol=1e-14,
+                )
+                or result["strict_gate_flagged"] is not flagged
+            ):
+                raise ValueError("TNR1 C2ST decision arithmetic changed")
+        if audit["passed"] is not (not audit["candidate"]["strict_gate_flagged"]):
+            raise ValueError("TNR1 nuisance audit summary disagrees")
+    if (
+        report["hgb_parameters"] != HGB_PARAMS
+        or report["prediction_inputs_include_prior_submission_pixels"] is not False
+    ):
+        raise ValueError("TNR1 frozen model/input declaration changed")
+
+
 def verify_recorded(root=ROOT, *, source_history=True):
     """Reopen exact files and replay recorded algebra only; no experiment rerun."""
     card_path, report_path = root / CARD.relative_to(ROOT), root / REPORT.relative_to(ROOT)
@@ -198,7 +337,22 @@ def verify_recorded(root=ROOT, *, source_history=True):
                 raise ValueError(f"TNR1 pooled {key} disagrees")
         if result["n_withheld_positive_pixels"] != pooled["n_truth"]:
             raise ValueError("TNR1 withheld count changed")
+    verify_diagnostic_algebra(card, report, root)
+    if card.get("organizer_confirmed_score") is not None:
+        raise ValueError("TNR1 has no organizer-confirmed receipt")
     if source_history:
+        if report["preregistration_commit"] != PREREG_COMMIT:
+            raise ValueError("TNR1 preregistration identity changed")
+        subprocess.check_call(
+            ["git", "merge-base", "--is-ancestor", PREREG_COMMIT, report["execution_commit"]],
+            cwd=root,
+        )
+        registry_name = REGISTRY.relative_to(ROOT).as_posix()
+        original_registry = subprocess.check_output(
+            ["git", "show", f"{report['execution_commit']}:{registry_name}"], cwd=root
+        )
+        if hashlib.sha256(original_registry).hexdigest() != report["inputs"][registry_name]:
+            raise ValueError("TNR1 registry was not the committed pre-execution union")
         for path, expected in report["code_sha256"].items():
             raw = subprocess.check_output(
                 ["git", "show", f"{report['execution_commit']}:{path}"], cwd=root
@@ -248,6 +402,17 @@ def verify_recorded(root=ROOT, *, source_history=True):
         or pre.get("decision", {}).get("submission_status") != "DO_NOT_SUBMIT"
     ):
         raise ValueError("TNR1 preflight is stale or permissive")
+    fresh_preflight = preflight(
+        path,
+        root / "data/bridge/sample_submission.tif",
+        run_card_path=card_path,
+        expected_template_sha256=report["inputs"]["data/bridge/sample_submission.tif"],
+    )
+    # Paths vary between the execution machine, local clones and CI. All
+    # scientific/format/hash/decision fields must still match exactly.
+    pre["run_card"]["path"] = fresh_preflight["run_card"]["path"]
+    if pre != fresh_preflight or card.get("ok_to_download") is not True:
+        raise ValueError("TNR1 exact-file preflight no longer reproduces")
     return card
 
 

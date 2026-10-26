@@ -49,12 +49,28 @@ def main():
         help="Verify recorded H24-GVC1 experiment, C2ST receipt, Run Card, and GeoTIFFs",
     )
     parser.add_argument(
+        "--verify-tnr1",
+        action="store_true",
+        help="Verify frozen TNR1 pooled holdout/components and exact TIFFs; never rerun",
+    )
+    parser.add_argument(
         "--work-dir",
         type=Path,
         default=Path("/tmp/gems_work"),
         help="Scratch directory outside tracked workspace for memmaps",
     )
     args = parser.parse_args()
+    if args.verify_tnr1:
+        from run_tnr1_lane import verify_recorded
+
+        print(
+            json.dumps(
+                {"verified": True, "experiment_rerun": False, "run_card": verify_recorded()},
+                indent=2,
+                allow_nan=False,
+            )
+        )
+        return
     if args.verify_recorded:
         from verify_mtr_receipt import verify
 

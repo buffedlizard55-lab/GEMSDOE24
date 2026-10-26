@@ -86,6 +86,11 @@ def validate_feed(data, sources):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--offline", action="store_true")
+    ap.add_argument(
+        "--from-owner-snapshot",
+        type=Path,
+        help="Reuse an already checked all-owner source snapshot; keep its original timestamp",
+    )
     args = ap.parse_args()
     path = ROOT / "docs/data/priority_feed.json"
     sources = json.loads((ROOT / "registry/priority_rasters.json").read_text())["sources"]
@@ -93,9 +98,29 @@ def main():
         validate_feed(json.loads(path.read_text()), sources)
         print("Offline priority feed schema valid; source timestamps unchanged")
         return
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        rows = list(pool.map(check, sources))
-    now = datetime.now(timezone.utc).isoformat()
+    if args.from_owner_snapshot:
+        from review_owner_sites import validate
+
+        snapshot = validate(json.loads(args.from_owner_snapshot.read_text()))
+        if snapshot.get("refresh_status") == "error":
+            raise ValueError("Cannot convert a stale all-owner snapshot into fresh priority checks")
+        by_repo = {row["repo"]: row for row in snapshot["rows"]}
+        rows = [
+            {
+                "repo": row["repo"],
+                "pinned_ref": row["ref"],
+                "url": "https://github.com/" + row["repo"],
+                "latest_main_ref": by_repo[row["repo"]]["commit"],
+                "changed_since_review": by_repo[row["repo"]]["commit"] != row["ref"],
+                "status": "checked",
+            }
+            for row in sources
+        ]
+        now = snapshot["checked_utc"]  # never advance freshness without a new request
+    else:
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            rows = list(pool.map(check, sources))
+        now = datetime.now(timezone.utc).isoformat()
     feed = {
         "scope": "GitHub source freshness only; not a leaderboard or scoring API",
         "checked_utc": now,
