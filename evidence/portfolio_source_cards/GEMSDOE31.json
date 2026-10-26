@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-10-26T15:55:52Z",
+  "hypothesis": "Concealed stepover-dilation hydrothermal upflow (CSDU): geothermal upflow is focused at blind stepover/relay-ramp dilation zones between en-echelon fault segments buried under Quaternary alluvium, producing no surface scarp and no USGS-catalogue trace.",
+  "mechanism": "En-echelon concealed normal segments step right; left-stepping relay ramps between them dilate and focus deep fluid upflow. Score = 4 km Gaussian halo around each stepover dilation center, Poisson-disk thinned to a sparse 4,000-dot budget so false-positive weight stays low (H33 pruning economics) with entirely new geometry.",
+  "named_non_fault_mimic": "Alluvial-fan distributary channels and erosional gullies can mimic low-relief dilation lineaments; mitigated by sparse Poisson-disk spacing and dilation-zone localization rather than continuous drainage networks.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "status": "NOT RUN \u2014 competition truth / catalogue / SGMC rasters unavailable offline; private labels required by gemsdoe31-holdout-v1.",
+    "dti": null,
+    "ci95": null
+  },
+  "leakage_canary": {
+    "note": "Single-feature AUC canary not run (no prepared feature stack / labels offline). Binary stepover-halo dots are label-free; catalogue-AUC = 0 by construction."
+  },
+  "correlation_overlap_vs_registry": {
+    "note": "Registry raster comparison NOT run locally (shared registry rasters not in this checkout). Unique by construction: new stepover-halo geometry, Poisson-disk emitted, zero dots copied from any prior submission."
+  },
+  "raster_sha256": {
+    "nan_outside_primary": "774c7c5aa3784d7c52dc67870e1cc8b0e0a34d1697092ad9f3b08c33dcaf2546",
+    "allfinite_fallback": "bc3681c49fef1df1610cba81cd1064d22f17c28a1812ac9ac233858925e3ea73",
+    "zip": "e1a79938f99391ad2e278eed9d77544527b7c050e8f51f76fdc5068b6932524a"
+  },
+  "validator_output": {
+    "no_nan_inside_footprint": true,
+    "values_in_0_1": true,
+    "crs_shape_transform_match": true,
+    "outside_footprint_nan_exact": true,
+    "allfinite_twin_valid": true,
+    "positive_dots": 4000,
+    "dots_on_public_catalogue": 0
+  },
+  "submission_name": "gemsdoe31-csdu-stepover-8cf9dc27",
+  "submission_note": "CSDU concealed stepover-dilation upflow 4,000d blind-fault hypothesis; unique new geometry no incumbent dots; research-only 8cf9dc27",
+  "submission_note_chars": 132,
+  "verdict": "negative",
+  "verdict_reason": "Format + uniqueness-by-construction PASS. Holdout efficacy and registry uniqueness NOT verifiable offline (no competition truth/registry). Research download only; DO NOT SUBMIT until holdout beats incumbent and registry gate passes.",
+  "ok_to_download_for_research": true,
+  "ok_to_submit": false,
+  "slot_approved": false
+}

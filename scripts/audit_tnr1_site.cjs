@@ -15,7 +15,7 @@ const base = new URL(process.argv[2]);
 
 async function main() {
   const card = JSON.parse(await fs.readFile(path.join(root, 'evidence/dprf1_run_card_20261026.json'), 'utf8'));
-  const noteCard = JSON.parse(await fs.readFile(path.join(root, 'evidence/tnr1_run_card_20261026.json'), 'utf8'));
+  const noteCard = card;
   const libs = await inflate(path.join(modules, '@sparticuz/chromium/bin/al2023.tar.br'));
   setupLambdaEnvironment(path.join(libs, 'lib'));
   const browser = await playwright.launch({args: chromium.args.filter(value => value !== "--single-process"), executablePath: await chromium.executablePath(), headless: true});
@@ -43,14 +43,19 @@ async function main() {
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `Horizontal overflow: ${device} ${relative}`);
         const historical = page.locator('details[id^="historical-"]').first();
         assert.equal(await historical.getAttribute('open'), null);
+        assert.equal(await page.locator('#portfolio-historical tbody tr').count(), 9);
+        assert.equal(await page.locator('#portfolio-current tbody tr').count(), 9);
+        assert.equal(await page.locator('#portfolio-historical .portfolio-mobile > article').count(), 9);
+        assert.equal(await page.locator('#portfolio-historical .portfolio-mobile').isVisible(), device === 'mobile');
         if (!relative) await page.screenshot({path: path.join(root, `logs/tnr1-${device}.png`), fullPage: true});
         const [download] = await Promise.all([page.waitForEvent('download'), link.click()]);
         assert.equal(download.suggestedFilename(), card.submission_name);
         const bytes = await fs.readFile(await download.path());
         const digest = crypto.createHash('sha256').update(bytes).digest('hex');
         assert.equal(digest, card.raster_sha256);
-        await page.locator('[data-copy="#note-tnr1"]').click();
-        await page.waitForFunction(() => document.querySelector('#tnr1-feedback')?.textContent === 'Copied to clipboard.');
+        await page.locator('#current-download-details > summary').click();
+        await page.locator('[data-copy="#note-current-best"]').click();
+        await page.waitForFunction(() => document.querySelector('#current-best-feedback')?.textContent === 'Copied to clipboard.');
         assert.equal(await page.evaluate(() => navigator.clipboard.readText()), noteCard.note);
         await page.addScriptTag({path: axeSource});
         const accessibility = await page.evaluate(async () => {

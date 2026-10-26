@@ -18,14 +18,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-import numpy as np  # noqa: E402
 import rasterio  # noqa: E402
+import run_dprf1_lane as dprf  # noqa: E402
 
 from gems import footprint as footprint_mod  # noqa: E402
 from gems import selector, submission  # noqa: E402
 from gems.validator import sha256_file  # noqa: E402
-
-import run_dprf1_lane as dprf  # noqa: E402
 
 CARD = ROOT / "evidence" / "xfront_run_card_20261026.json"
 TEMPLATE = ROOT / "data" / "bridge" / "sample_submission.tif"
@@ -123,18 +121,12 @@ def main() -> None:
         "c2st_holm_p": c2["holm_p_value"],
         "c2st_strict_gate_passed": c2["strict_gate_passed"],
         "competing_method_novelty_passed": bool(nov["final_dots"]["method_lane_passed"]),
-        "competing_method_max_3px_overlap": nov["final_dots"][
-            "method_lane_max_dot_overlap"
-        ],
-        "competing_method_max_abs_rho": nov["final_dots"][
-            "method_lane_max_abs_rank_correlation"
-        ],
+        "competing_method_max_3px_overlap": nov["final_dots"]["method_lane_max_dot_overlap"],
+        "competing_method_max_abs_rho": nov["final_dots"]["method_lane_max_abs_rank_correlation"],
         "peer_blobs_novelty_passed": bool(nov["peers_final"]["passed"]),
         "peer_blobs_max_3px_overlap": nov["peers_final"]["max_dot_overlap_within_3px"],
         "registry_entries_checked": nov["registry_entries_checked"],
-        "competing_method_rasters_checked": nov["final_dots"][
-            "competing_method_rasters_count"
-        ],
+        "competing_method_rasters_checked": nov["final_dots"]["competing_method_rasters_count"],
         "apron_2_to_9px_fraction": prof["frac_2_to_9px_apron"],
         "farfield_gt20px_fraction": prof["frac_gt_20px_farfield"],
         "median_distance_px": prof["median_dist_px"],

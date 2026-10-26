@@ -1,5 +1,206 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current portfolio review — 2026-10-26, session e78615fb
+
+**DOWNLOAD existing research: YES · SUBMIT: NO · NEW TIFF: NONE.**
+The requested new, high-scoring, gate-passing unique submission **has not been achieved**.
+No old prediction was renamed or copied into a new submission, no geological
+experiment was run, and no weekly slot was used.
+
+[**Executive summary and submission guide**](docs/executive-summary.html) ·
+[Concise nine-site brief](docs/portfolio-executive-summary.md) ·
+[Full scientific / integrity review](docs/portfolio-review-20261026.md) ·
+[Nine-site CSV](docs/data/portfolio_summary_20261026.csv) ·
+[New artifact audit JSON](evidence/portfolio_artifact_audit_20261026.json) ·
+[Session run card](evidence/portfolio_run_card_20261026.json).
+
+[**Download the existing DPRF1 research TIFF — DO NOT SUBMIT**](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif)
+
+- **Actual artifact audit, not another HEAD-only check:** 326 TIFFs reopened
+  (315 across the nine pinned focus sites + 11 local references); 167 distinct
+  valid contents, 157 encoding/content aliases, two format rejects. All 18
+  selected historical/current files fail the literal final-dot rule.
+- **New non-control duplicate finding:** DPRF1 has **86.66% directed 3-px
+  overlap with EUL1**, as well as **99.56%** with the lattice. Its older reverse
+  or narrower comparisons are not a current all-entry PASS.
+- **Integrity corrections:** the CSDU NaN file has 2,610,312 invalid interior
+  cells; its allfinite twin has 2,101 in-footprint dots, 1,899 outside, and 32
+  on catalogue. The G36 format demo is off-grid. G27's source withheld counts
+  disagree. Old G28/G33 simple-superset statements are not supported by the
+  exact masks. These findings do not rewrite frozen historical receipts.
+- **Data placement is complete here:** restored the 418,912,844-byte feature
+  raster and prepared the 5,167,373 × 30 cache on CPU, with hashes checked.
+  They are ignored owner-mirror bulk inputs, not organizer-authenticated data.
+- **Do not repeat already-tried geology:** the proposed graben-pair mechanism
+  exists in GEMSDOE36. Read the [corrected unexecuted queue](knowledge/26_portfolio_plan_corrections_2026-10-26.md), not the initial ranking in isolation.
+- **An automatic preflight obstruction remains:** any 37,654-dot set inside
+  the sample footprint overlaps the retained lattice by at least **82.34%**.
+  This is a bound at that budget, not proof of scientific copying. No exemption,
+  dot-moving or stopped-lane retuning was used. No lane paragraph was supplied.
+
+DPRF1 is only the **recorded local point-best**: **HOLDOUT-DTI 0.16379**,
+95% CI **[0.15045, 0.17739]**, `gems-segment-pooled-v1`, **60,988 withheld
+positives**. Not independently replayed here; not a verified cross-site winner
+or leaderboard forecast. H33-B2's **0.2778** and the conflicting leader claims
+**0.4413 / 0.3195** remain **OWNER-REPORTED / UNVERIFIED**. No defensible numeric
+leaderboard estimate or organizer receipt has been obtained.
+
+The GitHub source feed now also checks the new artifact-audit pins. Later
+commits are explicitly unaudited, not silently treated as unchanged. Site
+copy/format checks, exact-byte downloads and mobile/desktop browser checks do
+not authorize a submission; there is no human-inspector fallback.
+
+### Read at every session start
+
+Read this README, AGENTS, the normalized current request below, the full
+preserved owner text in the archive, and the current review's remaining work.
+Core values: **Maximize P(Win)** and **Own the Outcome**.
+
+<details id="current-owner-request"><summary>Current owner request — normalized, explicitly not a verbatim transcript</summary>
+
+# Current owner request — portfolio session, 2026-10-26 16:12 UTC
+
+Read this at every session start, with README and AGENTS. This is an explicitly
+**normalized requirements record, not a claimed verbatim transcript**. The full
+previously preserved owner message and its long site catalogue remain embedded
+in README and in `owner_brief_2026-10-26.md`. This addendum records the current
+request's priority and differences; it does not replace or erase those records.
+
+## Highest urgency (owner wording)
+
+> MUST GENERATE A UNIQUE TIF SUBMISSION FOR THE COMPETITION. DO NOT COPY A PREVIOUS SUBMISSION UNLESS IT'S FOR LEARNING AND EDUCATION. BUT WE MUST GENERATE A UNIQUE TIF SUBMISSION. IT MUST BE OBVIOUS WHETHER IT IS OK TO DOWNLOAD AND SUBMIT THE GENERATED TIF SUBMISSION.
+
+Focus on **GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31,
+GEMSDOE32, GEMSDOE33 and GEMSDOE36**. Review every focus site, learn from the
+highest listed submissions, and provide a clear executive table stating the
+exact downloadable file, estimated score or evidence limitation, uniqueness,
+and whether it is actually okay to submit. Do not copy prior predictions or
+call new filenames/bytes scientific uniqueness. The project's automated gates,
+not a human inspector, decide the file's status.
+
+## Parallel-run protocol (operative constraints)
+
+1. Stay in the single assigned method paragraph. That paragraph is absent in
+   this message; do not claim a lane was assigned. If rank correlation with a
+   registry raster exceeds 0.90, or more than 70% of candidate dots lie within
+   3 px of any registry raster, log duplicate and stop. Check before placement
+   and on final dots; no after-the-fact exemption or registry-driven dot moving.
+2. Reuse the cached feature stack, `evaluate_holdout.py`, and
+   `submission_writer.py`. Fix shared tools centrally, not private forks.
+   Hide whole fault segments with a buffer, derive catalogue features from
+   visible faults only, mask visible faults exactly, and pool DTI components
+   with alpha 0.2, beta 0.8, 300 m triangular kernel.
+3. Every performance result must be HOLDOUT-DTI with evaluator version,
+   withheld-positive count and 95% CI, or ORGANIZER-CONFIRMED from an
+   artifact-linked submission-page receipt. A projection is never a score.
+   Prompt values without receipts remain explicitly unverified owner claims.
+4. Test every actual feature/transform alone on the holdout; AUC above 0.90
+   means suspected leakage until disproven. Existing stricter two-polarity
+   canary checks remain in force.
+5. End with one JSON run card: hypothesis, mechanism, named non-fault mimic,
+   holdout/CI, registry correlation and overlap, exact raster SHA-256,
+   finite/range/grid validator, name, note of at most 140 characters, and
+   promote/negative verdict. Negative results are deliverables.
+6. At most three experiments or two hours. Promotion to a real weekly slot is
+   a separate selector decision under the actual submission-page allowance.
+   Never spend a slot on a hypothesis that has not beaten the current
+   comparable holdout best. Do not retune stopped lanes.
+
+## Scientific and engineering outcome requested
+
+- Before implementation, rank three to five untried geological hypotheses by
+  expected DTI benefit (qualitative until measured) and cost. Name exact layers,
+  physical transform, rationale for finding uncatalogued faults, distinction
+  from previous methods, and non-fault alternatives. Verify required free,
+  official external sources are obtainable before calling an idea viable.
+- Explain why the reported GEMSDOE32 H33-B2 result may have improved; distinguish
+  observed pixel geometry from an unobservable hidden-label causal explanation.
+  Research geothermal systems critically, but do not mistake fault proxies for
+  verified geothermal vents or guaranteed productive reservoirs.
+- Review prior next steps first. Restore available inputs autonomously; use
+  `scripts/download_competition_data.sh` / `scripts/prepare_data.py` where
+  appropriate. Do not pretend an unavailable official host is accessible or
+  require credentials in chat. The inherited statement that training requires
+  a GPU is subject to source verification, not an unquestioned assumption.
+- Produce a clean GitHub Pages site with the main download/status at the start,
+  a dedicated executive submission guide, a unique filename and short note.
+  Prevent invalid finite/range/grid output; investigate the reported portal
+  error "Predicted values must be in range [0, 1]" without guessing its cause.
+  A local file check is not a guarantee of organizer acceptance.
+- Keep official provenance, immutable file hashes, limitations and irregularities
+  in auditable tables with review links. Maintain a current source-activity feed
+  without misrepresenting it as a live leaderboard. No automatic DrivenData
+  access under the standing project policy; no secret requests or fake receipts.
+- Maximize P(Win) and Own the Outcome: act on engineering defects, preserve
+  negative evidence, and do not spend scarce slots on cosmetic changes.
+- Preserve this request in README as the starting point for later sessions.
+  Complete three passes: implement/verify, fix bugs/assumptions/edge cases, then
+  recheck all requirements and quality. Open a PR from the fixed Arena branch,
+  merge after checks, distinguish merge from deployment, and state remaining
+  work/access limits honestly. Do not claim the central TIFF goal is achieved
+  when it is not.
+
+## Current focus-site owner claims (not authenticated scores)
+
+The latest message explicitly repeats the following newer-batch claims as well
+as the historical maxima. They are included in
+`registry/owner_reported_scores_2026-10-26.json`; none becomes an organizer receipt
+merely by appearing in another site's README.
+
+| Site | Highest listed historical owner claim | Newer listed claim / identity |
+|---|---|---|
+| GEMSDOE24 | 0.2477, H25-1 D1.5 | 0.0859, `gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros` |
+| GEMSDOE25 | 0.2600, D2.8 | 0.0742, `gems25-h66-mgd-flank-sapd3-0-k3p5-20261025-da617550a0e9-zeros` |
+| GEMSDOE27 | 0.2449, topo-gap closure | 0.2190, `gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite` |
+| GEMSDOE28 | 0.2710, H36-1 rung30 | 0.0217, `gems28-s18-mxtp-20261025-3e95505c011a-allfinite` |
+| GEMSDOE30 | 0.2600, D2.8 | 0.1462, `gems30-MSDB1-edge44090-20261025-e7856ec3f14a` |
+| GEMSDOE31 | 0.2708, H27-4 solo D2.8 | No newer score supplied |
+| GEMSDOE32 | 0.2778, `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros` | No newer score supplied |
+| GEMSDOE33 | 0.2632, H33D analog tip/stepover | No newer score supplied |
+| GEMSDOE36 | 0.2750, Anderson-geothermal | No newer score supplied |
+
+The message also gives conflicting current-leader claims **0.4413** and
+**0.3195**. Preserve both as unverified, not as a current leaderboard snapshot.
+The full historical catalogue through GEMSDOE92 remains in the preserved brief;
+this session prioritizes the nine named sites rather than claiming every artifact
+from every listed site has been scientifically replayed.
+
+## Official/manual-review starting points supplied by the owner
+
+- [Competition and submission account](https://www.drivendata.org/competitions/306/competition-doe-gems/)
+- [Problem and metric](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/)
+- [About/resources](https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/)
+- [Data](https://www.drivendata.org/competitions/306/competition-doe-gems/data/)
+- [Leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/)
+- [Official reference solution](https://github.com/drivendataorg/gems-prize-reference-solution)
+- [Rules PDF](https://docs.nlr.gov/docs/fy26osti/96647.pdf)
+- [USGS GeoDAWN](https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and)
+- [INGENIOUS project](https://gbcge.org/current-projects/ingenious/)
+- [OpenEI GDR 1391](https://gdr.openei.org/submissions/1391)
+- [EPSG:32611 reference](https://epsg.io/32611)
+
+The supplied Dropbox data links and original repeated requirements remain in
+the full preserved owner brief in README. This addendum is not evidence that
+any of these hosts was accessed. Access status belongs in the session's source
+receipt. Outbound access in this sandbox is restricted to GitHub/codeload and
+package registries.
+
+</details>
+
+<details id="readme-historical"><summary>Preserved prior reviews, frozen findings, full inherited owner prompt and all-site catalogue — historical, not current authorization</summary>
+
+The current audit above supersedes cross-site freshness, simple ancestry and
+submission-eligibility claims below. Older evidence and the full inherited
+prompt are preserved rather than silently rewritten.
+
+
+
+### Concurrent main integration
+
+The following main-branch records, including PAIR1, XFRONT and other late research files, are preserved. They were not generated by this session or silently added to the frozen nine-site audit.
+
+# GEMS DOE 24 — evidence before a leaderboard slot
+
 ## Latest session c6ea4bb7 — changed-artifact audit, not a new submission
 
 **DOWNLOAD existing research: YES / SUBMIT: NO. No new TIFF generated.**
@@ -3188,5 +3389,7 @@ Do not stop after the first pass. Each pass must build on the previous one. Befo
 
 Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that is in the way of a successful project. It should be worked on in this next session or the next session. Work line by line verify everything no hallucinations.
 ```
+
+</details>
 
 </details>

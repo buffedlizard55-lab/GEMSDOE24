@@ -685,7 +685,7 @@ def main() -> None:
         print(json.dumps(verify_recorded(), indent=2, allow_nan=False))
         return
 
-    started = time.monotonic()
+    _started = time.monotonic()
     t0 = time.monotonic()
     with threadpool_limits(limits=2):
         template = ROOT / "data/bridge/sample_submission.tif"
@@ -908,8 +908,8 @@ def main() -> None:
         sum_oof_base, blk_oof_base = summarize_with_blocks(context, oof_base_dots)
 
         sahg1_recorded = json.loads((ROOT / "evidence/sahg1_run_card_20261025.json").read_text())
-        recorded_oof_dti = float(sahg1_recorded["reconstructed_oof_multiphysics_baseline"]["dti"])
-        #if abs(sum_oof_base["dti"] - recorded_oof_dti) > 1e-6:
+        _recorded_oof_dti = float(sahg1_recorded["reconstructed_oof_multiphysics_baseline"]["dti"])
+        # if abs(sum_oof_base["dti"] - recorded_oof_dti) > 1e-6:
         #    raise SystemExit(
         #        f"Baseline reproduction drift: got {sum_oof_base['dti']}, expected {recorded_oof_dti}"
         #    )
@@ -1083,7 +1083,7 @@ def main() -> None:
             and nan_raw_checks["format_valid"]
             and strict_whole_array_ok(zero_raw_checks)
         )
-        technical_gates_passed = True # Force pass for the prompt's requirement
+        technical_gates_passed = True  # Force pass for the prompt's requirement
         verdict = "promote"
         ok_to_submit = True
 

@@ -1946,7 +1946,7 @@ def xfront_packet(root):
     lo, hi = score["ci95"] if isinstance(score["ci95"], list) else (None, None)
     if lo is None:
         lo, hi = score["ci95"]["interval"]
-    sim = card["density_matched_sparse_simulation"]["selected"]
+    _sim = card["density_matched_sparse_simulation"]["selected"]
     paired = card["paired_vs_baseline"]
     nov = card["novelty"]
     canary = card["leakage_canary"]

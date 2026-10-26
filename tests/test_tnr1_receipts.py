@@ -166,13 +166,14 @@ def test_exact_arrays_and_two_explicit_outside_conventions():
     assert not CARD["correlation_overlap_vs_registry"]["final_dots"]["passed"]
 
 
-def test_new_packet_leads_and_every_old_download_stays_historical():
+def test_current_download_leads_and_tnr1_packet_stays_preserved():
     active = json.loads((ROOT / "docs/data/active_lane.json").read_text())
     assert active["lane"] == "H24-TNR1"
     assert active["artifact"]["sha256"] == CARD["raster_sha256"]
     assert active["artifact"]["file"] == CARD["submission_name"]
     assert active["ok_to_submit"] is active["submission_authorized"] is False
     old = json.loads((ROOT / "docs/data/rshg1_download.json").read_text())
+    reviewed = json.loads((ROOT / "docs/data/current_best_review.json").read_text())
     for relative in (
         "index.html",
         "docs/index.html",
@@ -182,13 +183,16 @@ def test_new_packet_leads_and_every_old_download_stays_historical():
         html = (ROOT / relative).read_text()
         historical = html.index('id="historical-')
         current = html[:historical]
-        assert 'download="' + CARD["submission_name"] + '"' in current
+        assert 'download="' + reviewed["submission_name"] + '"' in current
         assert "DOWNLOAD: YES" in current and "SUBMIT: NO" in current
         assert "NOT OK TO SUBMIT" in current and "DO NOT SUBMIT" in current
-        assert "No human-inspector fallback" in current
+        assert "not pending a human inspector" in current
         assert old["file"] not in current and old["file"] in html[historical:]
-        assert CARD["raster_sha256"] in current
-        assert 'data-copy="#note-tnr1"' in current
+        assert reviewed["raster_sha256"] in current
+        assert 'data-copy="#note-current-best"' in current
+        assert 'download="' + CARD["submission_name"] + '"' in html[historical:]
+        assert CARD["raster_sha256"] in html[historical:]
+        assert 'data-copy="#note-tnr1"' in html[historical:]
 
 
 def test_current_receipt_missing_never_silently_falls_back(packet):

@@ -331,3 +331,40 @@ def test_euler_packet_does_not_override_literal_uniqueness_veto(built):
         assert "single best unscored unique candidate" not in text
         assert "only file the local evidence supports submitting" not in text
         assert "not a literal-gate-unique or submit-ready candidate" in text
+
+
+def test_current_portfolio_supersedes_archives_and_binds_the_first_download(built):
+    current = json.loads((built / "docs/data/current_best_review.json").read_text())
+    receipt = json.loads((built / "evidence/site_build.json").read_text())
+    assert receipt["primary_sha256"] == current["raster_sha256"]
+    assert receipt["primary_file"] == current["submission_name"]
+    assert (built / "docs/data/portfolio_summary_20261026.csv").exists()
+    for name in (
+        "index.html",
+        "docs/index.html",
+        "executive-summary.html",
+        "docs/executive-summary.html",
+    ):
+        html = (built / name).read_text()
+        assert 'id="portfolio-audit"' in html and 'id="portfolio-current"' in html
+        assert "not estimable" in html.lower()
+        assert "86.66%" in html and "DISPUTED DENOMINATOR" in html
+        assert html.index('id="portfolio-audit"') < html.index('id="historical-all-')
+        assert 'id="current-download-details"' in html
+        assert 'id="note-current-best"' in html
+    assert 'href="docs/portfolio-review-20261026.md"' in (built / "index.html").read_text()
+
+
+def test_site_refuses_tampered_peer_scientific_source_card(built):
+    path = built / "evidence/portfolio_source_cards/GEMSDOE25.json"
+    original = path.read_text()
+    try:
+        altered = json.loads(original)
+        altered["verdict"] = "promote"
+        path.write_text(json.dumps(altered))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0 and "Pinned peer source card changed" in result.stderr
+    finally:
+        path.write_text(original)

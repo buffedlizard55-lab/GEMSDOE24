@@ -49,9 +49,7 @@ NULL_SEED: int = 20261026
 N_ANGLE_BINS: int = 256
 
 # cos/sin tables for the uint8 index of the doubled angle 2*theta.
-_INDEX = np.arange(N_ANGLE_BINS, dtype=np.float32) * (
-    2.0 * np.pi / np.float32(N_ANGLE_BINS)
-)
+_INDEX = np.arange(N_ANGLE_BINS, dtype=np.float32) * (2.0 * np.pi / np.float32(N_ANGLE_BINS))
 TAB_COS = np.cos(_INDEX).astype(np.float32)
 TAB_SIN = np.sin(_INDEX).astype(np.float32)
 

@@ -93,8 +93,7 @@ unverified owner claim, explicitly excluded from scientific scores and promotion
 <p>Source freshness is checked separately from scientific review. New commits do not invalidate frozen results, but their new files
 are not covered by the old novelty certificate. Do not upload an old winner, a renamed copy, or a candidate merely because it passes [0,1].
 The newer reported GEMSDOE24/25/27/28/30 results in the 2026-10-26 brief do not exceed their listed historical maxima; they also lack organizer receipts.
-Parallel PR #29 preserved an unverified GVC1 0.0859 claim from its own session brief;
-that claim is absent from this session's preserved score list and has no organizer receipt.
+The current owner prompt includes the GVC1 0.0859 claim; it remains unverified and has no artifact-linked organizer receipt.
 Dense-catalogue holdout rank does not guarantee hidden-set rank. The parallel historical list is
 <code>registry/owner_reported_scores_2026-10-26.json</code>, not fresh scoring evidence. The brief's leaderboard claims (0.4413 and 0.3195) conflict; neither is verified.</p>
 <p><a href="research.html">H33-B2 geometry, hypothesis history and metric limitations</a> ·

@@ -102,14 +102,16 @@ def thermal_surface(fp):
     n_vents = 0
     with open(VENTS_CSV, newline="") as f:
         for row in csv.DictReader(f):
-            r = int(float(row["row"])); c = int(float(row["col"]))
+            r = int(float(row["row"]))
+            c = int(float(row["col"]))
             if 0 <= r < fp.shape[0] and 0 <= c < fp.shape[1] and fp[r, c]:
                 mask[r, c] = True
                 n_vents += 1
     n_springs = 0
     with open(SPRINGS_CSV, newline="") as f:
         for row in csv.DictReader(f):
-            r = int(float(row["row"])); c = int(float(row["col"]))
+            r = int(float(row["row"]))
+            c = int(float(row["col"]))
             gq = row.get("geothermquartz_c", "")
             if gq in (None, "", "nan", "NaN"):
                 continue
@@ -124,12 +126,16 @@ def thermal_surface(fp):
 
 def build_score_surface(fp):
     lidar_valid = read_u8_band(LIDAR, 12) > 0
-    ex_mean = read_u8_band(LIDAR, 2)       # short-wavelength steepness / flexure
-    k_band = read_u8_band(RAD, 1)           # potassium alteration halo
-    thk_band = read_u8_band(EXT, 1)         # Th/K; low = argillic overprint
+    ex_mean = read_u8_band(LIDAR, 2)  # short-wavelength steepness / flexure
+    k_band = read_u8_band(RAD, 1)  # potassium alteration halo
+    thk_band = read_u8_band(EXT, 1)  # Th/K; low = argillic overprint
 
-    for name, arr in (("lidar_valid", lidar_valid.astype(np.float32)),
-                      ("ex_mean", ex_mean), ("k_band", k_band), ("thk_band", thk_band)):
+    for name, arr in (
+        ("lidar_valid", lidar_valid.astype(np.float32)),
+        ("ex_mean", ex_mean),
+        ("k_band", k_band),
+        ("thk_band", thk_band),
+    ):
         if arr.shape != fp.shape:
             raise SystemExit(f"{name} shape {arr.shape} != template {fp.shape}")
 
@@ -142,16 +148,25 @@ def build_score_surface(fp):
     score = curvature * k_anom * alteration * (1.0 + THERMAL_BOOST * thermal)
     support = fp & lidar_valid & (k_band > 0) & (thk_band > 0)
     score = np.where(support, score, 0.0).astype(np.float32)
-    return score, support, dict(
-        lidar_valid_px=int(lidar_valid.sum()),
-        thermal_px=n_thermal_px, n_vents=n_vents, n_springs=n_springs,
+    return (
+        score,
+        support,
+        dict(
+            lidar_valid_px=int(lidar_valid.sum()),
+            thermal_px=n_thermal_px,
+            n_vents=n_vents,
+            n_springs=n_springs,
+        ),
     )
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--verify-recorded", action="store_true",
-                    help="Inspect recorded evidence; do not run a new experiment")
+    ap.add_argument(
+        "--verify-recorded",
+        action="store_true",
+        help="Inspect recorded evidence; do not run a new experiment",
+    )
     args = ap.parse_args()
 
     if args.verify_recorded:
@@ -196,12 +211,21 @@ def main():
         "maximum_experiments": 3,
         "maximum_session_hours": 2,
         "input_provenance": "Committed external mirrors (USGS GeoDAWN DOI 10.5066/P93LGLVQ, INGENIOUS/OpenEI GDR 1391, USGS 3DEP LiDAR derivatives)",
-        "inputs": {str(p.relative_to(ROOT)): sha256_file(p)
-                   for p in (TEMPLATE, LABELS, LIDAR, RAD, EXT, VENTS_CSV, SPRINGS_CSV)},
-        "code_sha256": {str(p.relative_to(ROOT)): sha256_file(p)
-                        for p in (Path(__file__), ROOT / "src/gems/holdout.py",
-                                  ROOT / "src/gems/metric.py", ROOT / "src/gems/emission.py",
-                                  ROOT / "src/gems/novelty.py", ROOT / "src/gems/submission.py")},
+        "inputs": {
+            str(p.relative_to(ROOT)): sha256_file(p)
+            for p in (TEMPLATE, LABELS, LIDAR, RAD, EXT, VENTS_CSV, SPRINGS_CSV)
+        },
+        "code_sha256": {
+            str(p.relative_to(ROOT)): sha256_file(p)
+            for p in (
+                Path(__file__),
+                ROOT / "src/gems/holdout.py",
+                ROOT / "src/gems/metric.py",
+                ROOT / "src/gems/emission.py",
+                ROOT / "src/gems/novelty.py",
+                ROOT / "src/gems/submission.py",
+            )
+        },
         "supported_pixels": int(support.sum()),
         "layer_stats": layer_stats,
         "catalogue_features": [],
@@ -213,10 +237,13 @@ def main():
     }
 
     report["fold_integrity"] = [
-        {"name": f["name"], "withheld_positive_pixels": int(f["truth"].sum()),
-         "hidden_whole_components": len(f["hidden_component_ids"]),
-         "visible_fault_pixels": int(f["visible"].sum()),
-         "train_validation_overlap": bool((f["train"] & f["valid"]).any())}
+        {
+            "name": f["name"],
+            "withheld_positive_pixels": int(f["truth"].sum()),
+            "hidden_whole_components": len(f["hidden_component_ids"]),
+            "visible_fault_pixels": int(f["visible"].sum()),
+            "train_validation_overlap": bool((f["train"] & f["valid"]).any()),
+        }
         for f in context.folds
     ]
 
@@ -228,17 +255,27 @@ def main():
     thermal, *_ = thermal_surface(fp)
     thermal = np.where(fp & lidar_valid, thermal, 0.0).astype(np.float32)
     canary_features = {
-        "curvature_ex_mean": np.where(fp & lidar_valid, norm01(ex_mean, lidar_valid), 0.0).astype(np.float32),
-        "k_anomaly": np.where(fp & lidar_valid & (k_band > 0), norm01(k_band, lidar_valid & (k_band > 0)), 0.0).astype(np.float32),
-        "alteration_low_thk": np.where(fp & lidar_valid & (thk_band > 0),
-                                       1.0 - norm01(thk_band, lidar_valid & (thk_band > 0)), 0.0).astype(np.float32),
+        "curvature_ex_mean": np.where(fp & lidar_valid, norm01(ex_mean, lidar_valid), 0.0).astype(
+            np.float32
+        ),
+        "k_anomaly": np.where(
+            fp & lidar_valid & (k_band > 0), norm01(k_band, lidar_valid & (k_band > 0)), 0.0
+        ).astype(np.float32),
+        "alteration_low_thk": np.where(
+            fp & lidar_valid & (thk_band > 0),
+            1.0 - norm01(thk_band, lidar_valid & (thk_band > 0)),
+            0.0,
+        ).astype(np.float32),
         "thermal_vent_spring": thermal,
         "score_surface": score,
     }
     report["canary"] = context.canary(canary_features)
     if not report["canary"]["passed"]:
-        report.update(verdict="negative", stopped_reason="leakage-canary",
-                      elapsed_seconds=time.monotonic() - started)
+        report.update(
+            verdict="negative",
+            stopped_reason="leakage-canary",
+            elapsed_seconds=time.monotonic() - started,
+        )
         save(report, RESULT)
         raise SystemExit("Leakage canary failed; no candidate packaged")
     print("Canaries passed", flush=True)
@@ -246,14 +283,21 @@ def main():
     # Surface novelty before placement.
     registry = json.loads((ROOT / "registry/priority_rasters.json").read_text())
     report["surface_novelty"] = novelty.compare_prospective_registry(
-        score, fp, registry["unique_rasters"], ROOT)
+        score, fp, registry["unique_rasters"], ROOT
+    )
     surf = report["surface_novelty"]
-    print(f"Surface novelty: method_lane_passed={surf.get('method_lane_passed')} "
-          f"literal={surf.get('literal_all_entries_passed')} "
-          f"max|rho|={surf.get('max_abs_rank_correlation')}", flush=True)
+    print(
+        f"Surface novelty: method_lane_passed={surf.get('method_lane_passed')} "
+        f"literal={surf.get('literal_all_entries_passed')} "
+        f"max|rho|={surf.get('max_abs_rank_correlation')}",
+        flush=True,
+    )
     if not surf.get("method_lane_passed"):
-        report.update(verdict="negative", stopped_reason="duplicate-surface",
-                      elapsed_seconds=time.monotonic() - started)
+        report.update(
+            verdict="negative",
+            stopped_reason="duplicate-surface",
+            elapsed_seconds=time.monotonic() - started,
+        )
         save(report, RESULT)
         raise SystemExit("Duplicate surface; stopped before placement")
 
@@ -261,27 +305,38 @@ def main():
     predictions = []
     for f in context.folds:
         eligible = support & f["valid"] & ~f["visible"]
-        predictions.append(emission.priority_poisson(
-            score, eligible, round(BUDGET_FRACTION * f["valid"].sum()), min_dist=MIN_DIST_PX))
+        predictions.append(
+            emission.priority_poisson(
+                score, eligible, round(BUDGET_FRACTION * f["valid"].sum()), min_dist=MIN_DIST_PX
+            )
+        )
     results = context.summarize(predictions)
     report["holdout"] = results
     print(f"HOLDOUT-DTI {results['dti']:.5f} CI {results['ci95']['interval']}", flush=True)
 
     # Final dots on full support, excluding catalogue pixels.
     final = emission.priority_poisson(
-        score, support & ~catalogue, round(BUDGET_FRACTION * fp.sum()), min_dist=MIN_DIST_PX)
+        score, support & ~catalogue, round(BUDGET_FRACTION * fp.sum()), min_dist=MIN_DIST_PX
+    )
     if not final.any():
         raise SystemExit("No positive evidence; refusing an empty submission")
 
     report["final_novelty"] = novelty.compare_prospective_registry(
-        final.astype(np.float32), fp, registry["unique_rasters"], ROOT, dots=final)
+        final.astype(np.float32), fp, registry["unique_rasters"], ROOT, dots=final
+    )
     fin = report["final_novelty"]
-    print(f"Final novelty: method_lane_passed={fin.get('method_lane_passed')} "
-          f"literal={fin.get('literal_all_entries_passed')} "
-          f"max_overlap={fin.get('max_dot_overlap')}", flush=True)
+    print(
+        f"Final novelty: method_lane_passed={fin.get('method_lane_passed')} "
+        f"literal={fin.get('literal_all_entries_passed')} "
+        f"max_overlap={fin.get('max_dot_overlap')}",
+        flush=True,
+    )
     if not fin.get("method_lane_passed"):
-        report.update(verdict="negative", stopped_reason="duplicate-final-dots",
-                      elapsed_seconds=time.monotonic() - started)
+        report.update(
+            verdict="negative",
+            stopped_reason="duplicate-final-dots",
+            elapsed_seconds=time.monotonic() - started,
+        )
         save(report, RESULT)
         raise SystemExit("Duplicate final dots; stopped without packaging")
 
@@ -296,8 +351,10 @@ def main():
     if not checks["format_valid"]:
         raise SystemExit("Exact-file format checks failed; do not publish")
 
-    note = (f"24GEMS blind-upwelling LiDARxKxThKxthermal | catalogue-independent | "
-            f"research; HOLDOUT-DTI {results['dti']:.5f} | id {content_id}")
+    note = (
+        f"24GEMS blind-upwelling LiDARxKxThKxthermal | catalogue-independent | "
+        f"research; HOLDOUT-DTI {results['dti']:.5f} | id {content_id}"
+    )
     if len(note) > 140:
         note = note[:137] + "..."
     note_file = f"note-{name[:-4]}.txt"
@@ -308,17 +365,23 @@ def main():
 
     raster_sha256 = sha256_file(zeros_path)
     preflight_report = preflight(
-        zeros_path, TEMPLATE, run_card_path=None, note=note,
-        expected_template_sha256=sha256_file(TEMPLATE))
+        zeros_path,
+        TEMPLATE,
+        run_card_path=None,
+        note=note,
+        expected_template_sha256=sha256_file(TEMPLATE),
+    )
     preflight_file = f"preflight-{name[:-4]}.json"
     save(preflight_report, DOWNLOADS / preflight_file)
 
     beats_current_best = results["dti"] > CURRENT_BEST_HOLDOUT
-    ok_to_submit = (checks["format_valid"]
-                    and checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
-                    and fin.get("method_lane_passed")
-                    and report["canary"]["passed"]
-                    and beats_current_best)
+    ok_to_submit = (
+        checks["format_valid"]
+        and checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
+        and fin.get("method_lane_passed")
+        and report["canary"]["passed"]
+        and beats_current_best
+    )
     verdict = "promote" if ok_to_submit else "negative"
 
     card = {
@@ -358,12 +421,20 @@ def main():
         "verdict": verdict,
         "ok_to_download": checks["format_valid"],
         "ok_to_submit": ok_to_submit,
-        "reasons": ([] if ok_to_submit else
-                    ([f"holdout DTI {results['dti']:.5f} does not beat current comparable best {CURRENT_BEST_HOLDOUT}"]
-                     if not beats_current_best else [])
-                    + (["format or range check failed"] if not checks["format_valid"] else [])
-                    + (["novelty gate failed"] if not fin.get("method_lane_passed") else [])
-                    + (["canary failed"] if not report["canary"]["passed"] else [])),
+        "reasons": (
+            []
+            if ok_to_submit
+            else (
+                [
+                    f"holdout DTI {results['dti']:.5f} does not beat current comparable best {CURRENT_BEST_HOLDOUT}"
+                ]
+                if not beats_current_best
+                else []
+            )
+            + (["format or range check failed"] if not checks["format_valid"] else [])
+            + (["novelty gate failed"] if not fin.get("method_lane_passed") else [])
+            + (["canary failed"] if not report["canary"]["passed"] else [])
+        ),
         "organizer_confirmed_score": None,
         "experiments_run": 1,
         "submission_slots_used": 0,
@@ -393,15 +464,28 @@ def main():
     }
     save(download_entry, DATA_OUT / "blind_upwell_download.json")
 
-    print(json.dumps({
-        "file": name, "pixels": int(final.sum()), "sha256": raster_sha256,
-        "holdout_dti": results["dti"], "holdout_ci95": results["ci95"]["interval"],
-        "note_characters": len(note), "verdict": verdict, "ok_to_submit": ok_to_submit,
-        "ok_to_download": checks["format_valid"],
-        "strict_range_ok": checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"],
-        "novelty_method_lane_passed": fin.get("method_lane_passed"),
-        "canary_passed": report["canary"]["passed"],
-    }, indent=2), flush=True)
+    print(
+        json.dumps(
+            {
+                "file": name,
+                "pixels": int(final.sum()),
+                "sha256": raster_sha256,
+                "holdout_dti": results["dti"],
+                "holdout_ci95": results["ci95"]["interval"],
+                "note_characters": len(note),
+                "verdict": verdict,
+                "ok_to_submit": ok_to_submit,
+                "ok_to_download": checks["format_valid"],
+                "strict_range_ok": checks["checks"]["variant_strict_whole_array_no_nan_allowed"][
+                    "pass"
+                ],
+                "novelty_method_lane_passed": fin.get("method_lane_passed"),
+                "canary_passed": report["canary"]["passed"],
+            },
+            indent=2,
+        ),
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

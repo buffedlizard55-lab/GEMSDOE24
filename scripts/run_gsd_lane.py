@@ -6,34 +6,38 @@ from __future__ import annotations
 import json
 import os
 import time
+
 os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 os.environ.setdefault("OMP_NUM_THREADS", "1")
 
-from pathlib import Path
-import sys
-import gc
+import gc  # noqa: E402
+import sys  # noqa: E402
+from pathlib import Path  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-import numpy as np
-import rasterio
+import numpy as np  # noqa: E402
+import rasterio  # noqa: E402
 
-from gems import holdout, submission
-from gems.validator import sha256_file
+from gems import holdout, submission  # noqa: E402
+from gems.validator import sha256_file  # noqa: E402
 
 BUDGET_FRAC = 0.0073
 SEED = 20261027
 
+
 def save_json(o, p):
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(o, indent=2, allow_nan=False) + "\n")
+
 
 def load_prepared_channel(name, fp, stack, meta):
     idx = meta["names"].index(name)
     arr = np.full(fp.shape, np.nan, dtype=np.float32)
     arr.ravel()[np.flatnonzero(fp.ravel())] = stack[:, idx]
     return arr
+
 
 def robust_sigmoid(x, support):
     vals = x[support]
@@ -45,8 +49,9 @@ def robust_sigmoid(x, support):
     out[~support] = 0
     return out
 
+
 def main():
-    started = time.monotonic()
+    _started = time.monotonic()
     template = ROOT / "data/bridge/sample_submission.tif"
     labels_path = ROOT / "data/bridge/labels.tif"
     with rasterio.open(template) as t:
@@ -57,7 +62,7 @@ def main():
     prep_meta = json.loads((ROOT / "data/prepared/features.json").read_text())
     prep_path = ROOT / "data/prepared/features.npy"
     stack = np.load(prep_path, mmap_mode="r")
-    
+
     needed = ["geod_dilaterate", "geod_shearrate", "iso_grav_anom", "det_local_relief"]
     raw_valid = fp.copy()
     for n in needed:
@@ -66,8 +71,9 @@ def main():
         del a
 
     from scipy.ndimage import binary_erosion
+
     support = binary_erosion(raw_valid, structure=np.ones((5, 5), bool), border_value=False)
-    
+
     dil = load_prepared_channel("geod_dilaterate", fp, stack, prep_meta)
     shr = load_prepared_channel("geod_shearrate", fp, stack, prep_meta)
     grav = load_prepared_channel("iso_grav_anom", fp, stack, prep_meta)
@@ -93,17 +99,39 @@ def main():
 
     candidate = np.where(support, strain_n * saddle_n * flat_gate, 0).astype(np.float32)
 
-    del dil, shr, grav, relief, strain, strain_n, grav_safe, gy, gx, hyy, hyx, hxy, hxx, hdet, saddle, saddle_n, flat_gate
+    del (
+        dil,
+        shr,
+        grav,
+        relief,
+        strain,
+        strain_n,
+        grav_safe,
+        gy,
+        gx,
+        hyy,
+        hyx,
+        hxy,
+        hxx,
+        hdet,
+        saddle,
+        saddle_n,
+        flat_gate,
+    )
     gc.collect()
 
     context = holdout.SegmentHoldout(fp, catalogue, buffer_px=15)
-    
+
     canary = context.canary({"candidate": candidate}, seed=SEED, max_per_class=15000)
     if not canary["passed"]:
-        save_json({"canary": canary, "verdict": "negative"}, ROOT / "evidence/gsd_experiment_20261026.json")
+        save_json(
+            {"canary": canary, "verdict": "negative"},
+            ROOT / "evidence/gsd_experiment_20261026.json",
+        )
         raise SystemExit("Canary failed")
 
     from gems import emission
+
     per_fold_dots = []
     for fold in context.folds:
         eligible = support & fold["valid"] & ~fold["visible"]
@@ -119,15 +147,17 @@ def main():
     eligible_final = support & ~catalogue
     full_budget = round(BUDGET_FRAC * int(fp.sum()))
     final_dots = emission.priority_poisson(candidate, eligible_final, full_budget, min_dist=3)
-    
+
     content_id = submission.scored_content_id(final_dots, fp, catalogue)
     name = submission.make_filename("gems24", "gsd-strain-gravity", "20261026", content_id, "zeros")
     out_dir = ROOT / "docs/downloads"
     out_dir.mkdir(parents=True, exist_ok=True)
-    zeros = submission.write_submission(final_dots.astype(np.float32), template, out_dir / name, outside="zero")
-    
+    zeros = submission.write_submission(
+        final_dots.astype(np.float32), template, out_dir / name, outside="zero"
+    )
+
     checks = {"zero_outside": submission.check_variants(zeros, template)}
-    
+
     card = {
         "hypothesis": "H24-GSD: Geodetic Strain Rate Divergence at Isostatic Gravity Saddles",
         "mechanism": "Spatial coincidence of geodetic strain rate anomalies (high shear/dilation) intersecting gravity saddles.",
@@ -139,7 +169,7 @@ def main():
             "ci95": results["ci95"],
             "n_withheld_positive_pixels": 60988,
             "paired_delta_vs_oof_baseline_0_13": delta,
-            "baseline_dti": baseline
+            "baseline_dti": baseline,
         },
         "correlation_overlap_vs_registry": {},
         "raster_sha256": sha256_file(zeros),
@@ -148,10 +178,11 @@ def main():
         "note": "GEMS24 GSD | strain x gravity | research",
         "verdict": "promote" if delta > 0 else "negative",
         "ok_to_download": True,
-        "ok_to_submit": bool(delta > 0)
+        "ok_to_submit": bool(delta > 0),
     }
     save_json(card, ROOT / "evidence/gsd_run_card_20261026.json")
     print(json.dumps({"file": name, "dti": results["dti"], "verdict": card["verdict"]}, indent=2))
+
 
 if __name__ == "__main__":
     main()

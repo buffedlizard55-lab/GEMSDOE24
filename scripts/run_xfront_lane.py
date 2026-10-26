@@ -47,11 +47,10 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 import numpy as np  # noqa: E402
 import rasterio  # noqa: E402
+import run_dprf1_lane as dprf  # noqa: E402  (reuse frozen peer/distance/C2ST helpers)
 from scipy.ndimage import distance_transform_edt  # noqa: E402
 
 from gems import (  # noqa: E402
-    c2s2,
-    confounds,
     emission,
     footprint,
     holdout,
@@ -61,8 +60,6 @@ from gems import (  # noqa: E402
     xfront,
 )
 from gems.validator import sha256_file  # noqa: E402
-
-import run_dprf1_lane as dprf  # noqa: E402  (reuse frozen peer/distance/C2ST helpers)
 
 SEED = 20261026
 SPARSE_FRACTION = 0.20
@@ -129,7 +126,7 @@ def load_surface(fp: np.ndarray) -> dict[str, Any]:
     res = xfront.build_xfront(layers, fp)
     del layers
     gc.collect()
-    score_a = res["score"]                       # C * E_R  (primary arm)
+    score_a = res["score"]  # C * E_R  (primary arm)
     elig = res["total_weight"] >= res["min_total_weight"]
     score_b = np.where(elig, res["corroboration"], 0.0).astype(np.float32)  # C alone
     np.savez_compressed(
@@ -251,9 +248,7 @@ def main() -> None:
             np.float32
         )
     canary = ctx.canary(canary_features)
-    worst = max(
-        max(v["pooled_auc"], 1 - v["pooled_auc"]) for v in canary["features"].values()
-    )
+    worst = max(max(v["pooled_auc"], 1 - v["pooled_auc"]) for v in canary["features"].values())
     print(f"      canary passed={canary['passed']} worst extremity={worst:.4f}", flush=True)
     if not canary["passed"]:
         raise SystemExit("HALT: leakage canary exceeded the 0.90 threshold")
@@ -296,7 +291,13 @@ def main() -> None:
                     pred.ravel()[order[: min(k, len(order))]] = 1.0
                 ref, blocks = ctx.score_fold(pred, fold)
                 fold_rows.setdefault((arm, budget), []).append(
-                    {"fold": fold["name"], **{kk: ref[kk] for kk in ("TP_w", "FP_w", "FN_w", "n_truth", "n_emitted", "dti")}}
+                    {
+                        "fold": fold["name"],
+                        **{
+                            kk: ref[kk]
+                            for kk in ("TP_w", "FP_w", "FN_w", "n_truth", "n_emitted", "dti")
+                        },
+                    }
                 )
                 fold_blocks.setdefault((arm, budget), []).append(blocks)
                 for frac in SPARSE_FRACTIONS:
@@ -304,7 +305,13 @@ def main() -> None:
                         pred, sparse_truths[frac], fold["valid"], fold["visible"], tile_px=100
                     )
                     sparse_rows.setdefault((arm, budget, frac), []).append(
-                        {"fold": fold["name"], **{kk: sref[kk] for kk in ("TP_w", "FP_w", "FN_w", "n_truth", "n_emitted", "dti")}}
+                        {
+                            "fold": fold["name"],
+                            **{
+                                kk: sref[kk]
+                                for kk in ("TP_w", "FP_w", "FN_w", "n_truth", "n_emitted", "dti")
+                            },
+                        }
                     )
                     sparse_blocks.setdefault((arm, budget, frac), []).append(sblocks)
                     sparse_info.setdefault(frac, {"components": 0, "pixels": 0})
@@ -326,9 +333,7 @@ def main() -> None:
                 "budget": budget,
                 "arm": arm,
                 "dense_holdout_dti": float(dense["dti"]),
-                "dense_ci95": holdout.spatial_bootstrap_ci(dblocks[active], draws=1999)[
-                    "interval"
-                ],
+                "dense_ci95": holdout.spatial_bootstrap_ci(dblocks[active], draws=1999)["interval"],
                 "dense_folds": [round(r["dti"], 5) for r in fold_rows[(arm, budget)]],
                 "dense_mean_fold_dti": round(
                     float(np.mean([r["dti"] for r in fold_rows[(arm, budget)]])), 5
@@ -342,9 +347,12 @@ def main() -> None:
                 "sparse_ci95": holdout.spatial_bootstrap_ci(sblocks[active], draws=1999)[
                     "interval"
                 ],
-                "sparse_folds": [round(r["dti"], 5) for r in sparse_rows[(arm, budget, SPARSE_FRACTION)]],
+                "sparse_folds": [
+                    round(r["dti"], 5) for r in sparse_rows[(arm, budget, SPARSE_FRACTION)]
+                ],
                 "sparse_mean_fold_dti": round(
-                    float(np.mean([r["dti"] for r in sparse_rows[(arm, budget, SPARSE_FRACTION)]])), 5
+                    float(np.mean([r["dti"] for r in sparse_rows[(arm, budget, SPARSE_FRACTION)]])),
+                    5,
                 ),
                 "sparse_coverage": float(sparse["TP_w"] / max(sparse["n_truth"], 1)),
                 "sparse_n_truth": int(sparse["n_truth"]),
@@ -357,7 +365,7 @@ def main() -> None:
                 r.setdefault("sparse_sensitivity", {})[str(frac)] = {
                     "simulated_dti": float(s20["dti"]),
                     "mean_fold_dti": round(
-                        float(np.mean([q["dti"] for q in sparse_rows[(arm, budget, frac)]])) , 5
+                        float(np.mean([q["dti"] for q in sparse_rows[(arm, budget, frac)]])), 5
                     ),
                     "ci95": holdout.spatial_bootstrap_ci(sb[active], draws=1999)["interval"],
                     "coverage": float(s20["TP_w"] / max(s20["n_truth"], 1)),
@@ -450,16 +458,16 @@ def main() -> None:
         f"{sel_budget} dots | id {content_id}"
     )
     if len(note) > 140:
-        note = f"GEMS24 XFRONT {sel_arm} | cross-modal step corrob | {sel_budget} dots | {content_id}"
+        note = (
+            f"GEMS24 XFRONT {sel_arm} | cross-modal step corrob | {sel_budget} dots | {content_id}"
+        )
 
     holdout_block = {
         "label": "HOLDOUT-DTI",
         "evaluator_version": holdout.MTR_EVALUATOR_VERSION,
         "dti": results[sel_arm][sel_budget]["dense_holdout_dti"],
         "ci95": results[sel_arm][sel_budget]["dense_ci95"],
-        "n_withheld_positive_pixels": results[sel_arm][sel_budget][
-            "n_withheld_positive_pixels"
-        ],
+        "n_withheld_positive_pixels": results[sel_arm][sel_budget]["n_withheld_positive_pixels"],
         "protocol": {
             "alpha": 0.2,
             "beta": 0.8,
@@ -517,9 +525,7 @@ def main() -> None:
                 "preregistered 0.20 fraction. Tests whether the owner-reported live pattern "
                 "(fewer dots -> higher score) appears at lower simulated truth densities."
             ),
-            "simulated_truth_pixels": {
-                str(k): v["pixels"] for k, v in sorted(sparse_info.items())
-            },
+            "simulated_truth_pixels": {str(k): v["pixels"] for k, v in sorted(sparse_info.items())},
             "simulated_truth_components": {
                 str(k): v["components"] for k, v in sorted(sparse_info.items())
             },
@@ -584,15 +590,11 @@ def main() -> None:
             "peers_final": fin_peers,
             "registry_entries_checked": len(entries),
             "correlation_overlap_vs_registry": {
-                "max_abs_rank_correlation_surface": pre_methods[
-                    "max_abs_rank_correlation"
-                ],
+                "max_abs_rank_correlation_surface": pre_methods["max_abs_rank_correlation"],
                 "max_abs_rank_correlation_final_dots": fin_methods[
                     "method_lane_max_abs_rank_correlation"
                 ],
-                "max_3px_dot_overlap_method_lanes": fin_methods[
-                    "method_lane_max_dot_overlap"
-                ],
+                "max_3px_dot_overlap_method_lanes": fin_methods["method_lane_max_dot_overlap"],
                 "max_3px_dot_overlap_peer_blobs": fin_peers["max_dot_overlap_within_3px"],
             },
         },
@@ -629,7 +631,7 @@ def main() -> None:
 
     from gems import preflight as preflight_mod
 
-    pf = preflight_mod.preflight(
+    _pf = preflight_mod.preflight(
         zeros_path,
         template,
         run_card_path=RUN_CARD_JSON,
@@ -652,9 +654,9 @@ def main() -> None:
             "artifact": name,
             "sha256": run_card["raster_sha256"],
             "format_valid": validator["format_valid"],
-            "strict_whole_array_0_1": validator["checks"]["variant_strict_whole_array_no_nan_allowed"][
-                "pass"
-            ],
+            "strict_whole_array_0_1": validator["checks"][
+                "variant_strict_whole_array_no_nan_allowed"
+            ]["pass"],
             "download_status": pf2["decision"]["download_status"],
             "submission_status": pf2["decision"]["submission_status"],
             "blockers": pf2["decision"]["blockers"],

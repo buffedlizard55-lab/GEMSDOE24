@@ -25,10 +25,10 @@ from site_packets import (  # noqa: E402
     cup1_packet,
     dprf1_packet,
     eul1_packet,
-    xfront_packet,
     gvc1_packet,
     rshg1_packet,
     trsg1_packet,
+    xfront_packet,
 )
 from tnr1_site import all_sites_table  # noqa: E402
 from tnr1_site import render as render_tnr1  # noqa: E402
@@ -74,7 +74,7 @@ def page(title, active, body, prefix=""):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="DOE GEMS fault research: independent GeoTIFF downloads, automated negative submission gates, and reproducible evidence."><meta name="source-feed" content="{prefix}data/source_health.json"><title>{e(title)} · GEMS DOE 24</title><link rel="stylesheet" href="{prefix}assets/style.css"></head>
 <body><header><div class="nav"><a class="brand" href="{prefix}index.html"><span class="mark" aria-hidden="true">∿</span><span>GEMS DOE 24<small>Geologic mapping · evidence first</small></span></a><nav class="navlinks" aria-label="Main navigation">{"".join(nav)}</nav></div></header>
-<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}review-20261026.md">Review &amp; blockers</a> · <a href="{prefix}artifact-audit.html">Nine-site changed-file audit</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone. <a href="{prefix}metric-integrity-20261026.md">Corrected B2 metric explanation</a>.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
+<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}portfolio-review-20261026.md">Current audit &amp; blockers</a> · <a href="{prefix}artifact-audit.html">Earlier Git-object inventory</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone. <a href="{prefix}metric-integrity-20261026.md">Corrected B2 metric explanation</a>.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
 
 
 def download_button(row, prefix, label="Download submission .tif", primary=True):
@@ -383,7 +383,7 @@ def build_independent_site(primary):
     ch = current["holdout"]
     clo, chi = ch["ci95"]["interval"]
     current_banner = (
-        '<section class="card" id="current-best-review"><h2>Current decision: DOWNLOAD YES / SUBMIT NO</h2>'
+        '<section class="card" id="current-best-review"><h1 class="portfolio-title">DOWNLOAD: YES / SUBMIT: NO</h1><p><strong>NOT OK TO SUBMIT.</strong> Existing research download; no new TIFF in this review.</p>'
         f'<p><a class="button primary" href="downloads/{e(current["submission_name"])}" '
         f'download="{e(current["submission_name"])}">Download current point-best research TIFF — DO NOT SUBMIT</a></p>'
         f"<p>Recorded local point-best: <strong>{e(current['current_recorded_point_best']['lane'])}</strong>. "
@@ -393,7 +393,7 @@ def build_independent_site(primary):
         "Not a verified cross-site winner or a leaderboard prediction. "
         "Literal novelty, quota and independent replay gates still block submission.</p>"
         '<p><a href="data/current_best_review.json" download>Fresh exact-file review JSON</a> · '
-        '<a href="#nine-site-executive-summary">Nine-site executive comparison</a></p></section>'
+        '<a href="#portfolio-audit">Fresh nine-site artifact comparison</a></p></section>'
     )
     # Preserve the concurrent VENT negative packet through scheduled rebuilds.
     vent_html = ""
@@ -426,12 +426,78 @@ def build_independent_site(primary):
     from gems.executive_decisions import build_decisions, render_decisions
 
     decisions = build_decisions(ROOT, current)
+    decisions["superseded_by_artifact_audit"] = "data/portfolio_artifact_audit_20261026.json"
     (DOCS / "data/nine_site_download_decisions.json").write_text(
         json.dumps(decisions, indent=2, allow_nan=False) + "\n"
     )
     decision_table = render_decisions(decisions)
-    overview = current_banner + decision_table + vent_html + overview
-    executive = current_banner + decision_table + vent_html + executive
+    # Keep one authoritative current view. Historical packets remain intact but
+    # collapsed, including their superseded site rankings and frozen claim text.
+    from portfolio_summary import build_portfolio
+
+    portfolio = build_portfolio(ROOT)
+    current_note = (
+        '<details id="current-download-details"><summary>Exact filename, SHA-256 and research note</summary>'
+        f'<p class="fileline">{e(current["submission_name"])}</p>'
+        f'<p class="hash">SHA-256 {e(current["raster_sha256"])}</p>'
+        f'<div class="note" id="note-current-best">{e(current["note"])}</div>'
+        '<button class="button" data-copy="#note-current-best" data-feedback="#current-best-feedback">Copy current research note</button>'
+        '<p id="current-best-feedback" class="copyfeedback" aria-live="polite"></p>'
+        '<p class="micro">At most 140 characters. This note does not authorize submission.</p></details>'
+    )
+    overview = (
+        current_banner
+        + current_note
+        + portfolio["intro"]
+        + portfolio["historical"]
+        + '<details id="portfolio-research-files"><summary>Current research file and HOLDOUT-DTI evidence for every site</summary>'
+        + portfolio["current"]
+        + "</details>"
+        + portfolio["obstruction"]
+        + portfolio["late_integrations"]
+        + '<details id="historical-all-packets"><summary>Archived experiments and superseded summaries — all research only</summary>'
+        + "<p>Historical snapshot, not a current portfolio ranking. Some inherited dot counts and source statuses are corrected in the fresh audit above.</p>"
+        + decision_table
+        + vent_html
+        + overview
+        + "</details>"
+    )
+    executive = (
+        current_banner
+        + current_note
+        + portfolio["intro"]
+        + portfolio["historical"]
+        + portfolio["current"]
+        + portfolio["obstruction"]
+        + portfolio["guide"]
+        + portfolio["late_integrations"]
+        + '<details id="historical-all-executive"><summary>Archived submission packets and superseded summaries</summary>'
+        + "<p>Historical evidence only; the fresh artifact audit above supersedes these cross-site rankings. No packet below authorizes a slot.</p>"
+        + decision_table
+        + vent_html
+        + executive
+        + "</details>"
+    )
+    research = (
+        '<h1 class="portfolio-title">Scientific review and next steps</h1>'
+        + portfolio["obstruction"]
+        + (
+            "<section><h2>Current scientific queue and evidence limits</h2>"
+            "<p>No new experiment or TIFF in this review. Four ideas were ranked prospectively; the cross-site audit found prior graben-pair work and corrected mistaken layer assumptions. "
+            "Read the amended, unexecuted queue rather than recycling stopped experiments.</p>"
+            '<a href="portfolio-review-20261026.md">Scientific findings, corrected hypotheses and source evidence</a></section>'
+        )
+        + '<details id="historical-all-research"><summary>Archived scientific packets and earlier hypotheses</summary>'
+        + research
+        + "</details>"
+    )
+    source_page = (
+        "<section><h2>Current nine-site artifact audit</h2><p>The first-screen summary now reopens the actual TIFFs at immutable refs, not only README text. "
+        'All original source restrictions and scientific caveats remain.</p><div class="actions">'
+        '<a class="button" href="data/portfolio_artifact_audit_20261026.json">Complete file/novelty audit</a>'
+        '<a class="button" href="data/portfolio_source_claims_20261026.json">Fresh official GitHub quotes and blocked sources</a>'
+        '<a class="button" href="data/portfolio_freshness.json">Current audit-pin freshness</a></div></section>'
+    ) + source_page
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),
@@ -444,7 +510,14 @@ def build_independent_site(primary):
         )
         (DOCS / name).write_text(html)
     root_body = overview
-    for path in ("downloads/", "executive-summary.html", "research.html", "sources.html", "data/"):
+    for path in (
+        "downloads/",
+        "executive-summary.html",
+        "research.html",
+        "sources.html",
+        "data/",
+        "portfolio-review-20261026.md",
+    ):
         root_body = root_body.replace(f'href="{path}', f'href="docs/{path}')
     root_body = root_body.replace('src="assets/', 'src="docs/assets/')
     (ROOT / "index.html").write_text(
@@ -453,7 +526,14 @@ def build_independent_site(primary):
         )
     )
     exec_root_body = executive
-    for path in ("downloads/", "executive-summary.html", "research.html", "sources.html", "data/"):
+    for path in (
+        "downloads/",
+        "executive-summary.html",
+        "research.html",
+        "sources.html",
+        "data/",
+        "portfolio-review-20261026.md",
+    ):
         exec_root_body = exec_root_body.replace(f'href="{path}', f'href="docs/{path}')
     exec_root_body = exec_root_body.replace('src="assets/', 'src="docs/assets/')
     (ROOT / "executive-summary.html").write_text(
@@ -755,9 +835,11 @@ score exists; HOLDOUT-DTI is not a leaderboard forecast. Short comment
 [Executive guide](docs/executive-summary.html#crp1)
 """
     xfront_md = ""
-    xfront_card_site = load("evidence/xfront_run_card_20261026.json") if (
-        ROOT / "evidence/xfront_run_card_20261026.json"
-    ).exists() else None
+    xfront_card_site = (
+        load("evidence/xfront_run_card_20261026.json")
+        if (ROOT / "evidence/xfront_run_card_20261026.json").exists()
+        else None
+    )
     if xfront_card_site and xfront_hero:
         xh = xfront_card_site["holdout"]
         xlo, xhi = xh["ci95"]
@@ -826,7 +908,12 @@ Earlier scores/forecasts below are historical, not current promotion authority.
     )
     receipt = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "primary_sha256": tnr1["active"]["artifact"]["sha256"] if tnr1 else primary["sha256"],
+        "primary_sha256": current["raster_sha256"],
+        "primary_file": current["submission_name"],
+        "historical_active_lane_primary_sha256": tnr1["active"]["artifact"]["sha256"]
+        if tnr1
+        else primary["sha256"],
+        "portfolio_audit_sha256": portfolio["audit_sha256"],
         "pages": [str((DOCS / p).relative_to(ROOT)) for p in pages],
         "root": "index.html",
         "slot_recommendation": "not_recommended",

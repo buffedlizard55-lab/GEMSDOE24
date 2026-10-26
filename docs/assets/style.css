@@ -13,3 +13,18 @@
 code{color:var(--ink)}main p a{text-decoration:underline;text-underline-offset:2px}.cardtop .metric-label{font-size:14px;font-weight:700;letter-spacing:0;margin:0}.grid2>*,.hero>*{min-width:0}
 
 .review-notice a{text-decoration:underline;text-underline-offset:2px}
+
+/* The current portfolio decision stays compact, including on the first mobile screen. */
+.portfolio-title { font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.25; margin: 0 0 .65rem; }
+.portfolio-file { display: block; max-width: 25rem; overflow-wrap: anywhere; word-break: break-word; }
+#portfolio-audit .actions a, #current-download-details .fileline { overflow-wrap: anywhere; }
+
+.portfolio-mobile { display: none; }
+@media (max-width: 700px) {
+  #portfolio-historical > .tablewrap, #portfolio-current > .tablewrap { display: none; }
+  .portfolio-mobile { display: grid; gap: 1rem; }
+  .portfolio-mobile article { padding: 1rem; border: 1px solid #d7dfeb; border-radius: .6rem; background: #fff; }
+  .portfolio-mobile h3 { margin-top: 0; }
+  .portfolio-mobile p, .portfolio-mobile code { overflow-wrap: anywhere; }
+  .portfolio-mobile .portfolio-file { max-width: 100%; }
+}
