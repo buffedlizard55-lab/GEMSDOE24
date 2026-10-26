@@ -136,3 +136,12 @@ Original source is retained as non-executable text in
 `archive/legacy/vent/run_vent_lane.py.txt`; the shared entrypoint now refuses
 all execution except exact-file verification, which explicitly disclaims those
 audits. No private evaluator fork or replacement experiment was created.
+
+Integrated final verification: **355 tests passed**. A real desktop/mobile Chromium
+review initially exposed a first-screen regression after adding the status card.
+The current-best card now has its own immediately visible DPRF1 research download;
+the browser audit checks that exact downloaded hash while retaining the separate
+TNR1 note-copy check. Local review of all 12 desktop/mobile page visits passes,
+with no horizontal overflow, blocked external requests, JavaScript errors or
+accessibility violations; all 92 source rows expand correctly. Lint and formatting
+also pass after quarantining the newly integrated VENT code.

@@ -371,6 +371,8 @@ def build_independent_site(primary):
     clo, chi = ch["ci95"]["interval"]
     current_banner = (
         '<section class="card" id="current-best-review"><h2>Current decision: DOWNLOAD YES / SUBMIT NO</h2>'
+        f'<p><a class="button primary" href="downloads/{e(current["submission_name"])}" '
+        f'download="{e(current["submission_name"])}">Download current point-best research TIFF — DO NOT SUBMIT</a></p>'
         f"<p>Recorded local point-best: <strong>{e(current['current_recorded_point_best']['lane'])}</strong>. "
         f"HOLDOUT-DTI {ch['dti']:.5f}, 95% CI [{clo:.5f}, {chi:.5f}], "
         f"{e(ch['evaluator_version'])}, {ch['n_withheld_positive_pixels']:,} withheld positives. "
