@@ -380,7 +380,14 @@ def build_independent_site(primary):
     else:
         overview = dprf1_hero + dkrn1_hero + eul1_hero + trsg1_hero + xfront_hero + overview
         executive = dprf1_exec + dkrn1_exec + eul1_exec + trsg1_exec + xfront_exec + executive
-        research = dprf1_research + dkrn1_research + eul1_research + trsg1_research + xfront_research + research
+        research = (
+            dprf1_research
+            + dkrn1_research
+            + eul1_research
+            + trsg1_research
+            + xfront_research
+            + research
+        )
     # Resolve current-best from all comparable records, not the historical active_lane.
     from gems.current_review import review_current_best
 

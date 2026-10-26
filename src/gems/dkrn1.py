@@ -287,17 +287,15 @@ def compute_d8_hydrologic_channels(
         gvc._robust_z(knick_2d, dem_v) + 0.50 * gvc._robust_z(turn_2d, dem_v),
         0.0,
     ).astype(np.float32)
-    corridor_2d = gvc.oriented_lineament_response(
-        comb, dem_v, half_len_px=4, flank_offset_px=3
-    )
+    corridor_2d = gvc.oriented_lineament_response(comb, dem_v, half_len_px=4, flank_offset_px=3)
     del comb
 
     # 6. 1 km transverse drainage trunk asymmetry in low-to-moderate slope basins
     log_acc_fill = gvc._nearest_fill(log_acc_2d, dem_v)
     slope_z = gvc._robust_z(det_elev_slope, dem_v)
-    asym_raw = (
-        log_acc_fill - gaussian_filter(log_acc_fill, sigma=10.0, mode="nearest")
-    ) * expit(-slope_z).astype(np.float32)
+    asym_raw = (log_acc_fill - gaussian_filter(log_acc_fill, sigma=10.0, mode="nearest")) * expit(
+        -slope_z
+    ).astype(np.float32)
     asym_2d = np.where(dem_v, asym_raw, np.nan).astype(np.float32)
     del log_acc_fill, slope_z, asym_raw
 
@@ -689,9 +687,7 @@ def fit_and_predict_dkrn1_fold(
     kern_rows, y_kern, pop_mean_yk = sample_kernel_corridor_rows(
         train_mask, visible_mask, fp_ids, seed=seed + 17
     )
-    pop_core_prev = float(
-        int((train_mask & visible_mask).sum()) / max(int(train_mask.sum()), 1)
-    )
+    pop_core_prev = float(int((train_mask & visible_mask).sum()) / max(int(train_mask.sum()), 1))
     sample_core_prev = float(np.mean(y_core))
     sample_mean_yk = float(np.mean(y_kern))
 
@@ -703,9 +699,7 @@ def fit_and_predict_dkrn1_fold(
     if len(bg_disjoint) < 5_000:
         bg_disjoint = bg_pool_all
     rng_bg = np.random.default_rng(seed + 41)
-    bg_sel = np.sort(
-        rng_bg.choice(bg_disjoint, size=min(35_000, len(bg_disjoint)), replace=False)
-    )
+    bg_sel = np.sort(rng_bg.choice(bg_disjoint, size=min(35_000, len(bg_disjoint)), replace=False))
 
     x_bg = dprf1.read_stack_rows(bg_sel, base_mm, gvc_mm, sahg_mm, dkrn1_mm)
     c_bg = np.asarray(nuisance_fp[bg_sel], dtype=np.float32)
@@ -813,8 +807,7 @@ def fit_and_predict_dkrn1_fold(
             mu_kern_vec[start : start + chunk_size] = kern_cal.transform(mu_raw, c_sub, slp, rel)
 
             p_raw = 0.5 * (
-                clf_models[0].predict_proba(x_raw)[:, 1]
-                + clf_models[1].predict_proba(x_raw)[:, 1]
+                clf_models[0].predict_proba(x_raw)[:, 1] + clf_models[1].predict_proba(x_raw)[:, 1]
             )
             p_cal = core_cal.transform(p_raw, hl, c_sub, slp, rel)
             q_core_vec[start : start + chunk_size] = _apply_elkan_bayes_shift(
@@ -1092,9 +1085,7 @@ def ranking_surface_for_novelty(
     val = np.asarray(valid_mask, dtype=bool)
     vis = np.asarray(visible_faults, dtype=bool)
     comb = (
-        0.48 * u_base_2d
-        + 0.28 * (u_base_2d * m_hydro_2d)
-        + 0.24 * (u_base_2d * m_concealed_2d)
+        0.48 * u_base_2d + 0.28 * (u_base_2d * m_hydro_2d) + 0.24 * (u_base_2d * m_concealed_2d)
     ).astype(np.float32)
     if vis.any():
         d_vis = distance_transform_edt(~vis)

@@ -2018,7 +2018,9 @@ def dkrn1_packet(root):
     for srow in nine["sites"]:
         sname = srow["site"]
         sfile = srow.get("inspected_20261026_artifact") or srow.get("recorded_point_best_artifact")
-        ssha = (srow.get("inspected_20261026_sha256") or srow.get("recorded_point_best_sha256") or "")[:12]
+        ssha = (
+            srow.get("inspected_20261026_sha256") or srow.get("recorded_point_best_sha256") or ""
+        )[:12]
         strict_ok = srow.get("whole_array_strict_0_1", True)
         apron = srow.get("apron_2_to_9px")
         farf = srow.get("farfield_gt_20px")
@@ -2028,14 +2030,14 @@ def dkrn1_packet(root):
             else "22.3% / 52.3% (DPRF1); 23.8% / 52.2% (DKRN1)"
         )
         nine_rows.append(
-            f"<tr><td><a href=\"{e(srow['pages_url'])}\"><strong>{e(sname)}</strong></a><br><code>{e(srow['inspected_main_commit'][:8])}</code></td>"
+            f'<tr><td><a href="{e(srow["pages_url"])}"><strong>{e(sname)}</strong></a><br><code>{e(srow["inspected_main_commit"][:8])}</code></td>'
             f"<td><code>{e(srow['historical_best_submission'])}</code><br>UNVERIFIED-OWNER-REPORT: {srow['historical_best_owner_reported_score']:.4f}</td>"
             f"<td><code>{e(sfile)}</code><br><small>SHA {e(ssha)}… · [0,1]={'PASS' if strict_ok else 'FAIL (NaN outside)'}</small></td>"
             f"<td>{e(ap_str)}</td>"
             f"<td>{e(srow['executive_verdict'])}</td></tr>"
         )
     nine_table_html = (
-        '<h3>Fresh 2026-10-26 Nine-Site Forensic Audit (all 8 sibling HEAD TIFFs SHA-verified)</h3>'
+        "<h3>Fresh 2026-10-26 Nine-Site Forensic Audit (all 8 sibling HEAD TIFFs SHA-verified)</h3>"
         '<div class="tablewrap" tabindex="0" role="region" aria-label="2026-10-26 nine-site forensic refresh">'
         "<table><thead><tr><th>Site &amp; HEAD</th><th>Historical Reference (prohibited to copy)</th>"
         "<th>Latest 2026-10-26 Inspected TIFF</th><th>Apron (2–9 px) / Far-Field (&gt;2 km)</th>"

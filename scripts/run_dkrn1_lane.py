@@ -725,7 +725,10 @@ def main() -> None:
         )
 
     t0 = time.monotonic()
-    print(f"[1/8] Loading footprint, prepared stack, and building {LANE_ID} 10-ch memmap...", flush=True)
+    print(
+        f"[1/8] Loading footprint, prepared stack, and building {LANE_ID} 10-ch memmap...",
+        flush=True,
+    )
     fp = footprint.load_footprint()
     fp_ids = np.flatnonzero(fp.ravel())
     template = ROOT / "data/bridge/sample_submission.tif"
@@ -780,7 +783,10 @@ def main() -> None:
     context = holdout.SegmentHoldout(fp, catalogue, buffer_px=15)
 
     if args.stage in ("1", "all"):
-        print("[2/8] Running two-polarity single-feature leakage canary over all 62 channels...", flush=True)
+        print(
+            "[2/8] Running two-polarity single-feature leakage canary over all 62 channels...",
+            flush=True,
+        )
         canary = run_batched_canary(
             context,
             fp,
@@ -997,7 +1003,10 @@ def main() -> None:
         t0 = time.monotonic() - stage1_elapsed
 
     if args.stage in ("2", "all"):
-        print("[4/8] Evaluating 3.0 km Bridge Protocol + Partition 2 (Rotated45 OOF) for deployment...", flush=True)
+        print(
+            "[4/8] Evaluating 3.0 km Bridge Protocol + Partition 2 (Rotated45 OOF) for deployment...",
+            flush=True,
+        )
         bridge_3km = evaluate_bridge_3km(
             base_mm, gvc_mm, sahg_mm, dkrn1_mm, nuisance_fp, names62, fp, catalogue
         )
@@ -1082,7 +1091,10 @@ def main() -> None:
         stitched_u, stitched_mh, stitched_mc, fp, catalogue, catalogue_clearance_px=2.0
     )
 
-    print("[5/8] Pre-placement novelty audit (surface) vs pinned registry + local lanes + peers...", flush=True)
+    print(
+        "[5/8] Pre-placement novelty audit (surface) vs pinned registry + local lanes + peers...",
+        flush=True,
+    )
     priority_reg = json.loads((ROOT / "registry/priority_rasters.json").read_text())
     existing_shas = {e["footprint_sha256"] for e in priority_reg["unique_rasters"]}
     extra_locals = local_lane_entries(fp, existing_shas)
@@ -1103,7 +1115,10 @@ def main() -> None:
         flush=True,
     )
 
-    print("[6/8] Final 37,654-dot 3-Regime Net-Tversky allocation + final-dot novelty audit...", flush=True)
+    print(
+        "[6/8] Final 37,654-dot 3-Regime Net-Tversky allocation + final-dot novelty audit...",
+        flush=True,
+    )
     final_dots = dkrn1.three_regime_net_tversky_allocate(
         stitched_u,
         stitched_mu,

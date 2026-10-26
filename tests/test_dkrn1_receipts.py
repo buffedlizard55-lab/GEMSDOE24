@@ -163,8 +163,10 @@ def test_dkrn1_nine_site_20261026_forensics_and_site_ordering():
     ):
         html = (ROOT / rel).read_text()
         assert dkrn1_file in html
-        assert html.index(dprf1_dl["file"]) < html.index(dkrn1_file) < html.index(
-            eul1_card["submission_name"]
+        assert (
+            html.index(dprf1_dl["file"])
+            < html.index(dkrn1_file)
+            < html.index(eul1_card["submission_name"])
         )
     readme = (ROOT / "README.md").read_text()
     assert dkrn1_file in readme
