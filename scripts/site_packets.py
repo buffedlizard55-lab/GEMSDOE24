@@ -25,7 +25,11 @@ def cup1_packet(root):
     target = root / "docs/downloads" / name
     if not target.exists() or sha256_file(target) != card["raster_sha256"]:
         raise ValueError("CUP1 exact-file SHA-256 disagrees with run card")
-    if card.get("ok_to_submit") is not False or card.get("ok_to_download") is not True:
+    if (
+        card.get("ok_to_submit") is not False
+        or card.get("ok_to_download") is not True
+        or card.get("verdict") != "negative"
+    ):
         raise ValueError("CUP1 packet must stay fail-closed (selector is a separate step)")
     note_path = root / "docs/downloads" / f"note-{name[:-4]}.txt"
     if len(card["note"]) > 140 or note_path.read_text().strip() != card["note"]:
@@ -62,7 +66,7 @@ def cup1_packet(root):
     verdict_word = "SELECTOR-ELIGIBLE" if eligible else "DO_NOT_SUBMIT"
     status_box = (
         '<div class="status stopped" role="status"><strong>'
-        f"NEWEST UNIQUE CANDIDATE (H24-CUP1, 2026-10-26) — DOWNLOAD: YES · SUBMIT: "
+        f"RETAINED NEGATIVE RESEARCH (H24-CUP1, 2026-10-26) — DOWNLOAD: YES · SUBMIT: "
         f"{'SELECTOR STEP REQUIRED' if eligible else 'NO'} ({verdict_word}).</strong> "
         f"{e(card['submit_state'])}. Automated validation only — zero human-inspector fallback. "
         "No organizer-confirmed score exists; HOLDOUT-DTI below is a local measurement, not a leaderboard result or projection.</div>"
@@ -74,12 +78,12 @@ def cup1_packet(root):
     reasons = "".join(f"<li>{e(r)}</li>" for r in card["reasons"])
     hero = f"""<section class="hero" aria-label="H24-CUP1 unique GeoTIFF and automated gate">
 <div>
-<div class="eyebrow">Newest unique submission candidate · H24-CUP1 compositional fronts + upward-continuation persistence</div>
+<div class="eyebrow">Retained parallel research · H24-CUP1 compositional fronts + upward-continuation persistence</div>
 <h1>Download the new .tif.<br>Read the gate before submitting.</h1>
 <p class="lead"><strong><code>{e(name)}</code></strong> was generated in this repository on 2026-10-26 from physical layers only —
 GeoDAWN K/Th/U ratio-grid compositional fronts plus RTP→TMI-150 m paired-trough persistence, fused with the shared
 multi-physics stack and emitted as 37,654 sparse off-catalogue dots. <strong>Zero previous submission pixels were copied;</strong>
-uniqueness was checked against every pinned registry raster before and after placement.</p>
+novelty was checked against the pinned registry before and after placement and failed. New content does not mean lane uniqueness passed.</p>
 {status_box}
 <div class="actions">
 <a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download CUP1 GeoTIFF (zeros outside, strict [0,1])</a>
@@ -101,7 +105,7 @@ uniqueness was checked against every pinned registry raster before and after pla
 Matched B-GVC baseline {h["matched_baseline_bgvc_dti"]:.5f} · paired Δ {h["paired_delta"]:+.5f} (95% CI [{h["paired_delta_ci95"][0]:+.5f}, {h["paired_delta_ci95"][1]:+.5f}]) · recorded prior best (GVC1) 0.14876</p>
 <p class="micro">Max competing 3-px dot overlap {nov["final_max_competing_overlap_within_3px"]:.4f} (gate ≤0.70) · max |ρ| {nov["final_method_lane_max_abs_rho"]:.4f} (gate ≤0.90) · C2ST AUC {c2["candidate_auc"]:.4f}</p>
 </aside></section>"""
-    exec_html = f"""<section aria-label="H24-CUP1 executive gate report"><h2>Newest candidate: H24-CUP1 (2026-10-26)</h2>
+    exec_html = f"""<section aria-label="H24-CUP1 executive gate report"><h2>Parallel negative result: H24-CUP1 (2026-10-26)</h2>
 {status_box}
 <div class="actions"><a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download CUP1 .tif</a>
 <a class="button" href="downloads/checks-{e(name[:-4])}.json" download>Exact-file validator JSON</a>
@@ -959,6 +963,9 @@ def crp1_packet(root):
         or receipt.get("decision") != current_screen["decision"]
     ):
         raise ValueError("Frozen negative CRP1 cannot be promoted by edited card/selector flags")
+    (root / "docs/data/crp1_current_policy_screen.json").write_text(
+        json.dumps(current_screen, indent=2, allow_nan=False) + "\n"
+    )
     ok_submit = False
     if card.get("ok_to_submit") is not ok_submit or dl.get("ok_to_submit") is not ok_submit:
         raise ValueError("CRP1 card/download disagree with the independent selector")
@@ -981,40 +988,33 @@ def crp1_packet(root):
     decision_word = "YES" if ok_submit else "NO"
     decision_label = "OK_TO_SUBMIT" if ok_submit else "DO_NOT_SUBMIT"
     status_cls = "status" if ok_submit else "status stopped"
-    verdict_sentence = (
-        "The independent selector cleared every preregistered project gate for this "
-        "exact file. Organizer-account quota is still unknown here: confirm remaining "
-        "allowance on the submission page before uploading."
-        if ok_submit
-        else "At least one preregistered gate failed (see the selector receipt); the "
-        "lane stopped with no retuning and no weekly slot was used."
-    )
+    verdict_sentence = "Frozen negative result; no retuning or slot. Current policy retains all literal comparators and blocks unknown quota and the missing independent positive replay certificate. The v1 JSON remains historical, not a release permission."
     reasons = (
-        "".join(f"<li>{e(r)}</li>" for r in receipt.get("reasons", []))
+        "".join(f"<li>{e(r)}</li>" for r in current_screen.get("reasons", []))
         or "<li>None — all gates passed.</li>"
     )
     gate_rows = "".join(
         f"<tr><td>{e(k)}</td><td><strong>{'PASS' if v else 'FAIL'}</strong></td></tr>"
-        for k, v in receipt["gates"].items()
+        for k, v in current_screen["gates"].items()
     )
     status_box = (
-        f'<div class="{status_cls}" role="status"><strong>UNIQUE FILE (H24-CRP1, 2026-10-26) — '
+        f'<div class="{status_cls}" role="status"><strong>NEWLY COMPUTED RESEARCH (H24-CRP1, 2026-10-26) — '
         f"DOWNLOAD: YES · SUBMIT: {decision_word} ({decision_label}).</strong> "
         f"{e(verdict_sentence)} Validated end-to-end by project automation — shared "
         f"format validator, leakage canaries, SegmentHoldout, registry novelty, exact-file "
         f"C2ST and the independent selector — with <strong>no human-inspector fallback</strong>. "
         f"HOLDOUT-DTI is a local measurement, not a leaderboard score or forecast.</div>"
     )
-    hero_html = f"""<div class="hero"><div><div class="eyebrow">DOE GEMS · unique GeoTIFF generated 2026-10-26</div>
+    hero_html = f"""<div class="hero"><div><div class="eyebrow">DOE GEMS · retained parallel GeoTIFF generated 2026-10-26</div>
 <h1>One new file.<br>One automatic decision.</h1>
 <p class="lead">H24-CRP1 computed its own predictions from physical layers (compositional radiometric
 fronts, cross-depth magnetic persistence, curvature saddles) with selective nuisance
 residualization. <strong>No previous submission pixels were copied.</strong> Download it with one
 click; the independent selector receipt below states whether it may be submitted.</p>
 {status_box}
-<div class="actions"><a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download the unique CRP1 .tif <span>({size:.2f} MiB)</span></a>
+<div class="actions"><a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download CRP1 research .tif — DO NOT SUBMIT <span>({size:.2f} MiB)</span></a>
 <a class="button" href="executive-summary.html#crp1">Executive summary &amp; gates →</a>
-<a class="button" href="downloads/{e(name[:-4])}.selector.json">Selector receipt (JSON)</a></div>
+<a class="button" href="downloads/{e(name[:-4])}.selector.json">Archived v1 selector (JSON)</a><a class="button" href="data/crp1_current_policy_screen.json">Current negative-only policy</a></div>
 <p class="fileline">{e(name)}</p><p class="hash">SHA-256 {e(digest)}</p>
 <p class="micro"><span class="badge blue">Single-band float32 · EPSG:32611 · values in [0,1]</span>
 <span class="badge {"blue" if ok_submit else "danger"}">{decision_label}</span> <span class="badge gray">0 slots used by this repository session</span></p></div>
@@ -1022,7 +1022,7 @@ click; the independent selector receipt below states whether it may be submitted
 <div class="result-number">{h["dti"]:.5f}</div>
 <p>95% CI [{lo:.5f}, {hi:.5f}] · evaluator <code>{e(h["evaluator_version"])}</code> ·
 {h["n_withheld_positive_pixels"]:,} withheld positives · paired Δ vs reconstructed OOF baseline
-{paired["delta_dti"]:+.5f} (95% CI [{plo:+.5f}, {phi:+.5f}]) · recorded repo best {best:.5f} (GVC1).</p>
+{paired["delta_dti"]:+.5f} (95% CI [{plo:+.5f}, {phi:+.5f}]) · execution-time GVC1 comparator {best:.5f}; see current point-best in the featured gate table.</p>
 <img class="raster-preview" src="assets/crp1-preview.png" alt="Downsampled map of CRP1 experimental fault dots, not verified faults or geothermal vents">
 <p class="micro">Experiment preview · downsampled 100 m grid · not verified faults or vents</p></aside></div>"""
 
@@ -1041,14 +1041,14 @@ click; the independent selector receipt below states whether it may be submitted
 <a class="button" href="downloads/{e(dl["note_file"])}" download>Note .txt</a></div>
 <p class="copyfeedback" id="fb-crp1" aria-live="polite"></p>
 <p class="micro">{len(dl["note"])} characters · maximum 140</p>
-<h3>Automatic gate report (independent selector, no human inspection)</h3>
+<h3>Current negative-only policy screen (archived v1 receipt kept separately)</h3>
 <div class="tablewrap"><table><thead><tr><th>Gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div>
 <ul>{reasons}</ul>
 <p>Measured evidence: leakage canary worst polarity extremity {canary["worst_polarity_extremity"]:.4f} (limit 0.90);
 surface max |ρ| {nov["surface_max_abs_rank_correlation"]:.4f} and final-dot max |ρ| {nov["final_max_abs_rank_correlation"]:.4f} (limit 0.90);
 max competing-method 3-px dot overlap {nov["final_max_method_overlap_within_3px"]:.4f} and peer overlap
 {nov["final_max_peer_overlap_within_3px"]:.4f} (limit 0.70); literal all-entry novelty
-{"passed" if nov["literal_all_entries_passed"] else "flagged only by calibration controls — see run card"};
+{"passed" if nov["literal_all_entries_passed"] else "FAIL — literal controls and/or competing methods retained; no exceptions"};
 exact-file C2ST AUC {c2st["observed_auc"]:.4f} (strict gate {"PASS" if c2st["strict_gate_passed"] else "FAIL"});
 {dl["pixel_count"]:,} binary dots. Every competition score quoted on this site remains
 <strong>OWNER-REPORTED, UNVERIFIED</strong> unless an organizer receipt is published; CRP1 has

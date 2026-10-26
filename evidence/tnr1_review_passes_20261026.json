@@ -1,0 +1,104 @@
+{
+  "checked_utc": "2026-10-26T01:40:01.516215+00:00",
+  "scope": "Three distinct implementation/review passes by this agent, not three external peer reviews or independent scientific replications.",
+  "branch": "arena/eda1fee6-gemsdoe24",
+  "passes": [
+    {
+      "pass": 1,
+      "focus": "Prerequisites, source integrity, hypothesis ranking and shared-tool correctness before science",
+      "records": [
+        "knowledge/20_preregistered_TNR1_2026-10-26.md",
+        "registry/tnr1_union_20261026.json",
+        "tests/test_targeted_residual.py",
+        "tests/test_github_archive.py"
+      ],
+      "preregistration_commit": "8cd6782",
+      "science_freeze_commit": "853dae8",
+      "findings": [
+        "Shared single-output Ridge broadcast fixed centrally and tested before science",
+        "Exact protected/residualized channel accounting, visible-only catalogue inputs and immutable registry references checked",
+        "Unofficial mirrors, blocked official hosts and absent coordinator assignment explicitly disclosed"
+      ]
+    },
+    {
+      "pass": 2,
+      "focus": "One fixed science attempt, scientific falsification, exact-file and provenance review",
+      "records": [
+        "evidence/tnr1_experiment_20261026.json",
+        "evidence/tnr1_run_card_20261026.json",
+        "evidence/tnr1_source_review_20261026.json",
+        "knowledge/21_TNR1_findings_2026-10-26.md"
+      ],
+      "experiments": "One TNR1 candidate plus preregistered matched raw control; no retuning after duplicate",
+      "findings": [
+        "Negative paired gain, real-method/literal-control novelty failure and current-best failure retained",
+        "Both physical-feature and actual OOF-transform canaries checked in both polarities; diagnostics are not leakage-proof certification",
+        "Conditional CI and source/footprint/protocol limitations disclosed; no organizer score, higher-score projection or causal H33 claim"
+      ]
+    },
+    {
+      "pass": 3,
+      "focus": "Parallel integration, adversarial authorization review and delivered-product review",
+      "integrated_prs": [
+        28,
+        29,
+        30
+      ],
+      "scientific_receipts_preserved": [
+        "evidence/crp1_experiment_20261026.json",
+        "evidence/crp1_run_card_20261026.json",
+        "evidence/crp1_selector_20261026.json",
+        "evidence/cup1_run_card_20261026.json",
+        "evidence/cup1_experiment_20261026.json",
+        "evidence/cup1_c2st_audit_20261026.json"
+      ],
+      "cup1_runner_ast_unchanged_vs_upstream": true,
+      "test_suite": {
+        "checked_utc": "2026-10-26T01:37:54.180416+00:00",
+        "passed": 331,
+        "pytest_seconds": 60.04,
+        "wall_seconds": 60.43012997999995,
+        "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q",
+        "returncode": 0
+      },
+      "ruff": "All checks passed; 138 files formatted",
+      "browser": {
+        "checked_utc": "2026-10-26T01:39:46.896Z",
+        "engine": "153.0.8010.0",
+        "desktop_mobile_page_cases": 12,
+        "exact_sha_downloads": 8,
+        "clipboard_and_first_screen_cta_cases": 8,
+        "owner_table_rows_per_viewport": 92,
+        "scoped_accessibility_violations": 0,
+        "horizontal_overflows": 0,
+        "errors": [],
+        "external_requests_blocked": []
+      },
+      "findings": [
+        "Current point-best inventory includes later CUP1 without certifying comparability or a gain; missing/malformed known benchmark fails closed",
+        "Legacy CI-list discovery bug fixed and regression-tested",
+        "Literal synthetic controls cannot be excluded, unknown quota cannot be manually bypassed, and missing independent replay blocks every positive authorization",
+        "Historical CRP1 v1 receipt preserved separately from current negative-only screen; edited card/receipt promotion flags rejected",
+        "Source collection freshness is not score freshness; 92 pinned READMEs/118 historical claims/zero confirmed receipts",
+        "Dead manual-quota release prose removed; negative CUP1 cannot be promoted by an edited verdict; causal/optimality/convergence claims explicitly qualified"
+      ]
+    }
+  ],
+  "primary_artifact": {
+    "file": "docs/downloads/gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif",
+    "sha256": "c8cb320c2c776e64c2d198bfc2e28338e7e354b6d827550f09464b413f0a8a90",
+    "fresh_sha256": "c8cb320c2c776e64c2d198bfc2e28338e7e354b6d827550f09464b413f0a8a90",
+    "scientific_verdict": "negative",
+    "ok_to_download": true,
+    "ok_to_submit": false,
+    "official_nan_variant_does_not_override_scientific_no": true
+  },
+  "slot_count": 0,
+  "requested_gate_passing_submit_ready_objective_achieved": false,
+  "remote_ci_and_pages": "Not claimed by this local review receipt; consult the subsequent PR checks and GitHub deployment receipts.",
+  "remaining_work": [
+    "An assigned genuinely orthogonal geological hypothesis and verified official raw-data availability",
+    "Untouched outer spatial confirmation and a true paired replay against the current comparable best",
+    "Complete independent positive authorization and legitimate current quota verification; no human-inspector fallback"
+  ]
+}

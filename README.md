@@ -36,11 +36,7 @@ end of this README. Older prompts, forecasts and packets below are historical.
 No claimed guarantee of a score, winning, vent discovery, or full task completion.
 
 
-## Current review — 2026-10-26: DOWNLOAD YES / SUBMIT NO
-
-## Retained parallel result (PR #29) — 2026-10-26 H24-CRP1: DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
-
-## ⭐ Newest unique TIFF (2026-10-26, H24-CUP1): DOWNLOAD YES / SUBMIT NO
+## Retained parallel result — PR #30, H24-CUP1 (2026-10-26): DOWNLOAD YES / SUBMIT NO
 
 [**Download the CUP1 GeoTIFF — zeros outside, strict whole-array [0,1]**](docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif) ·
 [NaN-outside twin](docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-nan.tif) ·
@@ -49,7 +45,7 @@ No claimed guarantee of a score, winning, vent discovery, or full task completio
 [Findings](knowledge/21_CUP1_findings_2026-10-26.md) · [Executive summary](docs/executive-summary.html)
 
 **NOT OK TO SUBMIT (`DO_NOT_SUBMIT`) — automatic gate, zero human-inspector fallback.**
-Generated from scratch in this session (zero copied submission pixels): GeoDAWN
+Generated independently in the parallel CUP1 session (PR #30; not another TNR1 experiment; zero copied submission pixels): GeoDAWN
 K/Th/U compositional fronts + RTP→TMI-150 m trough persistence (16 new channels) on the
 shared multi-physics stack, 37,654 sparse off-catalogue dots. It is the repo's highest
 pooled **HOLDOUT-DTI 0.15038** (95% CI [0.13646, 0.16460], `gems-segment-pooled-v1`,
@@ -65,17 +61,19 @@ GVC1 file (>70% duplicate rule). No organizer score exists; no slot was used.
 - Reproduce: `.venv/bin/python scripts/run_cup1_lane.py` refuses to rerun (frozen receipt);
   verify bytes with `scripts/preflight_submission.py` (receipt beside the TIFF).
 
-**Why GEMSDOE32's 0.2778 leads:** it is an emission-policy result, not a new detector —
-H27-4's dots minus those within 200 m of the catalogue (exact forensics in
-[`knowledge/21 §2`](knowledge/21_CUP1_findings_2026-10-26.md)). Beating it needs a better
-*ranking surface* in catalogue-incomplete terrain, not more thinning. CUP1 shows an
-incremental HGB stack cannot supply that (its dots converge to its parent's).
+**H33-B2 forensics — not score proof:** its reported 0.2778 remains owner-reported,
+unverified, and not established as the current leader. The preserved raster comparison
+finds 2,545 catalogue-near dots removed and no added dots. This does not prove why the
+hidden score changed, that deletion was beneficial, or that emission is optimal.
+CUP1's failed overlap is evidence about this candidate, not proof every future HGB
+model inevitably converges or that higher hidden scores are impossible.
 
-## Latest unique file — 2026-10-26 H24-CRP1: DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
+## Retained parallel result — PR #29, H24-CRP1 (2026-10-26): DOWNLOAD YES / SUBMIT NO
 
-[**Download the unique H24-CRP1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif) ·
+[**Download H24-CRP1 research GeoTIFF — DO NOT SUBMIT (zeros outside, strict [0,1])**](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif) ·
 [NaN-outside twin](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif) ·
-[Independent selector receipt](evidence/crp1_selector_20261026.json) ·
+[Archived v1 selector receipt](evidence/crp1_selector_20261026.json) ·
+[Current negative-only policy screen](docs/data/crp1_current_policy_screen.json) ·
 [JSON run card](evidence/crp1_run_card_20261026.json) ·
 [Preregistration (committed before the run)](knowledge/20_preregistered_CRP1_2026-10-26.md) ·
 [Findings: why H33-B2 leads, why CRP1 stops, nine-site summary](knowledge/21_CRP1_findings_2026-10-26.md) ·
@@ -88,15 +86,16 @@ physical layers only — zero prior submission pixels. Validated end-to-end
 0.5991), exact-file C2ST nuisance audit **PASS** (AUC 0.5273). It reaches
 **HOLDOUT-DTI 0.13747** (95% CI [0.12400, 0.15152], `gems-segment-pooled-v1`,
 60,988 withheld positives; paired Δ vs reconstructed OOF baseline 0.13000 =
-+0.00747, 95% CI [−0.00242, +0.01793]). The new independent selector
-(`gems.selector`, this session) returns **DO_NOT_SUBMIT** because (a) that
-holdout result does not beat the recorded best (GVC1 0.14876) with a paired
++0.00747, 95% CI [−0.00242, +0.01793]). The archived selector v1
+(parallel CRP1 session) returned **DO_NOT_SUBMIT** because (a) that
+holdout result did not beat its execution-time GVC1 comparator with a paired
 CI above zero, and (b) 80.7% of its dots fall within 3 px of a prior method
 raster (> 70% duplicate rule; max |ρ| = 0.5878 ≤ 0.90). Independent detectors
 keep converging on the same range-front corridors; the lane stopped with no
 retuning. **No claim to beat 0.2778 / 0.3195 / 0.4413 — all OWNER-REPORTED,
-UNVERIFIED; zero organizer receipts exist.** Best submission to submit today,
-across all nine priority sites: **NONE** (see findings table).
+UNVERIFIED; zero organizer receipts exist.** No reviewed priority-site artifact is currently authorized. The current v2 screen
+retains literal controls and blocks unknown quota and missing independent positive
+replay; the later CUP1 point estimate is not hidden behind an easier old benchmark.
 
 - Name: `gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif`
 - SHA-256: `f02859b3e881b942919deb267cad23673d6a6a1bc0148b2116ff1b706cba8978`

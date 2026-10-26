@@ -41,10 +41,12 @@ The older dated continuation notes below are historical, not newer authority.
 `knowledge/21_CUP1_findings_2026-10-26.md` and `evidence/cup1_run_card_20261026.json` first.
 CUP1 (HOLDOUT-DTI 0.15038, new point best) is DOWNLOAD YES / SUBMIT NO: paired CI vs matched
 B-GVC crosses 0 and 91.2% of dots sit within 3 px of parent GVC1. Do not rerun/retune CUP1,
-and do not propose another GVC18+HGB increment — it will converge to the same dots. Next lane
-must be an orthogonal surface family, judged on SegmentHoldout **and** SGMC-sparse; the
-independent selector now exists on main (`gems.selector`, CRP1 session) but CUP1's failed
-gates make its decision DO_NOT_SUBMIT regardless; quota remains unknown.
+and do not treat a minor increment as a fresh assigned lane. One negative result does
+not prove inevitable convergence of every future model. Prospectively prioritize
+orthogonal hypotheses; SGMC-sparse is an additional diagnostic, not a replacement
+for the mandated spatially blocked primary endpoint. The current selector is
+negative-only: positive replay certification and actual account quota remain
+unverified, so no slot can be authorized from card booleans.
 
 **CRP1 continuation (2026-10-26):** Read `knowledge/20_preregistered_CRP1_2026-10-26.md`,
 `knowledge/21_CRP1_findings_2026-10-26.md` and `evidence/crp1_run_card_20261026.json` first.
@@ -59,8 +61,9 @@ v2 is a negative-only recorded-evidence screen: literal controls are retained,
 unknown quota blocks, and complete independent positive replay is not implemented. Preflight schema v2 still requires its own selector receipt
 format — wiring the two is future work, do not change preflight semantics silently.
 Owner-reported nine-site list updated in `registry/owner_reported_scores_2026-10-26.json`
-(includes GVC1 listed live at 0.0859 vs its 0.14876 holdout — holdout rank does
-not transfer monotonically). Parallel PR #28 (`knowledge/20_repo_review_2026-10-26.md`)
+(includes an unverified 0.0859 claim from a parallel brief, not this session’s
+original owner list; no artifact-linked organizer receipt establishes a live score
+or a monotonic/nonmonotonic mapping to holdout). Parallel PR #28 (`knowledge/20_repo_review_2026-10-26.md`)
 shares the `knowledge/20_` prefix with the CRP1 preregistration by coincidence;
 both files remain. Next lanes, if assigned: valley-floor blind-fault or
 drainage-deflection with a sparse-regime primary endpoint; any change to how

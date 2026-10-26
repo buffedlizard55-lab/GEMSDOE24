@@ -24,23 +24,49 @@ RECORDS = (
 
 
 def recorded_points(root: Path) -> list[dict]:
+    root = Path(root)
     rows = []
-    for lane, source, key in RECORDS:
-        path = Path(root) / source
-        if not path.exists():
-            continue
+    known = {source: (lane, key) for lane, source, key in RECORDS}
+    for source in known:
+        if not (root / source).is_file():
+            raise ValueError(f"Known benchmark missing: {source}; cannot lower the floor")
+    for path in sorted((root / "evidence").glob("*run_card*.json")):
+        source = path.relative_to(root).as_posix()
         card = json.loads(path.read_text())
-        result = card.get(key)
-        if result is None:
+        if not isinstance(card, dict):
+            if source in known:
+                raise ValueError("Known benchmark is not an object")
+            continue
+        lane, key = known.get(source, (path.name.split("_run_card")[0].upper(), None))
+        if key is None:
+            key = next(
+                (k for k in ("holdout", "holdout_dti") if isinstance(card.get(k), dict)), None
+            )
+        result = card.get(key) if key else None
+        if not isinstance(result, dict):
+            if source in known:
+                raise ValueError("Known benchmark is missing its primary result")
             continue
         if (
             result.get("label") != "HOLDOUT-DTI"
             or result.get("evaluator_version") != EVALUATOR
             or result.get("n_withheld_positive_pixels") != WITHHELD
         ):
-            raise ValueError("Known benchmark no longer has the declared evaluator/count")
+            if source in known:
+                raise ValueError("Known benchmark no longer has the declared evaluator/count")
+            continue  # Other metric/split records are not comparable even by declaration.
         dti = result.get("dti")
-        interval = result.get("ci95", {}).get("interval")
+        ci = result.get("ci95")
+        interval = ci.get("interval") if isinstance(ci, dict) else ci
+        if isinstance(ci, list):
+            result = {
+                **result,
+                "ci95": {
+                    "level": 0.95,
+                    "interval": ci,
+                    "scope": "Normalized recorded CI list; no bootstrap replay",
+                },
+            }
         if (
             type(dti) not in (float, int)
             or not math.isfinite(dti)
