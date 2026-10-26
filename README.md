@@ -22,8 +22,8 @@ Latest wording audit: [three-pass review](knowledge/25_submission_wording_review
 Concurrent PR #35 review and exact-file utility are also preserved: [review](knowledge/22_current_best_review_2026-10-26.md), [receipt](docs/data/current_best_review.json), `python scripts/review_current_best.py`.
 
 **No new experiment or TIFF in this review. DOWNLOAD existing research: YES / SUBMIT: NO.**
-Read the [review and next-step queue](docs/review-20261026.md), [owner brief](knowledge/owner_brief_2026-10-26.md), and [prompt delta](knowledge/owner_brief_2026-10-26_delta.md) at every session start. The full inherited prompt remains embedded below.
-The assigned method paragraph is still missing; stopped lanes must not be retuned.
+Read the [latest three-pass repo review](docs/repo-review-20261026-followup.md), [review and next-step queue](docs/review-20261026.md), [owner brief](knowledge/owner_brief_2026-10-26.md), and [prompt delta](knowledge/owner_brief_2026-10-26_delta.md) at every session start. The full inherited prompt remains embedded below.
+The assigned method paragraph is still missing; stopped lanes must not be retuned. The prepared feature cache is also absent in this checkout; no new candidate was validated.
 Fresh source checks found all nine repositories changed since registry pins; this is not a new raster or score audit.
 The following historical point-best section is not a new cross-site promotion decision.
 
