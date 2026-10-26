@@ -64,7 +64,7 @@ def render(root):
         f"95% spatial-bootstrap CI [{low:.5f}, {high:.5f}]"
     )
     hero = f"""<div class="hero" id="current-packet"><div>
-<div class="eyebrow">Latest generated file · H24-TNR1 · 2026-10-26</div>
+<div class="eyebrow">Featured session file · H24-TNR1 · 2026-10-26</div>
 <h1>Download the evidence.<br>Protect the slot.</h1>
 <p class="lead">A new, independently computed fault-prediction GeoTIFF is ready to download.
 The project evaluated it automatically and says <strong>do not submit</strong>—not “inspection pending”.</p>
@@ -187,7 +187,7 @@ all-entry novelty and current account allowance. No human inspection exception r
     return {
         "overview": overview,
         "executive": executive,
-        "research": '<section id="tnr1-research"><div class="pagehead"><div class="eyebrow">Latest preregistered test · stopped without retuning</div><h1>Keep the negative result.</h1></div>'
+        "research": '<section id="tnr1-research"><div class="pagehead"><div class="eyebrow">This session’s preregistered test · stopped without retuning</div><h1>Keep the negative result.</h1></div>'
         + status
         + "</section>"
         + explanation

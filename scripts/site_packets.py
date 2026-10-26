@@ -804,3 +804,159 @@ Spacing-5 control retained; no exemption. No claim of global uniqueness or a ven
 <button class="button" data-copy="#note-oj1" data-feedback="#fb-oj1">Copy short research note</button>
 <p id="fb-oj1" aria-live="polite"></p><p class="micro">{len(card["note"])} characters; maximum 140.
 Independent selector/quota verification is not implemented, so preflight cannot authorize any slot from card flags alone.</p></section>'''
+
+
+def crp1_packet(root):
+    """Validate and render the 2026-10-26 H24-CRP1 packet (hero, executive, research).
+
+    Decision text is generated from the independent selector receipt only;
+    this renderer never upgrades a decision.  Returns empty strings when the
+    CRP1 evidence is absent (site builds before the experiment remain valid).
+    """
+    card_path = root / "evidence/crp1_run_card_20261026.json"
+    dl_path = root / "docs/data/crp1_download.json"
+    sel_path = root / "evidence/crp1_selector_20261026.json"
+    if not (card_path.exists() and dl_path.exists() and sel_path.exists()):
+        return "", "", ""
+    card = json.loads(card_path.read_text())
+    dl = json.loads(dl_path.read_text())
+    receipt = json.loads(sel_path.read_text())
+    name = dl["file"]
+    digest = dl["sha256"]
+    published = json.loads((root / "docs/data/crp1_run_card.json").read_text())
+    target = root / "docs/downloads" / name
+    checks = json.loads((root / "docs/downloads" / f"checks-{name[:-4]}.json").read_text())
+    if (
+        published != card
+        or card.get("raster_sha256") != digest
+        or card.get("submission_name") != name
+        or dl.get("note") != card.get("note")
+        or sha256_file(target) != digest
+        or checks["zero_outside"].get("sha256") != digest
+        or checks["zero_outside"].get("format_valid") is not True
+        or receipt.get("artifact_sha256") != digest
+        or receipt.get("artifact") != name
+        or receipt.get("human_inspection_used") is not False
+    ):
+        raise ValueError("CRP1 packet identity, checksum or selector receipt disagrees")
+    from gems.selector import verify_selector
+
+    current_screen = verify_selector(target, root / "data/bridge/sample_submission.tif", card)
+    if (
+        receipt.get("ok_to_submit") is not False
+        or current_screen["ok_to_submit"] is not False
+        or receipt.get("decision") != current_screen["decision"]
+    ):
+        raise ValueError("Frozen negative CRP1 cannot be promoted by edited card/selector flags")
+    ok_submit = False
+    if card.get("ok_to_submit") is not ok_submit or dl.get("ok_to_submit") is not ok_submit:
+        raise ValueError("CRP1 card/download disagree with the independent selector")
+    if (card.get("verdict") == "promote") is not ok_submit:
+        raise ValueError("CRP1 verdict disagrees with the independent selector")
+    note_path = root / "docs/downloads" / dl["note_file"]
+    if len(dl["note"]) > 140 or note_path.read_text().strip() != dl["note"]:
+        raise ValueError("CRP1 note is missing, changed, or exceeds 140 characters")
+
+    e = lambda s: escape(str(s), quote=True)  # noqa: E731
+    h = card["holdout"]
+    lo, hi = h["ci95"]["interval"]
+    paired = card["paired_vs_baseline"]
+    plo, phi = paired["ci95"]
+    nov = card["correlation_overlap_vs_registry"]
+    c2st = card["c2st_exact_file"]
+    canary = card["leakage_canary"]
+    best = card["recorded_best_same_evaluator"]["dti"]
+    size = target.stat().st_size / (1024**2)
+    decision_word = "YES" if ok_submit else "NO"
+    decision_label = "OK_TO_SUBMIT" if ok_submit else "DO_NOT_SUBMIT"
+    status_cls = "status" if ok_submit else "status stopped"
+    verdict_sentence = (
+        "The independent selector cleared every preregistered project gate for this "
+        "exact file. Organizer-account quota is still unknown here: confirm remaining "
+        "allowance on the submission page before uploading."
+        if ok_submit
+        else "At least one preregistered gate failed (see the selector receipt); the "
+        "lane stopped with no retuning and no weekly slot was used."
+    )
+    reasons = (
+        "".join(f"<li>{e(r)}</li>" for r in receipt.get("reasons", []))
+        or "<li>None — all gates passed.</li>"
+    )
+    gate_rows = "".join(
+        f"<tr><td>{e(k)}</td><td><strong>{'PASS' if v else 'FAIL'}</strong></td></tr>"
+        for k, v in receipt["gates"].items()
+    )
+    status_box = (
+        f'<div class="{status_cls}" role="status"><strong>UNIQUE FILE (H24-CRP1, 2026-10-26) — '
+        f"DOWNLOAD: YES · SUBMIT: {decision_word} ({decision_label}).</strong> "
+        f"{e(verdict_sentence)} Validated end-to-end by project automation — shared "
+        f"format validator, leakage canaries, SegmentHoldout, registry novelty, exact-file "
+        f"C2ST and the independent selector — with <strong>no human-inspector fallback</strong>. "
+        f"HOLDOUT-DTI is a local measurement, not a leaderboard score or forecast.</div>"
+    )
+    hero_html = f"""<div class="hero"><div><div class="eyebrow">DOE GEMS · unique GeoTIFF generated 2026-10-26</div>
+<h1>One new file.<br>One automatic decision.</h1>
+<p class="lead">H24-CRP1 computed its own predictions from physical layers (compositional radiometric
+fronts, cross-depth magnetic persistence, curvature saddles) with selective nuisance
+residualization. <strong>No previous submission pixels were copied.</strong> Download it with one
+click; the independent selector receipt below states whether it may be submitted.</p>
+{status_box}
+<div class="actions"><a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download the unique CRP1 .tif <span>({size:.2f} MiB)</span></a>
+<a class="button" href="executive-summary.html#crp1">Executive summary &amp; gates →</a>
+<a class="button" href="downloads/{e(name[:-4])}.selector.json">Selector receipt (JSON)</a></div>
+<p class="fileline">{e(name)}</p><p class="hash">SHA-256 {e(digest)}</p>
+<p class="micro"><span class="badge blue">Single-band float32 · EPSG:32611 · values in [0,1]</span>
+<span class="badge {"blue" if ok_submit else "danger"}">{decision_label}</span> <span class="badge gray">0 slots used by this repository session</span></p></div>
+<aside class="card visual"><div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Not a leaderboard score</span></div>
+<div class="result-number">{h["dti"]:.5f}</div>
+<p>95% CI [{lo:.5f}, {hi:.5f}] · evaluator <code>{e(h["evaluator_version"])}</code> ·
+{h["n_withheld_positive_pixels"]:,} withheld positives · paired Δ vs reconstructed OOF baseline
+{paired["delta_dti"]:+.5f} (95% CI [{plo:+.5f}, {phi:+.5f}]) · recorded repo best {best:.5f} (GVC1).</p>
+<img class="raster-preview" src="assets/crp1-preview.png" alt="Downsampled map of CRP1 experimental fault dots, not verified faults or geothermal vents">
+<p class="micro">Experiment preview · downsampled 100 m grid · not verified faults or vents</p></aside></div>"""
+
+    exec_html = f"""<section id="crp1" class="card" aria-label="H24-CRP1 executive summary">
+<div class="eyebrow">Executive summary · unique file generated this session</div>
+<h2>H24-CRP1 — is this exact file OK to download and submit?</h2>
+{status_box}
+<div class="actions"><a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download {e(name)} ({size:.2f} MiB)</a>
+<a class="button" href="downloads/{e(dl["nan_file"])}" download>NaN-outside twin</a>
+<a class="button" href="data/crp1_run_card.json">Full JSON run card</a>
+<a class="button" href="downloads/checks-{e(name[:-4])}.json">Exact-file validator JSON</a></div>
+<p class="hash">SHA-256 {e(digest)}</p>
+<h3>Unique name and short comment (paste into the submission Note field if — and only if — the selector says OK)</h3>
+<div class="note" id="note-crp1">{e(dl["note"])}</div>
+<div class="actions" style="margin-top:10px"><button class="button" data-copy="#note-crp1" data-feedback="#fb-crp1">Copy note</button>
+<a class="button" href="downloads/{e(dl["note_file"])}" download>Note .txt</a></div>
+<p class="copyfeedback" id="fb-crp1" aria-live="polite"></p>
+<p class="micro">{len(dl["note"])} characters · maximum 140</p>
+<h3>Automatic gate report (independent selector, no human inspection)</h3>
+<div class="tablewrap"><table><thead><tr><th>Gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div>
+<ul>{reasons}</ul>
+<p>Measured evidence: leakage canary worst polarity extremity {canary["worst_polarity_extremity"]:.4f} (limit 0.90);
+surface max |ρ| {nov["surface_max_abs_rank_correlation"]:.4f} and final-dot max |ρ| {nov["final_max_abs_rank_correlation"]:.4f} (limit 0.90);
+max competing-method 3-px dot overlap {nov["final_max_method_overlap_within_3px"]:.4f} and peer overlap
+{nov["final_max_peer_overlap_within_3px"]:.4f} (limit 0.70); literal all-entry novelty
+{"passed" if nov["literal_all_entries_passed"] else "flagged only by calibration controls — see run card"};
+exact-file C2ST AUC {c2st["observed_auc"]:.4f} (strict gate {"PASS" if c2st["strict_gate_passed"] else "FAIL"});
+{dl["pixel_count"]:,} binary dots. Every competition score quoted on this site remains
+<strong>OWNER-REPORTED, UNVERIFIED</strong> unless an organizer receipt is published; CRP1 has
+<strong>no organizer score</strong>. Local validation cannot guarantee portal acceptance or a score
+above 0.2778.</p></section>"""
+
+    fold_rows = "".join(
+        f"<tr><td>{e(f['fold'])}</td><td>{f['dti']:.5f}</td><td>{int(f['n_truth']):,}</td><td>{int(f['n_emitted']):,}</td></tr>"
+        for f in h["folds"]
+    )
+    research_html = f"""<section><h2>H24-CRP1 (2026-10-26) — preregistered method and result</h2>
+<p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p>
+<p><strong>Mechanism:</strong> {e(card["mechanism"])}</p>
+<p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p>
+<div class="tablewrap"><table><thead><tr><th>Fold</th><th>HOLDOUT-DTI</th><th>Withheld positives</th><th>Emitted dots</th></tr></thead>
+<tbody>{fold_rows}</tbody></table></div>
+<p>Pooled HOLDOUT-DTI <strong>{h["dti"]:.5f}</strong> (95% CI [{lo:.5f}, {hi:.5f}]) on
+<code>{e(h["evaluator_version"])}</code>. Spec frozen before implementation in
+<code>knowledge/20_preregistered_CRP1_2026-10-26.md</code>; verdict
+<code>{e(card["verdict"])}</code> from the independent selector. Fault recovery is the benchmark
+target — this raster is not evidence of a geothermal vent, heat or permeability.</p></section>"""
+    return hero_html, exec_html, research_html

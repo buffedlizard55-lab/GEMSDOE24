@@ -38,6 +38,43 @@ No claimed guarantee of a score, winning, vent discovery, or full task completio
 
 ## Current review — 2026-10-26: DOWNLOAD YES / SUBMIT NO
 
+## Retained parallel result (PR #29) — 2026-10-26 H24-CRP1: DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
+
+[**Download the unique H24-CRP1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif) ·
+[NaN-outside twin](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif) ·
+[Independent selector receipt](evidence/crp1_selector_20261026.json) ·
+[JSON run card](evidence/crp1_run_card_20261026.json) ·
+[Preregistration (committed before the run)](knowledge/20_preregistered_CRP1_2026-10-26.md) ·
+[Findings: why H33-B2 leads, why CRP1 stops, nine-site summary](knowledge/21_CRP1_findings_2026-10-26.md) ·
+[Executive submission guide](docs/executive-summary.html#crp1).
+
+**NOT OK TO SUBMIT.** One preregistered experiment, 0 slots used, computed from
+physical layers only — zero prior submission pixels. Validated end-to-end
+**without any human inspector**: shared format validator + strict whole-array
+[0,1] **PASS**, 40/40 two-polarity leakage canaries **PASS** (worst extremity
+0.5991), exact-file C2ST nuisance audit **PASS** (AUC 0.5273). It reaches
+**HOLDOUT-DTI 0.13747** (95% CI [0.12400, 0.15152], `gems-segment-pooled-v1`,
+60,988 withheld positives; paired Δ vs reconstructed OOF baseline 0.13000 =
++0.00747, 95% CI [−0.00242, +0.01793]). The new independent selector
+(`gems.selector`, this session) returns **DO_NOT_SUBMIT** because (a) that
+holdout result does not beat the recorded best (GVC1 0.14876) with a paired
+CI above zero, and (b) 80.7% of its dots fall within 3 px of a prior method
+raster (> 70% duplicate rule; max |ρ| = 0.5878 ≤ 0.90). Independent detectors
+keep converging on the same range-front corridors; the lane stopped with no
+retuning. **No claim to beat 0.2778 / 0.3195 / 0.4413 — all OWNER-REPORTED,
+UNVERIFIED; zero organizer receipts exist.** Best submission to submit today,
+across all nine priority sites: **NONE** (see findings table).
+
+- Name: `gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif`
+- SHA-256: `f02859b3e881b942919deb267cad23673d6a6a1bc0148b2116ff1b706cba8978`
+- Short comment (92 chars): `GEMS24 CRP1 | comp-front+xdepth+saddle | NEGATIVE gate stop; DO NOT SUBMIT | id c679a967f700`
+- Reproduce/verify: `.venv/bin/python scripts/restore_data.py && .venv/bin/python scripts/cache_priority_registry.py && .venv/bin/python scripts/prepare_data.py && .venv/bin/python scripts/run_crp1_lane.py --verify-recorded`
+- Parallel PR #28 (same prompt, review-only, merged mid-session) is preserved
+  below and in `knowledge/20_repo_review_2026-10-26.md`; its conclusion
+  (no submit-authorized TIFF) still holds after CRP1.
+
+## Prior review — 2026-10-26 (PRs #27/#28): DOWNLOAD YES / SUBMIT NO
+
 **No new submit-ready TIFF was generated in this review.** No assigned method
 paragraph was supplied; stopped lanes were not rerun and no slot was used.
 The prior full owner prompt remains embedded below and must be read each session.
@@ -55,6 +92,16 @@ Maximize P(Win) and Own the Outcome mean preserving a failed gate, not renaming 
 The repeated brief's competition values remain **OWNER-REPORTED, UNVERIFIED**,
 not ORGANIZER-CONFIRMED. No claim is made to beat either cited leaderboard target.
 
+**Current featured research packet (not a submission):** H24-GVC1
+[`gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif`](docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif)
+— DOWNLOAD: YES · SUBMIT: NO. Recorded HOLDOUT-DTI **0.14876** (`gems-segment-pooled-v1`,
+60,988 withheld positives, 95% CI `[0.13413, 0.16370]`); registry surface rank-correlation
+max `0.54781`, but final-dot overlap `0.76823` exceeds the 0.70 limit. This is the highest
+recorded local holdout value among the current reviewed packets, not a leaderboard score.
+No new unique candidate was generated in this review: the prompt's assigned method paragraph
+is absent, and a new lane cannot be selected or promoted on our own. Do not submit this file.
+See [`evidence/gvc1_run_card_20261025.json`](evidence/gvc1_run_card_20261025.json) and
+[`evidence/2026-10-26_review_run_card.json`](evidence/2026-10-26_review_run_card.json).
 
 ## Historical retained experiment (2026-10-25): H24-RSHG1 — DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
 
@@ -120,6 +167,58 @@ The existing candidate remains **DOWNLOAD: YES · SUBMIT: NO**.
 See the [corrected GEMSDOE32 analysis](knowledge/14_h33_analysis_2026-10-25.md):
 prediction ancestry does not prove the hidden-score gain came entirely from FP
 reduction. No new candidate or competition slot was used in this review.
+
+## Owner brief (2026-10-26 session) — standing instructions, read every session
+
+This session's owner prompt (condensed faithfully; machine-readable score
+list in [`registry/owner_reported_scores_2026-10-26.json`](registry/owner_reported_scores_2026-10-26.json);
+full site-by-site list was supplied in-session):
+
+- Focus on the highest-scoring submissions from GEMSDOE24, 25, 27, 28, 30,
+  31, 32, 33, 36; give a per-site executive summary making obvious which
+  file is best to submit. It must be **unique, not an exact duplicate** of
+  any previous submission. **MUST GENERATE A UNIQUE TIF SUBMISSION** — do
+  not copy a previous submission except for learning/education. It must be
+  obvious whether the generated TIF is OK to download and OK to submit, the
+  download must be easy and first-screen, and any "inspection" must be done
+  through the project **without human intervention**.
+- Study why GEMSDOE32 `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`
+  (0.2778) scored highest and whether >0.2778 is achievable; leaderboard
+  claims in the brief: 0.4413 and 0.3195 (conflicting; both unverified).
+  Answer at PhD level, then generate the unique TIF; verify line by line,
+  no hallucinations, official verified sources with links.
+- Follow the Parallel-Run Protocol: stay in one lane (rank-corr ≤0.90 and
+  ≤70% dots within 3 px vs any registry raster, checked on surface and
+  final dots); reuse cached features + shared holdout evaluator + shared
+  submission writer; label every number HOLDOUT-DTI (evaluator, withheld
+  positives, 95% CI) or ORGANIZER-CONFIRMED (receipt only); leakage canary
+  AUC >0.90 = leakage; end with one JSON run card; max 3 experiments / 2 h;
+  promotion is a separate selector step within the weekly cap.
+- Before implementing: 3–5 untried geological hypotheses (layers, physical
+  signature, why a *missing* fault, difference from this repo), ranked by
+  expected DTI improvement vs cost; validate the top candidate on the
+  spatially blocked holdout before any weekly slot; name the free official
+  source for any external data and verify obtainability first.
+- Fix the portal error *"Predicted values must be in range [0, 1]"*; every
+  artifact needs a unique name + short comment; an executive-summary
+  subpage must explain exactly how to submit (single-band .tif or .zip
+  with one GeoTIFF, matching CRS/shape/geotransform, Note field).
+- Core values: **Maximize P(Win)**; **Own the Outcome**. Work previous
+  sessions' next steps first; three review passes; finish with a merged
+  pull request plus suggestions/limitations for the next session.
+- Competition: https://www.drivendata.org/competitions/306/competition-doe-gems/
+  (problem p.967, about p.968, data tab — login-required, never automated);
+  reference solution https://github.com/drivendataorg/gems-prize-reference-solution ;
+  rules https://docs.nlr.gov/docs/fy26osti/96647.pdf ;
+  GeoDAWN https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and (DOI 10.5066/P93LGLVQ);
+  INGENIOUS https://gdr.openei.org/submissions/1391 ;
+  EPSG:32611 https://epsg.io/32611 ; Tversky https://en.wikipedia.org/wiki/Tversky_index .
+
+Disposition this session: preregistered and ran **one** experiment
+(H24-CRP1, top-ranked hypothesis), generated the unique GeoTIFF at the top
+of this README/site, validated it fully automatically (new independent
+selector, no human inspector), verdict **negative** — so no slot may be
+spent on it. See `knowledge/21_CRP1_findings_2026-10-26.md`.
 
 ## Prompt (owner brief, 2026-10-25) — read at every session
 
@@ -296,6 +395,24 @@ Earlier packets below are historical, not current submission authority.
 Latest OJ1 research TIFF: [`gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif`](docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif). **DOWNLOAD YES / SUBMIT NO**. HOLDOUT-DTI 0.06362, 95% CI [0.05591, 0.07105], gems-segment-pooled-v1, 60,988 withheld positives. Stopped as duplicate, not a leaderboard result. No weekly slot has been spent. [OJ1 run card](evidence/oj1_run_card_20261025.json).
 
 **DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
+
+Latest unique 2026-10-26 `H24-CRP1` GeoTIFF:
+[`gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif`](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif)
+(`SHA-256: f02859b3e881b942919deb267cad23673d6a6a1bc0148b2116ff1b706cba8978`) and NaN-outside twin
+[`gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif`](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif).
+Independently computed (zero copied submission pixels) from compositional radiometric
+fronts, cross-depth TMI/up150 persistence and Hessian saddles with selective nuisance
+residualization. **HOLDOUT-DTI 0.13747** (95% CI [0.12400, 0.15152],
+`gems-segment-pooled-v1`, 60,988 withheld positives);
+paired Δ vs reconstructed OOF baseline +0.00747 (95% CI
+[-0.00242, +0.01793]); max competing-method 3-px dot overlap
+0.8070 (limit 0.70). Independent selector
+decision: **DO_NOT_SUBMIT** — see `evidence/crp1_selector_20261026.json`. No organizer
+score exists; HOLDOUT-DTI is not a leaderboard forecast. Short comment
+(92 chars): `GEMS24 CRP1 | comp-front+xdepth+saddle | NEGATIVE gate stop; DO NOT SUBMIT | id c679a967f700`
+[CRP1 run card](evidence/crp1_run_card_20261026.json) ·
+[Preregistration](knowledge/20_preregistered_CRP1_2026-10-26.md) ·
+[Executive guide](docs/executive-summary.html#crp1)
 
 Latest 2026-10-25 `H24-FUSE-HCW` Residualized Conduit OOF-HGB GeoTIFF (executes documented Next Step #4):
 [`gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif`](docs/downloads/gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif) (`SHA-256: cfb5d21f9f0308a4c5cc917641c1cfd4d8f73d60fa4f64cf12ba9548ae23afb3`)

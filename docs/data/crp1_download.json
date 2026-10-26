@@ -1,0 +1,17 @@
+{
+  "file": "gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif",
+  "nan_file": "gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif",
+  "note": "GEMS24 CRP1 | comp-front+xdepth+saddle | NEGATIVE gate stop; DO NOT SUBMIT | id c679a967f700",
+  "note_file": "note-gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.txt",
+  "sha256": "f02859b3e881b942919deb267cad23673d6a6a1bc0148b2116ff1b706cba8978",
+  "nan_sha256": "1dfe9f98cd05e7c2c191ec95bf71a3814e2e1b69d635e605210cfcc74def8e30",
+  "pixel_count": 37722,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "selector_decision": "DO_NOT_SUBMIT",
+  "holdout_dti": 0.13747112113439836,
+  "holdout_ci95": [
+    0.12400402422224979,
+    0.15151675390021224
+  ]
+}
