@@ -74,12 +74,21 @@ def test_pages_state_the_unscored_status_and_never_invent_a_score(built):
 
 
 def test_contradictory_hunique_packet_is_quarantined_without_tiff_link(built):
-    row = json.loads((built / "docs/data/unique_download.json").read_text())
+    from bs4 import BeautifulSoup
+
+    row = json.loads((built / "docs/data/unique_gapfill_quarantined_download.json").read_text())
     for page in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         html = (built / page).read_text()
         assert "H-UNIQUE-03 quarantined" in html
         assert "NOT OK TO SUBMIT" in html
+        # PR #56 retains a different, historical H-UNIQUE raster in the
+        # collapsed portfolio. The artifact quarantined for oracle leakage
+        # must not be recommended or linked anywhere in the built pages.
         assert row["file"] not in html
+        soup = BeautifulSoup(html, "html.parser")
+        quarantine = soup.find("aside", attrs={"aria-label": "Quarantined H-UNIQUE-03 evidence"})
+        assert quarantine is not None
+        assert not quarantine.find("a", href=lambda href: href and row["file"] in href)
 
 
 def test_guide_has_the_portal_steps_note_and_the_range_error_advice(built):

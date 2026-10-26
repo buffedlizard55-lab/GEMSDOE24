@@ -1,0 +1,61 @@
+{
+  "lane_id": "H24-XVAR1",
+  "file": "gems24-xvar1-duplicate-semivariogram-20261026-7d909c75458c-zeros.tif",
+  "sha256": "9c7d4ff1d49e322134e6b06e4ec304b98ea03d31420ac58c3803d9f2f57ba4b1",
+  "nan_file": "gems24-xvar1-duplicate-semivariogram-20261026-7d909c75458c-nan.tif",
+  "nan_sha256": "9d6f330256fe2ae7c2d6615fcfa9a61312136d7dda3d08aeebb57b854f0cf974",
+  "zip_file": "gems24-xvar1-duplicate-semivariogram-20261026-7d909c75458c-zeros.zip",
+  "zip_sha256": "9245a3a651df0bc044b36f61188facaf4625041ea925486b3794902ffed730b2",
+  "checks_file": "checks-gems24-xvar1-duplicate-semivariogram-20261026-7d909c75458c-zeros.json",
+  "preflight_file": "gems24-xvar1-duplicate-semivariogram-20261026-7d909c75458c-zeros.preflight.json",
+  "selector_file": "gems24-xvar1-duplicate-semivariogram-20261026-7d909c75458c-zeros.selector.json",
+  "note_file": "note-gems24-xvar1-duplicate-semivariogram-20261026-7d909c75458c-zeros.txt",
+  "note": "GEMS24 XVAR1 | 2-sided semivariogram OOF | id 7d909c75458c | HOLDOUT-DTI 0.1463 | research; DO NOT SUBMIT",
+  "pixel_count": 37654,
+  "holdout_dti": 0.14626723268965536,
+  "holdout_ci95": [
+    0.13345169549932293,
+    0.15996653519068924
+  ],
+  "arm2_single_regime_dti": 0.14679649909236672,
+  "arm3_b_sub37_no_xvar1_dti": 0.1453295155134225,
+  "dprf1_replay_dti": 0.1641642380378205,
+  "oof_multiphysics_hgb_d3_dti": 0.129996798011798,
+  "recorded_dprf1_dti": 0.1637924246971501,
+  "beats_recorded_dprf1_point": false,
+  "paired_delta_vs_b_sub37": 0.0009377171762328662,
+  "paired_delta_ci95_vs_b_sub37": [
+    -0.0026019340637512393,
+    0.00444679681553449
+  ],
+  "paired_delta_vs_dprf1_replay": -0.01789700534816513,
+  "paired_delta_ci95_vs_dprf1_replay": [
+    -0.02630280296896418,
+    -0.009550290191765847
+  ],
+  "paired_delta_vs_oof_d3": 0.016270434677857354,
+  "paired_delta_ci95_vs_oof_d3": [
+    0.0008002383922319681,
+    0.032053726262977825
+  ],
+  "c2st_auc": 0.5436547145898794,
+  "c2st_holm_p": 0.04,
+  "competing_method_novelty_passed": false,
+  "competing_method_max_3px_overlap": 0.7536251128698146,
+  "dot_overlap_within_3px_vs_dprf1": 0.6563711690657035,
+  "dot_overlap_within_3px_vs_dkrn1": 0.7536251128698146,
+  "dot_overlap_within_3px_vs_b2": 0.44300738301375686,
+  "peer_blobs_novelty_passed": true,
+  "peer_blobs_max_3px_overlap": 0.5391724650767514,
+  "nine_site_20261026_refresh_passed": true,
+  "nine_site_20261026_refresh_max_3px_overlap": 0.5241408615286557,
+  "apron_2_to_9px_fraction": 0.2182503850852499,
+  "farfield_gt20px_fraction": 0.5277792532001913,
+  "scientific_screen_all_passed": false,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "submission_authorized": false,
+  "verdict": "negative",
+  "selector_decision": "DO_NOT_SUBMIT",
+  "competing_method_rasters_checked": 69
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "three-pass-repository-review-v1",
-  "generated_utc": "2026-10-26T22:11:30Z",
+  "generated_utc": "2026-10-26T22:28:09.491526+00:00",
   "branch": "arena/e452969c-gemsdoe24",
   "review_scope": "GEMSDOE24 repository improvement with focus-site provenance for GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, and 36",
   "project_values": [
@@ -11,7 +11,8 @@
     "new_experiments": 0,
     "submission_slots_used": 0,
     "new_tif_generated_in_this_review": false,
-    "reason": "No single assigned-method paragraph was supplied. The review did not infer a lane, rerun a stopped method, or use a submission slot."
+    "reason": "No single assigned-method paragraph was supplied. The review did not infer a lane, rerun a stopped method, or use a submission slot.",
+    "upstream_integration": "Synchronized origin/main at a97aefe1287bed996e4d6dcdbf379de99e7ddd5c, including the previously executed negative H24-XVAR1 lane; this review did not execute or retune XVAR1."
   },
   "current_recorded_local_point_best": {
     "lane": "H24-S3DEP1",
@@ -26,8 +27,8 @@
     ],
     "evaluator_version": "gems-segment-pooled-v1",
     "withheld_positive_count": 60988,
-    "download": "YES — exact format-valid research bytes",
-    "submit": "NO — DO_NOT_SUBMIT",
+    "download": "YES \u2014 exact format-valid research bytes",
+    "submit": "NO \u2014 DO_NOT_SUBMIT",
     "selector": "gems-selector-v2-literal-quota-fail-closed",
     "blocking_evidence": {
       "competing_method_max_3px_overlap": 0.7131778828278537,
@@ -57,7 +58,8 @@
   "source_provenance": {
     "current_github_source_snapshot": "evidence/focus_source_refresh_20261026.json",
     "frozen_326_file_artifact_audit": "evidence/portfolio_artifact_audit_20261026.json",
-    "scope_limit": "GitHub source freshness is not a new raster audit, organizer receipt, leaderboard lookup, or score verification."
+    "scope_limit": "GitHub source freshness is not a new raster audit, organizer receipt, leaderboard lookup, or score verification.",
+    "current_github_source_checked_utc": "2026-10-26T22:25:26.511846+00:00"
   },
   "passes": [
     {
@@ -87,13 +89,14 @@
       "name": "requirements_recheck_and_quality_gate",
       "result": "PASS",
       "verification": {
-        "pytest": "458 passed",
+        "pytest": "462 passed after integrating origin/main and rebuilding the site",
         "ruff_check": "passed",
-        "ruff_format_check": "275 files already formatted",
+        "ruff_format_check": "280 files already formatted",
         "s3dep1_recorded_receipt": "verified; selector DO_NOT_SUBMIT",
         "s3dep1_preflight": "FORMAT true; STRICT_RANGE true; SCIENTIFIC_AUTHORIZATION false; SUBMISSION DO_NOT_SUBMIT",
         "portfolio_source_feed_offline_validation": "passed",
-        "json_receipts": "parsed and active lane resolved to H24-S3DEP1"
+        "json_receipts": "parsed and active lane resolved to H24-S3DEP1",
+        "origin_main_integration": "a97aefe1287bed996e4d6dcdbf379de99e7ddd5c merged; H24-XVAR1 retained as a prior negative lane and S3DEP1 remains the recorded local point-best"
       }
     }
   ],
