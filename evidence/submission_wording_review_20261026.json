@@ -1,9 +1,8 @@
 {
-  "audit_version": "nine-site-decision-continuation-v1",
-  "scope": "Read-only exact-file review and executive decision table; no new scientific experiment or TIFF",
-  "hypothesis": "Recorded DPRF1 hydrothermal/structural fusion; not newly tested in this continuation",
-  "mechanism": "Recorded stitched out-of-fold multiphysics fusion with visible-catalogue apron debiasing and two-regime allocation; hidden-score causal benefit unproven",
-  "non_fault_mimic": "Coincidence of a Tertiary welded ash-flow tuff cooling-joint hogback or diabase dike swarm with lateral hot-spring travertine apron outflow or arkosic K-feldspar alluvial fan detritus, plus Pleistocene Lake Lahontan shorezone tufa benches.",
+  "scope": "Read-only continuation; existing raster, recorded science; no new experiment or independent scientific replay",
+  "hypothesis": "52-channel Dual-Partition Stitched-OOF hydrothermal-structural fusion (30 scale-separated base + 18 OpenEI GDR INGENIOUS paleo-sinter/2m-probe/geothermometry/Miller-Singh tilt/8-azimuth lineaments + 4 modality-aware SAHG1 conduit channels) with selective 9-channel non-topographic nuisance residualization, relief-conditioned LiDAR-gap log-odds calibration, 8-azimuth ridge sharpening, visible-catalogue apron quantile debiasing, and Two-Regime 300 m submodular allocation (68% primary ridge + 32% low-relief intrabasin/step-over hydrothermal-subsurface conduit).",
+  "mechanism": "Recorded dual-partition stitched-OOF structural/hydrothermal fusion with visible-catalogue apron debiasing and two-regime 300 m allocation. Hidden-score causal benefit is unproven.",
+  "named_non_fault_mimic": "Coincidence of a Tertiary welded ash-flow tuff cooling-joint hogback or diabase dike swarm with lateral hot-spring travertine apron outflow or arkosic K-feldspar alluvial fan detritus, plus Pleistocene Lake Lahontan shorezone tufa benches.",
   "holdout": {
     "label": "HOLDOUT-DTI",
     "evaluator_version": "gems-segment-pooled-v1",
@@ -253,27 +252,14 @@
   "submission_name": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
   "note": "GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; DO NOT SUBMIT",
   "verdict": "negative",
-  "ok_to_download": true,
   "ok_to_submit": false,
-  "experiments_run": 0,
-  "new_tiffs_generated": 0,
+  "new_experiments": 0,
   "submission_slots_used": 0,
-  "organizer_confirmed_score": null,
-  "leaderboard_estimate": null,
-  "blockers": [
-    "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.1637924246971501 vs recorded best 0.1637924246971501, paired CI lower=0.020856953903675257",
-    "g4_registry_novelty: surface|rho|=0.40996331425920324, final|rho|=0.3467641405225967, method overlap=0.557815902692941, peer overlap=0.5494237000053115",
-    "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
-    "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
-  ],
-  "verification": {
-    "pytest": "383 passed",
-    "ruff_check": "passed",
-    "ruff_format": "222 files already formatted",
-    "compileall": "passed",
-    "git_diff_check": "passed",
-    "browser": "not run"
-  },
-  "official_reference_commit": "aebe92f7c8a990f0e3443451b7a825d9afd6336b",
-  "decision_packet": "docs/data/nine_site_download_decisions.json"
+  "limitations": [
+    "Missing single-method lane assignment",
+    "Literal registry novelty fails",
+    "Raw feature caches absent",
+    "No independent positive replay or verified quota",
+    "No organizer-confirmed score or calibrated leaderboard estimate"
+  ]
 }

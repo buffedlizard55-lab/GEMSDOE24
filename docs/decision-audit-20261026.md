@@ -108,4 +108,6 @@ The existing CPU pipeline disproves the inherited blanket claim that a GPU is
 required for every training path. Neither high leaderboard performance nor geothermal
 vent discovery is established by these cached proxy tests.
 
-[Final JSON run card](data/decision_audit_run_card_20261026.json): 383 tests passed; Ruff lint/format, compileall and diff checks passed.
+[Final JSON run card](data/decision_audit_run_card_20261026.json): 384 tests passed after integrating concurrent PR #38; Ruff lint/format, compileall and diff checks passed.
+
+Concurrent PR #38 wording corrections were preserved. A verification-only card was renamed outside the experimental `*run_card*.json` inventory after rechecking that it must not appear as a new scientific point-best. The final build resolves DPRF1 again; full tests passed after the correction.

@@ -267,9 +267,9 @@
     "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
   ],
   "verification": {
-    "pytest": "383 passed",
+    "pytest": "384 passed after integrating concurrent PR 38",
     "ruff_check": "passed",
-    "ruff_format": "222 files already formatted",
+    "ruff_format": "223 files already formatted",
     "compileall": "passed",
     "git_diff_check": "passed",
     "browser": "not run"
