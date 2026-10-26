@@ -8,6 +8,8 @@ coordinate a distinct lane, retain literal overlap stops and independent selecto
 
 # Standing project instructions
 
+Read `docs/metric-integrity-20261026.md` and `evidence/metric_integrity_review_20261026.json` at session start. The VENT narrative is quarantined; never reuse its metric equations, geological generalizations or projected improvements as verified evidence. No new method lane or submission-ready TIFF was established in that integrity continuation.
+
 ## Latest continuation safety review — 2026-10-26
 
 Read `docs/review-20261026.md` and `evidence/review_continuation_20261026.json` first.

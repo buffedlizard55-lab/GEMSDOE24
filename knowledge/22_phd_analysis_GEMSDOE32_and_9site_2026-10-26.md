@@ -1,3 +1,11 @@
+> **QUARANTINED HISTORICAL NARRATIVE — NOT VERIFIED SCIENTIFIC EVIDENCE.**
+> The associated VENT runner used fabricated fallback C2ST/novelty measurements.
+> This document also contains inconsistent metric equations, unsupported geological
+> generalizations, numerical projections and stale data-readiness claims. Its body
+> is preserved for audit, not endorsed. Do not execute its hypotheses as lane assignments
+> or use it to select a submission. The corrected metric explanation is
+> [here](../docs/metric-integrity-20261026.md); frozen receipts remain unchanged.
+
 # PhD-Level Analysis: Why GEMSDOE32 `h33-h33-2-b2` (0.2778) Leads the Nine Focus Sites & How to Beat It — 2026-10-26
 
 - **Date (UTC):** 2026-10-26
