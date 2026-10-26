@@ -1,5 +1,7 @@
 # Nine-site artifact audit — 2026-10-26
 
+> **Repository review follow-up (Arena branch `arena/961b11b3-gemsdoe24`, 2026-10-26):** [full repo review and nine-site executive comparison](repo-review-20261026-arena-961b11b3.md) · [machine-readable negative run card](data/repo_review_run_card_20261026_961b11b3.json). This follow-up restored and hash-checked the owner-supplied feature mirror, prepared the local CPU feature cache, and passed 447 tests after fetching the full commit history. **No lane was assigned, no experiment/TIFF/slot was used, and no file is authorized to submit.**
+
 **DOWNLOAD existing research: YES. SUBMIT: NO. New TIFFs: 0. New experiments: 0. Slots used: 0.**
 
 The requested new, higher-performing, genuinely unique submission **was not
