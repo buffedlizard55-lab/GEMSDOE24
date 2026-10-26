@@ -1219,25 +1219,94 @@ def concurrent_con(root):
 
 
 def concurrent_unique(root):
-    """Validate and retain PR #19's H-UNIQUE-03 fault-guided K modulation packet."""
+    """Retain H-UNIQUE-03 only as quarantined evidence when its gates conflict.
+
+    Historical source files are immutable. A contradictory promotion claim must
+    not break the whole site build or produce a download link that looks approved.
+    """
     dl_path = root / "docs/data/unique_download.json"
     card_path = root / "docs/data/unique_run_card.json"
     if not (dl_path.exists() and card_path.exists()):
         return ""
     dl = json.loads(dl_path.read_text())
     card = json.loads(card_path.read_text())
-    name = dl["file"]
-    digest = dl["sha256"]
-    target = root / "docs/downloads" / name
+    name = dl.get("file", "")
+    digest = dl.get("sha256")
+    safe_tif_name = isinstance(name, str) and Path(name).name == name and name.endswith(".tif")
+    target = root / "docs/downloads" / name if safe_tif_name else None
+    validator_payload = card.get("validator_output")
+    validator = validator_payload if isinstance(validator_payload, dict) else {}
+    preflight_name = dl.get("preflight_file", "")
+    preflight_path = (
+        root / "docs/downloads" / preflight_name
+        if isinstance(preflight_name, str) and Path(preflight_name).name == preflight_name
+        else None
+    )
+    reasons = []
+    if target is None or not target.is_file() or sha256_file(target) != digest:
+        reasons.append("exact-file hash is missing or disagrees")
+    if card.get("submission_name") != name or card.get("raster_sha256") != digest:
+        reasons.append("run-card artifact identity disagrees")
+    if dl.get("ok_to_submit") is not False or card.get("ok_to_submit") is not False:
+        reasons.append("download metadata or run card claims submission approval")
+    if dl.get("verdict") != "negative" or card.get("verdict") != "negative":
+        reasons.append("download metadata or run card is not negative")
     if (
-        not target.exists()
-        or sha256_file(target) != digest
-        or card.get("raster_sha256") != digest
-        or dl.get("ok_to_submit") is not False
-        or card.get("verdict") != "negative"
-        or len(dl["note"]) > 140
+        validator.get("ok_to_upload") is not False
+        or validator.get("submission_authorized") is not False
     ):
-        raise ValueError("Concurrent H-UNIQUE-03 run-card or checksum disagrees")
+        reasons.append("format validator does not explicitly deny authorization")
+    if not isinstance(dl.get("note"), str) or not 0 < len(dl["note"]) <= 140:
+        reasons.append("submission note is missing or exceeds 140 characters")
+    if dl.get("note") != card.get("note"):
+        reasons.append("run-card note disagrees")
+    selector_name = dl.get("selector_file", "")
+    if not isinstance(selector_name, str) or Path(selector_name).name != selector_name:
+        reasons.append("independent selector receipt is missing")
+    else:
+        selector_path = root / "docs/downloads" / selector_name
+        if not selector_path.is_file():
+            reasons.append("independent selector receipt is missing")
+        else:
+            try:
+                selector = json.loads(selector_path.read_text())
+            except (OSError, json.JSONDecodeError):
+                selector = None
+            if not isinstance(selector, dict) or (
+                selector.get("decision") != "DO_NOT_SUBMIT"
+                or selector.get("ok_to_submit") is not False
+                or selector.get("artifact_sha256") != digest
+            ):
+                reasons.append("selector does not bind this file to a negative decision")
+    if preflight_path is None or not preflight_path.is_file():
+        reasons.append("hash-bound preflight receipt is missing")
+    else:
+        try:
+            preflight = json.loads(preflight_path.read_text())
+        except (OSError, json.JSONDecodeError):
+            preflight = None
+        decision = preflight.get("decision") if isinstance(preflight, dict) else None
+        artifact = preflight.get("artifact") if isinstance(preflight, dict) else None
+        if (
+            not isinstance(decision, dict)
+            or decision.get("submission_status") != "DO_NOT_SUBMIT"
+            or decision.get("ready_to_submit") is not False
+            or not isinstance(artifact, dict)
+            or artifact.get("sha256") != digest
+        ):
+            reasons.append("preflight does not bind this file to a negative decision")
+    if reasons:
+        details = "; ".join(escape(reason) for reason in reasons)
+        return (
+            '<aside class="card stopped" role="alert" '
+            'aria-label="Quarantined H-UNIQUE-03 evidence">'
+            "<h3>H-UNIQUE-03 quarantined — NOT OK TO SUBMIT</h3>"
+            "<p>The historical packet contains contradictory promotion metadata. "
+            f"Automated integrity checks: {details}. "
+            "Its prediction TIFF is intentionally not offered as a recommended download. "
+            "Keep the frozen files for audit only; do not treat any HOLDOUT-DTI field or "
+            "filename as a leaderboard estimate or approval.</p></aside>"
+        )
     e = lambda s: escape(str(s), quote=True)  # noqa: E731
     lo, hi = dl["holdout_ci95"]
     return f"""<aside class="card concurrent" aria-label="Preserved H-UNIQUE-03 experiment">

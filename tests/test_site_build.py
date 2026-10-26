@@ -73,6 +73,15 @@ def test_pages_state_the_unscored_status_and_never_invent_a_score(built):
     assert "not a leaderboard result" in status and "No weekly slot has been spent" in status
 
 
+def test_contradictory_hunique_packet_is_quarantined_without_tiff_link(built):
+    row = json.loads((built / "docs/data/unique_download.json").read_text())
+    for page in ("index.html", "docs/index.html", "docs/executive-summary.html"):
+        html = (built / page).read_text()
+        assert "H-UNIQUE-03 quarantined" in html
+        assert "NOT OK TO SUBMIT" in html
+        assert row["file"] not in html
+
+
 def test_guide_has_the_portal_steps_note_and_the_range_error_advice(built):
     html = (built / "docs/executive-summary.html").read_text()
     for needle in (
