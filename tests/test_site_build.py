@@ -322,3 +322,12 @@ def test_site_rejects_trsg1_checksum_tampering_and_permissive_preflight(built):
         assert result.returncode != 0 and "TRSG1 exact-file preflight" in result.stderr
     finally:
         pf_path.write_text(original_pf)
+
+
+def test_euler_packet_does_not_override_literal_uniqueness_veto(built):
+    """A negative incremental lane cannot market its parent as submission-ready."""
+    for page in ("docs/index.html", "docs/executive-summary.html", "README.md"):
+        text = (built / page).read_text()
+        assert "single best unscored unique candidate" not in text
+        assert "only file the local evidence supports submitting" not in text
+        assert "not a literal-gate-unique or submit-ready candidate" in text
