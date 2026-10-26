@@ -329,28 +329,34 @@ def build_independent_site(primary):
     tnr1 = render_tnr1(ROOT)
     if tnr1:
         overview = (
-            tnr1["overview"]
-            + dprf1_hero
+            dprf1_hero
             + eul1_hero
             + trsg1_hero
+            + '<details id="historical-tnr1"><summary>Historical H24-TNR1 negative result — DO NOT SUBMIT</summary>'
+            + tnr1["overview"]
+            + "</details>"
             + '<details id="historical-packets"><summary>Earlier research downloads — all DO NOT SUBMIT</summary>'
             + overview
             + "</details>"
         )
         executive = (
-            tnr1["executive"]
-            + dprf1_exec
+            dprf1_exec
             + eul1_exec
             + trsg1_exec
+            + '<details id="historical-tnr1-executive"><summary>Historical H24-TNR1 negative packet — DO NOT SUBMIT</summary>'
+            + tnr1["executive"]
+            + "</details>"
             + '<details id="historical-executive"><summary>Historical submission packets and nine-site comparison</summary>'
             + executive
             + "</details>"
         )
         research = (
-            tnr1["research"]
-            + dprf1_research
+            dprf1_research
             + eul1_research
             + trsg1_research
+            + '<details id="historical-tnr1-research"><summary>Historical H24-TNR1 research and negative evidence</summary>'
+            + tnr1["research"]
+            + "</details>"
             + '<details id="historical-research"><summary>Prior experiments, frozen evidence and historical proposals</summary>'
             + research
             + "</details>"
@@ -759,14 +765,16 @@ Earlier scores/forecasts below are historical, not current promotion authority.
         oh = oj["holdout"]
         olo, ohi = oh["ci95"]["interval"]
         md = (
-            f"Latest OJ1 research TIFF: [`{oj['submission_name']}`](docs/downloads/{oj['submission_name']}). "
-            f"**DOWNLOAD YES / SUBMIT NO**. HOLDOUT-DTI {oh['dti']:.5f}, 95% CI [{olo:.5f}, {ohi:.5f}], "
-            f"{oh['evaluator_version']}, {oh['n_withheld_positive_pixels']:,} withheld positives. "
-            "Stopped as duplicate, not a leaderboard result. No weekly slot has been spent. "
-            "[OJ1 run card](evidence/oj1_run_card_20261025.json).\n\n" + md
+            md
+            + "\n\n"
+            + f"Historical OJ1 research TIFF: [`{oj['submission_name']}`](docs/downloads/{oj['submission_name']}). "
+            + f"**DOWNLOAD YES / SUBMIT NO**. HOLDOUT-DTI {oh['dti']:.5f}, 95% CI [{olo:.5f}, {ohi:.5f}], "
+            + f"{oh['evaluator_version']}, {oh['n_withheld_positive_pixels']:,} withheld positives. "
+            + "Stopped as duplicate, not a leaderboard result. No weekly slot has been spent. "
+            + "[OJ1 run card](evidence/oj1_run_card_20261025.json)."
         )
     if tnr1:
-        md = tnr1["status_md"] + md
+        md = md + "\n\n" + tnr1["status_md"]
     readme = ROOT / "README.md"
     readme.write_text(
         re.sub(
@@ -778,7 +786,7 @@ Earlier scores/forecasts below are historical, not current promotion authority.
     )
     receipt = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "primary_sha256": tnr1["active"]["artifact"]["sha256"] if tnr1 else primary["sha256"],
+        "primary_sha256": current["raster_sha256"],
         "pages": [str((DOCS / p).relative_to(ROOT)) for p in pages],
         "root": "index.html",
         "slot_recommendation": "not_recommended",

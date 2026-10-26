@@ -2,7 +2,7 @@
 
 ## Current continuation review — 2026-10-26
 
-Concurrent PR #35 review and exact-file utility are also preserved: [review](knowledge/22_current_best_review_2026-10-26.md), [receipt](docs/data/current_best_review.json), `python scripts/review_current_best.py`.
+Concurrent PR #35 review and exact-file utility are also preserved: [review](knowledge/22_current_best_review_2026-10-26.md), [receipt](docs/data/current_best_review.json), `python scripts/review_current_best.py`. Follow-up site-order audit and test receipt: [review](docs/review-20261026.md) · [JSON](evidence/site_review_followup_20261026.json).
 
 **No new experiment or TIFF in this review. DOWNLOAD existing research: YES / SUBMIT: NO.**
 Read the [review and next-step queue](docs/review-20261026.md), [owner brief](knowledge/owner_brief_2026-10-26.md), and [prompt delta](knowledge/owner_brief_2026-10-26_delta.md) at every session start. The full inherited prompt remains embedded below.
@@ -506,12 +506,6 @@ Irregularities for review (the H33 analysis still cites `registry/live_scores.js
 ## Current decision
 
 <!-- STATUS:START -->
-Latest **H24-TNR1**: [`gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif`](docs/downloads/gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif). **DOWNLOAD YES / SUBMIT NO — NOT OK TO SUBMIT**. HOLDOUT-DTI **0.13219**, 95% CI **[0.11791, 0.14546]**, `gems-segment-pooled-v1`, **60,988 withheld positives**. Matched raw control **HOLDOUT-DTI 0.13223** (95% CI [0.11639, 0.14880]); paired delta -0.00004 (95% CI [-0.01020, +0.01021]). Execution-time GVC1 comparator **HOLDOUT-DTI 0.14876** (95% CI [0.13413, 0.16370], same evaluator/positives; not retrained). Later recorded DPRF1 point-best **HOLDOUT-DTI 0.16379** (95% CI [0.15045, 0.17739], same evaluator/positives) also is not a certified paired win. Exact file [0,1]/grid and 79 leakage-canary checks pass; C2ST diagnostic AUC 0.5267, Holm p 0.240, not flagged. Final competing-method 3-px overlap **74.89%** exceeds 70%; retained lattice overlap **100%**. Stopped as duplicate; no retuning. New bytes, not gate-passing scientific uniqueness, and not a leaderboard result. No weekly slot has been spent. [JSON run card](evidence/tnr1_run_card_20261026.json) · [Executive guide](docs/executive-summary.html) · [Current owner brief](knowledge/owner_brief_2026-10-26.md).
-
-Earlier packets below are historical, not current submission authority.
-
-Latest OJ1 research TIFF: [`gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif`](docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif). **DOWNLOAD YES / SUBMIT NO**. HOLDOUT-DTI 0.06362, 95% CI [0.05591, 0.07105], gems-segment-pooled-v1, 60,988 withheld positives. Stopped as duplicate, not a leaderboard result. No weekly slot has been spent. [OJ1 run card](evidence/oj1_run_card_20261025.json).
-
 **DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
 
 Latest 2026-10-26 Point-Best `H24-DPRF1` 52-Channel Dual-Partition Stitched-OOF + Two-Regime Submodular GeoTIFF (**10/10 Competing-Method Technical Gates PASS · Selector v2: `DO_NOT_SUBMIT`**):
@@ -626,6 +620,14 @@ Parallel ASPC research from PR #10 is retained with its own negative verdict and
 point scores are not a certified current-best comparison.
 
 Earlier scores/forecasts below are historical, not current promotion authority.
+
+
+Historical OJ1 research TIFF: [`gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif`](docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif). **DOWNLOAD YES / SUBMIT NO**. HOLDOUT-DTI 0.06362, 95% CI [0.05591, 0.07105], gems-segment-pooled-v1, 60,988 withheld positives. Stopped as duplicate, not a leaderboard result. No weekly slot has been spent. [OJ1 run card](evidence/oj1_run_card_20261025.json).
+
+Historical **H24-TNR1** result: [`gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif`](docs/downloads/gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif). **DOWNLOAD YES / SUBMIT NO — NOT OK TO SUBMIT**. HOLDOUT-DTI **0.13219**, 95% CI **[0.11791, 0.14546]**, `gems-segment-pooled-v1`, **60,988 withheld positives**. Matched raw control **HOLDOUT-DTI 0.13223** (95% CI [0.11639, 0.14880]); paired delta -0.00004 (95% CI [-0.01020, +0.01021]). Execution-time GVC1 comparator **HOLDOUT-DTI 0.14876** (95% CI [0.13413, 0.16370], same evaluator/positives; not retrained). Later recorded DPRF1 point-best **HOLDOUT-DTI 0.16379** (95% CI [0.15045, 0.17739], same evaluator/positives) also is not a certified paired win. Exact file [0,1]/grid and 79 leakage-canary checks pass; C2ST diagnostic AUC 0.5267, Holm p 0.240, not flagged. Final competing-method 3-px overlap **74.89%** exceeds 70%; retained lattice overlap **100%**. Stopped as duplicate; no retuning. New bytes, not gate-passing scientific uniqueness, and not a leaderboard result. No weekly slot has been spent. [JSON run card](evidence/tnr1_run_card_20261026.json) · [Executive guide](docs/executive-summary.html) · [Current owner brief](knowledge/owner_brief_2026-10-26.md).
+
+Earlier packets below are historical, not current submission authority.
+
 <!-- STATUS:END -->
 
 ## Current protocol — 2026-10-25 (supersedes historical promotion advice)
