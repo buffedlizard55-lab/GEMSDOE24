@@ -1,0 +1,68 @@
+{
+  "checked_utc": "2026-10-26T16:29:19.706100+00:00",
+  "official_repo": "drivendataorg/gems-prize-reference-solution",
+  "ref": "aebe92f7c8a990f0e3443451b7a825d9afd6336b",
+  "source_files": [
+    {
+      "file": "README.md",
+      "sha256": "cfa4d55559c9128313beb9417eae7e0a94c31677132afb1120f9e86222804239"
+    },
+    {
+      "file": "unet-mc-cv-reference-solution.ipynb",
+      "sha256": "1a7622732ba00f67237058bc0efe79b45ba4e87c449fc9c1e5d6ea659de92ca0"
+    }
+  ],
+  "claims": [
+    {
+      "id": "OFFICIAL-TARGET",
+      "claim": "The official reference models geological fault detection, not direct vent classification.",
+      "source_url": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/unet-mc-cv-reference-solution.ipynb",
+      "locator": "cell 0",
+      "quote": "This benchmark notebook implements a deep learning approach to geological fault detection.",
+      "verification_status": "Exact quote freshly retrieved and checked at immutable official GitHub ref"
+    },
+    {
+      "id": "OFFICIAL-LOSS",
+      "claim": "The reference uses alpha 0.2 and beta 0.8 for Tversky training loss; this does not independently verify this repository's distance-weighted evaluation implementation.",
+      "source_url": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/unet-mc-cv-reference-solution.ipynb",
+      "locator": "cell 16",
+      "quote": "alpha = 0.2  # weight for false positives in Tversky loss\nbeta = 0.8  # weight for false negatives in Tversky loss",
+      "verification_status": "Exact quote freshly retrieved and checked at immutable official GitHub ref"
+    },
+    {
+      "id": "OFFICIAL-WRITER",
+      "claim": "The reference writes a single band using the labels' CRS and transform; the shown writer does not set nodata.",
+      "source_url": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/unet-mc-cv-reference-solution.ipynb",
+      "locator": "cell 19",
+      "quote": "count=1,\n    dtype=y_final.dtype,\n    crs=fault_dataset.crs,\n    transform=fault_dataset.transform,",
+      "verification_status": "Exact quote freshly retrieved and checked at immutable official GitHub ref"
+    },
+    {
+      "id": "OFFICIAL-CPU",
+      "claim": "A GPU accelerates the reference, but CPU training is explicitly supported.",
+      "source_url": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/README.md#choosing-gpu-vs-cpu",
+      "locator": "Choosing GPU vs. CPU",
+      "quote": "- **No GPU:** Use the `cpu` option (uv) or `environment-cpu.yml` (conda) for the\n  smallest install.",
+      "verification_status": "Exact quote freshly retrieved and checked at immutable official GitHub ref"
+    }
+  ],
+  "not_accessed": [
+    {
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+      "reason": "No automatic portal access under project policy; host outside sandbox allowlist; no live leaderboard or account quota verified"
+    },
+    {
+      "url": "https://docs.nlr.gov/docs/fy26osti/96647.pdf",
+      "reason": "Host outside sandbox allowlist; no current rules verification"
+    },
+    {
+      "url": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+      "reason": "Host outside sandbox allowlist; local official-derived metadata only"
+    },
+    {
+      "url": "https://gdr.openei.org/submissions/1391",
+      "reason": "Host outside sandbox allowlist; inherited local source provenance only"
+    }
+  ],
+  "research_limit": "No new official external scientific dataset or comprehensive literature review was completed; plausible mechanisms are explicitly hypotheses."
+}

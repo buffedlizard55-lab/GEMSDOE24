@@ -1,0 +1,112 @@
+{
+  "schema_version": 2,
+  "lane": "geothermal-corridor",
+  "experiment_spec": "offcat-d3-b2halo",
+  "run_id": "GEMSDOE30-geothermal-corridor-offcat-d3-20261026T160300Z",
+  "hypothesis": "Concealed intrabasin faults hosting blind Great Basin geothermal systems are under-represented in the USGS/INGENIOUS Quaternary catalogue (which favours surface-rupturing traces). A concealed fault cutting Quaternary volcanic cover should co-locate with Quaternary volcanic vents/flows (heat source), paleogeothermal sinter/tufa springs (fluid discharge), and shallow 2 m temperature probes (near-surface thermal anomaly), gently boosted near (not on) SGMC-mapped structure for step-over/splay strands, and gated more than 2 px off mapped structure so dots target catalogue-missing faults without paying the unmasked 1-2 px flank halo penalty.",
+  "mechanism": "Weighted linear pool of exp(-distance/1000 m) proximity surfaces: GDR Quaternary volcanics (0.4), GDR paleogeothermal springs (0.3), GDR 2 m temperature probes (0.3), multiplied by (0.75 + 0.25 x SGMC-proximity decay); normalized to [0,1]; domain = template footprint minus pixels within 2 px of SGMC mapped structure, belief > 0.10; Poisson-disk thinning at 3.0 px (300 m kernel scale) in descending belief order, capped at 40,000 dots; binary {0,1} emission written with gemsdoe30.submission.write_submission_file as single-band float32 GeoTIFF, NaN outside the template footprint. Builder: scripts/build_geothermal_corridor_submission.py.",
+  "non_fault_mimic": "Non-tectonic volcanic centers/caldera rings, paleospring clusters and shallow thermal anomalies with no Quaternary fault control (e.g., volcanic geothermal circulation unrelated to a mappable fault trace) can mimic a corridor signal.",
+  "experiments_run": 1,
+  "experiment_cap": 3,
+  "experimental_elapsed_seconds": null,
+  "time_cap_hours": 2,
+  "inputs": {
+    "template": "docs/downloads/gems30-PTA1-44090-20261025-9a3f7f9535a4.tif (competition grid proxy: EPSG:32611, 3730x3292, 100 m)",
+    "layers": [
+      "data/external/derived_gdr_volcanics_100m_u8.tif",
+      "data/external/derived_gdr_paleo_100m_u8.tif",
+      "data/external/derived_gdr_2m_probes_100m_u8.tif",
+      "data/external/derived_sgmc_faults_100m_u8.tif"
+    ],
+    "source_receipt": "data/external/external_receipt.json (USGS SGMC state geologic maps NV/CA; DOE GDR submission 1391 INGENIOUS, DOI 10.15121/1881483)"
+  },
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "note": "NOT COMPUTABLE in this checkout: labels.tif / training_features.tif are organizer-controlled behind the DrivenData login and are absent. No HOLDOUT-DTI, CI, or leakage-canary AUC is claimed. Per protocol, no weekly slot may be selected without a holdout pass.",
+    "withheld_positives": null,
+    "ci95": null,
+    "evaluator_version": "component-holdout-v3-blockstats-20261025",
+    "protocol_version": "buffered-quadrant-whole-components-v1-20261025",
+    "scope": "holdout gated on organizer data access; not a score, not a projection"
+  },
+  "organizer_score": null,
+  "organizer_score_label": "none (no submission-page receipt exists)",
+  "scientific_basis": "docs/research/geothermal-vents-knowledge.md: Faulds OSTI 1110517/1148722/1724109 (blind systems; step-overs/relay ramps host ~32% of Great Basin geothermal systems; linear tufa towers mark the blind Pyramid Lake system); GDR 1391 INGENIOUS compilation; DrivenData staff threads 11516/11536 (known faults masked pixel-exactly; 'new fault' = anything outside USGS/INGENIOUS, can be <300 m from mapped traces). Local measured evidence in that knowledge base: 21 volcanic vents, 0 within 300 m of catalogue truth; 45% of in-footprint Qfaults centroids >300 m from catalogue.",
+  "feature_canaries": {
+    "note": "Single-feature leakage canaries require labels.tif (organizer-controlled, absent). Not run; no AUC claimed. Holdout-gated."
+  },
+  "registry": {
+    "pinned_snapshot": "docs/research/2026-10-25/novelty-registry-partial.json",
+    "registry_complete": false,
+    "dots": {
+      "decision": "blocked-incomplete-evidence",
+      "registry_entries_compared": 16,
+      "errors": 3,
+      "max_spearman_any_reference": 0.2056,
+      "max_spearman_note": "max rho is against the input GDR 2 m-probe layer itself, not a submission",
+      "max_spearman_vs_submissions": 0.0179,
+      "max_fraction_within_3px": 0.6057,
+      "closest_reference": "docs/downloads/gemsdoe30-edge-hybrid-80k-02845bd4-20261003T234340Z-allfinite.tif",
+      "receipt": "docs/research/geothermal-corridor/novelty-dots.json"
+    },
+    "downloads_audit": {
+      "registry_entries_compared": 23,
+      "errors": 0,
+      "max_spearman": 0.0179,
+      "max_fraction_within_3px": 0.6057,
+      "overlap_vs_gemsdoe25_best_0_2600_file": 0.1716,
+      "overlap_vs_d28_poisson300m_0_2600_file": 0.1716,
+      "overlap_vs_pta1": 0.1979,
+      "overlap_vs_tad24": 0.3921,
+      "overlap_vs_msdb1": 0.2653,
+      "receipt": "docs/research/geothermal-corridor/novelty-downloads-audit.json"
+    },
+    "lane_check": "PASS on every comparable raster: Spearman <= 0.90 AND 3 px dot overlap <= 0.70. Files for GEMSDOE27/28/31/32/33/36 best submissions are not present locally, so no direct file comparison against them is claimed; the lane is mechanistically distinct (geothermal-discharge proximity, off-SGMC) from every focus-site method of record."
+  },
+  "files": {
+    "submission_tif": "docs/downloads/GEMSDOE30-geothermal-corridor-offcat-d3-20261026T160300Z.tif",
+    "submission_json": "docs/downloads/GEMSDOE30-geothermal-corridor-offcat-d3-20261026T160300Z.json",
+    "validation_json": "docs/research/geothermal-corridor/validation.json"
+  },
+  "raster_sha256": "0ed2670200159cab23436a5033a90d7582accc63811756d3393441c6bbdac564",
+  "prediction_array_sha256": "6f5b9d162997702ab184a76f0ab9458fd556c881d0c7e39066247de6462f8194",
+  "file_bytes": 375154,
+  "validator_output": {
+    "status": "passed",
+    "checks_passed": "12/12",
+    "receipt": "docs/research/geothermal-corridor/validation.json",
+    "no_nan_inside_footprint": true,
+    "values_in_0_1": true,
+    "footprint_cells": 5167373,
+    "outside_cells_nan": 7111787,
+    "crs_match": true,
+    "crs": "EPSG:32611",
+    "shape_match": true,
+    "shape": [3730, 3292],
+    "transform_match": true,
+    "single_float32_band": true,
+    "published_format_compliant": true,
+    "emitted_dots": 40000,
+    "dots_on_sgmc_core": 0,
+    "dots_within_2px_of_sgmc": 0,
+    "dots_by_sgmc_distance_px": {
+      "le_2px": 0,
+      "gt_2_le_10px": 10131,
+      "gt_10_le_30px": 14230,
+      "gt_30px": 15639
+    },
+    "note_on_catalogue": "SGMC is the local mapped-structure proxy. Dots on/within 2 px of the organizer catalogue (labels.tif) cannot be counted without organizer data."
+  },
+  "submission_name": "GEMSDOE30-geothermal-corridor-offcat-d3-20261026T160300Z",
+  "note": "Geothermal corridor off-cat: Q-volcanics x paleo-springs x 2m probes, SGMC-gated, 3px Poisson disk, 40000 dots",
+  "note_length": 110,
+  "download_ok": true,
+  "ok_to_submit": false,
+  "submission_approved": false,
+  "slot_selected": false,
+  "verdict": "negative",
+  "scientific_gate_passed": false,
+  "verdict_reason": "Unique vs every locally comparable registry/downloads raster and 12/12 format-validated, so download_open is true; but HOLDOUT-DTI cannot be computed without organizer labels, so per protocol ('No holdout pass means no slot') it is NOT OK to submit. Download is a research artifact; do not spend a weekly slot on it until a holdout pass exists.",
+  "created_utc": "2026-10-26T16:03:01+00:00"
+}

@@ -1,0 +1,88 @@
+{
+  "checked_utc": "2026-10-26T16:46:19.127732+00:00",
+  "evidence_class": "COMPUTED-ARTIFACT-GEOMETRY / source-text discrepancies, not scores",
+  "csdu": {
+    "repo": "buffedlizard55-lab/GEMSDOE31",
+    "ref": "784d3ae2dc1d247323378074257eba4353b3d087",
+    "file": "docs/downloads/gemsdoe31-csdu-stepover-8cf9dc27-allfinite.tif",
+    "sha256": "bc3681c49fef1df1610cba81cd1064d22f17c28a1812ac9ac233858925e3ea73",
+    "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/784d3ae2dc1d247323378074257eba4353b3d087/docs/downloads/gemsdoe31-csdu-stepover-8cf9dc27-allfinite.tif",
+    "total_positive_pixels": 4000,
+    "inside_template": 2101,
+    "outside_template": 1899,
+    "on_public_catalogue": 32,
+    "nan_companion_nonfinite_inside": 2610312,
+    "interpretation": "Allfinite range/grid success does not validate the source footprint or zero-catalogue-overlap claims. No companion is rewritten or offered as a new candidate."
+  },
+  "withheld_count_conflict": {
+    "repo": "buffedlizard55-lab/GEMSDOE27",
+    "ref": "cf8b4c201f2cc2ef649b6ca7cd32f235c2f6743a",
+    "run_card_count": 120778,
+    "readme_occurrences": 289180,
+    "status": "Different declared denominators; not independently reconciled. Do not treat either as an audited scientific score."
+  },
+  "footprint_count_correction": {
+    "current_template_pixels": 5167373,
+    "historical_prose_count_not_reproduced": 5167378,
+    "current_binary_mask_xor_template": 0,
+    "scores_rewritten": false
+  },
+  "prepared_inputs": {
+    "raw_file": "data/training_features.tif",
+    "raw_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+    "raw_bytes": 418912844,
+    "prepared_metadata": {
+      "names": [
+        "rtp",
+        "tmi_hg",
+        "tmi_vg",
+        "iso_grav_anom",
+        "iso_grav_anom_hg",
+        "iso_grav_anom_vg",
+        "det_elev",
+        "det_elev_slope",
+        "tmi",
+        "cond_surf",
+        "depth_to_base_surf",
+        "geod_dilaterate",
+        "geod_shearrate",
+        "lidar_1",
+        "lidar_2",
+        "lidar_3",
+        "lidar_4",
+        "lidar_5",
+        "lidar_6",
+        "lidar_7",
+        "lidar_8",
+        "lidar_9",
+        "lidar_10",
+        "lidar_cos2strike",
+        "lidar_sin2strike",
+        "det_local_relief",
+        "det_gradient",
+        "arc_rtp",
+        "arc_det_elev",
+        "arc_agreement"
+      ],
+      "base_count": 27,
+      "shape": [
+        5167373,
+        30
+      ],
+      "arc_radii_px": [
+        6,
+        12,
+        24
+      ],
+      "sha256": "a4ca25b2a18f6f6637f0247367cc6235a1366eb8475f77b18cd0285e62232dc8",
+      "inputs": {
+        "data/bridge/sample_submission.tif": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+        "data/training_features.tif": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+        "data/external/lidar_scarp_features_u8.tif": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568"
+      },
+      "note": "Band names follow owner bridge order. Ambiguous tc/earthquake description aliases are deliberately excluded. Features are not calibrated fault probabilities."
+    },
+    "status": "Restored, prepared and hash-checked on CPU; owner mirror, not organizer-authenticated",
+    "new_experiments": 0
+  }
+}

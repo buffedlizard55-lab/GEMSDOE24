@@ -11,6 +11,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
+import shutil
 import subprocess
 import sys
 import time
@@ -24,7 +26,7 @@ import rasterio
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from gems.footprint import TRANSFORM, load_footprint  # noqa: E402
-from gems.github_archive import cache_archive  # noqa: E402
+from gems.github_archive import cache_archive, git_blob_sha, safe_relative  # noqa: E402
 from gems.validator import sha256_file  # noqa: E402
 
 REPOS = (24, 25, 27, 28, 30, 31, 32, 33, 36)
@@ -71,23 +73,38 @@ def discover(number):
     return {"repo": repo, "ref": ref, "files": files}
 
 
-def cache_one(task):
+def cache_one(task, cache_dir=None):
+    """Cache immutable repo/ref/path bytes; never reuse a mutable path across refs."""
     repo, ref, entry = task
-    path = entry["path"]
-    dest = CACHE / repo.split("/")[-1] / path
+    if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repo):
+        raise ValueError("Expected GitHub owner/repository")
+    if not re.fullmatch(r"[0-9a-f]{40}", ref):
+        raise ValueError("A complete immutable commit SHA is required")
+    path = str(safe_relative(entry["path"]))
+    base = (Path(cache_dir) if cache_dir is not None else CACHE).resolve()
+    dest = base / repo / ref / path
+    if not dest.resolve().is_relative_to(base):
+        raise ValueError("Cache path escapes its root")
     if not dest.exists():
+        raw = gh(f"repos/{repo}/contents/{path}?ref={ref}")
+        if git_blob_sha(raw) != entry["blob_sha"]:
+            raise ValueError(f"Git object mismatch: {repo}@{ref}/{path}")
         dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_bytes(gh(f"repos/{repo}/contents/{path}?ref={ref}"))
+        temporary = dest.with_suffix(dest.suffix + ".partial")
+        temporary.write_bytes(raw)
+        temporary.replace(dest)
     raw = dest.read_bytes()
-    blob = hashlib.sha1(f"blob {len(raw)}\0".encode() + raw).hexdigest()
-    if blob != entry["blob_sha"]:
+    if git_blob_sha(raw) != entry["blob_sha"]:
         raise ValueError(f"Git object mismatch: {repo}@{ref}/{path}")
+    if not dest.is_relative_to(ROOT):
+        raise ValueError("Cache must remain inside the repository workspace")
     return {
         "repo": repo,
         "ref": ref,
         "file": path,
         "cache_path": str(dest.relative_to(ROOT)),
         "sha256": hashlib.sha256(raw).hexdigest(),
+        "blob_sha": entry["blob_sha"],
         "source_url": f"https://github.com/{repo}/blob/{ref}/{path}",
     }
 
@@ -134,6 +151,55 @@ def archive_sources(sources, cache_dir):
         return list(pool.map(one, sources))
 
 
+def preserve_frozen_manifest(existing, restored):
+    """Restore cache paths without rewriting scientific pins, IDs or historical JSON."""
+    if existing["sources"] != restored["sources"]:
+        raise ValueError("Frozen registry source pins changed; use a new versioned manifest")
+    old_policy = existing.get("footprint_identity", {}).get("policy", "legacy-science")
+    if old_policy != restored["footprint_identity"]["policy"]:
+        raise ValueError("Frozen footprint policy changed; use a new versioned manifest")
+    if (
+        existing.get("footprint_identity")
+        and existing["footprint_identity"] != restored["footprint_identity"]
+    ):
+        raise ValueError("Frozen footprint identity changed; use a new versioned manifest")
+
+    def keyed(data):
+        rows = [
+            r for k in ("unique_rasters", "duplicate_content_variants", "rejected") for r in data[k]
+        ]
+        mapping = {(r["repo"], r["ref"], r["file"]): r for r in rows}
+        if len(mapping) != len(rows):
+            raise ValueError("Duplicate artifact key in frozen manifest")
+        return mapping
+
+    before, after = keyed(existing), keyed(restored)
+    if set(before) != set(after):
+        raise ValueError("Frozen registry membership changed; use a new versioned manifest")
+    for key, original in before.items():
+        current = after[key]
+        if any(
+            original.get(field) != current.get(field)
+            for field in ("sha256", "footprint_sha256", "reason")
+        ):
+            raise ValueError("Frozen artifact identity or validity changed")
+        destination = ROOT / safe_relative(original["cache_path"])
+        if not destination.resolve().is_relative_to(ROOT):
+            raise ValueError("Frozen cache path escapes workspace")
+        source = ROOT / safe_relative(current["cache_path"])
+        if destination.exists():
+            if sha256_file(destination) != original["sha256"]:
+                raise ValueError("Existing frozen cache bytes changed")
+        else:
+            if not str(safe_relative(original["cache_path"])).startswith("data/research/"):
+                raise ValueError("Refusing to restore cache over non-cache project paths")
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            temporary = destination.with_suffix(destination.suffix + ".partial")
+            shutil.copyfile(source, temporary)
+            temporary.replace(destination)
+    return existing
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--refresh", action="store_true")
@@ -143,6 +209,12 @@ def main():
         "--snapshot", type=Path, default=ROOT / "registry/priority_source_snapshot.json"
     )
     ap.add_argument("--cache-dir", type=Path, default=CACHE)
+    ap.add_argument(
+        "--footprint-policy",
+        choices=("legacy-science", "sample-template"),
+        default="legacy-science",
+        help="Explicit mask identity; never silently rewrite historical footprint hashes",
+    )
     args = ap.parse_args()
     manifest_path = args.manifest.resolve()
     snapshot_file = args.snapshot.resolve()
@@ -150,6 +222,10 @@ def main():
     for path in (manifest_path, snapshot_file, cache_dir):
         if not path.is_relative_to(ROOT):
             raise ValueError("Registry/cache output must remain inside the workspace")
+    if args.refresh and (manifest_path.exists() or snapshot_file.exists()):
+        raise ValueError(
+            "Frozen snapshots cannot be refreshed in place; supply new versioned paths"
+        )
     if args.transport == "archive":
         prior = (
             json.loads(snapshot_file.read_text())["sources"]
@@ -183,7 +259,7 @@ def main():
     else:
         tasks = [(s["repo"], s["ref"], e) for s in sources for e in s["files"]]
         with ThreadPoolExecutor(max_workers=6) as pool:
-            cached = list(pool.map(cache_one, tasks))
+            cached = list(pool.map(lambda task: cache_one(task, cache_dir), tasks))
     # Local historic references are also registry members, never detector inputs.
     for p in sorted((ROOT / "inputs").rglob("*.tif")):
         cached.append(
@@ -195,9 +271,23 @@ def main():
                 "sha256": sha256_file(p),
             }
         )
-    fp, seen, rasters, rejected, aliases = load_footprint(), {}, [], [], []
+    if args.footprint_policy == "sample-template":
+        template = ROOT / "data/bridge/sample_submission.tif"
+        with rasterio.open(template) as ds:
+            fp = np.isfinite(ds.read(1))
+            if (
+                ds.shape != load_footprint().shape
+                or ds.crs.to_epsg() != 32611
+                or ds.transform != TRANSFORM
+            ):
+                raise ValueError("Pinned sample grid mismatch")
+        footprint_source = str(template.relative_to(ROOT))
+    else:
+        fp = load_footprint()
+        footprint_source = "docs/data/footprint.bin"
+    seen, rasters, rejected, aliases = {}, [], [], []
     for row in cached:
-        if not row["file"].endswith(".tif"):
+        if not row["file"].lower().endswith((".tif", ".tiff")):
             continue
         with rasterio.open(ROOT / row["cache_path"]) as s:
             if (
@@ -229,8 +319,18 @@ def main():
     )
     result = {
         "generated_utc": existing.get("generated_utc", datetime.now(timezone.utc).isoformat()),
-        "scope": "All published docs/downloads/*.tif in the nine pinned priority repositories plus local inputs; not every unseen registry in parallel sessions",
+        "scope": json.loads(snapshot_file.read_text()).get(
+            "scope", "All published docs/downloads/*.tif in the nine pinned priority repositories"
+        )
+        + "; local inputs/calibration references retained; not every TIFF in all 92 sites or all historical refs",
         "sources": [{"repo": s["repo"], "ref": s["ref"]} for s in sources],
+        "footprint_identity": {
+            "policy": args.footprint_policy,
+            "source": footprint_source,
+            "source_sha256": sha256_file(ROOT / footprint_source),
+            "pixels": int(fp.sum()),
+            "mask_sha256": hashlib.sha256(fp.astype("uint8").tobytes()).hexdigest(),
+        },
         "source_files_checked": len(cached),
         "unique_rasters": rasters,
         "duplicate_content_variants": aliases,
@@ -239,7 +339,10 @@ def main():
         "score_status": "Team source and user claims are NOT ORGANIZER-CONFIRMED scores",
     }
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
-    manifest_path.write_text(json.dumps(result, indent=2) + "\n")
+    if existing:
+        result = preserve_frozen_manifest(existing, result)
+    else:
+        manifest_path.write_text(json.dumps(result, indent=2) + "\n")
     print(
         json.dumps(
             {

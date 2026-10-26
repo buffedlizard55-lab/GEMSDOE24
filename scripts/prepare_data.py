@@ -39,6 +39,24 @@ BASE_BANDS = (
 LIDAR_BANDS = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)  # strike converted to circular encoding below.
 
 
+def verify_cached_preparation(dest, meta_path, input_paths, expected_shape, expected_names):
+    """Fail closed on stale bytes, inputs, or layout instead of trusting cache presence."""
+    metadata = json.loads(Path(meta_path).read_text())
+    if metadata.get("names") != list(expected_names) or metadata.get("shape") != list(
+        expected_shape
+    ):
+        raise ValueError("Prepared cache layout changed; explicit --force required")
+    if metadata.get("sha256") != sha256_file(dest):
+        raise ValueError("Prepared feature cache checksum mismatch; explicit --force required")
+    expected_inputs = {str(p.relative_to(ROOT)): sha256_file(p) for p in input_paths}
+    if metadata.get("inputs") != expected_inputs:
+        raise ValueError("Prepared cache inputs changed; explicit --force required")
+    arr = np.load(dest, mmap_mode="r", allow_pickle=False)
+    if arr.shape != tuple(expected_shape) or arr.dtype != np.dtype("float32"):
+        raise ValueError("Prepared cache array layout does not match metadata")
+    return metadata
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--force", action="store_true")
@@ -47,9 +65,8 @@ def main() -> None:
     out.mkdir(parents=True, exist_ok=True)
     dest = out / "features.npy"
     meta_path = out / "features.json"
-    if dest.exists() and meta_path.exists() and not args.force:
-        print(meta_path.read_text())
-        return
+    if dest.exists() != meta_path.exists() and not args.force:
+        raise ValueError("Incomplete prepared cache; explicit --force required")
     fp = footprint.load_footprint()
     idx = np.flatnonzero(fp.ravel())
     template = ROOT / "data/bridge/sample_submission.tif"
@@ -76,6 +93,12 @@ def main() -> None:
             "arc_agreement",
         ]
     )
+    if dest.exists() and meta_path.exists() and not args.force:
+        checked = verify_cached_preparation(
+            dest, meta_path, (template, source, lidar), (len(idx), len(names)), names
+        )
+        print(json.dumps(checked, indent=2))
+        return
     arr = np.lib.format.open_memmap(
         dest.with_name("features.partial.npy"),
         mode="w+",

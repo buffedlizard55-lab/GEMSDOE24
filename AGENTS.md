@@ -1,5 +1,31 @@
 # Standing project instructions
 
+## Latest portfolio continuation — 2026-10-26 e78615fb (read first)
+
+Read the README and `knowledge/owner_brief_2026-10-26_portfolio.md` first.
+The new immutable artifact audit is `evidence/portfolio_artifact_audit_20261026.json`;
+findings/limits are `docs/portfolio-review-20261026.md`. It reopens 326 TIFFs,
+retains all rejects/controls and checks 18 named artifacts against 166/167
+comparators. All final-dot gates fail. **DPRF1 additionally overlaps EUL1 by
+86.66% in the DPRF1→EUL1 direction**, so a lattice exception would not fix it.
+No new TIFF or experiment was run; no submission is authorized. Original
+pre-placement surfaces and scientific training runs were not independently
+replayed. Do not reinterpret geometric audit numbers as HOLDOUT-DTI.
+
+The raw source and 30-channel cache were restored and hash-checked here; bulk
+caches are ignored and can be absent in a fresh sandbox. The current committed
+footprint and sample mask are identical (5,167,373 cells), not five cells apart.
+GEMSDOE36 already implemented graben-pair features; read the corrected queue in
+`knowledge/26_portfolio_plan_corrections_2026-10-26.md`. No lane assignment exists.
+Never retune stopped methods or remove controls to pass novelty.
+
+Use new versioned snapshot/registry paths for new source pins. The shared API
+cache now honors `--cache-dir` and immutable refs; restoring a frozen registry
+must not rewrite its IDs/content. Cached feature reuse must verify checksums
+and layout. Run site generation/tests against preserved source-card bytes.
+Old review sections below remain historical; newer negative gates take precedence.
+
+
 ## Latest continuation safety review — 2026-10-26
 
 Read `docs/review-20261026.md` and `evidence/review_continuation_20261026.json` first.

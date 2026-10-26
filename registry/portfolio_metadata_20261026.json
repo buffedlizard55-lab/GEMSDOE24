@@ -1,0 +1,85 @@
+{
+  "scope": "Source-reported scientific evidence, not independently replayed",
+  "files": [
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE25",
+      "ref": "fac6dbe5852baa0f0125d00ecc5cb1c16872741a",
+      "file": "registry/run_card_h71_2026-10-26.json",
+      "cache_path": "data/research/portfolio_20261026T1612Z/cache/buffedlizard55-lab/GEMSDOE25/fac6dbe5852baa0f0125d00ecc5cb1c16872741a/registry/run_card_h71_2026-10-26.json",
+      "sha256": "68020bac8c8c757daa1d2aa773062ab45cef1f830801f4e1f80a3c7e932f304d",
+      "blob_sha": "495364aeb7d773d2d8024d463e3f33d451a61d15",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/fac6dbe5852baa0f0125d00ecc5cb1c16872741a/registry/run_card_h71_2026-10-26.json",
+      "local_evidence_path": "evidence/portfolio_source_cards/GEMSDOE25.json"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE27",
+      "ref": "cf8b4c201f2cc2ef649b6ca7cd32f235c2f6743a",
+      "file": "evidence/h31_s10_run_card_2026-10-26.json",
+      "cache_path": "data/research/portfolio_20261026T1612Z/cache/buffedlizard55-lab/GEMSDOE27/cf8b4c201f2cc2ef649b6ca7cd32f235c2f6743a/evidence/h31_s10_run_card_2026-10-26.json",
+      "sha256": "a043e8ec20049262dacc0b7ca565bbb2660d51a19d4822f64ad6ea94c63d285f",
+      "blob_sha": "ac6af1c7622cdc55675dfae89b18bec152384653",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/cf8b4c201f2cc2ef649b6ca7cd32f235c2f6743a/evidence/h31_s10_run_card_2026-10-26.json",
+      "local_evidence_path": "evidence/portfolio_source_cards/GEMSDOE27.json"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE28",
+      "ref": "12ec4fea4c97a7887a7ca8a06f9bd94c7609ea07",
+      "file": "evidence/s20_nchc_run_card.json",
+      "cache_path": "data/research/portfolio_20261026T1612Z/cache/buffedlizard55-lab/GEMSDOE28/12ec4fea4c97a7887a7ca8a06f9bd94c7609ea07/evidence/s20_nchc_run_card.json",
+      "sha256": "b1583345804287aeb636b964fbde36ea956f0ad27b338f008229bdbc940a6d86",
+      "blob_sha": "6a21178396b04b35437edafdbc2f5a96f06e164d",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/12ec4fea4c97a7887a7ca8a06f9bd94c7609ea07/evidence/s20_nchc_run_card.json",
+      "local_evidence_path": "evidence/portfolio_source_cards/GEMSDOE28.json"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE30",
+      "ref": "35ce8911e2c3287eed973eacd12c252e8cb3f34c",
+      "file": "docs/research/geothermal-corridor/run-card.json",
+      "cache_path": "data/research/portfolio_20261026T1612Z/cache/buffedlizard55-lab/GEMSDOE30/35ce8911e2c3287eed973eacd12c252e8cb3f34c/docs/research/geothermal-corridor/run-card.json",
+      "sha256": "54ef780c5668eaca20e571ed102f33c2e6411968c356ca863da4f392a2970ba0",
+      "blob_sha": "4b3b3922f073a172d65261e61b0bb63b0dfa2eb1",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/35ce8911e2c3287eed973eacd12c252e8cb3f34c/docs/research/geothermal-corridor/run-card.json",
+      "local_evidence_path": "evidence/portfolio_source_cards/GEMSDOE30.json"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE31",
+      "ref": "784d3ae2dc1d247323378074257eba4353b3d087",
+      "file": "docs/downloads/gemsdoe31-csdu-stepover-8cf9dc27-run-card.json",
+      "cache_path": "data/research/portfolio_20261026T1612Z/cache/buffedlizard55-lab/GEMSDOE31/784d3ae2dc1d247323378074257eba4353b3d087/docs/downloads/gemsdoe31-csdu-stepover-8cf9dc27-run-card.json",
+      "sha256": "f6fcbd80611f1cad49d839cd08be5a337d5ce7cddb2e2aa3cbc07ce4adc0ade0",
+      "blob_sha": "ea27672133e59667cb8113b64abd9aec035ba819",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/784d3ae2dc1d247323378074257eba4353b3d087/docs/downloads/gemsdoe31-csdu-stepover-8cf9dc27-run-card.json",
+      "local_evidence_path": "evidence/portfolio_source_cards/GEMSDOE31.json"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE32",
+      "ref": "8b00ee91b9d6d7ef0e3762eb7bc0c92bee0928d1",
+      "file": "evidence/h44_spcp_run_card.json",
+      "cache_path": "data/research/portfolio_20261026T1612Z/cache/buffedlizard55-lab/GEMSDOE32/8b00ee91b9d6d7ef0e3762eb7bc0c92bee0928d1/evidence/h44_spcp_run_card.json",
+      "sha256": "feabd1fa067766b1cb7d65f390faac18cbcd340d8c5eb891e0d20f6cec7820a3",
+      "blob_sha": "64bfbf74a49a04c612bd6ef75d1b5bd1059c7117",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/8b00ee91b9d6d7ef0e3762eb7bc0c92bee0928d1/evidence/h44_spcp_run_card.json",
+      "local_evidence_path": "evidence/portfolio_source_cards/GEMSDOE32.json"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE33",
+      "ref": "adf1f45ae0030de5e63d07655eaeb1a0ea4d96f3",
+      "file": "evidence/a33_r3_run_card_20261026.json",
+      "cache_path": "data/research/portfolio_20261026T1612Z/cache/buffedlizard55-lab/GEMSDOE33/adf1f45ae0030de5e63d07655eaeb1a0ea4d96f3/evidence/a33_r3_run_card_20261026.json",
+      "sha256": "23e0e8b33db5e65c293a189c9f41cfdb406253e75dfea558196d19f1c6805bd0",
+      "blob_sha": "115d9f9e8d2f2ce1cbb58ba0ee4495079d1a0bae",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/adf1f45ae0030de5e63d07655eaeb1a0ea4d96f3/evidence/a33_r3_run_card_20261026.json",
+      "local_evidence_path": "evidence/portfolio_source_cards/GEMSDOE33.json"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE36",
+      "ref": "6dae4545076c4e5fc2be1cf348fe740ba9508a1d",
+      "file": "evidence/mto36_run_card_20261026.json",
+      "cache_path": "data/research/portfolio_20261026T1612Z/cache/buffedlizard55-lab/GEMSDOE36/6dae4545076c4e5fc2be1cf348fe740ba9508a1d/evidence/mto36_run_card_20261026.json",
+      "sha256": "3c355b8ad9646b1ae8fb9b401b4e27c4a730fa3a186f0362dca3593584263547",
+      "blob_sha": "8ff5ac2c4d8ff0d337993a16eea90d64b9ce4ee7",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/6dae4545076c4e5fc2be1cf348fe740ba9508a1d/evidence/mto36_run_card_20261026.json",
+      "local_evidence_path": "evidence/portfolio_source_cards/GEMSDOE36.json"
+    }
+  ]
+}

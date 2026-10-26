@@ -91,9 +91,13 @@ def main():
         type=Path,
         help="Reuse an already checked all-owner source snapshot; keep its original timestamp",
     )
+    ap.add_argument("--registry", type=Path, default=ROOT / "registry/priority_rasters.json")
+    ap.add_argument("--output", type=Path, default=ROOT / "docs/data/priority_feed.json")
     args = ap.parse_args()
-    path = ROOT / "docs/data/priority_feed.json"
-    sources = json.loads((ROOT / "registry/priority_rasters.json").read_text())["sources"]
+    path, registry_path = args.output.resolve(), args.registry.resolve()
+    if not path.is_relative_to(ROOT) or not registry_path.is_relative_to(ROOT):
+        raise ValueError("Feed and registry paths must stay inside the workspace")
+    sources = json.loads(registry_path.read_text())["sources"]
     if args.offline:
         validate_feed(json.loads(path.read_text()), sources)
         print("Offline priority feed schema valid; source timestamps unchanged")
@@ -147,6 +151,7 @@ def main():
         "warning": "Registry/experiment snapshots stay pinned. New commits require a new audit; the stopped negative candidate stays DO NOT SUBMIT.",
     }
     validate_feed(feed, sources)
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(feed, indent=2) + "\n")
     print(
         json.dumps(
