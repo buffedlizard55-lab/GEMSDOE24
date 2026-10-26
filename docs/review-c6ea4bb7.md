@@ -158,8 +158,8 @@ Outstanding, in order:
 
 ### Final verification
 
-Three passes completed. Final suite after integrating concurrent main PRs #38, #39 and #44: **396 passed**; Ruff lint passed, formatting
-passed for 160 files, compileall and JavaScript syntax checks passed, and
+Three passes completed. Final suite after integrating concurrent main PRs #38, #39, #44 and #41: **410 passed**; Ruff lint passed, formatting
+passed for 162 files, compileall and JavaScript syntax checks passed, and
 `git diff --check` passed. New audit-page relative links resolve and its table
 contains all nine sites. Shared current-best review no longer repeats the inherited
 causal mechanism as a fresh verified conclusion; the source card remains unchanged.

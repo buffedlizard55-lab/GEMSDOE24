@@ -387,9 +387,9 @@
   "inventory_receipt": "docs/data/priority_artifact_inventory_20261026_session_c6ea4bb7.json",
   "archive_receipt": "evidence/h33_archive_inspection_c6ea4bb7.json",
   "verification": {
-    "pytest": "396 passed after integration of main PRs #38, #39 and #44",
+    "pytest": "410 passed after integration of main PRs #38, #39, #44 and #41",
     "ruff_lint": "passed",
-    "ruff_format": "160 files already formatted",
+    "ruff_format": "162 files already formatted",
     "compileall": "passed",
     "javascript_syntax": "passed",
     "git_diff_check": "passed"
