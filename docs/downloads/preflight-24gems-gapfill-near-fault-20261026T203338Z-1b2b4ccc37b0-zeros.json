@@ -144,6 +144,9 @@
       "hash_bound_scientific_promotion",
       "RUN_CARD_REQUIRED"
     ],
-    "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score."
-  }
+    "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score.",
+    "quarantined_irregularity": "IRR-GAPFILL-ORACLE-LEAK: build_score_surface() computed distance_transform_edt(~labels) directly on full ground-truth labels.tif (including all 60,988 withheld fold.truth pixels) while zeroing exact label pixels (np.where(t_fp & ~labels, ...)) to evade the single-pixel leakage canary (AUC=0.3752). Holdout DTI 0.60183 is 100% oracle test-label leakage; quarantined as DO_NOT_SUBMIT."
+  },
+  "quarantined": true,
+  "quarantined_irregularity": "IRR-GAPFILL-ORACLE-LEAK: build_score_surface() computed distance_transform_edt(~labels) directly on full ground-truth labels.tif (including all 60,988 withheld fold.truth pixels) while zeroing exact label pixels (np.where(t_fp & ~labels, ...)) to evade the single-pixel leakage canary (AUC=0.3752). Holdout DTI 0.60183 is 100% oracle test-label leakage; quarantined as DO_NOT_SUBMIT."
 }

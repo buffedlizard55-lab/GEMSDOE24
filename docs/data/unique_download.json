@@ -1,22 +1,22 @@
 {
-  "file": "24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.tif",
-  "sha256": "cc0d061f915fef34288a09df990dde229d6efd95521bc73013bd5c652eb14f24",
-  "content_id": "1b2b4ccc37b0",
-  "pixel_count": 37722,
-  "note": "24GEMS gapfill near-fault dots | avoids existing submission dots | research; HOLDOUT-DTI 0.60183 | id 1b2b4ccc37b0",
-  "note_file": "note-24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.txt",
-  "checks_file": "checks-24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.json",
-  "preflight_file": "preflight-24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.json",
+  "file": "24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.tif",
+  "sha256": "20a619dd806be92a27961cc48df7ca63486c1120d852907fe7418b7708333aad",
+  "content_id": "dd2fff044fc1",
+  "pixel_count": 8830,
+  "note": "24GEMS geothermal-surface-proximity vents+springs | catalogue-independent | research; HOLDOUT-DTI 0.02235 | id dd2fff044fc1",
+  "note_file": "note-24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.txt",
+  "checks_file": "checks-24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.json",
+  "preflight_file": "preflight-24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.json",
   "role": "primary",
   "format_valid": true,
   "strict_range_ok": true,
   "ok_to_download": true,
-  "ok_to_submit": true,
-  "verdict": "promote",
-  "holdout_dti": 0.601827138891752,
+  "ok_to_submit": false,
+  "verdict": "negative",
+  "holdout_dti": 0.022348219779637794,
   "holdout_ci95": [
-    0.6000423531215942,
-    0.6035282309899314
+    0.01799309009314464,
+    0.02715698839958841
   ],
   "run_card": "unique_run_card.json"
 }

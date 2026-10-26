@@ -139,12 +139,15 @@
   "note": "24GEMS gapfill near-fault dots | avoids existing submission dots | research; HOLDOUT-DTI 0.60183 | id 1b2b4ccc37b0",
   "note_characters": 114,
   "note_limit": 140,
-  "verdict": "promote",
+  "verdict": "negative",
   "ok_to_download": true,
-  "ok_to_submit": true,
+  "ok_to_submit": false,
   "reasons": [],
   "organizer_confirmed_score": null,
   "experiments_run": 1,
   "submission_slots_used": 0,
-  "elapsed_seconds": 71.55186473200001
+  "elapsed_seconds": 71.55186473200001,
+  "quarantined": true,
+  "quarantined_irregularity": "IRR-GAPFILL-ORACLE-LEAK: build_score_surface() computed distance_transform_edt(~labels) directly on full ground-truth labels.tif (including all 60,988 withheld fold.truth pixels) while zeroing exact label pixels (np.where(t_fp & ~labels, ...)) to evade the single-pixel leakage canary (AUC=0.3752). Holdout DTI 0.60183 is 100% oracle test-label leakage; quarantined as DO_NOT_SUBMIT.",
+  "holdout_invalidated_reason": "IRR-GAPFILL-ORACLE-LEAK: build_score_surface() computed distance_transform_edt(~labels) directly on full ground-truth labels.tif (including all 60,988 withheld fold.truth pixels) while zeroing exact label pixels (np.where(t_fp & ~labels, ...)) to evade the single-pixel leakage canary (AUC=0.3752). Holdout DTI 0.60183 is 100% oracle test-label leakage; quarantined as DO_NOT_SUBMIT."
 }

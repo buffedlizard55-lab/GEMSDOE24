@@ -124,10 +124,12 @@ def test_dkrn1_exact_geotiff_and_three_arm_integrity():
     # Split-View Head A explicitly excluded all 15 raw LiDAR amplitude channels
     assert len(exp["head_a_gap_native_excluded_lidar_15"]) == 15
 
-    # Benchmark inventory discovers DKRN1 while preserving DPRF1 as point-best
-    assert recorded_point_best(ROOT)["lane"] == "DPRF1"
+    # Benchmark inventory discovers DKRN1 while S3DEP1 (> DPRF1 > DKRN1) holds point-best
+    best = recorded_point_best(ROOT)
+    assert best["lane"] in {"DPRF1", "S3DEP1"}
+    assert best["holdout"]["dti"] > card["holdout"]["dti"]
     lanes = {r["lane"] for r in recorded_points(ROOT)}
-    assert "DKRN1" in lanes
+    assert {"DKRN1", "DPRF1", "S3DEP1"} <= lanes
 
 
 def test_dkrn1_nine_site_20261026_forensics_and_site_ordering():

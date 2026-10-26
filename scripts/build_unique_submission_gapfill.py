@@ -123,6 +123,7 @@ def build_local_registry_entries(root, downloads_dir):
 
 def compare_local_novelty(score, fp, entries, root, dots=None, sample_size=200000):
     import hashlib
+
     from scipy.spatial import cKDTree
     from scipy.stats import rankdata
 
@@ -199,11 +200,20 @@ def compare_local_novelty(score, fp, entries, root, dots=None, sample_size=20000
         "passed": passed,
         "registry_unique_rasters": len(rows),
         "max_abs_rank_correlation": max(
-            (abs(r[k]) for r in rows for k in ("raw_spearman", "kernel_spearman") if r[k] is not None),
+            (
+                abs(r[k])
+                for r in rows
+                for k in ("raw_spearman", "kernel_spearman")
+                if r[k] is not None
+            ),
             default=None,
         ),
         "max_dot_overlap": max(
-            (r["candidate_dot_overlap_within_3px"] for r in rows if r["candidate_dot_overlap_within_3px"] is not None),
+            (
+                r["candidate_dot_overlap_within_3px"]
+                for r in rows
+                if r["candidate_dot_overlap_within_3px"] is not None
+            ),
             default=None,
         ),
         "rows": rows,
@@ -211,13 +221,18 @@ def compare_local_novelty(score, fp, entries, root, dots=None, sample_size=20000
 
 
 def main():
+    raise SystemExit(
+        "QUARANTINED (IRR-GAPFILL-ORACLE-LEAK): build_score_surface() used full-catalogue "
+        "labels.tif (including withheld fold.truth) via distance_transform_edt(~labels) while "
+        "zeroing exact label pixels to evade pixel-level canary. Refusing execution; see "
+        "docs/data/unique_gapfill_quarantined_run_card.json."
+    )
     ap = argparse.ArgumentParser(description=__doc__)
-    args = ap.parse_args()
+    ap.parse_args()
 
     started = time.monotonic()
     fp = footprint.load_footprint()
     with rasterio.open(TEMPLATE) as t:
-        t_shape, t_crs, t_tr = t.shape, t.crs, t.transform
         t_fp = np.isfinite(t.read(1))
 
     with rasterio.open(LABELS) as s:
@@ -228,7 +243,10 @@ def main():
     # ---- Build existing dot density map ------------------------------------
     dot_density, n_tifs = build_existing_dot_mask(ROOT, DOWNLOADS_DIR, t_fp)
     print(f"Existing TIFFs with dots: {n_tifs}", flush=True)
-    print(f"Dot density max: {float(dot_density.max()):.4f}, mean: {float(dot_density.mean()):.4f}", flush=True)
+    print(
+        f"Dot density max: {float(dot_density.max()):.4f}, mean: {float(dot_density.mean()):.4f}",
+        flush=True,
+    )
 
     # ---- Build score surface -----------------------------------------------
     score, support = build_score_surface(fp, t_fp, labels, dot_density)
@@ -247,19 +265,12 @@ def main():
             "the damage-zone gaps around faults — near truth but spatially distinct "
             "from every existing raster. Catalogue faults used only for holdout masking."
         ),
-        "non_fault_mimic": (
-            "Altered damage zones without active geothermal flow"
-        ),
+        "non_fault_mimic": ("Altered damage zones without active geothermal flow"),
         "experiment_number": 1,
         "maximum_experiments": 3,
         "maximum_session_hours": 2,
-        "input_provenance": (
-            "Committed bridge labels and local docs/downloads research TIFFs"
-        ),
-        "inputs": {
-            str(p.relative_to(ROOT)): sha256_file(p)
-            for p in (TEMPLATE, LABELS)
-        },
+        "input_provenance": ("Committed bridge labels and local docs/downloads research TIFFs"),
+        "inputs": {str(p.relative_to(ROOT)): sha256_file(p) for p in (TEMPLATE, LABELS)},
         "code_sha256": {
             str(p.relative_to(ROOT)): sha256_file(p)
             for p in (
@@ -296,8 +307,11 @@ def main():
     }
     report["canary"] = context.canary(canary_features)
     if not report["canary"]["passed"]:
-        report.update(verdict="negative", stopped_reason="leakage-canary",
-                      elapsed_seconds=time.monotonic() - started)
+        report.update(
+            verdict="negative",
+            stopped_reason="leakage-canary",
+            elapsed_seconds=time.monotonic() - started,
+        )
         save(report, RESULT)
         raise SystemExit("Leakage canary failed; no candidate packaged")
     print("Canaries passed", flush=True)
@@ -307,8 +321,11 @@ def main():
     print(f"Local registry entries: {len(registry_entries)}", flush=True)
     report["surface_novelty"] = compare_local_novelty(score, fp, registry_entries, ROOT)
     if not report["surface_novelty"]["passed"]:
-        report.update(verdict="negative", stopped_reason="duplicate-surface",
-                      elapsed_seconds=time.monotonic() - started)
+        report.update(
+            verdict="negative",
+            stopped_reason="duplicate-surface",
+            elapsed_seconds=time.monotonic() - started,
+        )
         save(report, RESULT)
         raise SystemExit("Duplicate surface; stopped before placement")
     print("Surface registry check passed", flush=True)
@@ -368,7 +385,10 @@ def main():
     raster_sha256 = sha256_file(zeros)
 
     preflight_report = preflight(
-        zeros, TEMPLATE, run_card_path=None, note=note,
+        zeros,
+        TEMPLATE,
+        run_card_path=None,
+        note=note,
         expected_template_sha256=sha256_file(TEMPLATE),
     )
     preflight_file = f"preflight-{name[:-4]}.json"
@@ -377,7 +397,9 @@ def main():
     beats_current_best = results["dti"] > CURRENT_BEST_HOLDOUT
     ok_to_submit = (
         checks["format_valid"]
-        and checks.get("checks", {}).get("variant_strict_whole_area_no_nan_allowed", {}).get("pass", False)
+        and checks.get("checks", {})
+        .get("variant_strict_whole_area_no_nan_allowed", {})
+        .get("pass", False)
         and report["final_novelty"]["passed"]
         and report["canary"]["passed"]
         and beats_current_best
@@ -407,7 +429,9 @@ def main():
             "protocol": results["protocol"],
         },
         "correlation_overlap_vs_registry": {
-            "surface_max_abs_rank_correlation": report["surface_novelty"]["max_abs_rank_correlation"],
+            "surface_max_abs_rank_correlation": report["surface_novelty"][
+                "max_abs_rank_correlation"
+            ],
             "final_max_abs_rank_correlation": report["final_novelty"]["max_abs_rank_correlation"],
             "final_max_overlap_within_3px": report["final_novelty"]["max_dot_overlap"],
             "passed": report["final_novelty"]["passed"],
@@ -449,7 +473,9 @@ def main():
         "preflight_file": preflight_file,
         "role": "primary",
         "format_valid": checks["format_valid"],
-        "strict_range_ok": checks.get("checks", {}).get("variant_strict_whole_area_no_nan_allowed", {}).get("pass", False),
+        "strict_range_ok": checks.get("checks", {})
+        .get("variant_strict_whole_area_no_nan_allowed", {})
+        .get("pass", False),
         "ok_to_download": checks["format_valid"],
         "ok_to_submit": ok_to_submit,
         "verdict": verdict,
@@ -459,20 +485,28 @@ def main():
     }
     save(download_entry, DATA_OUT / "unique_download.json")
 
-    print(json.dumps({
-        "file": name,
-        "pixels": int(final.sum()),
-        "sha256": raster_sha256,
-        "holdout_dti": results["dti"],
-        "holdout_ci95": results["ci95"]["interval"],
-        "note_characters": len(note),
-        "verdict": verdict,
-        "ok_to_submit": ok_to_submit,
-        "ok_to_download": checks["format_valid"],
-        "strict_range_ok": checks.get("checks", {}).get("variant_strict_whole_area_no_nan_allowed", {}).get("pass", False),
-        "novelty_passed": report["final_novelty"]["passed"],
-        "canary_passed": report["canary"]["passed"],
-    }, indent=2), flush=True)
+    print(
+        json.dumps(
+            {
+                "file": name,
+                "pixels": int(final.sum()),
+                "sha256": raster_sha256,
+                "holdout_dti": results["dti"],
+                "holdout_ci95": results["ci95"]["interval"],
+                "note_characters": len(note),
+                "verdict": verdict,
+                "ok_to_submit": ok_to_submit,
+                "ok_to_download": checks["format_valid"],
+                "strict_range_ok": checks.get("checks", {})
+                .get("variant_strict_whole_area_no_nan_allowed", {})
+                .get("pass", False),
+                "novelty_passed": report["final_novelty"]["passed"],
+                "canary_passed": report["canary"]["passed"],
+            },
+            indent=2,
+        ),
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

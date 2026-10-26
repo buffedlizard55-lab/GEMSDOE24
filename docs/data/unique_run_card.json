@@ -1,13 +1,13 @@
 {
-  "hypothesis": "H-UNIQUE-GAPFILL: dots near faults in gaps between existing submissions \u2014 captures DTI credit without duplicating any raster",
-  "mechanism": "Score surface is high near visible catalogue faults (DTI credit) but suppressed where existing submissions already place dots. Dots land in the damage-zone gaps around faults \u2014 near truth but spatially distinct from every existing raster. Catalogue faults used only for holdout masking.",
-  "non_fault_mimic": "Altered damage zones without active geothermal flow",
+  "hypothesis": "H-UNIQUE-06 geothermal surface-feature proximity: vents + hot springs mark concealed fault conduits absent from the fault catalogue",
+  "mechanism": "Hot springs and volcanic vents mark geothermal fluid reaching the surface; the fault conduit connects them to depth. Dots near surface geothermal features target concealed faults missing from USGS/INGENIOUS.",
+  "non_fault_mimic": "Cold springs, non-geothermal seeps, surface water",
   "holdout": {
     "evaluator_version": "gems-segment-pooled-v1",
-    "dti": 0.601827138891752,
+    "dti": 0.022348219779637794,
     "ci95": [
-      0.6000423531215942,
-      0.6035282309899314
+      0.01799309009314464,
+      0.02715698839958841
     ],
     "n_withheld_positive_pixels": 60988,
     "n_unique_withheld_components": 3199,
@@ -23,10 +23,10 @@
     }
   },
   "correlation_overlap_vs_registry": {
-    "surface_max_abs_rank_correlation": 0.0999721799329496,
-    "final_max_abs_rank_correlation": 0.20751612126721927,
-    "final_max_overlap_within_3px": 0.4312072530618737,
-    "passed": true,
+    "surface_max_abs_rank_correlation": 0.00954092702287659,
+    "final_max_abs_rank_correlation": 0.048728583600066336,
+    "final_max_overlap_within_3px": 0.9968289920724802,
+    "passed": false,
     "rank_limit": 0.9,
     "overlap_limit": 0.7
   },
@@ -34,14 +34,16 @@
     "passed": true,
     "threshold": 0.9,
     "features": {
-      "fault_proximity_gapfill": 0.3751833333333333
+      "vent_proximity": 0.49996666666666667,
+      "spring_proximity": 0.5054616618573924,
+      "score_surface": 0.5003009626458601
     }
   },
-  "raster_sha256": "cc0d061f915fef34288a09df990dde229d6efd95521bc73013bd5c652eb14f24",
+  "raster_sha256": "20a619dd806be92a27961cc48df7ca63486c1120d852907fe7418b7708333aad",
   "validator_output": {
-    "file": "24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.tif",
-    "bytes": 826272,
-    "sha256": "cc0d061f915fef34288a09df990dde229d6efd95521bc73013bd5c652eb14f24",
+    "file": "24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.tif",
+    "bytes": 770544,
+    "sha256": "20a619dd806be92a27961cc48df7ca63486c1120d852907fe7418b7708333aad",
     "format_valid": true,
     "ok_to_upload": false,
     "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
@@ -50,8 +52,8 @@
     "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
     "hard_failures": [],
     "official_format_compliant": false,
-    "in_footprint_positive_pixels": 37722,
-    "in_footprint_mass": 37722.0,
+    "in_footprint_positive_pixels": 8830,
+    "in_footprint_mass": 8830.0,
     "checks": {
       "official_template_grid_and_footprint": {
         "pass": true,
@@ -135,16 +137,19 @@
     ],
     "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score."
   },
-  "submission_name": "24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.tif",
-  "note": "24GEMS gapfill near-fault dots | avoids existing submission dots | research; HOLDOUT-DTI 0.60183 | id 1b2b4ccc37b0",
-  "note_characters": 114,
+  "submission_name": "24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.tif",
+  "note": "24GEMS geothermal-surface-proximity vents+springs | catalogue-independent | research; HOLDOUT-DTI 0.02235 | id dd2fff044fc1",
+  "note_characters": 123,
   "note_limit": 140,
-  "verdict": "promote",
+  "verdict": "negative",
   "ok_to_download": true,
-  "ok_to_submit": true,
-  "reasons": [],
+  "ok_to_submit": false,
+  "reasons": [
+    "holdout DTI does not beat current comparable best 0.13",
+    "novelty gate failed"
+  ],
   "organizer_confirmed_score": null,
   "experiments_run": 1,
   "submission_slots_used": 0,
-  "elapsed_seconds": 71.55186473200001
+  "elapsed_seconds": 58.484666941999876
 }
