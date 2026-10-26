@@ -1,0 +1,31 @@
+{
+  "file": "gems24-drain1-valley-knick-deflect-20261026-da704869289a-zeros.tif",
+  "nan_file": "gems24-drain1-valley-knick-deflect-20261026-da704869289a-nan.tif",
+  "zip_file": "gems24-drain1-valley-knick-deflect-20261026-da704869289a-nan.zip",
+  "sha256": "99d884f7d5c258a4633f2eb7d2a522e7d2462ead0a5438b931b7af1ad29d225a",
+  "nan_sha256": "8b07d71835000be114ebcb0393291a44c4d2b9d6ff02c0b834c3fabdb9db6555",
+  "zip_sha256": "d724ed83b19b53faecbe31bdd1adea1f5d4ad14802b17e2a49490b442903586f",
+  "content_id": "da704869289a",
+  "pixel_count": 37722,
+  "note": "GEMS24 DRAIN1 | valley knick deflect | da704869289a | HOLDOUT-DTI 0.06578 | DO NOT SUBMIT",
+  "note_file": "note-gems24-drain1-valley-knick-deflect-20261026-da704869289a-zeros.txt",
+  "checks_file": "checks-gems24-drain1-valley-knick-deflect-20261026-da704869289a-zeros.json",
+  "generation": "independent-drain1-v1",
+  "format_valid": true,
+  "all_technical_gates_passed": false,
+  "competing_method_uniqueness_passed": true,
+  "literal_unseparated_uniqueness_passed": false,
+  "strict_c2st_gate_passed": false,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "slot_recommendation": "not_recommended",
+  "verdict": "negative",
+  "live_dti": null,
+  "run_card": "drain1_run_card.json",
+  "independently_computed": true,
+  "holdout_dti": 0.06577659735184543,
+  "ci95": [
+    0.05846528013771287,
+    0.07321610181905176
+  ]
+}

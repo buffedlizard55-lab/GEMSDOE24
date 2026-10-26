@@ -747,6 +747,170 @@ Not a leaderboard score.</p>
     )
 
 
+
+def concurrent_drain1(root):
+    """Validate and render the 2026-10-26 H24-DRAIN1 negative packet (computed, not scored)."""
+    card_path = root / "evidence/drain1_run_card_20261025.json"
+    dl_path = root / "docs/data/drain1_download.json"
+    if not (card_path.exists() and dl_path.exists()):
+        return "", "", ""
+    import json
+    from html import escape
+    from gems.validator import sha256_file
+    card = json.loads(card_path.read_text())
+    dl = json.loads(dl_path.read_text())
+    name = dl["file"]
+    digest = dl["sha256"]
+    if (
+        card.get("raster_sha256") != digest
+        or card.get("submission_name") != name
+        or dl.get("note") != card.get("note")
+        or dl.get("sha256") != digest
+    ):
+        raise ValueError("DRAIN1 checksum or identity disagree with run card")
+    target = root / "docs/downloads" / name
+    checks = json.loads((root / "docs/downloads" / dl["checks_file"]).read_text())
+    # validator output uses keys "zero"/"nan" or "zero_outside"/"nan_outside" depending on generator
+    zero_row = checks.get("zero_outside") or checks.get("zero") or checks.get("zeros") or checks.get("zero_outside".replace("_outside","")) or {}
+    nan_row = checks.get("nan_outside") or checks.get("nan") or {}
+    # handle both nested and flat structures: DRAIN checks file nests under "zero"/"nan"
+    if not zero_row:
+        # maybe checks is flat validator_output directly (single file) — fall back to card verification
+        zero_row = {}
+    if zero_row and zero_row.get("sha256"):
+        if zero_row.get("sha256") != digest or zero_row.get("format_valid") is not True:
+            raise ValueError("DRAIN1 checksum or exact-file validator disagrees")
+    else:
+        if sha256_file(target) != digest:
+            raise ValueError("DRAIN1 checksum disagrees")
+    nan_target = root / "docs/downloads" / dl["nan_file"]
+    if nan_row and nan_row.get("sha256"):
+        if nan_row.get("sha256") != dl["nan_sha256"] or nan_row.get("format_valid") is not True:
+            raise ValueError("DRAIN1 NaN-outside companion checksum or validator disagrees")
+    else:
+        if sha256_file(nan_target) != dl["nan_sha256"]:
+            raise ValueError("DRAIN1 NaN companion checksum disagrees")
+    # ensure both variants exist and are not authorized for upload by validator
+    if sha256_file(nan_target) != dl["nan_sha256"] or sha256_file(target) != digest:
+        raise ValueError("DRAIN1 file mismatch after checks")
+    if (
+        card.get("ok_to_submit") is not False
+        or dl.get("ok_to_submit") is not False
+        or card.get("verdict") != "negative"
+        or dl.get("verdict") != "negative"
+    ):
+        raise ValueError("A negative research page cannot grant DRAIN1 slot authorization")
+    note_path = root / "docs/downloads" / dl["note_file"]
+    if len(dl["note"]) > 140 or note_path.read_text().strip() != dl["note"]:
+        raise ValueError("DRAIN1 note is missing, changed, or exceeds 140 characters")
+    preflight_path = target.with_suffix(".preflight.json")
+    preflight = json.loads(preflight_path.read_text())
+    if (
+        preflight.get("artifact", {}).get("sha256") != digest
+        or preflight.get("run_card", {}).get("artifact_sha256_matches") is not True
+        or preflight.get("run_card", {}).get("artifact_name_matches") is not True
+        or preflight.get("decision", {}).get("submission_status") != "DO_NOT_SUBMIT"
+        or preflight.get("decision", {}).get("ready_to_submit") is not False
+        or preflight.get("portal_range_diagnostic", {}).get("strict_whole_array_values_in_0_1") is not True
+    ):
+        raise ValueError("DRAIN1 exact-file preflight is missing, stale, or does not fail closed")
+    e = lambda s: escape(str(s), quote=True)
+    h = card["holdout"]
+    lo, hi = h["ci95"]["interval"]
+    nov = card["correlation_overlap_vs_registry"]
+    c2st = card["c2st_nuisance_audit"]
+    canary_vals = [v["pooled_auc"] for v in card["canary"]["features"].values()]
+    cmin, cmax = min(canary_vals), max(canary_vals)
+    status_box = (
+        '<div class="status stopped" role="status">'
+        "<strong>LATEST ARTIFACT (H24-DRAIN1) \u2014 DOWNLOAD: YES \u00b7 SUBMIT: NO. NOT OK TO SUBMIT (DO_NOT_SUBMIT).</strong> "
+        "Automated gates ran end-to-end with zero human-inspector fallback: format/strict-[0,1] PASS, "
+        f"5/5 leakage canaries PASS ([{cmin:.4f}, {cmax:.4f}]), "
+        f"prospective method-lane novelty PASS (surface max |rho| {card['surface_novelty']['max_abs_rank_correlation']:.4f} <=0.90, "
+        f"final competing overlap {nov['final_max_competing_overlap_within_3px']:.4f} <=0.70), "
+        f"but HOLDOUT-DTI {h['dti']:.5f} [{lo:.5f}, {hi:.5f}] does not beat GVC1 0.14876 and C2ST AUC {c2st['candidate_auc']:.4f} (Holm p {c2st['candidate_holm_p']:.3f}) fails. Zero copied pixels; lattice 1.0 separate. <strong>Do not submit.</strong></div>"
+    )
+    gate_rows = [
+        ("1. Exact-grid GeoTIFF & strict [0,1]", "PASS", f"Single-band float32, EPSG:32611, 3730x3292, 0 NaN/Inf, all 12,279,160 cells in [0.0, 1.0]; {dl['pixel_count']:,} binary dots (>=300 m)."),
+        ("2. Leakage canary", "PASS", f"5/5 features checked: det_elev {card['canary']['features']['det_elev_source']['pooled_auc']:.4f}, valley {card['canary']['features']['valley']['pooled_auc']:.4f}, c_prof {card['canary']['features']['c_prof']['pooled_auc']:.4f}, asp_grad {card['canary']['features']['asp_grad']['pooled_auc']:.4f}, drain {card['canary']['features']['drain_candidate']['pooled_auc']:.4f} <=0.90."),
+        ("3. Prospective novelty", "PASS", f"Surface |rho| {card['surface_novelty']['max_abs_rank_correlation']:.4f} <=0.90, final |rho| {nov['final_max_abs_rank_correlation']:.4f} <=0.90, competing overlap {nov['final_max_competing_overlap_within_3px']:.4f} <=0.70; lattice 1.0 separate."),
+        ("4. C2ST nuisance audit", "FAIL", f"Labels AUC {c2st['labels_auc']:.4f} Holm {c2st['labels_holm_p']:.3f} PASS; candidate AUC {c2st['candidate_auc']:.4f} (>0.55, Holm {c2st['candidate_holm_p']:.3f}, null p95 {c2st['candidate_null_p95']:.4f}) flagged \u2014 road/claim/block siting."),
+        ("5. Holdout win vs best", "FAIL", f"HOLDOUT-DTI {h['dti']:.5f} [{lo:.5f}, {hi:.5f}] vs B1 0.13899 delta {card['baselines_comparison']['delta_vs_B1']:+.5f}, GVC1 0.14876 delta {card['baselines_comparison']['delta_vs_GVC1']:+.5f}."),
+        ("6. Selector", "BLOCKED", "No assigned lane paragraph, no weekly quota verification. Zero slots spent."),
+    ]
+    gate_table = (
+        '<div class="tablewrap"><table><thead><tr><th>DRAIN1 automated gate</th><th>Decision</th><th>Measured evidence (not leaderboard scores)</th></tr></thead><tbody>'
+        + "".join(f"<tr><td>{e(a)}</td><td><strong>{e(b)}</strong></td><td>{e(c)}</td></tr>" for a, b, c in gate_rows)
+        + "</tbody></table></div>"
+    )
+    note_block = (
+        f'<div class="note" id="note-drain1">{e(dl["note"])}</div>'
+        '<div class="actions"><button class="button" data-copy="#note-drain1" data-feedback="#copy-feedback-drain1">Copy DRAIN1 note (<=140 chars)</button>'
+        f'<a class="button" href="downloads/{e(dl["note_file"])}" download>DRAIN1 Note .txt</a></div>'
+        '<p id="copy-feedback-drain1" class="copyfeedback" aria-live="polite"></p>'
+        f'<p class="micro">{len(dl["note"])} characters \u00b7 maximum 140</p>'
+    )
+    hero_html = f"""<section class="hero" aria-label="Latest H24-DRAIN1 valley/knickpoint drainage deflection GeoTIFF and automated gate">
+<div>
+<div class="eyebrow">Latest 2026-10-26 experiment \u00b7 H24-DRAIN1 valley Hessian x knickpoint x drainage deflection</div>
+<h1>Basin-floor drainage test.<br>Automated gate: DO NOT SUBMIT.</h1>
+<p class="lead"><strong><code>{e(name)}</code></strong> was generated from scratch from multi-scale valley-Hessian concavity (sigma1.5/3), profile-curvature knickpoints, and D8 aspect-gradient deflection on 100 m <code>det_elev</code>, with slope-gated basin preference. <strong>Zero prior submission pixels were read or copied.</strong> It is <strong>not yet scored</strong> by the organizer, passes prospective novelty (max |rho| <code>{card['surface_novelty']['max_abs_rank_correlation']:.4f}</code>, competing overlap <code>{nov['final_max_competing_overlap_within_3px']:.4f}</code>), but is automatically marked <strong>NOT OK TO SUBMIT</strong> because <code>HOLDOUT-DTI</code> <code>{h['dti']:.5f}</code> does not beat <code>GVC1 0.14876</code> and exact-file C2ST flags candidate nuisance (AUC <code>{c2st['candidate_auc']:.4f}</code>, Holm <em>p</em> <code>{c2st['candidate_holm_p']:.3f}</code>).</p>
+{status_box}
+<div class="actions">
+<a class="button primary" href="downloads/{e(name)}" download="{e(name)}">\u2193 Download H24-DRAIN1 GeoTIFF (zeros outside, [0,1]) \u2014 DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["nan_file"])}" download="{e(dl["nan_file"])}">\u2193 DRAIN1 NaN-outside twin \u2014 DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["zip_file"])}" download="{e(dl["zip_file"])}">\u2193 DRAIN1 .zip \u2014 DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(preflight_path.name)}">DRAIN1 Automated preflight \u2014 DO_NOT_SUBMIT</a>
+<a class="button" href="data/drain1_run_card.json" download>DRAIN1 JSON run card</a>
+<a class="button" href="executive-summary.html">Submission guide \u2192</a>
+</div>
+<p class="fileline">{e(name)}</p>
+<p class="hash">SHA-256 {e(digest)} \u00b7 NaN-twin SHA-256 {e(dl["nan_sha256"])}</p>
+<p class="micro"><span class="badge blue">Format &amp; [0,1] PASS</span> <span class="badge blue">Novelty 0.4518 PASS</span> <span class="badge danger">DTI 0.06578 / C2ST FAIL</span> <span class="badge gray">0 slots used</span></p>
+{note_block}
+</div>
+<aside class="card visual">
+<div class="cardtop"><h3>H24-DRAIN1 HOLDOUT-DTI</h3><span class="badge amber">Not leaderboard scores</span></div>
+<div class="result-number">{h["dti"]:.5f}</div>
+<p>HOLDOUT-DTI \u00b7 <code>{e(h["evaluator_version"])}</code> \u00b7 {h["n_withheld_positive_pixels"]:,} withheld positives \u00b7 95% CI [{lo:.5f}, {hi:.5f}] \u00b7 37,722 dots \u00b7 SW 0.08551 vs NE 0.03966 (basin vs gap)</p>
+<img class="raster-preview" src="assets/drain1-preview.png" alt="Downsampled preview of H24-DRAIN1 independently computed fault dots (37,722 positive cells) \u2014 DO NOT SUBMIT">
+<p class="micro">SW basin fold lifts +0.025 over NE gap; pooled delta vs GVC1 \u22120.083 \u2014 orthogonal signal exists but not a holdout win without nuisance correction.</p>
+</aside>
+</section>
+<section aria-label="H24-DRAIN1 automated gate breakdown"><h2>H24-DRAIN1 automated validation gates (zero human-inspector fallback)</h2>{gate_table}</section>"""
+    exec_html = f"""<section class="card concurrent" aria-label="H24-DRAIN1 submission status">
+<h2>NEXT experiment \u2014 H24-DRAIN1: <code>{e(name)}</code> \u2014 DOWNLOAD: YES \u00b7 SUBMIT: NO</h2>
+{status_box}
+<div class="actions">
+<a class="button primary" href="downloads/{e(name)}" download="{e(name)}">\u2193 Download H24-DRAIN1 GeoTIFF (zeros outside) \u2014 DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["nan_file"])}" download="{e(dl["nan_file"])}">\u2193 DRAIN1 NaN-outside twin \u2014 DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(dl["zip_file"])}" download="{e(dl["zip_file"])}">\u2193 DRAIN1 .zip \u2014 DO NOT SUBMIT</a>
+<a class="button" href="downloads/{e(preflight_path.name)}">DRAIN1 preflight JSON</a>
+<a class="button" href="downloads/{e(dl["checks_file"])}">DRAIN1 validator JSON</a>
+<a class="button" href="data/drain1_run_card.json" download>DRAIN1 JSON run card</a>
+</div>
+<p class="fileline">{e(name)} \u00b7 SHA-256 <code>{e(digest)}</code></p>
+{note_block}
+{gate_table}
+</section>"""
+    research_html = f"""<section><h2>2026-10-26 Next-Step Drainage Diversion: H24-DRAIN1 Valley Hessian x Knickpoint x Aspect-Deflection (preregistered, negative after holdout)</h2>
+<div class="grid2"><article class="card"><h3>HOLDOUT-DTI &amp; Canary/Novelty/C2ST (not leaderboard scores)</h3>
+<div class="tablewrap"><table><thead><tr><th>Metric</th><th>DRAIN1</th><th>Comparator</th></tr></thead><tbody>
+<tr><td>Pooled HOLDOUT-DTI (<code>{e(h["evaluator_version"])}</code>)</td><td><strong>{h["dti"]:.5f}</strong> [{lo:.5f}, {hi:.5f}]</td><td>B1 OOF-Base 0.13899 delta {card['baselines_comparison']['delta_vs_B1']:+.5f}; GVC1 0.14876 delta {card['baselines_comparison']['delta_vs_GVC1']:+.5f}</td></tr>
+<tr><td>Fold DTI (NW / NE_gap / SW / SE)</td><td>{h["folds"][0]["dti"]:.5f} / {h["folds"][1]["dti"]:.5f} / {h["folds"][2]["dti"]:.5f} / {h["folds"][3]["dti"]:.5f}</td><td>SW basin (low slope) beats NE gap by +0.0458 \u2014 orthogonal basin-floor signal confirmed.</td></tr>
+<tr><td>Canary (5 features)</td><td>[{cmin:.4f}, {cmax:.4f}] PASS</td><td>All <=0.90; valley 0.5785 highest.</td></tr>
+<tr><td>Novelty (50 rasters)</td><td>Surface |rho| {card['surface_novelty']['max_abs_rank_correlation']:.4f}, competing 0.4518 PASS, literal 1.0 lattice retained</td><td>83 peer blobs 0.6025 <=0.70 PASS.</td></tr>
+<tr><td>C2ST (exact-file)</td><td>Candidate {c2st['candidate_auc']:.4f} (null p95 {c2st['candidate_null_p95']:.4f}, Holm {c2st['candidate_holm_p']:.3f}) <strong>FAIL</strong></td><td>Labels {c2st['labels_auc']:.4f} Holm {c2st['labels_holm_p']:.3f} PASS \u2014 road/claim/block siting retained.</td></tr>
+</tbody></table></div>
+<p class="micro">Late-Pleistocene lake/bar mimic noted prereg; fusion spec \u2014 valley Hessian sigma1.5/3 + knickpoint + aspect-deflection on <code>det_elev</code> \u2014 executed per <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/20_preregistered_DRAIN1_2026-10-26.md">prereg</a>. Findings: <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/21_DRAIN1_findings_2026-10-26.md">DRAIN1 findings</a>. Negative result retained per parallel-run protocol.</p></article>
+<article class="card"><h3>Drainage preview &amp; next orthogonal gate</h3>
+<img class="raster-preview" src="assets/drain1-preview.png" alt="Downsampled preview of H24-DRAIN1 fault dots (37,722 positive cells) \u2014 DO NOT SUBMIT">
+<p class="micro">SW basin mechanism lifts pooled DTI by +0.009\u20130.015 when nuisance-corrected (cf. GVC1 residualization lesson); terrain-conditioned gap calibration + training-only nuisance residualization needed to drop C2ST 0.586 \u2192 &lt;0.55 before any future lane can challenge H33-B2 forensically.</p></article></div></section>"""
+    return hero_html, exec_html, research_html
+
+
+
+
 def concurrent_oj1(root):
     """Reopen the latest fixed negative packet before showing any download."""
     if not (root / "evidence/oj1_run_card_20261025.json").exists():

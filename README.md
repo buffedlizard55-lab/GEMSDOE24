@@ -1,6 +1,24 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Latest experiment: H24-RSHG1 — DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
+## Latest experiment: H24-DRAIN1 — DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
+
+[**Download the newly generated H24-DRAIN1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-drain1-valley-knick-deflect-20261026-da704869289a-zeros.tif) ·
+[NaN-outside twin](docs/downloads/gems24-drain1-valley-knick-deflect-20261026-da704869289a-nan.tif) ·
+[ZIP of NaN variant](docs/downloads/gems24-drain1-valley-knick-deflect-20261026-da704869289a-nan.zip) ·
+[Full JSON run card](evidence/drain1_run_card_20261025.json) ·
+[Preregistration](knowledge/20_preregistered_DRAIN1_2026-10-26.md) ·
+[PhD synthesis & findings](knowledge/21_DRAIN1_findings_2026-10-26.md) ·
+[Executive submission guide](docs/executive-summary.html).
+
+**NOT OK TO SUBMIT (`DO_NOT_SUBMIT`).** Independently generated drainage-network valley concavity × knickpoint × aspect-deflection on 100 m `det_elev` (no LiDAR, no copied pixels). Format & strict whole-array `[0,1]` PASS (825,180 bytes, 37,722 binary {0,1} dots, 0 NaN inside footprint), 5/5 two-polarity leakage canaries PASS (worst valley AUC 0.5785 ≪0.90), prospective method-lane novelty **PASS** (surface max |ρ| 0.1237 ≤0.90, final-dot max |ρ| 0.1227 ≤0.90, final-dot max competing overlap **0.4518 ≤0.70 PASS** vs 49 competing rasters + 1 spacing-5 lattice reported separately at 1.0), but **C2ST nuisance audit FAIL** (AUC 0.5864, null p95 0.5212, Holm p 0.010 flagged; labels 0.4958 not flagged) and HOLDOUT-DTI **0.06578** (95% CI [0.05847,0.07322], `gems-segment-pooled-v1`, 60,988 withheld positives) does not beat current best `GVC1 0.14876` (Δ −0.08299) or `B1 0.13899` (Δ −0.07322) and overlaps are still below threshold but gate requires beating best. Zero previous submission pixels copied.
+
+- Name: `gems24-drain1-valley-knick-deflect-20261026-da704869289a-zeros.tif`
+- SHA-256: `99d884f7d5c258a4633f2eb7d2a522e7d2462ead0a5438b931b7af1ad29d225a`
+- Short comment (98 chars): `GEMS24 DRAIN1 | valley knick deflect | da704869289a | HOLDOUT-DTI 0.06578 | DO NOT SUBMIT`
+
+**Highest holdout artifact remains H24-GVC1 (not this experiment):** `gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif` (HOLDOUT-DTI 0.14876 [0.13413,0.16370], C2ST PASS) — also **DOWNLOAD: YES · SUBMIT: NO** (76.8% overlap). See below.
+
+## Second latest: H24-RSHG1 — DOWNLOAD YES / SUBMIT NO (`DO_NOT_SUBMIT`)
 
 [**Download the newly generated H24-RSHG1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif) ·
 [NaN-outside twin](docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif) ·
@@ -82,7 +100,14 @@ ends with one JSON run card (budget: max 3 experiments or 2 hours; negative resu
 are valid deliverables). Full verbatim prompt:
 [`knowledge/owner_brief_2026-10-25.md`](knowledge/owner_brief_2026-10-25.md).
 
-**Latest artifact (this session — `H24-RSHG1`):**
+**Latest artifact (this session — `H24-DRAIN1`):**
+`docs/downloads/gems24-drain1-valley-knick-deflect-20261026-da704869289a-zeros.tif`
+(SHA-256: `99d884f7d5c258a4633f2eb7d2a522e7d2462ead0a5438b931b7af1ad29d225a`)
+and NaN-outside twin
+`docs/downloads/gems24-drain1-valley-knick-deflect-20261026-da704869289a-nan.tif`
+— **DOWNLOAD: YES · SUBMIT: NO (`DO_NOT_SUBMIT`)** · format-valid, strict `[0,1]` PASS, 5/5 canaries PASS, **C2ST FAIL** (AUC 0.5864, Holm p 0.010 flagged vs labels 0.4958), HOLDOUT-DTI **0.06578** (95% CI [0.05847,0.07322], `gems-segment-pooled-v1`, 60,988 withheld), does not beat `GVC1 0.14876` or `B1 0.13899`; but **novelty PASS** (max |ρ| 0.1227 ≤0.90, competing overlap 0.4518 ≤0.70). Run card: [`evidence/drain1_run_card_20261025.json`](evidence/drain1_run_card_20261025.json) · Prereg: [`knowledge/20_preregistered_DRAIN1_2026-10-26.md`](knowledge/20_preregistered_DRAIN1_2026-10-26.md) · Findings: [`knowledge/21_DRAIN1_findings_2026-10-26.md`](knowledge/21_DRAIN1_findings_2026-10-26.md).
+
+**Second latest artifact (this session — `H24-RSHG1`):**
 `docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif`
 (SHA-256: `06d28182d9fea06d1d4ac3fc603bada748306e68350ebe432e3ff9f82fd3703e`)
 and NaN-outside twin
