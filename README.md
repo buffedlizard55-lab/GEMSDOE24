@@ -257,6 +257,24 @@ Latest OJ1 research TIFF: [`gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zero
 
 **DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**
 
+Latest unique 2026-10-26 `H24-CRP1` GeoTIFF:
+[`gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif`](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif)
+(`SHA-256: f02859b3e881b942919deb267cad23673d6a6a1bc0148b2116ff1b706cba8978`) and NaN-outside twin
+[`gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif`](docs/downloads/gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif).
+Independently computed (zero copied submission pixels) from compositional radiometric
+fronts, cross-depth TMI/up150 persistence and Hessian saddles with selective nuisance
+residualization. **HOLDOUT-DTI 0.13747** (95% CI [0.12400, 0.15152],
+`gems-segment-pooled-v1`, 60,988 withheld positives);
+paired Δ vs reconstructed OOF baseline +0.00747 (95% CI
+[-0.00242, +0.01793]); max competing-method 3-px dot overlap
+0.8070 (limit 0.70). Independent selector
+decision: **DO_NOT_SUBMIT** — see `evidence/crp1_selector_20261026.json`. No organizer
+score exists; HOLDOUT-DTI is not a leaderboard forecast. Short comment
+(92 chars): `GEMS24 CRP1 | comp-front+xdepth+saddle | NEGATIVE gate stop; DO NOT SUBMIT | id c679a967f700`
+[CRP1 run card](evidence/crp1_run_card_20261026.json) ·
+[Preregistration](knowledge/20_preregistered_CRP1_2026-10-26.md) ·
+[Executive guide](docs/executive-summary.html#crp1)
+
 Latest 2026-10-25 `H24-FUSE-HCW` Residualized Conduit OOF-HGB GeoTIFF (executes documented Next Step #4):
 [`gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif`](docs/downloads/gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif) (`SHA-256: cfb5d21f9f0308a4c5cc917641c1cfd4d8f73d60fa4f64cf12ba9548ae23afb3`)
 and NaN-outside twin [`gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-nan.tif`](docs/downloads/gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-nan.tif).
