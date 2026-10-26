@@ -219,7 +219,7 @@
     },
     {
       "pass": 3,
-      "result": "Ruff all src/scripts/tests PASS; compileall PASS; site rebuild PASS; local HTML file links PASS; offline source feed schema PASS; git diff --check PASS."
+      "result": "Ruff all src/scripts/tests PASS; compileall PASS; site rebuild PASS; local HTML file links PASS; offline source feed schema PASS; git diff --check PASS. Initial remote CI format check failed; formatted the new files with repository-pinned Ruff 0.16.10, then format --check all 119 files PASS; targeted 9 tests PASS; Node syntax and offline source snapshot checks PASS."
     }
   ],
   "limitations": [

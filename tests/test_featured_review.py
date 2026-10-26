@@ -1,4 +1,5 @@
 """Featured downloads and priority summaries cannot turn claims into approval."""
+
 import copy
 import importlib.util
 import json
@@ -9,7 +10,9 @@ import pytest
 from gems.release_audit import verify_featured_downloads
 
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location("priority_summary", ROOT / "scripts/priority_summary.py")
+spec = importlib.util.spec_from_file_location(
+    "priority_summary", ROOT / "scripts/priority_summary.py"
+)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 
@@ -24,12 +27,18 @@ def test_featured_exact_bytes_remain_negative():
         assert not row["validator_output"]["submission_authorized"]
 
 
-@pytest.mark.parametrize("change", [
-    {"ok_to_submit": True}, {"verdict": "promote"},
-    {"submission_authorized": True}, {"sha256": "0" * 64},
-    {"file": "../escape-zeros.tif"}, {"note_file": "../escape.txt"},
-    {"note": "x" * 141},
-])
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"ok_to_submit": True},
+        {"verdict": "promote"},
+        {"submission_authorized": True},
+        {"sha256": "0" * 64},
+        {"file": "../escape-zeros.tif"},
+        {"note_file": "../escape.txt"},
+        {"note": "x" * 141},
+    ],
+)
 def test_featured_metadata_tampering_fails_closed(monkeypatch, change):
     original = Path.read_text
 
