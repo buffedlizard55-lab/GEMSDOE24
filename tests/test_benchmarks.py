@@ -20,15 +20,19 @@ def _seed(root):
     return evidence
 
 
-def test_later_cup_point_best_is_recorded_but_never_mistaken_for_promotion():
+def test_later_drain5_point_best_is_recorded_but_never_mistaken_for_promotion():
     result = recorded_point_best(ROOT)
-    assert result["lane"] == "DPRF1"
-    assert result["holdout"]["dti"] == 0.1637924246971501
+    # H24-DRAIN5 (2026-10-26) superseded DPRF1 as the recorded point-best; the
+    # inventory must surface it while never treating it as promotion evidence.
+    assert result["lane"] == "DRAIN5"
+    assert result["holdout"]["dti"] == 0.16950396856353708
     assert result["source_sha256"] == sha256_file(ROOT / result["source"])
     assert result["ok_to_submit"] is False
     assert "no independent" in result["scope"]
     rows = recorded_points(ROOT)
-    assert {"GVC1", "TNR1", "CRP1", "CUP1", "DPRF1"} <= {row["lane"] for row in rows}
+    assert {"GVC1", "TNR1", "CRP1", "CUP1", "DPRF1", "DRAIN5"} <= {row["lane"] for row in rows}
+    dprf1 = next(row for row in rows if row["lane"] == "DPRF1")
+    assert dprf1["holdout"]["dti"] == 0.1637924246971501
     assert [row["holdout"]["dti"] for row in rows] == sorted(
         (row["holdout"]["dti"] for row in rows), reverse=True
     )

@@ -1746,3 +1746,141 @@ def eul1_packet(root):
     eul = card["euler_diagnostics"]
     research_html = f"""<section><h2>H24-EUL1 (2026-10-26) — preregistered method and result</h2><p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p><p><strong>Mechanism:</strong> {e(card["mechanism"])}</p><p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p><p>Euler census: RTP {eul["rtp"]["n_solutions_accepted"]:,} accepted ({100 * eul["rtp"]["accepted_fraction_of_valid"]:.2f}% of valid windows, median depth {eul["rtp"]["median_depth_px"]:.2f} px, {100 * eul["rtp"]["signed_depth_positive_fraction"]:.1f}% below plane); gravity {eul["grav"]["n_solutions_accepted"]:,} accepted (median {eul["grav"]["median_depth_px"]:.1f} px). Survey <code>*_vg</code> bands were replaced by self-consistent FFT vertical derivatives after label-free forensics (Amendment A1, <code>knowledge/23_EUL1_prereg_amendment_2026-10-26.md</code>): <code>tmi_vg</code> = ∂(tmi)×{eul["vg_band_forensics"]["tmi_vg_vs_tmi"]["slope_vg_equals_slope_times_fft_fz_per_px"]:.5f}/px (corr {eul["vg_band_forensics"]["tmi_vg_vs_tmi"]["corr_vg_vs_fft_fz"]:.4f}); <code>iso_grav_anom_vg</code> vs ∂(iso_grav_anom) corr {eul["vg_band_forensics"]["iso_grav_anom_vg_vs_iso_grav_anom"]["corr_vg_vs_fft_fz"]:.4f}.</p><p>Pooled HOLDOUT-DTI <strong>{score["dti"]:.5f}</strong> (95% CI [{lo:.5f}, {hi:.5f}]) on <code>{e(score["evaluator_version"])}</code>; verdict <code>{e(card["verdict"])}</code>. Spec frozen in <code>knowledge/22_preregistered_EUL1_2026-10-26.md</code>; findings in <code>knowledge/24_EUL1_findings_and_executive_summary_2026-10-26.md</code>. Lesson: incremental channels on a strong parent converge to duplicate dots (CUP1 91.2%, EUL1 86.6%); future lanes must change detection geometry, not append features.</p></section>"""
     return hero_html, exec_html, research_html
+
+
+def drain5_packet(root):
+    """Validate and render the 2026-10-26 H24-DRAIN5 drainage-knickpoint packet.
+
+    Science-positive (paired holdout win over the bit-identical DPRF1 replay)
+    but a duplicate lane under Rule 1 (83.55% of dots within 3 px of DPRF1):
+    rendered as a research-only download, never as the unique submission.
+    """
+    exp_path = root / "evidence/drain5_experiment_20261026.json"
+    card_path = root / "evidence/drain5_run_card_20261026.json"
+    sel_path = root / "evidence/drain5_selector_20261026.json"
+    dl_path = root / "docs/data/drain5_download.json"
+    summary_path = root / "evidence/nine_site_executive_summary_drain5_20261026.json"
+    if not (
+        exp_path.exists()
+        and card_path.exists()
+        and sel_path.exists()
+        and dl_path.exists()
+        and summary_path.exists()
+    ):
+        return "", "", ""
+    experiment = json.loads(exp_path.read_text())
+    card = json.loads(card_path.read_text())
+    saved_sel = json.loads(sel_path.read_text())
+    dl = json.loads(dl_path.read_text())
+    nine = json.loads(summary_path.read_text())
+    name = dl["file"]
+    digest = dl["sha256"]
+    if (
+        card.get("raster_sha256") != digest
+        or card.get("submission_name") != name
+        or dl.get("note") != card.get("note")
+        or card.get("exact_file_nuisance_audit", {}).get("candidate", {}).get("sha256") != digest
+    ):
+        raise ValueError("DRAIN5 checksum or identity disagree with run card or C2ST receipt")
+
+    template = root / "data/bridge/sample_submission.tif"
+    target = root / "docs/downloads" / name
+    fresh_sel = selector.verify_selector(target, template, card)
+    ok_submit = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
+    # DRAIN5's own card is now the recorded point-best, so a fresh selector pass can
+    # flip only the G3 gate (candidate cannot strictly beat itself). Compare every
+    # other gate exactly, exactly as scripts/run_drain5_lane.py --verify-recorded does.
+    saved_gates = dict(saved_sel.get("gates") or {})
+    fresh_gates = dict(fresh_sel.get("gates") or {})
+    g3 = "g3_holdout_beats_recorded_best_and_paired_baseline"
+    saved_gates.pop(g3, None)
+    fresh_gates.pop(g3, None)
+    if (
+        saved_gates != fresh_gates
+        or saved_sel.get("decision") != fresh_sel.get("decision")
+        or saved_sel.get("human_inspection_used") is not False
+        or card.get("ok_to_submit") is not ok_submit
+        or dl.get("ok_to_submit") is not ok_submit
+        or experiment.get("ok_to_submit") is not ok_submit
+        or (card.get("verdict") == "promote") is not ok_submit
+    ):
+        raise ValueError("DRAIN5 card/download disagrees with independent gems.selector receipt")
+
+    checks = json.loads((root / "docs/downloads" / dl["checks_file"]).read_text())
+    for key in ("zero_outside", "nan_outside"):
+        row = checks[key]
+        fresh = check_variants(root / "docs/downloads" / row["file"], template)
+        if (
+            not fresh["format_valid"]
+            or not row["format_valid"]
+            or fresh.get("submission_authorized") is not False
+            or any(fresh.get(field) != value for field, value in row.items())
+        ):
+            raise ValueError(f"DRAIN5 download variant invalid or stale: {key}")
+
+    zip_target = root / "docs/downloads" / checks["zeros_zip_file"]
+    if sha256_file(zip_target) != checks["zeros_zip_sha256"]:
+        raise ValueError("DRAIN5 ZIP checksum disagrees with receipt")
+    with zipfile.ZipFile(zip_target) as zf:
+        if zf.namelist() != [checks["zero_outside"]["file"]]:
+            raise ValueError("DRAIN5 ZIP entry list invalid")
+        if (
+            hashlib.sha256(zf.read(checks["zero_outside"]["file"])).hexdigest()
+            != checks["zero_outside"]["sha256"]
+        ):
+            raise ValueError("DRAIN5 ZIP inner TIFF hash disagrees")
+
+    note_path = root / "docs/downloads" / dl["note_file"]
+    if len(dl["note"]) > 140 or note_path.read_text().strip() != dl["note"]:
+        raise ValueError("DRAIN5 note is missing, changed, or exceeds 140 characters")
+
+    preflight = json.loads((root / "docs/downloads" / dl["preflight_file"]).read_text())
+    if (
+        preflight.get("artifact", {}).get("sha256") != digest
+        or preflight.get("run_card", {}).get("artifact_sha256_matches") is not True
+        or preflight.get("run_card", {}).get("artifact_name_matches") is not True
+    ):
+        raise ValueError("DRAIN5 exact-file preflight is missing or stale")
+    if len(nine.get("sites", [])) != 9:
+        raise ValueError("DRAIN5 nine-site executive summary must contain all 9 focus repositories")
+
+    e = lambda s: escape(str(s), quote=True)  # noqa: E731
+    score = card["holdout"]
+    lo, hi = score["ci95"]["interval"]
+    pr = card["paired_comparisons"]["arm1_vs_arm2_nodrain_replay"]
+    plo, phi = pr["paired_delta_ci95"]
+    nov = card["correlation_overlap_vs_registry"]
+    dist = card["off_catalogue_distance_profile"]
+    c2 = card["exact_file_nuisance_audit"]["candidate"]
+    arms = card["arms_same_evaluator"]
+    gates_saved = saved_sel["gates"]
+    status_box = (
+        '<div class="status stopped" role="status">'
+        "<strong>LATEST LANE H24-DRAIN5 (2026-10-26) — BEST LOCAL MEASUREMENT, DUPLICATE LANE · DOWNLOAD: YES · SUBMIT: NO "
+        f"(SELECTOR <code>{e(fresh_sel['selector_version'])}</code>: <code>{e(fresh_sel['decision'])}</code>).</strong> "
+        "Preregistered D8 drainage-network knickpoint channels on the DPRF1 stack scored "
+        f"<strong>HOLDOUT-DTI {score['dti']:.5f}</strong> [{lo:.5f}, {hi:.5f}] vs the bit-identical DPRF1 replay "
+        f"<strong>{arms['arm2_nodrain_52ch_replay']['dti']:.5f}</strong> (paired Δ {pr['paired_delta_dti']:+.5f}, "
+        f"95% CI [{plo:+.5f}, {phi:+.5f}], {pr['fold_wins']}/4 folds — the first strictly-positive paired "
+        "increment over DPRF1), <strong>but</strong> "
+        f"<strong>{100 * nov['dot_overlap_within_3px_vs_dprf1']:.2f}%</strong> of its dots sit within 3 px of DPRF1's "
+        "(&gt; 70% Rule-1 limit = duplicate lane). Strict [0,1] format PASS, 59/59 leakage canaries PASS, "
+        f"exact-file C2ST PASS (AUC {c2['observed_auc']:.4f}). <strong>DPRF1 remains the #1 unscored "
+        "unique-lane candidate. Do not submit DRAIN5, do not submit both files, and do not retune DRAIN5.</strong></div>"
+    )
+    hero_html = f"""<div class="hero"><div><div class="eyebrow">H24-DRAIN5 · D8 drainage knickpoints · preregistered · duplicate lane</div><h2>Drainage physics won the holdout.<br>The dots still converged.</h2><p class="lead">Seven label-free drainage-network channels (395,567 channel cells routed on the 100 m DEM; knickpoint co-linearity across ephemeral washes) beat the reigning DPRF1 detector in a paired, bit-identical replay — then the shared 300 m allocator placed 5 of every 6 dots back onto the parent lattice. A real detector improvement, honestly logged as not-a-unique-submission.</p>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download>Download DRAIN5 research GeoTIFF (-zeros)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="executive-summary.html#drain5">Why NOT OK to submit →</a></div><p class="micro">{dl["pixel_count"]:,} binary dots · strict whole-array [0,1] PASS · SHA-256 <span class="hash">{e(digest)}</span> · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><p class="micro"><span class="badge blue">Format PASS</span> <span class="badge blue">Holdout WIN vs DPRF1 (paired)</span> <span class="badge danger">Novelty FAIL — duplicate lane</span> <span class="badge blue">No slot used</span></p></div><aside class="card visual" aria-label="H24-DRAIN5 holdout result and raster preview"><div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Not a leaderboard score</span></div><div class="result-number">{score["dti"]:.5f}</div><p>95% CI [{lo:.5f}, {hi:.5f}] · <code>{e(score["evaluator_version"])}</code> · 60,988 withheld · DPRF1 replay {arms["arm2_nodrain_52ch_replay"]["dti"]:.5f}</p><img class="raster-preview" src="assets/drain5-preview.png" alt="Downsampled map of DRAIN5 experimental fault dots, not verified faults or geothermal vents"><p class="micro">Experiment preview · downsampled 100 m grid · not verified faults or vents</p></aside></div>"""
+    fail_html = '<span class="fail">FAIL</span>'
+    gate_rows = "".join(
+        f"<tr><td>{e(g)}</td><td>{'PASS' if v else fail_html}</td></tr>"
+        for g, v in gates_saved.items()
+    )
+    fold_rows = "".join(
+        f"<tr><td>{e(f['fold'])}</td><td>{f['dti']:.5f}</td><td>{int(f['n_truth']):,}</td><td>{int(f['n_emitted']):,}</td></tr>"
+        for f in score["folds"]
+    )
+    exec_html = f"""<section id="drain5"><h2>H24-DRAIN5 — D8 drainage knickpoint increment (2026-10-26) · NOT OK to submit</h2>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">Download DRAIN5 research GeoTIFF (research only — do not submit)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="downloads/{e(dl["nan_file"])}" download>NaN-outside twin</a></div><p class="micro"><span class="hash">{e(name)}</span> · SHA-256 <span class="hash">{e(digest)}</span> · {dl["pixel_count"]:,} dots · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><p><strong>What to do instead:</strong> no file is authorized for submission. The #1 unscored unique-lane candidate remains DPRF1's <code>gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif</code> (top of this page; selector step pending). DRAIN5 is the better local detector measurement but a duplicate lane of DPRF1 — submitting both would spend two slots measuring nearly the same dots.</p><div class="tablewrap" tabindex="0" role="region" aria-label="H24-DRAIN5 per-fold holdout results"><table><thead><tr><th>Fold</th><th>HOLDOUT-DTI</th><th>Withheld positives</th><th>Emitted dots</th></tr></thead><tbody>{fold_rows}</tbody></table></div><p>Arms (same evaluator): DRAIN5-primary <strong>{score["dti"]:.5f}</strong>; channels-only <strong>{arms["arm3_channels_only_59ch"]["dti"]:.5f}</strong>; no-drainage replay <strong>{arms["arm2_nodrain_52ch_replay"]["dti"]:.5f}</strong> — bit-identical to the recorded DPRF1 card. Distance profile: 0% ≤200 m, {100 * dist["frac_2_to_9px_apron"]:.1f}% apron, {100 * dist["frac_gt_20px_farfield"]:.1f}% &gt;2 km far-field (median {dist["median_dist_px"]:.1f} px).</p><h3>Independent selector screen (issuance-time receipt)</h3><div class="tablewrap" tabindex="0" role="region" aria-label="H24-DRAIN5 independent selector gates"><table><thead><tr><th>Gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div><p class="micro">No organizer-confirmed score exists for DRAIN5 or DPRF1. HOLDOUT-DTI is not a leaderboard forecast. Fault recovery is a structural proxy, not geothermal-vent discovery.</p></section>"""
+    diag = card["drainage_diagnostics"]
+    aucs = card["leakage_canary"]["drainage_channel_pooled_aucs"]
+    auc_txt = ", ".join(f"{e(k)} {v:.4f}" for k, v in aucs.items())
+    research_html = f"""<section><h2>H24-DRAIN5 (2026-10-26) — preregistered method and result</h2><p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p><p><strong>Mechanism:</strong> {e(card["mechanism"])}</p><p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p><p>Drainage census: {diag["valid_dem_cells"]:,} valid DEM cells routed; {diag["sink_cells"]:,} endorheic sinks ({100 * diag["sink_fraction_of_valid"]:.3f}%, no pit filling); {diag["channel_cells_accum_ge_100"]:,} channel cells at A ≥ 100; maximum upslope area {diag["accum_max_cells"]:,.0f} cells. Solo leakage-canary pooled AUCs (both polarities ≤ 0.90 required): {auc_txt} — stronger marginal signal than the Euler channels (0.502–0.529), still far from leakage.</p><p>Pooled HOLDOUT-DTI <strong>{score["dti"]:.5f}</strong> (95% CI [{lo:.5f}, {hi:.5f}]) on <code>{e(score["evaluator_version"])}</code>; verdict <code>{e(card["verdict"])}</code> (duplicate lane, not a science failure). Spec frozen in <code>knowledge/26_preregistered_DRAIN5_2026-10-26.md</code>; findings in <code>knowledge/27_DRAIN5_findings_and_executive_summary_2026-10-26.md</code>. Lesson, third measurement (CUP1 91.2%, EUL1 86.6%, DRAIN5 83.5%): increments on the DPRF1 parent converge to duplicate dots even when the science is real — the next lane must change target/allocator geometry (e.g. DTI-kernel soft labels) with drainage evidence built in from the start.</p></section>"""
+    return hero_html, exec_html, research_html

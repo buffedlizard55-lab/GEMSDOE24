@@ -183,15 +183,13 @@ def compute_drainage_channels(
         """grid values sampled at each cell's receiver (NaN where invalid)."""
         out = np.full(grid.shape, np.nan, dtype=np.float32)
         ok = receiver_grid >= 0
-        out.ravel()[np.flatnonzero(ok.ravel())] = grid.ravel()[
-            receiver_grid.ravel()[ok.ravel()]
-        ]
+        out.ravel()[np.flatnonzero(ok.ravel())] = grid.ravel()[receiver_grid.ravel()[ok.ravel()]]
         return out
 
     log_accum = np.where(valid, np.log10(1.0 + accum), np.nan).astype(np.float32)
-    ksn = np.where(
-        valid, slope * np.power(np.maximum(accum, 1.0), THETA_REF), np.nan
-    ).astype(np.float32)
+    ksn = np.where(valid, slope * np.power(np.maximum(accum, 1.0), THETA_REF), np.nan).astype(
+        np.float32
+    )
 
     gate = valid & ~is_sink & (accum >= KNICK_GATE_ACCUM)
     knick = np.full(z_smooth.shape, np.nan, dtype=np.float32)
@@ -227,9 +225,7 @@ def compute_drainage_channels(
         unit[k] = (dy / dist, dx / dist)
     dir2 = np.full(direction.shape, -1, dtype=np.int8)
     ok = receiver >= 0
-    dir2.ravel()[np.flatnonzero(ok.ravel())] = (
-        direction.ravel()[receiver.ravel()[ok.ravel()]]
-    )
+    dir2.ravel()[np.flatnonzero(ok.ravel())] = direction.ravel()[receiver.ravel()[ok.ravel()]]
     bend = np.full(z_smooth.shape, np.nan, dtype=np.float32)
     bend_gate = gate & (direction >= 0) & (dir2 >= 0)
     if bend_gate.any():

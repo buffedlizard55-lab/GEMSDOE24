@@ -450,7 +450,9 @@ def verify_recorded() -> dict[str, Any]:
         or dl.get("ok_to_submit") is not ok_sel
         or (card.get("verdict") == "promote") is not ok_sel
     ):
-        raise SystemExit("DRAIN5 run card/download disagrees with independent gems.selector receipt")
+        raise SystemExit(
+            "DRAIN5 run card/download disagrees with independent gems.selector receipt"
+        )
 
     if sha256_file(zeros_path) != card["raster_sha256"] or dl["sha256"] != card["raster_sha256"]:
         raise SystemExit("DRAIN5 zero-outside GeoTIFF SHA-256 mismatch")
@@ -611,7 +613,9 @@ def main() -> None:
     del cdict
     gc.collect()
 
-    selective_extra: tuple[str, ...] = ()  # locked: drainage channels are terrain-derived, not residualized
+    selective_extra: tuple[
+        str, ...
+    ] = ()  # locked: drainage channels are terrain-derived, not residualized
     total_offcat = int((fp & (~catalogue)).sum())
 
     print(

@@ -12,7 +12,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_review_finds_current_best_without_relying_on_active_lane():
     result = review_current_best(ROOT)
-    assert result["current_recorded_point_best"]["lane"] == "DPRF1"
+    # H24-DRAIN5 superseded DPRF1 as recorded point-best on 2026-10-26; the live
+    # review must find it from evidence, not from any hard-coded lane identity.
+    assert result["current_recorded_point_best"]["lane"] == "DRAIN5"
     assert result["holdout"]["n_withheld_positive_pixels"] == 60988
     assert result["holdout"]["evaluator_version"] == "gems-segment-pooled-v1"
     assert result["validator_output"]["format_valid"] is True

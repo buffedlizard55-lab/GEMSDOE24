@@ -1,5 +1,14 @@
 # Standing project instructions
 
+## Latest continuation — 2026-10-26 H24-DRAIN5: BEST LOCAL MEASUREMENT, DUPLICATE LANE (frozen; do not retune)
+
+Read `knowledge/27_DRAIN5_findings_and_executive_summary_2026-10-26.md` and `evidence/drain5_run_card_20261026.json` first.
+- DRAIN5 (prereg `knowledge/26_preregistered_DRAIN5_2026-10-26.md` @ `3739d7d`; `src/gems/drainage.py`, `scripts/run_drain5_lane.py`) added 7 label-free D8 drainage-network channels + knickpoint-gated Regime B to DPRF1's exact 52-ch stack: **HOLDOUT-DTI 0.16950** [0.15627, 0.18343] vs same-session bit-identical DPRF1 replay **0.16379** (paired Δ **+0.00571** [+0.00136, +0.01003], **4/4 folds** — first strictly-positive paired increment over DPRF1). Final-dot overlap with DPRF1 **83.55%** (>70% Rule-1 ceiling) → **duplicate lane, verdict negative**; selector v2 `DO_NOT_SUBMIT` (G3 ✓ first-ever; G4/quota/replay ✗); zero slots spent.
+- DRAIN5's card is now the recorded point-best that `gems.benchmarks` and selector G3 compare against (the floor for future lanes). It must never be rendered as the submission candidate: **DPRF1 remains the #1 unscored unique-lane candidate**; never submit both files; **do not rerun or retune DRAIN5** (no channel subsetting, no re-gating, no KERN6 run seeded from DRAIN5 dots) without a new preregistration.
+- Standing measurement (3× now: CUP1 91.2%, EUL1 86.6%, DRAIN5 83.5%): appending channels to the DPRF1 parent converges to duplicate dots at the shared allocator even when the science is real. **The next lane (future session, fresh preregistration) must change target/allocator geometry** — queued candidate `H24-KERN6` (DTI-kernel soft labels + rank allocation, drainage channels built in from the start, novelty checked against DPRF1+DRAIN5+EUL1 surfaces), then `H24-SEGBAL7`; `H24-INSAR4`/`H24-3DEP8` remain sandbox-unreachable (only github/pypi respond; do not retry fetching here).
+- Immediate next step remains the DPRF1 selector/quota authorization step (live-quota receipt, prospective lattice policy separation, independent replay certificate). **OK TO SUBMIT TODAY: NOTHING.**
+- Verify without rerunning: `.venv/bin/python scripts/run_drain5_lane.py --verify-recorded` (G3-aware: DRAIN5 is now its own recorded point-best), plus the DPRF1/EUL1 verifiers below.
+
 ## Latest continuation safety review — 2026-10-26
 
 Read `docs/review-20261026.md` and `evidence/review_continuation_20261026.json` first.
@@ -16,7 +25,7 @@ Read `knowledge/22_current_best_review_2026-10-26.md` and the README current con
 ## Latest 2026-10-26 point-best continuation: H24-DPRF1 & Nine-Site Executive Summary
 
 Read `knowledge/owner_brief_2026-10-26.md`, `knowledge/owner_brief_2026-10-25.md`, and the current README decision first.
-- `H24-DPRF1` (`src/gems/dprf1.py`, `scripts/run_dprf1_lane.py`, `knowledge/19_preregistered_DPRF1_2026-10-26.md`, `knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md`, `evidence/dprf1_run_card_20261026.json`, `evidence/dprf1_selector_20261026.json`) achieves the repository point-best **`HOLDOUT-DTI 0.16379`** (`[0.15045, 0.17739]` on `gems-segment-pooled-v1`, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000`, `B1` `0.13900`, `B0` `0.14179`, and exceeding `CUP1` `0.15038`, `GVC1` `0.14876`, `CRP1` `0.13747`, and `TNR1` `0.13219`) and **`0.16290`** (`[0.14449, 0.18118]`) on `3.0 km` `segment-hide-recover-pooled-v1`.
+- `H24-DPRF1` (`src/gems/dprf1.py`, `scripts/run_dprf1_lane.py`, `knowledge/19_preregistered_DPRF1_2026-10-26.md`, `knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md`, `evidence/dprf1_run_card_20261026.json`, `evidence/dprf1_selector_20261026.json`) achieves the repository **unique-lane point-best `HOLDOUT-DTI 0.16379`** (the later DRAIN5 duplicate lane holds the recorded point measurement 0.16950 — see the DRAIN5 note at the top of this file) (`[0.15045, 0.17739]` on `gems-segment-pooled-v1`, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000`, `B1` `0.13900`, `B0` `0.14179`, and exceeding `CUP1` `0.15038`, `GVC1` `0.14876`, `CRP1` `0.13747`, and `TNR1` `0.13219`) and **`0.16290`** (`[0.14449, 0.18118]`) on `3.0 km` `segment-hide-recover-pooled-v1`.
 - Passes **57/57** competing method rasters (`max 3-px overlap = 0.5578 <= 0.70`, incl. `0.3613` vs `TNR1`, `0.3398` vs `CRP1`, `0.3381` vs `CUP1`), **83/83** peer blobs (`0.5494 <= 0.70`), **52/52** two-polarity leakage canaries (`<= 0.6111 <= 0.90`), strict exact-file C2ST (`AUC = 0.5247 < 0.55`, Holm `p = 0.100`), and Dual-Partition Stitched-OOF far-field coverage (`52.3%` `>2 km` vs `22.3%` in `2-9 px`).
 - Remains **`DOWNLOAD: YES · SUBMIT: NO` (`DO_NOT_SUBMIT`, `verdict: "negative"`)** under `gems-selector-v2-literal-quota-fail-closed` (retained `registry-039` spacing-5 calibration lattice, unknown live DrivenData quota, and missing independent replay certificate). Verify without rerunning via `.venv/bin/python scripts/run_dprf1_lane.py --verify-recorded`.
 
@@ -223,9 +232,11 @@ Own the Outcome, without promising a score or prize.
   derivatives self-consistently (see `gems.euler.fft_vertical_derivative`).
 - Parent-convergence is the binding constraint now (CUP1 91.2%, EUL1 86.6% dot
   overlap with their parents): appending channels to DPRF1 cannot clear the 70%
-  Rule-1 ceiling. Next lane candidates (fresh prereg required): `H24-DRAIN5`
-  flow-routing knickpoints, `H24-KERN6` DTI-kernel soft labels, `H24-INSAR4`
-  NASA OPERA (unreachable from this sandbox — only github/pypi respond).
+  Rule-1 ceiling. The subsequent `H24-DRAIN5` lane measured this a third time
+  (83.5%; see the DRAIN5 note at the top of this file). Next lane candidate
+  (fresh prereg required): `H24-KERN6` DTI-kernel soft labels with drainage
+  evidence built in from the start; `H24-INSAR4` NASA OPERA (unreachable from
+  this sandbox — only github/pypi respond).
 - Immediate next step remains the DPRF1 selector/quota authorization step
   (live-quota receipt, lattice policy separation, independent replay certificate).
   DPRF1 stays the strongest unscored unique candidate; everything else SUBMIT: NO.

@@ -35,7 +35,9 @@ async function main() {
       for (const relative of ['', 'docs/index.html', 'executive-summary.html', 'docs/executive-summary.html']) {
         const response = await page.goto(new URL(relative, base).href, {waitUntil: 'networkidle'});
         assert.equal(response.status(), 200);
-        const link = page.getByRole('link', {name: /Download current point-best research TIFF/}).first();
+        // Primary first-screen download must be the #1 unscored unique-lane candidate
+        // (DPRF1), not a duplicate-lane point-best measurement (e.g. DRAIN5).
+        const link = page.getByRole('link', {name: /Download (#1 unscored candidate|current point-best research) TIFF/}).first();
         const box = await link.boundingBox();
         assert(box && box.x >= 0 && box.x + box.width <= viewport.width + 1);
         assert(box.y >= 0 && box.y + box.height <= viewport.height, `First-screen download off-screen: ${device} ${relative} ${JSON.stringify(box)}`);
