@@ -24,6 +24,7 @@ from site_packets import (  # noqa: E402
     crp1_packet,
     cup1_packet,
     dprf1_packet,
+    eul1_packet,
     gvc1_packet,
     rshg1_packet,
     trsg1_packet,
@@ -154,6 +155,9 @@ def build_independent_site(primary):
     trsg1_hero, trsg1_exec, trsg1_research = trsg1_packet(ROOT)
     dprf1_hero, dprf1_exec, dprf1_research = dprf1_packet(ROOT)
     dprf1_card_site = load("evidence/dprf1_run_card_20261026.json")
+    eul1_hero, eul1_exec, eul1_research = eul1_packet(ROOT)
+    eul1_card_site = load("evidence/eul1_run_card_20261026.json")
+    eul1_ok_submit = bool(eul1_card_site.get("ok_to_submit")) and bool(eul1_hero)
     dprf1_ok_submit = bool(dprf1_card_site.get("ok_to_submit")) and bool(dprf1_hero)
     cup1_hero, cup1_exec, cup1_research = cup1_packet(ROOT)
     crp1_hero, crp1_exec, crp1_research = crp1_packet(ROOT)
@@ -224,9 +228,9 @@ def build_independent_site(primary):
         + latest
         + hero
         + concurrent
-        + f"""<div class="metrics"><div class="card metric"><div class="number">{primary["pixel_count"]:,}</div><div class="label">Experimental dots</div></div><div class="card metric"><div class="number">{len(registry["unique_rasters"])}</div><div class="label">Distinct registry rasters compared</div></div><div class="card metric"><div class="number">{n:,}</div><div class="label">Withheld positive pixels</div></div><div class="card metric"><div class="number">0</div><div class="label">Competition slots used</div></div></div><section><h2>The decision is automatic, not “inspection pending”.</h2>{gates}</section><section class="grid2"><article class="card"><h3>Why the overlap veto fired</h3><p>A 5-pixel lattice is within √8 pixels of every interior grid cell. Your radius-3 rule therefore marks even an unrelated detector as a duplicate in this domain. We logged the incompatibility and stopped, rather than removing the comparator.</p><a href="research.html">Method, ablation and irregularities →</a></article><article class="card"><h3>Download the evidence</h3><div class="actions"><a class="button" href="data/dprf1_run_card.json" download>DPRF1 JSON run card</a><a class="button" href="data/trsg1_run_card_20261026.json" download>TRSG1 JSON run card</a><a class="button" href="data/nine_site_executive_summary_20261026.json" download>9-Site Executive Summary JSON</a><a class="button" href="data/rshg1_run_card.json" download>RSHG1 JSON run card</a><a class="button" href="data/mtr1_run_card.json" download>MTR1 JSON run card</a><a class="button" href="downloads/{e(primary["checks_file"])}" download>Exact-file validator</a></div><p class="micro">These are local measurements, not an organizer receipt or a leaderboard projection.</p></article></section><section><h2>Source freshness — not a live leaderboard</h2><p class="micro">GitHub commits checked at {e(feed.get("checked_utc", "not checked"))}. Scientific inputs and decisions remain pinned to the experiment.</p><ul class="feed" id="source-feed-list"></ul><p class="micro" data-source-state>GitHub-only freshness feed; no scoring or promotion API</p></section>"""
+        + f"""<div class="metrics"><div class="card metric"><div class="number">{primary["pixel_count"]:,}</div><div class="label">Experimental dots</div></div><div class="card metric"><div class="number">{len(registry["unique_rasters"])}</div><div class="label">Distinct registry rasters compared</div></div><div class="card metric"><div class="number">{n:,}</div><div class="label">Withheld positive pixels</div></div><div class="card metric"><div class="number">0</div><div class="label">Competition slots used</div></div></div><section><h2>The decision is automatic, not “inspection pending”.</h2>{gates}</section><section class="grid2"><article class="card"><h3>Why the overlap veto fired</h3><p>A 5-pixel lattice is within √8 pixels of every interior grid cell. Your radius-3 rule therefore marks even an unrelated detector as a duplicate in this domain. We logged the incompatibility and stopped, rather than removing the comparator.</p><a href="research.html">Method, ablation and irregularities →</a></article><article class="card"><h3>Download the evidence</h3><div class="actions"><a class="button" href="data/dprf1_run_card.json" download>DPRF1 JSON run card</a><a class="button" href="data/eul1_run_card.json" download>EUL1 JSON run card (negative)</a><a class="button" href="data/nine_site_executive_summary_eul1_20261026.json" download>9-Site Executive Summary (EUL1 update) JSON</a><a class="button" href="data/trsg1_run_card_20261026.json" download>TRSG1 JSON run card</a><a class="button" href="data/nine_site_executive_summary_20261026.json" download>9-Site Executive Summary JSON</a><a class="button" href="data/rshg1_run_card.json" download>RSHG1 JSON run card</a><a class="button" href="data/mtr1_run_card.json" download>MTR1 JSON run card</a><a class="button" href="downloads/{e(primary["checks_file"])}" download>Exact-file validator</a></div><p class="micro">These are local measurements, not an organizer receipt or a leaderboard projection.</p></article></section><section><h2>Source freshness — not a live leaderboard</h2><p class="micro">GitHub commits checked at {e(feed.get("checked_utc", "not checked"))}. Scientific inputs and decisions remain pinned to the experiment.</p><ul class="feed" id="source-feed-list"></ul><p class="micro" data-source-state>GitHub-only freshness feed; no scoring or promotion API</p></section>"""
     )
-    any_ok_submit = dprf1_ok_submit or crp1_ok_submit
+    any_ok_submit = dprf1_ok_submit or eul1_ok_submit or crp1_ok_submit
     exec_intro = (
         "<p><strong>For H24-DPRF1 above: YES — cleared automatically by the independent selector (<code>gems-selector-v1</code>: <code>OK_TO_SUBMIT</code>).</strong> "
         "It passed all 10/10 project validation gates automatically with zero human-inspector fallback; "
@@ -311,6 +315,7 @@ def build_independent_site(primary):
 .venv/bin/python scripts/prepare_data.py
 .venv/bin/python scripts/cache_priority_registry.py
 .venv/bin/python scripts/run_dprf1_lane.py --verify-recorded
+.venv/bin/python scripts/run_eul1_lane.py --verify-recorded
 .venv/bin/python scripts/evaluate_holdout.py --verify-recorded
 .venv/bin/python scripts/evaluate_holdout.py --verify-gvc1
 .venv/bin/python scripts/run_sahg1_lane.py --verify-recorded
@@ -320,12 +325,13 @@ def build_independent_site(primary):
 # Verifies frozen evidence; the stopped experiments refuse implicit reruns.
 .venv/bin/python scripts/export_negative_result.py
 .venv/bin/python scripts/build_site.py
-.venv/bin/python -m pytest -q</code></pre><p class="micro">Caches and the 419 MB training raster are ignored. GitHub download access is sufficient for these CPU experiments. Original organizer authentication of owner mirrors and an explicit single-method lane remain unavailable. No GPU is required.</p></section><section><h2>Next work — completed and remaining</h2><ol class="steplist"><li><h3>Completed: Prospective registry-overlap separation</h3><p><code>gems.novelty.compare_prospective_registry</code> separates synthetic calibration controls (<code>registry-039</code> spacing-5 lattice, <code>registry-044</code> zero placeholder) from the competing method lanes and 83 peer blobs while keeping literal all-entry flags on record.</p></li><li><h3>Completed: Reconstructed same-protocol OOF multi-physics baseline</h3><p><code>oof_multiphysics_hgb_d3</code> refits a fold-local 27-channel HGB detector strictly on <code>fold["train"]</code> of <code>SegmentHoldout</code>, establishing a leakage-free OOF benchmark of <strong>HOLDOUT-DTI 0.13000</strong> (95% CI [0.11565, 0.14396]).</p></li><li><h3>Completed: Strike-projected hydrothermal-geomorphic operator &amp; exact-file C2ST</h3><p><code>H24-SAHG1</code> achieves <strong>HOLDOUT-DTI 0.09672</strong> ([0.08657, 0.10703]) on <code>gems-segment-pooled-v1</code> and <strong>0.09655</strong> ([0.08270, 0.10976]) on <code>segment-hide-recover-pooled-v1</code>, beating <code>MTR1</code>, <code>ASPC</code>, and its own geomorphic ablation <code>G_0</code> (+0.01012), and is audited by <code>gems.c2s2</code> (AUC 0.5826 vs. labels 0.4912).</p></li><li><h3>Completed: Dual-Partition Stitched-OOF Fusion &amp; Orthogonal Seismic-Geothermal Discovery (<code>H24-DPRF1</code> &amp; <code>H24-TRSG1</code>)</h3><p><code>H24-DPRF1</code> achieves the repository point-best <strong>HOLDOUT-DTI 0.16379</strong> ([0.15045, 0.17739]) and 3.0 km bridge <strong>0.16290</strong>, passes 57/57 competing method rasters (≤0.5578 ≤ 0.70) and 83/83 peer blobs (≤0.5494 ≤ 0.70), passes C2ST (AUC 0.5247 &lt; 0.55), and restores 52.3% &gt;2 km far-field discovery. Orthogonal 44-channel <code>H24-TRSG1</code> integrates restored <code>ieq_n100a15</code>/<code>deq_n100a15</code> microseismic anisotropy, hyperbolic step-over saddle twists, Quaternary vents, and compact INGENIOUS DoGs, achieving <strong>HOLDOUT-DTI 0.14644</strong> ([0.13220, 0.16241], paired Δ <strong>+0.01644</strong> [+0.00053, +0.03163] over <code>oof_multiphysics_hgb_d3</code>; 3.0 km bridge <strong>0.14674</strong>), passing C2ST (AUC <strong>0.4727</strong>, Holm <em>p</em> = 1.000) and 141-raster novelty (≤0.6622 vs <code>DPRF1</code>/<code>TNR1</code>/<code>CRP1</code>/<code>CUP1</code>).</p></li></ol><p>Open legacy PR #7 remains conflicting and was not merged or overwritten. Official block boundaries remain a derived audit, not published coordinates. No human exception is requested.</p></section><section><h2>Machine-readable evidence</h2><div class="actions"><a class="button" href="data/dprf1_run_card.json" download>DPRF1 JSON run card</a><a class="button" href="data/dprf1_selector.json" download>DPRF1 Selector v2 JSON</a><a class="button" href="data/dprf1_experiment_20261026.json" download>DPRF1 experiment</a><a class="button" href="data/trsg1_run_card_20261026.json" download>TRSG1 JSON run card</a><a class="button" href="data/trsg1_selector.json" download>TRSG1 Selector v2 JSON</a><a class="button" href="data/trsg1_experiment_20261026.json" download>TRSG1 experiment</a><a class="button" href="data/nine_site_executive_summary_20261026.json" download>9-Site Executive Summary JSON</a><a class="button" href="data/hcw_run_card.json" download>FUSE-HCW JSON run card</a><a class="button" href="data/hcw_experiment_20261025.json" download>FUSE-HCW experiment</a><a class="button" href="data/fuse_run_card.json" download>Stopped unresidualized FUSE card</a><a class="button" href="data/rshg1_run_card.json" download>RSHG1 JSON run card</a><a class="button" href="data/rshg1_experiment_20261025.json" download>RSHG1 experiment</a><a class="button" href="data/oj1_run_card.json" download>OJ1 JSON run card</a><a class="button" href="data/sahg1_run_card.json" download>SAHG1 JSON run card</a><a class="button" href="data/sahg1_experiment_20261025.json" download>SAHG1 experiment</a><a class="button" href="data/con_run_card.json" download>CON JSON run card</a><a class="button" href="data/unique_run_card.json" download>H-UNIQUE-03 JSON run card</a><a class="button" href="data/mtr1_run_card.json" download>MTR1 JSON card</a><a class="button" href="data/mtr1_experiment.json" download>MTR1 experiment</a><a class="button" href="data/priority_rasters.json" download>Registry manifest</a><a class="button" href="data/priority_feed.json" download>Source freshness</a><a class="button" href="data/submission_preflight_review_20261025.json" download>Preflight review</a><a class="button" href="data/data_readiness_20261025.json" download>Data readiness / next gate</a><a class="button" href="data/2026-10-25_data_readiness_run_card.json" download>Readiness run card</a></div></section>"""
+.venv/bin/python -m pytest -q</code></pre><p class="micro">Caches and the 419 MB training raster are ignored. GitHub download access is sufficient for these CPU experiments. Original organizer authentication of owner mirrors and an explicit single-method lane remain unavailable. No GPU is required.</p></section><section><h2>Next work — completed and remaining</h2><ol class="steplist"><li><h3>Completed: Prospective registry-overlap separation</h3><p><code>gems.novelty.compare_prospective_registry</code> separates synthetic calibration controls (<code>registry-039</code> spacing-5 lattice, <code>registry-044</code> zero placeholder) from the competing method lanes and 83 peer blobs while keeping literal all-entry flags on record.</p></li><li><h3>Completed: Reconstructed same-protocol OOF multi-physics baseline</h3><p><code>oof_multiphysics_hgb_d3</code> refits a fold-local 27-channel HGB detector strictly on <code>fold["train"]</code> of <code>SegmentHoldout</code>, establishing a leakage-free OOF benchmark of <strong>HOLDOUT-DTI 0.13000</strong> (95% CI [0.11565, 0.14396]).</p></li><li><h3>Completed: Strike-projected hydrothermal-geomorphic operator &amp; exact-file C2ST</h3><p><code>H24-SAHG1</code> achieves <strong>HOLDOUT-DTI 0.09672</strong> ([0.08657, 0.10703]) on <code>gems-segment-pooled-v1</code> and <strong>0.09655</strong> ([0.08270, 0.10976]) on <code>segment-hide-recover-pooled-v1</code>, beating <code>MTR1</code>, <code>ASPC</code>, and its own geomorphic ablation <code>G_0</code> (+0.01012), and is audited by <code>gems.c2s2</code> (AUC 0.5826 vs. labels 0.4912).</p></li><li><h3>Completed: Dual-Partition Stitched-OOF Fusion &amp; Orthogonal Seismic-Geothermal Discovery (<code>H24-DPRF1</code> &amp; <code>H24-TRSG1</code>)</h3><p><code>H24-DPRF1</code> achieves the repository point-best <strong>HOLDOUT-DTI 0.16379</strong> ([0.15045, 0.17739]) and 3.0 km bridge <strong>0.16290</strong>, passes 57/57 competing method rasters (≤0.5578 ≤ 0.70) and 83/83 peer blobs (≤0.5494 ≤ 0.70), passes C2ST (AUC 0.5247 &lt; 0.55), and restores 52.3% &gt;2 km far-field discovery. Orthogonal 44-channel <code>H24-TRSG1</code> integrates restored <code>ieq_n100a15</code>/<code>deq_n100a15</code> microseismic anisotropy, hyperbolic step-over saddle twists, Quaternary vents, and compact INGENIOUS DoGs, achieving <strong>HOLDOUT-DTI 0.14644</strong> ([0.13220, 0.16241], paired Δ <strong>+0.01644</strong> [+0.00053, +0.03163] over <code>oof_multiphysics_hgb_d3</code>; 3.0 km bridge <strong>0.14674</strong>), passing C2ST (AUC <strong>0.4727</strong>, Holm <em>p</em> = 1.000) and 141-raster novelty (≤0.6622 vs <code>DPRF1</code>/<code>TNR1</code>/<code>CRP1</code>/<code>CUP1</code>).</p></li></ol><p>Open legacy PR #7 remains conflicting and was not merged or overwritten. Official block boundaries remain a derived audit, not published coordinates. No human exception is requested.</p></section><section><h2>Machine-readable evidence</h2><div class="actions"><a class="button" href="data/dprf1_run_card.json" download>DPRF1 JSON run card</a><a class="button" href="data/dprf1_selector.json" download>DPRF1 Selector v2 JSON</a><a class="button" href="data/dprf1_experiment_20261026.json" download>DPRF1 experiment</a><a class="button" href="data/eul1_run_card.json" download>EUL1 JSON run card (negative)</a><a class="button" href="data/eul1_selector.json" download>EUL1 Selector v2 JSON</a><a class="button" href="data/nine_site_executive_summary_eul1_20261026.json" download>9-Site Executive Summary (EUL1 update) JSON</a><a class="button" href="data/trsg1_run_card_20261026.json" download>TRSG1 JSON run card</a><a class="button" href="data/trsg1_selector.json" download>TRSG1 Selector v2 JSON</a><a class="button" href="data/trsg1_experiment_20261026.json" download>TRSG1 experiment</a><a class="button" href="data/nine_site_executive_summary_20261026.json" download>9-Site Executive Summary JSON</a><a class="button" href="data/hcw_run_card.json" download>FUSE-HCW JSON run card</a><a class="button" href="data/hcw_experiment_20261025.json" download>FUSE-HCW experiment</a><a class="button" href="data/fuse_run_card.json" download>Stopped unresidualized FUSE card</a><a class="button" href="data/rshg1_run_card.json" download>RSHG1 JSON run card</a><a class="button" href="data/rshg1_experiment_20261025.json" download>RSHG1 experiment</a><a class="button" href="data/oj1_run_card.json" download>OJ1 JSON run card</a><a class="button" href="data/sahg1_run_card.json" download>SAHG1 JSON run card</a><a class="button" href="data/sahg1_experiment_20261025.json" download>SAHG1 experiment</a><a class="button" href="data/con_run_card.json" download>CON JSON run card</a><a class="button" href="data/unique_run_card.json" download>H-UNIQUE-03 JSON run card</a><a class="button" href="data/mtr1_run_card.json" download>MTR1 JSON card</a><a class="button" href="data/mtr1_experiment.json" download>MTR1 experiment</a><a class="button" href="data/priority_rasters.json" download>Registry manifest</a><a class="button" href="data/priority_feed.json" download>Source freshness</a><a class="button" href="data/submission_preflight_review_20261025.json" download>Preflight review</a><a class="button" href="data/data_readiness_20261025.json" download>Data readiness / next gate</a><a class="button" href="data/2026-10-25_data_readiness_run_card.json" download>Readiness run card</a></div></section>"""
     tnr1 = render_tnr1(ROOT)
     if tnr1:
         overview = (
             tnr1["overview"]
             + dprf1_hero
+            + eul1_hero
             + trsg1_hero
             + '<details id="historical-packets"><summary>Earlier research downloads — all DO NOT SUBMIT</summary>'
             + overview
@@ -334,6 +340,7 @@ def build_independent_site(primary):
         executive = (
             tnr1["executive"]
             + dprf1_exec
+            + eul1_exec
             + trsg1_exec
             + '<details id="historical-executive"><summary>Historical submission packets and nine-site comparison</summary>'
             + executive
@@ -342,6 +349,7 @@ def build_independent_site(primary):
         research = (
             tnr1["research"]
             + dprf1_research
+            + eul1_research
             + trsg1_research
             + '<details id="historical-research"><summary>Prior experiments, frozen evidence and historical proposals</summary>'
             + research
@@ -357,9 +365,9 @@ def build_independent_site(primary):
         for source_name in ("tnr1_source_review_20261026.json",):
             (DOCS / "data" / source_name).write_text((ROOT / "evidence" / source_name).read_text())
     else:
-        overview = dprf1_hero + trsg1_hero + overview
-        executive = dprf1_exec + trsg1_exec + executive
-        research = dprf1_research + trsg1_research + research
+        overview = dprf1_hero + eul1_hero + trsg1_hero + overview
+        executive = dprf1_exec + eul1_exec + trsg1_exec + executive
+        research = dprf1_research + eul1_research + trsg1_research + research
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),
@@ -394,7 +402,10 @@ def build_independent_site(primary):
         "trsg1_experiment_20261026.json",
         "dprf1_run_card_20261026.json",
         "dprf1_experiment_20261026.json",
+        "eul1_run_card_20261026.json",
+        "eul1_experiment_20261026.json",
         "nine_site_executive_summary_20261026.json",
+        "nine_site_executive_summary_eul1_20261026.json",
         "gvc1_run_card_20261025.json",
         "gvc1_experiment_20261025.json",
         "gvc1_c2st_audit_20261025.json",
@@ -417,6 +428,13 @@ def build_independent_site(primary):
         )
         (DOCS / "data/dprf1_selector.json").write_text(
             (ROOT / "evidence/dprf1_selector_20261026.json").read_text()
+        )
+    if (ROOT / "evidence/eul1_run_card_20261026.json").exists():
+        (DOCS / "data/eul1_run_card.json").write_text(
+            (ROOT / "evidence/eul1_run_card_20261026.json").read_text()
+        )
+        (DOCS / "data/eul1_selector.json").write_text(
+            (ROOT / "evidence/eul1_selector_20261026.json").read_text()
         )
     if (ROOT / "evidence/crp1_run_card_20261026.json").exists():
         (DOCS / "data/crp1_run_card.json").write_text(
@@ -615,6 +633,22 @@ Achieves the **highest HOLDOUT-DTI in `GEMSDOE24`** on both evaluators: `{dh["ev
 Passes prospective novelty across **all {dnov["competing_method_rasters_checked"]} competing method rasters** (max 3-px dot overlap `{dnov["method_lane_max_dot_overlap"]:.4f}` ≤ 0.70; `0.3613` vs `TNR1`, `0.3398` vs `CRP1`, `0.3381` vs `CUP1`, ≤ `0.4912` vs all 9 focus-site champions) and **all {dnov["peer_blobs_checked"]} peer blobs** (`{dnov["peer_blobs_max_dot_overlap"]:.4f}` ≤ 0.70), and restores **{100 * ddist["frac_gt_20px_farfield"]:.1f}%** `> 2 km` far-field discovery (`{100 * ddist["frac_2_to_9px_apron"]:.1f}%` in `200–900 m` apron, curing `GVC1`'s `70.4%` in-sample apron collapse). Held at **`{d_decision}`** under `gems-selector-v2-literal-quota-fail-closed` (`evidence/dprf1_selector_20261026.json`) due to the unseparated synthetic spacing-5 calibration lattice (`registry-039`), unknown live DrivenData quota, and replay certificate.
 [DPRF1 JSON run card](evidence/dprf1_run_card_20261026.json) · [DPRF1 Selector v2 JSON](evidence/dprf1_selector_20261026.json) · [9-Site Executive Summary JSON](evidence/nine_site_executive_summary_20261026.json) · [DPRF1 preregistration](knowledge/19_preregistered_DPRF1_2026-10-26.md) · [DPRF1 PhD synthesis & 9-site review](knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md)
 """
+    eul1_md = ""
+    if eul1_card_site and eul1_hero:
+        eh = eul1_card_site["holdout"]
+        elo, ehi = eh["ci95"]["interval"]
+        epr = eul1_card_site["paired_comparisons"]["arm1_vs_arm2_noeuler_replay"]
+        enov = eul1_card_site["correlation_overlap_vs_registry"]
+        ec2 = eul1_card_site["exact_file_nuisance_audit"]["candidate"]
+        eul1_md = f"""
+Latest 2026-10-26 Lane `H24-EUL1` Euler N=0 Contact 59-Channel GeoTIFF (**NEGATIVE RESULT — DOWNLOAD: YES · SUBMIT: NO · DO NOT RETUNE**):
+[`{eul1_card_site["submission_name"]}`](docs/downloads/{eul1_card_site["submission_name"]}) (`SHA-256: {eul1_card_site["raster_sha256"]}`),
+Single-GeoTIFF ZIP [`{eul1_card_site["zip_artifact"]}`](docs/downloads/{eul1_card_site["zip_artifact"]}), and
+NaN-outside twin [`{eul1_card_site["nan_outside_artifact"]}`](docs/downloads/{eul1_card_site["nan_outside_artifact"]}).
+Preregistered (`knowledge/22_preregistered_EUL1_2026-10-26.md` @ `b841bf4`; pre-fit Amendment A1 replaced the inconsistent survey `*_vg` bands with self-consistent FFT vertical derivatives): 7 Euler-deconvolution channels (47,322 accepted RTP N=0 solutions) on the exact DPRF1 52-channel stitched-OOF stack + Euler-gated Regime B (`37,654` dots; zero copied pixels; strict `[0, 1]` PASS; 59/59 leakage canaries PASS; exact-file C2ST AUC `{ec2["observed_auc"]:.4f}` PASS).
+**HOLDOUT-DTI** `{eh["evaluator_version"]}` = **{eh["dti"]:.5f}** (95% CI **[{elo:.5f}, {ehi:.5f}]**) vs the **bit-identical same-session DPRF1 replay** **0.16379** (paired Δ **{epr["paired_delta_dti"]:+.5f}**, 95% CI **[{epr["paired_delta_ci95"][0]:+.5f}, {epr["paired_delta_ci95"][1]:+.5f}]**, {epr["fold_wins"]}/4 folds; channels alone lost 0/4). Final-dot novelty **FAIL**: `{100 * enov["dot_overlap_within_3px_vs_dprf1"]:.2f}%` within 3 px of DPRF1 (> 70% Rule-1 limit = duplicate lane) — the portfolio's parent-convergence lesson (CUP1 91.2%). **DPRF1 above remains the single best unscored unique candidate**; selector `gems-selector-v2-literal-quota-fail-closed`: `DO_NOT_SUBMIT` for every file (quota/replay certificate pending). No organizer score; HOLDOUT-DTI is not a leaderboard forecast.
+[EUL1 JSON run card](evidence/eul1_run_card_20261026.json) · [EUL1 Selector v2 JSON](evidence/eul1_selector_20261026.json) · [9-Site Executive Summary (EUL1 update) JSON](evidence/nine_site_executive_summary_eul1_20261026.json) · [EUL1 preregistration](knowledge/22_preregistered_EUL1_2026-10-26.md) · [Amendment A1](knowledge/23_EUL1_prereg_amendment_2026-10-26.md) · [EUL1 PhD findings & updated executive summary](knowledge/24_EUL1_findings_and_executive_summary_2026-10-26.md) · [Executive guide](docs/executive-summary.html#eul1)
+"""
     crp1_md = ""
     if crp1_card_site and crp1_hero:
         ch = crp1_card_site["holdout"]
@@ -647,7 +681,7 @@ score exists; HOLDOUT-DTI is not a leaderboard forecast. Short comment
         else "**DOWNLOAD: YES. SUBMIT: NO — automatic NEGATIVE verdict, not human inspection pending.**"
     )
     md = f"""{status_headline}
-{dprf1_md}{trsg1_md}{crp1_md}{fuse_md}{gvc1_md}{rshg1_md}{sahg1_md}
+{dprf1_md}{eul1_md}{trsg1_md}{crp1_md}{fuse_md}{gvc1_md}{rshg1_md}{sahg1_md}
 Independently generated MTR1 audit TIFF: [`{primary["file"]}`](docs/downloads/{primary["file"]}).
 It passes exact-grid/[0,1] file checks but fails the lane overlap rule against a registered
 spacing-5 calibration lattice. Content is not copied or identical to any compared file;

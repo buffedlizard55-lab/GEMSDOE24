@@ -193,3 +193,28 @@ Own the Outcome, without promising a score or prize.
   claim a PR, merge or public deployment without evidence. Never request secrets.
 - Keep large regenerable inputs/caches out of Git; retain only the small artifacts
   necessary for auditable scientific results.
+
+## Continuation — 2026-10-26 H24-EUL1 (Euler N=0 contact): NEGATIVE, DPRF1 still point-best
+
+- EUL1 (prereg `knowledge/22_…` @ `b841bf4`, amendment `knowledge/23_…`, findings
+  `knowledge/24_…`) added 7 label-free Euler-deconvolution channels + Euler-gated
+  Regime B to DPRF1's exact 52-ch stack: HOLDOUT-DTI **0.16005** [0.14729, 0.17278]
+  vs same-session DPRF1 replay **0.16379** (bit-identical DTI+CI; paired Δ −0.00375,
+  1/4 folds; channels alone 0/4). Final-dot overlap with DPRF1 **86.57%** → duplicate
+  lane; selector v2 `DO_NOT_SUBMIT`; zero slots spent. **Do not rerun or retune EUL1**
+  (no looser Euler acceptance, no channel subsetting, no new gating) without a new
+  preregistration and a genuinely different detection geometry.
+- `IRR-EUL1-VG-BANDS`: bridge `*_vg` bands are NOT certified derivatives
+  (`tmi_vg`=∂(`tmi`)×0.00990/px corr 0.9965; `iso_grav_anom_vg` vs ∂(`iso_grav_anom`)
+  corr −0.19; `tmi_hg`=2.0000×|∇`tmi`|). Multi-derivative operators must derive their
+  derivatives self-consistently (see `gems.euler.fft_vertical_derivative`).
+- Parent-convergence is the binding constraint now (CUP1 91.2%, EUL1 86.6% dot
+  overlap with their parents): appending channels to DPRF1 cannot clear the 70%
+  Rule-1 ceiling. Next lane candidates (fresh prereg required): `H24-DRAIN5`
+  flow-routing knickpoints, `H24-KERN6` DTI-kernel soft labels, `H24-INSAR4`
+  NASA OPERA (unreachable from this sandbox — only github/pypi respond).
+- Immediate next step remains the DPRF1 selector/quota authorization step
+  (live-quota receipt, lattice policy separation, independent replay certificate).
+  DPRF1 stays the strongest unscored unique candidate; everything else SUBMIT: NO.
+- Verify: `.venv/bin/python scripts/run_eul1_lane.py --verify-recorded` and
+  `.venv/bin/python scripts/run_dprf1_lane.py --verify-recorded`.
