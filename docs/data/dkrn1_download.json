@@ -1,0 +1,59 @@
+{
+  "lane_id": "H24-DKRN1",
+  "file": "gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif",
+  "sha256": "0b114a75d5a905ded84450fe55df386f9361ff39139a2e4452476563ac0fa65d",
+  "nan_file": "gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-nan.tif",
+  "nan_sha256": "551c8fb4d7bd80ad2b18cfc5e3d903fd693627beec269374ed8ae10df7ed2530",
+  "zip_file": "gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.zip",
+  "zip_sha256": "497b1664c9d651b141f30f4a8240bef4e9a2ae816ba338cd4c01eeaefd5e44f0",
+  "checks_file": "checks-gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.json",
+  "preflight_file": "gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.preflight.json",
+  "selector_file": "gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.selector.json",
+  "note_file": "note-gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.txt",
+  "note": "GEMS24 DKRN1 | D8 knick+300m kernel OOF | id 7f031285130c | HOLDOUT-DTI 0.1553 | research; DO NOT SUBMIT",
+  "pixel_count": 37654,
+  "holdout_dti": 0.1552511531888172,
+  "holdout_ci95": [
+    0.14204551992559925,
+    0.16873947884110158
+  ],
+  "bridge_3km_dti": 0.15461511082791493,
+  "bridge_3km_ci95": [
+    0.13652572542763972,
+    0.1727977062372503
+  ],
+  "arm2_head_a_kernel47_dti": 0.15071967484376064,
+  "arm3_dprf1_replay_dti": 0.1641642380378205,
+  "oof_multiphysics_hgb_d3_dti": 0.129996798011798,
+  "recorded_dprf1_dti": 0.1637924246971501,
+  "beats_recorded_dprf1_point": false,
+  "paired_delta_vs_dprf1_replay": -0.0089130848490033,
+  "paired_delta_ci95_vs_dprf1_replay": [
+    -0.015304015420551396,
+    -0.0022429359144089853
+  ],
+  "paired_delta_vs_oof_d3": 0.025254355177019183,
+  "paired_delta_ci95_vs_oof_d3": [
+    0.010064173151269146,
+    0.0402211789875487
+  ],
+  "c2st_auc": 0.5773309201191575,
+  "c2st_holm_p": 0.02,
+  "competing_method_novelty_passed": false,
+  "competing_method_max_3px_overlap": 0.7567589100759547,
+  "dot_overlap_within_3px_vs_dprf1": 0.7567589100759547,
+  "dot_overlap_within_3px_vs_b2": 0.4405109682902215,
+  "peer_blobs_novelty_passed": true,
+  "peer_blobs_max_3px_overlap": 0.5336750411642853,
+  "nine_site_20261026_refresh_passed": true,
+  "nine_site_20261026_refresh_max_3px_overlap": 0.5588782068306156,
+  "apron_2_to_9px_fraction": 0.23784989642534657,
+  "farfield_gt20px_fraction": 0.5216444468051203,
+  "scientific_screen_all_passed": false,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "submission_authorized": false,
+  "verdict": "negative",
+  "selector_decision": "DO_NOT_SUBMIT",
+  "competing_method_rasters_checked": 62
+}
