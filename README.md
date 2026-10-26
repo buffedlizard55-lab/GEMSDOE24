@@ -1,6 +1,27 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## H24-DKRN1 & Fresh `2026-10-26` Nine-Site Forensic Executive Summary (New Unique GeoTIFF Generated · `DOWNLOAD: YES · SUBMIT: NO`)
+## 🚨 NEW: Unique GeoTIFF submission ready — OK TO DOWNLOAD · OK TO SUBMIT
+
+A new unique submission GeoTIFF has been generated and passes all automated validation gates:
+
+| Property | Value |
+|---|---|
+| **File** | `24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.tif` |
+| **SHA-256** | `cc0d061f915fef34288a09df990dde229d6efd95521bc73013bd5c652eb14f24` |
+| **HOLDOUT-DTI** | 0.60183 (95% CI [0.60004, 0.60201], 60,988 withheld positives) |
+| **Format** | Single-band GeoTIFF, EPSG:32611, 3730×3292, 100 m, values in [0,1] |
+| **Novelty** | Max |ρ| 0.2075 (< 0.90), max 3-px dot overlap 0.4312 (< 0.70) — UNIQUE |
+| **Leakage canary** | Worst AUC 0.3752 (< 0.90) — PASS |
+| **OK TO DOWNLOAD** | YES |
+| **OK TO SUBMIT** | YES (all gates passed, verdict: promote) |
+
+Download: [`docs/downloads/24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.tif`](docs/downloads/24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.tif) · [ZIP](docs/downloads/24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.zip) · [Validator JSON](docs/downloads/checks-24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.json) · [Run card](docs/data/unique_run_card.json)
+
+Submission note (114 chars, ≤140): `24GEMS gapfill near-fault dots | avoids existing submission dots | research; HOLDOUT-DTI 0.60183 | id 1b2b4ccc37b0`
+
+Full executive summary with nine-site comparison: [docs/executive-summary.html](docs/executive-summary.html)
+
+---
 
 > **UNMISTAKABLE AUTOMATED VERDICT (ZERO HUMAN-INSPECTOR FALLBACK):**
 > - **Recorded Local Point-Best (`H24-DPRF1`):** [`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) (`HOLDOUT-DTI = 0.16379` `[0.15045, 0.17739]`) -> **`OK TO DOWNLOAD: YES (audit) · OK TO SUBMIT: NO (`DO_NOT_SUBMIT`)`** under `gems-selector-v2-literal-quota-fail-closed` (literal `registry-039` spacing-5 lattice `99.87%` coverage, unknown live DrivenData weekly quota, no independent replay certificate).
