@@ -1,0 +1,1 @@
+GEMS24 SGMC-AUX | SGMC proximity S=exp(-d/3) | HOLDOUT-DTI 0.18733 | id def264613709 | research; check weekly quota

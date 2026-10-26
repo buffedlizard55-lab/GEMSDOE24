@@ -1,0 +1,23 @@
+{
+  "file": "gems24-sgmc-aux-proximity-20261026-def264613709-zeros.tif",
+  "nan_file": "gems24-sgmc-aux-proximity-20261026-def264613709-nan.tif",
+  "zip": "gems24-sgmc-aux-proximity-20261026-def264613709-nan.zip",
+  "sha256": "5b2440b3b3930b780ff1da06e7f8ab90f399740f2a6e9edc5a48f34c11529a5e",
+  "nan_sha256": "5d946ec038a84f42abcccca6328875d08bc2b4fdd48e5b349043efd16b21efad",
+  "checks_file": "checks-gems24-sgmc-aux-proximity-20261026-def264613709-zeros.json",
+  "note_file": "note-gems24-sgmc-aux-proximity-20261026-def264613709-zeros.txt",
+  "preflight_file": "preflight-gems24-sgmc-aux-proximity-20261026-def264613709-zeros.json",
+  "content_id": "def264613709",
+  "pixel_count": 37722,
+  "note": "GEMS24 SGMC-AUX | SGMC proximity S=exp(-d/3) | HOLDOUT-DTI 0.18733 | id def264613709 | research; check weekly quota",
+  "format_valid": true,
+  "strict_range_ok": true,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "verdict": "negative",
+  "holdout_dti": 0.18733377383997737,
+  "holdout_ci95": [
+    0.17045455539793583,
+    0.2051902375800703
+  ]
+}

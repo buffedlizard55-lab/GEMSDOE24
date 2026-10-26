@@ -1,0 +1,118 @@
+{
+  "generated_utc": "2026-10-26T00:59:47.779492+00:00",
+  "hypothesis": "H24-SGMC-AUX: State Geologic Map auxiliary fault proximity \u2014 distance to NBMG SGMC faults (83,593 px) via exp(-d/3) triangular-kernel proximity, hide-and-recover SegmentHoldout pooled DTI",
+  "mechanism": "SGMC faults mapped from aeromag/gravity/field independent of USGS/INGENIOUS photo-interpretation; proximity S recovers hidden faults that are SGMC-mapped but INGENIOUS-missed (e.g., Walker Lane intrabasinal stepovers); allocated via 300 m Poisson-disk budgeting; Great Basin basement offset under flat alluvium corroborated by gravity/mag not needed here \u2014 SGMC alone suffices",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 10767.030677679833,
+    "FP_w": 32656.557209062375,
+    "FN_w": 50220.96932232016,
+    "n_truth": 60988.0,
+    "n_emitted": 37722.0,
+    "dti": 0.18733377383997737,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.17045455539793583,
+        0.2051902375800703
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 2656.90586055253,
+        "FP_w": 7033.9133490393215,
+        "FN_w": 7508.09413944747,
+        "n_truth": 10165,
+        "n_emitted": 8430,
+        "dti": 0.26383938754466224,
+        "coverage": 0.2613778515054137
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 3167.3669217806323,
+        "FP_w": 9030.688079676605,
+        "FN_w": 9343.633078219367,
+        "n_truth": 12511,
+        "n_emitted": 10422,
+        "dti": 0.25443945590172373,
+        "coverage": 0.25316656716334685
+      },
+      {
+        "fold": "SW",
+        "TP_w": 2129.2271393881965,
+        "FP_w": 9307.299532410689,
+        "FN_w": 18404.772860611803,
+        "n_truth": 20534,
+        "n_emitted": 10429,
+        "dti": 0.11377416080923947,
+        "coverage": 0.1036927602701956
+      },
+      {
+        "fold": "SE",
+        "TP_w": 2813.530755958475,
+        "FP_w": 7284.656247935761,
+        "FN_w": 14964.469244041526,
+        "n_truth": 17778,
+        "n_emitted": 8441,
+        "dti": 0.17322523563492323,
+        "coverage": 0.15825912678357942
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "artifact": {
+    "family": "gems24",
+    "hypothesis": "sgmc-aux-proximity",
+    "date": "20261026",
+    "content_id": "def264613709",
+    "content_id_algorithm": "scored-float32-v2",
+    "file": "gems24-sgmc-aux-proximity-20261026-def264613709-zeros.tif",
+    "nan_file": "gems24-sgmc-aux-proximity-20261026-def264613709-nan.tif",
+    "zip": "gems24-sgmc-aux-proximity-20261026-def264613709-nan.zip",
+    "sha256": "5b2440b3b3930b780ff1da06e7f8ab90f399740f2a6e9edc5a48f34c11529a5e",
+    "nan_sha256": "5d946ec038a84f42abcccca6328875d08bc2b4fdd48e5b349043efd16b21efad",
+    "checks_file": "checks-gems24-sgmc-aux-proximity-20261026-def264613709-zeros.json",
+    "note_file": "note-gems24-sgmc-aux-proximity-20261026-def264613709-zeros.txt",
+    "note": "GEMS24 SGMC-AUX | SGMC proximity S=exp(-d/3) | HOLDOUT-DTI 0.18733 | id def264613709 | research; check weekly quota",
+    "pixel_count": 37722,
+    "min_distance_to_catalogue_px": 0.0,
+    "template": "data/bridge/sample_submission.tif",
+    "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "outside": "zero (strict [0,1] pass) + nan twin (official text)",
+    "preview_png": "docs/assets/sgmc-preview.png"
+  },
+  "verdict": "negative"
+}
