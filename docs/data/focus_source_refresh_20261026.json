@@ -1,0 +1,67 @@
+{
+  "schema_version": "focus-source-refresh-v1",
+  "checked_utc": "2026-10-26T22:25:26.511846+00:00",
+  "method": "GitHub API default-branch commit lookup followed by README retrieval at each immutable commit",
+  "scope": "Source-text provenance only. This refresh did not download or re-audit GeoTIFF bytes and did not access DrivenData.",
+  "rows": [
+    {
+      "site": "GEMSDOE24",
+      "commit": "a97aefe1287bed996e4d6dcdbf379de99e7ddd5c",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/a97aefe1287bed996e4d6dcdbf379de99e7ddd5c/README.md",
+      "readme_sha256": "60e7a3463e49f0a48dab83916cbbf9750907ed421434fe669a140384af8f6019"
+    },
+    {
+      "site": "GEMSDOE25",
+      "commit": "4e66254d5202f049f1dd9af3e4f3019d607cff6e",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/4e66254d5202f049f1dd9af3e4f3019d607cff6e/README.md",
+      "readme_sha256": "5b774f47ab7e9f1e8445adf609683d20f4f130475e4381fd9d52b452a1fa39cc"
+    },
+    {
+      "site": "GEMSDOE27",
+      "commit": "21687996529d4e3bcb83e7d8ac56fa29864acf97",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/21687996529d4e3bcb83e7d8ac56fa29864acf97/README.md",
+      "readme_sha256": "495a0879901cf22d425d8860761ff23d08c64ebd72f27e73bbdd15ca95a56fb3"
+    },
+    {
+      "site": "GEMSDOE28",
+      "commit": "63851bca9f3e98b4fc7a79616aeb9fb0dd3baf7f",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/63851bca9f3e98b4fc7a79616aeb9fb0dd3baf7f/README.md",
+      "readme_sha256": "806efe9d6940835426198bcd003069c016bb3db6bceae4a4df9f83366a3e7c56"
+    },
+    {
+      "site": "GEMSDOE30",
+      "commit": "9c0d637c0171407196b61b780444bc772ce75438",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/9c0d637c0171407196b61b780444bc772ce75438/README.md",
+      "readme_sha256": "609f0e1d986f54589e01fd87624d0d6c70bd96dddc850f88113b8b9c78dd45c5"
+    },
+    {
+      "site": "GEMSDOE31",
+      "commit": "abd9a45cc7adf046d7d3829eb6e8c980943f462d",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/abd9a45cc7adf046d7d3829eb6e8c980943f462d/README.md",
+      "readme_sha256": "18e3f17b543b033d88393aaacf1a669c5eed7404b100d2c918dead7f3d67fc4c"
+    },
+    {
+      "site": "GEMSDOE32",
+      "commit": "54fab4b281e9e49371f1b4dc078f0558cc5a8972",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/54fab4b281e9e49371f1b4dc078f0558cc5a8972/README.md",
+      "readme_sha256": "05d69e5d458308d42d1cfa5c74b2aad4ea8a5d92c029fc2118363a0ad0195cbb"
+    },
+    {
+      "site": "GEMSDOE33",
+      "commit": "efa438d3104893c3e8aedf3817ac22167b1c681a",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/efa438d3104893c3e8aedf3817ac22167b1c681a/README.md",
+      "readme_sha256": "deff7519ed5ffecc4ce7bb5c91f0a546d62477f897744e512418c27600c9fd5f"
+    },
+    {
+      "site": "GEMSDOE36",
+      "commit": "23ad503204288fd48681beacc67d83563c4cbf3b",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/23ad503204288fd48681beacc67d83563c4cbf3b/README.md",
+      "readme_sha256": "e9f5832642e4933e078a0734ff4cad56fbbd20d77a5aeca0f3e6dfc32fcaf5b3"
+    }
+  ],
+  "not_accessed": [
+    "DrivenData leaderboard/submission pages",
+    "competition quota endpoint",
+    "external raster download hosts"
+  ]
+}

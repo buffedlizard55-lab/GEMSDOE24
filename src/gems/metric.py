@@ -185,8 +185,55 @@ def dti_score_masked(
     )
 
 
-def marginal_inclusion_threshold(current_dti: float, alpha: float = ALPHA) -> float:
-    return (alpha * current_dti) / (1.0 - alpha * current_dti)
+def _validated_threshold_inputs(
+    current_dti: float, alpha: float, beta: float
+) -> tuple[float, float, float]:
+    values = (float(current_dti), float(alpha), float(beta))
+    if not all(np.isfinite(value) for value in values):
+        raise ValueError("current_dti, alpha, and beta must be finite")
+    dti, alpha, beta = values
+    if not 0.0 <= dti <= 1.0:
+        raise ValueError("current_dti must be in [0, 1]")
+    if alpha < 0.0 or beta < 0.0:
+        raise ValueError("alpha and beta must be non-negative")
+    return dti, alpha, beta
+
+
+def marginal_inclusion_threshold(
+    current_dti: float,
+    alpha: float = ALPHA,
+    beta: float = BETA,
+) -> float:
+    """Return the break-even true-credit/false-mass ratio ``delta TP_w/delta FP_w``.
+
+    For ``D = T / (T + alpha*F + beta*(G-T))``, improvement requires
+    ``delta T / delta F > alpha*D / (1-(1-beta)*D)``.  This is not expected
+    credit per emitted pixel; use :func:`marginal_credit_per_mass_threshold`
+    for ``delta TP_w/delta N`` where ``delta N = delta TP_w + delta FP_w``.
+    """
+    dti, alpha, beta = _validated_threshold_inputs(current_dti, alpha, beta)
+    denominator = 1.0 - (1.0 - beta) * dti
+    if denominator <= 0.0:
+        raise ValueError("break-even true/false ratio is undefined for these inputs")
+    return alpha * dti / denominator
+
+
+def marginal_credit_per_mass_threshold(
+    current_dti: float,
+    alpha: float = ALPHA,
+    beta: float = BETA,
+) -> float:
+    """Return break-even expected credit per added mass, ``delta TP_w/delta N``.
+
+    Improvement requires ``delta TP_w / delta N >
+    alpha*D / (1-(1-alpha-beta)*D)``.  With ``alpha=0.2`` and ``beta=0.8``,
+    this threshold is simply ``0.2*D``.
+    """
+    dti, alpha, beta = _validated_threshold_inputs(current_dti, alpha, beta)
+    denominator = 1.0 - (1.0 - alpha - beta) * dti
+    if denominator <= 0.0:
+        raise ValueError("break-even per-mass credit is undefined for these inputs")
+    return alpha * dti / denominator
 
 
 def verify_organizer_worked_example() -> dict[str, float | bool]:

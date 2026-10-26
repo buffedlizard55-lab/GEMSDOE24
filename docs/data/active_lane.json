@@ -1,24 +1,26 @@
 {
-  "lane": "H24-TNR1",
-  "generated_utc": "2026-10-26T00:42:08.535281+00:00",
-  "preregistration": "knowledge/20_preregistered_TNR1_2026-10-26.md",
-  "evaluator_version": "gems-segment-pooled-v1",
+  "schema_version": "active-lane-view-v2",
+  "semantics": "current recorded point-best review; no new lane assignment",
+  "generated_utc": "2026-10-26T22:30:45.877875+00:00",
+  "lane": "H24-S3DEP1",
+  "source_run_card": "evidence/s3dep1_run_card_20261026.json",
+  "review": "docs/data/current_best_review.json",
   "holdout": {
     "label": "HOLDOUT-DTI",
     "evaluator_version": "gems-segment-pooled-v1",
-    "TP_w": 7558.366861977947,
-    "FP_w": 34376.004626293725,
-    "FN_w": 53429.63313802205,
+    "TP_w": 9561.088973615462,
+    "FP_w": 34367.229074327144,
+    "FN_w": 51426.911026384536,
     "n_truth": 60988.0,
-    "n_emitted": 37722.0,
-    "dti": 0.13219180093505795,
+    "n_emitted": 38104.0,
+    "dti": 0.16606013635163805,
     "n_withheld_positive_pixels": 60988,
     "n_unique_withheld_components": 3199,
     "ci95": {
       "level": 0.95,
       "interval": [
-        0.1179079641652387,
-        0.1454617440443537
+        0.15185839118988828,
+        0.18033886456990444
       ],
       "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
       "block_pixels": 100,
@@ -31,43 +33,43 @@
     "folds": [
       {
         "fold": "NW",
-        "TP_w": 1460.56620493653,
-        "FP_w": 7722.144164965046,
-        "FN_w": 8704.433795063469,
+        "TP_w": 1644.3091803163827,
+        "FP_w": 7850.3378675485765,
+        "FN_w": 8520.690819683618,
         "n_truth": 10165,
-        "n_emitted": 8430,
-        "dti": 0.14651753426754532,
-        "coverage": 0.1436858047158416
+        "n_emitted": 8515,
+        "dti": 0.16392391105162676,
+        "coverage": 0.16176184754711095
       },
       {
         "fold": "NE_LidarGapHeavy",
-        "TP_w": 1679.851755955808,
-        "FP_w": 9642.324818823265,
-        "FN_w": 10831.148244044192,
+        "TP_w": 2735.4702948837294,
+        "FP_w": 9468.803720875743,
+        "FN_w": 9775.52970511627,
         "n_truth": 12511,
-        "n_emitted": 10422,
-        "dti": 0.13687114382098592,
-        "coverage": 0.1342699828915201
+        "n_emitted": 10528,
+        "dti": 0.21972258171923084,
+        "coverage": 0.21864521580079366
       },
       {
         "fold": "SW",
-        "TP_w": 1929.0285866364784,
-        "FP_w": 9575.870092910474,
-        "FN_w": 18604.97141336352,
+        "TP_w": 2193.663131759511,
+        "FP_w": 9679.084755815069,
+        "FN_w": 18340.33686824049,
         "n_truth": 20534,
-        "n_emitted": 10429,
-        "dti": 0.10300139222433138,
-        "coverage": 0.09394314729894217
+        "n_emitted": 10535,
+        "dti": 0.11667335120616931,
+        "coverage": 0.10683077489819379
       },
       {
         "fold": "SE",
-        "TP_w": 2488.920314449131,
-        "FP_w": 7435.665549594936,
-        "FN_w": 15289.079685550869,
+        "TP_w": 2987.6463666558393,
+        "FP_w": 7369.002730087752,
+        "FN_w": 14790.35363334416,
         "n_truth": 17778,
-        "n_emitted": 8441,
-        "dti": 0.15356769340020457,
-        "coverage": 0.14000001768754253
+        "n_emitted": 8526,
+        "dti": 0.1833617225621164,
+        "coverage": 0.1680530074617977
       }
     ],
     "protocol": {
@@ -81,16 +83,63 @@
       "triangular_kernel_radius_m": 300
     }
   },
-  "artifact": {
-    "file": "gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif",
-    "sha256": "c8cb320c2c776e64c2d198bfc2e28338e7e354b6d827550f09464b413f0a8a90",
-    "note": "TNR1 selective survey/access residuals; terrain intact | id 56dfd14b88db | research; DO NOT SUBMIT",
-    "note_file": "gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.note.txt",
-    "ok_to_download": true,
-    "ok_to_submit": false,
-    "submission_authorized": false,
-    "verdict": "negative"
+  "correlation_overlap_vs_registry": {
+    "pre_placement_surface_max_abs_spearman": 0.4273787790875911,
+    "final_dots_max_abs_spearman": 0.5509969596285441,
+    "competing_method_max_3px_dot_overlap": 0.7131778828278537,
+    "competing_method_passed": false,
+    "dot_overlap_within_3px_vs_dprf1": 0.6445264779306316,
+    "dot_overlap_within_3px_vs_dkrn1": 0.7131778828278537,
+    "dot_overlap_within_3px_vs_trsg1": 0.5472459765230786,
+    "dot_overlap_within_3px_vs_gemsdoe32_b2": 0.4695384288521804,
+    "peer_blobs_max_3px_dot_overlap": 0.5433154512136825,
+    "peer_blobs_passed": true,
+    "nine_site_20261026_max_3px_dot_overlap": 0.5316566633027036,
+    "nine_site_20261026_passed": true,
+    "literal_all_entries_max_3px_dot_overlap": 0.9968927603973018,
+    "literal_all_entries_passed": false
   },
+  "artifact": {
+    "file": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
+    "sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+    "note": "GEMS24 S3DEP1 | 10m 3DEP+crustal OOF 37654d | id 464fa34b4091 | HOLDOUT-DTI 0.1661 | research; DO NOT SUBMIT",
+    "ok_to_download": true
+  },
+  "selector": {
+    "selector_version": "gems-selector-v2-literal-quota-fail-closed",
+    "decided_utc": "2026-10-26T22:30:45.877875+00:00",
+    "artifact": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
+    "artifact_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+    "human_inspection_used": false,
+    "gates": {
+      "artifact_hash_matches_run_card": true,
+      "artifact_name_matches_run_card": true,
+      "g1_format_strict_0_1": true,
+      "g2_leakage_canary": true,
+      "g3_holdout_beats_recorded_best_and_paired_baseline": false,
+      "g4_registry_novelty": false,
+      "g5_exact_file_c2st": false,
+      "note_at_most_140_chars": true,
+      "budget_and_no_slot_spent": true,
+      "current_account_quota_independently_verified": false,
+      "complete_independent_replay_certificate": false
+    },
+    "all_gates_passed": false,
+    "ok_to_submit": false,
+    "decision": "DO_NOT_SUBMIT",
+    "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
+    "recorded_scientific_screen_passed": false,
+    "current_point_best_source": "evidence/s3dep1_run_card_20261026.json",
+    "reasons": [
+      "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.16606013635163805 vs recorded best 0.16606013635163805, paired CI lower=0.020819191342639203",
+      "g4_registry_novelty: surface|rho|=0.4273787790875911, final|rho|=0.5509969596285441, method overlap=0.7131778828278537, peer overlap=0.5433154512136825",
+      "g5_exact_file_c2st: strict C2ST gate not passed on the exact file",
+      "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
+      "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
+    ],
+    "scope": "Recorded-evidence screening and exact-file validation only; positive authorization is not implemented. Not an organizer score, quota record or acceptance guarantee. The agent never uploads."
+  },
+  "lane_assignment": "No single-method paragraph supplied; no new experiment authorized",
   "verdict": "negative",
   "ok_to_submit": false,
   "submission_authorized": false

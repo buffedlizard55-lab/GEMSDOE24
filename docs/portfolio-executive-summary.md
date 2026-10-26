@@ -1,15 +1,15 @@
 # Nine-site executive decision — 2026-10-26
 
-**DOWNLOAD existing research: YES. SUBMIT: NO. New TIFFs: 0.**
+**DOWNLOAD current research: YES. SUBMIT: NO. New TIFFs in this review: 0.**
 
 The requested new, higher-scoring, genuinely unique submission was not achieved. No old prediction was renamed or copied into a new submission.
 
-[Download existing DPRF1 research TIFF](downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) · [Full submission guide](executive-summary.html) · [Scientific findings and sources](portfolio-review-20261026.md)
+[Download current S3DEP1 research TIFF](downloads/gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif) · [Full submission guide](executive-summary.html) · [Scientific findings and sources](research.html)
 
-**Exact file:** `gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`  
-**SHA-256:** `c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1`
+**Exact file:** `gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif`
+**SHA-256:** `86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071`
 
-DPRF1 is the recorded local point-best, not a verified cross-site winner. Its source-recorded HOLDOUT-DTI is 0.16379, 95% CI [0.15045, 0.17739], `gems-segment-pooled-v1`, 60,988 withheld positives; not replayed here and not a leaderboard forecast.
+S3DEP1 is the current recorded local point-best, not a verified cross-site winner. Its recorded HOLDOUT-DTI is 0.16606, 95% CI [0.15186, 0.18034], `gems-segment-pooled-v1`, 60,988 withheld positives; scientific measurements were not replayed here and this is not a leaderboard forecast.
 
 ## Highest historical owner claim by site
 

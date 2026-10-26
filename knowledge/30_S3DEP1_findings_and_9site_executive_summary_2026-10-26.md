@@ -1,4 +1,4 @@
-# PhD Findings, `GEMSDOE32` Mathematical Dissection & Live Nine-Site Executive Synthesis: `H24-S3DEP1` (2026-10-26)
+# PhD Findings, `GEMSDOE32` Mathematical Dissection & Frozen Nine-Site Executive Synthesis: `H24-S3DEP1` (2026-10-26)
 
 - **Lane ID**: `H24-S3DEP1` (*Seamless 10 m USGS 3DEP Monoclinal-Step × 19-Band Crustal Strain/Seismic × OpenEI GDR #1391 Hydrothermal Conduit Dual-Objective Stitched-OOF*)
 - **Preregistration**: [`knowledge/29_preregistered_S3DEP1_2026-10-26.md`](29_preregistered_S3DEP1_2026-10-26.md) locked at commit `7e6db4d428aea6c26a769feed71f4de04f50f613` prior to model execution
@@ -31,16 +31,18 @@ $$D = \frac{T}{(1-\beta)T + \alpha F + \beta G} = \frac{T}{0.2\,T + 0.2\,(N - T)
 
 where $G = T + \text{FN}_w$ is the fixed hidden-fault positive count, $N = T + F$ is total off-catalogue emitted mass, and $T = \sum_{x \in \mathcal{G}_{\text{hid}}} \max_{\hat{x} \in \hat{Y}} K(\|x - \hat{x}\|_2)$ is kernel-weighted true-positive recovery.
 
-1. **Why deleting $6,436$ near-catalogue ($d_{\text{cat}} \le 200\text{ m}$) dots raised `0.2600 -> 0.2778` (`+0.0178`)**: Public fault pixels are masked before scoring, and withheld hidden faults are predominantly distinct unmapped structures rather than parallel traces `100–200 m` beside already-mapped faults. Those `6,436` halo dots carried $\Delta T \approx 0$ while paying full false-positive penalty $0.2\,\Delta F \approx 1,287.2$ denominator units. Removing $\Delta N = 6,436$ zero-credit dots scales $D$ by $(0.2 N_0 + 0.8 G) / (0.2(N_0 - 6,436) + 0.8 G) \approx +6.8\%$, matching $0.2778 / 0.2600 = 1.0685$.
-2. **Exact marginal-precision threshold to beat `0.2778` / `0.3195` / `0.4413` genuinely**: Adding $\Delta N$ new dots with expected marginal kernel credit $\bar{\tau} = \Delta T / \Delta N$ strictly increases $D$ over baseline $D_0$ if and only if:
+1. **What the observed deletion establishes—and what it does not**: Pixel-set algebra proves that `H33-B2` adds no pixels to `D2.8` and removes exactly `6,436` near-catalogue dots. The `0.2600` and `0.2778` values are `UNVERIFIED-OWNER-REPORT`; no organizer receipt or hidden labels are available. Therefore the deleted dots' hidden-fault credit $\Delta T$ and the causal explanation for the reported change are **unobserved**. If, as a bounded hypothesis rather than a fact, those dots had $\Delta T=0$, removing them would reduce false-positive mass and mechanically raise $D$. Catalogue proximity alone does not prove zero hidden-fault credit.
+2. **Exact break-even thresholds for `0.2778` / `0.3195` / `0.4413`**: Adding $\Delta N=\Delta T+\Delta F$ mass with expected kernel credit $\bar{\tau}=\Delta T/\Delta N$ strictly increases $D$ over baseline $D_0$ if and only if:
 
-$$\bar{\tau} > \tau^*(D_0) = \frac{\alpha D_0}{1 - (1 - \beta - \alpha) D_0} = \frac{0.2\,D_0}{1 - 0.2\,D_0}$$
+$$\frac{\Delta T}{\Delta N} > \frac{\alpha D_0}{1-(1-\alpha-\beta)D_0} = 0.2D_0.$$
 
-| Reference Benchmark | `D_0` (`UNVERIFIED-OWNER-REPORT`) | Break-Even Marginal Credit $\tau^*(D_0)$ per Added Dot | Geological Requirement (Without Copying `H19-5`/`B2`) |
-|---|---:|---:|---|
-| `GEMSDOE32 H33-B2` | `0.2778` | **`5.88%`** (`0.05883`) | Recover unmapped faults in the **31.8% 1 m LiDAR gap** (`1,641,254` cells) and sub-alluvial basins at zero $d_{\text{cat}} \le 200\text{ m}$ waste |
-| Prompt Leader Snapshot A | `0.3195` | **`6.83%`** (`0.06826`) | Seamless `10 m` 3DEP + crustal strain/seismic + blind hydrothermal alteration/MT/InSAR |
-| Prompt Leader Snapshot B | `0.4413` | **`9.68%`** (`0.09680`) | High-precision concealed intrabasin & relay-ramp fault localization (likely aided by external remote sensing / 3D MT / manual Quaternary scarp interpretation permitted by rules) |
+The different expression $\alpha D_0/[1-(1-\beta)D_0]=0.2D_0/(1-0.2D_0)$ is the break-even **true-credit/false-mass ratio** $\Delta T/\Delta F$, not credit per added dot.
+
+| Reference Benchmark | `D_0` (`UNVERIFIED-OWNER-REPORT`) | Break-Even $\Delta T/\Delta N$ | Equivalent Break-Even $\Delta T/\Delta F$ | Geological Requirement (Without Copying `H19-5`/`B2`) |
+|---|---:|---:|---:|---|
+| `GEMSDOE32 H33-B2` | `0.2778` | **`5.56%`** (`0.05556`) | `5.88%` (`0.05883`) | Recover unmapped faults in the **31.8% 1 m LiDAR gap** (`1,641,254` cells) and sub-alluvial basins without assuming every $d_{\text{cat}} \le 200\text{ m}$ dot is wasted |
+| Prompt Leader Snapshot A | `0.3195` | **`6.39%`** (`0.06390`) | `6.83%` (`0.06826`) | Seamless `10 m` 3DEP + crustal strain/seismic + blind hydrothermal alteration/MT/InSAR |
+| Prompt Leader Snapshot B | `0.4413` | **`8.83%`** (`0.08826`) | `9.68%` (`0.09680`) | High-precision concealed intrabasin and relay-ramp fault localization; this remains a hypothesis, not a score forecast |
 
 ---
 
@@ -76,7 +78,7 @@ Full specifications are locked in [`knowledge/29_preregistered_S3DEP1_2026-10-26
 
 ### 3.2 Novelty, C2ST & Why `H24-S3DEP1` Stopped Honestly at `DO_NOT_SUBMIT`
 
-1. **Parent-Convergence Against `H24-DPRF1` Cured (`64.45% <= 70%`)**: Every previous high-scoring extension in this repository (`CUP1 = 91.2%`, `EUL1 = 86.57%`, `DKRN1 = 75.68%`) exceeded the `70%` 3-px dot-overlap ceiling against `DPRF1` because 1 m LiDAR scarps dominated tree splits inside the `68.2%` LiDAR coverage polygon. Withholding all `15` 1 m LiDAR channels reduced 3-px overlap with `DPRF1` to **`64.45% <= 70.0%` (`PASS`)**, `54.72%` vs `TRSG1`, `46.95%` vs `GEMSDOE32 B2`, `<= 54.33%` across all `83` peer blobs (`PASS`), and `<= 53.17%` across all `32` live `2026-10-26` sibling focus GeoTIFFs (`PASS`).
+1. **Parent-Convergence Against `H24-DPRF1` Reduced (`64.45% <= 70%`)**: Earlier repository extensions recorded `CUP1 = 91.2%`, `EUL1 = 86.57%`, and `DKRN1 = 75.68%` 3-px dot overlap against `DPRF1`. Their shared 1 m LiDAR features are a plausible contributor, but the saved artifacts do not isolate that cause. Withholding all `15` 1 m LiDAR channels reduced S3DEP1's measured overlap with `DPRF1` to **`64.45% <= 70.0%` (`PASS`)**, `54.72%` vs `TRSG1`, `46.95%` vs `GEMSDOE32 B2`, `<= 54.33%` across all `83` peer blobs (`PASS`), and `<= 53.17%` across the `32` sibling focus GeoTIFFs in the frozen audit (`PASS`).
 2. **Binding Overlap Flag vs Local Stopped Lane `DKRN1` (`71.32% > 70%`)**: Against `69` competing method rasters in the combined local + portfolio registry, `S3DEP1` passed `68 / 69` and exceeded `70%` by **`+1.32 pp` (`71.32%`)** against a single raster: local stopped lane `DKRN1` (`gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif`). Diagnosis: `DKRN1`'s gap-native Head A (`47` channels) and `S3DEP1` (`61` channels) share the exact same `37` non-LiDAR geophysical/hydrothermal channels and `300 m` submodular allocator, causing convergence inside basin margins and the `31.8%` LiDAR gap. In addition, the retained synthetic spacing-5 lattice (`registry-039`, `99.87%` footprint coverage at `3 px`) forces `99.51%` literal overlap by pigeonhole (`>= 82.34%` for any `37,654`-dot set). Per Parallel-Run Protocol Rule 1, we logged the result immediately and performed **zero post-hoc retuning**.
 3. **Binding Exact-File C2ST Nuisance Flag (`AUC = 0.6012`, `Holm p = 0.0200`)**: While training labels pass C2ST (`AUC = 0.5040`), `S3DEP1`'s emitted dots recorded `AUC = 0.6012` against `road_m / claim_m / block_1..4`. Diagnosis: our preregistration residualized all `19` non-topographic geophysical/seismic channels (`S3DEP1_RESID_INDICES`) and applied `UnconditionalNuisanceLogitCalibrator`, **but intentionally excluded `dem10_*` sub-cell gradients** under the assumption that seamless `10 m` DEM is purely topographic. At `10 m` resolution (`1/3` arc-sec), paved US/state highways across Great Basin valleys create `15–25 m` road-cut benches and elevated fill embankments (`dem10_onesided3`, `dem10_steep_ratio_max`) directly along `tiger_road_distance_m = 0`, imprinting road-corridor contrast onto the tree splits that post-hoc marginal logit debiasing over `6` coarse basis terms cannot fully erase.
 4. **Flagged Metadata Irregularity (`IRR-S3DEP1-TC-BAND`)**: Band 6 (`tc`) of `data/training_features.tif` carries an inherited bridge GDAL description claiming *"Tilt angle or total curvature"*, yet direct inspection of all `5,167,373` in-footprint cells proves strictly positive values `[2.948, 88.573]` (median `13.48`, mean `15.86`), which physically is the USGS/INGENIOUS **Complete Bouguer gravity terrain correction (`tc`, in mGal)** — never a `[-pi/2, +pi/2]` tilt angle or zero-mean curvature. Documented in `data/prepared/s3dep1_stack61.json`.
@@ -84,11 +86,11 @@ Full specifications are locked in [`knowledge/29_preregistered_S3DEP1_2026-10-26
 
 ---
 
-## 4. Live `2026-10-26` Nine-Site `main` HEAD Master Forensic Table
+## 4. Frozen `2026-10-26` Nine-Site Forensic Snapshot
 
-All `8` sibling repositories were freshly pulled at their live `2026-10-26` `main` HEAD commits (`32` GeoTIFFs SHA-verified in `data/research/nine_site_20261026_refresh/manifest_20261026.json`; full machine-readable ledger in [`evidence/nine_site_executive_summary_s3dep1_20261026.json`](../evidence/nine_site_executive_summary_s3dep1_20261026.json)):
+The rows below preserve the commits and `32` GeoTIFFs inspected by the original S3DEP1 run (`data/research/nine_site_20261026_refresh/manifest_20261026.json`; full machine-readable ledger in [`evidence/nine_site_executive_summary_s3dep1_20261026.json`](../evidence/nine_site_executive_summary_s3dep1_20261026.json)). They are **not live HEADs**. Later GitHub source-text commits are recorded separately in [`evidence/focus_source_refresh_20261026.json`](../evidence/focus_source_refresh_20261026.json), and source freshness alone does not re-audit raster bytes. The current executive guide uses the immutable 326-file portfolio audit for exact historical downloads.
 
-| Site & Live `main` HEAD | Historical Reference (`UNVERIFIED-OWNER-REPORT`, Do Not Copy) | Live `2026-10-26` Featured Research `.tif` (`SHA-256` prefix) | Strict `[0,1]` / Dots / Apron / `>2 km` | `S3DEP1` 3-px Overlap | Autonomous Download / Submit Verdict & Flagged Irregularities |
+| Site & Inspected Commit | Historical Reference (`UNVERIFIED-OWNER-REPORT`, Do Not Copy) | Inspected `2026-10-26` Featured Research `.tif` (`SHA-256` prefix) | Strict `[0,1]` / Dots / Apron / `>2 km` | `S3DEP1` 3-px Overlap | Autonomous Download / Submit Verdict & Flagged Irregularities |
 |---|---|---|---|---:|---|
 | **[GEMSDOE24](https://buffedlizard55-lab.github.io/GEMSDOE24/)** `5cfab745` + this PR | `h25-1-dotted-h19-5-d1-5` (`0.2477`) | `gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif` (`86516533fb52`) | **PASS** · `37,654` · `22.2%` / `52.1%` | self (`64.45%` vs `DPRF1`) | **DOWNLOAD: YES · SUBMIT: NO.** New all-time recorded `HOLDOUT-DTI = 0.16606` (`[0.15186, 0.18034]`, zero 1 m LiDAR); stopped on `71.32%` vs local `DKRN1`, `C2ST = 0.6012`, paired CI vs `DPRF1` spanning 0, and `registry-039`. |
 | **[GEMSDOE25](https://buffedlizard55-lab.github.io/GEMSDOE25/)** `bc3381fd` | `dotted-h19-5-d2-8` (`0.2600`) | `gems25-h72-3-subsurf-pttg-mths-sapd3-0-k3p0-20261026-88bbebfe79b4-zeros.tif` (`51f6e3cb83d7`) | **PASS** · `41,061` · `46.5%` / `24.0%` | **`27.86%`** (`PASS`) | **DOWNLOAD: YES · SUBMIT: NO.** `H72-3` self-marks `SUBMIT: NO` after confirmation miss. |

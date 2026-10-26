@@ -281,6 +281,13 @@
       "status": "documented",
       "issue": "DPRF1 preregistration baseline table quotes 5,167,378 footprint pixels; the template/footprint actually used everywhere contains 5,167,373 (delta 5 px).",
       "resolution": "Documentation-only discrepancy; all computation uses gems.footprint.load_footprint() (5,167,373 px, verified 2026-10-26). Historical preregistration left unmodified."
+    },
+    {
+      "id": "IRR-S3DEP1-MARGINAL-THRESHOLD-UNOBSERVED-CAUSAL",
+      "severity": "high",
+      "status": "fixed",
+      "issue": "S3DEP1 prose mislabeled the break-even ΔTP_w/ΔFP_w ratio as expected credit per added mass ΔTP_w/ΔN and asserted, without hidden labels or an organizer receipt, that B2 halo deletions had zero hidden-fault credit and caused the owner-reported score change.",
+      "resolution": "src/gems/metric.py now names and tests both formulas. For alpha=0.2, beta=0.8, break-even ΔTP_w/ΔN is alpha*D (5.56%, 6.39%, 8.83% at D=0.2778, 0.3195, 0.4413); ΔTP_w/ΔFP_w is 5.88%, 6.83%, 9.68%. Site, findings, and evidence narratives now limit the B2 conclusion to deletion ancestry and label hidden credit/causality unobserved; recorded experimental measurements are unchanged."
     }
   ]
 }

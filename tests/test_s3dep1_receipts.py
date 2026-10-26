@@ -162,6 +162,23 @@ def test_s3dep1_preregistration_ancestry_and_new_point_best_benchmark():
     assert exp["ok_to_submit"] is False
 
 
+def test_s3dep1_b2_narrative_distinguishes_per_mass_and_true_false_thresholds():
+    nine = json.loads(NINE_PATH.read_text())
+    correction = nine["correction_20261026"]
+    assert correction["irregularity_id"] == "IRR-S3DEP1-MARGINAL-THRESHOLD-UNOBSERVED-CAUSAL"
+    diagnosis = nine["cross_site_executive_conclusion"]["can_we_beat_02778_03195_04413"]
+    for value in ("5.56%", "6.39%", "8.83%", "5.88%", "6.83%", "9.68%"):
+        assert value in diagnosis
+    assert "does not prove" in diagnosis
+
+    html = (ROOT / "docs/research.html").read_text()
+    start = html.index('<section id="s3dep1-research">')
+    section = html[start : html.index("</section>", start)]
+    assert "expected credit per added mass" in section
+    assert all(value in section for value in ("5.56%", "6.39%", "8.83%"))
+    assert "causal explanation" in section and "unobserved" in section
+
+
 def test_s3dep1_nine_site_20261026_forensics_and_site_tamper_guard(tmp_path):
     nine = json.loads(NINE_PATH.read_text())
     expected = [

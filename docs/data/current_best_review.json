@@ -278,7 +278,7 @@
   },
   "selector": {
     "selector_version": "gems-selector-v2-literal-quota-fail-closed",
-    "decided_utc": "2026-10-26T21:56:30.202472+00:00",
+    "decided_utc": "2026-10-26T22:30:45.877875+00:00",
     "artifact": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
     "artifact_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
     "human_inspection_used": false,

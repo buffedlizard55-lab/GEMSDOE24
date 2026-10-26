@@ -1,15 +1,15 @@
 {
   "generated_utc": "2026-10-26T21:19:31.489118+00:00",
-  "scope": "H24-S3DEP1 (0.16606 new all-time recorded HOLDOUT-DTI point-best) & fresh 2026-10-26 nine-site main HEAD forensic refresh (GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36)",
+  "scope": "H24-S3DEP1 recorded results plus a frozen 2026-10-26 nine-site forensic snapshot at the listed immutable commits; not current HEAD and not score verification",
   "supersedes": "evidence/nine_site_executive_summary_dkrn1_20261026.json (kept, unmodified)",
   "score_governance": "Every public leaderboard number in the standing prompt (including GEMSDOE32 0.2778, GEMSDOE27 H29-CELF 0.2190, and conflicting top-score snapshots 0.3195 vs 0.4413) is strictly UNVERIFIED-OWNER-REPORT (zero DrivenData submission-page receipts exist in this checkout). Local measurements are strictly HOLDOUT-DTI with evaluator version, withheld positive count, and 95% block-bootstrap CI. No leaderboard projection or calibrated hidden-score estimate is asserted.",
   "cross_site_executive_conclusion": {
-    "best_historical_reference_not_for_resubmission": "GEMSDOE32 h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros (0.2778 UNVERIFIED-OWNER-REPORT; exact 37,654-dot subset of D2.8 with all 6,436 dots within <=200 m of public catalogue deleted; prohibited to copy or perturb)",
+    "best_historical_reference_not_for_resubmission": "GEMSDOE32 h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros (0.2778 UNVERIFIED-OWNER-REPORT; pixel algebra proves it is a 37,654-dot deletion-only subset of D2.8 with 6,436 <=200 m catalogue-halo dots removed; hidden credit and causal score effect are unobserved; prohibited to copy or perturb)",
     "best_already_scored_unique_20261025_submission": "GEMSDOE27 gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite (0.2190 UNVERIFIED-OWNER-REPORT; Dual-Partition Stitched-OOF + 300 m CELF cover; already scored, do not resubmit)",
-    "recorded_local_point_best_research_only": "GEMSDOE24 H24-S3DEP1 gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif (SHA-256 86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071; HOLDOUT-DTI 0.16606 [0.15186, 0.18034], gems-segment-pooled-v1, 60,988 withheld, zero 1 m LiDAR, NE_LidarGapHeavy 0.21972, 3.0 km Bridge 0.16257, 64.45% 3-px overlap vs DPRF1 <= 70%, <=53.17% vs all 32 live 2026-10-26 sibling focus TIFFs, <=54.33% vs all 83 peer blobs). DOWNLOAD: YES (audit only) \u00b7 SUBMIT: NO (not a literal-gate-unique or submit-ready candidate: 71.32% 3-px overlap vs local stopped lane DKRN1, exact-file C2ST AUC 0.6012 holm_p=0.0200, paired CI vs DPRF1 [-0.00699, +0.01144] spans zero, and retained spacing-5 lattice registry-039).",
+    "recorded_local_point_best_research_only": "GEMSDOE24 H24-S3DEP1 gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif (SHA-256 86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071; HOLDOUT-DTI 0.16606 [0.15186, 0.18034], gems-segment-pooled-v1, 60,988 withheld, zero 1 m LiDAR, NE_LidarGapHeavy 0.21972, 3.0 km Bridge 0.16257, 64.45% 3-px overlap vs DPRF1 <= 70%, <=53.17% vs all 32 sibling focus TIFFs in the frozen 2026-10-26 audit, <=54.33% vs all 83 peer blobs). DOWNLOAD: YES (audit only) \u00b7 SUBMIT: NO (not a literal-gate-unique or submit-ready candidate: 71.32% 3-px overlap vs local stopped lane DKRN1, exact-file C2ST AUC 0.6012 holm_p=0.0200, paired CI vs DPRF1 [-0.00699, +0.01144] spans zero, and retained spacing-5 lattice registry-039).",
     "previous_point_best_dprf1_disposition": "GEMSDOE24 H24-DPRF1 gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif (HOLDOUT-DTI 0.16379 [0.15045, 0.17739], C2ST 0.5247 PASS, 55.78% original competing-method novelty PASS, 86.66% overlap vs subsequent EUL1) remains not a literal-gate-unique or submit-ready candidate under gems-selector-v2-literal-quota-fail-closed.",
-    "all_eight_20261026_sibling_tifs_audited": "All 32 live 2026-10-26 GeoTIFFs across GEMSDOE25@bc3381fd, 27@f1e32af8, 28@9c1be21e, 30@35ce8911, 31@78f9bf3a, 32@8953b986, 33@a24fb7c5, and 36@b90418f8 were SHA-verified and audited pixel-by-pixel: zero sibling repositories have a submit-ready override; GEMSDOE30's 2026-10-26 TIFF fails strict whole-array [0,1] (7,111,787 outside NaNs), GEMSDOE32's 'arena47-perturb-h38-unique' is flagged as a perturbed derivative, GEMSDOE28 has 12/44 un-manifested downloads, and S3DEP1 has <=53.17% 3-px overlap against every single one.",
-    "can_we_beat_02778_03195_04413": "Unproven and unforecastable without organizer calibration receipts. Exact DTI deletion algebra D = T / (0.2 T + 0.2 F + 0.8 G) proves GEMSDOE32 B2 (0.2778 UNVERIFIED-OWNER-REPORT) gained +0.0178 over D2.8 (0.2600) purely by deleting 6,436 zero-marginal-credit <=200 m catalogue-halo dots (zero new geological detections). Conflicting prompt top-score snapshots (0.3195 vs 0.4413) have no receipts; surpassing ~0.28 without copying B2 requires genuine off-catalogue fault discovery inside the 31.8% LiDAR gap and sub-alluvial basins at zero <=200 m halo waste."
+    "all_eight_20261026_sibling_tifs_audited": "Frozen audit: 32 GeoTIFFs at GEMSDOE25@bc3381fd, 27@f1e32af8, 28@9c1be21e, 30@35ce8911, 31@78f9bf3a, 32@8953b986, 33@a24fb7c5, and 36@b90418f8 were SHA-verified and audited pixel-by-pixel. These refs are no longer presented as live HEAD. Newer source commits require a new artifact audit.",
+    "can_we_beat_02778_03195_04413": "Unproven and unforecastable without organizer receipts and hidden labels. Pixel algebra proves B2 is a deletion-only subset of D2.8, but does not prove the deleted dots had zero hidden-fault credit or that deletion caused the UNVERIFIED-OWNER-REPORT change from 0.2600 to 0.2778. At alpha=0.2 and beta=0.8, break-even expected credit per added mass is alpha*D: 5.56%, 6.39%, and 8.83% at D=0.2778, 0.3195, and 0.4413. The corresponding true-credit/false-mass ratios are 5.88%, 6.83%, and 9.68%. A scientifically distinct method would still need prospective buffered holdout, canaries, and both novelty gates."
   },
   "sites": [
     {
@@ -69,7 +69,7 @@
       "apron_2_to_9px": 0.2224,
       "farfield_gt_20px": 0.5209,
       "s3dep1_3px_overlap_vs_site_artifact": 1.0,
-      "executive_verdict": "DOWNLOAD: YES (research audit) \u00b7 SUBMIT: NO. H24-S3DEP1 sets a new all-time recorded HOLDOUT-DTI point-best (0.16606 [0.15186, 0.18034], NE_LidarGapHeavy 0.21972, zero 1 m LiDAR, 64.45% <= 70% vs DPRF1, <=53.17% vs all 8 sibling sites), but stops honestly on 71.32% overlap vs local DKRN1, C2ST 0.6012 (10 m highway cut/fill), paired CI spanning 0 vs DPRF1, and registry-039."
+      "executive_verdict": "DOWNLOAD: YES (research audit) \u00b7 SUBMIT: NO. H24-S3DEP1 is GEMSDOE24's current recorded local HOLDOUT-DTI point-best (0.16606 [0.15186, 0.18034], NE_LidarGapHeavy 0.21972, zero 1 m LiDAR, 64.45% <= 70% vs DPRF1, <=53.17% vs all 8 sibling sites in this frozen audit), but stops on 71.32% overlap vs local DKRN1, road-associated C2ST 0.6012 (highway cut/fill is a plausible mimic), paired CI spanning 0 vs DPRF1, and registry-039."
     },
     {
       "site": "GEMSDOE25",
@@ -240,5 +240,11 @@
       "s3dep1_3px_overlap_vs_site_artifact": 0.2873,
       "executive_verdict": "DO NOT SUBMIT \u2014 HVG-36 scored HOLDOUT-DTI 0.135759 (paired CI spans zero), companion GVSC-36 has 94.6% internal overlap, and GEMSDOE36 HEAD (b90418f8) explicitly marks DO NOT SUBMIT."
     }
-  ]
+  ],
+  "correction_20261026": {
+    "irregularity_id": "IRR-S3DEP1-MARGINAL-THRESHOLD-UNOBSERVED-CAUSAL",
+    "status": "corrected narrative; recorded raster measurements unchanged",
+    "detail": "Earlier prose mislabeled the \u0394TP_w/\u0394FP_w threshold as \u0394TP_w/\u0394N and treated zero hidden credit as observed. Correct formulas and epistemic limits are now explicit.",
+    "source_refresh": "evidence/focus_source_refresh_20261026.json"
+  }
 }

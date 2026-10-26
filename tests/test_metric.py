@@ -8,6 +8,7 @@ import pytest
 from gems.metric import (
     dti_components_exact,
     dti_score_fast,
+    marginal_credit_per_mass_threshold,
     marginal_inclusion_threshold,
     ridge_nms,
     verify_organizer_worked_example,
@@ -67,6 +68,33 @@ def test_exact_and_fast_agree_for_binary_predictions():
 def test_marginal_inclusion_bar_values_used_on_the_site():
     assert round(marginal_inclusion_threshold(0.1563), 4) == 0.0323
     assert round(marginal_inclusion_threshold(0.3168), 4) == 0.0676
+
+
+def test_marginal_true_false_ratio_is_distinct_from_per_mass_credit():
+    expected = {
+        0.2778: (0.05882851213417475, 0.05556),
+        0.3195: (0.06826193782715521, 0.0639),
+        0.4413: (0.096803913396363, 0.08826),
+    }
+    for dti, (tp_fp_ratio, per_mass_credit) in expected.items():
+        assert marginal_inclusion_threshold(dti) == pytest.approx(tp_fp_ratio)
+        assert marginal_credit_per_mass_threshold(dti) == pytest.approx(per_mass_credit)
+        assert tp_fp_ratio / (1.0 + tp_fp_ratio) == pytest.approx(per_mass_credit)
+
+
+def test_general_alpha_beta_threshold_algebra_and_validation():
+    dti, alpha, beta = 0.3, 0.25, 0.5
+    assert marginal_inclusion_threshold(dti, alpha, beta) == pytest.approx(
+        alpha * dti / (1.0 - (1.0 - beta) * dti)
+    )
+    assert marginal_credit_per_mass_threshold(dti, alpha, beta) == pytest.approx(
+        alpha * dti / (1.0 - (1.0 - alpha - beta) * dti)
+    )
+    for args in ((-0.1,), (1.1,), (float("nan"),), (0.3, -0.1, 0.8), (0.3, 0.2, -0.1)):
+        with pytest.raises(ValueError):
+            marginal_inclusion_threshold(*args)
+        with pytest.raises(ValueError):
+            marginal_credit_per_mass_threshold(*args)
 
 
 def test_recall_dominated_form_of_the_score():
