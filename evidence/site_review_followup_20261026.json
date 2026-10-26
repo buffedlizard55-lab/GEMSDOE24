@@ -1,0 +1,48 @@
+{
+  "schema_version": "site-review-followup-v1",
+  "reviewed_utc": "2026-10-26T16:35:16Z",
+  "scope": "Repository and Pages status-order review; no scientific experiment or organizer access",
+  "finding": "The generated site and README status block placed H24-TNR1/OJ1 research after DPRF1 in a way that still described them as latest/new, while the build receipt called TNR1 the primary artifact. This could confuse users about which raster is the current local point-best and whether a download is authorized.",
+  "fixes": [
+    "Promoted the recorded DPRF1 local point-best and newer negative-lane summaries ahead of historical TNR1 content on generated Overview, Executive Summary, and Research pages.",
+    "Wrapped TNR1 content in a closed historical-result section and replaced stale latest/new copy with historical/archive wording.",
+    "Changed the README status ordering so OJ1 and TNR1 are appended as historical results rather than prepended as latest.",
+    "Bound evidence/site_build.json primary_sha256 to the current-best exact-file review rather than the TNR1 active-lane identity.",
+    "Added regression tests for ordering, historical labels, current-best hash binding, and non-authorization status."
+  ],
+  "current_artifact": {
+    "name": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+    "sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+    "status": "DOWNLOAD YES / SUBMIT NO",
+    "holdout_label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positive_pixels": 60988,
+    "dti": 0.1637924246971501,
+    "ci95": [0.15044621733051888, 0.1773903019943756],
+    "organizer_confirmed_score": null,
+    "scope_note": "Existing recorded point-best; exact file revalidated, not scientifically replayed in this follow-up. Literal all-entry novelty, independent replay, and quota remain blocking."
+  },
+  "experiments_run": 0,
+  "new_tiffs_generated": 0,
+  "submission_slots_used": 0,
+  "validation": {
+    "pytest": "392 passed",
+    "ruff_check": "passed",
+    "ruff_format_check": "158 files already formatted",
+    "compileall": "passed",
+    "git_diff_check": "passed",
+    "site_build": "passed; negative / new_slot_eligible=false",
+    "dprf1_recorded_verification": "passed; no experiment rerun; selector DO_NOT_SUBMIT",
+    "tnr1_recorded_verification": "passed; no experiment rerun; negative preserved",
+    "browser_review": "12 desktop/mobile page checks passed; current-best download SHA and clipboard note verified; first-screen placement, no overflow, zero accessibility violations; 92 source rows shown",
+    "web_download_authorization": "false"
+  },
+  "remaining_blockers": [
+    "No explicitly assigned single-method paragraph for a new lane",
+    "No candidate satisfies the literal all-entry 3-pixel overlap ceiling; DPRF1 exceeds it against the retained calibration lattice",
+    "No complete independent positive replay certificate",
+    "Current DrivenData weekly quota and organizer submission receipt are unavailable",
+    "The reported 0.2778 and conflicting leaderboard maxima 0.3195 / 0.4413 remain unverified owner claims"
+  ],
+  "verdict": "negative"
+}

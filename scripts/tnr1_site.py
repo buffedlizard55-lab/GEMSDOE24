@@ -1,4 +1,4 @@
-"""Render the latest exact-file-verified negative packet, without a slot selector."""
+"""Render the historical TNR1 negative packet, without a slot selector."""
 
 from __future__ import annotations
 
@@ -59,7 +59,7 @@ def render(root):
     )
     buttons = (
         f'<a class="button primary" href="downloads/{name}" download="{name}">'
-        "↓ Download new research .tif — DO NOT SUBMIT</a>"
+        "↓ Download TNR1 research .tif — DO NOT SUBMIT</a>"
         f'<a class="button" href="downloads/{name[:-4]}.preflight.json">Automated preflight</a>'
     )
     score_label = (
@@ -67,9 +67,9 @@ def render(root):
         f"{holdout['n_withheld_positive_pixels']:,} withheld positives · "
         f"95% spatial-bootstrap CI [{low:.5f}, {high:.5f}]"
     )
-    hero = f"""<div class="hero" id="current-packet"><div>
-<div class="eyebrow">Featured session file · H24-TNR1 · 2026-10-26</div>
-<h1>Download the evidence.<br>Protect the slot.</h1>
+    hero = f"""<div class="hero" id="tnr1-historical-packet"><div>
+<div class="eyebrow">Historical negative experiment · H24-TNR1 · 2026-10-26</div>
+<h1>Archived result.<br>Protect the slot.</h1>
 <p class="lead">A new, independently computed fault-prediction GeoTIFF is ready to download.
 The project evaluated it automatically and says <strong>do not submit</strong>—not “inspection pending”.</p>
 {status}<div class="actions">{buttons}<a class="button" href="executive-summary.html">Submission guide →</a></div>{info}
@@ -169,7 +169,7 @@ all-entry novelty and current account allowance. No human inspection exception r
         + '<section><h2>Full source inventory</h2><p>All 92 owner-listed repository READMEs have been retrieved at immutable commits and checked for byte identity. That is a source audit—not organizer score verification or a novelty certificate against every current TIFF.</p><div class="actions"><a class="button" href="sources.html#all-owner-sites">Browse all 92 sites</a><a class="button" href="data/all_owner_sites_20261026.csv" download>Download audit table .csv</a><a class="button" href="research.html#tnr1-research">Method and limitations</a></div></section>'
     )
     executive = (
-        '<div class="pagehead"><div class="eyebrow">Executive submission summary</div><h1>New file available.<br>Not cleared to submit.</h1></div>'
+        '<div class="pagehead"><div class="eyebrow">Historical TNR1 result · 2026-10-26</div><h1>Archived experiment.<br>Not cleared to submit.</h1></div>'
         + status
         + '<div class="actions">'
         + buttons
@@ -192,7 +192,7 @@ all-entry novelty and current account allowance. No human inspection exception r
     return {
         "overview": overview,
         "executive": executive,
-        "research": '<section id="tnr1-research"><div class="pagehead"><div class="eyebrow">This session’s preregistered test · stopped without retuning</div><h1>Keep the negative result.</h1></div>'
+        "research": '<section id="tnr1-research"><div class="pagehead"><div class="eyebrow">Historical TNR1 preregistered test · stopped without retuning</div><h1>Keep the negative result.</h1></div>'
         + status
         + "</section>"
         + explanation
@@ -209,7 +209,7 @@ all-entry novelty and current account allowance. No human inspection exception r
             "ok_to_submit": False,
             "submission_authorized": False,
         },
-        "status_md": f"Latest **H24-TNR1**: [`{card['submission_name']}`](docs/downloads/{card['submission_name']}). **DOWNLOAD YES / SUBMIT NO — NOT OK TO SUBMIT**. HOLDOUT-DTI **{holdout['dti']:.5f}**, 95% CI **[{low:.5f}, {high:.5f}]**, `{holdout['evaluator_version']}`, **{holdout['n_withheld_positive_pixels']:,} withheld positives**. Matched raw control **HOLDOUT-DTI {raw['dti']:.5f}** (95% CI [{raw_low:.5f}, {raw_high:.5f}]); paired delta {paired['paired_delta_dti']:+.5f} (95% CI [{delta_low:+.5f}, {delta_high:+.5f}]). Execution-time GVC1 comparator **HOLDOUT-DTI {best['dti']:.5f}** (95% CI [{best_low:.5f}, {best_high:.5f}], same evaluator/positives; not retrained). Later recorded {current['lane']} point-best **HOLDOUT-DTI {current_score['dti']:.5f}** (95% CI [{current_low:.5f}, {current_high:.5f}], same evaluator/positives) also is not a certified paired win. Exact file [0,1]/grid and {count} leakage-canary checks pass; C2ST diagnostic AUC {audit['observed_auc']:.4f}, Holm p {audit['holm_p_value']:.3f}, not flagged. Final competing-method 3-px overlap **{100 * method_overlap:.2f}%** exceeds 70%; retained lattice overlap **100%**. Stopped as duplicate; no retuning. New bytes, not gate-passing scientific uniqueness, and not a leaderboard result. No weekly slot has been spent. [JSON run card](evidence/tnr1_run_card_20261026.json) · [Executive guide](docs/executive-summary.html) · [Current owner brief](knowledge/owner_brief_2026-10-26.md).\n\nEarlier packets below are historical, not current submission authority.\n\n",
+        "status_md": f"Historical **H24-TNR1** result: [`{card['submission_name']}`](docs/downloads/{card['submission_name']}). **DOWNLOAD YES / SUBMIT NO — NOT OK TO SUBMIT**. HOLDOUT-DTI **{holdout['dti']:.5f}**, 95% CI **[{low:.5f}, {high:.5f}]**, `{holdout['evaluator_version']}`, **{holdout['n_withheld_positive_pixels']:,} withheld positives**. Matched raw control **HOLDOUT-DTI {raw['dti']:.5f}** (95% CI [{raw_low:.5f}, {raw_high:.5f}]); paired delta {paired['paired_delta_dti']:+.5f} (95% CI [{delta_low:+.5f}, {delta_high:+.5f}]). Execution-time GVC1 comparator **HOLDOUT-DTI {best['dti']:.5f}** (95% CI [{best_low:.5f}, {best_high:.5f}], same evaluator/positives; not retrained). Later recorded {current['lane']} point-best **HOLDOUT-DTI {current_score['dti']:.5f}** (95% CI [{current_low:.5f}, {current_high:.5f}], same evaluator/positives) also is not a certified paired win. Exact file [0,1]/grid and {count} leakage-canary checks pass; C2ST diagnostic AUC {audit['observed_auc']:.4f}, Holm p {audit['holm_p_value']:.3f}, not flagged. Final competing-method 3-px overlap **{100 * method_overlap:.2f}%** exceeds 70%; retained lattice overlap **100%**. Stopped as duplicate; no retuning. New bytes, not gate-passing scientific uniqueness, and not a leaderboard result. No weekly slot has been spent. [JSON run card](evidence/tnr1_run_card_20261026.json) · [Executive guide](docs/executive-summary.html) · [Current owner brief](knowledge/owner_brief_2026-10-26.md).\n\nEarlier packets below are historical, not current submission authority.\n\n",
     }
 
 

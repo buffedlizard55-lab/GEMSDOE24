@@ -39,6 +39,14 @@ def built(tmp_path_factory):
 
 
 def active_artifact(built):
+    current = built / "docs/data/current_best_review.json"
+    if current.exists():
+        row = json.loads(current.read_text())
+        return {
+            "file": row["submission_name"],
+            "sha256": row["raster_sha256"],
+            "note": row["note"],
+        }
     lane = built / "docs/data/active_lane.json"
     if lane.exists():
         return json.loads(lane.read_text())["artifact"]
@@ -57,6 +65,27 @@ def test_download_is_on_the_first_screen_and_the_file_is_the_registered_one(buil
             else True
         )
     assert (built / "docs/downloads" / row["file"]).exists()
+
+
+def test_current_point_best_precedes_archived_tnr1_and_build_receipt_matches(built):
+    current = json.loads((built / "docs/data/current_best_review.json").read_text())
+    receipt = json.loads((built / "evidence/site_build.json").read_text())
+    assert receipt["primary_sha256"] == current["raster_sha256"]
+    for page in (
+        "index.html",
+        "docs/index.html",
+        "executive-summary.html",
+        "docs/executive-summary.html",
+    ):
+        text = (built / page).read_text()
+        tnr1_archive = text.index('id="historical-tnr1')
+        before_archive = text[:tnr1_archive]
+        after_archive = text[tnr1_archive:]
+        assert current["submission_name"] in before_archive
+        assert 'download="' + current["submission_name"] + '"' in before_archive
+        assert "Historical" in after_archive and "H24-TNR1" in after_archive
+        assert "Featured session file · H24-TNR1" not in before_archive
+        assert "New file available" not in after_archive
 
 
 def test_pages_state_the_unscored_status_and_never_invent_a_score(built):
