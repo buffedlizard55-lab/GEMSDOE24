@@ -15,7 +15,6 @@ const base = new URL(process.argv[2]);
 
 async function main() {
   const card = JSON.parse(await fs.readFile(path.join(root, 'evidence/dprf1_run_card_20261026.json'), 'utf8'));
-  const noteCard = JSON.parse(await fs.readFile(path.join(root, 'evidence/tnr1_run_card_20261026.json'), 'utf8'));
   const libs = await inflate(path.join(modules, '@sparticuz/chromium/bin/al2023.tar.br'));
   setupLambdaEnvironment(path.join(libs, 'lib'));
   const browser = await playwright.launch({args: chromium.args.filter(value => value !== "--single-process"), executablePath: await chromium.executablePath(), headless: true});
@@ -39,7 +38,7 @@ async function main() {
         const box = await link.boundingBox();
         assert(box && box.x >= 0 && box.x + box.width <= viewport.width + 1);
         assert(box.y >= 0 && box.y + box.height <= viewport.height, `First-screen download off-screen: ${device} ${relative} ${JSON.stringify(box)}`);
-        assert(await page.getByText('NOT OK TO SUBMIT.', {exact: false}).first().isVisible());
+        assert(await page.getByRole('heading', {name: /Current decision: DOWNLOAD YES \/ SUBMIT NO/}).first().isVisible());
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `Horizontal overflow: ${device} ${relative}`);
         const historical = page.locator('details[id^="historical-"]').first();
         assert.equal(await historical.getAttribute('open'), null);
@@ -49,9 +48,9 @@ async function main() {
         const bytes = await fs.readFile(await download.path());
         const digest = crypto.createHash('sha256').update(bytes).digest('hex');
         assert.equal(digest, card.raster_sha256);
-        await page.locator('[data-copy="#note-tnr1"]').click();
-        await page.waitForFunction(() => document.querySelector('#tnr1-feedback')?.textContent === 'Copied to clipboard.');
-        assert.equal(await page.evaluate(() => navigator.clipboard.readText()), noteCard.note);
+        await page.locator('[data-copy="#note-dprf1"]').click();
+        await page.waitForFunction(() => document.querySelector('#copy-feedback-dprf1')?.textContent === 'Copied to clipboard.');
+        assert.equal(await page.evaluate(() => navigator.clipboard.readText()), card.note);
         await page.addScriptTag({path: axeSource});
         const accessibility = await page.evaluate(async () => {
           const result = await axe.run(document.querySelector('main'), {runOnly: {type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice']}});
