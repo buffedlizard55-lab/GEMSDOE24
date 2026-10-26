@@ -35,9 +35,16 @@ def write_submission(
     template_path: Path | str,
     out_path: Path | str,
     *,
-    outside: str = "nan",
+    outside: str = "zero",
 ) -> Path:
-    """Write ``pred_2d`` using the *template's own raster profile*."""
+    """Write ``pred_2d`` using the template profile and a portal-safe default.
+
+    The default is an all-finite ``0.0`` exterior because some portal validators
+    inspect every stored cell and reject the template's ``NaN`` outside
+    convention as out of range.  Use ``outside="nan"`` only when producing an
+    explicitly labelled compatibility twin; it is never the recommended upload
+    artifact and must fail the strict whole-array preflight diagnostic.
+    """
     if outside not in ("nan", "zero"):
         raise ValueError("outside must be 'nan' or 'zero'")
     out_path = Path(out_path)
@@ -263,9 +270,9 @@ def make_note(
     suffix = f" | id {content_id} | " + (
         "reference, no new score" if reference else "not yet live-scored"
     )
-    max_sum = 200 - len(prefix) - len(suffix)
+    max_sum = 140 - len(prefix) - len(suffix)
     if max_sum < 1:
-        raise ValueError("Hypothesis/content identifiers are too long for the 200-character note")
+        raise ValueError("Hypothesis/content identifiers are too long for the 140-character note")
     return f"{prefix}{summary[:max_sum]}{suffix}"
 
 

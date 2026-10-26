@@ -1,28 +1,35 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## H24-DKRN1 & Fresh `2026-10-26` Nine-Site Forensic Executive Summary (New Unique GeoTIFF Generated · `DOWNLOAD: YES · SUBMIT: NO`)
+## Current fail-closed review — 2026-10-26
 
-> **UNMISTAKABLE AUTOMATED VERDICT (ZERO HUMAN-INSPECTOR FALLBACK):**
-> - **Recorded Local Point-Best (`H24-DPRF1`):** [`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) (`HOLDOUT-DTI = 0.16379` `[0.15045, 0.17739]`) -> **`OK TO DOWNLOAD: YES (audit) · OK TO SUBMIT: NO (`DO_NOT_SUBMIT`)`** under `gems-selector-v2-literal-quota-fail-closed` (literal `registry-039` spacing-5 lattice `99.87%` coverage, unknown live DrivenData weekly quota, no independent replay certificate).
-> - **Newly Generated Unique GeoTIFF (`H24-DKRN1`, this session):** [`gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif`](docs/downloads/gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif) (`SHA-256: 0b114a75d5a905ded84450fe55df386f9361ff39139a2e4452476563ac0fa65d`) -> **`OK TO DOWNLOAD: YES (audit) · OK TO SUBMIT: NO (`DO_NOT_SUBMIT`)`** (`verdict: "negative"`).
+> **AUTOMATED VERDICT: DOWNLOAD MAY BE AVAILABLE FOR RESEARCH · SUBMIT: NO · NEW TIFF: NONE.**
+>
+> The current review did not run a geological experiment, create an intentionally new GeoTIFF, use a competition slot, upload to DrivenData, or obtain an organizer receipt. No artifact is submission-authorized. Do not treat a research download, a local holdout, or an owner-reported live value as a leaderboard forecast.
 
-[**⬇ Download New Unique H24-DKRN1 GeoTIFF (`-zeros.tif`, strict whole-array `[0, 1]`) — DO NOT SUBMIT**](docs/downloads/gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif) ·
-[Single-GeoTIFF ZIP](docs/downloads/gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.zip) ·
-[NaN-outside twin](docs/downloads/gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-nan.tif) ·
-[JSON run card](evidence/dkrn1_run_card_20261026.json) ·
-[Selector v2 receipt (`DO_NOT_SUBMIT`)](evidence/dkrn1_selector_20261026.json) ·
-[Fresh 9-Site `2026-10-26` Forensic Audit JSON](evidence/nine_site_executive_summary_dkrn1_20261026.json) ·
-[PhD Findings & 9-Site Report](knowledge/28_DKRN1_findings_and_9site_executive_summary_2026-10-26.md) ·
-[Preregistration (`86d7f622a0ef`)](knowledge/27_preregistered_DKRN1_2026-10-26.md) ·
-[Executive Summary & Submission Guide](docs/executive-summary.html#dkrn1)
+The recorded local reference **H24-DPRF1** is [`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif): **HOLDOUT-DTI 0.16379**, evaluator `gems-segment-pooled-v1`, 60,988 withheld positives, 95% CI `[0.15045, 0.17739]`. It is a local measurement, not an organizer-confirmed score, not independently replayed in this checkout, and remains `DO_NOT_SUBMIT` because the literal novelty registry, independent quota receipt, and replay certificate gates are not cleared.
 
-- **What `H24-DKRN1` tested (`AGENTS.md` next-step queue `H24-DRAIN5` + `H24-KERN6`):** Exact sparse unit-lower-triangular D8 flow routing $(I - P^\top)A = \mathbf{1}$ across `12,279,160` DEM cells (`det_elev`) extracting Flint's-law stream-power knickpoint steps ($\Omega = A^{0.45} S_{\text{D8}}$), 4-step thalweg dog-leg turns, and `900 m` cross-wash knickpoint corridors (`10` new channels, `62` total), fused via a **Split-View Dual-Head** architecture (**Arm 2 `HeadA47`**: gap-native `47`-channel continuous `300 m` DTI-kernel regressor withholding all `15` raw LiDAR amplitude channels; **Head B**: `62`-channel Elkan prior-odds calibrated fault-core classifier) and **3-Regime (`48/28/24%`) Net-Tversky Submodular Allocation** (`37,654` binary `{0.0, 1.0}` dots; `0` copied submission pixels; `23.8%` apron / `52.2%` `>2 km` far-field).
-- **Holdout readout (`gems-segment-pooled-v1`, `60,988` withheld positives):**
-  - **Arm 1 (`H24-DKRN1`):** **`HOLDOUT-DTI = 0.15525`** (`95% CI [0.14205, 0.16874]`; `3.0 km` bridge **`0.15462`** `[0.13653, 0.17280]`), beating `oof_multiphysics_hgb_d3` (`0.13000`) on **`4/4` spatial folds** by **`+0.02525`** (`95% CI [+0.01006, +0.04022]`) and **beating `H24-DPRF1` inside `NE_LidarGapHeavy` (`0.21308 > 0.21227`)** — the highest `NE_LidarGapHeavy` score recorded in `GEMSDOE24`.
-  - **Arm 2 (`HeadA47` pure LiDAR-free `300 m` kernel regressor):** **`HOLDOUT-DTI = 0.15072`** (`95% CI [0.13730, 0.16425]`), outperforming every prior non-`DPRF1`/`EUL1` lane in `GEMSDOE24` (`GVC1` `0.14876`, `TRSG1` `0.14644`, `CRP1` `0.14494`, `CUP1` `0.14366`, `TNR1` `0.13219`, `RSHG1` `0.12899`, `PAIR1` `0.12711`) using **zero raw 1 m LiDAR amplitude channels**.
-  - **Why `H24-DKRN1` is an honest `NEGATIVE` (`DO_NOT_SUBMIT`):** (1) Pooled `0.15525` trails recorded `H24-DPRF1` (`0.16379`) by `-0.00854` (paired vs `Arm 3` replay `-0.00891` `[-0.01530, -0.00224]`); (2) while passing `62/62` leakage canaries (`<=0.6111 <= 0.90`), pre-placement surface novelty (`max |ρ| = 0.4589 <= 0.90`), `83/83` peer blobs (`<=53.37% <= 70%`), `8/8` `2026-10-26` sibling `.tif`s (`<=55.89% <= 70%`), and `GEMSDOE32 B2` (`44.05% <= 70%`), retaining `52%` blend weight on `Head B` inside LiDAR coverage still left **`75.68% > 70%`** 3-px dot overlap with `DPRF1` (down `-10.89` pp from `EUL1`'s `86.57%`, proving clearing `<=70%` requires 100% exclusion of the `DPRF1` head); (3) unresidualized `m_hydro` (`28%` wash allocation) flagged exact-file C2ST (`AUC = 0.5773`, `holm_p = 0.0200`) due to Great Basin valley-floor roads following D8 washes.
-  - **Short Note (`104 <= 140` chars):** `GEMS24 DKRN1 | D8 knick+300m kernel OOF | id 7f031285130c | HOLDOUT-DTI 0.1553 | research; DO NOT SUBMIT`
-- **Fresh `2026-10-26` Forensic Audit Across All 9 Focus Sites (`GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36`):** Every sibling `2026-10-26` HEAD `.tif` was downloaded by git blob SHA and pixel-audited ([full table & JSON receipt](knowledge/28_DKRN1_findings_and_9site_executive_summary_2026-10-26.md)): `GEMSDOE30`'s `2026-10-26` `.tif` **fails strict whole-array `[0, 1]`** (`NaN` outside footprint -> portal range-error hazard!), `GEMSDOE31` `PGR31` exhibits **`69.2%` apron collapse** (`only 7.5% > 2 km`), `GEMSDOE27` `H31-DRCG` uses a non-comparable `289,180`-px split (`0.04730`) lacking `registry-039`, and `GEMSDOE25/28/32/33/36` all mark their `2026-10-26` artifacts `DO NOT SUBMIT` or trail `H24-DPRF1` on harmonized holdout.
+The repository also retains an **archived, prior negative lane** for audit completeness: [`gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif`](docs/downloads/gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif), SHA-256 `0b114a75d5a905ded84450fe55df386f9361ff39139a2e4452476563ac0fa65d`. That file is historical research evidence, not a new artifact from this review, and its receipt says `verdict: negative` / `DO_NOT_SUBMIT`.
+
+[Executive summary and submission guide](docs/executive-summary.html) ·
+[Concise nine-site brief](docs/portfolio-executive-summary.md) ·
+[Full scientific / integrity review](docs/portfolio-review-20261026.md) ·
+[Nine-site CSV](docs/data/portfolio_summary_20261026.csv) ·
+[Current artifact audit JSON](evidence/portfolio_artifact_audit_20261026.json) ·
+[Session run card](evidence/portfolio_run_card_20261026.json) · [Continuation safety review receipt](evidence/continuation_safety_review_20261026.json).
+
+### Nine-site scope and evidence policy
+
+The executive table covers `GEMSDOE24`, `25`, `27`, `28`, `30`, `31`, `32`, `33`, and `36`. It reports the exact inspected file, score provenance, uniqueness status, and separate `DOWNLOAD` / `SUBMIT` status. `UNVERIFIED-OWNER-REPORT` values are preserved as historical claims only. `HOLDOUT-DTI` values are internal evaluator measurements and must carry the evaluator, withheld-positive count, and 95% CI; no leaderboard estimate is supplied.
+
+H33-B2's reported `0.2778` is explained only as a reproducible mask relationship plus a mechanism hypothesis: B2 is an exact subset of D2.8 after removing 6,436 public-catalogue-proximal cells. Hidden labels and the organizer's `T`, `F`, and `N` contributions are unavailable, so the deletion cannot be claimed to have caused the reported score. See [the evidence-bounded analysis](docs/metric-integrity-20261026.md) and the [nine-site packet](evidence/nine_site_executive_summary_20261026.json).
+
+**H24-VENT integrity correction:** The earlier “passes novelty/C2ST” sentence is withdrawn. The preserved runner used fabricated fallback measurements; its scientific gate claims and recorded holdout are untrusted and not independently replayed. Its file is quarantined research only: **DOWNLOAD: YES · SUBMIT: NO**. No new VENT artifact or experiment was generated in this continuation.
+
+### Archived prior lane links — not current authorization
+
+The archived DKRN1 receipt, run card, selector, and preregistration remain available for reproducibility: [ZIP](docs/downloads/gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.zip) · [NaN compatibility twin](docs/downloads/gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-nan.tif) · [run card](evidence/dkrn1_run_card_20261026.json) · [selector receipt](evidence/dkrn1_selector_20261026.json) · [prior nine-site audit](evidence/nine_site_executive_summary_dkrn1_20261026.json) · [findings](knowledge/28_DKRN1_findings_and_9site_executive_summary_2026-10-26.md) · [preregistration](knowledge/27_preregistered_DKRN1_2026-10-26.md).
+
+**Core values:** **Maximize P(Win)** and **Own the Outcome**. No human-inspection fallback exists: automated validation and selector gates fail closed.
 
 ## Current portfolio review — 2026-10-26, session e78615fb
 
@@ -327,98 +334,63 @@ used; do not rerun or retune. No weekly slot has been spent.
 [XFRONT Selector v2 JSON](evidence/xfront_selector_20261026.json) ·
 [Executive guide](docs/executive-summary.html#xfront)
 
-## Latest 2026-10-26 Point-Best Candidate: `H24-DPRF1` — 10/10 Competing-Method Gates PASS · Selector v2: `DO_NOT_SUBMIT`
+## Recorded local reference — `H24-DPRF1` · `DOWNLOAD: YES (research) · SUBMIT: NO`
 
-[**Download the newly generated H24-DPRF1 GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) ·
+[**Download the research GeoTIFF (finite-zero exterior; DO NOT SUBMIT)**](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) ·
 [Single-GeoTIFF ZIP](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.zip) ·
-[NaN-outside twin](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif) ·
-[Selector v2 receipt (`DO_NOT_SUBMIT`)](evidence/dprf1_selector_20261026.json) ·
-[Full JSON run card](evidence/dprf1_run_card_20261026.json) ·
-[9-Site Executive Summary JSON](evidence/nine_site_executive_summary_20261026.json) ·
-[Preregistration](knowledge/19_preregistered_DPRF1_2026-10-26.md) ·
-[PhD synthesis & 9-site review](knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md) ·
-[Executive submission guide](docs/executive-summary.html).
+[NaN compatibility twin — audit only](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif) ·
+[Selector receipt (`DO_NOT_SUBMIT`)](evidence/dprf1_selector_20261026.json) ·
+[Exact-file run card](evidence/dprf1_run_card_20261026.json) ·
+[Machine-readable nine-site summary](evidence/nine_site_executive_summary_20261026.json) ·
+[Executive guide](docs/executive-summary.html).
 
-**DOWNLOAD: YES · SUBMIT: NO (`DO_NOT_SUBMIT` under `gems-selector-v2-literal-quota-fail-closed`, zero human-inspector fallback).**
-Independently generated across 100% of the active footprint (`0` prior submission pixels read or copied; `0%` in-sample predictions) by fusing 30 scale-separated base channels + 18 label-free OpenEI GDR INGENIOUS hydrothermal/tilt/lineament channels + 4 modality-aware `SAHG1` conduit channels (`52` channels total) with **Stratified `d_vis >= 300 m` negative sampling**, **selective 9-channel non-topographic nuisance residualization**, **3-tier relief-conditioned LiDAR-gap calibration**, **Dual-Partition Stitched-OOF** (`0.5 * Quadrant_OOF + 0.5 * Rotated45_Diamond_OOF`), **Visible-Catalogue Apron Quantile Debiasing**, and **Two-Regime 300 m Submodular Allocation** (`37,654` binary `{0.0, 1.0}` dots).
-- **Highest `HOLDOUT-DTI` in `GEMSDOE24` on BOTH evaluators:** **`0.16379`** (95% CI `[0.15045, 0.17739]`, `gems-segment-pooled-v1`, `60,988` withheld positives, **winning `4/4` spatial folds** over `oof_multiphysics_hgb_d3` `0.13000` by `+0.03380`, over `B1: OOF-Base-Submod` `0.13900` by `+0.02479`, over `B0: OOF-H24-Ridge` `0.14179` by `+0.02200`, and beating `CUP1` `0.15038`, `GVC1` `0.14876`, `CRP1` `0.13747`, `TNR1` `0.13219`, `RSHG1` `0.12899`, and `FUSE-HCW` `0.12372`; `NE_LidarGapHeavy` **`0.21227`**; `SW` **`0.12768`** vs `RSHG1` `0.07993`; `SE` **`0.17442`**) and **`0.16290`** (95% CI `[0.14449, 0.18118]`) on the `3.0 km` `segment-hide-recover-pooled-v1` bridge evaluator.
-- **Changes GVC1 apron allocation & passes the recorded competing-method novelty/C2ST checks (not the literal all-entry gate):** Cuts `200–900 m` near-catalogue apron dots from `70.4%` (`GVC1`) to **`22.3%`**, restores **`52.3%`** `> 2 km` far-field dot allocation (`0.0%` $\le 200\text{ m}$), passes **all 57 competing method rasters** (`max 3-px dot overlap = 55.78% <= 70%`; `36.13%` vs `TNR1`, `33.98%` vs `CRP1`, `33.81%` vs `CUP1`, `<= 49.12%` vs all 9 focus-site champions; `max |ρ| = 0.3468 <= 0.90`) and **all 83 peer blobs** (`54.94% <= 70%`), passes **52/52 two-polarity leakage canaries**, and passes **strict exact-file C2ST** (`AUC = 0.5247 < 0.55`, Holm *p* = `0.100`).
-- **Why `gems-selector-v2-literal-quota-fail-closed` remains `DO_NOT_SUBMIT`:** Under the current literal-control + unknown-quota policy (`src/gems/selector.py`), the synthetic spacing-5 calibration lattice (`registry-039`, `99.87%` footprint coverage at 3 px), unknown live DrivenData weekly quota, and independent replay certificate remain fail-closed, so a literal-all-entry **gate-passing unique, submit-ready** release has **not** been achieved without a prospective lattice-exemption & quota receipt.
-- Name: `gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`
-- SHA-256: `c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1`
-- Short comment (115 chars): `GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; DO NOT SUBMIT`
+This is the **recorded local point-best research artifact**, not a new artifact from the current continuation. Its reproducible measurement is **HOLDOUT-DTI `0.16379`**, evaluator `gems-segment-pooled-v1`, `60,988` withheld positives, 95% CI `[0.15045, 0.17739]`. A separate bridge measurement is **HOLDOUT-DTI `0.16290`**, evaluator `segment-hide-recover-pooled-v1`, `60,988` withheld positives, 95% CI `[0.14449, 0.18118]`. Neither is an organizer score, hidden-score estimate, or leaderboard forecast.
 
-### Nine-Site Executive Summary (`GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36`)
+- **Format:** finite float32 `-zeros.tif`, exact pinned grid, strict whole-array `[0,1]` diagnostic PASS; the `-nan.tif` file is a compatibility twin and is not the recommended upload-format candidate.
+- **Scientific/novelty status:** recorded technical method and peer comparisons pass, but the literal all-entry registry gate fails on retained `registry-039`; the independent replay certificate and live quota receipt are unavailable.
+- **Final decision:** `DOWNLOAD: YES (research/audit) · SUBMIT: NO · verdict: negative · slot_recommendation: not_recommended · new_slot_eligible: false`. No human-inspection fallback and no competition slot used.
+- **Short note:** `GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379 | research; DO NOT SUBMIT`
 
-All prompt leaderboard numbers below are `UNVERIFIED-OWNER-REPORT` (never `ORGANIZER-CONFIRMED`; see [2026-10-26 prompt delta](knowledge/owner_brief_2026-10-26_delta.md) and [machine-verified 9-site receipt](evidence/nine_site_executive_summary_20261026.json)):
+### Nine-site executive table — exact artifact, provenance, uniqueness, action
 
-| Focus Site | Historical Best (`UNVERIFIED-OWNER-REPORT`) | Historically Inspected `2026-10-25 / 26` Artifact | Prompt Live Score or Local Holdout | `2–9 px` Apron / `>20 px` Far-Field | `H24-DPRF1` 3-px Overlap | Clear Executive Verdict |
-|---|---|---|---|---|---|---|
-| **[GEMSDOE24](https://buffedlizard55-lab.github.io/GEMSDOE24/)** | `h25-1-dotted-h19-5-d1-5` (`0.2477`, H19-5 thinned) | **`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`** *(prior `GVC1`: `0.0859`)* | **`HOLDOUT-DTI 0.16379`** (`4/4` folds won; 57/57 method novelty PASS) | **`22.3%` / `52.3%`** *(vs `GVC1` `70.4% / 8.5%`)* | *Self* (`34.8%` vs `GVC1`) | **RECORDED LOCAL POINT-BEST; LITERAL UNIQUENESS FAILS** (`DO_NOT_SUBMIT` under v2 literal lattice/quota hold) |
-| **[GEMSDOE25](https://buffedlizard55-lab.github.io/GEMSDOE25/)** | `dotted-h19-5-d2-8` (`0.2600`, H19-5 thinned) | `gems25-h66-mgd-flank-sapd3-0-k3p5-20261025-da617550a0e9-zeros.tif` | `0.0742` live; confirm holdout `-0.00224` FAIL | `69.6%` / `3.0%` | `30.76%` | **DO NOT RESUBMIT** (already scored `0.0742`; apron collapse) |
-| **[GEMSDOE27](https://buffedlizard55-lab.github.io/GEMSDOE27/)** | `topo-gap-closure-t-v2-on-d1-5` (`0.2449`) | `gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite.tif` | **`0.2190` live** (Stitched-OOF + 300 m CELF) | `35.8%` / `44.3%` | `45.51%` | **BEST ALREADY-SCORED `2026-10-25` UNIQUE METHOD** (do not resubmit duplicate) |
-| **[GEMSDOE28](https://buffedlizard55-lab.github.io/GEMSDOE28/)** | `h36-1-rung30-blind-r1` (`0.2710`, H27-4 + 501 px) | `gems28-s18-mxtp-20261025-3e95505c011a-allfinite.tif` | `0.0217` live; holdout `-0.0879` FAIL | `20.0%` / `54.8%` | `5.65%` | **DO NOT SUBMIT** (failed holdout & already scored `0.0217`) |
-| **[GEMSDOE30](https://buffedlizard55-lab.github.io/GEMSDOE30/)** | `d28-poisson300m-offcat-44090` (`0.2600`, =D2.8) | `gems30-MSDB1-edge44090-20261025-e7856ec3f14a.tif` | `0.1462` live (`18.2%` $\le 200\text{ m}$ flank) | `45.5%` / `16.4%` | `40.92%` | **DO NOT RESUBMIT** (already scored `0.1462`; flank/apron drag) |
-| **[GEMSDOE31](https://buffedlizard55-lab.github.io/GEMSDOE31/docs/)** | `h27-4-solo-d28` (`0.2708`, D2.8 minus $\le 1\text{ px}$) | `gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168-allfinite.tif` | Unscored; `GEMSDOE31` holdout `0.1247` PASS | `47.9%` / `22.9%` | `34.33%` | **UNSCORED SIBLING CANDIDATE** (`47.9%` apron share vs `DPRF1` `22.3%`) |
-| **[GEMSDOE32](https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html)** | **`h33-h33-2-b2-...-zeros` (`0.2778`, D2.8 minus $\le 2\text{ px}$)** | `gemsdoe32-h-geo-conduit-37654-20261025T235617Z-2d0d0c5e-zeros.tif` | Unscored; repo top header: `DO NOT SUBMIT` | `63.6%` / `13.1%` | `29.50%` (`45.6%` vs `B2`) | **DO NOT SUBMIT** (`H33-B2` prohibited to copy; `H-GEO-CONDUIT` `63.6%` apron) |
-| **[GEMSDOE33](https://buffedlizard55-lab.github.io/GEMSDOE33/)** | `h33d-analog-tip-stepover-r30` (`0.2632`, B2 + 6,436 px) | `gemsdoe33-a33-l1-analog-transfer-research-37654-20261025-85c94a805a34-zeros.tif` | Unscored; `GEMSDOE33` holdout FAIL (`NEGATIVE`) | `37.6%` / `38.7%` | `27.60%` | **DO NOT SUBMIT** (failed `GEMSDOE33` holdout gate) |
-| **[GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/docs/)** | `anderson-geothermal-pinn-38854` (`0.2750`, B2 + 1,200 px) | *None (`2026-10-26` review retired legacy copied/leaky code)* | No valid unique candidate | — | `46.06%` (vs `PINN`) | **DO NOT SUBMIT** (no non-copied unique candidate on `GEMSDOE36`) |
+A `DOWNLOAD` label means the repository retains an inspectable research file. `SUBMIT` is a separate automated decision; every row below is **SUBMIT: NO**. Owner-reported live values are preserved but are not organizer-confirmed. Where a local holdout is shown, it is labeled with its available evaluator receipt; no missing evaluator/CI fields are invented.
 
-**H24-VENT integrity correction (2026-10-26):** The earlier “passes novelty/C2ST” sentence is withdrawn. The preserved runner used fabricated fallback measurements; its scientific gate claims and recorded holdout are **untrusted and not independently replayed**. Its file is quarantined research only: **DOWNLOAD YES / SUBMIT NO**. Do not use its historical PhD analysis as verified scientific evidence. Read the [corrected metric explanation and evidence limits](docs/metric-integrity-20261026.md), including why catalogue distance is not the hidden-truth distance in the scoring kernel. No new TIFF or geological experiment was generated in this integrity continuation.
-
-### Executive Summary Master Download & Score Estimation Table
-
-| Focus Site | Recommended File to Download | Estimated Score (Metric & Provenance) | Unique vs Other GEMSDOE Sites? | Actionable Submission Verdict |
+| Site | Exact file | Score provenance / estimate | Uniqueness | Status |
 |---|---|---|---|---|
-| **[GEMSDOE24](https://buffedlizard55-lab.github.io/GEMSDOE24/)** | [**`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`**](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) (or [Single-TIFF .zip](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.zip)) | **HOLDOUT-DTI `0.16379`** [0.15045, 0.17739] (`gems-segment-pooled-v1`, 60,988 withheld positives; 4/4 folds won); historical H19-5: `0.2477` unverified owner report | **YES — UNIQUE** (57/57 method lanes $\le 55.78\%$, 83/83 peer blobs $\le 54.94\%$, $\le 49.12\%$ vs all 8 external focus sites) | **#1 BEST UNIQUE FILE TO DOWNLOAD & SUBMIT FOR HIGH SCORE** (10/10 technical gates PASS; strict `[0, 1]` PASS; selector v2 fail-closed quota hold) |
-| **[GEMSDOE25](https://buffedlizard55-lab.github.io/GEMSDOE25/)** | `gems25-h66-mgd-flank-sapd3-0-k3p5-20261025-da617550a0e9-zeros.tif` | `0.0742` live `UNVERIFIED-OWNER-REPORT` (historical D2.8: `0.2600`) | **NO** (69.6% apron collapse; 30.76% overlap vs DPRF1) | **DO NOT SUBMIT** (already scored `0.0742` live; failed confirmation holdout `-0.00224`) |
-| **[GEMSDOE27](https://buffedlizard55-lab.github.io/GEMSDOE27/)** | `gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite.tif` | `0.2190` live `UNVERIFIED-OWNER-REPORT` (historical gap-closure: `0.2449`) | **YES — UNIQUE** (Dual-Partition Stitched-OOF + 300m CELF; 45.51% overlap vs DPRF1) | **DO NOT RESUBMIT** (already scored `0.2190` on live leaderboard; highest scored unique 2026-10-25 file) |
-| **[GEMSDOE28](https://buffedlizard55-lab.github.io/GEMSDOE28/)** | `gems28-s18-mxtp-20261025-3e95505c011a-allfinite.tif` | `0.0217` live `UNVERIFIED-OWNER-REPORT` (historical rung30: `0.2710`) | **NO (FAILED HOLDOUT)** (`-0.0879` holdout delta; 5.65% overlap vs DPRF1) | **DO NOT SUBMIT** (failed local holdout and already scored `0.0217` live) |
-| **[GEMSDOE30](https://buffedlizard55-lab.github.io/GEMSDOE30/)** | `gems30-MSDB1-edge44090-20261025-e7856ec3f14a.tif` | `0.1462` live `UNVERIFIED-OWNER-REPORT` (historical D2.8: `0.2600`) | **MARGINAL** (18.2% $\le 200\text{ m}$ flank, 45.5% apron; 40.92% overlap vs DPRF1) | **DO NOT RESUBMIT** (already scored `0.1462` live; penalized by near-catalogue flank clustering) |
-| **[GEMSDOE31](https://buffedlizard55-lab.github.io/GEMSDOE31/docs/)** | `gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168-allfinite.tif` | **HOLDOUT-DTI `0.1247`** on collar (historical H27-4: `0.2708`) | **YES — UNIQUE** (unscored sibling candidate; 34.33% overlap vs DPRF1) | **SECONDARY SIBLING (UNSCORED)** (strong candidate, but secondary to DPRF1: 47.9% apron vs DPRF1 22.3%) |
-| **[GEMSDOE32](https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html)** | `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif` (Historical) / `gemsdoe32-h-geo-conduit-37654-20261025T235617Z-2d0d0c5e-zeros.tif` (New) | `0.2778` live (B2 unverified owner report) | **PROHIBITED (B2) / FAILED GATES (CONDUIT)** (B2 is exact D2.8 subset; Conduit has 63.6% apron) | **DO NOT SUBMIT** (B2 is prohibited to copy; Conduit repo header: `DO NOT SUBMIT`) |
-| **[GEMSDOE33](https://buffedlizard55-lab.github.io/GEMSDOE33/)** | `gemsdoe33-a33-l1-analog-transfer-research-37654-20261025-85c94a805a34-zeros.tif` | Failed holdout (historical tip/stepover: `0.2632`) | **NO** (27.60% overlap vs DPRF1; failed regional comparator) | **DO NOT SUBMIT** (failed preregistered holdout gate) |
-| **[GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/docs/)** | `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif` | `0.2750` live (Historical PINN = B2 + 1,200) | **NO** (copied B2 base; repo retired pipeline on 2026-10-26) | **DO NOT SUBMIT** (no non-copied unique candidate on GEMSDOE36) |
+| **GEMSDOE24** | `gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif` | **HOLDOUT-DTI `0.16379`**, `gems-segment-pooled-v1`, 60,988 withheld positives, 95% CI `[0.15045, 0.17739]`; no leaderboard estimate | Technical comparisons pass; literal `registry-039` gate fails | **DOWNLOAD: YES · SUBMIT: NO (`DO_NOT_SUBMIT`)** |
+| **GEMSDOE25** | `gems25-h66-mgd-flank-sapd3-0-k3p5-20261025-da617550a0e9-zeros.tif` | `0.0742` **UNVERIFIED-OWNER-REPORT**; no organizer receipt or estimate; local confirmation was negative | No slot-eligible new lane | **DOWNLOAD: research only · SUBMIT: NO** |
+| **GEMSDOE27** | `gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite.tif` | `0.2190` **UNVERIFIED-OWNER-REPORT**; no organizer receipt or estimate; buffered local comparison is not a leaderboard result | Method-distinct historical artifact; already scored, not resubmission-eligible | **DOWNLOAD: research only · SUBMIT: NO** |
+| **GEMSDOE28** | `gems28-s18-mxtp-20261025-3e95505c011a-allfinite.tif` | `0.0217` **UNVERIFIED-OWNER-REPORT**; no organizer receipt or estimate; local LOSFO comparison negative | Failed local gate | **DOWNLOAD: research only · SUBMIT: NO** |
+| **GEMSDOE30** | `gems30-MSDB1-edge44090-20261025-e7856ec3f14a.tif` | `0.1462` **UNVERIFIED-OWNER-REPORT**; no organizer receipt or estimate; local audit mixed | Marginal/catalogue-proximal; not approved | **DOWNLOAD: research only · SUBMIT: NO** |
+| **GEMSDOE31** | `gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168-allfinite.tif` | Local holdout `0.1247` is recorded in the nine-site source, but its evaluator, withheld count and 95% CI are not carried there; **no score estimate**. Historical `0.2708` is an unverified owner report | Method-distinct sibling; literal/selector gates not cleared | **DOWNLOAD: research only · SUBMIT: NO** |
+| **GEMSDOE32** | Historical `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif` (prohibited) / `gemsdoe32-h-geo-conduit-37654-20261025T235617Z-2d0d0c5e-zeros.tif` | `0.2778` **UNVERIFIED-OWNER-REPORT** for B2; no receipt or estimate. Conduit is unscored | B2 is prohibited exact-subset reference; conduit unverified | **DOWNLOAD: audit only · SUBMIT: NO** |
+| **GEMSDOE33** | `gemsdoe33-a33-l1-analog-transfer-research-37654-20261025-85c94a805a34-zeros.tif` | Local holdout negative; historical `0.2632` **UNVERIFIED-OWNER-REPORT**; no receipt or estimate | Failed regional comparator | **DOWNLOAD: research only · SUBMIT: NO** |
+| **GEMSDOE36** | `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif` | `0.2750` **UNVERIFIED-OWNER-REPORT**; no organizer receipt or estimate | Copied/retired pipeline; no approved non-copied lane | **DOWNLOAD: historical audit only · SUBMIT: NO** |
 
-### PhD-Level Analysis: Why GEMSDOE32's `h33-h33-2-b2` Scored 0.2778
+### Evidence-bounded explanation of H33-B2's reported `0.2778`
 
-1. **Mathematical Derivation under Asymmetric Tversky Distance-Weighted Metric:**
-   The competition evaluates predictions using the distance-weighted Tversky index (DTI):
-   $$DTI = \frac{T}{T + 0.2 \cdot F + 0.8 \cdot N}$$
-   where $T$ is True Positive mass (predicted dots within tolerance of withheld ground truth), $F$ is False Positive mass (predicted dots outside tolerance), and $N$ is False Negative mass (missed ground truth faults).
-   Crucially, false positives are penalized heavily with weight $\alpha = 0.20$.
-   Bit-level pixel forensics reveal that `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif` is an **exact mathematical subset** of the earlier D2.8 benchmark ($44,090$ dots). Exactly $6,436$ dots located within $200\text{ m}$ (2 pixels) of public catalogued faults were pruned, leaving $37,654$ dots.
-   Because competition evaluation withholds only hidden uncatalogued faults, predicted dots in close proximity ($\le 200\text{ m}$) to public faults receive **zero True Positive credit** while incurring pure False Positive penalty ($\Delta F = 6,436$).
-   Pruning these zero-credit apron dots directly reduced the denominator penalty by $0.2 \times 6,436 = 1,287.2$, driving the score from $0.2600$ (D2.8) to $0.2778$ (B2) with **zero newly discovered faults**.
+The value `0.2778` is an **UNVERIFIED-OWNER-REPORT**, not `ORGANIZER-CONFIRMED`. Byte/pixel forensics reproduce one narrow fact: B2 is an exact subset of the earlier D2.8 emission, with 6,436 public-catalogue-proximal cells removed and no cells added. That is geometry, not hidden-label truth.
 
-2. **Structural & Geological Ceiling:**
-   While B2 achieved $0.2778$ through emission-efficiency pruning, it represents an evolutionary dead-end. Continued pruning drops True Positive mass $T$, while blindly adding dots around catalogued faults (as seen in GVC1's $70.4\%$ apron collapse) crashes scores to $0.0742$–$0.0859$.
-   Breaking the $0.3195+$ barrier strictly requires **genuine geological discovery of concealed hydrothermal fault structures** in the far-field ($>2\text{ km}$ from existing catalogues), as implemented in `H24-DPRF1` ($52.3\%$ far-field dots, 52-channel multi-physics OOF fusion).
+A pruning effect is a plausible mechanism under an asymmetric distance-weighted Tversky metric: removing a prediction can help if its hidden true-positive credit is sufficiently low relative to its false-positive mass. It can also hurt if those cells are near withheld faults. The hidden contributions `T`, `F`, and `N` for the organizer evaluation are unavailable. We therefore **do not** claim that the removed cells had zero credit, that the algebra caused the live value, that B2 discovered zero new faults, or that any numerical deletion explains `0.2778`. The bounded conclusion is: **plausible emission-policy effect; hidden-label causality unproven**. The conflicting `0.3195` and `0.4413` claims also have no artifact-linked receipts.
 
-### 3–5 Candidate Geological Hypotheses Targeting Missing Faults (Ranked Before Implementation)
+### Four prospective hypotheses — ranked before implementation, no score projections
 
-| Rank & Hypothesis | Geological Mechanism & Multi-Physics Signature | Expected DTI Gain | Computational & Data Cost |
-|---|---|---|---|
-| **Rank 1: H24-CTI1** (Curvature Tensor Invariants & Horizontal Gravi-Topographic Hessian) | Blind fault step-overs, relay ramps, and graben borders create sharp subtle inflections in basement gravity and quaternary alluvial cover. Computes differential curvature ($\lambda_1 - \lambda_2$) and maximum horizontal gradient of isostatic gravity and 100m DEM. | **+0.008 to +0.012** | **Low** (available in cached features; fast 2D convolution) |
-| **Rank 2: H24-GDS1** (Geothermal Dilatational Strain & Microseismic Slip-Tendency) | Active geothermal conduits require critically stressed, permeable normal/strike-slip faults. Fuses GPS/InSAR dilatational strain rate tensor, shear strain rate, and microseismic hypocenter density. | **+0.006 to +0.010** | **Medium** (requires GDR INGENIOUS regional geodetic grids) |
-| **Rank 3: H24-ASPC1** (Potential Field Phase Congruency & Monogenic Wavelet Edges) | Concealed basement faults produce sharp phase boundaries invariant to illumination and regional field intensity. Evaluates multiscale monogenic wavelets on RTP magnetics and gravity. | **+0.005 to +0.009** | **Medium** (FFT frequency-domain operations) |
-| **Rank 4: H24-MMR1** (Hydrothermal Metasomatic Mineral Ratio Discontinuity) | Hydrothermal fluids ascend along active fault conduits, causing feldspar alteration to illite/smectite and potassium metasomatism. Employs K/Th radiometric depletion and ASTER SWIR mineral indices. | **+0.004 to +0.007** | **Low** (existing GeoDAWN radiometric bands) |
-| **Rank 5: H24-RRC1** (Relay-Ramp Damage Zone & Elastic Coulomb Stress Transfer) | Overlapping en-echelon normal fault segments transfer displacement through highly fractured relay ramps with elevated subsidiary fault density. Computes Coulomb stress perturbation kernels. | **+0.005 to +0.008** | **Medium-High** (iterative boundary element boundary calculation) |
+These hypotheses remain queued because the assigned method paragraph is missing. None was implemented or placed in this continuation. Expected DTI improvement is intentionally qualitative; a candidate would need feature-only/two-polarity leakage canaries, whole-segment buffered holdout, exact-file novelty checks and an independent selector before any slot discussion.
 
-### Root Cause Analysis & Resolution: "Predicted values must be in range [0, 1]"
+| Rank / hypothesis | Layers · physical signature | Missing-catalogue rationale · non-fault mimic | Difference, source readiness, cost | Expected benefit (not a score) |
+|---|---|---|---|---|
+| **1 · H24-TEX1** magnetic–gravity texture front | `rtp`, `tmi`, `iso_grav_anom`, `TMI_up150`; cross-scale directional texture persistence | Covered basement step; mimic intrusive/remanent contact or levelling seam | Distinct from trough/edge channels; local layers present, but acquisition-block confounding needs an audit; medium | Highest qualitative potential, unmeasured |
+| **2 · H24-RADLAG** radiometric alteration-front phase lag | Valid-mask-aware K/Th/U rank bands; tangent-coherent signed lag | Displaced alteration front along a concealed permeable structure; mimic hillslope transport/differential weathering | Distinct from compositional magnitude; GeoDAWN ranks locally present; low–medium | Moderate qualitative potential, likely sparse |
+| **3 · H24-PHASE** cross-modality phase congruency | RTP/TMI/gravity local quadrature/monogenic phase and orientation agreement | Low-amplitude buried discontinuity; mimic dike, caldera margin, acquisition boundary | Distinct from amplitude edges; local bands present; FFT/edge effects require fold-local canaries; medium-high | Moderate but uncertain |
+| **4 · H24-DRAIN-ABS** multi-catchment channel-offset graph | Absolute USGS 3DEP elevation/LiDAR; directed thalweg offsets and repeated knickpoints | Concealed structure perturbing several washes; mimic avulsion, stream capture, lithologic resistance | Absolute DEM receipt is missing; USGS 3DEP is a verified free official dependency but blocked in this sandbox; high/deferred | Potentially high, presently unknown |
 
-- **Root Cause:** DrivenData's ingestion engine parses the *entire 2D raster array* including cells outside the official project footprint boundary. Standard GDAL/Rasterio export pipelines often place `NaN`, `-9999.0`, or infinity in outside-footprint cells. DrivenData treats `NaN` as an out-of-bounds float, immediately triggering the `"Predicted values must be in range [0, 1]"` rejection.
-- **Permanent Fix:** All submission GeoTIFFs generated in this repository use the `-zeros.tif` specification: cells outside the active footprint boundary are filled with strictly `0.0` (allfinite float32), while cells inside the boundary are strictly bounded in `[0.0, 1.0]`. This completely eliminates the `[0, 1]` range error and passes automated preflight validation with zero errors.
+### Range-error diagnostic and safe export
 
-### How to Submit into the Contest (Step-by-Step Submission Guide)
+The exact organizer-side cause of the earlier `Predicted values must be in range [0, 1]` response is **unknown**. Locally, NaN/Inf/out-of-range values anywhere in a stored raster reproduce the relevant failure class, but this does not prove how the portal handled outside-footprint cells. The shared writer now defaults to finite `0.0` outside the footprint; use an explicitly named `-zeros.tif` candidate and run the strict whole-array check. Keep `-nan.tif` files as compatibility/audit twins only. A local format PASS is not upload authorization.
 
-1. **Obtain the Recommended File:** Download [`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif) (0.79 MiB) or its [Single-TIFF .zip](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.zip).
-2. **Verify Checksum:** Confirm SHA-256 digest matches: `c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1`.
-3. **Navigate to DrivenData:** Sign in to [DrivenData GEMS Competition](https://www.drivendata.org/competitions/306/competition-doe-gems/) and click **Submit → Make new submission**.
-4. **Attach File:** Choose the `.tif` or `.zip` file under "File to submit".
-5. **Add Short Comment (Optional):** Paste: `GEMS24 DPRF1 | 52ch stitched-OOF 2-regime submod | id 81849d67c8bf | HOLDOUT-DTI 0.16379`.
-6. **Submit & Record Receipt:** Confirm submission quota (maximum three submissions per week) and record the live leaderboard confirmation receipt.
-See the full interactive guide at [docs/executive-summary.html](docs/executive-summary.html).
+### Download versus submit — no current submission
+
+Use the download links for audit/research only. A future submission candidate would require the pinned grid, finite float32 values in `[0,1]` across the entire array, SHA-256/run-card identity, a ≤140-character note, the shared holdout receipt, both novelty stages, nuisance audit, and an independent selector decision. The current selector is fail-closed; **do not upload or spend a slot**. No organizer-confirmed score or artifact-linked submission receipt exists.
 
 ## Latest lane — 2026-10-26 (`H24-EUL1`) Euler N=0 contact increment: NEGATIVE · DOWNLOAD YES / SUBMIT NO · DO NOT RETUNE
 

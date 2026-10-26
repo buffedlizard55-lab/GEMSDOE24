@@ -2,7 +2,9 @@
 """Package a slot-eligible candidate OR the exact known H19-5 reference.
 
 Format validation never replaces scientific gates. ZIP contains ONE .tif; the
-<=200-character comment is a separate file. No portal uploads are performed.
+<=140-character comment is a separate file. No portal uploads are performed.
+The all-finite ``-zero`` variant is the safe upload-format candidate; a NaN twin
+is retained only for compatibility audits.
 """
 
 from __future__ import annotations
@@ -130,13 +132,13 @@ def main():
         hyp = f"h25-1-dotted-h19-5-d{spacing:g}"
     dl = paths.DOWNLOADS_DIR
     dl.mkdir(parents=True, exist_ok=True)
-    primary = dl / submission.make_filename("gems24", hyp, date, cid, "nan")
-    fallback = dl / submission.make_filename("gems24", hyp, date, cid, "allfinite")
-    submission.write_submission(arr, TEMPLATE, primary, outside="nan")
-    submission.write_submission(arr, TEMPLATE, fallback, outside="zero")
+    primary = dl / submission.make_filename("gems24", hyp, date, cid, "zeros")
+    fallback = dl / submission.make_filename("gems24", hyp, date, cid, "nan")
+    submission.write_submission(arr, TEMPLATE, primary, outside="zero")
+    submission.write_submission(arr, TEMPLATE, fallback, outside="nan")
     checks = {
-        "nan": submission.check_variants(primary, TEMPLATE),
-        "allfinite": submission.check_variants(fallback, TEMPLATE),
+        "zero_outside": submission.check_variants(primary, TEMPLATE),
+        "nan_outside": submission.check_variants(fallback, TEMPLATE),
     }
     if not all(c["format_valid"] for c in checks.values()):
         raise SystemExit("Packaged raster failed range/grid/band validation")

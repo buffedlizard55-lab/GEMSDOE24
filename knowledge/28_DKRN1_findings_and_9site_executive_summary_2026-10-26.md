@@ -41,35 +41,27 @@ Every public leaderboard number quoted in inherited prompts is strictly labeled 
 
 ---
 
-## 3. PhD-Level Explanation: Why `GEMSDOE32 B2` Achieved `0.2778` (`UNVERIFIED-OWNER-REPORT`) and What Governing Math Controls Beating `0.2778` / `0.3195` / `0.4413`
+## 3. Evidence-bounded analysis of `GEMSDOE32 B2`'s reported `0.2778` (`UNVERIFIED-OWNER-REPORT`)
 
-### 3.1 Exact Pixel Genealogy of `B2` (`h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`)
-Direct SHA-verified pixel comparison in `evidence/priority_review_20261025.json` and [`docs/metric-integrity-20261026.md`](../docs/metric-integrity-20261026.md) proves a deterministic subset chain descending from a single parent detector (`19GEMSDOE` `H19-5` multi-physics scarp ridge):
-1. **`H19-5` (`0.1922` `UNVERIFIED-OWNER-REPORT`):** `161,366` contiguous ridge pixels.
-2. **`H25-1 / D1.5` (`0.2477` `UNVERIFIED-OWNER-REPORT`):** Poisson-disk thinning of `H19-5` at $d_{\min}=1.5\text{ px}$ (`60,069` dots).
-3. **`D2.8` (`0.2600` `UNVERIFIED-OWNER-REPORT`, `GEMSDOE25` / `GEMSDOE30`):** Poisson-disk thinning of `H19-5` at $d_{\min}=2.8\text{ px}$ (`44,090` dots) — one `300 m` triangular-kernel footprint per trace segment, preserving almost all $T_w$ while slashing $F_w$ by $72.7\%$.
-4. **`H27-4` (`0.2708` `UNVERIFIED-OWNER-REPORT`, `GEMSDOE31`):** `D2.8` minus all `3,891` dots within $d_{\text{cat}} \le 100\text{ m}$ (`40,199` dots).
-5. **`H33-B2` (`0.2778` `UNVERIFIED-OWNER-REPORT`, `GEMSDOE32`):** **`D2.8` minus all `6,436` dots within $d_{\text{cat}} \le 200\text{ m}$ (`37,654` dots; `0` dots added!).**
+### 3.1 Exact pixel genealogy of `B2` — geometry, not hidden-label truth
 
-### 3.2 Exact Distance-Weighted Tversky Index (DTI) Deletion & Addition Algebra
-For $\alpha = 0.2$, $\beta = 0.8$, $(1 - \beta) = 0.2$, let $G = |Y_{\text{hidden}}|$ denote total withheld hidden-fault pixels (note $T_w + \text{FN}_w = G$), $T = T_w$ denote kernel-recovered hidden truth credit ($\max_{p \in \hat{P}} \max(0, 1 - d(y, p)/300\text{ m})$), and $F = F_w$ denote off-catalogue false-positive mass ($\sum_{p \in \hat{P} \setminus M_{\text{cat}}} (1 - k_{\text{hidden}}(p))$):
-$$D(T, F) = \frac{T}{(1 - \beta) T + \alpha \text{FP}_w + \beta \text{FN}_w} = \frac{T}{0.2\,T + 0.2\,F + 0.8\,(G - T)} \quad\text{?}$$
-**Careful check (see `src/gems/metric.py` and [`docs/metric-integrity-20261026.md`](../docs/metric-integrity-20261026.md)):** In Tversky notation $\text{DTI} = \frac{\text{TP}_w}{\text{TP}_w + \alpha\,\text{FP}_w + \beta\,\text{FN}_w}$ with $\text{TP}_w + \text{FN}_w = G$, substituting $\text{FN}_w = G - T$ gives the exact algebraic identity:
-$$D(T, F) = \frac{T}{T + 0.2\,F + 0.8\,(G - T)} = \frac{T}{0.2\,T + 0.2\,F + 0.8\,G}.$$
-Notice two critical properties of this exact expression:
-1. **Why deleting `6,436` near-catalogue dots (`d_cat <= 200 m`) raised `D2.8` (`0.2600`) to `B2` (`0.2778`):**
-   Suppose we delete a subset of dots $\Delta P$ that loses $t \ge 0$ of true-positive credit and saves $f \ge 0$ of false-positive mass:
-   $$D(T - t, F - f) > D(T, F) \iff \frac{T - t}{0.2(T - t) + 0.2(F - f) + 0.8 G} > \frac{T}{0.2 T + 0.2 F + 0.8 G} \iff t\,(0.2 F + 0.8 G) < 0.2\,T\,f.$$
-   Equivalently, in terms of the baseline score $D_0 = D(T, F)$:
-   $$\frac{t}{f} < \frac{0.2\,D_0}{1 - 0.2\,D_0}.$$
-   At $D_0 = 0.2600$, $\frac{0.2 \times 0.26}{1 - 0.052} = \mathbf{0.0549}$: **any near-catalogue dot subset whose marginal hidden-truth precision $t / f$ is below $5.49\%$ strictly degrades DTI!** Because public USGS/INGENIOUS catalogue traces are already mapped along the scarp axis, hidden unmapped faults rarely sit parallel at $100\text{–}200\text{ m}$ cross-strike separation (unlike $d_{\text{cat}} = 0$, which is masked free of charge, off-catalogue pixels at $100\text{–}200\text{ m}$ incur the full $\alpha = 0.2$ FP penalty when no *separate hidden* fault lies within $300\text{ m}$). Deleting those `6,436` halo dots removed $\Delta F \approx 6{,}100$ of pure denominator waste with $t \approx 0$, yielding:
-   $$\Delta D \approx D_0^2 \cdot \frac{0.2\,\Delta F}{T},$$
-   which quantitatively accounts for the `+0.0178` jump (`0.2600 -> 0.2778`) **without discovering a single new fault pixel**.
-2. **Why `GEMSDOE33` (`0.2632`) and `GEMSDOE36` (`0.2750`) dropped when adding dots onto `B2`:**
-   By symmetry, *adding* $\Delta N$ new dots onto `B2` at $D_0 = 0.2778$ improves DTI if and only if their marginal hidden-truth credit per false-positive unit exceeds $\frac{0.2 \times 0.2778}{1 - 0.2 \times 0.2778} = \mathbf{0.0588}$ (roughly $\ge 5.6\%$ true hidden-fault hit rate on wholly unoccluded targets). Lower-precision stepover/PINN additions diluted the denominator.
-3. **Can a genuinely unique submission beat `0.2778` / `0.3195` / `0.4413`?**
-   - First, **provenance discipline:** `0.2778`, `0.3195`, and `0.4413` are all `UNVERIFIED-OWNER-REPORT` numbers from prompt text; moreover `0.3195` and `0.4413` directly conflict across prompt snapshots (`IR-PROMPT-TOP-CONFLICT`), and zero organizer receipts exist to calibrate `HOLDOUT-DTI` to hidden-test DTI.
-   - Second, **necessary physical condition:** `B2` (`0.2778`) is blind inside the **`31.8%` 3DEP LiDAR coverage gap** (`1,641,254` footprint cells) and across **sheetflood-reworked alluvial-fan piedmonts** where 1 m bare-earth scarp relief vanishes. Surpassing `~0.28–0.32+` without copying `B2` is only physically possible by combining (a) `B2`-equivalent emission geometry (`~37,654` 300 m-spaced dots, `0%` at $d_{\text{cat}} \le 200\text{ m}$, `<25%` in the $200\text{–}900\text{ m}$ in-sample apron) with (b) genuine off-catalogue fault recovery in the `31.8%` LiDAR gap and sub-alluvial basins at marginal precision $> 5.9\%$.
+SHA-verified pixel comparison in `evidence/priority_review_20261025.json` and [`docs/metric-integrity-20261026.md`](../docs/metric-integrity-20261026.md) establishes a deterministic subset relationship among the stored masks:
+
+1. `D2.8` is recorded as 44,090 dots.
+2. `H33-B2` is recorded as 37,654 dots.
+3. The B2 mask contains no dots outside D2.8; 6,436 D2.8 dots are absent from B2, and the removed cells fall in the repository's public-catalogue distance band.
+
+The historical values associated with those files (`0.2600` and `0.2778`) are **UNVERIFIED-OWNER-REPORT** values. The mask relationship does not reveal the organizer's hidden labels and does not establish that the removed dots were false positives, zero-credit cells, or newly absent faults.
+
+### 3.2 A bounded DTI mechanism hypothesis, not a causal explanation
+
+For the shared local evaluator, the metric is a distance-weighted Tversky-style quantity with `alpha = 0.2`, `beta = 0.8`, and a 300 m triangular kernel. In abstract terms, deleting a prediction can raise the metric when the hidden true-positive mass lost is smaller than the false-positive mass removed; it can also lower the metric when the removed cells are near withheld positives. That conditional algebra is useful for experiment design, but it cannot be evaluated for the organizer's hidden labels from this checkout.
+
+The hidden contributions `T`, `F` and `N` for the reported live result are unavailable. We therefore do **not** claim that B2 removed zero-credit cells, that `0.2 × 6,436` is a live denominator change, that B2 discovered zero new faults, or that deletion caused `0.2600 → 0.2778`. The evidence-bounded conclusion is: **plausible emission-policy effect; hidden-label causality unproven**. The conflicting `0.3195` and `0.4413` snapshots also have no artifact-linked organizer receipts.
+
+### 3.3 Consequence for prospective work
+
+B2 is a historical reference and is prohibited from copying or perturbing. A future method must be genuinely independent, must hide whole fault segments with a buffer, derive catalogue features from visible faults only, and must report a local **HOLDOUT-DTI** with evaluator, withheld-positive count and 95% CI. No local holdout is a leaderboard estimate. Any prospective raster also needs the strict finite-array writer, two-polarity feature canaries, pre-placement/final registry checks and a separate selector decision.
 
 ---
 

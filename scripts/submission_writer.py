@@ -21,7 +21,12 @@ def main():
     ap.add_argument("prediction", type=Path, help="2D .npy or aligned single-band .tif")
     ap.add_argument("output", type=Path)
     ap.add_argument("--template", type=Path, default=ROOT / "data/bridge/sample_submission.tif")
-    ap.add_argument("--outside", choices=("nan", "zero"), default="nan")
+    ap.add_argument(
+        "--outside",
+        choices=("nan", "zero"),
+        default="zero",
+        help="exterior encoding; zero is the strict all-finite upload-safe default",
+    )
     args = ap.parse_args()
     if args.prediction.suffix == ".npy":
         a = np.load(args.prediction, allow_pickle=False)

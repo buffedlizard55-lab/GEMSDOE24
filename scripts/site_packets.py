@@ -129,7 +129,7 @@ def dprf1_packet(root):
         "No human-inspector fallback: strict whole-array [0,1] PASS, 52/52 two-polarity leakage canaries PASS, "
         "highest GEMSDOE24 HOLDOUT-DTI on both evaluators "
         f"(<strong>{score['dti']:.5f}</strong> [{lo:.5f}, {hi:.5f}] on <code>{e(score['evaluator_version'])}</code>, "
-        f"winning 4/4 quadrants over every baseline and beating CUP1 0.15038, GVC1 0.14876, CRP1 0.13747 &amp; TNR1 0.13219; "
+        "winning 4/4 quadrants over the recorded internal baselines; baseline values and paired intervals remain in the immutable run card (no leaderboard estimate); "
         f"<strong>{br['dti']:.5f}</strong> [{blo:.5f}, {bhi:.5f}] on 3.0 km bridge), "
         f"57/57 competing-method novelty PASS (max 3-px overlap <strong>{100 * nov['method_lane_max_dot_overlap']:.2f}% &le; 70%</strong>), "
         f"83/83 peer-blob novelty PASS (<strong>{100 * nov['peer_blobs_max_dot_overlap']:.2f}% &le; 70%</strong>), "
@@ -152,15 +152,15 @@ def dprf1_packet(root):
         (
             "3. Primary HOLDOUT-DTI win (gems-segment-pooled-v1)",
             "PASS",
-            f"HOLDOUT-DTI {score['dti']:.5f} [{lo:.5f}, {hi:.5f}] (60,988 withheld pos) beats oof_multiphysics_hgb_d3 (0.13000) by {paired_d3['paired_delta_dti']:+.5f} [{d3_lo:+.5f}, {d3_hi:+.5f}] (4/4 folds), B1 OOF-Base-Submod (0.13900) by {paired_b1['paired_delta_dti']:+.5f} [{b1_lo:+.5f}, {b1_hi:+.5f}] (4/4 folds), CUP1 (0.15038), GVC1 (0.14876), B0 (0.14179), CRP1 (0.13747), and TNR1 (0.13219).",
+            f"HOLDOUT-DTI {score['dti']:.5f} [{lo:.5f}, {hi:.5f}] on {score['evaluator_version']} with {score['n_withheld_positive_pixels']:,} withheld positives; paired HOLDOUT-DTI delta versus the recorded D3 baseline is {paired_d3['paired_delta_dti']:+.5f} [{d3_lo:+.5f}, {d3_hi:+.5f}] and versus B1 is {paired_b1['paired_delta_dti']:+.5f} [{b1_lo:+.5f}, {b1_hi:+.5f}] (4/4 folds). Baseline point values are retained in the run card, not projected leaderboard scores.",
         ),
         (
             "4. 3.0 km Bridge HOLDOUT-DTI win",
             "PASS",
-            f"HOLDOUT-DTI {br['dti']:.5f} [{blo:.5f}, {bhi:.5f}] beats RSHG1 (0.13112) by {br['delta_vs_rshg1_bridge']:+.5f}, FUSE-HCW (0.12362) by {br['delta_vs_fuse_hcw_bridge']:+.5f}, SAHG1 (0.09655), and ASPC (0.08553).",
+            f"HOLDOUT-DTI {br['dti']:.5f} [{blo:.5f}, {bhi:.5f}] on segment-hide-recover-pooled-v1; bridge paired deltas versus the recorded bridge baselines are retained in the run card. This is a local bridge measurement, not a leaderboard estimate.",
         ),
         (
-            "5. Dual-Partition Stitched-OOF apron cure",
+            "5. Dual-Partition Stitched-OOF apron redistribution",
             "PASS",
             f"0% pixels predicted in-sample; 200–900 m apron share reduced from 70.4% (GVC1) to {100 * dist['frac_2_to_9px_apron']:.1f}%; >2 km far-field restored from 8.5% (GVC1) to {100 * dist['frac_gt_20px_farfield']:.1f}% (median d_cat = {dist['median_dist_px']:.2f} px).",
         ),
@@ -200,82 +200,104 @@ def dprf1_packet(root):
         + "</tbody></table></div>"
     )
 
+    site_audit_display = {
+        "GEMSDOE24": f"HOLDOUT-DTI {score['dti']:.5f} [{lo:.5f}, {hi:.5f}] · {score['evaluator_version']} · {score['n_withheld_positive_pixels']:,} withheld positives; technical novelty passes, literal selector fails.",
+        "GEMSDOE25": "Local screen/confirmation audit was negative; pooled HOLDOUT-DTI receipt is not included here. No leaderboard estimate.",
+        "GEMSDOE27": "Buffered holdout comparison was recorded as positive against its local baseline; exact evaluator, withheld count and 95% CI are not carried here. No leaderboard estimate.",
+        "GEMSDOE28": "LOSFO holdout comparison was negative against its local baseline; exact evaluator, withheld count and 95% CI are not carried here. No leaderboard estimate.",
+        "GEMSDOE30": "Local holdout comparison was mixed; exact evaluator, withheld count and 95% CI are not carried here. No leaderboard estimate.",
+        "GEMSDOE31": "Local holdout sibling was retained negative on the unexempted lattice/continuous-field gate; exact evaluator, withheld count and 95% CI are not carried here.",
+        "GEMSDOE32": "Current checkout review is DO_NOT_SUBMIT; B2 is historical/prohibited and the conduit artifact is unscored. No causal hidden-label claim.",
+        "GEMSDOE33": "Fold-safe regional comparator rejected the analog transfer; exact evaluator, withheld count and 95% CI are not carried here. No leaderboard estimate.",
+        "GEMSDOE36": "Legacy pipeline retired after copied-pixel/truth-leak review; no new unique candidate approved. No leaderboard estimate.",
+    }
+    historical_ancestry_display = {
+        "GEMSDOE24": "Historical owner-report references are preserved; DPRF1 is a separate local HOLDOUT-DTI research artifact.",
+        "GEMSDOE25": "Historical D2.8 reference; stored-mask genealogy is not a hidden-label score explanation.",
+        "GEMSDOE27": "Historical topology/CELF references; no organizer receipt or leaderboard estimate.",
+        "GEMSDOE28": "Historical rung reference; newer local comparison was negative.",
+        "GEMSDOE30": "Historical D2.8 reference; catalogue-distance diagnostics are spatial audits, not score causality.",
+        "GEMSDOE31": "Historical H27-4 reference; local sibling remains selector-ineligible.",
+        "GEMSDOE32": "B2/D2.8 subset relationship is geometry only; hidden-label causality is unproven.",
+        "GEMSDOE33": "Historical analog reference; additions/removals do not identify hidden-label credit.",
+        "GEMSDOE36": "Historical PINN reference; copied/retired pipeline is not a new candidate.",
+    }
     site_rows_html = []
     for s in nine["sites"]:
-        hist_str = f"{s['historical_best_submission']} ({s['historical_best_owner_reported_score']:.4f} owner-reported)"
+        hist_str = f"{s['historical_best_submission']} ({s['historical_best_owner_reported_score']:.4f} UNVERIFIED-OWNER-REPORT)"
         if s["latest_20261025_scored_submission"]:
-            sc_str = f"{s['latest_20261025_scored_submission']} ({s['latest_20261025_owner_reported_score']:.4f} owner-reported)"
+            sc_str = f"{s['latest_20261025_scored_submission']} ({s['latest_20261025_owner_reported_score']:.4f} UNVERIFIED-OWNER-REPORT)"
         else:
             sc_str = "None newly scored in prompt"
         ov_str = (
-            "Self (#1 tech gates)"
+            "Self (#1 technical gates; literal selector FAIL)"
             if s["site"] == "GEMSDOE24"
-            else f"{100 * s['dprf1_3px_overlap_vs_site_artifact']:.2f}% (ρ={s['dprf1_spearman_vs_site_artifact']:+.3f})"
+            else f"{100 * s['dprf1_3px_overlap_vs_site_artifact']:.2f}% 3-px overlap (ρ={s['dprf1_spearman_vs_site_artifact']:+.3f})"
         )
         site_rows_html.append(
             f"<tr>"
             f'<td><strong><a href="{e(s["pages_url"])}" target="_blank" rel="noopener noreferrer">{e(s["site"])} ↗</a></strong><br><small><code>{e(s["inspected_main_commit"][:8])}</code></small></td>'
-            f"<td><code>{e(hist_str)}</code><br><small>{e(s['historical_ancestry'])}</small></td>"
-            f"<td><code>{e(s['inspected_artifact_file'])}</code><br><small>Recent prompt score: {e(sc_str)} · Apron 2–9 px: {100 * s['inspected_frac_2_to_9px']:.1f}% · &gt;2 km: {100 * s['inspected_frac_gt_20px']:.1f}%</small></td>"
-            f"<td>{e(s['current_holdout_and_gate_summary'])}</td>"
+            f"<td><code>{e(hist_str)}</code><br><small>{e(historical_ancestry_display[s['site']])}</small></td>"
+            f"<td><code>{e(s['inspected_artifact_file'])}</code><br><small>Recent prompt score: {e(sc_str)} · catalogue-distance profile: 2–9 px {100 * s['inspected_frac_2_to_9px']:.1f}%, &gt;2 km {100 * s['inspected_frac_gt_20px']:.1f}%</small></td>"
+            f"<td>{e(site_audit_display[s['site']])}</td>"
             f"<td><code>{e(ov_str)}</code></td>"
-            f"<td><strong>{e(s['executive_verdict'])}</strong></td>"
+            f"<td><strong>SUBMIT: NO — {e(s['executive_verdict'])}</strong><br><small>DOWNLOAD is research-only; no slot authorization.</small></td>"
             f"</tr>"
         )
     zip_file = e(dl["zip_file"])
     nan_file = e(dl["nan_file"])
     master_rows_html = [
         f'<tr><td><strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE24/" target="_blank" rel="noopener noreferrer">GEMSDOE24 ↗</a></strong></td>'
-        f'<td><a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download {e(name)}</a><br><small><a href="downloads/{zip_file}" download="{zip_file}">Single-GeoTIFF .zip</a> · <a href="downloads/{nan_file}" download="{nan_file}">NaN twin</a></small></td>'
-        f"<td><strong>HOLDOUT-DTI {score['dti']:.5f}</strong><br><small>[{lo:.5f}, {hi:.5f}] (4/4 folds won); historical H19-5: 0.2477 owner-reported</small></td>"
-        f"<td><strong>YES — UNIQUE</strong><br><small>57/57 methods ≤55.78%, 83/83 peers ≤54.94%, ≤49.12% vs all 8 external focus sites</small></td>"
-        f"<td><strong>#1 BEST UNIQUE FILE TO DOWNLOAD &amp; SUBMIT FOR HIGH SCORE</strong><br><small>10/10 technical gates PASS; strict [0, 1] PASS; fail-closed quota hold at selector</small></td></tr>",
+        f'<td><a class="button" href="downloads/{e(name)}" download="{e(name)}">DOWNLOAD research .tif</a><br><small><code>{e(name)}</code><br><a href="downloads/{zip_file}" download="{zip_file}">zeros ZIP</a> · <a href="downloads/{nan_file}" download="{nan_file}">NaN twin (audit only)</a></small></td>'
+        f"<td><strong>HOLDOUT-DTI {score['dti']:.5f}</strong><br><small><code>{e(score['evaluator_version'])}</code>; {score['n_withheld_positive_pixels']:,} withheld positives; 95% CI [{lo:.5f}, {hi:.5f}]. Not a leaderboard estimate.</small></td>"
+        f"<td><strong>TECHNICAL NOVELTY PASS</strong><br><small>57/57 methods and 83/83 peers pass; literal registry-039 gate remains failed.</small></td>"
+        f"<td><strong>SUBMIT: NO — DO_NOT_SUBMIT</strong><br><small>DOWNLOAD: YES. Unknown quota and missing independent replay keep the selector fail-closed.</small></td></tr>",
         '<tr><td><strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE25/" target="_blank" rel="noopener noreferrer">GEMSDOE25 ↗</a></strong></td>'
-        "<td><code>gems25-h66-mgd-flank-sapd3-0-k3p5-20261025-da617550a0e9-zeros.tif</code></td>"
-        "<td><strong>0.0742 live</strong> (UNVERIFIED-OWNER-REPORT)<br><small>Historical D2.8: 0.2600 owner-reported</small></td>"
-        "<td><strong>NO</strong><br><small>69.6% apron collapse; 30.76% overlap vs DPRF1</small></td>"
-        "<td><strong>DO NOT SUBMIT</strong><br><small>Already scored 0.0742 live; failed confirmation holdout (-0.00224)</small></td></tr>",
+        "<td><code>gems25-h66-mgd-flank-sapd3-0-k3p5-20261025-da617550a0e9-zeros.tif</code><br><small>Existing research artifact; download link not asserted here.</small></td>"
+        "<td><strong>UNVERIFIED-OWNER-REPORT 0.0742</strong><br><small>Reported live value; no organizer receipt, no leaderboard estimate. Local confirmation holdout was negative.</small></td>"
+        "<td><strong>NOT SUBMISSION-UNIQUE</strong><br><small>Near-catalogue clustering and overlap with GEMSDOE24 were audited; no new lane approved.</small></td>"
+        "<td><strong>SUBMIT: NO — DO_NOT_SUBMIT</strong><br><small>Previously scored artifact; no resubmission authorization.</small></td></tr>",
         '<tr><td><strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE27/" target="_blank" rel="noopener noreferrer">GEMSDOE27 ↗</a></strong></td>'
-        "<td><code>gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite.tif</code></td>"
-        "<td><strong>0.2190 live</strong> (UNVERIFIED-OWNER-REPORT)<br><small>Historical gap-closure: 0.2449 owner-reported</small></td>"
-        "<td><strong>YES — UNIQUE</strong><br><small>Dual-Partition Stitched-OOF + 300m CELF; 45.51% overlap vs DPRF1</small></td>"
-        "<td><strong>DO NOT RESUBMIT</strong><br><small>Already scored 0.2190 on live leaderboard; highest scored unique 2026-10-25 file</small></td></tr>",
+        "<td><code>gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite.tif</code><br><small>Existing research artifact; download link not asserted here.</small></td>"
+        "<td><strong>UNVERIFIED-OWNER-REPORT 0.2190</strong><br><small>Reported live value; no organizer receipt, no leaderboard estimate. Buffered holdout comparison was recorded separately.</small></td>"
+        "<td><strong>UNIQUE VS GEMSDOE24, NOT SLOT-ELIGIBLE</strong><br><small>Distinct method family; uniqueness alone is not authorization.</small></td>"
+        "<td><strong>SUBMIT: NO — DO_NOT_SUBMIT</strong><br><small>Already scored; do not resubmit an old artifact.</small></td></tr>",
         '<tr><td><strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE28/" target="_blank" rel="noopener noreferrer">GEMSDOE28 ↗</a></strong></td>'
-        "<td><code>gems28-s18-mxtp-20261025-3e95505c011a-allfinite.tif</code></td>"
-        "<td><strong>0.0217 live</strong> (UNVERIFIED-OWNER-REPORT)<br><small>Historical rung30: 0.2710 owner-reported</small></td>"
-        "<td><strong>NO (FAILED HOLDOUT)</strong><br><small>-0.0879 holdout delta; 5.65% overlap vs DPRF1</small></td>"
-        "<td><strong>DO NOT SUBMIT</strong><br><small>Failed local holdout and already scored 0.0217 live</small></td></tr>",
+        "<td><code>gems28-s18-mxtp-20261025-3e95505c011a-allfinite.tif</code><br><small>Existing research artifact; download link not asserted here.</small></td>"
+        "<td><strong>UNVERIFIED-OWNER-REPORT 0.0217</strong><br><small>Reported live value; no organizer receipt, no leaderboard estimate. Local LOSFO comparison was negative.</small></td>"
+        "<td><strong>NO — FAILED HOLDOUT</strong><br><small>Research result is not a new approved lane.</small></td>"
+        "<td><strong>SUBMIT: NO — DO_NOT_SUBMIT</strong><br><small>Failed local gate and no slot authorization.</small></td></tr>",
         '<tr><td><strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE30/" target="_blank" rel="noopener noreferrer">GEMSDOE30 ↗</a></strong></td>'
-        "<td><code>gems30-MSDB1-edge44090-20261025-e7856ec3f14a.tif</code></td>"
-        "<td><strong>0.1462 live</strong> (UNVERIFIED-OWNER-REPORT)<br><small>Historical D2.8: 0.2600 owner-reported</small></td>"
-        "<td><strong>MARGINAL</strong><br><small>18.2% &le;200m flank, 45.5% apron; 40.92% overlap vs DPRF1</small></td>"
-        "<td><strong>DO NOT RESUBMIT</strong><br><small>Already scored 0.1462 live; penalized by near-catalogue flank clustering</small></td></tr>",
+        "<td><code>gems30-MSDB1-edge44090-20261025-e7856ec3f14a.tif</code><br><small>Existing research artifact; download link not asserted here.</small></td>"
+        "<td><strong>UNVERIFIED-OWNER-REPORT 0.1462</strong><br><small>Reported live value; no organizer receipt, no leaderboard estimate. Local method audit was mixed.</small></td>"
+        "<td><strong>MARGINAL / NOT APPROVED</strong><br><small>Catalogue-proximal placement is a known concern; no independent selector pass.</small></td>"
+        "<td><strong>SUBMIT: NO — DO_NOT_SUBMIT</strong><br><small>Previously scored artifact; no resubmission authorization.</small></td></tr>",
         '<tr><td><strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE31/docs/" target="_blank" rel="noopener noreferrer">GEMSDOE31 ↗</a></strong></td>'
-        "<td><code>gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168-allfinite.tif</code></td>"
-        "<td><strong>HOLDOUT-DTI 0.1247</strong><br><small>Historical H27-4: 0.2708 owner-reported</small></td>"
-        "<td><strong>YES — UNIQUE</strong><br><small>Unscored sibling; 34.33% overlap vs DPRF1</small></td>"
-        "<td><strong>SECONDARY SIBLING (UNSCORED)</strong><br><small>Strong unscored candidate, but secondary to DPRF1 (47.9% apron vs DPRF1 22.3%)</small></td></tr>",
+        "<td><code>gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168-allfinite.tif</code><br><small>Existing research artifact; download link not asserted here.</small></td>"
+        "<td><strong>LOCAL HOLDOUT-DTI reported as 0.1247</strong><br><small>Evaluator, withheld count and 95% CI are not carried by the nine-site receipt; not a leaderboard estimate. Historical live report is separately unverified.</small></td>"
+        "<td><strong>METHOD-DISTINCT, LITERAL GATE NOT PASSED</strong><br><small>Unscored sibling; uniqueness does not imply slot eligibility.</small></td>"
+        "<td><strong>SUBMIT: NO — DO_NOT_SUBMIT</strong><br><small>Selector and independent replay requirements are unmet.</small></td></tr>",
         '<tr><td><strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html" target="_blank" rel="noopener noreferrer">GEMSDOE32 ↗</a></strong></td>'
-        "<td><code>h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code> (Historical) / <code>gemsdoe32-h-geo-conduit-37654-20261025T235617Z-2d0d0c5e-zeros.tif</code></td>"
-        "<td><strong>0.2778 live</strong> (B2 unverified owner report)</td>"
-        "<td><strong>PROHIBITED (B2) / FAILED GATES (CONDUIT)</strong><br><small>B2 is exact D2.8 subset (prohibited to copy); Conduit has 63.6% apron</small></td>"
-        "<td><strong>DO NOT SUBMIT</strong><br><small>B2 is prohibited to copy; Conduit repo header: DO NOT SUBMIT</small></td></tr>",
+        "<td><code>h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code> (historical, prohibited) / <code>gemsdoe32-h-geo-conduit-37654-20261025T235617Z-2d0d0c5e-zeros.tif</code></td>"
+        "<td><strong>UNVERIFIED-OWNER-REPORT 0.2778</strong><br><small>B2 report has no organizer receipt; causal hidden-label explanation is unproven. Conduit is unscored.</small></td>"
+        "<td><strong>NO — B2 PROHIBITED; CONDUIT UNVERIFIED</strong><br><small>B2 is an exact subset of D2.8 and may not be copied or perturbed.</small></td>"
+        "<td><strong>SUBMIT: NO — DO_NOT_SUBMIT</strong><br><small>Historical/prohibited or unscored; no new lane approved.</small></td></tr>",
         '<tr><td><strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE33/" target="_blank" rel="noopener noreferrer">GEMSDOE33 ↗</a></strong></td>'
-        "<td><code>gemsdoe33-a33-l1-analog-transfer-research-37654-20261025-85c94a805a34-zeros.tif</code></td>"
-        "<td><strong>Failed Holdout</strong><br><small>Historical tip/stepover: 0.2632 owner-reported</small></td>"
-        "<td><strong>NO</strong><br><small>27.60% overlap vs DPRF1; failed regional comparator</small></td>"
-        "<td><strong>DO NOT SUBMIT</strong><br><small>Failed preregistered holdout gate</small></td></tr>",
+        "<td><code>gemsdoe33-a33-l1-analog-transfer-research-37654-20261025-85c94a805a34-zeros.tif</code><br><small>Existing research artifact; download link not asserted here.</small></td>"
+        "<td><strong>LOCAL HOLDOUT NEGATIVE</strong><br><small>Historical tip/stepover value 0.2632 is an UNVERIFIED-OWNER-REPORT; no leaderboard estimate.</small></td>"
+        "<td><strong>NO — FAILED REGIONAL COMPARATOR</strong><br><small>Analog transfer did not pass the fold-safe gate.</small></td>"
+        "<td><strong>SUBMIT: NO — DO_NOT_SUBMIT</strong><br><small>Failed preregistered holdout gate.</small></td></tr>",
         '<tr><td><strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE36/docs/" target="_blank" rel="noopener noreferrer">GEMSDOE36 ↗</a></strong></td>'
-        "<td><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></td>"
-        "<td><strong>0.2750 live</strong> (Historical PINN = B2 + 1,200)</td>"
-        "<td><strong>NO</strong><br><small>Copied B2 base; repo retired pipeline on 2026-10-26</small></td>"
-        "<td><strong>DO NOT SUBMIT</strong><br><small>No valid non-copied unique candidate on GEMSDOE36</small></td></tr>",
+        "<td><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code><br><small>Historical artifact; download link not asserted here.</small></td>"
+        "<td><strong>UNVERIFIED-OWNER-REPORT 0.2750</strong><br><small>Historical PINN report; no organizer receipt, no leaderboard estimate.</small></td>"
+        "<td><strong>NO — COPIED/RETIRED PIPELINE</strong><br><small>No valid non-copied unique candidate was approved.</small></td>"
+        "<td><strong>SUBMIT: NO — DO_NOT_SUBMIT</strong><br><small>Retired historical pipeline; no slot authorization.</small></td></tr>",
     ]
 
     master_download_table = (
         '<div class="card" id="master-downloads-table">'
-        "<h3>Executive Summary Master Table: Direct File Downloads, Estimated Scores &amp; Uniqueness</h3>"
-        "<p>This table clearly details for each focus site the recommended file to download, estimated score with explicit provenance (distinguishing local <code>HOLDOUT-DTI</code> from unverified owner claims), whether it is a unique submission unlike other sites, and the actionable verdict.</p>"
+        "<h3>Executive Summary Master Table: Exact Files, Score Provenance, Uniqueness &amp; Submit Status</h3>"
+        "<p><strong>DOWNLOAD</strong> means a research artifact is available for inspection. <strong>SUBMIT</strong> is a separate automated authorization and is <strong>NO for every row</strong>. Owner-reported values are not organizer receipts; no leaderboard estimate or forecast is supplied. Local HOLDOUT-DTI values include their evaluator, withheld-positive count and 95% CI when the receipt carries them.</p>"
         '<div class="tablewrap" tabindex="0" role="region" aria-label="Nine-site master download table">'
         "<table><thead><tr>"
         "<th>Focus Site</th>"
@@ -287,66 +309,61 @@ def dprf1_packet(root):
     )
 
     phd_analysis_html = (
-        '<section id="phd-analysis-gemsdoe32" aria-label="PhD Analysis of GEMSDOE32 0.2778">'
-        "<h3>PhD-Level Analysis: Why GEMSDOE32's <code>h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros</code> Scored 0.2778</h3>"
-        "<p><strong>1. Mathematical Derivation under Asymmetric Tversky Metric:</strong> DrivenData evaluates submissions using a distance-weighted Tversky index (DTI):<br>"
-        "<code>DTI = T / (T + 0.2·F + 0.8·N)</code>, where <code>T</code> is True Positive mass, <code>F</code> is False Positive mass, and <code>N</code> is False Negative mass. "
-        "Notice the heavy penalty on False Positives: each false positive pixel incurs <code>0.20</code> penalty relative to true positives. "
-        "Local bit-level forensic analysis reveals that <code>h33-h33-2-b2</code> is an <strong>exact mathematical subset</strong> of the earlier benchmark <code>D2.8</code> (44,090 dots). "
-        "Specifically, exactly <strong>6,436 dots</strong> located within 200 m (2 pixels) of catalogued faults were pruned, leaving 37,654 dots. "
-        "Because competition evaluation withholds only hidden uncatalogued faults, predicted dots in close proximity (≤200 m) to public faults receive <strong>zero True Positive credit</strong> while generating pure False Positive penalty (<code>ΔF = 6,436</code>). "
-        "Pruning these zero-credit apron dots directly reduced the denominator penalty by <code>0.2 · 6,436 = 1,287.2</code>, driving the score from <code>0.2600</code> (D2.8) to <code>0.2778</code> (B2) with <em>zero newly discovered faults</em>.</p>"
-        "<p><strong>2. Structural &amp; Geological Ceiling:</strong> While B2 achieved 0.2778 through pure mathematical emission pruning, it represents an evolutionary dead-end. "
-        "Pixel forensics across peer submissions show that continuing to prune dots reduces True Positive recovery, while blindly adding dots around catalogued faults (as seen in GVC1's 70.4% apron collapse) crashes scores to 0.0742–0.0859. "
-        "Reaching top-tier scores (0.3195+) strictly requires <strong>genuine geological discovery of concealed hydrothermal fault structures</strong> in the far-field (>2 km from existing catalogues), which is achieved by <code>H24-DPRF1</code> (52.3% far-field dots, 52-channel multi-physics OOF fusion).</p>"
+        '<section id="phd-analysis-gemsdoe32" aria-label="Evidence-bounded analysis of GEMSDOE32 0.2778">'
+        "<h3>Evidence-bounded analysis of GEMSDOE32's <code>h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros</code> owner-reported 0.2778</h3>"
+        "<p><strong>What is actually observed:</strong> The value <code>0.2778</code> is an <strong>UNVERIFIED-OWNER-REPORT</strong>; no artifact-linked DrivenData receipt is present. Local byte/pixel forensics find that the B2 dot mask is an exact subset of the D2.8 mask: 44,090 versus 37,654 positive cells, with 6,436 cells removed and no cells added. The removed cells are within the repository's public-catalogue distance band. These are reproducible geometry facts, not hidden-label outcomes.</p>"
+        "<p><strong>What is only a mechanism hypothesis:</strong> Under an asymmetric distance-weighted Tversky metric, emission pruning can improve a score when the removed cells have low hidden-truth hit probability and high false-positive mass. It can also hurt when those cells are near withheld faults. The hidden <code>T</code>, <code>F</code> and <code>N</code> contributions for the actual organizer evaluation are unavailable, so we cannot claim that B2 removed zero-credit cells, compute a causal denominator change, or explain the reported score from the pixel difference alone. The correct conclusion is <strong>plausible emission-policy effect; causal explanation unproven</strong>.</p>"
+        "<p><strong>Decision consequence:</strong> B2 is a historical reference and prohibited from copying or perturbing. DPRF1's local HOLDOUT-DTI and far-field allocation are internal validation measurements, not evidence that it achieved a leaderboard result or a geothermal discovery. The conflicting 0.3195 and 0.4413 leader claims remain unverified. A future candidate must beat the current comparable holdout, pass both novelty stages and the independent selector before any slot is considered.</p>"
         "</section>"
     )
 
     hypotheses_html = (
         '<section id="candidate-geological-hypotheses" aria-label="Candidate Geological Hypotheses">'
-        "<h3>3–5 Candidate Geological Hypotheses Targeting Missing Faults (Ranked Before Implementation)</h3>"
-        "<p>To discover concealed, non-outcropping permeability pathways in the Basin and Range geothermal province without copying prior submissions, we formulate and rank 5 multi-physics candidate hypotheses:</p>"
+        "<h3>Four unexecuted geological hypotheses — ranked before implementation</h3>"
+        "<p>These are prospective hypotheses, not scores or promises. The current session did not receive the single assigned method paragraph, so no candidate below was implemented or placed. Expected benefit is qualitative; the only valid numeric comparison remains a future shared HOLDOUT-DTI with evaluator, withheld count and 95% CI.</p>"
         '<div class="tablewrap" tabindex="0" role="region" aria-label="Candidate Geological Hypotheses Table">'
         "<table><thead><tr>"
-        "<th>Rank &amp; Hypothesis</th>"
-        "<th>Geological Mechanism &amp; Multi-Physics Channels</th>"
-        "<th>Expected DTI Gain</th>"
-        "<th>Computational &amp; Data Cost</th>"
+        "<th>Rank / hypothesis</th>"
+        "<th>Layers and physical signature</th>"
+        "<th>Why missing-catalogue fault / named mimic</th>"
+        "<th>Difference, source readiness and cost</th>"
+        "<th>Expected benefit (not a score)</th>"
         "</tr></thead><tbody>"
-        "<tr><td><strong>Rank 1: H24-CTI1</strong><br><small>Curvature Tensor Invariants &amp; Horizontal Gravi-Topographic Hessian</small></td>"
-        "<td>Blind fault step-overs, relay ramps, and graben borders create sharp subtle inflections in basement gravity and quaternary alluvial cover. Computes differential curvature (λ1 - λ2) and maximum horizontal gradient of isostatic gravity and 100m DEM.</td>"
-        "<td><strong>+0.008 to +0.012</strong></td>"
-        "<td><strong>Low</strong><br><small>Available in cached features; fast 2D convolution</small></td></tr>"
-        "<tr><td><strong>Rank 2: H24-GDS1</strong><br><small>Geothermal Dilatational Strain &amp; Microseismic Slip-Tendency</small></td>"
-        "<td>Active geothermal conduits require critically stressed, permeable normal/strike-slip faults. Fuses GPS/InSAR dilatational strain rate tensor, shear strain rate, and microseismic hypocenter density.</td>"
-        "<td><strong>+0.006 to +0.010</strong></td>"
-        "<td><strong>Medium</strong><br><small>Requires GDR INGENIOUS regional geodetic grids</small></td></tr>"
-        "<tr><td><strong>Rank 3: H24-ASPC1</strong><br><small>Potential Field Phase Congruency &amp; Monogenic Wavelet Edges</small></td>"
-        "<td>Concealed basement faults produce sharp phase boundaries invariant to illumination and regional magnetic/gravity field intensity. Evaluates multiscale monogenic wavelets on RTP magnetics and gravity.</td>"
-        "<td><strong>+0.005 to +0.009</strong></td>"
-        "<td><strong>Medium</strong><br><small>FFT frequency-domain operations</small></td></tr>"
-        "<tr><td><strong>Rank 4: H24-MMR1</strong><br><small>Hydrothermal Metasomatic Mineral Ratio Discontinuity</small></td>"
-        "<td>Hydrothermal fluids ascend along active fault conduits, causing feldspar alteration to illite/smectite and potassium metasomatism. Employs K/Th radiometric depletion and ASTER SWIR mineral indices.</td>"
-        "<td><strong>+0.004 to +0.007</strong></td>"
-        "<td><strong>Low</strong><br><small>Existing GeoDAWN radiometric bands</small></td></tr>"
-        "<tr><td><strong>Rank 5: H24-RRC1</strong><br><small>Relay-Ramp Damage Zone &amp; Elastic Coulomb Stress Transfer</small></td>"
-        "<td>Overlapping en-echelon normal fault segments transfer displacement through highly fractured relay ramps with elevated subsidiary fault density. Computes Coulomb stress perturbation kernels.</td>"
-        "<td><strong>+0.005 to +0.008</strong></td>"
-        "<td><strong>Medium-High</strong><br><small>Iterative boundary element boundary calculation</small></td></tr>"
+        "<tr><td><strong>1 · H24-TEX1</strong><br><small>Multi-scale magnetic–gravity texture front</small></td>"
+        "<td>Raw <code>rtp</code>, <code>tmi</code>, <code>iso_grav_anom</code> plus quantized <code>TMI_up150</code>; two-sided directional semivariogram/texture change across a front, requiring persistence across lags and modalities.</td>"
+        "<td>A covered basement step may change spatial texture without a single large edge or scarp. Mimic: intrusive/remanent-magnetization contact or survey levelling seam.</td>"
+        "<td>Texture persistence is distinct from MTR1's trough and CRP1/EUL1 derivative channels. Local owner-mirrored layers are present; quantized support and acquisition-block confounding must be audited. Medium cost.</td>"
+        "<td><strong>Highest qualitative potential</strong>; unmeasured until feature-only canaries and blocked holdout.</td></tr>"
+        "<tr><td><strong>2 · H24-RADLAG</strong><br><small>Radiometric alteration-front phase lag</small></td>"
+        "<td>Valid-mask-aware K/Th/U rank bands; tangent-coherent signed spatial lag between mobile-element fronts and a Th front, not raw ratio magnitude.</td>"
+        "<td>Hydrothermal alteration may be displaced along a permeable fracture from the lithologic boundary that maps it; this can target concealed structure. Mimic: hillslope transport and differential weathering.</td>"
+        "<td>Differs from CRP1/CUP1 compositional magnitude and avoids unsupported absolute-concentration claims. GeoDAWN radiometric ranks are present locally; low-to-medium cost.</td>"
+        "<td><strong>Moderate qualitative potential</strong>; likely sparse and confounded; no numeric gain claimed.</td></tr>"
+        "<tr><td><strong>3 · H24-PHASE</strong><br><small>Cross-modality phase congruency</small></td>"
+        "<td>Raw RTP/TMI/gravity; local quadrature/monogenic phase congruency with cross-modality orientation agreement, rather than amplitude edge strength.</td>"
+        "<td>A low-amplitude buried discontinuity can retain phase alignment under cover while escaping scarp detection. Mimic: dike swarm, caldera margin or acquisition boundary.</td>"
+        "<td>Distinct from prior amplitude persistence and Euler contact operators, but FFT support/edge effects require careful fold-local canaries. Layers are locally present; medium-high cost.</td>"
+        "<td><strong>Moderate but uncertain</strong>; requires ablation and support audit before ranking empirically.</td></tr>"
+        "<tr><td><strong>4 · H24-DRAIN-ABS</strong><br><small>Multi-catchment channel-offset graph</small></td>"
+        "<td>Absolute USGS 3DEP elevation plus LiDAR support; directed thalweg graph and repeated channel-offset/knickpoint alignment across independent catchments.</td>"
+        "<td>A transverse concealed structure may perturb several washes after a surface scarp erodes. Mimic: fan avulsion, stream capture or lithologic resistance.</td>"
+        "<td>Topology differs from local 9×9 geomorphic filters. The available <code>det_elev</code> is detrended, not a verified absolute DEM; USGS 3DEP is the specific free official dependency and was not obtainable in this sandbox. High cost, deferred—not viable until source receipt.</td>"
+        "<td><strong>Potentially high, presently unknown</strong>; no implementation or score projection.</td></tr>"
         "</tbody></table></div>"
+        '<p class="micro">Local data readiness is not scientific validation. Official manual-review links: '
+        '<a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN</a>, '
+        '<a href="https://www.usgs.gov/3d-elevation-program">USGS 3DEP</a>, and '
+        '<a href="https://gdr.openei.org/submissions/1391">OpenEI GDR INGENIOUS</a>. '
+        "No candidate can be promoted without the shared feature-only leakage canary, buffered whole-segment holdout, pre-placement/final novelty checks, exact-file validator and separate selector.</p>"
         "</section>"
     )
 
     range_error_guide_html = (
-        '<section id="portal-range-error-guide" aria-label="DrivenData Range Error Root Cause and Fix">'
-        "<h3>Root Cause &amp; Resolution: DrivenData Error <code>Predicted values must be in range [0, 1]</code></h3>"
-        "<p>When submitting to DrivenData, users frequently encounter the error: <code>Predicted values must be in range [0, 1]</code>. "
-        "Our deep file-format diagnostics identified the exact root cause:<br>"
-        "<strong>Root Cause:</strong> DrivenData's ingestion engine parses the <em>entire 2D raster array</em> including cells outside the official project footprint boundary. "
-        "Standard GDAL/Rasterio export pipelines often place <code>NaN</code>, <code>-9999.0</code>, or infinity in outside-footprint cells. DrivenData treats <code>NaN</code> as an out-of-bounds float, immediately triggering validation failure.<br>"
-        "<strong>Permanent Fix:</strong> All submission GeoTIFFs generated in this repository use the <code>-zeros.tif</code> specification: "
-        "cells outside the active footprint boundary are filled with strictly <code>0.0</code> (allfinite float32), while cells inside the boundary are bounded in <code>[0.0, 1.0]</code>. "
-        "This completely eliminates the <code>[0, 1]</code> range error and passes automated preflight validation with zero errors.</p>"
+        '<section id="portal-range-error-guide" aria-label="DrivenData Range Error Diagnostic and Safe Export">'
+        "<h3>Range-error diagnostic: <code>Predicted values must be in range [0, 1]</code></h3>"
+        "<p>The repository can reproduce the reported failure mode when a stored GeoTIFF contains NaN, infinity or an out-of-range value. The exact organizer-side cause of the earlier rejection is <strong>unknown</strong>; local evidence does not prove how the portal interpreted its outside-footprint cells. Therefore this page does not promise acceptance.</p>"
+        '<p><strong>Safe local export:</strong> use the shared writer\'s <code>outside="zero"</code> default (or an explicitly named <code>-zeros.tif</code> artifact). It writes finite float32 values, keeps the footprint in <code>[0,1]</code>, and the strict preflight checks the entire stored array. The <code>-nan.tif</code> twin is retained only for compatibility/audit comparison and is not the recommended upload file.</p>'
+        "<p><strong>Required checks before any future slot:</strong> single band; exact pinned CRS, shape and transform; no NaN/Inf anywhere; every stored value in <code>[0,1]</code>; SHA-256 matches the run card; short note ≤140 characters; then the independent scientific selector. Format PASS never overrides a negative scientific or quota decision.</p>"
         "</section>"
     )
 
@@ -380,8 +397,8 @@ def dprf1_packet(root):
     hero_html = f"""<section id="dprf1-overview" class="hero" aria-label="Latest 2026-10-26 H24-DPRF1 Stitched-OOF Two-Regime GeoTIFF">
 <div>
 <div class="eyebrow">New 2026-10-26 Point-Best · H24-DPRF1 · 57/57 Competing-Method Novelty PASS</div>
-<h2>Highest HOLDOUT-DTI (0.16379) &amp; Apron Cure.<br>Fail-closed selector v2: DO NOT SUBMIT.</h2>
-<p class="lead"><strong><code>H24-DPRF1</code></strong> fuses 52 physical &amp; OpenEI GDR INGENIOUS hydrothermal channels (paleo-sinter, 2 m thermal probes, geothermometry, Miller–Singh tilt, 8-azimuth lineaments, and modality-aware <code>SAHG1</code> conduits) using <strong>Stratified <code>d_vis &ge; 300 m</code> negative sampling</strong>, <strong>3-tier Relief-Conditioned LiDAR-gap calibration</strong>, <strong>Dual-Partition Stitched-OOF</strong> (Quadrant + 45&deg; Diamond, zero in-sample predictions), and <strong>Two-Regime 300 m Submodular Allocation</strong>. <strong>Zero previous submission pixels were copied.</strong> It is <strong>not yet scored</strong> on DrivenData, cures <code>GVC1</code>'s 70.4% near-catalogue apron collapse (restoring <strong>52.3% &gt;2 km far-field</strong> dots), passes <strong>all 57 competing method rasters</strong> (max 3-px overlap <strong>55.78% &le; 70%</strong>) and <strong>83 peer blobs</strong> (<strong>54.94%</strong>), passes strict exact-file C2ST (AUC <code>{c2_cand["observed_auc"]:.4f}</code>), and remains <strong>NOT OK TO SUBMIT (<code>DO_NOT_SUBMIT</code>)</strong> under <code>gems-selector-v2-literal-quota-fail-closed</code>.</p>
+<h2>Recorded local HOLDOUT-DTI point-best.<br>Fail-closed selector v2: DO NOT SUBMIT.</h2>
+<p class="lead"><strong><code>H24-DPRF1</code></strong> fuses 52 physical &amp; OpenEI GDR INGENIOUS hydrothermal channels (paleo-sinter, 2 m thermal probes, geothermometry, Miller–Singh tilt, 8-azimuth lineaments, and modality-aware <code>SAHG1</code> conduits) using <strong>Stratified <code>d_vis &ge; 300 m</code> negative sampling</strong>, <strong>3-tier Relief-Conditioned LiDAR-gap calibration</strong>, <strong>Dual-Partition Stitched-OOF</strong> (Quadrant + 45&deg; Diamond, zero in-sample predictions), and <strong>Two-Regime 300 m Submodular Allocation</strong>. <strong>Zero previous submission pixels were copied.</strong> It has no organizer-confirmed score; its local HOLDOUT-DTI and spatial diagnostics are recorded below. It passes the listed competing-method and peer technical comparisons, but the literal selector still fails on the retained lattice and unknown quota, so it remains <strong>NOT OK TO SUBMIT (<code>DO_NOT_SUBMIT</code>)</strong> under <code>gems-selector-v2-literal-quota-fail-closed</code>.</p>
 {status_box}
 <div class="actions">
 <a class="button primary" href="downloads/{e(name)}" download="{e(name)}">↓ Download H24-DPRF1 .tif (strict [0,1]) — DO NOT SUBMIT</a>
@@ -426,9 +443,10 @@ def dprf1_packet(root):
 </section>
 {nine_site_table}"""
 
-    research_html = f"""<section id="dprf1-research"><h2>2026-10-26 Breakthrough: H24-DPRF1 Dual-Partition Stitched-OOF &amp; Apron Redistribution Analysis (0.0859 owner-reported)</h2>
+    research_html = f"""<section id="dprf1-research"><h2>2026-10-26 H24-DPRF1 — Dual-Partition Stitched-OOF &amp; spatial-allocation research (local holdout only)</h2>
 <div class="grid2"><article class="card"><h3>Three-Arm Preregistered Factorial on <code>SegmentHoldout</code> (not leaderboard scores)</h3>
-<div class="tablewrap" tabindex="0" role="region" aria-label="H24-DPRF1 three-arm holdout comparison"><table><thead><tr><th>Arm / Baseline</th><th>Pooled <code>HOLDOUT-DTI</code></th><th>95% Bootstrap CI</th><th>NW</th><th>NE_LidarGap</th><th>SW</th><th>SE</th></tr></thead><tbody>
+<p class="micro">Every pooled value below is an internal <strong>HOLDOUT-DTI</strong> measurement under <code>{e(score["evaluator_version"])}</code> with {score["n_withheld_positive_pixels"]:,} withheld positives; the displayed pooled 95% CI is the receipt's approximate bootstrap interval. Fold columns are diagnostic components, not separate leaderboard scores. No organizer-confirmed score or forecast exists.</p>
+<div class="tablewrap" tabindex="0" role="region" aria-label="H24-DPRF1 three-arm holdout comparison"><table><thead><tr><th>Arm / Baseline</th><th>Pooled <code>HOLDOUT-DTI</code></th><th>95% Bootstrap CI</th><th>NW fold component</th><th>NE_LidarGap fold component</th><th>SW fold component</th><th>SE fold component</th></tr></thead><tbody>
 <tr><td><strong>Arm 1: <code>H24-DPRF1</code> (Stratified d&ge;3 + Two-Regime, packaged)</strong></td><td><strong>{score["dti"]:.5f}</strong></td><td>[{lo:.5f}, {hi:.5f}]</td><td><strong>{score["folds"][0]["dti"]:.5f}</strong></td><td><strong>{score["folds"][1]["dti"]:.5f}</strong></td><td><strong>{score["folds"][2]["dti"]:.5f}</strong></td><td><strong>{score["folds"][3]["dti"]:.5f}</strong></td></tr>
 <tr><td>Arm 2: <code>DPRF1-SingleRegime</code> (100% primary ridge)</td><td>{arm2_dti:.5f}</td><td>[{experiment["arms"]["arm2_single_regime"]["holdout"]["ci95"]["interval"][0]:.5f}, {experiment["arms"]["arm2_single_regime"]["holdout"]["ci95"]["interval"][1]:.5f}]</td><td>{experiment["arms"]["arm2_single_regime"]["holdout"]["folds"][0]["dti"]:.5f}</td><td>{experiment["arms"]["arm2_single_regime"]["holdout"]["folds"][1]["dti"]:.5f}</td><td>{experiment["arms"]["arm2_single_regime"]["holdout"]["folds"][2]["dti"]:.5f}</td><td>{experiment["arms"]["arm2_single_regime"]["holdout"]["folds"][3]["dti"]:.5f}</td></tr>
 <tr><td>Arm 3: <code>DPRF1-DeadZone9</code> (legacy d&ge;9 negative dead zone)</td><td>{arm3_dti:.5f}</td><td>[{experiment["arms"]["arm3_deadzone9"]["holdout"]["ci95"]["interval"][0]:.5f}, {experiment["arms"]["arm3_deadzone9"]["holdout"]["ci95"]["interval"][1]:.5f}]</td><td>{experiment["arms"]["arm3_deadzone9"]["holdout"]["folds"][0]["dti"]:.5f}</td><td>{experiment["arms"]["arm3_deadzone9"]["holdout"]["folds"][1]["dti"]:.5f}</td><td>{experiment["arms"]["arm3_deadzone9"]["holdout"]["folds"][2]["dti"]:.5f}</td><td>{experiment["arms"]["arm3_deadzone9"]["holdout"]["folds"][3]["dti"]:.5f}</td></tr>
@@ -436,7 +454,7 @@ def dprf1_packet(root):
 <tr><td><code>B1: OOF-Base-Submod</code> (30-ch matched submod baseline)</td><td>{card["baselines_and_siblings_same_evaluator"]["B1_oof_base_submod"]["dti"]:.5f}</td><td>[{card["baselines_and_siblings_same_evaluator"]["B1_oof_base_submod"]["ci95"][0]:.5f}, {card["baselines_and_siblings_same_evaluator"]["B1_oof_base_submod"]["ci95"][1]:.5f}]</td><td>0.14975</td><td>0.16713</td><td>0.11172</td><td>0.14253</td></tr>
 <tr><td><code>oof_multiphysics_hgb_d3</code> (27-ch LiDAR-only baseline)</td><td>{card["baselines_and_siblings_same_evaluator"]["oof_multiphysics_hgb_d3"]["dti"]:.5f}</td><td>[{card["baselines_and_siblings_same_evaluator"]["oof_multiphysics_hgb_d3"]["ci95"][0]:.5f}, {card["baselines_and_siblings_same_evaluator"]["oof_multiphysics_hgb_d3"]["ci95"][1]:.5f}]</td><td>0.14613</td><td>0.13464</td><td>0.10490</td><td>0.14558</td></tr>
 </tbody></table></div>
-<p class="micro">Stratified <code>d_vis &ge; 300 m</code> negatives beat the legacy <code>d_vis &ge; 900 m</code> dead zone by <strong>{paired_dz["paired_delta_dti"]:+.5f}</strong> (95% CI [{dz_lo:+.5f}, {dz_hi:+.5f}], 4/4 folds won), while 3-tier relief-conditioned LiDAR-gap calibration lifts <code>SW</code> from <code>0.07993</code> (<code>RSHG1</code>) to <strong><code>0.12768</code></strong> and <code>NE_LidarGapHeavy</code> to <strong><code>0.21227</code></strong>.</p></article>
+<p class="micro">The preregistered paired comparison for the stratified negative-distance arm versus the legacy dead-zone arm is retained as a <strong>HOLDOUT-DTI paired delta</strong> {paired_dz["paired_delta_dti"]:+.5f} (95% CI [{dz_lo:+.5f}, {dz_hi:+.5f}], 4/4 folds); arm-specific values are in the immutable experiment receipt. This does not calibrate a hidden-label score.</p></article>
 <article class="card"><h3>Possible explanation for owner-reported GVC1 0.0859 vs H29-CELF 0.2190 — not causal proof</h3>
 <img class="raster-preview" src="assets/dprf1-preview.png" alt="Downsampled preview of H24-DPRF1 fault dots (37,654 positive cells)">
 <p class="micro">Recorded distance forensics found near-catalogue clustering in <code>GVC1</code> (<code>0.0859</code> owner-reported) and <code>GEMSDOE25 H66-MGD</code> (<code>0.0742</code>) with <strong>70.4%</strong> and <strong>69.6%</strong> of their dots into 200–900 m halos around already-mapped faults (leaving only 8.5% and 3.0% &gt;2 km). DPRF1 combines multiple changes and records 200–900 m apron dots to <strong>{100 * dist["frac_2_to_9px_apron"]:.1f}%</strong>, restores <strong>{100 * dist["frac_gt_20px_farfield"]:.1f}%</strong> &gt;2 km far-field dot allocation, and passes all 57 competing method rasters (max 3-px overlap <strong>{100 * nov["method_lane_max_dot_overlap"]:.2f}%</strong> &le; 70%). <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/19_preregistered_DPRF1_2026-10-26.md">DPRF1 preregistration →</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md">DPRF1 PhD synthesis &amp; 9-site review →</a></p></article></div></section>"""
@@ -761,7 +779,7 @@ def gvc1_packet(root):
         f"<tr><td><code>{e(fn)}</code></td><td><strong>{e1_folds[fn]['dti']:.5f}</strong></td><td>{e2_folds[fn]['dti']:.5f}</td><td>{b1_folds[fn]['dti']:.5f}</td><td>{b0_folds[fn]['dti']:.5f}</td><td>{e1_folds[fn]['n_emitted']:,}</td></tr>"
         for fn in ("NW", "NE_LidarGapHeavy", "SW", "SE")
     )
-    research_html = f"""<section><h2>2026-10-25 Continuation Breakthrough &amp; Overlap Stop: H24-GVC1 Geothermal-Vent Upflow + Tilt + Lineament Submodular Detector</h2>
+    research_html = f"""<section><h2>2026-10-25 Historical continuation research &amp; overlap stop: H24-GVC1 Geothermal-Vent Upflow + Tilt + Lineament Submodular Detector</h2>
 <div class="grid2"><article class="card"><h3>HOLDOUT-DTI vs Reconstructed OOF Baselines (not leaderboard scores)</h3>
 <div class="tablewrap"><table><thead><tr><th>Fold / Summary</th><th>E1: H24-GVC1</th><th>E2: GVC1-Resid</th><th>B1: OOF-Base-Submod</th><th>B0: OOF-H24-Ridge</th><th>GVC1 Dots</th></tr></thead><tbody>
 {fold_rows}
@@ -964,7 +982,7 @@ def rshg1_packet(root):
 <tr><td><strong>Pooled <code>gems-segment-pooled-v1</code></strong></td><td><strong>{h_main["dti"]:.5f}</strong> [{lo:.5f}, {hi:.5f}]</td><td><strong>{h_ab_b["dti"]:.5f}</strong> [{blo:.5f}, {bhi:.5f}]</td><td>{h_ab_a["dti"]:.5f} [{alo:.5f}, {ahi:.5f}]</td><td>{h_oof["dti"]:.5f} [{olo:.5f}, {ohi:.5f}]</td><td>{dl["pixel_count"]:,}</td></tr>
 </tbody></table></div>
 <p class="micro">Unlocking the 31.8% 3DEP LiDAR gap via tree <code>NaN</code> routing + Miller &amp; Singh tilt-zero sharpness + DEM-Hessian ridge + Th-normalized K alteration jumped <code>NE_LidarGapHeavy</code> from <code>0.13464</code> to <strong><code>0.17285</code></strong> (<code>0.17365</code> pointwise). <code>Ablation B</code> (<code>0.13137</code>) was a historical <code>HOLDOUT-DTI</code> point-best at execution; post-hoc <code>K_300</code> kernel smoothing cost <code>-0.00238</code>, and uniform LiDAR-gap tail matching over-allocated dots in flat <code>SW</code> valley gaps.</p></article>
-<article class="card"><h3>C2ST Nuisance Breakthrough &amp; Supervised Convergence</h3>
+<article class="card"><h3>C2ST nuisance audit &amp; supervised convergence</h3>
 <img class="raster-preview" src="assets/rshg1-preview.png" alt="Downsampled preview of H24-RSHG1 fault dots (37,722 positive cells)">
 <p class="micro">Exact-file C2ST AUC dropped from <code>0.5826</code> (SAHG1 FAIL) to <strong><code>{c2st["observed_auc"]:.4f}</code></strong> (null p95 <code>{c2st["null_p95"]:.4f}</code>, Holm <em>p</em> = <code>{c2st["holm_p_value"]:.3f}</code>, <code>claim_m</code> AUC <code>{c2st["single_feature_auc_descriptive"]["claim_m"]:.4f}</code> — <strong>PASS</strong>). Surface max |ρ| = <code>{nov["surface_max_abs_rank_correlation"]:.4f}</code> ≤ 0.90 with zero copied pixels, while 72.69% of predicted off-catalogue dots independently converge within 300 m of <code>gems10-h25-ctx-ridge</code> (<code>0.7233</code> on <code>gems28</code>). <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/17_preregistered_RSHG1_2026-10-25.md">RSHG1 preregistration →</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/18_RSHG1_findings_2026-10-25.md">RSHG1 PhD synthesis &amp; findings →</a></p></article></div></section>"""
     return hero_html, exec_html, research_html
@@ -1551,16 +1569,16 @@ def trsg1_packet(root: Path) -> tuple[str, str, str]:
 </section>
 <section aria-label="H24-TRSG1 automated gate breakdown"><h2>H24-TRSG1 automated validation gates (zero human-inspector fallback)</h2>{gate_table}</section>"""
 
-    portfolio_table = """<div class="tablewrap" tabindex="0" role="region" aria-label="TRSG1 nine-site scoreboard"><table><thead><tr><th>Rank</th><th>Priority Site</th><th>Pinned <code>main</code></th><th>Best Submission on Site (<code>OWNER-REPORTED</code>)</th><th>Dots</th><th>Best Score</th><th>2026-10-25/26 Independent Detector Note</th></tr></thead><tbody>
-<tr><td><strong>1</strong></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE32"><strong>GEMSDOE32</strong></a></td><td><code>7a97c5a889</code></td><td><code>h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros</code></td><td>37,654</td><td><strong>0.2778</strong></td><td><strong>#1 overall across the 9 priority sites</strong> (<code>D2.8</code> + 200 m zero-credit apron prune)</td></tr>
-<tr><td>2</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE36">GEMSDOE36</a></td><td><code>d519364018</code></td><td><code>h35-1-pinn-b2-p1200-20261004T193800Z-f7a8dae1</code></td><td>38,854</td><td><strong>0.2750</strong></td><td><code>gied</code> / <code>sbrf</code> (unscored)</td></tr>
-<tr><td>3</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE28">GEMSDOE28</a></td><td><code>10c26af3dc</code></td><td><code>h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan</code></td><td>39,964</td><td><strong>0.2710</strong></td><td><code>s18-mxtp</code>: <code>0.0217</code> (<code>OWNER-REPORTED</code>)</td></tr>
-<tr><td>4</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE31">GEMSDOE31</a></td><td><code>3c1be4993a</code></td><td><code>h27-4-20261003T081907Z-7f95c1c9</code></td><td>40,199</td><td><strong>0.2708</strong></td><td><code>scgp-submod-37654</code> (unscored)</td></tr>
-<tr><td>5</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE33">GEMSDOE33</a></td><td><code>b542e5ce41</code></td><td><code>h38-3-b2-matched44090-20261004T093000Z-6930b98e</code></td><td>44,090</td><td><strong>0.2632</strong></td><td><code>tcf</code> / <code>gied</code> (unscored)</td></tr>
-<tr><td>6 (tie)</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE25">GEMSDOE25</a></td><td><code>0a45b3ca64</code></td><td><code>dotted-h19-5-d2-8-20261002-e56ea318af89-nan</code></td><td>44,090</td><td><strong>0.2600</strong></td><td><code>h66-mgd-flank</code>: <code>0.0742</code> (<code>OWNER-REPORTED</code>)</td></tr>
-<tr><td>6 (tie)</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE30">GEMSDOE30</a></td><td><code>78ae70817a</code></td><td><code>d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca</code></td><td>44,090</td><td><strong>0.2600</strong></td><td><code>MSDB1-edge44090</code>: <code>0.1462</code> (<code>18.2%</code> wasted at <code>d_cat≤2 px</code>)</td></tr>
-<tr><td>8</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE24"><strong>GEMSDOE24</strong></a></td><td><code>fc2bc6f350</code></td><td><code>gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan</code></td><td>60,069</td><td><strong>0.2477</strong></td><td><code>GVC1</code>: <code>0.0859</code> (in-sample halo); <strong><code>H24-DPRF1</code> (<code>0.16379</code>) &amp; <code>H24-TRSG1</code> (<code>0.14644</code>, C2ST <code>0.4727</code>)</strong></td></tr>
-<tr><td>9</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE27">GEMSDOE27</a></td><td><code>927322eadb</code></td><td><code>topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan</code></td><td>59,075</td><td><strong>0.2449</strong></td><td><strong><code>H29-HPVC</code>: <code>0.2190</code></strong> (stitched OOF + CELF cover)</td></tr>
+    portfolio_table = """<div class="tablewrap" tabindex="0" role="region" aria-label="TRSG1 nine-site historical audit"><table><thead><tr><th>Focus site</th><th>Historical artifact</th><th>Value provenance</th><th>2026 audit disposition</th></tr></thead><tbody>
+<tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE32"><strong>GEMSDOE32</strong></a></td><td><code>h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros</code></td><td><strong>0.2778 UNVERIFIED-OWNER-REPORT</strong>; no organizer receipt</td><td>B2 is an exact D2.8 subset after catalogue-proximal removals; geometry is reproducible, hidden-label causality unproven; do not copy</td></tr>
+<tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE36">GEMSDOE36</a></td><td><code>h35-1-pinn-b2-p1200-20261004T193800Z-f7a8dae1</code></td><td><strong>0.2750 UNVERIFIED-OWNER-REPORT</strong>; no organizer receipt</td><td>Historical/copy-related pipeline; no approved unique lane</td></tr>
+<tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE28">GEMSDOE28</a></td><td><code>h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan</code></td><td><strong>0.2710 UNVERIFIED-OWNER-REPORT</strong>; no organizer receipt</td><td>Historical reference only; newer local lane negative</td></tr>
+<tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE31">GEMSDOE31</a></td><td><code>h27-4-20261003T081907Z-7f95c1c9</code></td><td><strong>0.2708 UNVERIFIED-OWNER-REPORT</strong>; no organizer receipt</td><td>Historical reference only; selector not cleared</td></tr>
+<tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE33">GEMSDOE33</a></td><td><code>h38-3-b2-matched44090-20261004T093000Z-6930b98e</code></td><td><strong>0.2632 UNVERIFIED-OWNER-REPORT</strong>; no organizer receipt</td><td>Historical analog; local transfer lane negative</td></tr>
+<tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE25">GEMSDOE25</a></td><td><code>dotted-h19-5-d2-8-20261002-e56ea318af89-nan</code></td><td><strong>0.2600 UNVERIFIED-OWNER-REPORT</strong>; no organizer receipt</td><td>Historical reference only; newer local confirmation negative</td></tr>
+<tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE30">GEMSDOE30</a></td><td><code>d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca</code></td><td><strong>0.2600 UNVERIFIED-OWNER-REPORT</strong>; no organizer receipt</td><td>Historical/reference raster; a later NaN-outside file has a strict-range hazard</td></tr>
+<tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE24"><strong>GEMSDOE24</strong></a></td><td><code>gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan</code></td><td><strong>0.2477 UNVERIFIED-OWNER-REPORT</strong>; current DPRF1 is a separate local <strong>HOLDOUT-DTI</strong> receipt</td><td>Current local reference is research-only; no submission authorization</td></tr>
+<tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE27">GEMSDOE27</a></td><td><code>topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan</code></td><td><strong>0.2449 UNVERIFIED-OWNER-REPORT</strong>; no organizer receipt</td><td>Historical reference; later already-scored artifact must not be resubmitted</td></tr>
 </tbody></table></div>"""
 
     exec_html = f"""<section id="trsg1-exec" class="card concurrent" aria-label="Latest 2026-10-26 H24-TRSG1 submission status &amp; 9-site executive review">
@@ -1984,7 +2002,7 @@ def dkrn1_packet(root):
 
     status_box = (
         '<div class="status stopped" role="status">'
-        "<strong>LATEST EXECUTED LANE H24-DKRN1 (2026-10-26) — NEGATIVE RESULT · DOWNLOAD: YES · SUBMIT: NO "
+        "<strong>ARCHIVED PRIOR EXECUTED LANE H24-DKRN1 (2026-10-26) — NEGATIVE RESULT · DOWNLOAD: YES · SUBMIT: NO "
         f"(SELECTOR <code>{e(fresh_sel['selector_version'])}</code>: <code>{e(fresh_sel['decision'])}</code>).</strong> "
         "Executes AGENTS.md next-step queue (<code>H24-DRAIN5</code> exact sparse D8 flow-routing + "
         "<code>H24-KERN6</code> 300 m DTI-kernel soft-label regression + Elkan prior-odds calibration + "
@@ -2003,7 +2021,7 @@ def dkrn1_packet(root):
         "Do not submit and do not retune DKRN1.</strong></div>"
     )
 
-    hero_html = f"""<div class="hero"><div><div class="eyebrow">H24-DKRN1 · Split-View D8 Knickpoint Routing + 300 m Kernel Regression · preregistered · negative</div><h2>Won the LiDAR gap.<br>Stopped honestly on pooled holdout.</h2><p class="lead">Exact sparse triangular D8 routing <code>(I − P<sup>T</sup>)A = 1</code> across 12.28 M cells extracted Flint's-law stream-power knickpoints and thalweg dog-legs, winning <code>NE_LidarGapHeavy</code> (<strong>0.21308</strong> vs DPRF1 <strong>0.21227</strong>) and lifting a pure LiDAR-free 47-channel kernel regressor to <strong>0.15072</strong> — yet trailed DPRF1 pooled (<strong>0.15525</strong> vs <strong>0.16379</strong>), retained 75.68% 3-px dot overlap with DPRF1 via Head B, and exposed valley wash-road C2ST correlation (AUC 0.5773). Logged, verified, not retuned.</p>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">Download DKRN1 research GeoTIFF (-zeros)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="executive-summary.html#dkrn1">Executive summary &amp; 9-site 2026-10-26 audit →</a></div><p class="micro">{dl["pixel_count"]:,} binary dots · strict whole-array [0,1] PASS · SHA-256 <span class="hash">{e(digest)}</span> · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><p class="micro"><span class="badge blue">Format [0,1] PASS</span> <span class="badge blue">NE LiDAR-Gap Win 0.21308</span> <span class="badge danger">Pooled &amp; Parent-Overlap FAIL vs DPRF1</span> <span class="badge gray">No slot used</span></p></div><aside class="card visual" aria-label="H24-DKRN1 holdout result and raster preview"><div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Not a leaderboard score</span></div><div class="result-number">{score["dti"]:.5f}</div><p>95% CI [{lo:.5f}, {hi:.5f}] · <code>{e(score["evaluator_version"])}</code> · 60,988 withheld · HeadA47 {arms["arm2_head_a_kernel47_ablation"]["dti"]:.5f} · OOF-d3 {arms["oof_multiphysics_hgb_d3_baseline"]["dti"]:.5f}</p><img class="raster-preview" src="assets/dkrn1-preview.png" alt="Downsampled map of DKRN1 experimental fault dots, not verified faults or geothermal vents"><p class="micro">Experiment preview · downsampled 100 m grid · 23.8% apron / 52.2% &gt;2 km far-field</p></aside></div>"""
+    hero_html = f"""<div class="hero"><div><div class="eyebrow">ARCHIVED PRIOR H24-DKRN1 · Split-View D8 Knickpoint Routing + 300 m Kernel Regression · preregistered · negative</div><h2>Historical research lane.<br>Stopped honestly on pooled holdout.</h2><p class="lead">Exact sparse triangular D8 routing <code>(I − P<sup>T</sup>)A = 1</code> across 12.28 M cells extracted Flint's-law stream-power knickpoints and thalweg dog-legs. In the local <strong>HOLDOUT-DTI</strong> receipt (<code>{e(score["evaluator_version"])}</code>, 60,988 withheld positives; pooled 95% CI [{lo:.5f}, {hi:.5f}]), the <code>NE_LidarGapHeavy</code> fold component was <strong>0.21308</strong> versus the DPRF1 component <strong>0.21227</strong>, and the LiDAR-free 47-channel arm was <strong>0.15072</strong>; the archived DKRN1 pooled value <strong>0.15525</strong> trailed the recorded DPRF1 <strong>0.16379</strong>. It retained 75.68% 3-px dot overlap with DPRF1 via Head B and exposed valley wash-road C2ST correlation (AUC 0.5773). Logged, verified, not retuned.</p>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">Download DKRN1 research GeoTIFF (-zeros)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="executive-summary.html#dkrn1">Executive summary &amp; 9-site 2026-10-26 audit →</a></div><p class="micro">{dl["pixel_count"]:,} binary dots · strict whole-array [0,1] PASS · SHA-256 <span class="hash">{e(digest)}</span> · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><p class="micro"><span class="badge blue">Format [0,1] PASS</span> <span class="badge blue">NE LiDAR-Gap Win 0.21308</span> <span class="badge danger">Pooled &amp; Parent-Overlap FAIL vs DPRF1</span> <span class="badge gray">No slot used</span></p></div><aside class="card visual" aria-label="H24-DKRN1 holdout result and raster preview"><div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Not a leaderboard score</span></div><div class="result-number">{score["dti"]:.5f}</div><p>95% CI [{lo:.5f}, {hi:.5f}] · <code>{e(score["evaluator_version"])}</code> · 60,988 withheld · HeadA47 {arms["arm2_head_a_kernel47_ablation"]["dti"]:.5f} · OOF-d3 {arms["oof_multiphysics_hgb_d3_baseline"]["dti"]:.5f}</p><img class="raster-preview" src="assets/dkrn1-preview.png" alt="Downsampled map of DKRN1 experimental fault dots, not verified faults or geothermal vents"><p class="micro">Experiment preview · downsampled 100 m grid · 23.8% apron / 52.2% &gt;2 km far-field</p></aside></div>"""
 
     fail_html = '<span class="fail">FAIL</span>'
     gate_rows = "".join(
@@ -2014,6 +2032,17 @@ def dkrn1_packet(root):
         f"<tr><td>{e(f['fold'])}</td><td>{f['dti']:.5f}</td><td>{int(f['n_truth']):,}</td><td>{int(f['n_emitted']):,}</td></tr>"
         for f in score["folds"]
     )
+    dkrn_verdict_display = {
+        "GEMSDOE24": "DOWNLOAD research only; DPRF1/DKRN1 are local holdout packets and not submission-authorized.",
+        "GEMSDOE25": "DO_NOT_SUBMIT; historical/reference or failed confirmation.",
+        "GEMSDOE27": "DO_NOT_SUBMIT; historical owner report and no resubmission.",
+        "GEMSDOE28": "DO_NOT_SUBMIT; local comparison negative.",
+        "GEMSDOE30": "DO_NOT_SUBMIT; historical/reference and format hazards are retained.",
+        "GEMSDOE31": "DO_NOT_SUBMIT; catalogue-proximal or selector-ineligible sibling.",
+        "GEMSDOE32": "DO_NOT_SUBMIT; B2 subset geometry is historical/prohibited and hidden-label causality is unproven.",
+        "GEMSDOE33": "DO_NOT_SUBMIT; historical analog/local transfer negative.",
+        "GEMSDOE36": "DO_NOT_SUBMIT; copied/retired historical pipeline.",
+    }
     nine_rows = []
     for srow in nine["sites"]:
         sname = srow["site"]
@@ -2034,7 +2063,7 @@ def dkrn1_packet(root):
             f"<td><code>{e(srow['historical_best_submission'])}</code><br>UNVERIFIED-OWNER-REPORT: {srow['historical_best_owner_reported_score']:.4f}</td>"
             f"<td><code>{e(sfile)}</code><br><small>SHA {e(ssha)}… · [0,1]={'PASS' if strict_ok else 'FAIL (NaN outside)'}</small></td>"
             f"<td>{e(ap_str)}</td>"
-            f"<td>{e(srow['executive_verdict'])}</td></tr>"
+            f"<td>{e(dkrn_verdict_display[sname])}</td></tr>"
         )
     nine_table_html = (
         "<h3>Fresh 2026-10-26 Nine-Site Forensic Audit (all 8 sibling HEAD TIFFs SHA-verified)</h3>"
@@ -2046,13 +2075,13 @@ def dkrn1_packet(root):
         + "</tbody></table></div>"
     )
 
-    exec_html = f"""<section id="dkrn1"><h2>H24-DKRN1 — Split-View D8-Knickpoint + 300 m Kernel Regression (2026-10-26) · NOT OK to submit</h2>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">Download DKRN1 research GeoTIFF (audit only — do not submit)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="downloads/{e(dl["nan_file"])}" download>NaN-outside twin</a><a class="button" href="data/dkrn1_run_card.json" download>DKRN1 JSON run card</a><a class="button" href="data/nine_site_executive_summary_dkrn1_20261026.json" download>9-Site 2026-10-26 Audit JSON</a></div><p class="micro"><span class="hash">{e(name)}</span> · SHA-256 <span class="hash">{e(digest)}</span> · {dl["pixel_count"]:,} dots · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><div class="tablewrap" tabindex="0" role="region" aria-label="H24-DKRN1 per-fold holdout results"><table><thead><tr><th>Fold</th><th>DKRN1 HOLDOUT-DTI</th><th>Withheld positives</th><th>Emitted dots</th></tr></thead><tbody>{fold_rows}</tbody></table></div><p>Three-arm same-evaluator readout (<code>{e(score["evaluator_version"])}</code>, 60,988 withheld): Arm 1 <code>H24-DKRN1</code> <strong>{score["dti"]:.5f}</strong>; Arm 2 pure gap-native 47-channel kernel regressor (0 raw LiDAR amplitude channels) <strong>{arms["arm2_head_a_kernel47_ablation"]["dti"]:.5f}</strong> (paired Δ Head B addition {p_ha["paired_delta_dti"]:+.5f} [{pha_lo:+.5f}, {pha_hi:+.5f}]); Arm 3 DPRF1 replay <strong>{arms["arm3_dprf1_52ch_replay"]["dti"]:.5f}</strong>; reconstructed <code>oof_multiphysics_hgb_d3</code> <strong>{arms["oof_multiphysics_hgb_d3_baseline"]["dti"]:.5f}</strong>. Distance profile: 0.0% ≤200 m, {100 * dist["frac_2_to_9px_apron"]:.1f}% apron, {100 * dist["frac_gt_20px_farfield"]:.1f}% &gt;2 km far-field (median {dist["median_dist_px"]:.1f} px; vs B2 overlap {100 * nov["dot_overlap_within_3px_vs_b2"]:.2f}% ≤ 70%).</p>{nine_table_html}<h3>Independent selector screen (<code>gems-selector-v2-literal-quota-fail-closed</code>)</h3><div class="tablewrap" tabindex="0" role="region" aria-label="H24-DKRN1 independent selector gates"><table><thead><tr><th>Gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div></section>"""
+    exec_html = f"""<section id="dkrn1"><h2>ARCHIVED PRIOR H24-DKRN1 — Split-View D8-Knickpoint + 300 m Kernel Regression (2026-10-26) · NOT OK to submit</h2>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">Download DKRN1 research GeoTIFF (audit only — do not submit)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="downloads/{e(dl["nan_file"])}" download>NaN-outside twin</a><a class="button" href="data/dkrn1_run_card.json" download>DKRN1 JSON run card</a><a class="button" href="data/nine_site_executive_summary_dkrn1_20261026.json" download>9-Site 2026-10-26 Audit JSON</a></div><p class="micro"><span class="hash">{e(name)}</span> · SHA-256 <span class="hash">{e(digest)}</span> · {dl["pixel_count"]:,} dots · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><div class="tablewrap" tabindex="0" role="region" aria-label="H24-DKRN1 per-fold holdout results"><table><thead><tr><th>Fold</th><th>DKRN1 HOLDOUT-DTI</th><th>Withheld positives</th><th>Emitted dots</th></tr></thead><tbody>{fold_rows}</tbody></table></div><p>Three-arm same-evaluator readout (<code>{e(score["evaluator_version"])}</code>, 60,988 withheld): Arm 1 <code>H24-DKRN1</code> <strong>{score["dti"]:.5f}</strong>; Arm 2 pure gap-native 47-channel kernel regressor (0 raw LiDAR amplitude channels) <strong>{arms["arm2_head_a_kernel47_ablation"]["dti"]:.5f}</strong> (paired Δ Head B addition {p_ha["paired_delta_dti"]:+.5f} [{pha_lo:+.5f}, {pha_hi:+.5f}]); Arm 3 DPRF1 replay <strong>{arms["arm3_dprf1_52ch_replay"]["dti"]:.5f}</strong>; reconstructed <code>oof_multiphysics_hgb_d3</code> <strong>{arms["oof_multiphysics_hgb_d3_baseline"]["dti"]:.5f}</strong>. Distance profile: 0.0% ≤200 m, {100 * dist["frac_2_to_9px_apron"]:.1f}% apron, {100 * dist["frac_gt_20px_farfield"]:.1f}% &gt;2 km far-field (median {dist["median_dist_px"]:.1f} px; vs B2 overlap {100 * nov["dot_overlap_within_3px_vs_b2"]:.2f}% ≤ 70%).</p>{nine_table_html}<h3>Independent selector screen (<code>gems-selector-v2-literal-quota-fail-closed</code>)</h3><div class="tablewrap" tabindex="0" role="region" aria-label="H24-DKRN1 independent selector gates"><table><thead><tr><th>Gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div></section>"""
 
     canary_list = ", ".join(
         f"<code>{e(k)}</code>={v:.4f}"
         for k, v in card["leakage_canary"]["dkrn1_channel_pooled_aucs"].items()
     )
-    research_html = f"""<section><h2>H24-DKRN1 (2026-10-26) — Split-View D8-Knickpoint Routing &amp; 300 m Kernel Regression</h2><p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p><p><strong>Mechanism:</strong> {e(card["mechanism"])}</p><p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p><p>10 new physical channels solo leakage-canary AUCs (all ≤ 0.90): {canary_list}. Pooled HOLDOUT-DTI <strong>{score["dti"]:.5f}</strong> (95% CI [{lo:.5f}, {hi:.5f}]) on <code>{e(score["evaluator_version"])}</code> and <strong>{br["dti"]:.5f}</strong> ([{blo:.5f}, {bhi:.5f}]) on <code>segment-hide-recover-pooled-v1</code> (3.0 km collar); verdict <code>{e(card["verdict"])}</code>. Preregistered at commit <code>{e(card["preregistration_commit"][:12])}</code> in <code>knowledge/27_preregistered_DKRN1_2026-10-26.md</code>; full post-mortem in <code>knowledge/28_DKRN1_findings_and_9site_executive_summary_2026-10-26.md</code>.</p><p><strong>Three durable scientific lessons:</strong> (1) exact topological D8 drainage-knickpoint routing genuinely improves recovery inside the 31.8% LiDAR gap (<code>NE_LidarGapHeavy</code> <strong>0.21308 &gt; 0.21227</strong>; LiDAR-free 47-ch kernel regressor <strong>0.15072</strong> beats GVC1 0.14876, TRSG1 0.14644, CRP1 0.14494, PAIR1 0.12711); (2) keeping a ≥50%-weighted full-stack DPRF1 Head B inside the 68.2% LiDAR zone still yields 75.68% 3-px dot overlap (&gt;70%), proving any future unique lane must exclude the DPRF1 head completely (like HeadA47 or TRSG1); (3) unresidualized D8 drainage-wash allocation (<code>m_hydro</code>, 28% share) correlates with valley-floor wash roads/survey block 2 (C2ST AUC 0.5773, fold 2 AUC 0.6632), so future hydrologic lanes must residualize all D8 channel operators and regime gates against <code>road_m</code>/<code>claim_m</code>/blocks.</p></section>"""
+    research_html = f"""<section><h2>ARCHIVED PRIOR H24-DKRN1 (2026-10-26) — Split-View D8-Knickpoint Routing &amp; 300 m Kernel Regression</h2><p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p><p><strong>Mechanism:</strong> {e(card["mechanism"])}</p><p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p><p>10 new physical channels solo leakage-canary AUCs (all ≤ 0.90): {canary_list}. Pooled HOLDOUT-DTI <strong>{score["dti"]:.5f}</strong> (95% CI [{lo:.5f}, {hi:.5f}]) on <code>{e(score["evaluator_version"])}</code> and <strong>{br["dti"]:.5f}</strong> ([{blo:.5f}, {bhi:.5f}]) on <code>segment-hide-recover-pooled-v1</code> (3.0 km collar); verdict <code>{e(card["verdict"])}</code>. Preregistered at commit <code>{e(card["preregistration_commit"][:12])}</code> in <code>knowledge/27_preregistered_DKRN1_2026-10-26.md</code>; full post-mortem in <code>knowledge/28_DKRN1_findings_and_9site_executive_summary_2026-10-26.md</code>.</p><p><strong>Three durable scientific lessons:</strong> (1) in this local holdout, exact topological D8 drainage-knickpoint routing had higher recovery inside the 31.8% LiDAR gap (<code>NE_LidarGapHeavy</code> <strong>0.21308 &gt; 0.21227</strong>; LiDAR-free 47-ch kernel regressor <strong>0.15072</strong> beats GVC1 0.14876, TRSG1 0.14644, CRP1 0.14494, PAIR1 0.12711); (2) keeping a ≥50%-weighted full-stack DPRF1 Head B inside the 68.2% LiDAR zone still yields 75.68% 3-px dot overlap (&gt;70%), so this blend fails the current uniqueness gate; a future unique lane would need to exclude the DPRF1 head or otherwise prove separation; (3) unresidualized D8 drainage-wash allocation (<code>m_hydro</code>, 28% share) correlates with valley-floor wash roads/survey block 2 (C2ST AUC 0.5773, fold 2 AUC 0.6632), so future hydrologic lanes must residualize all D8 channel operators and regime gates against <code>road_m</code>/<code>claim_m</code>/blocks.</p></section>"""
     return hero_html, exec_html, research_html
 
 
