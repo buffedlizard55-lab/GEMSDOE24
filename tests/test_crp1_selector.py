@@ -206,3 +206,74 @@ def test_nonfinite_performance_and_negative_experiment_count_fail_named_gates(
     card["experiments_run"] = -1
     result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", card)
     assert result["gates"]["budget_and_no_slot_spent"] is False
+
+
+def test_malformed_numeric_evidence_cannot_pass_individual_gates(tmp_path, monkeypatch):
+    """A negative overall verdict must not conceal an incorrectly green subgate."""
+    cases = {
+        "g2_leakage_canary": [
+            ("leakage_canary.worst_polarity_extremity", v)
+            for v in ("0.71", True, float("nan"), float("inf"))
+        ],
+        "g3_holdout_beats_recorded_best_and_paired_baseline": [
+            ("paired_vs_baseline.ci95", v)
+            for v in ([0.02, 0.01], [0.01], [0.01, float("nan")], [True, 1], ["0.01", 1])
+        ]
+        + [("holdout.n_withheld_positive_pixels", 60988.5)],
+        "g4_registry_novelty": [
+            (f"novelty.{field}", v)
+            for field in (
+                "surface.max_abs_rank_correlation",
+                "final_dots.max_abs_rank_correlation",
+                "final_dots.method_lane_max_dot_overlap",
+                "peers_final.max_dot_overlap_within_3px",
+            )
+            for v in (-0.1, float("-inf"), float("nan"), "0.4", False, 10**400)
+        ],
+        "budget_and_no_slot_spent": [("submission_slots_used", v) for v in (0.5, "0", False)],
+    }
+    for gate, mutations in cases.items():
+        for path, value in mutations:
+            card = _passing_card(tmp_path, monkeypatch)
+            target = card
+            parts = path.split(".")
+            for key in parts[:-1]:
+                target = target[key]
+            target[parts[-1]] = value
+            result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", card)
+            assert result["gates"][gate] is False, (path, value)
+            assert result["recorded_scientific_screen_passed"] is False
+            assert result["ok_to_submit"] is False
+
+
+def test_non_object_gate_sections_return_negative_instead_of_crashing(tmp_path, monkeypatch):
+    for field in (
+        "leakage_canary",
+        "holdout",
+        "paired_vs_current_best",
+        "novelty",
+        "c2st_exact_file",
+    ):
+        card = _passing_card(tmp_path, monkeypatch)
+        card[field] = []
+        result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", card)
+        assert result["recorded_scientific_screen_passed"] is False
+        assert result["ok_to_submit"] is False
+
+
+def test_review_notice_and_no_unjustified_cross_site_superiority():
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    for name in (
+        "index.html",
+        "executive-summary.html",
+        "docs/index.html",
+        "docs/executive-summary.html",
+    ):
+        html = (root / name).read_text()
+        assert "Current review: no submission-authorized TIFF." in html
+        assert "review-20261026.md" in html
+        assert "STRONGEST UNSCORED UNIQUE CANDIDATE ACROSS ALL 9 SITES" not in html
+        assert "Pixel-level distance forensics proved" not in html
+        assert "TNR1 0.12352" not in html

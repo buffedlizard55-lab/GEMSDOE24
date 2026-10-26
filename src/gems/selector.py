@@ -38,6 +38,20 @@ MAX_NOTE_CHARS = 140
 MAX_EXPERIMENTS = 3
 
 
+def _number(value: Any, lower: float, upper: float) -> bool:
+    """JSON numbers only: reject booleans, coercible strings and nonfinite values."""
+    return type(value) in (int, float) and lower <= value <= upper and math.isfinite(value)
+
+
+def _positive_interval(value: Any) -> bool:
+    return (
+        isinstance(value, list)
+        and len(value) == 2
+        and all(_number(v, 0, 1) for v in value)
+        and 0 < value[0] <= value[1]
+    )
+
+
 def _strict_ok(checks: dict[str, Any]) -> bool:
     try:
         return bool(
@@ -106,48 +120,42 @@ def verify_selector(
     # --- G2: leakage canaries -------------------------------------------------
     try:
         canary = run_card["leakage_canary"]
-        worst = float(canary["worst_polarity_extremity"])
-        if canary.get("passed") is True and math.isfinite(worst) and 0.5 <= worst <= 0.90:
+        worst = canary["worst_polarity_extremity"]
+        if canary.get("passed") is True and _number(worst, 0.5, 0.90):
             gates["g2_leakage_canary"] = True
         else:
             fail("g2_leakage_canary", f"passed={canary.get('passed')}, worst extremity={worst}")
-    except (KeyError, TypeError, ValueError):
+    except (KeyError, TypeError, ValueError, AttributeError):
         fail("g2_leakage_canary", "canary evidence missing or malformed")
 
     # --- G3: holdout win --------------------------------------------------------
     try:
         holdout = run_card["holdout"]
         paired = run_card["paired_vs_baseline"]
-        dti = float(holdout["dti"])
-        ci_lo = float(paired["ci95"][0])
-        n_pos = int(holdout["n_withheld_positive_pixels"])
+        dti = holdout["dti"]
+        ci_lo = paired["ci95"][0]
+        n_pos = holdout["n_withheld_positive_pixels"]
         ok = (
-            type(holdout.get("dti")) in (float, int)
+            _number(dti, 0, 1)
             and holdout.get("label") == "HOLDOUT-DTI"
             and holdout.get("evaluator_version") == RECORDED_BEST_EVALUATOR
             and math.isfinite(dti)
             and RECORDED_BEST_DTI < dti <= 1
-            and math.isfinite(ci_lo)
-            and 0 < ci_lo <= 1
+            and _positive_interval(paired["ci95"])
+            and type(n_pos) is int
             and n_pos == 60988
             and run_card.get("baseline_reproduced") is True
         )
         current_pair = run_card.get("paired_vs_current_best", {})
         current_ci = current_pair.get("ci95", [])
         ok = ok and (
-            current_pair.get("baseline_dti") == RECORDED_BEST_DTI
+            _number(current_pair.get("baseline_dti"), 0, 1)
+            and current_pair.get("baseline_dti") == RECORDED_BEST_DTI
             and current_pair.get("evaluator_version") == RECORDED_BEST_EVALUATOR
+            and type(current_pair.get("n_withheld_positive_pixels")) is int
             and current_pair.get("n_withheld_positive_pixels") == 60988
             and current_pair.get("baseline_replayed") is True
-            and isinstance(current_ci, list)
-            and len(current_ci) == 2
-            and all(
-                isinstance(value, (float, int))
-                and not isinstance(value, bool)
-                and math.isfinite(value)
-                for value in current_ci
-            )
-            and 0 < current_ci[0] <= current_ci[1] <= 1
+            and _positive_interval(current_ci)
         )
         if ok:
             gates["g3_holdout_beats_recorded_best_and_paired_baseline"] = True
@@ -156,22 +164,22 @@ def verify_selector(
                 "g3_holdout_beats_recorded_best_and_paired_baseline",
                 f"dti={dti} vs recorded best {RECORDED_BEST_DTI}, paired CI lower={ci_lo}",
             )
-    except (KeyError, TypeError, ValueError, IndexError):
+    except (KeyError, TypeError, ValueError, IndexError, AttributeError):
         fail("g3_holdout_beats_recorded_best_and_paired_baseline", "holdout evidence malformed")
 
     # --- G4: registry novelty (surface + final dots) ---------------------------
     try:
         nov = run_card["novelty"]
-        surf_rho = float(nov["surface"]["max_abs_rank_correlation"])
+        surf_rho = nov["surface"]["max_abs_rank_correlation"]
         fin = nov["final_dots"]
-        fin_rho = float(fin["max_abs_rank_correlation"])
-        overlap = float(fin["method_lane_max_dot_overlap"])
-        peer_overlap = float(nov["peers_final"]["max_dot_overlap_within_3px"])
+        fin_rho = fin["max_abs_rank_correlation"]
+        overlap = fin["method_lane_max_dot_overlap"]
+        peer_overlap = nov["peers_final"]["max_dot_overlap_within_3px"]
         ok = (
-            surf_rho <= MAX_RANK_CORRELATION
-            and fin_rho <= MAX_RANK_CORRELATION
-            and overlap <= MAX_DOT_OVERLAP
-            and peer_overlap <= MAX_DOT_OVERLAP
+            _number(surf_rho, 0, MAX_RANK_CORRELATION)
+            and _number(fin_rho, 0, MAX_RANK_CORRELATION)
+            and _number(overlap, 0, MAX_DOT_OVERLAP)
+            and _number(peer_overlap, 0, MAX_DOT_OVERLAP)
             and fin.get("method_lane_passed") is True
             and nov["peers_final"].get("passed") is True
             and _literal_novelty_passed(run_card)
@@ -184,7 +192,7 @@ def verify_selector(
                 f"surface|rho|={surf_rho}, final|rho|={fin_rho}, "
                 f"method overlap={overlap}, peer overlap={peer_overlap}",
             )
-    except (KeyError, TypeError, ValueError):
+    except (KeyError, TypeError, ValueError, AttributeError):
         fail("g4_registry_novelty", "novelty evidence missing or malformed")
 
     # --- G5: exact-file C2ST nuisance audit --------------------------------------
@@ -208,12 +216,13 @@ def verify_selector(
         if (
             type(run_card["experiments_run"]) is int
             and 1 <= run_card["experiments_run"] <= MAX_EXPERIMENTS
-            and int(run_card["submission_slots_used"]) == 0
+            and type(run_card["submission_slots_used"]) is int
+            and run_card["submission_slots_used"] == 0
         ):
             gates["budget_and_no_slot_spent"] = True
         else:
             fail("budget_and_no_slot_spent", "experiment budget exceeded or slot already spent")
-    except (KeyError, TypeError, ValueError):
+    except (KeyError, TypeError, ValueError, AttributeError):
         fail("budget_and_no_slot_spent", "budget evidence missing or malformed")
 
     recorded_scientific_screen_passed = bool(gates) and all(gates.values())

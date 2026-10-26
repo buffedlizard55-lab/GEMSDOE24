@@ -1,55 +1,23 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Current continuation review — 2026-10-26: DOWNLOAD YES / SUBMIT NO
+## Current continuation review — 2026-10-26
 
-**No new submit-ready TIFF was achieved in this continuation. No new geological
-experiment or slot was used.** The existing DPRF1 file below was freshly reopened,
-hashed and validated, not newly generated. Its recorded **HOLDOUT-DTI is 0.16379**,
-95% CI **[0.15045, 0.17739]**, `gems-segment-pooled-v1`, **60,988 withheld positives**.
-It is the **local recorded point-best**, not a verified winner across sibling
-sites or a leaderboard forecast. Literal all-entry uniqueness fails; independent
-replay and current quota verification are missing. Historical claims of “unique
-across all 9 sites” below must not be read as satisfying those gates.
+Concurrent PR #35 review and exact-file utility are also preserved: [review](knowledge/22_current_best_review_2026-10-26.md), [receipt](docs/data/current_best_review.json), `python scripts/review_current_best.py`.
 
-[**Fresh exact-file review JSON**](docs/data/current_best_review.json) ·
-[Review, ranked deferred hypotheses, irregularities and next work](knowledge/22_current_best_review_2026-10-26.md) ·
-[Executive guide and nine-site comparison](docs/executive-summary.html#nine-site-executive-summary)
+**No new experiment or TIFF in this review. DOWNLOAD existing research: YES / SUBMIT: NO.**
+Read the [review and next-step queue](docs/review-20261026.md), [owner brief](knowledge/owner_brief_2026-10-26.md), and [prompt delta](knowledge/owner_brief_2026-10-26_delta.md) at every session start. The full inherited prompt remains embedded below.
+The assigned method paragraph is still missing; stopped lanes must not be retuned.
+Fresh source checks found all nine repositories changed since registry pins; this is not a new raster or score audit.
+The following historical point-best section is not a new cross-site promotion decision.
 
-Recheck autonomously without training or uploading:
-`python scripts/review_current_best.py` (after installing project dependencies).
-Read the [current owner requirements](knowledge/owner_brief_2026-10-26.md),
-[prompt delta](knowledge/owner_brief_2026-10-26_delta.md) and this decision at each
-session start. These preserved briefs remain the project starting point; this
-review does not replace or weaken the original prompt. Maximize P(Win); Own the
-Outcome means reporting failed gates rather than manufacturing a ready label.
+## Concurrent VENT result — QUARANTINED / DO NOT SUBMIT
 
-
-## Latest 2026-10-26 Experiment: `H24-VENT` — Vent-Bridged Quaternary Corridor — DOWNLOAD YES / SUBMIT NO (NEGATIVE)
-
-[**Download H24-VENT GeoTIFF (zeros outside, strict [0,1])**](docs/downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif) ·
-[NaN-outside twin](docs/downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-nan.tif) ·
-[Single-GeoTIFF ZIP](docs/downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.zip) ·
-[JSON run card](evidence/vent_run_card_20261026.json) ·
-[Selector receipt](evidence/vent_selector_20261026.json) ·
-[Preregistration](knowledge/22_preregistered_VENT_2026-10-26.md) ·
-[PhD Analysis: Why GEMSDOE32 0.2778 Leads & How to Beat It](knowledge/22_phd_analysis_GEMSDOE32_and_9site_2026-10-26.md) ·
-[Executive guide](docs/executive-summary.html).
-
-**QUARANTINED: DOWNLOAD FOR RESEARCH ONLY / SUBMIT NO.** The concurrent
-VENT code contained dummy C2ST and plausible registry-statistic fallbacks on audit
-failure. Its scientific gate PASS claims are **untrusted**, not validation.
-Historical receipts are preserved unchanged. The entrypoint now refuses execution
-except exact-file verification; original source is archived as non-executable text.
-The archived **HOLDOUT-DTI 0.02403**, 95% CI **[0.01777, 0.03054]**,
-`gems-segment-pooled-v1`, **60,988 withheld positives**, is recorded, not
-independently replayed. No promotion or slot is authorized.
-
-- Name: `gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif`
-- SHA-256: `1c8399f15fbc58f6006e49542af58ae14a29f7e07243ac7797111f008c67cf8b`
-- Short comment (119 chars): `GEMS24 VENT | vent-spring-lineament bridge | id a6e191937e80 | HOLDOUT-DTI 0.02403 | research; DO NOT SUBMIT`
-- Verified: `.venv/bin/python scripts/run_vent_lane.py --verify-recorded` · `.venv/bin/python -m pytest -q`
-
-> Concurrent VENT research is retained, not a new experiment by this review. The apparent H33-B2 leaderboard improvement is an unverified causal explanation; see the current review for scope and correct metric interpretation.
+The parallel PR #34 artifacts and historical source are preserved, but its runner
+contains explicit fabricated fallback C2ST and novelty values. Its scientific gate
+claims are **untrusted**, not validated PASS. See [integrity review](docs/review-20261026.md)
+and `archive/legacy/vent/run_vent_lane.py.txt`. The active `scripts/run_vent_lane.py`
+now only verifies existing file hash/format with `--verify-recorded`; no rerun is allowed.
+No VENT result is used here to justify promotion or a leaderboard forecast.
 
 ## Latest 2026-10-26 Point-Best Candidate: `H24-DPRF1` — 10/10 Competing-Method Gates PASS · Selector v2: `DO_NOT_SUBMIT`
 
@@ -66,7 +34,7 @@ independently replayed. No promotion or slot is authorized.
 **DOWNLOAD: YES · SUBMIT: NO (`DO_NOT_SUBMIT` under `gems-selector-v2-literal-quota-fail-closed`, zero human-inspector fallback).**
 Independently generated across 100% of the active footprint (`0` prior submission pixels read or copied; `0%` in-sample predictions) by fusing 30 scale-separated base channels + 18 label-free OpenEI GDR INGENIOUS hydrothermal/tilt/lineament channels + 4 modality-aware `SAHG1` conduit channels (`52` channels total) with **Stratified `d_vis >= 300 m` negative sampling**, **selective 9-channel non-topographic nuisance residualization**, **3-tier relief-conditioned LiDAR-gap calibration**, **Dual-Partition Stitched-OOF** (`0.5 * Quadrant_OOF + 0.5 * Rotated45_Diamond_OOF`), **Visible-Catalogue Apron Quantile Debiasing**, and **Two-Regime 300 m Submodular Allocation** (`37,654` binary `{0.0, 1.0}` dots).
 - **Highest `HOLDOUT-DTI` in `GEMSDOE24` on BOTH evaluators:** **`0.16379`** (95% CI `[0.15045, 0.17739]`, `gems-segment-pooled-v1`, `60,988` withheld positives, **winning `4/4` spatial folds** over `oof_multiphysics_hgb_d3` `0.13000` by `+0.03380`, over `B1: OOF-Base-Submod` `0.13900` by `+0.02479`, over `B0: OOF-H24-Ridge` `0.14179` by `+0.02200`, and beating `CUP1` `0.15038`, `GVC1` `0.14876`, `CRP1` `0.13747`, `TNR1` `0.13219`, `RSHG1` `0.12899`, and `FUSE-HCW` `0.12372`; `NE_LidarGapHeavy` **`0.21227`**; `SW` **`0.12768`** vs `RSHG1` `0.07993`; `SE` **`0.17442`**) and **`0.16290`** (95% CI `[0.14449, 0.18118]`) on the `3.0 km` `segment-hide-recover-pooled-v1` bridge evaluator.
-- **Cures the `0.0859` `GVC1` in-sample apron collapse & passes ALL competing-method novelty/C2ST gates:** Cuts `200–900 m` near-catalogue apron dots from `70.4%` (`GVC1`) to **`22.3%`**, restores **`52.3%`** `> 2 km` far-field discovery (`0.0%` $\le 200\text{ m}$), passes **all 57 competing method rasters** (`max 3-px dot overlap = 55.78% <= 70%`; `36.13%` vs `TNR1`, `33.98%` vs `CRP1`, `33.81%` vs `CUP1`, `<= 49.12%` vs all 9 focus-site champions; `max |ρ| = 0.3468 <= 0.90`) and **all 83 peer blobs** (`54.94% <= 70%`), passes **52/52 two-polarity leakage canaries**, and passes **strict exact-file C2ST** (`AUC = 0.5247 < 0.55`, Holm *p* = `0.100`).
+- **Changes GVC1 apron allocation & passes the recorded competing-method novelty/C2ST checks (not the literal all-entry gate):** Cuts `200–900 m` near-catalogue apron dots from `70.4%` (`GVC1`) to **`22.3%`**, restores **`52.3%`** `> 2 km` far-field dot allocation (`0.0%` $\le 200\text{ m}$), passes **all 57 competing method rasters** (`max 3-px dot overlap = 55.78% <= 70%`; `36.13%` vs `TNR1`, `33.98%` vs `CRP1`, `33.81%` vs `CUP1`, `<= 49.12%` vs all 9 focus-site champions; `max |ρ| = 0.3468 <= 0.90`) and **all 83 peer blobs** (`54.94% <= 70%`), passes **52/52 two-polarity leakage canaries**, and passes **strict exact-file C2ST** (`AUC = 0.5247 < 0.55`, Holm *p* = `0.100`).
 - **Why `gems-selector-v2-literal-quota-fail-closed` remains `DO_NOT_SUBMIT`:** Under the current literal-control + unknown-quota policy (`src/gems/selector.py`), the synthetic spacing-5 calibration lattice (`registry-039`, `99.87%` footprint coverage at 3 px), unknown live DrivenData weekly quota, and independent replay certificate remain fail-closed, so a literal-all-entry **gate-passing unique, submit-ready** release has **not** been achieved without a prospective lattice-exemption & quota receipt.
 - Name: `gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`
 - SHA-256: `c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1`
@@ -76,9 +44,9 @@ Independently generated across 100% of the active footprint (`0` prior submissio
 
 All prompt leaderboard numbers below are `UNVERIFIED-OWNER-REPORT` (never `ORGANIZER-CONFIRMED`; see [2026-10-26 prompt delta](knowledge/owner_brief_2026-10-26_delta.md) and [machine-verified 9-site receipt](evidence/nine_site_executive_summary_20261026.json)):
 
-| Focus Site | Historical Best (`UNVERIFIED-OWNER-REPORT`) | Inspected Unique `2026-10-25 / 26` Artifact | Prompt Live Score or Local Holdout | `2–9 px` Apron / `>20 px` Far-Field | `H24-DPRF1` 3-px Overlap | Clear Executive Verdict |
+| Focus Site | Historical Best (`UNVERIFIED-OWNER-REPORT`) | Historically Inspected `2026-10-25 / 26` Artifact | Prompt Live Score or Local Holdout | `2–9 px` Apron / `>20 px` Far-Field | `H24-DPRF1` 3-px Overlap | Clear Executive Verdict |
 |---|---|---|---|---|---|---|
-| **[GEMSDOE24](https://buffedlizard55-lab.github.io/GEMSDOE24/)** | `h25-1-dotted-h19-5-d1-5` (`0.2477`, H19-5 thinned) | **`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`** *(prior `GVC1`: `0.0859`)* | **`HOLDOUT-DTI 0.16379`** (`4/4` folds won; 57/57 method novelty PASS) | **`22.3%` / `52.3%`** *(vs `GVC1` `70.4% / 8.5%`)* | *Self* (`34.8%` vs `GVC1`) | **#1 UNSCORED UNIQUE CANDIDATE ACROSS ALL 9 SITES** (`DO_NOT_SUBMIT` under v2 literal lattice/quota hold) |
+| **[GEMSDOE24](https://buffedlizard55-lab.github.io/GEMSDOE24/)** | `h25-1-dotted-h19-5-d1-5` (`0.2477`, H19-5 thinned) | **`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif`** *(prior `GVC1`: `0.0859`)* | **`HOLDOUT-DTI 0.16379`** (`4/4` folds won; 57/57 method novelty PASS) | **`22.3%` / `52.3%`** *(vs `GVC1` `70.4% / 8.5%`)* | *Self* (`34.8%` vs `GVC1`) | **RECORDED LOCAL POINT-BEST; LITERAL UNIQUENESS FAILS** (`DO_NOT_SUBMIT` under v2 literal lattice/quota hold) |
 | **[GEMSDOE25](https://buffedlizard55-lab.github.io/GEMSDOE25/)** | `dotted-h19-5-d2-8` (`0.2600`, H19-5 thinned) | `gems25-h66-mgd-flank-sapd3-0-k3p5-20261025-da617550a0e9-zeros.tif` | `0.0742` live; confirm holdout `-0.00224` FAIL | `69.6%` / `3.0%` | `30.76%` | **DO NOT RESUBMIT** (already scored `0.0742`; apron collapse) |
 | **[GEMSDOE27](https://buffedlizard55-lab.github.io/GEMSDOE27/)** | `topo-gap-closure-t-v2-on-d1-5` (`0.2449`) | `gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite.tif` | **`0.2190` live** (Stitched-OOF + 300 m CELF) | `35.8%` / `44.3%` | `45.51%` | **BEST ALREADY-SCORED `2026-10-25` UNIQUE METHOD** (do not resubmit duplicate) |
 | **[GEMSDOE28](https://buffedlizard55-lab.github.io/GEMSDOE28/)** | `h36-1-rung30-blind-r1` (`0.2710`, H27-4 + 501 px) | `gems28-s18-mxtp-20261025-3e95505c011a-allfinite.tif` | `0.0217` live; holdout `-0.0879` FAIL | `20.0%` / `54.8%` | `5.65%` | **DO NOT SUBMIT** (failed holdout & already scored `0.0217`) |
@@ -524,7 +492,7 @@ Single-GeoTIFF ZIP [`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-z
 NaN-outside twin [`gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif`](docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif).
 Independently generated from 30 scale-separated base features + 18 OpenEI GDR INGENIOUS hydrothermal/tilt/lineament features + 4 modality-aware `SAHG1` conduit features using Stratified `d_vis >= 300 m` negative sampling, selective 9-channel non-topographic nuisance residualization, 3-tier relief-conditioned LiDAR-gap calibration, Dual-Partition Stitched-OOF (Quadrant + 45° Diamond, 0% in-sample pixels), apron quantile debiasing, and Two-Regime 300 m submodular allocation (`37,654` binary `{0.0, 1.0}` dots; zero copied submission pixels; strict `[0, 1]` all-finite PASS; 52/52 two-polarity leakage canaries PASS; exact-file C2ST **PASS** with AUC `0.5247` < 0.55, Holm *p* = `0.100`).
 Achieves the **highest HOLDOUT-DTI in `GEMSDOE24`** on both evaluators: `gems-segment-pooled-v1` = **0.16379** (95% CI **[0.15045, 0.17739]**, winning `4/4` spatial folds over `oof_multiphysics_hgb_d3` `0.13000` by `+0.03380` and over `B1: OOF-Base-Submod` `0.13900` by `+0.02479`, and beating `CUP1` `0.15038`, `GVC1` `0.14876`, `TRSG1` `0.14644`, `B0` `0.14179`, `CRP1` `0.13747`, `RSHG1` `0.12899`, `FUSE-HCW` `0.12372`, and `TNR1` `0.13219`) and `segment-hide-recover-pooled-v1` = **0.16290** (95% CI **[0.14449, 0.18118]**).
-Passes prospective novelty across **all 57 competing method rasters** (max 3-px dot overlap `0.5578` ≤ 0.70; `0.3613` vs `TNR1`, `0.3398` vs `CRP1`, `0.3381` vs `CUP1`, ≤ `0.4912` vs all 9 focus-site champions) and **all 83 peer blobs** (`0.5494` ≤ 0.70), and restores **52.3%** `> 2 km` far-field discovery (`22.3%` in `200–900 m` apron, curing `GVC1`'s `70.4%` in-sample apron collapse). Held at **`DO_NOT_SUBMIT`** under `gems-selector-v2-literal-quota-fail-closed` (`evidence/dprf1_selector_20261026.json`) due to the unseparated synthetic spacing-5 calibration lattice (`registry-039`), unknown live DrivenData quota, and replay certificate.
+Passes prospective novelty across **all 57 competing method rasters** (max 3-px dot overlap `0.5578` ≤ 0.70; `0.3613` vs `TNR1`, `0.3398` vs `CRP1`, `0.3381` vs `CUP1`, ≤ `0.4912` vs all 9 focus-site champions) and **all 83 peer blobs** (`0.5494` ≤ 0.70), and restores **52.3%** `> 2 km` far-field dot allocation (`22.3%` in `200–900 m` apron, versus `GVC1`'s `70.4%`; no hidden-score improvement established). Held at **`DO_NOT_SUBMIT`** under `gems-selector-v2-literal-quota-fail-closed` (`evidence/dprf1_selector_20261026.json`) due to the unseparated synthetic spacing-5 calibration lattice (`registry-039`), unknown live DrivenData quota, and replay certificate.
 [DPRF1 JSON run card](evidence/dprf1_run_card_20261026.json) · [DPRF1 Selector v2 JSON](evidence/dprf1_selector_20261026.json) · [9-Site Executive Summary JSON](evidence/nine_site_executive_summary_20261026.json) · [DPRF1 preregistration](knowledge/19_preregistered_DPRF1_2026-10-26.md) · [DPRF1 PhD synthesis & 9-site review](knowledge/20_DPRF1_findings_and_9site_executive_summary_2026-10-26.md)
 
 Orthogonal 2026-10-26 `H24-TRSG1` 44-channel Two-Regime Seismic-Geothermal Stitched-OOF GeoTIFF (**7/7 Technical Gates PASS · Selector v2: `DO_NOT_SUBMIT`**):
