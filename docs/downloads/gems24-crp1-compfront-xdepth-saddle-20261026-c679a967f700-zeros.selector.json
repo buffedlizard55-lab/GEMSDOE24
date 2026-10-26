@@ -1,0 +1,27 @@
+{
+  "selector_version": "gems-selector-v1",
+  "decided_utc": "2026-10-26T00:54:02.996994+00:00",
+  "artifact": "gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif",
+  "artifact_sha256": "f02859b3e881b942919deb267cad23673d6a6a1bc0148b2116ff1b706cba8978",
+  "human_inspection_used": false,
+  "gates": {
+    "artifact_hash_matches_run_card": true,
+    "artifact_name_matches_run_card": true,
+    "g1_format_strict_0_1": true,
+    "g2_leakage_canary": true,
+    "g3_holdout_beats_recorded_best_and_paired_baseline": false,
+    "g4_registry_novelty": false,
+    "g5_exact_file_c2st": true,
+    "note_at_most_140_chars": true,
+    "budget_and_no_slot_spent": true
+  },
+  "all_gates_passed": false,
+  "ok_to_submit": false,
+  "decision": "DO_NOT_SUBMIT",
+  "quota_status": "unknown_owner_must_confirm_on_submission_page",
+  "reasons": [
+    "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.13747112113439836 vs recorded best 0.14876289156979275, paired CI lower=-0.0024205517437371734",
+    "g4_registry_novelty: surface|rho|=0.5305606362661548, final|rho|=0.5878166547508024, method overlap=0.8070091723662585, peer overlap=0.8070091723662585"
+  ],
+  "scope": "Project scientific gates only; not an organizer score, acceptance guarantee, or quota check. The agent never uploads."
+}

@@ -1,0 +1,54 @@
+{
+  "session": "2026-10-26 H24-CRP1 (branch arena/12195834-gemsdoe24)",
+  "protocol_run_card": "evidence/crp1_run_card_20261026.json",
+  "hypothesis": "Compositional radiometric fronts + cross-depth TMI/up150 persistence + Hessian saddles with selective nuisance residualization detect catalogue-missing faults",
+  "mechanism": "Mobile-element balance fronts across concealed faults; basement persistence under upward continuation; step-over saddles; sparse binary emission with >2px catalogue clearance",
+  "named_non_fault_mimic": "Arkosic alluvium/lithologic contacts; magnetite-poor palaeochannel/remanence; pluvial shoreline saddle; flight-line seams",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "dti": 0.13747112113439836,
+    "ci95": [0.12400402422224979, 0.15151675390021224],
+    "n_withheld_positive_pixels": 60988,
+    "paired_vs_baseline": {"delta": 0.0074743231226003515, "ci95": [-0.0024205517437371734, 0.017931613801087425]},
+    "recorded_best": {"lane": "H24-GVC1", "dti": 0.14876289156979275}
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_max_abs_rank_correlation": 0.5305606362661548,
+    "final_max_abs_rank_correlation": 0.5878166547508024,
+    "final_max_method_overlap_within_3px": 0.8070091723662585,
+    "registry_entries_checked": "46 priority + 9 local extras + 83 peer blobs",
+    "duplicate_stop": true
+  },
+  "raster_sha256": "f02859b3e881b942919deb267cad23673d6a6a1bc0148b2116ff1b706cba8978",
+  "validator": "shared gems.submission.check_variants: format_valid, strict whole-array [0,1] PASS; exact bytes rechecked independently (1 band float32 EPSG:32611 3730x3292, finite everywhere, range 0.0-1.0, 37,722 positives in footprint, 0 outside)",
+  "submission_name": "gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif",
+  "note": "GEMS24 CRP1 | comp-front+xdepth+saddle | NEGATIVE gate stop; DO NOT SUBMIT | id c679a967f700",
+  "note_length": 92,
+  "selector": {"version": "gems-selector-v1", "decision": "DO_NOT_SUBMIT", "failed_gates": ["g3_holdout_beats_recorded_best_and_paired_baseline", "g4_registry_novelty"], "human_inspection_used": false},
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "experiments_run": 1,
+  "submission_slots_used": 0,
+  "organizer_confirmed_score": null,
+  "owner_reported_best_nine_sites": "GEMSDOE32 h33-h33-2-b2 0.2778 (OWNER-REPORTED, UNVERIFIED); full ledger registry/owner_reported_scores_2026-10-26.json; best file to submit today: NONE",
+  "review_passes": [
+    {"pass": 1, "result": "Preregistered (85744c1) before code; restored hash-pinned data; implemented crp1+selector; ran 1 experiment; generated unique TIF + selector verdict; site first-screen + executive summary rebuilt."},
+    {"pass": 2, "result": "Independent exact-byte range/grid check; --verify-recorded; schema-v2 preflight agrees DO_NOT_SUBMIT; comparator coverage forensics (14-27% at 3px, pigeonhole LB 0) confirm genuine convergence not space-filling artifact; fixed parallel-edit loss in build_site wiring; shallow-history test failure fixed by full fetch; merged parallel PR #28 cleanly."},
+    {"pass": 3, "result": "CI parity: 253 pytest passed; ruff check + format --check 123 files PASS; all recorded-lane verifiers PASS; node --check PASS; offline feeds PASS; 0 broken local links; live preview serves index/executive-summary/TIF with HTTP 200."}
+  ],
+  "limitations": [
+    "No organizer score, quota or portal acceptance can be known here; DrivenData never accessed",
+    "u8 rank caches make compositional channels monotone-rank constructs, not physical log-ratios",
+    "Holdout increment confounded: CRP1 vs baseline also differs by arc channels and residualization scope",
+    "GitHub REST rate limit exhausted mid-session; peer cache completed via codeload at pinned revisions",
+    "preflight schema v2 does not yet consume gems.selector receipts",
+    "knowledge/20_ prefix shared with parallel PR #28 review file (different filenames, both preserved)"
+  ],
+  "next_steps": [
+    "Prospectively decide how dense continuous registry rasters enter the 0.70 dot-overlap rule (never retroactively)",
+    "If assigned: valley-floor blind-fault or drainage-deflection lane with sparse-regime primary endpoint",
+    "Wire gems.selector receipts into gems.preflight; refresh versioned nine-site registry snapshot (keep old pins)"
+  ]
+}
