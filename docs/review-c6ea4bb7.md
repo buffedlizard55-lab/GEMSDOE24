@@ -74,10 +74,10 @@ cost more than truth credit. We cannot determine its hidden-label causal benefit
 prove geothermal vents, or forecast an improvement over the owner-reported result.
 Neither conflicting leaderboard-leader claim is organizer-confirmed.
 
-## Ranked prospective research — not executed or assigned
+## Research queue at initial review — updated for concurrent PAIR1
 
 Do not falsely relabel the previous review's unexecuted queue as newly discovered
-hypotheses. These three remain prospective; rank is qualitative expected benefit
+hypotheses. At initial review these three were prospective; rank is qualitative expected benefit
 versus implementation cost, **not a numerical score projection**. Novelty against
 all changed peer code remains unverified.
 
@@ -102,7 +102,12 @@ all changed peer code remains unverified.
    experiment-ready. A higher-resolution upgrade requires official USGS 3DEP,
    whose availability cannot be checked under this sandbox's host allowlist.
 
-No canary or new holdout was run: these are not promotion candidates. A future
+No canary or new holdout was run by this session: these are not promotion candidates.
+During integration, concurrent PR #44 added a negative PAIR1 paired-scarp experiment
+and research TIFF. Proposal 1 is therefore **no longer an untried lane**; do not rerun
+or retune it. See `knowledge/26_PAIR1_findings_and_9site_executive_2026-10-26.md`.
+Its subset-registry novelty claim is not a fresh literal all-entry audit by this session.
+The inventory snapshot predates that merge; it is deliberately not labeled live. A future
 assigned lane needs a preregistered current-best comparison and paired interval,
 whole-segment buffered hide-and-recover, visible-only catalogue features, every
 actual feature's two-polarity canary, surface novelty before placement and final-dot
