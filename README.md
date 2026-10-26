@@ -13,6 +13,8 @@
 - **Irregularities register (new IDs added):** [`registry/irregularities.json`](registry/irregularities.json)
 - **Official sources:** [problem description & metric](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) · [official rules PDF](https://docs.nlr.gov/docs/fy26osti/96647.pdf) (3 submissions/week; public vs private scoring; GenAI disclosure) · [live leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) · [reference solution `aebe92f`](https://github.com/drivendataorg/gems-prize-reference-solution)
 
+**Open defect (high):** `tests/test_site_build.py::test_contradictory_hunique_packet_is_quarantined_without_tiff_link` fails on `origin/main` as well as on this branch: the H-UNIQUE packet still says `ok_to_download: true` for `24gems-geothermal-surface-proximity-…-zeros.tif`. Treat that file as NOT OK TO SUBMIT until the packet is quarantined.
+
 **Next steps (not started):** (1) replace the catalogue-proxy holdout with an independent truth source before any further holdout claim; (2) obtain the uploaded file name/hash for the portal error; (3) decide whether ScienceBase 3DEP bulk tiles can be fetched through an allowed route; (4) include the GenAI disclosure in any submission narrative.
 
 ---
