@@ -45,8 +45,18 @@
       "format_valid": true,
       "single_band_float32": true,
       "crs": "EPSG:32611",
-      "shape": [3730, 3292],
-      "transform": [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0],
+      "shape": [
+        3730,
+        3292
+      ],
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ],
       "no_nan_inf_inside_footprint": true,
       "all_values_in_0_1": true,
       "format_scope_only": true,
@@ -93,5 +103,45 @@
     "No leaderboard score, live quota, or artifact-linked organizer receipt was obtained.",
     "Scientific holdout evidence was not independently replayed in this review.",
     "H-UNIQUE-03's reported 0.601827 value conflicts with its validator and preflight and is quarantined."
-  ]
+  ],
+  "post_merge_follow_up": {
+    "date": "2026-10-26",
+    "diagnosed_main_workflow_run": "40407836076",
+    "main_commit_reviewed": "a433b430b74b813a9118ebd4ec438b12cbc69f46",
+    "pytest_failure": {
+      "test": "tests/test_site_build.py::test_contradictory_hunique_packet_is_quarantined_without_tiff_link",
+      "root_cause": "The test asserted that the filename in docs/data/unique_download.json never appeared anywhere in generated pages. PR #56 added a distinct historical H-UNIQUE research raster to the collapsed portfolio inventory; the old test confused that permitted historical entry with a link to the separate oracle-leaking gapfill artifact.",
+      "correction": "Test now targets docs/data/unique_gapfill_quarantined_download.json, checks its TIFF is absent from generated pages, and checks the H-UNIQUE quarantine alert contains no TIFF link."
+    },
+    "current_download_audit_correction": {
+      "previously_audited": "DPRF1 (superseded point-best)",
+      "now_audited": "S3DEP1",
+      "exact_tiff": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
+      "sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "format_revalidation": "passed: hash, finite whole-array [0,1], CRS, shape, and template transform",
+      "selector": "DO_NOT_SUBMIT",
+      "score_status": "recorded HOLDOUT-DTI only; not independently replayed or organizer-confirmed"
+    },
+    "current_recorded_point_best": {
+      "lane": "H24-S3DEP1",
+      "label": "HOLDOUT-DTI",
+      "value": 0.16606,
+      "ci95": [
+        0.151858,
+        0.180339
+      ],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "submission_status": "DO_NOT_SUBMIT",
+      "blocker": "71.32% final-dot overlap with DKRN1 exceeds the 70% stop rule"
+    },
+    "follow_up_review_passes": [
+      "Reproduced and traced the main pytest failure without assuming its cause.",
+      "Scoped the test to the oracle-leaking gapfill TIFF and bound exact-file verification to current S3DEP1 metadata, run card, selector, and note.",
+      "Full suite: 455 passed; Ruff check and format passed (184 files); compileall, git diff --check, and scripts/verify_current_download.py passed."
+    ],
+    "no_new_tif_or_experiment": true,
+    "weekly_slots_used": 0,
+    "github_follow_up_check": "required after pushing the fix; not yet run"
+  }
 }

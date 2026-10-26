@@ -16,13 +16,13 @@ def test_current_download_is_format_valid_but_not_submit_ready():
     assert result["validator_output"]["format_valid"]
     assert result["ok_to_download"]
     assert not result["ok_to_submit"]
-    assert result["run_card"] == "evidence/dprf1_run_card_20261026.json"
+    assert result["run_card"] == "evidence/s3dep1_run_card_20261026.json"
     assert not result["submission_authorized"]
 
 
 def test_conflicting_hunique_promotion_claim_cannot_replace_current_download():
     result = verify_current_download(ROOT)
-    assert result["run_card"].startswith("evidence/dprf1_")
+    assert result["run_card"].startswith("evidence/s3dep1_")
     assert result["verdict"] == "negative"
     assert result["ok_to_submit"] is False
 
@@ -41,7 +41,7 @@ def test_conflicting_hunique_promotion_claim_cannot_replace_current_download():
 def test_current_download_rejects_inconsistent_card(tmp_path, change):
     for directory in ("docs/data", "docs/downloads", "data/bridge", "evidence"):
         shutil.copytree(ROOT / directory, tmp_path / directory)
-    path = tmp_path / "evidence/dprf1_run_card_20261026.json"
+    path = tmp_path / "evidence/s3dep1_run_card_20261026.json"
     card = json.loads(path.read_text())
     card.update(change)
     path.write_text(json.dumps(card))
