@@ -339,3 +339,24 @@ def test_source_holdout_requires_ci_evaluator_and_withheld_count(monkeypatch):
     assert summary.source_holdout(27, {})["dti"] is None
     assert summary.source_holdout(30, {})["dti"] is None
     assert summary.source_holdout(31, {})["dti"] is None
+
+
+def test_late_concurrent_files_are_separate_preserved_negative_downloads():
+    import json
+
+    packet = json.loads(
+        (ROOT / "evidence/portfolio_concurrent_local_files_20261026.json").read_text()
+    )
+    assert len(packet["files"]) == 10 and packet["distinct_new_contents"] == 7
+    assert packet["source_scientific_claims_endorsed"] is False
+    assert packet["new_tiffs_generated_by_this_session"] == 0
+    assert packet["submission_authorized"] is False
+    assert all(
+        row["generated_by_this_session"] is False and row["ok_to_submit"] is False
+        for row in packet["files"]
+    )
+    for relative in ("index.html", "docs/index.html", "docs/executive-summary.html"):
+        html = (ROOT / relative).read_text()
+        assert 'id="late-concurrent-files"' in html
+        for row in packet["files"]:
+            assert 'download="' + Path(row["file"]).name + '"' in html

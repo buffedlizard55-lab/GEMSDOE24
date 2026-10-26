@@ -38,7 +38,13 @@ def review_current_best(root: Path) -> dict:
         "scope": "Fresh exact-file validation; recorded scientific measurements, not replayed",
         "current_recorded_point_best": best,
         "hypothesis": card.get("hypothesis"),
-        "mechanism": card.get("mechanism"),
+        "mechanism": (
+            "Recorded fault-recovery hypothesis only; this review validates artifact identity "
+            "and format, not the causal mechanism or any hidden-leaderboard improvement. "
+            "See the original run card for its unverified mechanistic interpretation."
+        ),
+        "mechanism_source": best["source"],
+        "mechanism_causally_verified": False,
         "non_fault_mimic": card.get("non_fault_mimic", card.get("named_non_fault_mimic")),
         "submission_name": name,
         "raster_sha256": card["raster_sha256"],

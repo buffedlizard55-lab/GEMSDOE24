@@ -1,0 +1,241 @@
+{
+  "schema_version": "nine-site-decisions-v1",
+  "scope": "Local exact-file review plus historical owner claims; no cross-site selection",
+  "claims_sha256": "9fde03c6e17c794837741a3db177c7646e61ddd83f0d8301ff6a53870c04223f",
+  "leaderboard_estimate_method": "Unavailable: no independently calibrated paired organizer receipts",
+  "rows": [
+    {
+      "site": "GEMSDOE24",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE24",
+      "historical_reference": "h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan",
+      "historical_claim": {
+        "label": "UNVERIFIED-OWNER-REPORT",
+        "value": 0.2477,
+        "source": "registry/owner_reported_scores_2026-10-26.json"
+      },
+      "research_download": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+      "holdout": {
+        "label": "HOLDOUT-DTI",
+        "evaluator_version": "gems-segment-pooled-v1",
+        "TP_w": 9428.538345121908,
+        "FP_w": 34439.193322528816,
+        "FN_w": 51559.4616548781,
+        "n_truth": 60988.0,
+        "n_emitted": 38104.0,
+        "dti": 0.1637924246971501,
+        "n_withheld_positive_pixels": 60988,
+        "n_unique_withheld_components": 3199,
+        "ci95": {
+          "level": 0.95,
+          "interval": [
+            0.15044621733051888,
+            0.1773903019943756
+          ],
+          "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+          "block_pixels": 100,
+          "block_size_m": 10000,
+          "n_blocks": 583,
+          "resamples": 1999,
+          "seed": 20261025,
+          "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+        },
+        "folds": [
+          {
+            "fold": "NW",
+            "TP_w": 1545.244785307485,
+            "FP_w": 7884.063091348148,
+            "FN_w": 8619.755214692515,
+            "n_truth": 10165,
+            "n_emitted": 8515,
+            "dti": 0.15424896557736514,
+            "coverage": 0.1520162110484491
+          },
+          {
+            "fold": "NE_LidarGapHeavy",
+            "TP_w": 2637.6005066979133,
+            "FP_w": 9445.89190864803,
+            "FN_w": 9873.399493302088,
+            "n_truth": 12511,
+            "n_emitted": 10528,
+            "dti": 0.21227321465377372,
+            "coverage": 0.21082251672111849
+          },
+          {
+            "fold": "SW",
+            "TP_w": 2404.41936266421,
+            "FP_w": 9615.412882613271,
+            "FN_w": 18129.580637335792,
+            "n_truth": 20534,
+            "n_emitted": 10535,
+            "dti": 0.12768297540973828,
+            "coverage": 0.1170945438133929
+          },
+          {
+            "fold": "SE",
+            "TP_w": 2841.2736904522985,
+            "FP_w": 7493.825439919369,
+            "FN_w": 14936.726309547701,
+            "n_truth": 17778,
+            "n_emitted": 8526,
+            "dti": 0.17442448661596,
+            "coverage": 0.15981964734235002
+          }
+        ],
+        "protocol": {
+          "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+          "buffer_m": 1500,
+          "whole_components_hidden_everywhere": true,
+          "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+          "catalogue_features": "must be constructed from fold.visible only",
+          "alpha": 0.2,
+          "beta": 0.8,
+          "triangular_kernel_radius_m": 300
+        }
+      },
+      "leaderboard_estimate": null,
+      "organizer_confirmed_score": null,
+      "uniqueness": "FAIL: literal registry overlap",
+      "ok_to_submit": false,
+      "decision": "DO_NOT_SUBMIT"
+    },
+    {
+      "site": "GEMSDOE25",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE25",
+      "historical_reference": "dotted-h19-5-d2-8-20261002-e56ea318af89-nan",
+      "historical_claim": {
+        "label": "UNVERIFIED-OWNER-REPORT",
+        "value": 0.26,
+        "source": "registry/owner_reported_scores_2026-10-26.json"
+      },
+      "research_download": null,
+      "holdout": null,
+      "leaderboard_estimate": null,
+      "organizer_confirmed_score": null,
+      "uniqueness": "NOT ESTABLISHED: no fresh artifact-level audit in this review",
+      "ok_to_submit": false,
+      "decision": "DO_NOT_SUBMIT"
+    },
+    {
+      "site": "GEMSDOE27",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE27",
+      "historical_reference": "topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan",
+      "historical_claim": {
+        "label": "UNVERIFIED-OWNER-REPORT",
+        "value": 0.2449,
+        "source": "registry/owner_reported_scores_2026-10-26.json"
+      },
+      "research_download": null,
+      "holdout": null,
+      "leaderboard_estimate": null,
+      "organizer_confirmed_score": null,
+      "uniqueness": "NOT ESTABLISHED: no fresh artifact-level audit in this review",
+      "ok_to_submit": false,
+      "decision": "DO_NOT_SUBMIT"
+    },
+    {
+      "site": "GEMSDOE28",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE28",
+      "historical_reference": "h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan",
+      "historical_claim": {
+        "label": "UNVERIFIED-OWNER-REPORT",
+        "value": 0.271,
+        "source": "registry/owner_reported_scores_2026-10-26.json"
+      },
+      "research_download": null,
+      "holdout": null,
+      "leaderboard_estimate": null,
+      "organizer_confirmed_score": null,
+      "uniqueness": "NOT ESTABLISHED: no fresh artifact-level audit in this review",
+      "ok_to_submit": false,
+      "decision": "DO_NOT_SUBMIT"
+    },
+    {
+      "site": "GEMSDOE30",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE30",
+      "historical_reference": "d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca",
+      "historical_claim": {
+        "label": "UNVERIFIED-OWNER-REPORT",
+        "value": 0.26,
+        "source": "registry/owner_reported_scores_2026-10-26.json"
+      },
+      "research_download": null,
+      "holdout": null,
+      "leaderboard_estimate": null,
+      "organizer_confirmed_score": null,
+      "uniqueness": "NOT ESTABLISHED: no fresh artifact-level audit in this review",
+      "ok_to_submit": false,
+      "decision": "DO_NOT_SUBMIT"
+    },
+    {
+      "site": "GEMSDOE31",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE31",
+      "historical_reference": "h27-4-solo-d28-20261004-8acb75e1-nan",
+      "historical_claim": {
+        "label": "UNVERIFIED-OWNER-REPORT",
+        "value": 0.2708,
+        "source": "registry/owner_reported_scores_2026-10-26.json"
+      },
+      "research_download": null,
+      "holdout": null,
+      "leaderboard_estimate": null,
+      "organizer_confirmed_score": null,
+      "uniqueness": "NOT ESTABLISHED: no fresh artifact-level audit in this review",
+      "ok_to_submit": false,
+      "decision": "DO_NOT_SUBMIT"
+    },
+    {
+      "site": "GEMSDOE32",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE32",
+      "historical_reference": "h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros",
+      "historical_claim": {
+        "label": "UNVERIFIED-OWNER-REPORT",
+        "value": 0.2778,
+        "source": "registry/owner_reported_scores_2026-10-26.json"
+      },
+      "research_download": null,
+      "holdout": null,
+      "leaderboard_estimate": null,
+      "organizer_confirmed_score": null,
+      "uniqueness": "NOT ESTABLISHED: no fresh artifact-level audit in this review",
+      "ok_to_submit": false,
+      "decision": "DO_NOT_SUBMIT"
+    },
+    {
+      "site": "GEMSDOE33",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE33",
+      "historical_reference": "h33d-analog-tip-stepover-r30-20261004-cb490425926e",
+      "historical_claim": {
+        "label": "UNVERIFIED-OWNER-REPORT",
+        "value": 0.2632,
+        "source": "registry/owner_reported_scores_2026-10-26.json"
+      },
+      "research_download": null,
+      "holdout": null,
+      "leaderboard_estimate": null,
+      "organizer_confirmed_score": null,
+      "uniqueness": "NOT ESTABLISHED: no fresh artifact-level audit in this review",
+      "ok_to_submit": false,
+      "decision": "DO_NOT_SUBMIT"
+    },
+    {
+      "site": "GEMSDOE36",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36",
+      "historical_reference": "anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros",
+      "historical_claim": {
+        "label": "UNVERIFIED-OWNER-REPORT",
+        "value": 0.275,
+        "source": "registry/owner_reported_scores_2026-10-26.json"
+      },
+      "research_download": null,
+      "holdout": null,
+      "leaderboard_estimate": null,
+      "organizer_confirmed_score": null,
+      "uniqueness": "NOT ESTABLISHED: no fresh artifact-level audit in this review",
+      "ok_to_submit": false,
+      "decision": "DO_NOT_SUBMIT"
+    }
+  ],
+  "ok_to_submit": false,
+  "verdict": "negative",
+  "superseded_by_artifact_audit": "data/portfolio_artifact_audit_20261026.json"
+}
