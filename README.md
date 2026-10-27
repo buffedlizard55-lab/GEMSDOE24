@@ -1,5 +1,14 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## H24-TMCG session (2026-10-27) — unique TIF generated; SUBMIT: NO
+
+**NOT OK TO SUBMIT.** Unique research GeoTIFF:
+[`docs/downloads/gems24-tmcg-b-decoupled-basin-20261027T113937Z-6f8d042d5ee4-zeros.tif`](docs/downloads/gems24-tmcg-b-decoupled-basin-20261027T113937Z-6f8d042d5ee4-zeros.tif)
+SHA-256 `9df52a41c34d4f508b57128c1bc6c2dd716c6149d22dd8717137baa463ed0336`.
+HOLDOUT-DTI **0.07157** [0.06271, 0.08168], `gems-segment-pooled-v1`, 60,988 withheld (Arm B basin-decoupled). Canary PASS. Trails S3DEP1 0.16606. 3/3 budget spent, 0 slots. Note: `GEMS24 TMCG basin-decoupled | HOLDOUT-DTI 0.07157 | research; DO NOT SUBMIT`
+
+Lane: topographic-magnetic cross-gradient (not PTAR, not GSD, not EUL1 mag-grav CG). Mimic: canals, playas, volcanic contacts. Leaderboard estimate: not estimable. Historical 0.2778 B2 is owner-reported and must not be copied.
+
 ## H24-S3DEP1 (Current Recorded Local `HOLDOUT-DTI = 0.166060`, Zero 1 m LiDAR) & Frozen `2026-10-26` Nine-Site Forensic Snapshot (`DOWNLOAD: YES · SUBMIT: NO`)
 
 > **UNMISTAKABLE AUTOMATED VERDICT (ZERO HUMAN-INSPECTOR FALLBACK):**
