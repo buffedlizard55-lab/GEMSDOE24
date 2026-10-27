@@ -1,0 +1,19 @@
+{
+  "schema": "gems-protocol-feasibility-v1",
+  "source_audit": "evidence/current_focus_nine_file_audit_20261027.json",
+  "source_sha256": "afc78be8eff1251b0e99c9211611ccfd8db41a49a032ecc9b5dc6c7c978c756e",
+  "source_checked_utc": "2026-10-27T11:53:46.535307+00:00",
+  "scope": "Arithmetic on frozen audit counts; no raster remeasurement or live refresh",
+  "lattice_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+  "geometry": {
+    "candidate_dots": 37654,
+    "minimum_possible_directed_overlap": 0.8234184947150369,
+    "overlap_limit": 0.7,
+    "necessarily_fails_literal_gate": true,
+    "maximum_dots_not_ruled_out_by_this_bound": 22163,
+    "interpretation": "Necessary condition only; not evidence of novelty or scientific merit"
+  },
+  "submission_authorized": false,
+  "leaderboard_estimate": null,
+  "required_next_step": "Coordinator must assign a method lane and resolve the space-filling registry control policy; do not change gates or evade the lattice by placement"
+}

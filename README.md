@@ -35,7 +35,41 @@
   (44,090 → −6,436 halo dots → 37,654) and the metric arithmetic are analysed in the findings doc.
   No file from the nine focus sites is OK to submit today; see the executive table.
 
-## Prior review decision — 2026-10-27: research downloads only; **DO NOT SUBMIT** (superseded in part by CGMK1 above; its nine-file audit, lattice and leakage findings remain in force)
+## Start here — current request and automated pre-training gate (2026-10-27)
+
+**Maximize P(Win) · Own the Outcome. No new TIFF is authorized to submit.**
+Read the [current normalized owner prompt](knowledge/owner_brief_2026-10-27_feasibility.md),
+[standing integrity rules](AGENTS.md), and [feasibility review](docs/feasibility-review-20261027.md)
+before any new work. The long historical prompt records below remain preserved;
+the current addendum is explicitly not a verbatim transcript.
+
+[**Executive status: research downloads only; SUBMIT NO**](docs/executive-summary.html#current-focus-files) ·
+[**Why ordinary dot budgets cannot pass the literal uniqueness gate**](docs/submission-readiness.html) ·
+[Hash-bound feasibility JSON](docs/data/uniqueness_feasibility_20261027.json).
+
+```bash
+# Read-only necessary gate BEFORE training; expected exit 2 for these budgets.
+python scripts/check_uniqueness_feasibility.py --dot-budget 37654 --dot-budget 44090
+```
+
+The pinned registry lattice leaves only 6,649 in-footprint pixels outside its
+inclusive 3-pixel union. Every 37,654-dot set therefore overlaps it by at least
+**82.34%**, and every 44,090-dot set by at least **84.92%**. This is a universal
+geometric bound, **not a score**, not proof of copying and not a full registry
+pass. At 22,164 or more distinct in-footprint dots the bound alone exceeds 70%.
+Smaller budgets are **NOT RULED OUT, NOT PASS**; do not retune a stopped method,
+shift dots or remove comparators to evade the protocol. No surface, training,
+new holdout, TIFF or slot was generated in this continuation. A separate
+scientific lane assignment and all existing gates remain required.
+
+The concurrent PR #67 added a dependency-free frozen-count check:
+`python scripts/check_protocol_feasibility.py`.
+Its [prior review](docs/protocol-feasibility-20261027.md) and
+[negative card](evidence/protocol_continuation_run_card_20261027.json) are preserved.
+Both entrypoints now reuse one exact-arithmetic implementation; the fresh
+checker additionally reopens the pinned template and reference raster.
+
+## Prior review decision — 2026-10-27: research downloads only; **DO NOT SUBMIT** (its nine-file audit, lattice and leakage findings remain in force; the CGMK1 and feasibility continuations above are later, parallel work)
 
 **No new TIFF or experiment was produced by this review, and no slot was used.**
 [Open the nine-site executive submission guide](docs/executive-summary.html#current-focus-files) ·

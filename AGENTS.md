@@ -22,6 +22,18 @@ Read `knowledge/32_preregistered_CGMK1_2026-10-27.md` (commits `9b280a3`+`8dafdc
   receipt; resolve the lattice comparator class; only then consider trunk-plus-new-channel or
   OPERA/Sentinel-2/MT lanes from an environment where those official downloads are obtainable.
 
+## Pre-training feasibility continuation — 2026-10-27
+
+Read `knowledge/owner_brief_2026-10-27_feasibility.md` and
+`docs/feasibility-review-20261027.md` with README at session start.
+Before allocating time to a newly assigned experiment, run
+`python scripts/check_uniqueness_feasibility.py --dot-budget K` for its
+prospectively fixed budget. Exit 2 proves the literal uniqueness gate cannot
+pass; exit 0 means only NOT RULED OUT, never approval. Errors fail closed.
+Do not restart old lanes, tune K or exclude comparators to force a pass.
+Use `gems.novelty.dot_budget_feasibility` in new shared runners, not a private
+metric. This continuation creates no TIFF, experiment, holdout or slot.
+
 ## 2026-10-27 integrity override — read before dated notes below
 
 - This review produced **no new TIFF, scientific run or slot**; the assigned
