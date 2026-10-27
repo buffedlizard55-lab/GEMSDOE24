@@ -116,6 +116,7 @@ def test_site_never_links_a_missing_local_file(built):
         "docs/executive-summary.html",
         "docs/research.html",
         "docs/sources.html",
+        "docs/submission-readiness.html",
     ):
         soup = BeautifulSoup((built / page).read_text(), "html.parser")
         for tag, attr in (("a", "href"), ("link", "href"), ("script", "src"), ("img", "src")):

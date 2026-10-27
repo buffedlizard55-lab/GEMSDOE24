@@ -5,11 +5,13 @@ import json
 import shutil
 import subprocess
 import sys
+from fractions import Fraction
 from pathlib import Path
 
 import pytest
 
 from gems.novelty import dot_budget_feasibility
+from gems.uniqueness_budget import bounds
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -129,3 +131,18 @@ def test_cli_exit_zero_does_not_mean_authorized(tmp_path, k, exit_code):
     assert report["submission_authorized"] is False
     assert report["new_tiffs"] == 0
     assert not list(tmp_path.glob("*.tif"))
+
+
+@pytest.mark.parametrize(
+    "args",
+    [
+        (True, 3, 1, Fraction(7, 10)),
+        (7, 3.0, 1, Fraction(7, 10)),
+        (7, 3, True, Fraction(7, 10)),
+        (7, 3, 1, 0.7),
+        (7, 3, 1, Fraction(1)),
+    ],
+)
+def test_shared_dependency_free_core_rejects_ambiguous_numbers(args):
+    with pytest.raises(ValueError):
+        bounds(*args)

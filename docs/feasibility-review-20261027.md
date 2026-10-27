@@ -141,3 +141,21 @@ selector must require actual account allowance before promotion. Do not spend a
 weekly slot on the current artifacts. The high-scoring unique-TIFF goal remains
 unfinished; repeated audit-only continuations are not scientific progress toward
 that goal unless the coordination/data blockers are resolved.
+
+
+### Final verification outcomes
+
+**510 pytest tests passed** after integration; six dependency-free unittest tests
+also passed. Ruff check and format, compileall, JavaScript syntax and diff checks
+passed. The shared Chromium audit checked **14 desktop/mobile page combinations**,
+including both versions of the executive guide, exact research-TIFF download
+hashes, clipboard notes, all nine table rows, and the new readiness page. Final
+receipt: **zero detected accessibility violations**, no page errors and no page
+horizontal overflow. These local checks are not a claim of remote Pages deployment
+or organizer acceptance.
+
+Pass 2 caught a concurrently merged root-link regression and focusability of
+mobile horizontal-scroll regions; both were fixed and retested. No raster bytes
+were changed. The session card is deliberately a non-experimental review receipt,
+not entered into the scientific run-card/point-best inventory:
+[JSON card](https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/evidence/uniqueness_feasibility_review_20261027.json).

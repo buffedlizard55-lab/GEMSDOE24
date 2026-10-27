@@ -115,7 +115,7 @@ not an organizer score, and not evidence that a geological method copied another
 its inclusive 3-pixel union. Any K distinct in-footprint dots must have at least
 max(0, K − {uncovered:,}) overlapping dots. A strict integer comparison enforces the
 <strong>greater than 70%</strong> stop rule, including its exact boundary.</p>
-<div class="table-wrap"><table><caption>Necessary-only overlap bounds for diagnostic budgets; not a budget search or submission selection</caption>
+<div class="tablewrap" role="region" aria-label="Diagnostic budget bounds" tabindex="0"><table><caption>Necessary-only overlap bounds for diagnostic budgets; not a budget search or submission selection</caption>
 <thead><tr><th scope="col">Dot budget K</th><th scope="col">Minimum overlapping dots</th>
 <th scope="col">Minimum overlap</th><th scope="col">Decision</th></tr></thead><tbody>{rows}</tbody></table></div>
 <p><strong>NOT_RULED_OUT is not PASS.</strong> Smaller budgets may also fail in practice.
@@ -123,10 +123,10 @@ No surface correlation, full registry, leakage, comparative holdout, bias, repla
 pass follows from this calculation. Do not shift dots, alter a stopped budget or remove the
 lattice to force uniqueness. A protocol change requires a prospective coordination decision.</p>
 <h2>Reproduce without training or human inspection</h2>
-<pre>python scripts/check_uniqueness_feasibility.py --dot-budget 37654 --dot-budget 44090</pre>
+<pre role="region" aria-label="Read-only reproduction command" tabindex="0">python scripts/check_uniqueness_feasibility.py --dot-budget 37654 --dot-budget 44090</pre>
 <p>Exit 2: impossible requested budget. Exit 0: only not ruled out. Missing or changed evidence fails;
 the program never writes a TIFF or uploads anything. <a href="data/uniqueness_feasibility_20261027.json">Hash-bound JSON receipt</a>.</p>
-<h2>Evidence and next action</h2><p>The exact witness is <code>{e(report["witness"]["path"])}</code>,
+<h2>Evidence and next action</h2><p class="note">The exact witness is <code>{e(report["witness"]["path"])}</code>,
 SHA-256 <code>{e(report["witness"]["sha256"])}</code>. This is one decisive comparator,
 not a complete fresh census of the registry.</p>
 <p>The operative prompt still lacks its single-method lane paragraph. Preserve stopped lanes.

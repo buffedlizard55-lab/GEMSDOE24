@@ -573,6 +573,7 @@ def build_independent_site(primary):
         "sources.html",
         "data/",
         "portfolio-review-20261026.md",
+        "protocol-feasibility-20261027.md",
     ):
         root_body = root_body.replace(f'href="{path}', f'href="docs/{path}')
     root_body = root_body.replace('src="assets/', 'src="docs/assets/')
@@ -589,6 +590,7 @@ def build_independent_site(primary):
         "sources.html",
         "data/",
         "portfolio-review-20261026.md",
+        "protocol-feasibility-20261027.md",
     ):
         exec_root_body = exec_root_body.replace(f'href="{path}', f'href="docs/{path}')
     exec_root_body = exec_root_body.replace('src="assets/', 'src="docs/assets/')
