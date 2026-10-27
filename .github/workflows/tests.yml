@@ -39,6 +39,7 @@ jobs:
       - run: python scripts/run_xvar1_lane.py --verify-recorded
       - run: python scripts/run_trsg1_lane.py --verify-recorded
       - run: python scripts/run_s3dep1_lane.py --verify-recorded
+      - run: python scripts/run_cgmk1_lane.py --verify-recorded
       - run: python -m pytest -q
       - run: ruff check src scripts tests
       - run: ruff format --check src scripts tests

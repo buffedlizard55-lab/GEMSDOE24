@@ -241,6 +241,20 @@ For CGMK1 specifically: **stop at step 0 — it is not promoted.**
      holdout components (no new dots, no slot) to align the internal objective with the
      sparse-hidden-truth regime the lattice calibration implies.
 
+## Parallel-session integration (PRs #67/#68, merged same day)
+
+While this lane ran, two parallel sessions merged a pre-training uniqueness-feasibility
+gate (`scripts/check_uniqueness_feasibility.py`, `gems.novelty.dot_budget_feasibility`,
+`docs/feasibility-review-20261027.md`, `docs/protocol-feasibility-20261027.md`). Their
+checker independently reproduces this document's lattice arithmetic exactly: 6,649
+uncovered pixels, minimum overlap 0.8234184947 at 37,654 dots, maximum budget not ruled
+out 22,163, exit 2 `STOP_IMPOSSIBLE_BUDGET` for the CGMK1 budget (verified locally after
+the merge). Their review lists the signed gravity–magnetic reversal and conditional-K
+residual as ranked-but-untested candidates #1/#2; CGMK1 is the same-day preregistered
+execution of that combination, and its negative result above is now the measured answer
+for the geophysics-only form. Neither workstream changes the other's verdict; the merge
+kept both intact, and the post-merge suite is 521 passed.
+
 ## Three passes (this session)
 
 1. **Implement + verify.** Restored hash-pinned data, preregistered, implemented
