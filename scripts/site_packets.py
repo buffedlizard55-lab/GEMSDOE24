@@ -49,7 +49,7 @@ def dprf1_packet(root):
     fresh_sel = selector.verify_selector(target, template, card)
     ok_submit = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
     if (
-        saved_sel.get("gates") != fresh_sel.get("gates")
+        not selector.recorded_gates_compatible(saved_sel.get("gates"), fresh_sel.get("gates"))
         or saved_sel.get("decision") != fresh_sel.get("decision")
         or saved_sel.get("human_inspection_used") is not False
         or card.get("ok_to_submit") is not ok_submit
@@ -1504,7 +1504,7 @@ def trsg1_packet(root: Path) -> tuple[str, str, str]:
         saved_sel = json.loads(sel_path.read_text())
         fresh_sel = selector.verify_selector(target, template, card)
         if (
-            saved_sel.get("gates") != fresh_sel.get("gates")
+            not selector.recorded_gates_compatible(saved_sel.get("gates"), fresh_sel.get("gates"))
             or saved_sel.get("decision") != fresh_sel.get("decision")
             or saved_sel.get("decision") != "DO_NOT_SUBMIT"
             or saved_sel.get("human_inspection_used") is not False
@@ -1881,7 +1881,7 @@ def eul1_packet(root):
     fresh_sel = selector.verify_selector(target, template, card)
     ok_submit = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
     if (
-        saved_sel.get("gates") != fresh_sel.get("gates")
+        not selector.recorded_gates_compatible(saved_sel.get("gates"), fresh_sel.get("gates"))
         or saved_sel.get("decision") != fresh_sel.get("decision")
         or saved_sel.get("human_inspection_used") is not False
         or card.get("ok_to_submit") is not ok_submit
@@ -2002,7 +2002,7 @@ def dkrn1_packet(root):
     fresh_sel = selector.verify_selector(target, template, card)
     ok_submit = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
     if (
-        saved_sel.get("gates") != fresh_sel.get("gates")
+        not selector.recorded_gates_compatible(saved_sel.get("gates"), fresh_sel.get("gates"))
         or saved_sel.get("decision") != fresh_sel.get("decision")
         or saved_sel.get("human_inspection_used") is not False
         or card.get("ok_to_submit") is not ok_submit
@@ -2181,7 +2181,7 @@ def xfront_packet(root):
     fresh_sel = selector.verify_selector(target, template, card)
     ok_submit = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
     if (
-        saved_sel.get("gates") != fresh_sel.get("gates")
+        not selector.recorded_gates_compatible(saved_sel.get("gates"), fresh_sel.get("gates"))
         or saved_sel.get("decision") != fresh_sel.get("decision")
         or saved_sel.get("human_inspection_used") is not False
         or card.get("ok_to_submit") is not ok_submit
@@ -2309,7 +2309,7 @@ def s3dep1_packet(root):
     fresh_sel = selector.verify_selector(target, template, card)
     ok_submit = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
     if (
-        saved_sel.get("gates") != fresh_sel.get("gates")
+        not selector.recorded_gates_compatible(saved_sel.get("gates"), fresh_sel.get("gates"))
         or saved_sel.get("decision") != fresh_sel.get("decision")
         or saved_sel.get("human_inspection_used") is not False
         or card.get("ok_to_submit") is not ok_submit
@@ -2479,7 +2479,7 @@ def xvar1_packet(root):
     fresh_sel = selector.verify_selector(target, template, card)
     ok_submit = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
     if (
-        saved_sel.get("gates") != fresh_sel.get("gates")
+        not selector.recorded_gates_compatible(saved_sel.get("gates"), fresh_sel.get("gates"))
         or saved_sel.get("decision") != fresh_sel.get("decision")
         or saved_sel.get("human_inspection_used") is not False
         or card.get("ok_to_submit") is not ok_submit

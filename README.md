@@ -13,7 +13,11 @@ paragraph remains absent. No policy exception or new geological run was invented
 
 Run `python scripts/check_protocol_feasibility.py` without scientific dependencies.
 [Negative continuation run card](evidence/protocol_continuation_run_card_20261027.json).
-The nine-site research download table remains below and in the executive guide.
+See the [prominent nine-site research file/freshness table](docs/executive-summary.html#current-focus-files),
+[four ranked unexecuted hypotheses and data availability](docs/research-directions-20261027.md), and
+[shared-tool verification review](docs/shared-guardrails-review-20261027.md). Local mirror/cache hashes
+prove integrity only, not organizer provenance. A format PASS never authorizes a submission;
+independent scientific replay, current registry coverage, quota, and the separate selector remain blockers.
 
 ## Current decision — 2026-10-27: research downloads only; **DO NOT SUBMIT**
 

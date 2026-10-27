@@ -97,20 +97,28 @@ def render(root: Path) -> dict[str, str]:
             f"{'PASS' if row['format_valid'] and row['strict_whole_array_finite_0_1'] else 'NOT PASS'}</span>"
         )
         score = _holdout(row["holdout"]) + "<br>" + source
+        site_feed = latest[row["site"]]
+        if site_feed["status"] != "checked":
+            source_state = "UNKNOWN — GitHub check failed"
+        elif site_feed["latest_main_ref"] != row["source_ref"]:
+            source_state = "CHANGED — latest commit not re-audited"
+        else:
+            source_state = "UNCHANGED since audited commit"
         tr.append(
             f'<tr><th scope="row">{e(row["site"])}</th><td>{file_link}</td><td>{score}</td>'
-            f'<td>{e(history)}<br><span class="micro">See historical table below; not linked to a receipt.</span></td>'
-            f"<td>{novelty}</td><td><strong>NO</strong></td></tr>"
+            f'<td>NOT ESTIMABLE</td><td>{e(history)}<br><span class="micro">Not linked to an organizer receipt.</span></td>'
+            f"<td>{novelty}</td><td>{e(source_state)}</td><td><strong>NO</strong></td></tr>"
         )
         mobile.append(
             f"<article><h3>{e(row['site'])}</h3><p>{file_link}</p><p>{score}</p>"
-            f"<p>{e(history)}</p><p>{novelty}</p><p><strong>SUBMIT: NO</strong></p></article>"
+            f"<p>Leaderboard estimate: NOT ESTIMABLE</p><p>{e(history)}</p><p>{novelty}</p>"
+            f"<p>Source: {e(source_state)}</p><p><strong>SUBMIT: NO</strong></p></article>"
         )
     research = f"""<section id="current-focus-files"><h2>Current nine-site research file review</h2>
-<p><strong>Before another experiment:</strong> the frozen lattice counts force at least 82.34% overlap for any 37,654-dot in-footprint candidate. This is a geometric bound, not a score. No method lane is assigned and no exception was made. <a href="protocol-feasibility-20261027.md">Reproducible feasibility check and next steps</a>.</p>
+<p><strong>Before another experiment:</strong> the frozen lattice counts force at least 82.34% overlap for any 37,654-dot in-footprint candidate. This is a geometric bound, not a score. No method lane is assigned and no exception was made. <a href="protocol-feasibility-20261027.md">Reproducible feasibility check and next steps</a> · <a href="research-directions-20261027.md">Four ranked unexecuted hypotheses and data availability</a>.</p>
 <p><strong>Nothing is approved to submit.</strong> On {e(audit["checked_utc"])} one explicitly named TIFF and its run card from each site were fetched at immutable commits and rechecked. All nine exact files passed the local grid/range checks and <strong>all nine fail the literal 70% overlap rule</strong> against the retained calibration lattice. This is one decisive comparator, not a complete current registry; no score surface or model was replayed. Click a filename to download for research only.</p>
-<p>The “best” historical number is an unverified owner claim, not a verified score. Featured source files are not ranked against one another: their evaluators and withheld sets differ. Source feed checked {e(feed["checked_utc"])}: {moved} sites moved beyond these nine-file audit refs and {unknown} checks failed. New commits require a fresh audit.</p>
-<div class="tablewrap" tabindex="0" role="region" aria-label="Current nine-site research audit"><table><thead><tr><th>Site</th><th>Research download / file check</th><th>Source holdout evidence</th><th>Best historical claim</th><th>Literal uniqueness</th><th>Submit?</th></tr></thead><tbody>{"".join(tr)}</tbody></table></div>
+<p>The “best” historical number is an unverified owner claim, not a verified score. Featured source files are not ranked against one another: their evaluators and withheld sets differ. No leaderboard score estimate is defensible. Source feed checked {e(feed["checked_utc"])}: {moved} sites moved beyond these nine-file audit refs and {unknown} checks failed. A changed source has not been re-audited.</p>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Current nine-site research audit"><table><thead><tr><th>Site</th><th>Research download / file check</th><th>Source holdout evidence</th><th>Leaderboard estimate</th><th>Best historical claim</th><th>Literal uniqueness</th><th>Source freshness</th><th>Submit?</th></tr></thead><tbody>{"".join(tr)}</tbody></table></div>
 <div class="portfolio-mobile">{"".join(mobile)}</div><p><a href="data/current_focus_nine_file_audit_20261027.json">Machine-readable nine-file audit</a> · <a href="data/current_focus_source_pins_20261027.json">Pinned source identities</a> · <a href="data/portfolio_freshness.json">Source feed</a></p></section>"""
     tmcg_name = e(tmcg["submission_name"], quote=True)
     unique_name = e(unique["submission_name"], quote=True)

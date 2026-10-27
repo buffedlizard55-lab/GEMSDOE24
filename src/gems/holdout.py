@@ -13,9 +13,21 @@ BUDGET_FRAC = 0.025
 FOLD_NAMES = ["NW", "NE_LidarGapHeavy", "SW", "SE"]
 
 
+def _binary_grid(value, name):
+    """Reject nodata and nonbinary values before converting a mask to bool.
+
+    In particular, bool(np.nan) and bool(-9999) are both True; coercing first
+    would silently turn missing catalogue data into positive fault labels.
+    """
+    grid = np.asarray(value)
+    if grid.ndim != 2 or not np.isin(grid, (0, 1)).all():
+        raise ValueError(f"{name} must be a finite two-dimensional binary grid")
+    return grid.astype(bool, copy=False)
+
+
 def make_quadrant_folds(footprint: np.ndarray) -> tuple[np.ndarray, list[str]]:
-    footprint = np.asarray(footprint, bool)
-    if footprint.ndim != 2 or not footprint.any():
+    footprint = _binary_grid(footprint, "Footprint")
+    if not footprint.any():
         raise ValueError("A nonempty 2D footprint is required")
     yy, xx = np.nonzero(footprint)
     y_med, x_med = int(np.median(yy)), int(np.median(xx))
@@ -30,6 +42,7 @@ def make_quadrant_folds(footprint: np.ndarray) -> tuple[np.ndarray, list[str]]:
 
 
 def thin_components(truth_2d: np.ndarray, keep_frac: float, seed: int) -> np.ndarray:
+    truth_2d = _binary_grid(truth_2d, "Catalogue")
     if not 0 <= keep_frac <= 1:
         raise ValueError("Component fraction must be in [0,1]")
     comp, n = ndi_label(truth_2d, structure=np.ones((3, 3), dtype=int))
@@ -48,9 +61,12 @@ class Holdout:
         budget: float = BUDGET_FRAC,
         sparse_seed_offset: int = 0,
     ):
-        footprint, labels = np.asarray(footprint, bool), np.asarray(labels, bool)
-        if footprint.shape != labels.shape or not 0 <= budget <= 1:
-            raise ValueError("Aligned grids and budget in [0,1] required")
+        footprint = _binary_grid(footprint, "Footprint")
+        labels = _binary_grid(labels, "Catalogue")
+        if footprint.shape != labels.shape or np.any(labels & ~footprint) or not 0 <= budget <= 1:
+            raise ValueError(
+                "Aligned grids, catalogue inside footprint and budget in [0,1] required"
+            )
         self.footprint = footprint
         self.labels = labels
         self.budget = budget
@@ -246,14 +262,17 @@ def segment_folds(footprint, labels, buffer_px=30):
     """
     from scipy.ndimage import distance_transform_edt
 
-    fp, truth = np.asarray(footprint, bool), np.asarray(labels, bool)
+    fp = _binary_grid(footprint, "Footprint")
+    truth = _binary_grid(labels, "Catalogue")
     if (
         fp.shape != truth.shape
         or np.any(truth & ~fp)
         or not np.isfinite(buffer_px)
-        or buffer_px < 0
+        or buffer_px < 3
     ):
-        raise ValueError("Aligned footprint/truth, truth inside footprint and buffer >=0 required")
+        raise ValueError(
+            "Aligned footprint/truth, truth inside footprint and buffer >=3 px required"
+        )
     components, count = ndi_label(truth, structure=np.ones((3, 3), int))
     if not count:
         raise ValueError("No fault components to withhold")
@@ -407,8 +426,8 @@ class SegmentHoldout:
     def __init__(self, footprint, labels, *, buffer_px=15):
         from scipy.ndimage import distance_transform_edt
 
-        self.footprint = np.asarray(footprint, bool)
-        self.labels = np.asarray(labels, bool)
+        self.footprint = _binary_grid(footprint, "Footprint")
+        self.labels = _binary_grid(labels, "Catalogue")
         if (
             self.footprint.shape != self.labels.shape
             or self.footprint.ndim != 2
@@ -545,7 +564,14 @@ class SegmentHoldout:
         }
 
     def canary(self, features, *, seed=20261025, max_per_class=15000):
-        """One-feature AUC diagnostics, never silently change a feature after a flag."""
+        """One-feature AUC diagnostics, including separate missingness tests.
+
+        Values can be a shared 2D array or one 2D array per fold, in fold order.
+        Fold-local catalogue-derived features must be built from that fold's
+        visible catalogue only. A passing canary is not proof of independence:
+        callers must also audit feature/eligibility provenance and avoid labels
+        hidden from the respective fold.
+        """
         from scipy.ndimage import distance_transform_edt
         from sklearn.metrics import roc_auc_score
 
@@ -569,38 +595,75 @@ class SegmentHoldout:
             negative = rng.choice(negative, min(len(negative), max_per_class), replace=False)
             samples.append((np.r_[positive, negative], len(positive), len(negative)))
         for name, surface in features.items():
-            surface = np.asarray(surface)
-            if surface.shape != self.footprint.shape:
-                raise ValueError("Canary feature shape mismatch")
-            details, values, labels = [], [], []
-            for fold, (ids, n_positive, n_negative) in zip(self.folds, samples):
-                x = surface.ravel()[ids]
-                # Missingness itself is tested: use the same fixed zero sentinel
-                # that the detector uses outside its supported physical domain.
-                x = np.where(np.isfinite(x), x, 0)
+            if (
+                isinstance(surface, (list, tuple))
+                and len(surface) == len(self.folds)
+                and all(np.shape(value) == self.footprint.shape for value in surface)
+            ):
+                grids = [np.asarray(value) for value in surface]
+            else:
+                array = np.asarray(surface)
+                if array.shape == self.footprint.shape:
+                    grids = [array] * len(self.folds)
+                elif array.shape == (len(self.folds), *self.footprint.shape):
+                    grids = [array[i] for i in range(len(self.folds))]
+                else:
+                    grids = []
+            if len(grids) != len(self.folds) or any(
+                grid.shape != self.footprint.shape for grid in grids
+            ):
+                raise ValueError("Canary feature shape mismatch: expected one grid or one per fold")
+            details, values, presence, labels = [], [], [], []
+            for fold, grid, (ids, n_positive, n_negative) in zip(self.folds, grids, samples):
+                raw = grid.ravel()[ids]
+                finite = np.isfinite(raw)
+                # Zero is the diagnostic sentinel, not an assertion about the
+                # detector's imputation. Also test finite/missing as its own signal:
+                # a real zero and an imputed zero otherwise become indistinguishable.
+                x = np.where(finite, raw, 0)
                 y = np.r_[np.ones(n_positive), np.zeros(n_negative)]
                 auc = float(roc_auc_score(y, x))
+                presence_auc = float(roc_auc_score(y, finite))
                 details.append(
                     {
                         "fold": fold["name"],
                         "auc": auc,
+                        "presence_auc": presence_auc,
                         "positives": n_positive,
                         "background": n_negative,
                     }
                 )
                 values.append(x)
+                presence.append(finite)
                 labels.append(y)
-            auc = float(roc_auc_score(np.concatenate(labels), np.concatenate(values)))
-            suspicious = (
-                max([max(auc, 1 - auc)] + [max(x["auc"], 1 - x["auc"]) for x in details]) > 0.90
-            )
-            rows[name] = {"pooled_auc": auc, "leakage_suspected": suspicious, "folds": details}
+            pooled_y = np.concatenate(labels)
+            auc = float(roc_auc_score(pooled_y, np.concatenate(values)))
+            presence_auc = float(roc_auc_score(pooled_y, np.concatenate(presence)))
+            all_aucs = [auc, presence_auc] + [
+                value for item in details for value in (item["auc"], item["presence_auc"])
+            ]
+            suspicious = max(max(value, 1 - value) for value in all_aucs) > 0.90
+            rows[name] = {
+                "pooled_auc": auc,
+                "pooled_presence_auc": presence_auc,
+                "leakage_suspected": suspicious,
+                "folds": details,
+            }
+        worst_name = max(
+            rows, key=lambda key: max(rows[key]["pooled_auc"], 1 - rows[key]["pooled_auc"])
+        )
+        worst_auc = rows[worst_name]["pooled_auc"]
         return {
             "diagnostic": "LEAKAGE-CANARY AUC, not a DTI or organizer score",
             "evaluator_version": MTR_EVALUATOR_VERSION,
+            "n_features_checked": len(rows),
+            "worst_feature": worst_name,
+            "worst_pooled_auc": worst_auc,
+            "worst_polarity_extremity": max(worst_auc, 1 - worst_auc),
             "threshold": 0.90,
             "two_polarities_checked": True,
+            "missingness_tested_separately": True,
             "passed": not any(x["leakage_suspected"] for x in rows.values()),
             "features": rows,
-            "interpretation": "AUC > .90 is leakage until explained; lower AUC does not prove independence or fault discovery.",
+            "interpretation": "Value or presence AUC > .90 is leakage until explained; lower AUC does not prove independence or fault discovery.",
         }

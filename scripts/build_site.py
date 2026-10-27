@@ -428,8 +428,8 @@ def build_independent_site(primary):
         "Literal novelty, C2ST, quota and independent replay gates still block submission. "
         "This review ran zero new geological experiments and used zero slots because no single assigned-method paragraph was supplied; it did not invent a lane.</p>"
         '<p><a href="data/current_best_review.json" download>Fresh exact-file review JSON</a> · '
-        '<a href="#s3dep1-overview">Latest H24-S3DEP1 packet</a> · '
-        '<a href="#portfolio-audit">Fresh nine-site artifact comparison</a></p></section>'
+        '<a href="executive-summary.html#s3dep1">H24-S3DEP1 packet</a> · '
+        '<a href="#current-focus-files">Nine-site artifact comparison</a></p></section>'
     )
     # Preserve the concurrent VENT negative packet through scheduled rebuilds.
     vent_html = ""
@@ -486,12 +486,12 @@ def build_independent_site(primary):
     )
     overview = (
         current_banner
+        + focus_review["current"]
         + focus_review["alert"]
         + current_note
         + s3dep1_hero
         + xvar1_hero
         + portfolio["intro"]
-        + focus_review["current"]
         + portfolio["historical"]
         + '<details id="portfolio-research-files"><summary>Current research file and HOLDOUT-DTI evidence for every site</summary>'
         + portfolio["current"]
@@ -507,12 +507,12 @@ def build_independent_site(primary):
     )
     executive = (
         current_banner
+        + focus_review["current"]
         + focus_review["alert"]
         + current_note
         + s3dep1_exec
         + xvar1_exec
         + portfolio["intro"]
-        + focus_review["current"]
         + portfolio["historical"]
         + '<details id="older-focus-research"><summary>Earlier 2026-10-26 pinned research files</summary>'
         + portfolio["current"]
@@ -573,6 +573,8 @@ def build_independent_site(primary):
         "sources.html",
         "data/",
         "portfolio-review-20261026.md",
+        "protocol-feasibility-20261027.md",
+        "research-directions-20261027.md",
     ):
         root_body = root_body.replace(f'href="{path}', f'href="docs/{path}')
     root_body = root_body.replace('src="assets/', 'src="docs/assets/')
@@ -589,6 +591,8 @@ def build_independent_site(primary):
         "sources.html",
         "data/",
         "portfolio-review-20261026.md",
+        "protocol-feasibility-20261027.md",
+        "research-directions-20261027.md",
     ):
         exec_root_body = exec_root_body.replace(f'href="{path}', f'href="docs/{path}')
     exec_root_body = exec_root_body.replace('src="assets/', 'src="docs/assets/')

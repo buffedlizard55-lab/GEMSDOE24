@@ -57,10 +57,67 @@ def _passing_card(tmp_path, monkeypatch) -> dict:
             },
         },
     )
+    # Synthetic complete two-entry registry; no claim of actual scientific replay.
+    required_hashes = frozenset({"a" * 64, "b" * 64})
+    monkeypatch.setattr(selector, "_required_registry_footprints", lambda: required_hashes)
+
+    def stage(name):
+        is_final = name == "final_dots"
+        return {
+            "stage": name,
+            "registry_unique_rasters": 2,
+            "max_abs_rank_correlation": 0.4,
+            "literal_all_entries_passed": True,
+            "literal_duplicate_rows": [],
+            "rows": [
+                {
+                    "footprint_sha256": digest,
+                    "raw_spearman": 0.4,
+                    "kernel_spearman": 0.2,
+                    "candidate_dot_overlap_within_3px": 0.5 if is_final else None,
+                    "duplicate": False,
+                    "correlation_defined": True,
+                }
+                for digest in sorted(required_hashes)
+            ],
+            **(
+                {
+                    "max_dot_overlap": 0.5,
+                    "method_lane_max_dot_overlap": 0.5,
+                    "method_lane_passed": True,
+                }
+                if is_final
+                else {}
+            ),
+        }
+
     return {
         "raster_sha256": sha256_file(artifact),
         "submission_name": "cand-zeros.tif",
-        "leakage_canary": {"passed": True, "worst_polarity_extremity": 0.71},
+        "leakage_canary": {
+            "passed": True,
+            "two_polarities_checked": True,
+            "evaluator_version": selector.RECORDED_BEST_EVALUATOR,
+            "n_features_checked": 1,
+            "worst_polarity_extremity": 0.71,
+            "features": {
+                "test_feature": {
+                    "pooled_auc": 0.71,
+                    "pooled_presence_auc": 0.5,
+                    "leakage_suspected": False,
+                    "folds": [
+                        {
+                            "fold": name,
+                            "auc": 0.6,
+                            "presence_auc": 0.5,
+                            "positives": 10,
+                            "background": 10,
+                        }
+                        for name in selector.FOLD_NAMES
+                    ],
+                }
+            },
+        },
         "holdout": {
             "label": "HOLDOUT-DTI",
             "evaluator_version": selector.RECORDED_BEST_EVALUATOR,
@@ -77,14 +134,8 @@ def _passing_card(tmp_path, monkeypatch) -> dict:
             "ci95": [0.001, 0.02],
         },
         "novelty": {
-            "surface": {"max_abs_rank_correlation": 0.4, "literal_all_entries_passed": True},
-            "final_dots": {
-                "max_abs_rank_correlation": 0.4,
-                "method_lane_max_dot_overlap": 0.5,
-                "method_lane_passed": True,
-                "literal_all_entries_passed": True,
-                "literal_duplicate_rows": [],
-            },
+            "surface": stage("surface_before_placement"),
+            "final_dots": stage("final_dots"),
             "peers_final": {"max_dot_overlap_within_3px": 0.5, "passed": True},
         },
         "c2st_exact_file": {"strict_gate_passed": True, "labels_audited_first": True},
@@ -192,6 +243,78 @@ def test_unknown_or_false_literal_gate_is_not_vacuously_successful(tmp_path, mon
     del card["novelty"]["surface"]["literal_all_entries_passed"]
     result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", card)
     assert result["gates"]["g4_registry_novelty"] is False
+
+
+def test_historical_gate_compatibility_only_allows_documented_stricter_changes():
+    old = {
+        "g1_format_strict_0_1": True,
+        "g2_leakage_canary": True,
+        "g3_holdout_beats_recorded_best_and_paired_baseline": False,
+        "g4_registry_novelty": True,
+        "g5_exact_file_c2st": True,
+    }
+    assert selector.recorded_gates_compatible(old, old.copy())
+    strict = dict(old, g2_leakage_canary=False, g4_registry_novelty=False)
+    assert selector.recorded_gates_compatible(old, strict)
+    assert not selector.recorded_gates_compatible(strict, old)
+    assert not selector.recorded_gates_compatible(old, dict(old, g5_exact_file_c2st=False))
+    assert not selector.recorded_gates_compatible(old, dict(old, g2_leakage_canary=1))
+    assert not selector.recorded_gates_compatible(old, {"g2_leakage_canary": False})
+    changed_best = dict(old, g3_holdout_beats_recorded_best_and_paired_baseline=True)
+    assert not selector.recorded_gates_compatible(old, changed_best)
+    assert selector.recorded_gates_compatible(old, changed_best, allow_benchmark_change=True)
+
+
+def test_canary_gate_requires_actual_value_and_missingness_rows(tmp_path, monkeypatch):
+    import copy
+
+    base = _passing_card(tmp_path, monkeypatch)
+    assert selector._recorded_canary_passed(base["leakage_canary"])
+    for mutate in (
+        lambda c: c["leakage_canary"].update(features={}, n_features_checked=0),
+        lambda c: c["leakage_canary"].update(n_features_checked=2),
+        lambda c: c["leakage_canary"].update(worst_polarity_extremity=0.6),
+        lambda c: c["leakage_canary"]["features"]["test_feature"].update(pooled_presence_auc=0.99),
+        lambda c: c["leakage_canary"]["features"]["test_feature"]["folds"].pop(),
+        lambda c: c["leakage_canary"]["features"]["test_feature"]["folds"][0].update(auc=0.01),
+        lambda c: c["leakage_canary"]["features"]["test_feature"]["folds"][0].pop("presence_auc"),
+    ):
+        bad = copy.deepcopy(base)
+        mutate(bad)
+        assert not selector._recorded_canary_passed(bad["leakage_canary"])
+        result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", bad)
+        assert result["gates"]["g2_leakage_canary"] is False
+        assert result["ok_to_submit"] is False
+
+
+def test_literal_gate_requires_nonvacuous_matching_full_registry_rows(tmp_path, monkeypatch):
+    import copy
+
+    base = _passing_card(tmp_path, monkeypatch)
+    assert selector._literal_novelty_passed(base)
+    for mutate in (
+        lambda c: c["novelty"]["surface"].update(rows=[], registry_unique_rasters=0),
+        lambda c: c["novelty"]["surface"]["rows"].pop(),
+        lambda c: c["novelty"]["final_dots"]["rows"].pop(),
+        lambda c: c["novelty"]["final_dots"]["rows"][0].update(duplicate=True),
+        lambda c: c["novelty"]["final_dots"]["rows"][0].update(
+            candidate_dot_overlap_within_3px=0.71
+        ),
+        lambda c: c["novelty"]["surface"]["rows"][0].update(raw_spearman=-0.91),
+        lambda c: c["novelty"]["surface"]["rows"][0].update(correlation_defined=False),
+        lambda c: c["novelty"]["surface"].update(max_abs_rank_correlation=0.1),
+        lambda c: c["novelty"]["final_dots"].update(max_dot_overlap=0.1),
+        lambda c: c["novelty"]["final_dots"]["rows"][0].update(footprint_sha256="c" * 64),
+        lambda c: c["novelty"]["surface"].update(stage="final_dots"),
+    ):
+        bad = copy.deepcopy(base)
+        mutate(bad)
+        assert not selector._literal_novelty_passed(bad)
+        result = selector.verify_selector(tmp_path / "cand-zeros.tif", tmp_path / "t.tif", bad)
+        assert result["gates"]["g4_registry_novelty"] is False
+        assert result["ok_to_submit"] is False
+    monkeypatch.setattr(selector, "_required_registry_footprints", lambda: None)
+    assert not selector._literal_novelty_passed(base)
 
 
 def test_nonfinite_performance_and_negative_experiment_count_fail_named_gates(

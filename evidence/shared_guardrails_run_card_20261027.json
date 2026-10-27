@@ -1,0 +1,45 @@
+{
+  "hypothesis": "No single-method lane was assigned or tested. Prospective signed magnetic-gravity gradient reversal is unrun.",
+  "mechanism": "A reversal in relative magnetic and gravity gradients near a buried structural intersection could indicate a covered fault splay.",
+  "named_non_fault_mimic": "Intrusive contacts, magnetic remanence, and survey or leveling seams.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "ci95": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "status": "NOT RUN: no assigned lane and no new model"
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "final_dot_overlap_within_3px": null,
+    "status": "NOT RUN: no new candidate"
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_raster": "NONE",
+    "no_nan_inside_footprint": null,
+    "range_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "NOT APPLICABLE: no new file"
+  },
+  "submission_name": null,
+  "submission_note": "No new TIFF. Existing S3DEP1 is research only; do not submit.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "organizer_confirmed_score": null,
+  "existing_research_reference": {
+    "submission_name": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
+    "raster_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+    "holdout_dti": {
+      "value": 0.16606013635163805,
+      "ci95": [0.1518583912, 0.1803388646],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "status": "Source-recorded; scientific measurement not replayed in this review"
+    },
+    "validator_output": "Pinned owner-mirror grid/footprint, interior finite [0,1] and strict whole-array range passed; outside zeros/nodata none do not match the NaN sample convention. No organizer acceptance inferred.",
+    "status": "DOWNLOAD FOR RESEARCH ONLY; DO NOT SUBMIT"
+  }
+}

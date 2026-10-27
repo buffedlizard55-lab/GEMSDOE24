@@ -47,14 +47,16 @@ def _evaluation_arrays(pred, truth, valid_mask, catalogue_mask, *, binary=False)
         raise ValueError("Evaluation/catalogue mask grid mismatch")
     active = valid & ~known
     values = pred[active]
-    # Official outside-footprint NaNs are neutral, but infinities or invalid
-    # values inside the evaluation domain must not turn into giant TP credit.
+    # Official outside-footprint NaNs are neutral, but invalid values inside
+    # the evaluation domain must not silently alter predictions or truth.
     if not np.isfinite(values).all() or np.any((values < 0) | (values > 1)):
         raise ValueError("Evaluated predictions must be probabilities in [0,1]")
+    if not np.isin(truth[active], (0, 1)).all():
+        raise ValueError("Evaluated truth must be a finite binary grid")
     if binary and np.any(np.isfinite(values) & (values != 0) & (values != 1)):
         raise ValueError("Fast DTI is binary-only; use dti_components_exact for soft scores")
     p = np.where(active & np.isfinite(pred), pred, 0).astype(bool if binary else np.float64)
-    g = active & np.isfinite(truth) & (truth > 0)
+    g = active & (truth == 1)
     return p, g, valid, known
 
 
@@ -72,8 +74,8 @@ def dti_components_exact(
         pred, truth, valid_mask, catalogue_mask
     )
     H, W = p.shape
-    if alpha < 0 or beta < 0:
-        raise ValueError("Tversky penalties must be nonnegative")
+    if not np.isfinite(alpha) or not np.isfinite(beta) or alpha < 0 or beta < 0:
+        raise ValueError("Tversky penalties must be finite and nonnegative")
     yy, xx = np.nonzero(g_mask)
     n_truth = int(len(yy))
     if n_truth == 0:

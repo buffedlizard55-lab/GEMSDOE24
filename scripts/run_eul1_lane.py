@@ -427,15 +427,12 @@ def verify_recorded() -> dict[str, Any]:
     ok_sel = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
     # NOTE: after EUL1's own card lands in evidence/, a fresh selector import may read
     # EUL1 itself as the recorded point-best (if it won), flipping only the G3 gate.
-    # Gate-by-gate equality with the issuance-time receipt is therefore checked on all
-    # gates except G3, whose issuance-time value is preserved in the saved receipt.
-    saved_gates = dict(saved_sel.get("gates") or {})
-    fresh_gates = dict(fresh_sel.get("gates") or {})
-    g3 = "g3_holdout_beats_recorded_best_and_paired_baseline"
-    saved_gates.pop(g3, None)
-    fresh_gates.pop(g3, None)
+    # G3 can change with the benchmark. The shared compatibility check also
+    # accepts only stricter G2/G4 transitions; saved receipts remain unchanged.
     if (
-        saved_gates != fresh_gates
+        not selector.recorded_gates_compatible(
+            saved_sel.get("gates"), fresh_sel.get("gates"), allow_benchmark_change=True
+        )
         or saved_sel.get("decision") != fresh_sel.get("decision")
         or json.loads(dl_sel_path.read_text()) != saved_sel
         or card.get("ok_to_submit") is not ok_sel

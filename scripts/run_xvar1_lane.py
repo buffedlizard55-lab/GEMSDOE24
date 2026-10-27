@@ -524,13 +524,10 @@ def verify_recorded() -> dict[str, Any]:
 
     fresh_sel = selector.verify_selector(zeros_path, template, card)
     ok_sel = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
-    saved_gates = dict(saved_sel.get("gates") or {})
-    fresh_gates = dict(fresh_sel.get("gates") or {})
-    g3 = "g3_holdout_beats_recorded_best_and_paired_baseline"
-    saved_gates.pop(g3, None)
-    fresh_gates.pop(g3, None)
     if (
-        saved_gates != fresh_gates
+        not selector.recorded_gates_compatible(
+            saved_sel.get("gates"), fresh_sel.get("gates"), allow_benchmark_change=True
+        )
         or saved_sel.get("decision") != fresh_sel.get("decision")
         or json.loads(dl_sel_path.read_text()) != saved_sel
         or card.get("ok_to_submit") is not ok_sel
