@@ -127,7 +127,11 @@ def test_dprf1_recorded_artifacts_verify_and_refuse_implicit_rerun():
     assert fresh_sel["ok_to_submit"] is False
     assert fresh_sel["decision"] == "DO_NOT_SUBMIT"
     assert fresh_sel["human_inspection_used"] is False
-    assert fresh_sel["gates"] == saved_sel["gates"]
+    # The historical summary-only canary passed at issuance, but cannot satisfy
+    # the current per-feature/per-fold missingness screen without replay.
+    assert saved_sel["gates"]["g2_leakage_canary"] is True
+    assert fresh_sel["gates"]["g2_leakage_canary"] is False
+    assert selector.recorded_gates_compatible(saved_sel["gates"], fresh_sel["gates"])
 
     fp = footprint.load_footprint()
     with rasterio.open(zeros) as dz, rasterio.open(nan_p) as dn:

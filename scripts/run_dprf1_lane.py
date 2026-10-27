@@ -596,7 +596,7 @@ def verify_recorded() -> dict[str, Any]:
     fresh_sel = selector.verify_selector(zeros_path, template, card)
     ok_sel = bool(fresh_sel["ok_to_submit"]) and fresh_sel["decision"] == "OK_TO_SUBMIT"
     if (
-        saved_sel.get("gates") != fresh_sel.get("gates")
+        not selector.recorded_gates_compatible(saved_sel.get("gates"), fresh_sel.get("gates"))
         or saved_sel.get("decision") != fresh_sel.get("decision")
         or json.loads(dl_sel_path.read_text()) != saved_sel
         or card.get("ok_to_submit") is not ok_sel

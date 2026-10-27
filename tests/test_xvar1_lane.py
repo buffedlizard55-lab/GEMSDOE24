@@ -143,7 +143,11 @@ def test_xvar1_recorded_receipts_and_strict_geotiff_integrity():
     fresh_sel = selector.verify_selector(zeros_tif, template, card)
     assert fresh_sel["decision"] == "DO_NOT_SUBMIT"
     assert fresh_sel["ok_to_submit"] is False
-    assert fresh_sel["gates"] == saved_sel["gates"]
+    # The historical summary-only canary passed at issuance, but cannot satisfy
+    # the current per-feature/per-fold missingness screen without replay.
+    assert saved_sel["gates"]["g2_leakage_canary"] is True
+    assert fresh_sel["gates"]["g2_leakage_canary"] is False
+    assert selector.recorded_gates_compatible(saved_sel["gates"], fresh_sel["gates"])
 
     # 9-site executive summary completeness
     sites = {row["site"] for row in nine["sites"]}

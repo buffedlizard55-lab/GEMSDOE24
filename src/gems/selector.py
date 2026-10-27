@@ -10,6 +10,7 @@ competition portal. Historical v1 receipts remain immutable research evidence.
 
 from __future__ import annotations
 
+import json
 import math
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,6 +18,7 @@ from typing import Any
 
 from . import submission
 from .benchmarks import EVALUATOR, selection_floor
+from .holdout import FOLD_NAMES
 from .validator import sha256_file
 
 SELECTOR_VERSION = "gems-selector-v2-literal-quota-fail-closed"
@@ -36,6 +38,35 @@ MAX_RANK_CORRELATION = 0.90
 MAX_DOT_OVERLAP = 0.70
 MAX_NOTE_CHARS = 140
 MAX_EXPERIMENTS = 3
+
+# Necessary minimum, not a guarantee that the live registry is complete. A
+# new manifest requires an explicit audited update of this content pin.
+REGISTRY_MANIFEST = "registry/priority_rasters_20261026_portfolio.json"
+REGISTRY_MANIFEST_SHA256 = "d60551fec38ffe9ce58f1ac6ee0a6b2effb30bb6590ad15859bedcaa578d1580"
+
+
+def _required_registry_footprints() -> frozenset[str] | None:
+    """Return the pinned portfolio's unique content IDs, or fail closed."""
+    path = Path(__file__).resolve().parents[2] / REGISTRY_MANIFEST
+    try:
+        if sha256_file(path) != REGISTRY_MANIFEST_SHA256:
+            return None
+        entries = json.loads(path.read_text())["unique_rasters"]
+        hashes = [entry["footprint_sha256"] for entry in entries]
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+    if (
+        not hashes
+        or any(
+            not isinstance(value, str)
+            or len(value) != 64
+            or any(c not in "0123456789abcdef" for c in value)
+            for value in hashes
+        )
+        or len(set(hashes)) != len(hashes)
+    ):
+        return None
+    return frozenset(hashes)
 
 
 def _number(value: Any, lower: float, upper: float) -> bool:
@@ -63,18 +94,153 @@ def _strict_ok(checks: dict[str, Any]) -> bool:
         return False
 
 
+def recorded_gates_compatible(
+    saved: Any, fresh: Any, *, allow_benchmark_change: bool = False
+) -> bool:
+    """Compare issuance-time gates without treating stricter checks as tampering.
+
+    Frozen receipts stay unchanged. Only the new G2/G4 screens may move from
+    True to False; the opposite direction is never accepted. Some historical
+    verifiers already allow G3 to change when the point-best benchmark moves.
+    This helper never authorizes a submission or bypasses byte/decision checks.
+    """
+    if not isinstance(saved, dict) or not isinstance(fresh, dict) or saved.keys() != fresh.keys():
+        return False
+    for key, old in saved.items():
+        new = fresh[key]
+        if type(old) is not bool or type(new) is not bool:
+            return False
+        if old is new:
+            continue
+        if key in {"g2_leakage_canary", "g4_registry_novelty"} and old and not new:
+            continue
+        if allow_benchmark_change and key == "g3_holdout_beats_recorded_best_and_paired_baseline":
+            continue
+        return False
+    return True
+
+
+def _recorded_canary_passed(canary: dict[str, Any]) -> bool:
+    """Require nonempty per-feature/fold value and missingness evidence.
+
+    Rows are a necessary recorded screen, not independent feature or provenance
+    replay. Old summary-only receipts cannot establish this stronger check.
+    """
+
+    def auc_clear(value: Any) -> bool:
+        return _number(value, 0, 1) and max(value, 1 - value) <= 0.9
+
+    try:
+        features = canary["features"]
+        worst = canary["worst_polarity_extremity"]
+        if (
+            canary.get("passed") is not True
+            or canary.get("two_polarities_checked") is not True
+            or canary.get("evaluator_version") != RECORDED_BEST_EVALUATOR
+            or not isinstance(features, dict)
+            or not features
+            or type(canary.get("n_features_checked")) is not int
+            or canary["n_features_checked"] != len(features)
+            or not _number(worst, 0.5, 0.9)
+        ):
+            return False
+        pooled_extremities = []
+        for name, feature in features.items():
+            if (
+                not isinstance(name, str)
+                or not name
+                or feature.get("leakage_suspected") is not False
+            ):
+                return False
+            pooled = feature["pooled_auc"]
+            if not auc_clear(pooled) or not auc_clear(feature["pooled_presence_auc"]):
+                return False
+            pooled_extremities.append(max(pooled, 1 - pooled))
+            folds = feature["folds"]
+            if not isinstance(folds, list) or len(folds) != len(FOLD_NAMES):
+                return False
+            if {fold["fold"] for fold in folds} != set(FOLD_NAMES):
+                return False
+            for fold in folds:
+                if (
+                    not auc_clear(fold["auc"])
+                    or not auc_clear(fold["presence_auc"])
+                    or type(fold["positives"]) is not int
+                    or type(fold["background"]) is not int
+                    or fold["positives"] < 1
+                    or fold["background"] < 1
+                ):
+                    return False
+        return math.isclose(worst, max(pooled_extremities), rel_tol=0, abs_tol=1e-12)
+    except (KeyError, TypeError, ValueError, AttributeError, OverflowError):
+        return False
+
+
 def _literal_novelty_passed(run_card: dict[str, Any]) -> bool:
-    """All entries means ALL entries; no control exception, no vacuous success."""
+    """Screen both stages against every pinned portfolio content identity.
+
+    Recorded rows alone cannot prove that comparisons were actually run or
+    that the pinned portfolio includes newly published rasters. Independent
+    replay and current-registry freshness remain separate mandatory gates.
+    """
+    required = _required_registry_footprints()
+    if not required:
+        return False
     try:
         novelty_result = run_card["novelty"]
         surface, final = novelty_result["surface"], novelty_result["final_dots"]
-        return (
-            surface.get("literal_all_entries_passed") is True
-            and final.get("literal_all_entries_passed") is True
-            and isinstance(final.get("literal_duplicate_rows"), list)
-            and not final["literal_duplicate_rows"]
-        )
-    except (KeyError, TypeError, AttributeError):
+        identities = []
+        for stage, expected_stage in (
+            (surface, "surface_before_placement"),
+            (final, "final_dots"),
+        ):
+            rows = stage["rows"]
+            if (
+                stage.get("stage") != expected_stage
+                or stage.get("literal_all_entries_passed") is not True
+                or not isinstance(rows, list)
+                or not rows
+                or type(stage.get("registry_unique_rasters")) is not int
+                or stage["registry_unique_rasters"] != len(rows)
+                or stage.get("literal_duplicate_rows") != []
+            ):
+                return False
+            seen, correlations, overlaps = set(), [], []
+            for row in rows:
+                content = row["footprint_sha256"]
+                if (
+                    not isinstance(content, str)
+                    or len(content) != 64
+                    or any(c not in "0123456789abcdef" for c in content)
+                    or content in seen
+                    or row.get("correlation_defined") is not True
+                    or row.get("duplicate") is not False
+                ):
+                    return False
+                seen.add(content)
+                for key in ("raw_spearman", "kernel_spearman"):
+                    rho = row[key]
+                    if not _number(rho, -MAX_RANK_CORRELATION, MAX_RANK_CORRELATION):
+                        return False
+                    correlations.append(abs(rho))
+                overlap = row["candidate_dot_overlap_within_3px"]
+                if expected_stage == "final_dots":
+                    if not _number(overlap, 0, MAX_DOT_OVERLAP):
+                        return False
+                    overlaps.append(overlap)
+                elif overlap is not None:
+                    return False
+            if not required.issubset(seen) or not math.isclose(
+                stage["max_abs_rank_correlation"], max(correlations), rel_tol=0, abs_tol=1e-12
+            ):
+                return False
+            if expected_stage == "final_dots" and not math.isclose(
+                stage["max_dot_overlap"], max(overlaps), rel_tol=0, abs_tol=1e-12
+            ):
+                return False
+            identities.append(seen)
+        return identities[0] == identities[1]
+    except (KeyError, TypeError, ValueError, AttributeError, OverflowError):
         return False
 
 
@@ -121,10 +287,14 @@ def verify_selector(
     try:
         canary = run_card["leakage_canary"]
         worst = canary["worst_polarity_extremity"]
-        if canary.get("passed") is True and _number(worst, 0.5, 0.90):
+        if _recorded_canary_passed(canary):
             gates["g2_leakage_canary"] = True
         else:
-            fail("g2_leakage_canary", f"passed={canary.get('passed')}, worst extremity={worst}")
+            fail(
+                "g2_leakage_canary",
+                f"passed={canary.get('passed')}, worst extremity={worst}; "
+                "complete per-feature and per-fold value/missingness AUC evidence required",
+            )
     except (KeyError, TypeError, ValueError, AttributeError):
         fail("g2_leakage_canary", "canary evidence missing or malformed")
 

@@ -1,0 +1,138 @@
+{
+  "checked_utc": "2026-10-27T17:43:36.081Z",
+  "base_origin": "http://127.0.0.1:8080",
+  "browser": "153.0.8010.0",
+  "experiments_run": 0,
+  "external_requests_blocked": [],
+  "errors": [],
+  "pages": [
+    {
+      "device": "desktop",
+      "page": "index.html",
+      "document_sha256": "cfb6dbfd9eb446ea4ffd8ef6721233763e38f3bac48d25ccbccd7fc50a38044b",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/index.html",
+      "document_sha256": "6dbec12bcd3bb63e963fa5479d03a4c15e1abcd3932963d62e994149d90c18c6",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "executive-summary.html",
+      "document_sha256": "3b2e6458c4cdc00b8b9828a19ad1ae142697fb19795dcfe387b40f22e376b9ca",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/executive-summary.html",
+      "document_sha256": "d591f7f373f8908f62472d014a9359866a44e103e6ac211181672502e76e774b",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/research.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/sources.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": [],
+      "owner_table_rows": 92
+    },
+    {
+      "device": "desktop",
+      "page": "docs/submission-readiness.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": [],
+      "diagnostic_budget_rows": 5
+    },
+    {
+      "device": "mobile",
+      "page": "index.html",
+      "document_sha256": "cfb6dbfd9eb446ea4ffd8ef6721233763e38f3bac48d25ccbccd7fc50a38044b",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/index.html",
+      "document_sha256": "6dbec12bcd3bb63e963fa5479d03a4c15e1abcd3932963d62e994149d90c18c6",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "executive-summary.html",
+      "document_sha256": "3b2e6458c4cdc00b8b9828a19ad1ae142697fb19795dcfe387b40f22e376b9ca",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/executive-summary.html",
+      "document_sha256": "d591f7f373f8908f62472d014a9359866a44e103e6ac211181672502e76e774b",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/research.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/sources.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": [],
+      "owner_table_rows": 92
+    },
+    {
+      "device": "mobile",
+      "page": "docs/submission-readiness.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": [],
+      "diagnostic_budget_rows": 5
+    }
+  ]
+}

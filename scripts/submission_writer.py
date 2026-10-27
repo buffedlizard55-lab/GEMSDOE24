@@ -13,7 +13,7 @@ import rasterio
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from gems.submission import check_variants, write_submission  # noqa: E402
+from gems.submission import _same_file, check_variants, write_submission  # noqa: E402
 
 
 def main():
@@ -28,6 +28,8 @@ def main():
         help="exterior encoding; zero tests strict all-finite validation and does not authorize upload",
     )
     args = ap.parse_args()
+    if _same_file(args.output, args.prediction):
+        raise SystemExit("Output must not overwrite the prediction input")
     if args.prediction.suffix == ".npy":
         a = np.load(args.prediction, allow_pickle=False)
     else:

@@ -21,6 +21,10 @@ EXPECTED = {
     "bounds": (243350.0, 4135550.0, 572550.0, 4508550.0),
     "footprint_pixels": 5167373,
     "outside_pixels": 7111787,
+    # SHA-256 of np.packbits(isfinite(sample), bitorder="big") in row-major
+    # order. This pins the owner-mirrored mask's *locations*, not merely its
+    # population count; it does not authenticate the mirror with the organizer.
+    "footprint_sha256": "aadc4079300653c5293dbe74c7f29b1fe04a1d0c58620d4e3d82ed3765348364",
 }
 
 
@@ -28,6 +32,26 @@ def sanitize(pred: np.ndarray) -> np.ndarray:
     """NaN/Inf-safe float32 in [0, 1]. NaN -> 0 (no evidence), +Inf -> 1, -Inf -> 0, then clip."""
     a = np.nan_to_num(np.asarray(pred, dtype=np.float64), nan=0.0, posinf=1.0, neginf=0.0)
     return np.clip(a, 0.0, 1.0).astype(np.float32)
+
+
+def _same_file(a: Path | str, b: Path | str) -> bool:
+    """Catch same path, symlink and existing hardlink aliases before writing."""
+    a, b = Path(a), Path(b)
+    if a.resolve() == b.resolve():
+        return True
+    try:
+        return a.samefile(b)
+    except FileNotFoundError:
+        return False
+
+
+def footprint_sha256(footprint: np.ndarray) -> str:
+    """Hash an exact binary footprint, independent of GeoTIFF encoding."""
+    footprint = np.asarray(footprint)
+    if footprint.ndim != 2 or not np.isin(footprint, (0, 1)).all():
+        raise ValueError("Footprint must be a two-dimensional binary grid")
+    packed = np.packbits(footprint.ravel().astype(bool, copy=False), bitorder="big")
+    return hashlib.sha256(packed.tobytes()).hexdigest()
 
 
 def write_submission(
@@ -48,6 +72,8 @@ def write_submission(
     if outside not in ("nan", "zero"):
         raise ValueError("outside must be 'nan' or 'zero'")
     out_path = Path(out_path)
+    if _same_file(out_path, template_path):
+        raise ValueError("Output must not overwrite the template")
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with rasterio.open(template_path) as t:
         profile = t.profile.copy()
@@ -80,6 +106,8 @@ def zip_single(tif_path: Path | str, zip_path: Path | str | None = None) -> Path
     zip_path = Path(zip_path) if zip_path else tif_path.with_suffix(".zip")
     if tif_path.suffix.lower() != ".tif" or not tif_path.is_file():
         raise ValueError("ZIP input must be an existing .tif")
+    if _same_file(tif_path, zip_path):
+        raise ValueError("ZIP output must not overwrite the source TIFF")
     zip_path.parent.mkdir(parents=True, exist_ok=True)
     info = zipfile.ZipInfo(tif_path.name, date_time=(2026, 10, 2, 0, 0, 0))
     info.compress_type = zipfile.ZIP_DEFLATED
@@ -143,6 +171,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         and t_shape == EXPECTED["shape"]
         and tuple(t_tr)[:6] == EXPECTED["transform"]
         and int(footprint.sum()) == EXPECTED["footprint_pixels"]
+        and footprint_sha256(footprint) == EXPECTED["footprint_sha256"]
     )
     add(
         "official_template_grid_and_footprint",

@@ -143,6 +143,7 @@ def test_format_validator_never_authorizes_an_upload(tmp_path, monkeypatch):
         s.write(np.where(fp, 0, np.nan).astype(np.float32), 1)
     monkeypatch.setitem(submission.EXPECTED, "shape", fp.shape)
     monkeypatch.setitem(submission.EXPECTED, "footprint_pixels", int(fp.sum()))
+    monkeypatch.setitem(submission.EXPECTED, "footprint_sha256", submission.footprint_sha256(fp))
     p = submission.write_submission(np.ones(fp.shape), template, tmp_path / "new.tif")
     checks = submission.check_variants(p, template)
     assert checks["format_valid"]

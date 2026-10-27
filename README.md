@@ -34,6 +34,12 @@ Its [prior review](docs/protocol-feasibility-20261027.md) and
 Both entrypoints now reuse one exact-arithmetic implementation; the fresh
 checker additionally reopens the pinned template and reference raster.
 
+See the [prominent nine-site research file/freshness table](docs/executive-summary.html#current-focus-files),
+[four ranked unexecuted hypotheses and data availability](docs/research-directions-20261027.md), and
+[shared-tool verification review](docs/shared-guardrails-review-20261027.md). Local mirror/cache hashes
+prove integrity only, not organizer provenance. A format PASS never authorizes a submission;
+independent scientific replay, current registry coverage, quota, and the separate selector remain blockers.
+
 ## Current decision — 2026-10-27: research downloads only; **DO NOT SUBMIT**
 
 **No new TIFF or experiment was produced by this review, and no slot was used.**

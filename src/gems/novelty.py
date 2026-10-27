@@ -467,6 +467,7 @@ def compare_prospective_registry(
         **base,
         "method_lane_passed": method_passed,
         "literal_all_entries_passed": base["passed"],
+        "literal_duplicate_rows": [row for row in base["rows"] if row["duplicate"]],
         "competing_method_rasters_count": len(method_rows),
         "calibration_control_rasters_count": len(control_rows),
         "method_lane_max_abs_rank_correlation": method_max_rho,

@@ -91,6 +91,41 @@ def test_contradictory_hunique_packet_is_quarantined_without_tiff_link(built):
         assert not quarantine.find("a", href=lambda href: href and row["file"] in href)
 
 
+def test_nine_site_review_is_prominent_and_shows_per_site_source_state(built):
+    from bs4 import BeautifulSoup
+
+    audit = json.loads((built / "evidence/current_focus_nine_file_audit_20261027.json").read_text())
+    feed = json.loads((built / "docs/data/portfolio_freshness.json").read_text())
+    refs = {row["repo"].split("/")[-1]: row for row in feed["rows"]}
+    for path in (
+        "index.html",
+        "executive-summary.html",
+        "docs/index.html",
+        "docs/executive-summary.html",
+    ):
+        html = (built / path).read_text()
+        assert html.index('id="current-focus-files"') < html.index('id="oct27-integrity"')
+        section = BeautifulSoup(html, "html.parser").find(id="current-focus-files")
+        table = section.find("table")
+        rows = table.find("tbody").find_all("tr", recursive=False)
+        assert len(rows) == 9 and "Leaderboard estimate" in table.get_text()
+        for rendered, recorded in zip(rows, audit["rows"], strict=True):
+            text = rendered.get_text(" ", strip=True)
+            source = refs[recorded["site"]]
+            expected = (
+                "UNKNOWN — GitHub check failed"
+                if source["status"] != "checked"
+                else (
+                    "UNCHANGED since audited commit"
+                    if source["latest_main_ref"] == recorded["source_ref"]
+                    else "CHANGED — latest commit not re-audited"
+                )
+            )
+            assert recorded["site"] in text and expected in text
+            assert "NOT ESTIMABLE" in text and "UNVERIFIED" in text and "NO" in text
+            assert rendered.find("a", href=lambda href: href and recorded["source_ref"] in href)
+
+
 def test_guide_has_the_portal_steps_note_and_the_range_error_advice(built):
     html = (built / "docs/executive-summary.html").read_text()
     for needle in (

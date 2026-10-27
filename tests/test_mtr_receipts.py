@@ -107,6 +107,31 @@ def test_missing_gh_is_a_recorded_failed_check_not_a_crashed_website(monkeypatch
     assert row["latest_main_ref"] is None and "unavailable" in row["error"]
 
 
+def test_priority_feed_falls_back_to_github_graphql_but_never_invents_a_ref(monkeypatch):
+    module = script("refresh_priority_feed")
+    calls = []
+
+    def rest_limited_then_graphql(command, **kwargs):
+        calls.append(command)
+        if "graphql" not in command:
+            raise subprocess.CalledProcessError(1, command, stderr="rate limited")
+        return "b" * 40 + "\n"
+
+    monkeypatch.setattr(module.subprocess, "check_output", rest_limited_then_graphql)
+    row = module.check({"repo": "owner/repository", "ref": "a" * 40})
+    assert row["status"] == "checked" and row["changed_since_review"] is True
+    assert row["latest_main_ref"] == "b" * 40 and row["source_api"] == "github-graphql"
+    assert len(calls) == 2 and "owner=owner" in calls[1] and "name=repository" in calls[1]
+
+    def both_fail(command, **kwargs):
+        raise subprocess.CalledProcessError(1, command, stderr="not accessible")
+
+    monkeypatch.setattr(module.subprocess, "check_output", both_fail)
+    row = module.check({"repo": "owner/repository", "ref": "a" * 40})
+    assert row["status"] == "failed" and row["latest_main_ref"] is None
+    assert row["changed_since_review"] is None
+
+
 def test_duplicate_primitives_reject_unknown_numbers_and_honor_both_polarities():
     assert novelty.is_duplicate(-0.90001)
     assert not novelty.is_duplicate(-0.90, 0.70)
