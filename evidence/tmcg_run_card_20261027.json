@@ -1,0 +1,325 @@
+{
+  "hypothesis": "H24-TMCG: topographic\u2013magnetic cross-gradient |\u2207z \u00d7 \u2207rtp| targets catalogue-missing faults that warp RTP without controlling modern drainage.",
+  "mechanism": "Sobel gradients of Gaussian-smoothed det_elev and rtp; magnitude of 2-D cross product; three arms (raw / basin-decoupled / shear-weighted).",
+  "named_non_fault_mimic": "Irrigation canals, playa edges, and volcanic flow contacts that also misalign topography vs magnetics.",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "dti": 0.07157068265289451,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.06270643919760513,
+        0.08168007816813075
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 399,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "n_withheld_positive_pixels": 60988,
+    "winning_arm": "B_decoupled_basin",
+    "delta_vs_oof_baseline_0_16370": -0.0921293173471055
+  },
+  "experiments": [
+    {
+      "arm": "A_raw",
+      "holdout_dti": 0.054143818383076726,
+      "ci95": {
+        "level": 0.95,
+        "interval": [
+          0.045623422189338264,
+          0.06354035636130337
+        ],
+        "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+        "block_pixels": 100,
+        "block_size_m": 10000,
+        "n_blocks": 583,
+        "resamples": 399,
+        "seed": 20261025,
+        "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+      },
+      "n_withheld_positive_pixels": 60988,
+      "evaluator_version": "gems-segment-pooled-v1",
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 558.1047447522286,
+          "FP_w": 8172.788742902466,
+          "FN_w": 9606.895255247771,
+          "n_truth": 10165,
+          "n_emitted": 8430,
+          "dti": 0.05649874960108562,
+          "coverage": 0.05490454940995854
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 424.68686032813685,
+          "FP_w": 10230.859299956333,
+          "FN_w": 12086.313139671864,
+          "n_truth": 12511,
+          "n_emitted": 10422,
+          "dti": 0.034982704747347014,
+          "coverage": 0.0339450771583516
+        },
+        {
+          "fold": "SW",
+          "TP_w": 1136.2175147912371,
+          "FP_w": 9891.220783970535,
+          "FN_w": 19397.78248520876,
+          "n_truth": 20534,
+          "n_emitted": 10429,
+          "dti": 0.06097979720013406,
+          "coverage": 0.05533347203619544
+        },
+        {
+          "fold": "SE",
+          "TP_w": 949.3757045739454,
+          "FP_w": 8039.7918620271585,
+          "FN_w": 16828.624295426056,
+          "n_truth": 17778,
+          "n_emitted": 8441,
+          "dti": 0.05926104034492687,
+          "coverage": 0.05340171586083617
+        }
+      ],
+      "delta_vs_baseline_0_16370": -0.10955618161692329
+    },
+    {
+      "arm": "B_decoupled_basin",
+      "holdout_dti": 0.07157068265289451,
+      "ci95": {
+        "level": 0.95,
+        "interval": [
+          0.06270643919760513,
+          0.08168007816813075
+        ],
+        "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+        "block_pixels": 100,
+        "block_size_m": 10000,
+        "n_blocks": 583,
+        "resamples": 399,
+        "seed": 20261025,
+        "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+      },
+      "n_withheld_positive_pixels": 60988,
+      "evaluator_version": "gems-segment-pooled-v1",
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 720.5837776788251,
+          "FP_w": 8125.180002027844,
+          "FN_w": 9444.416222321175,
+          "n_truth": 10165,
+          "n_emitted": 8430,
+          "dti": 0.07277776592620998,
+          "coverage": 0.07088871398709544
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 580.6293758885125,
+          "FP_w": 10171.265163969949,
+          "FN_w": 11930.370624111487,
+          "n_truth": 12511,
+          "n_emitted": 10422,
+          "dti": 0.04775235073669902,
+          "coverage": 0.04640950970254276
+        },
+        {
+          "fold": "SW",
+          "TP_w": 1505.1848026997725,
+          "FP_w": 9795.98700359017,
+          "FN_w": 19028.815197300228,
+          "n_truth": 20534,
+          "n_emitted": 10429,
+          "dti": 0.08054528907468456,
+          "coverage": 0.07330207473944543
+        },
+        {
+          "fold": "SE",
+          "TP_w": 1259.2471660131316,
+          "FP_w": 7919.987224266382,
+          "FN_w": 16518.75283398687,
+          "n_truth": 17778,
+          "n_emitted": 8441,
+          "dti": 0.0784174745579538,
+          "coverage": 0.07083176769114251
+        }
+      ],
+      "delta_vs_baseline_0_16370": -0.0921293173471055
+    },
+    {
+      "arm": "C_transtension",
+      "holdout_dti": 0.05769224152299243,
+      "ci95": {
+        "level": 0.95,
+        "interval": [
+          0.049224240503208526,
+          0.06671746318322075
+        ],
+        "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+        "block_pixels": 100,
+        "block_size_m": 10000,
+        "n_blocks": 583,
+        "resamples": 399,
+        "seed": 20261025,
+        "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+      },
+      "n_withheld_positive_pixels": 60988,
+      "evaluator_version": "gems-segment-pooled-v1",
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 604.38371277063,
+          "FP_w": 8150.837901682267,
+          "FN_w": 9560.61628722937,
+          "n_truth": 10165,
+          "n_emitted": 8430,
+          "dti": 0.0611535973146122,
+          "coverage": 0.059457325407833744
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 416.3222162102138,
+          "FP_w": 10234.721228768874,
+          "FN_w": 12094.677783789786,
+          "n_truth": 12511,
+          "n_emitted": 10422,
+          "dti": 0.03429622853669971,
+          "coverage": 0.03327649398211285
+        },
+        {
+          "fold": "SW",
+          "TP_w": 1181.523919239393,
+          "FP_w": 9901.638647905113,
+          "FN_w": 19352.476080760607,
+          "n_truth": 20534,
+          "n_emitted": 10429,
+          "dti": 0.06337344633309809,
+          "coverage": 0.057539881135647855
+        },
+        {
+          "fold": "SE",
+          "TP_w": 1068.8173817614263,
+          "FP_w": 7980.84006869654,
+          "FN_w": 16709.182618238574,
+          "n_truth": 17778,
+          "n_emitted": 8441,
+          "dti": 0.06666637241222945,
+          "coverage": 0.06012022622125247
+        }
+      ],
+      "delta_vs_baseline_0_16370": -0.10600775847700758
+    }
+  ],
+  "canary": {
+    "passed": true,
+    "threshold": 0.9
+  },
+  "correlation_overlap_vs_registry": {
+    "n_compared": 55,
+    "drifted": false,
+    "worst": {},
+    "flags": []
+  },
+  "raster_sha256": "9df52a41c34d4f508b57128c1bc6c2dd716c6149d22dd8717137baa463ed0336",
+  "n_dots": 37722,
+  "validator_output": {
+    "file": "gems24-tmcg-b-decoupled-basin-20261027T113937Z-6f8d042d5ee4-zeros.tif",
+    "bytes": 826562,
+    "sha256": "9df52a41c34d4f508b57128c1bc6c2dd716c6149d22dd8717137baa463ed0336",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37722,
+    "in_footprint_mass": 37722.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "submission_name": "gems24-tmcg-b-decoupled-basin-20261027T113937Z-6f8d042d5ee4-zeros.tif",
+  "note": "GEMS24 TMCG |\u2207z\u00d7\u2207rtp| unique; HOLDOUT only; selector spends slots",
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "experiments_run": 3,
+  "elapsed_seconds": 50.493129142999976,
+  "lane": "H24-TMCG"
+}
