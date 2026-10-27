@@ -1,5 +1,13 @@
 # Four prospective fault-detection directions — not executed
 
+> **Later concurrency check (session a73c5f88, 2026-10-27):**
+> [open PR #70](https://github.com/buffedlizard55-lab/GEMSDOE24/pull/70) at
+> `845adf5b6e762290462fb4896d339b0acfce78e8` describes a signed magnetic–gravity /
+> conditional-potassium experiment. Entries 1–2 below are a historical prospective
+> queue, **not currently certified untried**. Compare that implementation before
+> assigning any lane; its claims were not scientifically replayed here.
+
+
 **No lane is assigned and none of these is a predicted score or permission to run.** Ranking is a qualitative assessment of potential holdout information relative to implementation cost, not a DTI forecast. Results may be worse than existing methods. The pinned lattice imposes a separate, currently blocking geometric constraint; a model cannot be promoted merely by exceeding a holdout point estimate. [Feasibility analysis](protocol-feasibility-20261027.md) · [nine-site executive guide](executive-summary.html#current-focus-files).
 
 | Rank | Layers and specific proposed signature | Why it could identify an unmapped fault / named non-fault mimic | Difference from repository work and relative cost |

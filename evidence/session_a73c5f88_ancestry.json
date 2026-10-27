@@ -1,0 +1,79 @@
+{
+  "evidence_class": "COMPUTED-ARTIFACT-FORENSICS; counts and geometry, NOT scores",
+  "artifacts": [
+    {
+      "repo": "GEMSDOE24",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/07345ea0604953d7efb858d9cfbc21e20c7aca0b/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
+      "sha256": "3e0730e8d4f7db095dd80246a98cba3bc0fc9a28f436b91db27ca34df4d0d1ce",
+      "dot_count": 60069,
+      "recorded_counts_reproduced": true
+    },
+    {
+      "repo": "GEMSDOE25",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/04333cc3fbf7486c56e0324fd07aee684be614dc/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif",
+      "sha256": "3e78737f0da8dd2ca66cc6caac0ce8eeefcd6715707f8d1bd3091845cd9bcc30",
+      "dot_count": 44090,
+      "recorded_counts_reproduced": true
+    },
+    {
+      "repo": "GEMSDOE27",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/b8dd298e10884afffa05436673ac73aeaf850b8c/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif",
+      "sha256": "a9bf76b57453a5b3af74c8eef837df53c29a0931162aa540b8763220b36ba3bb",
+      "dot_count": 61328,
+      "recorded_counts_reproduced": true
+    },
+    {
+      "repo": "GEMSDOE28",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/78e724f95337a6528b1248be5c113c6d6d502891/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif",
+      "sha256": "7c74270ad48fa0b865163853046a6d3815967c5bf37bbda5b74ca7fa22583a32",
+      "dot_count": 37660,
+      "recorded_counts_reproduced": true
+    },
+    {
+      "repo": "GEMSDOE30",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/3d5bec2af5f29291617f97c9e2dfe443be6f55c3/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+      "sha256": "8cf893ead5667df21d3288a9968c35fd5385c425b029d82ee71d311715b129fd",
+      "dot_count": 44090,
+      "recorded_counts_reproduced": true
+    },
+    {
+      "repo": "GEMSDOE31",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/cf13282fcd86290f1539f0a86446c8ba7205a79b/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif",
+      "sha256": "acd853936e5a7170b207f23411b1844caa0e7cfdfc303c600e520ccfe75159e6",
+      "dot_count": 40199,
+      "recorded_counts_reproduced": true
+    },
+    {
+      "repo": "GEMSDOE32",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/012e17b2a115c3c0d5e7885bea625bf9657c99fc/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+      "dot_count": 37654,
+      "recorded_counts_reproduced": true
+    },
+    {
+      "repo": "GEMSDOE33",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f52533110fe62cd03e77f1228e9e5ecac412c463/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+      "sha256": "87f857d505e23247e991ccfab2cbe9f49a04df4f9c8028dce7ea261554690757",
+      "dot_count": 41865,
+      "recorded_counts_reproduced": true
+    },
+    {
+      "repo": "GEMSDOE36",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c9ad59ec6f969ed931d089a03044c1567a633e84/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "dot_count": 38854,
+      "recorded_counts_reproduced": true
+    }
+  ],
+  "tests": {
+    "GEMSDOE25_equals_GEMSDOE30": true,
+    "GEMSDOE32_equals_GEMSDOE25_after_200m_clearance": true,
+    "GEMSDOE32_equals_GEMSDOE31_after_200m_clearance": true,
+    "GEMSDOE36_contains_every_GEMSDOE32_dot": true
+  },
+  "removed_from_GEMSDOE25": 6436,
+  "removed_from_GEMSDOE31": 2545,
+  "added_by_GEMSDOE36": 1200,
+  "organizer_confirmed_scores": [],
+  "interpretation_limit": "Geometry does not reveal hidden TP/FP, vent discoveries, or why an unconfirmed score changed."
+}
