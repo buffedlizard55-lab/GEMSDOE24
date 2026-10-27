@@ -1,5 +1,40 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## 2026-10-27 CGMK1 session (`arena/5ef84d43`) — **new unique TIFF generated; DOWNLOAD YES (research) · SUBMIT NO**
+
+> **Read this first every session, with `AGENTS.md` and the preserved owner request below.**
+> Operative constraints (parallel-run protocol): one preregistered lane; shared
+> `evaluate_holdout.py`/`submission_writer.py` and the pooled segment holdout
+> (whole components hidden with buffer, visible faults masked pixel-exactly, DTI
+> α=0.2/β=0.8/300 m triangular kernel); every number labelled **HOLDOUT-DTI**
+> (evaluator, withheld n, 95% CI) or **ORGANIZER-CONFIRMED** (artifact-linked
+> receipt — none exists); per-feature leakage canary (AUC > 0.90 = leakage);
+> ≤3 experiments; zero slots spent by experiment sessions. **Core values:
+> Maximize P(Win) · Own the Outcome.**
+
+- **New file (obvious status):** [`gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-zeros.tif`](docs/downloads/gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-zeros.tif)
+  (SHA-256 `3258f3290390b92470e0eb9d92886f0ab1289df1abe46397fcfaf08f56b43070`, 37,654 binary dots,
+  strict whole-array [0,1] PASS) → **DOWNLOAD: YES (research) · SUBMIT: NO (`DO_NOT_SUBMIT`, verdict `negative`)**.
+  [ZIP](docs/downloads/gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-zeros.zip) ·
+  [NaN twin](docs/downloads/gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-nan.tif) ·
+  [validator JSON](docs/downloads/checks-gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-zeros.json) ·
+  [run card](evidence/cgmk1_run_card_20261027.json) ·
+  [**executive summary subpage + exact submission instructions**](docs/executive-summary-20261027-cgmk1.html) ·
+  [nine-site JSON](evidence/nine_site_executive_summary_cgmk1_20261027.json) ·
+  [findings + B2 PhD analysis](knowledge/33_CGMK1_findings_and_9site_executive_summary_2026-10-27.md) ·
+  [preregistration](knowledge/32_preregistered_CGMK1_2026-10-27.md).
+- **Result:** **HOLDOUT-DTI 0.08868** [0.07565, 0.10234] (`gems-segment-pooled-v1`, 60,988 withheld;
+  independently rescored) vs matched control 0.08589 (paired Δ +0.00279 [−0.00222, +0.00768]) and the
+  conservative floor 0.17010 (KPL-36 record). Canary PASS (worst extremity 0.5882);
+  competing-method novelty PASS (max 3-px overlap 62.05%, ~26% vs DPRF1/S3DEP1/DKRN1, max |ρ| 0.3842 over
+  39 local entries); literal lattice-included novelty FAIL (100%, pigeonhole ≥82.34% — disclosed).
+  Leaderboard estimate: **none defensible**; labelled MODEL PROJECTION (not a score) 0.0530–0.0655.
+- **Lesson:** dropping the DEM trunk collapses catalogue hide-and-recover (0.166 → 0.089) while breaking
+  dot convergence — the holdout is dominated by same-modality topographic rediscovery. Do not retune CGMK1.
+- **GEMSDOE32 B2 0.2778** remains UNVERIFIED-OWNER-REPORT; its computed deletion-only ancestry
+  (44,090 → −6,436 halo dots → 37,654) and the metric arithmetic are analysed in the findings doc.
+  No file from the nine focus sites is OK to submit today; see the executive table.
+
 ## Start here — current request and automated pre-training gate (2026-10-27)
 
 **Maximize P(Win) · Own the Outcome. No new TIFF is authorized to submit.**
@@ -34,7 +69,7 @@ Its [prior review](docs/protocol-feasibility-20261027.md) and
 Both entrypoints now reuse one exact-arithmetic implementation; the fresh
 checker additionally reopens the pinned template and reference raster.
 
-## Current decision — 2026-10-27: research downloads only; **DO NOT SUBMIT**
+## Prior review decision — 2026-10-27: research downloads only; **DO NOT SUBMIT** (its nine-file audit, lattice and leakage findings remain in force; the CGMK1 and feasibility continuations above are later, parallel work)
 
 **No new TIFF or experiment was produced by this review, and no slot was used.**
 [Open the nine-site executive submission guide](docs/executive-summary.html#current-focus-files) ·
