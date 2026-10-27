@@ -3,9 +3,9 @@
   "reviewed_utc": "2026-10-27T19:24:45.557384+00:00",
   "branch": "arena/68690fd4-gemsdoe24",
   "scope": "Repository, frozen receipts, GitHub source freshness, and dependency-free feasibility tests only; no experiment or submission",
-  "hypothesis": "No geological method was assigned or tested. Top-ranked prospective method: signed gravity-magnetic cross-gradient reversal using cached RTP and isostatic-gravity bands, optionally oriented by catalogue-independent terrain structure.",
-  "mechanism": "A sign change in the relative magnetic-gravity gradient orientation across a covered basement splay could reveal a discontinuity absent from the surface catalogue. This is a hypothesis only; no feature was computed.",
-  "named_non_fault_process_that_could_mimic_it": "Intrusive or lithologic contacts, remanent magnetization, and survey/leveling seams.",
+  "hypothesis": "No geological method was assigned or tested. Top-ranked prospective untried method at review time: multiscale local phase-congruency ridges with phase-consistent cross-field orientation in RTP, TMI and isostatic gravity. This is planning only, not authorization.",
+  "mechanism": "Phase congruency may preserve a coherent edge across scales and modalities where field amplitude is weak under cover. No feature was computed and no score effect is measured.",
+  "named_non_fault_process_that_could_mimic_it": "Intrusive or volcanic contacts, remanent magnetization, and survey-line or leveling seams.",
   "holdout_dti": {
     "label": "HOLDOUT-DTI",
     "value": null,
@@ -58,8 +58,9 @@
     "changed_main_refs_vs_frozen_portfolio_pins": 9,
     "failed_checks": 0,
     "all_current_main_refs_differ_from_nine_file_audit_source_refs": true,
-    "interpretation": "Latest-main artifacts/cards were not fetched or re-audited; score feed not accessed.",
-    "gemsdoe24_current_main_ref": "af8576cf23d1e8cfda69fd859e1fb98d3d72194f"
+    "interpretation": "The 19:18 receipt predates the later docs-only PR #72 merge; new-head TIFFs/cards were not audited, and no scores were checked.",
+    "gemsdoe24_current_main_ref": "af8576cf23d1e8cfda69fd859e1fb98d3d72194f",
+    "gemsdoe24_main_after_review_merge": "d86bb0695a17d7e7c1543bfc7b2a72f09bacf56f"
   },
   "data_state": {
     "small_committed_manifest_files_checked": 12,
@@ -116,7 +117,7 @@
       "classification": "REGISTRY-GEOMETRY (not score); necessary bound against one retained lattice witness."
     }
   },
-  "branch_head": "af8576cf23d1e8cfda69fd859e1fb98d3d72194f",
+  "branch_head": "d86bb0695a17d7e7c1543bfc7b2a72f09bacf56f",
   "main_head_at_rebase": "af8576cf23d1e8cfda69fd859e1fb98d3d72194f",
   "concurrent_pull_request_review": {
     "checked_utc": "2026-10-27T19:24:45.557384+00:00",
@@ -136,6 +137,18 @@
     "new_files_outside_all_open_pr_file_lists": true,
     "generated_pages_and_AGENTS_modified_by_this_pr": false,
     "other_pr_branches_modified": false,
-    "note": "PR #70 overlaps the earlier signed-gradient/conditional-K method queue; PR #61 separately covers B2. Both remain open/dirty and do not assign this session a lane."
+    "note": "PR #70 overlaps the earlier signed-gradient/conditional-K method queue; PR #61 separately covers B2. Both remain open/dirty and do not assign this session a lane.",
+    "pr_72_merged_after_review": true,
+    "pr_72_merge_commit": "d86bb0695a17d7e7c1543bfc7b2a72f09bacf56f"
+  },
+  "updated_utc": "2026-10-27T19:34:19.821788+00:00",
+  "branch_head_at_review_commit": "ac4d1ddf73bdf0d81863396696622eeec648f69e",
+  "post_review_merge": {
+    "pr_number": 72,
+    "status": "MERGED",
+    "merged_utc": "2026-10-27T19:32:26Z",
+    "merge_commit": "d86bb0695a17d7e7c1543bfc7b2a72f09bacf56f",
+    "scope": "Documentation/freshness only; README, timestamped source feed, review, run card and active brief. No TIFF or score artifacts changed.",
+    "freshness_receipt_predates_merge": true
   }
 }
