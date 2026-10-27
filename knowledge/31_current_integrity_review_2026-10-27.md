@@ -204,12 +204,21 @@ not organizer-score or account checks.
    provenance uncertainty. No experiment or TIFF generation.
 2. **Bug and edge-case review.** Fixed the central literal novelty comparison
    (no calibration exemption, grid/CRS/transform validation), stopped the two
-   faulty runners, quarantined the leaked holdout, bound source receipts and
-   fail-closed decisions, and corrected the selection floor/band-6 description.
-   Regression and tamper tests are recorded with the final checks below.
-3. **Request, links and usability review.** Rebuild the source-backed site,
-   check desktop/mobile download placement, links and accessibility, run the
-   full available test/format suites, then check GitHub status before a PR.
+   faulty runners, quarantined the leaked holdout, and corrected the selection
+   floor/band-6 description. A deliberate Git-blob tamper exposed an initial
+   receipt-validation gap; added [hash-pinned source identities](../registry/current_focus_source_pins_20261027.json),
+   byte-verified card snapshots, source-measurement checks and tests. A full
+   suite also exposed a missing trusted template in one synthetic test fixture;
+   the fixture was corrected without weakening the central check.
+3. **Request, links and usability review.** After merging the independently
+   advanced `main` review, the full suite reported **479 passed**. Ruff check,
+   Ruff format, Node syntax, compileall, `git diff --check`, recorded-lane
+   verifications and offline feed validations passed. The rebuilt static site
+   passed all 12 desktop/mobile page checks, including first-screen research
+   download, exact hash, nine current rows, clipboard and zero axe violations;
+   [browser receipt](../evidence/site_browser_integrity_review_20261027.json).
+   All six generated pages' local links resolve. The latest GitHub feed checked
+   12:13 UTC and found three sources had advanced beyond these audit refs;
+   their newer commits must not be represented as a fresh full raster audit.
    A local build is not proof of remote deployment; no slot or positive verdict
-   can follow from the site. Check results and remaining restrictions are
-   reported in the session response.
+   follows from the site.

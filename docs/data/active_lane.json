@@ -1,7 +1,7 @@
 {
   "schema_version": "active-lane-view-v2",
   "semantics": "current recorded point-best review; no new lane assignment",
-  "generated_utc": "2026-10-27T12:00:45.387089+00:00",
+  "generated_utc": "2026-10-27T12:14:03.360416+00:00",
   "lane": "H24-S3DEP1",
   "source_run_card": "evidence/s3dep1_run_card_20261026.json",
   "review": "docs/data/current_best_review.json",
@@ -107,7 +107,7 @@
   },
   "selector": {
     "selector_version": "gems-selector-v2-literal-quota-fail-closed",
-    "decided_utc": "2026-10-27T12:00:45.387089+00:00",
+    "decided_utc": "2026-10-27T12:14:03.360416+00:00",
     "artifact": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
     "artifact_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
     "human_inspection_used": false,

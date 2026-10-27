@@ -1,0 +1,124 @@
+{
+  "checked_utc": "2026-10-27T12:14:04.809Z",
+  "base_origin": "http://127.0.0.1:8765",
+  "browser": "153.0.8010.0",
+  "experiments_run": 0,
+  "external_requests_blocked": [],
+  "errors": [],
+  "pages": [
+    {
+      "device": "desktop",
+      "page": "index.html",
+      "document_sha256": "fc59135604c3a1207bd4dc522a42e38d64e65f4788a88cad49ce463daf64676b",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/index.html",
+      "document_sha256": "5c397c5307d75c2ff5723c2b363808e91705ad072e06b16c631a084120383bf8",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "executive-summary.html",
+      "document_sha256": "0535bed67ee7e07000d2e4f70c7c1a7cd45ff22212fecf37a91aebaab6b7e2ce",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/executive-summary.html",
+      "document_sha256": "1e11a44fbba3dde35d930625c6cf7f9494a13906c9a066631a42e91edfdb5210",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/research.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "desktop",
+      "page": "docs/sources.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": [],
+      "owner_table_rows": 92
+    },
+    {
+      "device": "mobile",
+      "page": "index.html",
+      "document_sha256": "fc59135604c3a1207bd4dc522a42e38d64e65f4788a88cad49ce463daf64676b",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/index.html",
+      "document_sha256": "5c397c5307d75c2ff5723c2b363808e91705ad072e06b16c631a084120383bf8",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "executive-summary.html",
+      "document_sha256": "0535bed67ee7e07000d2e4f70c7c1a7cd45ff22212fecf37a91aebaab6b7e2ce",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/executive-summary.html",
+      "document_sha256": "1e11a44fbba3dde35d930625c6cf7f9494a13906c9a066631a42e91edfdb5210",
+      "current_focus_rows": 9,
+      "download_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "first_screen_download": true,
+      "clipboard_matches": true,
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/research.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": []
+    },
+    {
+      "device": "mobile",
+      "page": "docs/sources.html",
+      "no_horizontal_overflow": true,
+      "accessibility_violations": [],
+      "owner_table_rows": 92
+    }
+  ]
+}
