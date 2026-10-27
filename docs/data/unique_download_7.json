@@ -1,0 +1,44 @@
+{
+  "file": "24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.tif",
+  "zip_file": "24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.zip",
+  "sha256": "fe6d637fad5b8fb435988b3ab31af8ae777380f78046577c505275e2e725a795",
+  "content_id": "578c30176163",
+  "pixel_count": 1814,
+  "note": "24GEMS H-UNIQUE-07 | vents+springs in 200-900 m catalogue offset band | research; HOLDOUT-DTI 0.0011 | id 578c30176163 | not yet live-scored",
+  "note_file": "note-24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.txt",
+  "checks_file": "checks-24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.json",
+  "preflight_file": "preflight-24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.json",
+  "zip_sha256": "d63a76d0af7bd97c71bd7b60b7d76142a1cb0a7df2c1323b74db524f48d7e837",
+  "role": "primary",
+  "format_valid": true,
+  "strict_range_ok": true,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "verdict": "negative",
+  "holdout_dti": 0.0011237887893642653,
+  "holdout_ci95": [
+    0.0008597455616431262,
+    0.0014311645702315392
+  ],
+  "run_card": "unique_run_card_7.json",
+  "evidence_report": "unique_experiment7.json",
+  "novelty_surrogate": {
+    "registry_cache_available_locally": false,
+    "lattice_file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "lattice_footprint_3px_coverage": 0.9987132726822701,
+    "lattice_uncovered_pixels": 6649,
+    "pigeonhole_min_overlap_any_dotted_set": 0.0,
+    "final_dots": 1814,
+    "pigeonhole_min_overlap_for_final": 0.0,
+    "measured_final_dot_overlap_within_3px_vs_lattice": 0.9977949283351709,
+    "measured_final_dot_overlap_within_3px_vs_local_fault_labels": 0.17750826901874311,
+    "local_dot_overlap_vs_labels": {
+      "candidate_within_3px_of_reference": 0.17750826901874311,
+      "reference_within_3px_of_candidate": 0.009624844231652128,
+      "radius_px": 3.0,
+      "candidate_dots": 1814,
+      "reference_dots": 60988
+    },
+    "interpretation": "Registry cache (data/research/priority_review) is not present in this clone, so the full 46-raster registry gate is not executable locally. Measured surrogate: 99.8% of final dots within 3 px of the retained spacing-5 calibration lattice (>70% limit) and 17.8% vs local fault labels. The all-entry literal novelty gate cannot be shown to pass locally."
+  }
+}
