@@ -1,0 +1,49 @@
+{
+  "schema": "gems-protocol-continuation-run-card-v1",
+  "branch": "arena/6ad83d86-gemsdoe24",
+  "hypothesis": "No geological hypothesis executed: single assigned method paragraph is absent. Existing three-candidate plan retained without retuning stopped lanes.",
+  "mechanism": "Necessary-condition arithmetic from frozen lattice coverage reveals a protocol feasibility blocker before placement.",
+  "named_non_fault_process_that_could_mimic_it": "Space-filling calibration geometry creates overlap independent of geology; the prospective signed potential-field hypothesis can be mimicked by intrusive contacts or leveling seams.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "ci95": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "status": "NOT RUN; no scientific experiment"
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "final_dot_overlap": null,
+    "new_raster_status": "NONE",
+    "necessary_minimum_overlap_for_37654_dots_from_frozen_counts": 0.8234184947150369,
+    "measurement_scope": "Arithmetic from frozen audit; no raster remeasurement or complete registry refresh",
+    "receipt": "evidence/protocol_feasibility_20261027.json"
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "status": "NOT RUN: no new raster",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "submission_authorized": false
+  },
+  "submission_name": null,
+  "submission_note": "No new TIFF; missing method lane and literal lattice novelty blocker. Research only; DO NOT SUBMIT.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "submission_slots_used": 0,
+  "organizer_confirmed_score": null,
+  "leaderboard_estimate": null,
+  "verification": {
+    "pass1": "Read standing instructions and frozen scientific/format/novelty evidence; added dependency-free exact-rational feasibility tool.",
+    "pass2": "Six unittest tests passed including exact threshold, zero uncovered cells, invalid counts and fail-closed output; Ruff check and format checks passed for changed Python files.",
+    "pass3": "Reviewed README and executive guide consistency, preserved generator paragraph, verified git diff --check. Full scientific suite not run: initial environment lacks scientific dependencies. No new source-download or browser test claimed."
+  },
+  "limitations": [
+    "Missing assigned method paragraph prohibits autonomous lane choice under the supplied parallel protocol.",
+    "Frozen lattice counts alone rule out all in-footprint candidates above 22163 dots at the literal 70% overlap ceiling. This is not a recommendation to target lattice holes.",
+    "No fresh organizer receipt, account quota, leaderboard, official geological data or peer-raster audit obtained.",
+    "No unique submission-ready TIFF or defensible leaderboard score estimate produced."
+  ]
+}
