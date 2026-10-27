@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Repository review — 2026-10-27
+
+[Current repository review and negative run card](docs/repo-review-20261027.md) · [Machine-readable run card](evidence/repo_review_20261027.json). No new experiment or TIFF was generated; no artifact is approved to submit. Full-history test suite: 462 passed. The assigned method paragraph and local prepared feature stack are absent, so no holdout experiment was authorized or runnable.
+
 ## H24-S3DEP1 (Current Recorded Local `HOLDOUT-DTI = 0.166060`, Zero 1 m LiDAR) & Frozen `2026-10-26` Nine-Site Forensic Snapshot (`DOWNLOAD: YES · SUBMIT: NO`)
 
 > **UNMISTAKABLE AUTOMATED VERDICT (ZERO HUMAN-INSPECTOR FALLBACK):**

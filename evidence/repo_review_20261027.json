@@ -1,0 +1,82 @@
+{
+  "schema": "gems-repository-review-run-card-v1",
+  "reviewed_utc": "2026-10-27",
+  "branch": "arena/ea265672-gemsdoe24",
+  "review_scope": "Repository, frozen evidence, exact-file validation and tests only; no scientific experiment or submission",
+  "hypothesis": "No assigned geological method was tested. Prospective priority: cross-potential-field phase congruency on RTP, TMI and isostatic gravity.",
+  "mechanism": "Coincident local phase alignment across magnetic and gravity channels may reveal low-amplitude covered basement discontinuities not represented in a surface-fault catalogue.",
+  "named_non_fault_process_that_could_mimic_it": "Dikes, intrusive contacts, remanent-magnetization boundaries, and acquisition or leveling seams.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "ci95": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "status": "NOT RUN: no assigned lane, no new experiment"
+  },
+  "recorded_current_local_reference_not_replayed": {
+    "label": "HOLDOUT-DTI",
+    "value": 0.16606013635163805,
+    "ci95": [0.151858, 0.180339],
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "artifact": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
+    "artifact_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+    "status": "frozen source-recorded result; not replayed in this review; not ORGANIZER-CONFIRMED or a leaderboard estimate"
+  },
+  "correlation_overlap_vs_registry": {
+    "new_surface": null,
+    "new_final_dots": null,
+    "new_candidate_status": "NOT RUN: no new candidate",
+    "current_s3dep1_source_recorded_overlap_with_dkrn1": 0.7131778828278537,
+    "literal_limit": 0.7,
+    "current_reference_status": "FAIL; source-recorded overlap, not independently recomputed here"
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_raster": "NONE",
+    "current_s3dep1_file": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
+    "current_s3dep1_sha256_revalidated": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+    "single_band_float32": true,
+    "crs": "EPSG:32611",
+    "shape": [3730, 3292],
+    "transform": [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0],
+    "no_nan_or_inf_inside_footprint": true,
+    "values_inside_footprint_in_0_1": true,
+    "selector_ok_to_submit": false,
+    "submission_authorized": false,
+    "optional_outside_nan_nodata_profile_checks_all_pass": false,
+    "scope": "Exact-file format revalidation; no organizer acceptance or scientific authorization"
+  },
+  "submission_name": null,
+  "submission_note": "No new submission. S3DEP1 is research-only; DO NOT SUBMIT.",
+  "verdict": "negative",
+  "submission_slots_used": 0,
+  "organizer_confirmed_score": null,
+  "leaderboard_estimate": null,
+  "access_and_reproducibility": {
+    "training_features_tif_present": false,
+    "prepared_feature_cache_present": false,
+    "live_drivendata_quota_checked": false,
+    "organizer_receipt_obtained": false,
+    "repository_was_shallow_at_start": true,
+    "initial_test_result": "457 passed, 5 failed because source/preregistration Git commits were unavailable in the shallow history",
+    "after_fetch_unshallow": "462 passed"
+  },
+  "validation": {
+    "pytest": "462 passed",
+    "ruff_check": "passed",
+    "ruff_format_check": "passed; 280 files already formatted",
+    "compileall": "passed",
+    "verify_current_download": "passed exact file and format checks; correctly reports DO_NOT_SUBMIT",
+    "git_diff_check_before_report_addition": "passed"
+  },
+  "limitations": [
+    "The required single-method paragraph is absent, so the parallel-run protocol forbids selecting a method and running an experiment.",
+    "The raw training feature raster and prepared feature cache are absent in this checkout.",
+    "No new HOLDOUT-DTI, pre-placement correlation, final-dot comparison or raster was produced.",
+    "H33-B2 0.2778 and the 0.3195 / 0.4413 leaderboard claims are not artifact-linked ORGANIZER-CONFIRMED receipts.",
+    "No current leaderboard, submission page, account quota or organizer acceptance was independently checked.",
+    "Receipt-verification tests require full Git history; a shallow checkout produces source-history failures until unshallowed."
+  ]
+}
