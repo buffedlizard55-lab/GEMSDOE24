@@ -81,3 +81,29 @@ def test_legacy_ci_list_is_normalized_without_claiming_replay(tmp_path):
     assert legacy["holdout"]["ci95"]["level"] == 0.95
     assert "no bootstrap replay" in legacy["holdout"]["ci95"]["scope"]
     assert "no independent" in legacy["scope"]
+
+
+def test_pinned_concurrent_results_raise_the_conservative_selection_floor(tmp_path):
+    from gems.benchmarks import EXTERNAL_RECORDS, selection_floor
+
+    _seed(tmp_path)
+    for row in EXTERNAL_RECORDS:
+        external = tmp_path / row["source"]
+        external.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / row["source"], external)
+    assert recorded_point_best(tmp_path)["lane"] == "S3DEP1"  # local main remains unchanged
+    result = selection_floor(tmp_path)
+    assert result["lane"] == "KPL-36"
+    assert result["holdout"]["dti"] == 0.17010000946379217
+    assert result["ok_to_submit"] is False
+    assert "not independently replayed" in result["scope"]
+    for row in EXTERNAL_RECORDS:
+        external = tmp_path / row["source"]
+        original = external.read_bytes()
+        external.write_bytes(original + b" ")
+        with pytest.raises(ValueError, match="missing or changed"):
+            selection_floor(tmp_path)
+        external.unlink()
+        with pytest.raises(ValueError, match="missing or changed"):
+            selection_floor(tmp_path)
+        external.write_bytes(original)

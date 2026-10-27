@@ -39,9 +39,9 @@ def write_submission(
 ) -> Path:
     """Write ``pred_2d`` using the template profile and a portal-safe default.
 
-    The default is an all-finite ``0.0`` exterior because some portal validators
-    inspect every stored cell and reject the template's ``NaN`` outside
-    convention as out of range.  Use ``outside="nan"`` only when producing an
+    The default is an all-finite ``0.0`` exterior to test a possible strict
+    whole-array [0,1] validation. The cause of the reported portal rejection
+    has not been established. Use ``outside="nan"`` only when producing an
     explicitly labelled compatibility twin; it is never the recommended upload
     artifact and must fail the strict whole-array preflight diagnostic.
     """

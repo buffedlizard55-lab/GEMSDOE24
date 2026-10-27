@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-"""H24-TMCG lane: 3 preregistered arms. Unique topo–magnetic cross-gradient.
+"""Stopped H24-TMCG lane; retained only for historical code review.
 
-Does not retune PTAR/GSD/S3DEP1. Uses SegmentHoldout + submission writer.
+The original local-download-only novelty helper omitted the registered calibration
+lattice and the surface-before-placement gate. The exact final TIFF was later
+measured at 100% overlap with that lattice. This lane cannot be restarted or used
+to select a file; use ``scripts/audit_tmcg_integrity.py`` for read-only checks.
 """
 
 from __future__ import annotations
@@ -13,7 +16,6 @@ import time
 os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 os.environ.setdefault("OMP_NUM_THREADS", "1")
 
-import gc  # noqa: E402
 import sys  # noqa: E402
 from pathlib import Path  # noqa: E402
 
@@ -44,7 +46,8 @@ def load_ch(name, fp, stack, meta):
 
 
 def registry_overlap(dots, fp, catalogue, template):
-    """Compare against local download TIFFs (peer registry proxy)."""
+    """Legacy incomplete proxy; never use it to certify uniqueness."""
+    raise RuntimeError("Stopped: local download TIFFs are not the full pinned registry")
     out = []
     dl = ROOT / "docs/downloads"
     cand = dots.astype(bool)
@@ -95,6 +98,11 @@ def emit_folds(score, support, context):
 
 
 def main():
+    raise SystemExit(
+        "H24-TMCG is stopped: 100% final-dot overlap with a registered lattice; "
+        "no rerun, new TIFF or competition slot is permitted. "
+        "Use scripts/audit_tmcg_integrity.py for a read-only audit."
+    )
     started = time.monotonic()
     template = ROOT / "data/bridge/sample_submission.tif"
     labels_path = ROOT / "data/bridge/labels.tif"
@@ -179,7 +187,9 @@ def main():
 
     content_id = submission.scored_content_id(final_dots, fp, catalogue)
     stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    fname = submission.make_filename("gems24", f"tmcg-{best_name.lower()}", stamp, content_id, "zeros")
+    fname = submission.make_filename(
+        "gems24", f"tmcg-{best_name.lower()}", stamp, content_id, "zeros"
+    )
     out_dir = ROOT / "docs/downloads"
     zeros = submission.write_submission(
         final_dots.astype(np.float32), template, out_dir / fname, outside="zero"
@@ -223,7 +233,11 @@ def main():
         {"canary": canary, "experiments": experiments, "novelty": nov},
         ROOT / "evidence/tmcg_experiment_20261027.json",
     )
-    print(json.dumps({"file": fname, "dti": best["holdout_dti"], "verdict": card["verdict"]}, indent=2))
+    print(
+        json.dumps(
+            {"file": fname, "dti": best["holdout_dti"], "verdict": card["verdict"]}, indent=2
+        )
+    )
 
 
 if __name__ == "__main__":

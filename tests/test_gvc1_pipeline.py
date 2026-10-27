@@ -87,13 +87,16 @@ def test_classify_space_filling_control_and_pigeonhole_bound(tmp_path):
         tmp_path,
         dots=cand > 0.5,
         separate_calibration_controls=True,
+        template_path=cor_path,
     )
     assert rep["registry_unique_rasters"] == 2
     assert rep["competing_method_rasters"] == 1
     assert rep["calibration_control_rasters"] == 1
     assert rep["competing_method_passed"] is True
     assert rep["literal_unseparated_passed"] is False
-    assert rep["passed"] is True
+    assert rep["passed"] is False  # a control cannot exempt the literal gate
+    assert rep["rows"][0]["duplicate"] is True
+    assert rep["rows"][0]["competing_method_duplicate"] is False
     assert len(rep["rows"]) == 2
 
 

@@ -117,8 +117,8 @@ def test_novelty_stops_an_exact_or_spatially_redundant_candidate(tmp_path):
             "file": p.name,
         }
     ]
-    surface = novelty.compare_registry(a, fp, rows, tmp_path)
-    final = novelty.compare_registry(a, fp, rows, tmp_path, dots=a > 0)
+    surface = novelty.compare_registry(a, fp, rows, tmp_path, template_path=p)
+    final = novelty.compare_registry(a, fp, rows, tmp_path, dots=a > 0, template_path=p)
     assert not surface["passed"] and not final["passed"]
     assert final["max_dot_overlap"] == 1
     assert surface["max_abs_rank_correlation"] == pytest.approx(1)

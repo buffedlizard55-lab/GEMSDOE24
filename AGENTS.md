@@ -1,5 +1,22 @@
 # Standing project instructions
 
+## 2026-10-27 integrity override — read before dated notes below
+
+- This review produced **no new TIFF, scientific run or slot**; the assigned
+  method paragraph remains absent. No selected focus file is authorized.
+- TMCG overlaps the registered lattice at 100%; H-UNIQUE-07 overlaps at 99.7795%
+  and its full-catalogue pre-fold support leaks withheld-fault information. Both
+  lanes are stopped; their historical narratives cannot establish uniqueness.
+- KPL-36 is an unreplayed external recorded HOLDOUT-DTI point of 0.17010 (not a
+  confirmed winner). Compare prospectively before promotion; it too fails the
+  literal lattice rule. S3DEP1 remains the local point-best, not global best.
+- Band 6 `tc` is **not established** as gravity terrain correction or mGal:
+  strong correlation to cached radiometric total count is not source proof.
+- Current source, limit, portal and hypothesis details are in
+  `knowledge/31_current_integrity_review_2026-10-27.md`. Dated claims below are
+  historical; where inconsistent with the current evidence, this override wins.
+
+
 ## H24-XVAR1 session — 2026-10-26 (executed `H24-XVAR1`; solved `DPRF1` overlap & exact-file C2ST; negative; do not retune)
 
 Read `knowledge/29_preregistered_XVAR1_2026-10-26.md` (@ `4f251952ee71`), `knowledge/30_XVAR1_findings_and_9site_executive_summary_2026-10-26.md`, `evidence/xvar1_run_card_20261026.json`, and `evidence/nine_site_executive_summary_xvar1_20261026.json` first.

@@ -1,0 +1,170 @@
+{
+  "schema": "tmcg-read-only-integrity-v1",
+  "checked_utc": "2026-10-27T11:48:30.941821+00:00",
+  "source_ref": "6e4a85a3456dfe6312d25b6d81187c765a10c847",
+  "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/6e4a85a3456dfe6312d25b6d81187c765a10c847/docs/downloads/gems24-tmcg-b-decoupled-basin-20261027T113937Z-6f8d042d5ee4-zeros.tif",
+  "source_pr": "https://github.com/buffedlizard55-lab/GEMSDOE24/pull/63",
+  "original_card_blob": "4b7627241d99fc26b4d48eca88f7a1718f21ff70",
+  "raster_git_blob": "650354982c3d9d37fb07747fb8a529db967b1624",
+  "generated_by_this_session": false,
+  "new_experiments": 0,
+  "competition_slots_used": 0,
+  "hypothesis": "H24-TMCG: topographic\u2013magnetic cross-gradient |\u2207z \u00d7 \u2207rtp| targets catalogue-missing faults that warp RTP without controlling modern drainage.",
+  "mechanism": "Sobel gradients of Gaussian-smoothed det_elev and rtp; magnitude of 2-D cross product; three arms (raw / basin-decoupled / shear-weighted).",
+  "named_non_fault_mimic": "Irrigation canals, playa edges, and volcanic flow contacts that also misalign topography vs magnetics.",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "dti": 0.07157068265289451,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.06270643919760513,
+        0.08168007816813075
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 399,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "n_withheld_positive_pixels": 60988,
+    "winning_arm": "B_decoupled_basin",
+    "delta_vs_oof_baseline_0_16370": -0.0921293173471055,
+    "status": "SOURCE-RECORDED, NOT INDEPENDENTLY REPLAYED; NOT A LEADERBOARD SCORE"
+  },
+  "original_novelty_issue": "Original local-download-only proxy recorded drifted=false but omitted the retained registered lattice and did not evaluate a pre-placement surface. Its 55-file count is not a complete all-registry comparison. Original evidence is retained unchanged.",
+  "preplacement_surface_novelty": null,
+  "final_dots": 37722,
+  "comparison_scope": "One hash-pinned registered lattice, a decisive failure witness; not all registries",
+  "correlation_overlap_vs_registry": {
+    "stage": "final_dots",
+    "passed": false,
+    "registry_unique_rasters": 1,
+    "raw_rank_scope": "exact over all footprint pixels",
+    "raw_rank_pixels": 5167373,
+    "kernel_rank_sample_size": 200000,
+    "rank_sample_seed": 20261025,
+    "rank_limit": 0.9,
+    "overlap_limit": 0.7,
+    "overlap_distance_px": 3,
+    "overlap_scope": "ALL candidate dots, not a sample",
+    "max_abs_rank_correlation": 0.0009996193413531983,
+    "max_dot_overlap": 1.0,
+    "rows": [
+      {
+        "registry_id": "registry-160",
+        "file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817",
+        "raw_spearman": -0.0001894783270318154,
+        "kernel_spearman": -0.0009996193413531983,
+        "candidate_dot_overlap_within_3px": 1.0,
+        "duplicate": true,
+        "correlation_defined": true
+      }
+    ]
+  },
+  "pigeonhole_bound_for_this_dot_count": {
+    "is_space_filling_calibration_control": true,
+    "footprint_3px_covered_pixels": 5160724,
+    "footprint_3px_uncovered_pixels": 6649,
+    "footprint_3px_coverage": 0.9987132726822701,
+    "coverage_threshold": 0.7,
+    "pigeonhole_min_overlap_for_candidate_size": 0.8237368114097874
+  },
+  "validator_output": {
+    "file": "gems24-tmcg-b-decoupled-basin-20261027T113937Z-6f8d042d5ee4-zeros.tif",
+    "bytes": 826562,
+    "sha256": "9df52a41c34d4f508b57128c1bc6c2dd716c6149d22dd8717137baa463ed0336",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37722,
+    "in_footprint_mass": 37722.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "submission_name": "gems24-tmcg-b-decoupled-basin-20261027T113937Z-6f8d042d5ee4-zeros.tif",
+  "raster_sha256": "9df52a41c34d4f508b57128c1bc6c2dd716c6149d22dd8717137baa463ed0336",
+  "note": "GEMS24 TMCG basin | HOLDOUT-DTI 0.07157 | duplicate audit; research only; DO NOT SUBMIT",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "verdict": "negative"
+}

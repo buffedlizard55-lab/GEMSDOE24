@@ -1,0 +1,1195 @@
+{
+  "schema": "current-focus-nine-file-audit-v1",
+  "checked_utc": "2026-10-27T11:53:46.535307+00:00",
+  "feed_checked_utc": "2026-10-27T11:49:22.256044+00:00",
+  "scope": "One selected source-featured TIFF per focus site at immutable feed refs; not every current TIFF, no scientific replay, no pre-placement surfaces, no leaderboard access",
+  "source_score_status": "Source holdouts are not organizer-confirmed and different evaluators/splits are not ranked together",
+  "lattice": {
+    "file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+    "footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817",
+    "is_space_filling_calibration_control": true,
+    "footprint_3px_covered_pixels": 5160724,
+    "footprint_3px_uncovered_pixels": 6649,
+    "footprint_3px_coverage": 0.9987132726822701,
+    "coverage_threshold": 0.7,
+    "pigeonhole_min_overlap_for_candidate_size": 0.8234184947150369
+  },
+  "rows": [
+    {
+      "site": "GEMSDOE24",
+      "source_ref": "a1ecb683a9fda2aa4612f27e28896ebb8b19ad08",
+      "source_file": {
+        "path": "docs/downloads/24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.tif",
+        "git_blob": "b756808d355df853168199f568d5dedcaffaec91",
+        "sha256": "fe6d637fad5b8fb435988b3ab31af8ae777380f78046577c505275e2e725a795",
+        "bytes": 755390,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/a1ecb683a9fda2aa4612f27e28896ebb8b19ad08/docs/downloads/24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.tif"
+      },
+      "source_card": {
+        "path": "evidence/unique_experiment7.json",
+        "git_blob": "d489c4b5a93ad25db6e41006d5d8b45f2905c1fa",
+        "sha256": "e4cf023ab3add42dca6d2d579507168b408ea3bff678dc16ecb6ba60c41173db",
+        "bytes": 7595,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/a1ecb683a9fda2aa4612f27e28896ebb8b19ad08/evidence/unique_experiment7.json"
+      },
+      "download_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/raw/a1ecb683a9fda2aa4612f27e28896ebb8b19ad08/docs/downloads/24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.tif",
+      "historical_best_owner_reported_unverified": {
+        "name": "h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan",
+        "owner_reported": 0.2477
+      },
+      "holdout": {
+        "label": "INVALID HOLDOUT",
+        "value": null,
+        "ci95": null,
+        "evaluator": null,
+        "withheld": null,
+        "status": "Full-catalogue support was used in fold placement; recorded 0.0011238 is not a valid comparison."
+      },
+      "format_valid": true,
+      "strict_whole_array_finite_0_1": true,
+      "validator_output": {
+        "file": "24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.tif",
+        "bytes": 755390,
+        "sha256": "fe6d637fad5b8fb435988b3ab31af8ae777380f78046577c505275e2e725a795",
+        "format_valid": true,
+        "ok_to_upload": false,
+        "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+        "format_acceptable": true,
+        "submission_authorized": false,
+        "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+        "hard_failures": [],
+        "official_format_compliant": false,
+        "in_footprint_positive_pixels": 1814,
+        "in_footprint_mass": 1814.0,
+        "checks": {
+          "official_template_grid_and_footprint": {
+            "pass": true,
+            "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+            "hard_requirement": true
+          },
+          "single_band": {
+            "pass": true,
+            "detail": "count=1",
+            "hard_requirement": true
+          },
+          "dtype_float32": {
+            "pass": true,
+            "detail": "dtypes=('float32',)",
+            "hard_requirement": true
+          },
+          "crs_epsg_32611": {
+            "pass": true,
+            "detail": "EPSG:32611",
+            "hard_requirement": true
+          },
+          "shape_matches_template": {
+            "pass": true,
+            "detail": "(3730, 3292) vs (3730, 3292)",
+            "hard_requirement": true
+          },
+          "geotransform_matches_template": {
+            "pass": true,
+            "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_all_finite": {
+            "pass": true,
+            "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+            "hard_requirement": true
+          },
+          "footprint_range_0_1": {
+            "pass": true,
+            "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+            "hard_requirement": true
+          },
+          "outside_is_nan_official_text": {
+            "pass": false,
+            "detail": "0 of 7,111,787 outside pixels are NaN",
+            "hard_requirement": false
+          },
+          "nodata_tag_is_nan": {
+            "pass": false,
+            "detail": "nodata=None",
+            "hard_requirement": false
+          },
+          "variant_nan_aware_whole_array": {
+            "pass": true,
+            "detail": "np.nanmin/np.nanmax over the whole array",
+            "hard_requirement": true
+          },
+          "variant_masked_read": {
+            "pass": true,
+            "detail": "rasterio read(masked=True).compressed()",
+            "hard_requirement": true
+          },
+          "variant_strict_whole_array_no_nan_allowed": {
+            "pass": true,
+            "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+            "hard_requirement": false
+          },
+          "profile_matches_official_sample": {
+            "pass": false,
+            "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+            "hard_requirement": false
+          }
+        }
+      },
+      "dots": 1814,
+      "literal_lattice_overlap_within_3px": 0.9977949283351709,
+      "literal_lattice_duplicate": true,
+      "preplacement_surface_novelty": null,
+      "full_registry_novelty_replayed": false,
+      "ok_to_download": true,
+      "ok_to_submit": false
+    },
+    {
+      "site": "GEMSDOE25",
+      "source_ref": "227347d0f1beb420c0dd2a7dd4079ddc6389f5ab",
+      "source_file": {
+        "path": "docs/downloads/gems25-h74-rmps-subsurf-catfree-b2-37654-20261026-3751606e1ce5-zeros.tif",
+        "git_blob": "b2846e50b8add39a944e0167d4aac6421100d784",
+        "sha256": "9e0200dc3b1597c7cfc94b1a39938da3e7e61cac52f89a1249992eaccf23b9ed",
+        "bytes": 826738,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/227347d0f1beb420c0dd2a7dd4079ddc6389f5ab/docs/downloads/gems25-h74-rmps-subsurf-catfree-b2-37654-20261026-3751606e1ce5-zeros.tif"
+      },
+      "source_card": {
+        "path": "registry/run_card_h74_2026-10-26.json",
+        "git_blob": "3fda7107c2c1eb16cbd0a4006f551f9147b79b80",
+        "sha256": "4289a16a267d89a3bc1c2df500d14aa96aecb71f87efb0c3cc31217a6404dbbb",
+        "bytes": 21070,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/227347d0f1beb420c0dd2a7dd4079ddc6389f5ab/registry/run_card_h74_2026-10-26.json"
+      },
+      "download_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/raw/227347d0f1beb420c0dd2a7dd4079ddc6389f5ab/docs/downloads/gems25-h74-rmps-subsurf-catfree-b2-37654-20261026-3751606e1ce5-zeros.tif",
+      "historical_best_owner_reported_unverified": {
+        "name": "dotted-h19-5-d2-8-20261002-e56ea318af89-nan",
+        "owner_reported": 0.26
+      },
+      "holdout": {
+        "label": "HOLDOUT-DTI",
+        "value": 0.0390574467025743,
+        "ci95": [
+          0.026077441992597556,
+          0.04889465231686535
+        ],
+        "evaluator": "gems25.metric.dti_binary (alpha=0.2, beta=0.8, R=3.0px)",
+        "withheld": 25308,
+        "status": "SOURCE-RECORDED; not scientifically replayed; not an organizer score; positive occurrences, not necessarily unique pixels"
+      },
+      "format_valid": true,
+      "strict_whole_array_finite_0_1": true,
+      "validator_output": {
+        "file": "gems25-h74-rmps-subsurf-catfree-b2-37654-20261026-3751606e1ce5-zeros.tif",
+        "bytes": 826738,
+        "sha256": "9e0200dc3b1597c7cfc94b1a39938da3e7e61cac52f89a1249992eaccf23b9ed",
+        "format_valid": true,
+        "ok_to_upload": false,
+        "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+        "format_acceptable": true,
+        "submission_authorized": false,
+        "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+        "hard_failures": [],
+        "official_format_compliant": false,
+        "in_footprint_positive_pixels": 37654,
+        "in_footprint_mass": 37654.0,
+        "checks": {
+          "official_template_grid_and_footprint": {
+            "pass": true,
+            "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+            "hard_requirement": true
+          },
+          "single_band": {
+            "pass": true,
+            "detail": "count=1",
+            "hard_requirement": true
+          },
+          "dtype_float32": {
+            "pass": true,
+            "detail": "dtypes=('float32',)",
+            "hard_requirement": true
+          },
+          "crs_epsg_32611": {
+            "pass": true,
+            "detail": "EPSG:32611",
+            "hard_requirement": true
+          },
+          "shape_matches_template": {
+            "pass": true,
+            "detail": "(3730, 3292) vs (3730, 3292)",
+            "hard_requirement": true
+          },
+          "geotransform_matches_template": {
+            "pass": true,
+            "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_all_finite": {
+            "pass": true,
+            "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+            "hard_requirement": true
+          },
+          "footprint_range_0_1": {
+            "pass": true,
+            "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+            "hard_requirement": true
+          },
+          "outside_is_nan_official_text": {
+            "pass": false,
+            "detail": "0 of 7,111,787 outside pixels are NaN",
+            "hard_requirement": false
+          },
+          "nodata_tag_is_nan": {
+            "pass": false,
+            "detail": "nodata=None",
+            "hard_requirement": false
+          },
+          "variant_nan_aware_whole_array": {
+            "pass": true,
+            "detail": "np.nanmin/np.nanmax over the whole array",
+            "hard_requirement": true
+          },
+          "variant_masked_read": {
+            "pass": true,
+            "detail": "rasterio read(masked=True).compressed()",
+            "hard_requirement": true
+          },
+          "variant_strict_whole_array_no_nan_allowed": {
+            "pass": true,
+            "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+            "hard_requirement": false
+          },
+          "profile_matches_official_sample": {
+            "pass": false,
+            "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+            "hard_requirement": false
+          }
+        }
+      },
+      "dots": 37654,
+      "literal_lattice_overlap_within_3px": 1.0,
+      "literal_lattice_duplicate": true,
+      "preplacement_surface_novelty": null,
+      "full_registry_novelty_replayed": false,
+      "ok_to_download": true,
+      "ok_to_submit": false
+    },
+    {
+      "site": "GEMSDOE27",
+      "source_ref": "6c34f5b7cb7756d23c258df051318b7b11cd9ab4",
+      "source_file": {
+        "path": "docs/downloads/gems27-h31-drcg-wl-celf28-20261026-cf8e1bbef244-allfinite.tif",
+        "git_blob": "b6d4e55739b982d2a2486b97886637b61b141767",
+        "sha256": "2c002b02792419864bd3b29a218e543cb41e3f07b3b57c29ef35c6e39e184bfe",
+        "bytes": 825820,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/6c34f5b7cb7756d23c258df051318b7b11cd9ab4/docs/downloads/gems27-h31-drcg-wl-celf28-20261026-cf8e1bbef244-allfinite.tif"
+      },
+      "source_card": {
+        "path": "evidence/h31_s10_run_card_2026-10-26.json",
+        "git_blob": "ac6af1c7622cdc55675dfae89b18bec152384653",
+        "sha256": "a043e8ec20049262dacc0b7ca565bbb2660d51a19d4822f64ad6ea94c63d285f",
+        "bytes": 19243,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/6c34f5b7cb7756d23c258df051318b7b11cd9ab4/evidence/h31_s10_run_card_2026-10-26.json"
+      },
+      "download_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/raw/6c34f5b7cb7756d23c258df051318b7b11cd9ab4/docs/downloads/gems27-h31-drcg-wl-celf28-20261026-cf8e1bbef244-allfinite.tif",
+      "historical_best_owner_reported_unverified": {
+        "name": "topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan",
+        "owner_reported": 0.2449
+      },
+      "holdout": {
+        "label": "HOLDOUT-DTI",
+        "value": 0.047302,
+        "ci95": [
+          0.044527,
+          0.049619
+        ],
+        "evaluator": "gems27.metric v1 + holdout-blind-buffered-v2 (alpha=0.2, beta=0.8, R=3px triangular, buffer_px=6.0)",
+        "withheld": 120778,
+        "status": "SOURCE-RECORDED; not scientifically replayed; not an organizer score; earlier pinned README/card denominator disagreement not independently reconciled"
+      },
+      "format_valid": true,
+      "strict_whole_array_finite_0_1": true,
+      "validator_output": {
+        "file": "gems27-h31-drcg-wl-celf28-20261026-cf8e1bbef244-allfinite.tif",
+        "bytes": 825820,
+        "sha256": "2c002b02792419864bd3b29a218e543cb41e3f07b3b57c29ef35c6e39e184bfe",
+        "format_valid": true,
+        "ok_to_upload": false,
+        "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+        "format_acceptable": true,
+        "submission_authorized": false,
+        "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+        "hard_failures": [],
+        "official_format_compliant": false,
+        "in_footprint_positive_pixels": 37654,
+        "in_footprint_mass": 37654.0,
+        "checks": {
+          "official_template_grid_and_footprint": {
+            "pass": true,
+            "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+            "hard_requirement": true
+          },
+          "single_band": {
+            "pass": true,
+            "detail": "count=1",
+            "hard_requirement": true
+          },
+          "dtype_float32": {
+            "pass": true,
+            "detail": "dtypes=('float32',)",
+            "hard_requirement": true
+          },
+          "crs_epsg_32611": {
+            "pass": true,
+            "detail": "EPSG:32611",
+            "hard_requirement": true
+          },
+          "shape_matches_template": {
+            "pass": true,
+            "detail": "(3730, 3292) vs (3730, 3292)",
+            "hard_requirement": true
+          },
+          "geotransform_matches_template": {
+            "pass": true,
+            "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_all_finite": {
+            "pass": true,
+            "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+            "hard_requirement": true
+          },
+          "footprint_range_0_1": {
+            "pass": true,
+            "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+            "hard_requirement": true
+          },
+          "outside_is_nan_official_text": {
+            "pass": false,
+            "detail": "0 of 7,111,787 outside pixels are NaN",
+            "hard_requirement": false
+          },
+          "nodata_tag_is_nan": {
+            "pass": false,
+            "detail": "nodata=None",
+            "hard_requirement": false
+          },
+          "variant_nan_aware_whole_array": {
+            "pass": true,
+            "detail": "np.nanmin/np.nanmax over the whole array",
+            "hard_requirement": true
+          },
+          "variant_masked_read": {
+            "pass": true,
+            "detail": "rasterio read(masked=True).compressed()",
+            "hard_requirement": true
+          },
+          "variant_strict_whole_array_no_nan_allowed": {
+            "pass": true,
+            "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+            "hard_requirement": false
+          },
+          "profile_matches_official_sample": {
+            "pass": false,
+            "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+            "hard_requirement": false
+          }
+        }
+      },
+      "dots": 37654,
+      "literal_lattice_overlap_within_3px": 0.9961491475009295,
+      "literal_lattice_duplicate": true,
+      "preplacement_surface_novelty": null,
+      "full_registry_novelty_replayed": false,
+      "ok_to_download": true,
+      "ok_to_submit": false
+    },
+    {
+      "site": "GEMSDOE28",
+      "source_ref": "f78c1e8fdc2fb95b0f5915e1e95ff82a8f1aa309",
+      "source_file": {
+        "path": "docs/downloads/gems28-s22-ctxhgb-20261026-e23dabcec6e2-allfinite.tif",
+        "git_blob": "ac92c77341810a85f49437babd06debcfa85b2d4",
+        "sha256": "77934be607d48a4daec5b046009cdabf61d3fdee210aadc75be82ac70f3beb2e",
+        "bytes": 826194,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/f78c1e8fdc2fb95b0f5915e1e95ff82a8f1aa309/docs/downloads/gems28-s22-ctxhgb-20261026-e23dabcec6e2-allfinite.tif"
+      },
+      "source_card": {
+        "path": "evidence/s22c_run_card.json",
+        "git_blob": "233162686599ce534692025863566425da20f68c",
+        "sha256": "20108551ceda7e639d16b425dceb5f42058da634f2709462d17b7c62b5ed8316",
+        "bytes": 25422,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/f78c1e8fdc2fb95b0f5915e1e95ff82a8f1aa309/evidence/s22c_run_card.json"
+      },
+      "download_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/raw/f78c1e8fdc2fb95b0f5915e1e95ff82a8f1aa309/docs/downloads/gems28-s22-ctxhgb-20261026-e23dabcec6e2-allfinite.tif",
+      "historical_best_owner_reported_unverified": {
+        "name": "h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan",
+        "owner_reported": 0.271
+      },
+      "holdout": {
+        "label": "HOLDOUT-DTI",
+        "value": 0.12017683367908955,
+        "ci95": [
+          0.10470617816137097,
+          0.13649195962047952
+        ],
+        "evaluator": "gems27.metric.dti_binary + gems27.holdout quadrant component-hide 20% (gems-segment-pooled-v1 semantics, as S21)",
+        "withheld": 36596,
+        "status": "SOURCE-RECORDED; not scientifically replayed; not an organizer score; source card says buffered=false, so not the requested buffered protocol"
+      },
+      "format_valid": true,
+      "strict_whole_array_finite_0_1": true,
+      "validator_output": {
+        "file": "gems28-s22-ctxhgb-20261026-e23dabcec6e2-allfinite.tif",
+        "bytes": 826194,
+        "sha256": "77934be607d48a4daec5b046009cdabf61d3fdee210aadc75be82ac70f3beb2e",
+        "format_valid": true,
+        "ok_to_upload": false,
+        "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+        "format_acceptable": true,
+        "submission_authorized": false,
+        "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+        "hard_failures": [],
+        "official_format_compliant": false,
+        "in_footprint_positive_pixels": 37654,
+        "in_footprint_mass": 37654.0,
+        "checks": {
+          "official_template_grid_and_footprint": {
+            "pass": true,
+            "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+            "hard_requirement": true
+          },
+          "single_band": {
+            "pass": true,
+            "detail": "count=1",
+            "hard_requirement": true
+          },
+          "dtype_float32": {
+            "pass": true,
+            "detail": "dtypes=('float32',)",
+            "hard_requirement": true
+          },
+          "crs_epsg_32611": {
+            "pass": true,
+            "detail": "EPSG:32611",
+            "hard_requirement": true
+          },
+          "shape_matches_template": {
+            "pass": true,
+            "detail": "(3730, 3292) vs (3730, 3292)",
+            "hard_requirement": true
+          },
+          "geotransform_matches_template": {
+            "pass": true,
+            "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_all_finite": {
+            "pass": true,
+            "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+            "hard_requirement": true
+          },
+          "footprint_range_0_1": {
+            "pass": true,
+            "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+            "hard_requirement": true
+          },
+          "outside_is_nan_official_text": {
+            "pass": false,
+            "detail": "0 of 7,111,787 outside pixels are NaN",
+            "hard_requirement": false
+          },
+          "nodata_tag_is_nan": {
+            "pass": false,
+            "detail": "nodata=None",
+            "hard_requirement": false
+          },
+          "variant_nan_aware_whole_array": {
+            "pass": true,
+            "detail": "np.nanmin/np.nanmax over the whole array",
+            "hard_requirement": true
+          },
+          "variant_masked_read": {
+            "pass": true,
+            "detail": "rasterio read(masked=True).compressed()",
+            "hard_requirement": true
+          },
+          "variant_strict_whole_array_no_nan_allowed": {
+            "pass": true,
+            "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+            "hard_requirement": false
+          },
+          "profile_matches_official_sample": {
+            "pass": false,
+            "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+            "hard_requirement": false
+          }
+        }
+      },
+      "dots": 37654,
+      "literal_lattice_overlap_within_3px": 0.9961757051043714,
+      "literal_lattice_duplicate": true,
+      "preplacement_surface_novelty": null,
+      "full_registry_novelty_replayed": false,
+      "ok_to_download": true,
+      "ok_to_submit": false
+    },
+    {
+      "site": "GEMSDOE30",
+      "source_ref": "3c3d7255fdbb3a94375eff086522463a8eaca449",
+      "source_file": {
+        "path": "docs/downloads/gems30-CSR1-44090-20261026-502fb5948335-zeros.tif",
+        "git_blob": "52ad62c4cca4e1f8a98ccd886d510020c7c5cbc5",
+        "sha256": "0fbf3b4a47c2229b68de59e174617f3b47973613ff57950712d25b9166c1d900",
+        "bytes": 415760,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/3c3d7255fdbb3a94375eff086522463a8eaca449/docs/downloads/gems30-CSR1-44090-20261026-502fb5948335-zeros.tif"
+      },
+      "source_card": {
+        "path": "docs/research/2026-10-26-csr/run-card.json",
+        "git_blob": "1ed341edf8a3e96cbed50c6e3726578956c53cf6",
+        "sha256": "c2e8cce35861d2eb754752334da4ed9360642bf9588c77fa68b7ef66db2216b1",
+        "bytes": 14746,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/3c3d7255fdbb3a94375eff086522463a8eaca449/docs/research/2026-10-26-csr/run-card.json"
+      },
+      "download_url": "https://github.com/buffedlizard55-lab/GEMSDOE30/raw/3c3d7255fdbb3a94375eff086522463a8eaca449/docs/downloads/gems30-CSR1-44090-20261026-502fb5948335-zeros.tif",
+      "historical_best_owner_reported_unverified": {
+        "name": "d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca",
+        "owner_reported": 0.26
+      },
+      "holdout": {
+        "label": "HOLDOUT-DTI",
+        "value": 0.15816185919666023,
+        "ci95": [
+          0.14498623625179088,
+          0.17147419427326102
+        ],
+        "evaluator": "component-holdout-v3-blockstats-20261025",
+        "withheld": 60988,
+        "status": "SOURCE-RECORDED; not scientifically replayed; not an organizer score"
+      },
+      "format_valid": true,
+      "strict_whole_array_finite_0_1": true,
+      "validator_output": {
+        "file": "gems30-CSR1-44090-20261026-502fb5948335-zeros.tif",
+        "bytes": 415760,
+        "sha256": "0fbf3b4a47c2229b68de59e174617f3b47973613ff57950712d25b9166c1d900",
+        "format_valid": true,
+        "ok_to_upload": false,
+        "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+        "format_acceptable": true,
+        "submission_authorized": false,
+        "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+        "hard_failures": [],
+        "official_format_compliant": false,
+        "in_footprint_positive_pixels": 44090,
+        "in_footprint_mass": 44090.0,
+        "checks": {
+          "official_template_grid_and_footprint": {
+            "pass": true,
+            "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+            "hard_requirement": true
+          },
+          "single_band": {
+            "pass": true,
+            "detail": "count=1",
+            "hard_requirement": true
+          },
+          "dtype_float32": {
+            "pass": true,
+            "detail": "dtypes=('float32',)",
+            "hard_requirement": true
+          },
+          "crs_epsg_32611": {
+            "pass": true,
+            "detail": "EPSG:32611",
+            "hard_requirement": true
+          },
+          "shape_matches_template": {
+            "pass": true,
+            "detail": "(3730, 3292) vs (3730, 3292)",
+            "hard_requirement": true
+          },
+          "geotransform_matches_template": {
+            "pass": true,
+            "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_all_finite": {
+            "pass": true,
+            "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+            "hard_requirement": true
+          },
+          "footprint_range_0_1": {
+            "pass": true,
+            "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+            "hard_requirement": true
+          },
+          "outside_is_nan_official_text": {
+            "pass": false,
+            "detail": "0 of 7,111,787 outside pixels are NaN",
+            "hard_requirement": false
+          },
+          "nodata_tag_is_nan": {
+            "pass": false,
+            "detail": "nodata=None",
+            "hard_requirement": false
+          },
+          "variant_nan_aware_whole_array": {
+            "pass": true,
+            "detail": "np.nanmin/np.nanmax over the whole array",
+            "hard_requirement": true
+          },
+          "variant_masked_read": {
+            "pass": true,
+            "detail": "rasterio read(masked=True).compressed()",
+            "hard_requirement": true
+          },
+          "variant_strict_whole_array_no_nan_allowed": {
+            "pass": true,
+            "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+            "hard_requirement": false
+          },
+          "profile_matches_official_sample": {
+            "pass": false,
+            "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=deflate (template lzw)",
+            "hard_requirement": false
+          }
+        }
+      },
+      "dots": 44090,
+      "literal_lattice_overlap_within_3px": 0.9998639147198911,
+      "literal_lattice_duplicate": true,
+      "preplacement_surface_novelty": null,
+      "full_registry_novelty_replayed": false,
+      "ok_to_download": true,
+      "ok_to_submit": false
+    },
+    {
+      "site": "GEMSDOE31",
+      "source_ref": "abd9a45cc7adf046d7d3829eb6e8c980943f462d",
+      "source_file": {
+        "path": "docs/downloads/gemsdoe31-h31y-regime-mosaic-37654-20261026-66162f1f-zeros.tif",
+        "git_blob": "dce9fef84939d20b4cdd64a3826120e42f822f69",
+        "sha256": "41f1e63a803950db1f621321d5a26c5d3fbbfcc3999923035f0de8a253f7901e",
+        "bytes": 148173,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/abd9a45cc7adf046d7d3829eb6e8c980943f462d/docs/downloads/gemsdoe31-h31y-regime-mosaic-37654-20261026-66162f1f-zeros.tif"
+      },
+      "source_card": {
+        "path": "evidence/h31ym/run_card.json",
+        "git_blob": "55e6da4325ee6a87af8c47771dc1fbdc4ccd15df",
+        "sha256": "306e51698b844d87246dfc26a5d2775fb69457bf148b60e29f00f4793b05d79d",
+        "bytes": 23631,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/abd9a45cc7adf046d7d3829eb6e8c980943f462d/evidence/h31ym/run_card.json"
+      },
+      "download_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/raw/abd9a45cc7adf046d7d3829eb6e8c980943f462d/docs/downloads/gemsdoe31-h31y-regime-mosaic-37654-20261026-66162f1f-zeros.tif",
+      "historical_best_owner_reported_unverified": {
+        "name": "h27-4-solo-d28-20261004-8acb75e1-nan",
+        "owner_reported": 0.2708
+      },
+      "holdout": {
+        "label": "HOLDOUT-DTI",
+        "value": 0.1549635276683578,
+        "ci95": [
+          0.14010673053320416,
+          0.1701173378346074
+        ],
+        "evaluator": "gems57-pooled-hide-v2",
+        "withheld": 60988,
+        "status": "SOURCE-RECORDED; not scientifically replayed; not an organizer score"
+      },
+      "format_valid": true,
+      "strict_whole_array_finite_0_1": true,
+      "validator_output": {
+        "file": "gemsdoe31-h31y-regime-mosaic-37654-20261026-66162f1f-zeros.tif",
+        "bytes": 148173,
+        "sha256": "41f1e63a803950db1f621321d5a26c5d3fbbfcc3999923035f0de8a253f7901e",
+        "format_valid": true,
+        "ok_to_upload": false,
+        "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+        "format_acceptable": true,
+        "submission_authorized": false,
+        "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+        "hard_failures": [],
+        "official_format_compliant": false,
+        "in_footprint_positive_pixels": 37654,
+        "in_footprint_mass": 37654.0,
+        "checks": {
+          "official_template_grid_and_footprint": {
+            "pass": true,
+            "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+            "hard_requirement": true
+          },
+          "single_band": {
+            "pass": true,
+            "detail": "count=1",
+            "hard_requirement": true
+          },
+          "dtype_float32": {
+            "pass": true,
+            "detail": "dtypes=('float32',)",
+            "hard_requirement": true
+          },
+          "crs_epsg_32611": {
+            "pass": true,
+            "detail": "EPSG:32611",
+            "hard_requirement": true
+          },
+          "shape_matches_template": {
+            "pass": true,
+            "detail": "(3730, 3292) vs (3730, 3292)",
+            "hard_requirement": true
+          },
+          "geotransform_matches_template": {
+            "pass": true,
+            "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_all_finite": {
+            "pass": true,
+            "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+            "hard_requirement": true
+          },
+          "footprint_range_0_1": {
+            "pass": true,
+            "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+            "hard_requirement": true
+          },
+          "outside_is_nan_official_text": {
+            "pass": false,
+            "detail": "0 of 7,111,787 outside pixels are NaN",
+            "hard_requirement": false
+          },
+          "nodata_tag_is_nan": {
+            "pass": false,
+            "detail": "nodata=None",
+            "hard_requirement": false
+          },
+          "variant_nan_aware_whole_array": {
+            "pass": true,
+            "detail": "np.nanmin/np.nanmax over the whole array",
+            "hard_requirement": true
+          },
+          "variant_masked_read": {
+            "pass": true,
+            "detail": "rasterio read(masked=True).compressed()",
+            "hard_requirement": true
+          },
+          "variant_strict_whole_array_no_nan_allowed": {
+            "pass": true,
+            "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+            "hard_requirement": false
+          },
+          "profile_matches_official_sample": {
+            "pass": false,
+            "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=deflate (template lzw)",
+            "hard_requirement": false
+          }
+        }
+      },
+      "dots": 37654,
+      "literal_lattice_overlap_within_3px": 0.9904658203643704,
+      "literal_lattice_duplicate": true,
+      "preplacement_surface_novelty": null,
+      "full_registry_novelty_replayed": false,
+      "ok_to_download": true,
+      "ok_to_submit": false
+    },
+    {
+      "site": "GEMSDOE32",
+      "source_ref": "1398109a23f04a2ace71c1bd2f527cfba87860b5",
+      "source_file": {
+        "path": "docs/downloads/gemsdoe32-h47-ldgi-dualhorizon-corridor-37654-20261026T230609Z-0eb8a25c-zeros.tif",
+        "git_blob": "154ec157f28f1c2689edd6127b689275b9f73520",
+        "sha256": "d82d63ab9c935b4eb6d8886129a7820da4642d20c3304c57364c55380438f27a",
+        "bytes": 211243,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/1398109a23f04a2ace71c1bd2f527cfba87860b5/docs/downloads/gemsdoe32-h47-ldgi-dualhorizon-corridor-37654-20261026T230609Z-0eb8a25c-zeros.tif"
+      },
+      "source_card": {
+        "path": "evidence/h47_ldgi_run_card.json",
+        "git_blob": "89636b147dece97b6ecbfd526aa49bb83caae4df",
+        "sha256": "2ffd7f395b4f264bfc85c41d40e19a6442f8c0caf35f3b37da0a484f1ac46947",
+        "bytes": 16030,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/1398109a23f04a2ace71c1bd2f527cfba87860b5/evidence/h47_ldgi_run_card.json"
+      },
+      "download_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/raw/1398109a23f04a2ace71c1bd2f527cfba87860b5/docs/downloads/gemsdoe32-h47-ldgi-dualhorizon-corridor-37654-20261026T230609Z-0eb8a25c-zeros.tif",
+      "historical_best_owner_reported_unverified": {
+        "name": "h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros",
+        "owner_reported": 0.2778,
+        "note": "Highest artifact-attached value in the brief's full list and in this nine-site focus. Local pixel forensics: exactly the H27-4/D2.8 emission minus dots within 2 px of the public catalogue; 0 dots added (evidence/priority_review_20261025.json)."
+      },
+      "holdout": {
+        "label": "HOLDOUT-DTI",
+        "value": 0.119765,
+        "ci95": [
+          0.105732,
+          0.132895
+        ],
+        "evaluator": "GEMSDOE32-HIDE-RECOVER-v3.0",
+        "withheld": 22232,
+        "status": "SOURCE-RECORDED; not scientifically replayed; not an organizer score"
+      },
+      "format_valid": true,
+      "strict_whole_array_finite_0_1": true,
+      "validator_output": {
+        "file": "gemsdoe32-h47-ldgi-dualhorizon-corridor-37654-20261026T230609Z-0eb8a25c-zeros.tif",
+        "bytes": 211243,
+        "sha256": "d82d63ab9c935b4eb6d8886129a7820da4642d20c3304c57364c55380438f27a",
+        "format_valid": true,
+        "ok_to_upload": false,
+        "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+        "format_acceptable": true,
+        "submission_authorized": false,
+        "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+        "hard_failures": [],
+        "official_format_compliant": false,
+        "in_footprint_positive_pixels": 37654,
+        "in_footprint_mass": 37654.0,
+        "checks": {
+          "official_template_grid_and_footprint": {
+            "pass": true,
+            "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+            "hard_requirement": true
+          },
+          "single_band": {
+            "pass": true,
+            "detail": "count=1",
+            "hard_requirement": true
+          },
+          "dtype_float32": {
+            "pass": true,
+            "detail": "dtypes=('float32',)",
+            "hard_requirement": true
+          },
+          "crs_epsg_32611": {
+            "pass": true,
+            "detail": "EPSG:32611",
+            "hard_requirement": true
+          },
+          "shape_matches_template": {
+            "pass": true,
+            "detail": "(3730, 3292) vs (3730, 3292)",
+            "hard_requirement": true
+          },
+          "geotransform_matches_template": {
+            "pass": true,
+            "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_all_finite": {
+            "pass": true,
+            "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+            "hard_requirement": true
+          },
+          "footprint_range_0_1": {
+            "pass": true,
+            "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+            "hard_requirement": true
+          },
+          "outside_is_nan_official_text": {
+            "pass": false,
+            "detail": "0 of 7,111,787 outside pixels are NaN",
+            "hard_requirement": false
+          },
+          "nodata_tag_is_nan": {
+            "pass": false,
+            "detail": "nodata=None",
+            "hard_requirement": false
+          },
+          "variant_nan_aware_whole_array": {
+            "pass": true,
+            "detail": "np.nanmin/np.nanmax over the whole array",
+            "hard_requirement": true
+          },
+          "variant_masked_read": {
+            "pass": true,
+            "detail": "rasterio read(masked=True).compressed()",
+            "hard_requirement": true
+          },
+          "variant_strict_whole_array_no_nan_allowed": {
+            "pass": true,
+            "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+            "hard_requirement": false
+          },
+          "profile_matches_official_sample": {
+            "pass": false,
+            "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=deflate (template lzw)",
+            "hard_requirement": false
+          }
+        }
+      },
+      "dots": 37654,
+      "literal_lattice_overlap_within_3px": 0.9961491475009295,
+      "literal_lattice_duplicate": true,
+      "preplacement_surface_novelty": null,
+      "full_registry_novelty_replayed": false,
+      "ok_to_download": true,
+      "ok_to_submit": false
+    },
+    {
+      "site": "GEMSDOE33",
+      "source_ref": "122e2240a835c9c84831943ee3489dbb48fd6e85",
+      "source_file": {
+        "path": "docs/downloads/gemsdoe33-fsml2-cc-37654-20261026-6fd4410bbaee-zeros.tif",
+        "git_blob": "1084f9c0532d3df115b4a65c91f56c428d4a364f",
+        "sha256": "be5013aad085c23a9317959f85c7d494e28eac5875f61addce8ec81b5bb51de3",
+        "bytes": 826738,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/122e2240a835c9c84831943ee3489dbb48fd6e85/docs/downloads/gemsdoe33-fsml2-cc-37654-20261026-6fd4410bbaee-zeros.tif"
+      },
+      "source_card": {
+        "path": "evidence/fsml2_run_card_20261026.json",
+        "git_blob": "b1f85da5e34406c4f5194e5d2f4fbbce50f07a64",
+        "sha256": "869bc4e1ec2c45deff189c052c279cb3fbb99c75a3faa4e2fbbc1b01af06e16a",
+        "bytes": 20383,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/122e2240a835c9c84831943ee3489dbb48fd6e85/evidence/fsml2_run_card_20261026.json"
+      },
+      "download_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/raw/122e2240a835c9c84831943ee3489dbb48fd6e85/docs/downloads/gemsdoe33-fsml2-cc-37654-20261026-6fd4410bbaee-zeros.tif",
+      "historical_best_owner_reported_unverified": {
+        "name": "h33d-analog-tip-stepover-r30-20261004-cb490425926e",
+        "owner_reported": 0.2632
+      },
+      "holdout": {
+        "label": "HOLDOUT-DTI",
+        "value": 0.10307651005405224,
+        "ci95": [
+          0.09414410051422992,
+          0.11294135549935058
+        ],
+        "evaluator": "gems-segment-pooled-v1",
+        "withheld": 60988,
+        "status": "SOURCE-RECORDED; not scientifically replayed; not an organizer score; confirmation split"
+      },
+      "format_valid": true,
+      "strict_whole_array_finite_0_1": true,
+      "validator_output": {
+        "file": "gemsdoe33-fsml2-cc-37654-20261026-6fd4410bbaee-zeros.tif",
+        "bytes": 826738,
+        "sha256": "be5013aad085c23a9317959f85c7d494e28eac5875f61addce8ec81b5bb51de3",
+        "format_valid": true,
+        "ok_to_upload": false,
+        "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+        "format_acceptable": true,
+        "submission_authorized": false,
+        "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+        "hard_failures": [],
+        "official_format_compliant": false,
+        "in_footprint_positive_pixels": 37654,
+        "in_footprint_mass": 37654.0,
+        "checks": {
+          "official_template_grid_and_footprint": {
+            "pass": true,
+            "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+            "hard_requirement": true
+          },
+          "single_band": {
+            "pass": true,
+            "detail": "count=1",
+            "hard_requirement": true
+          },
+          "dtype_float32": {
+            "pass": true,
+            "detail": "dtypes=('float32',)",
+            "hard_requirement": true
+          },
+          "crs_epsg_32611": {
+            "pass": true,
+            "detail": "EPSG:32611",
+            "hard_requirement": true
+          },
+          "shape_matches_template": {
+            "pass": true,
+            "detail": "(3730, 3292) vs (3730, 3292)",
+            "hard_requirement": true
+          },
+          "geotransform_matches_template": {
+            "pass": true,
+            "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_all_finite": {
+            "pass": true,
+            "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+            "hard_requirement": true
+          },
+          "footprint_range_0_1": {
+            "pass": true,
+            "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+            "hard_requirement": true
+          },
+          "outside_is_nan_official_text": {
+            "pass": false,
+            "detail": "0 of 7,111,787 outside pixels are NaN",
+            "hard_requirement": false
+          },
+          "nodata_tag_is_nan": {
+            "pass": false,
+            "detail": "nodata=None",
+            "hard_requirement": false
+          },
+          "variant_nan_aware_whole_array": {
+            "pass": true,
+            "detail": "np.nanmin/np.nanmax over the whole array",
+            "hard_requirement": true
+          },
+          "variant_masked_read": {
+            "pass": true,
+            "detail": "rasterio read(masked=True).compressed()",
+            "hard_requirement": true
+          },
+          "variant_strict_whole_array_no_nan_allowed": {
+            "pass": true,
+            "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+            "hard_requirement": false
+          },
+          "profile_matches_official_sample": {
+            "pass": false,
+            "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+            "hard_requirement": false
+          }
+        }
+      },
+      "dots": 37654,
+      "literal_lattice_overlap_within_3px": 1.0,
+      "literal_lattice_duplicate": true,
+      "preplacement_surface_novelty": null,
+      "full_registry_novelty_replayed": false,
+      "ok_to_download": true,
+      "ok_to_submit": false
+    },
+    {
+      "site": "GEMSDOE36",
+      "source_ref": "61783525af4aa6dcf8da0bc68b06fa38b89ed27a",
+      "source_file": {
+        "path": "docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
+        "git_blob": "933a7a65eab0193e806f86d24c07f7af96bfbe03",
+        "sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
+        "bytes": 827142,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/61783525af4aa6dcf8da0bc68b06fa38b89ed27a/docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif"
+      },
+      "source_card": {
+        "path": "evidence/kpl36_run_card_20261026.json",
+        "git_blob": "2b0662c5f67aa3a8d154dfd495cc8ede2b3a0aef",
+        "sha256": "9448983264018a95518f79da1f63ecfb0f981f740f11ceaeebf341abac8a8d04",
+        "bytes": 8882,
+        "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/61783525af4aa6dcf8da0bc68b06fa38b89ed27a/evidence/kpl36_run_card_20261026.json"
+      },
+      "download_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/raw/61783525af4aa6dcf8da0bc68b06fa38b89ed27a/docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
+      "historical_best_owner_reported_unverified": {
+        "name": "anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros",
+        "owner_reported": 0.275,
+        "note": "Local forensics (knowledge/13_GVC1_findings_2026-10-25.md): exact superset of H33-B2 (37,654 + 1,200 dots)."
+      },
+      "holdout": {
+        "label": "HOLDOUT-DTI",
+        "value": 0.17010000946379217,
+        "ci95": [
+          0.1550890600301938,
+          0.18613752547087836
+        ],
+        "evaluator": "gems-segment-pooled-v1",
+        "withheld": 60988,
+        "status": "SOURCE-RECORDED; not scientifically replayed; not an organizer score; peer promote claim conflicts with literal lattice gate"
+      },
+      "format_valid": true,
+      "strict_whole_array_finite_0_1": true,
+      "validator_output": {
+        "file": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
+        "bytes": 827142,
+        "sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
+        "format_valid": true,
+        "ok_to_upload": false,
+        "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+        "format_acceptable": true,
+        "submission_authorized": false,
+        "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+        "hard_failures": [],
+        "official_format_compliant": false,
+        "in_footprint_positive_pixels": 37654,
+        "in_footprint_mass": 37654.0,
+        "checks": {
+          "official_template_grid_and_footprint": {
+            "pass": true,
+            "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+            "hard_requirement": true
+          },
+          "single_band": {
+            "pass": true,
+            "detail": "count=1",
+            "hard_requirement": true
+          },
+          "dtype_float32": {
+            "pass": true,
+            "detail": "dtypes=('float32',)",
+            "hard_requirement": true
+          },
+          "crs_epsg_32611": {
+            "pass": true,
+            "detail": "EPSG:32611",
+            "hard_requirement": true
+          },
+          "shape_matches_template": {
+            "pass": true,
+            "detail": "(3730, 3292) vs (3730, 3292)",
+            "hard_requirement": true
+          },
+          "geotransform_matches_template": {
+            "pass": true,
+            "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_all_finite": {
+            "pass": true,
+            "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+            "hard_requirement": true
+          },
+          "footprint_range_0_1": {
+            "pass": true,
+            "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+            "hard_requirement": true
+          },
+          "outside_is_nan_official_text": {
+            "pass": false,
+            "detail": "0 of 7,111,787 outside pixels are NaN",
+            "hard_requirement": false
+          },
+          "nodata_tag_is_nan": {
+            "pass": false,
+            "detail": "nodata=None",
+            "hard_requirement": false
+          },
+          "variant_nan_aware_whole_array": {
+            "pass": true,
+            "detail": "np.nanmin/np.nanmax over the whole array",
+            "hard_requirement": true
+          },
+          "variant_masked_read": {
+            "pass": true,
+            "detail": "rasterio read(masked=True).compressed()",
+            "hard_requirement": true
+          },
+          "variant_strict_whole_array_no_nan_allowed": {
+            "pass": true,
+            "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+            "hard_requirement": false
+          },
+          "profile_matches_official_sample": {
+            "pass": false,
+            "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+            "hard_requirement": false
+          }
+        }
+      },
+      "dots": 37654,
+      "literal_lattice_overlap_within_3px": 0.9916874701226961,
+      "literal_lattice_duplicate": true,
+      "preplacement_surface_novelty": null,
+      "full_registry_novelty_replayed": false,
+      "ok_to_download": true,
+      "ok_to_submit": false
+    }
+  ],
+  "new_experiments": 0,
+  "new_tiffs_generated_by_this_session": 0,
+  "competition_slots_used": 0,
+  "organizer_confirmed_scores": [],
+  "submission_authorized": false,
+  "verdict": "negative"
+}

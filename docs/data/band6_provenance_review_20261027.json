@@ -1,0 +1,52 @@
+{
+  "schema": "band6-provenance-audit-v1",
+  "checked_utc": "2026-10-27T11:49:02.654982+00:00",
+  "scope": "Correlation of cached aligned bytes, not organizer authentication or a fault-score experiment",
+  "training_file": "data/training_features.tif",
+  "training_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+  "band": 6,
+  "legacy_feature_alias": "bouguer_tc_mgal",
+  "training_band_tags": {
+    "band_name": "tc",
+    "data_category": "magnetic_data",
+    "data_type": "numeric",
+    "description": "Tilt angle or total curvature - magnetic field derivative for edge detection"
+  },
+  "radiometric_product": "data/external/geodawn_rad_u8.tif",
+  "radiometric_sha256": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+  "radiometric_metadata_sha256": "d917fd08f89c160d2a0ba91af9c3321c8c8b5677fcdba39b10e684384cbc7488",
+  "radiometric_quantization": "uint8 1..255 over per-channel 1st..99th pct after area mosaic; 0=nodata",
+  "cached_contractor_report_text_sha256": "28431423cf920636002ad58c3392de6d3a1cf6d05188a4e734d37f2b91498556",
+  "cached_report_quote": "22103_tc.grd:  Total Count Grid in Geosoft Grid Format",
+  "source_members_as_recorded": [
+    "22103_area2_tiffs/22103_tc_a2.tif",
+    "22103_area1_tiffs/22103_tc_a1.tif"
+  ],
+  "source_link": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
+  "total_joint_valid_pixels": 5164300,
+  "sample_size": 250000,
+  "sample_seed": 20261027,
+  "sample_policy": "uniform without replacement from joint finite template, band-6 and all four nonzero u8 channels",
+  "correlations": {
+    "K": {
+      "pearson": 0.8827950011201151,
+      "spearman": 0.8868462916083905
+    },
+    "Th": {
+      "pearson": 0.915745986265941,
+      "spearman": 0.913370071624949
+    },
+    "U": {
+      "pearson": 0.7146696489280562,
+      "spearman": 0.7176029129058363
+    },
+    "TC": {
+      "pearson": 0.9972622980507566,
+      "spearman": 0.9999506849927177
+    }
+  },
+  "interpretation": "Band 6 is almost monotonically related to the cached u8 total-count product. This is strong evidence consistent with radiometric total count, not proof of the band source, units or the independent authenticity of either cache. The mirror tag instead says magnetic tilt/curvature; a positive numeric range cannot establish Bouguer terrain correction. The historic feature alias is preserved for reproducibility, not asserted as physical truth.",
+  "organizer_authentication": "not established",
+  "new_experiments": 0,
+  "competition_slots_used": 0
+}

@@ -50,6 +50,11 @@ async function main() {
         assert.equal(await page.locator('#portfolio-current tbody tr').count(), 9);
         assert.equal(await page.locator('#portfolio-historical .portfolio-mobile > article').count(), 9);
         assert.equal(await page.locator('#portfolio-historical .portfolio-mobile').isVisible(), device === 'mobile');
+        assert.equal(await page.locator('#current-focus-files tbody tr').count(), 9);
+        assert.equal(await page.locator('#current-focus-files .portfolio-mobile > article').count(), 9);
+        assert.equal(await page.locator('#current-focus-files .portfolio-mobile').isVisible(), device === 'mobile');
+        assert.equal(await page.locator('#current-focus-files tbody tr strong').filter({hasText: 'NO'}).count(), 9);
+        assert(await page.getByText('all nine fail the literal 70% overlap rule').first().isVisible());
         if (!relative) await page.screenshot({path: path.join(root, `logs/tnr1-${device}.png`), fullPage: true});
         const [download] = await Promise.all([page.waitForEvent('download'), link.click()]);
         assert.equal(download.suggestedFilename(), card.submission_name);

@@ -1,0 +1,395 @@
+{
+  "schema_version": 1,
+  "experiment_spec": "csr1",
+  "run_id": "gems30-CSR1-44090-20261026-502fb5948335",
+  "submission_name": "gems30-CSR1-44090-20261026-502fb5948335",
+  "note": "CSR1: 3D Laplace/Poisson+1.8km Radon+NoisyOR+2.83px 1D-ridge EDGE, >2px off-cat, 44090d, all-finite [0,1]",
+  "created_utc": "2026-10-26T22:53:13+00:00",
+  "lane": "CSR-1 (preregistered 2026-10-26 before any fold fit)",
+  "lane_preregistration_sha256": "28383a271211f7ae1090f2cd89926f37ca756d3fcac8a6d442ad7b6b7b3009c9",
+  "externally_assigned_lane_verified": false,
+  "hypothesis": "Cover-compensated 3D Laplace/Poisson gravity vertical derivatives, unit-consistent 1000x tmi_vg magnetic tilt/analytic signal, and 12-azimuth 1.8 km flank-subtracted Radon line-integrals inside a cover-decoupled Noisy-OR dual-expert ensemble with 1D ridge concentration and >=2.83 px dispersed submodular EDGE emission improve concealed-fault recovery over core19 and MSDB-1v2 while avoiding 1-2 px range-front dot collisions.",
+  "mechanism": "Dual-expert HGB (33-feature cover-blind subsurface expert with inverse cover-censoring weights + 56-feature DC-free structural-geomorphic Radon expert) combined via Noisy-OR x Rayleigh curvilinear gate, concentrated onto 1D Hessian ridge crests (gamma=1.25) and emitted via submodular 300 m EDGE with dr^2+dc^2>6 (>=282.8 m) spacing and >2 px off-catalogue collar.",
+  "non_fault_mimic": "Buried pluton/caldera margins, incised bedrock paleochannels, unreactivated Mesozoic contacts, saline playa clay pans, and Lake Lahontan recessional shorelines.",
+  "experiments_run": 2,
+  "experiment_cap": 3,
+  "experimental_elapsed_seconds": 1493.61,
+  "dataset_signature": "291d346794ba20730708eaf1ab0f5695396732d7f1b183382ec1f3aeede855ed",
+  "published_tiff": "docs/downloads/gems30-CSR1-44090-20261026-502fb5948335-zeros.tif",
+  "tif_path": "docs/downloads/gems30-CSR1-44090-20261026-502fb5948335-zeros.tif",
+  "sha256": "0fbf3b4a47c2229b68de59e174617f3b47973613ff57950712d25b9166c1d900",
+  "raster_sha256": "0fbf3b4a47c2229b68de59e174617f3b47973613ff57950712d25b9166c1d900",
+  "values_sha256": "502fb59483353b2dd7ca829e57525c44008d7477f7c59dfac90965b1fb3c12e8",
+  "holdout_dti": 0.15816185919666023,
+  "ci95": [
+    0.14498623625179088,
+    0.17147419427326102
+  ],
+  "baseline_dti": {
+    "core19_edge": 0.1449146680023674,
+    "msdb_edge": 0.16998645976471358,
+    "csr_dense_edge": 0.15845299999741633
+  },
+  "max_feature_auc": 0.6629223465915133,
+  "max_registry_corr": 0.13783236890895245,
+  "dot_overlap_pct": 67.7002,
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "value": 0.15816185919666023,
+    "withheld_positives": 60988,
+    "ci95": [
+      0.14498623625179088,
+      0.17147419427326102
+    ],
+    "tp_weight": 9284.515745169661,
+    "fp_weight": 40276.59140695901,
+    "evaluator_version": "component-holdout-v3-blockstats-20261025",
+    "protocol_version": "buffered-quadrant-whole-components-v1-20261025",
+    "bootstrap": {
+      "unit": "geographic block aggregated across folds",
+      "blocks": 371,
+      "replicates": 2000,
+      "seed": 3137,
+      "interval": "paired spatial-block percentile 95%; conditional catalogue proxy"
+    },
+    "comparators": {
+      "core19_edge": {
+        "label": "HOLDOUT-DTI",
+        "value": 0.1449146680023674,
+        "withheld_positives": 60988,
+        "ci95": [
+          0.12994752346007402,
+          0.15944508076763406
+        ],
+        "tp_weight": 8492.992988797643,
+        "fp_weight": 40589.28386730382
+      },
+      "msdb_edge": {
+        "label": "HOLDOUT-DTI",
+        "value": 0.16998645976471358,
+        "withheld_positives": 60988,
+        "ci95": [
+          0.1565342444969894,
+          0.1839480382133582
+        ],
+        "tp_weight": 9980.286501079772,
+        "fp_weight": 39628.933459526714
+      },
+      "csr_dense_edge": {
+        "label": "HOLDOUT-DTI",
+        "value": 0.15845299999741633,
+        "withheld_positives": 60988,
+        "ci95": [
+          0.1445260070957728,
+          0.1723092643095573
+        ],
+        "tp_weight": 9292.769947638742,
+        "fp_weight": 39989.4997656018
+      }
+    },
+    "candidate_minus": {
+      "core19_edge": {
+        "label": "HOLDOUT-DTI difference",
+        "value": 0.013247191194292823,
+        "ci95": [
+          -0.001978189913756232,
+          0.030067970379719998
+        ]
+      },
+      "msdb_edge": {
+        "label": "HOLDOUT-DTI difference",
+        "value": -0.011824600568053345,
+        "ci95": [
+          -0.02345328353893821,
+          0.000296573866001773
+        ]
+      },
+      "csr_dense_edge": {
+        "label": "HOLDOUT-DTI difference",
+        "value": -0.0002911408007560956,
+        "ci95": [
+          -0.002060289560826304,
+          0.0013972376401649082
+        ]
+      }
+    },
+    "confirmation_seed3119": null
+  },
+  "feature_canaries": {
+    "features_per_fold": 81,
+    "folds": 4,
+    "alarms": [],
+    "max_auc_either_direction": 0.6629223465915133
+  },
+  "registry": {
+    "registry_path": "docs/research/2026-10-26-csr/registry.json",
+    "registry_sha256": "cf8ccc608e01ed233b350b0b48fc6904c3ec1fd8f7517863dbf2ecc0a9f9d62b",
+    "aligned_rasters_compared": 357,
+    "malformed_exclusions_audited": 1,
+    "surface_max_spearman": 0.13783236890895245,
+    "dots_max_spearman": 0.0856435875454567,
+    "dots_max_fraction_within_3px": 0.6770015876616012,
+    "dots_closest_reference": "data/raw/registry-expanded/GEMSDOE30-99e3f4dc50cdc770776a2fb35971856562aa1321.tif",
+    "dots_closest_reference_site": "GEMSDOE30"
+  },
+  "validator_output": {
+    "status": "passed",
+    "no_nan_inside_footprint": true,
+    "no_nan_anywhere": true,
+    "values_in_0_1_inside_footprint": true,
+    "values_in_0_1_whole_array": true,
+    "min_whole_array": 0.0,
+    "max_whole_array": 1.0,
+    "crs_match": true,
+    "shape_match": true,
+    "transform_match": true,
+    "single_float32_band": true,
+    "outside_footprint_value": 0.0,
+    "positive_catalogue_pixels": 0,
+    "dots_within_2px_of_catalogue": 0,
+    "emitted_dots": 44090,
+    "min_interdot_nn_px": 2.8284271247461903,
+    "p10_interdot_nn_px": 3.0,
+    "median_interdot_nn_px": 4.123105625617661,
+    "catalogue_distance_quantiles_px": {
+      "p10": 3.605551275463989,
+      "p25": 4.47213595499958,
+      "p50": 10.0,
+      "p75": 20.12461179749811,
+      "p90": 37.20215047547655,
+      "frac_gt_5px": 0.716148786572919,
+      "frac_gt_15px": 0.34853708323882965,
+      "frac_gt_50px": 0.05559083692447267
+    },
+    "organizer_acceptance_confirmed": false,
+    "submission_report": {
+      "path": "/home/user/GEMSDOE30/docs/downloads/gems30-CSR1-44090-20261026-502fb5948335-zeros.tif",
+      "passed": true,
+      "checks": [
+        {
+          "name": "template_single_band",
+          "passed": true,
+          "detail": "count=1"
+        },
+        {
+          "name": "single_band",
+          "passed": true,
+          "detail": "count=1"
+        },
+        {
+          "name": "float32",
+          "passed": true,
+          "detail": "dtypes=('float32',)"
+        },
+        {
+          "name": "epsg",
+          "passed": true,
+          "detail": "crs=EPSG:32611"
+        },
+        {
+          "name": "template_epsg",
+          "passed": true,
+          "detail": "crs=EPSG:32611"
+        },
+        {
+          "name": "shape_matches_template",
+          "passed": true,
+          "detail": "output=(3730, 3292) template=(3730, 3292)"
+        },
+        {
+          "name": "transform_matches_template",
+          "passed": true,
+          "detail": "output=| 100.00, 0.00, 243350.00|\n| 0.00,-100.00, 4508550.00|\n| 0.00, 0.00, 1.00| template=| 100.00, 0.00, 243350.00|\n| 0.00,-100.00, 4508550.00|\n| 0.00, 0.00, 1.00|"
+        },
+        {
+          "name": "100m_north_up_grid",
+          "passed": true,
+          "detail": "transform=| 100.00, 0.00, 243350.00|\n| 0.00,-100.00, 4508550.00|\n| 0.00, 0.00, 1.00|"
+        },
+        {
+          "name": "finite_and_in_range_inside_footprint",
+          "passed": true,
+          "detail": "valid_pixels=5167373 min=0.0 max=1.0"
+        },
+        {
+          "name": "finite_in_range_outside_footprint_diagnostic",
+          "passed": true,
+          "detail": "outside_pixels=7111787; finite in-range values required for the nonstandard whole-array diagnostic (finite=7111787)"
+        },
+        {
+          "name": "whole_raster_finite_range_diagnostic",
+          "passed": true,
+          "detail": "all_pixels=12279160 finite and in [0, 1]"
+        },
+        {
+          "name": "template_readable",
+          "passed": true,
+          "detail": "shape=(3730, 3292)"
+        }
+      ]
+    },
+    "write_info": {
+      "schema_version": 3,
+      "run_name": "gems30-CSR1-44090-20261026-502fb5948335",
+      "note": "CSR1: 3D Laplace/Poisson+1.8km Radon+NoisyOR+2.83px 1D-ridge EDGE, >2px off-cat, 44090d, all-finite [0,1]",
+      "output_file": "gems30-CSR1-44090-20261026-502fb5948335-zeros.tif",
+      "output_sha256": "0fbf3b4a47c2229b68de59e174617f3b47973613ff57950712d25b9166c1d900",
+      "prediction_array_sha256": "aebd51cfb45dd2a8b7861ee4262835f90a5e0c0b177ecb351082d44b018f9adb",
+      "outside_convention": "0.0 outside; nonstandard diagnostic only; does not match published null/NaN-outside format",
+      "published_format_compliant": false,
+      "template_file": "/home/user/GEMSDOE30/data/raw/sample_submission.tif",
+      "created_utc": "2026-10-26T22:51:20+00:00",
+      "format_validation": {
+        "path": "/home/user/GEMSDOE30/docs/downloads/gems30-CSR1-44090-20261026-502fb5948335-zeros.tif",
+        "passed": false,
+        "checks": [
+          {
+            "name": "template_single_band",
+            "passed": true,
+            "detail": "count=1"
+          },
+          {
+            "name": "single_band",
+            "passed": true,
+            "detail": "count=1"
+          },
+          {
+            "name": "float32",
+            "passed": true,
+            "detail": "dtypes=('float32',)"
+          },
+          {
+            "name": "epsg",
+            "passed": true,
+            "detail": "crs=EPSG:32611"
+          },
+          {
+            "name": "template_epsg",
+            "passed": true,
+            "detail": "crs=EPSG:32611"
+          },
+          {
+            "name": "shape_matches_template",
+            "passed": true,
+            "detail": "output=(3730, 3292) template=(3730, 3292)"
+          },
+          {
+            "name": "transform_matches_template",
+            "passed": true,
+            "detail": "output=| 100.00, 0.00, 243350.00|\n| 0.00,-100.00, 4508550.00|\n| 0.00, 0.00, 1.00| template=| 100.00, 0.00, 243350.00|\n| 0.00,-100.00, 4508550.00|\n| 0.00, 0.00, 1.00|"
+          },
+          {
+            "name": "100m_north_up_grid",
+            "passed": true,
+            "detail": "transform=| 100.00, 0.00, 243350.00|\n| 0.00,-100.00, 4508550.00|\n| 0.00, 0.00, 1.00|"
+          },
+          {
+            "name": "finite_and_in_range_inside_footprint",
+            "passed": true,
+            "detail": "valid_pixels=5167373 min=0.0 max=1.0"
+          },
+          {
+            "name": "null_outside_template_footprint",
+            "passed": false,
+            "detail": "outside_pixels=7111787; null/NaN/nodata required"
+          },
+          {
+            "name": "whole_raster_finite_range_diagnostic_advisory",
+            "passed": true,
+            "detail": "advisory only: all_pixels=12279160 finite and in [0, 1]; the public GEMS specification permits null/NaN outside the footprint, and private portal behavior is unverified"
+          },
+          {
+            "name": "template_readable",
+            "passed": true,
+            "detail": "shape=(3730, 3292)"
+          }
+        ]
+      },
+      "whole_raster_range_diagnostic": {
+        "path": "/home/user/GEMSDOE30/docs/downloads/gems30-CSR1-44090-20261026-502fb5948335-zeros.tif",
+        "passed": true,
+        "checks": [
+          {
+            "name": "template_single_band",
+            "passed": true,
+            "detail": "count=1"
+          },
+          {
+            "name": "single_band",
+            "passed": true,
+            "detail": "count=1"
+          },
+          {
+            "name": "float32",
+            "passed": true,
+            "detail": "dtypes=('float32',)"
+          },
+          {
+            "name": "epsg",
+            "passed": true,
+            "detail": "crs=EPSG:32611"
+          },
+          {
+            "name": "template_epsg",
+            "passed": true,
+            "detail": "crs=EPSG:32611"
+          },
+          {
+            "name": "shape_matches_template",
+            "passed": true,
+            "detail": "output=(3730, 3292) template=(3730, 3292)"
+          },
+          {
+            "name": "transform_matches_template",
+            "passed": true,
+            "detail": "output=| 100.00, 0.00, 243350.00|\n| 0.00,-100.00, 4508550.00|\n| 0.00, 0.00, 1.00| template=| 100.00, 0.00, 243350.00|\n| 0.00,-100.00, 4508550.00|\n| 0.00, 0.00, 1.00|"
+          },
+          {
+            "name": "100m_north_up_grid",
+            "passed": true,
+            "detail": "transform=| 100.00, 0.00, 243350.00|\n| 0.00,-100.00, 4508550.00|\n| 0.00, 0.00, 1.00|"
+          },
+          {
+            "name": "finite_and_in_range_inside_footprint",
+            "passed": true,
+            "detail": "valid_pixels=5167373 min=0.0 max=1.0"
+          },
+          {
+            "name": "finite_in_range_outside_footprint_diagnostic",
+            "passed": true,
+            "detail": "outside_pixels=7111787; finite in-range values required for the nonstandard whole-array diagnostic (finite=7111787)"
+          },
+          {
+            "name": "whole_raster_finite_range_diagnostic",
+            "passed": true,
+            "detail": "all_pixels=12279160 finite and in [0, 1]"
+          },
+          {
+            "name": "template_readable",
+            "passed": true,
+            "detail": "shape=(3730, 3292)"
+          }
+        ]
+      },
+      "whole_raster_range_diagnostic_passed": true,
+      "performance_status": "unscored; format validation is not a score"
+    }
+  },
+  "historical_best_rerun": {
+    "verified": true,
+    "benchmark_arm": "msdb_edge",
+    "evaluator_version": "component-holdout-v3-blockstats-20261025",
+    "protocol_version": "buffered-quadrant-whole-components-v1-20261025",
+    "candidate_beats_best_with_paired_ci": false
+  },
+  "lane_scientific_gates_all_passed": false,
+  "lane_scientific_verdict": "negative",
+  "verdict": "negative",
+  "submission_approved": false,
+  "slot_selected": false,
+  "download_ok": true,
+  "ok_to_submit": false,
+  "organizer_score": null,
+  "global_readiness_verdict": "negative",
+  "display_status": "NEGATIVE \u2014 RESEARCH DOWNLOAD OK; DO NOT SUBMIT TO PORTAL"
+}
