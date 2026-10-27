@@ -93,8 +93,10 @@ for the final full-fit surface):
   stencils; support eroded so filled pixels never score):
   `sinθ = (gx·my − gy·mx)/(|g||m|+eps)`, `cosθ = (g·m)/(|g||m|+eps)`,
   eps = 1e-6 × median(|g||m|) over support (computed per full grid,
-  label-free); `rev = |∇(sinθ smoothed sigma 1)|`;
-  `magprod = log1p(|g|·|m|)`.
+  label-free); `rev = |∇ sinθ|` (sinθ is already computed from smoothed
+  fields; no second smoothing — amendment 2026-10-27, before any run, so the
+  maximum stencil radius is 12 px and the 14-px support erosion below covers
+  every channel); `magprod = log1p(|g|·|m|)`.
   Channels: sin/cos/rev/magprod × 2 scales.
 - Conditional-K (4): fold-fit OLS on ordinal ranks
   `rK ~ 1 + rTh + rU + rTh·rU` (train-fold supported sample, deterministic
