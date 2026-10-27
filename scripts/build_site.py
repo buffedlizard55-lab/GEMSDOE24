@@ -77,7 +77,7 @@ def page(title, active, body, prefix=""):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="DOE GEMS fault research: independent GeoTIFF downloads, automated negative submission gates, and reproducible evidence."><meta name="source-feed" content="{prefix}data/source_health.json"><title>{e(title)} · GEMS DOE 24</title><link rel="stylesheet" href="{prefix}assets/style.css"></head>
 <body><header><div class="nav"><a class="brand" href="{prefix}index.html"><span class="mark" aria-hidden="true">∿</span><span>GEMS DOE 24<small>Geologic mapping · evidence first</small></span></a><nav class="navlinks" aria-label="Main navigation">{"".join(nav)}</nav></div></header>
-<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}portfolio-review-20261026.md">Current audit &amp; blockers</a> · <a href="{prefix}artifact-audit.html">Earlier Git-object inventory</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone. <a href="{prefix}metric-integrity-20261026.md">Corrected B2 metric explanation</a>.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
+<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}submission-readiness.html">Pre-training feasibility gate: why common dot budgets cannot pass uniqueness</a> · <a href="{prefix}portfolio-review-20261026.md">Current audit &amp; blockers</a> · <a href="{prefix}artifact-audit.html">Earlier Git-object inventory</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone. <a href="{prefix}metric-integrity-20261026.md">Corrected B2 metric explanation</a>.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
 
 
 def download_button(row, prefix, label="Download submission .tif", primary=True):
@@ -573,6 +573,7 @@ def build_independent_site(primary):
         "sources.html",
         "data/",
         "portfolio-review-20261026.md",
+        "protocol-feasibility-20261027.md",
     ):
         root_body = root_body.replace(f'href="{path}', f'href="docs/{path}')
     root_body = root_body.replace('src="assets/', 'src="docs/assets/')
@@ -589,6 +590,7 @@ def build_independent_site(primary):
         "sources.html",
         "data/",
         "portfolio-review-20261026.md",
+        "protocol-feasibility-20261027.md",
     ):
         exec_root_body = exec_root_body.replace(f'href="{path}', f'href="docs/{path}')
     exec_root_body = exec_root_body.replace('src="assets/', 'src="docs/assets/')

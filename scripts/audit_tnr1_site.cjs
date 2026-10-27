@@ -92,6 +92,17 @@ async function main() {
       receipt.pages.at(-1).owner_table_rows = 92;
       receipt.pages.at(-1).accessibility_violations.push(...expandedAccess);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+      const readiness = await page.goto(new URL('docs/submission-readiness.html', base).href, {waitUntil: 'networkidle'});
+      assert.equal(readiness.status(), 200);
+      assert(await page.getByRole('heading', {name: 'No submission-authorized TIFF', exact: true}).isVisible());
+      assert.equal(await page.locator('tbody tr').count(), 5);
+      assert(await page.getByText('NOT_RULED_OUT is not PASS.', {exact: true}).isVisible());
+      await page.addScriptTag({path: axeSource});
+      const readinessAccess = await page.evaluate(async () => {
+        const result = await axe.run(document.querySelector('main'), {runOnly: {type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice']}});
+        return result.violations.map(v => ({id: v.id, impact: v.impact, nodes: v.nodes.map(n => n.target)}));
+      });
+      receipt.pages.push({device, page: 'docs/submission-readiness.html', no_horizontal_overflow: await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), accessibility_violations: readinessAccess, diagnostic_budget_rows: 5});
       await context.close();
     }
     assert(receipt.pages.every(row => row.no_horizontal_overflow));
