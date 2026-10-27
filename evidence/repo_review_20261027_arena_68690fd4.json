@@ -1,0 +1,141 @@
+{
+  "schema": "gems-repository-review-run-card-v1",
+  "reviewed_utc": "2026-10-27T19:24:45.557384+00:00",
+  "branch": "arena/68690fd4-gemsdoe24",
+  "scope": "Repository, frozen receipts, GitHub source freshness, and dependency-free feasibility tests only; no experiment or submission",
+  "hypothesis": "No geological method was assigned or tested. Top-ranked prospective method: signed gravity-magnetic cross-gradient reversal using cached RTP and isostatic-gravity bands, optionally oriented by catalogue-independent terrain structure.",
+  "mechanism": "A sign change in the relative magnetic-gravity gradient orientation across a covered basement splay could reveal a discontinuity absent from the surface catalogue. This is a hypothesis only; no feature was computed.",
+  "named_non_fault_process_that_could_mimic_it": "Intrusive or lithologic contacts, remanent magnetization, and survey/leveling seams.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "ci95": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "status": "NOT RUN: no assigned lane and no candidate model."
+  },
+  "organizer_confirmed_score": null,
+  "leaderboard_estimate": null,
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": {
+      "measurement_type": "REGISTRY-NOVELTY (not score)",
+      "value": null,
+      "status": "NOT RUN: no candidate surface"
+    },
+    "final_dot_overlap_within_3px": {
+      "measurement_type": "REGISTRY-NOVELTY (not score)",
+      "value": null,
+      "status": "NOT RUN: no candidate dots"
+    },
+    "frozen_lattice_necessary_bound": {
+      "measurement_type": "REGISTRY-GEOMETRY (not score; arithmetic on pinned audit counts)",
+      "candidate_dot_count": 37654,
+      "minimum_overlap_fraction": 0.8234184947150369,
+      "threshold_fraction": 0.7,
+      "source": "evidence/protocol_feasibility_20261027.json",
+      "interpretation": "The bound is a fail for this count against one retained witness, not proof of copying or a full-registry pass."
+    },
+    "status": "No new comparison run."
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "status": "NOT RUN: no new candidate TIFF",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "submission_authorized": false
+  },
+  "submission_name": null,
+  "submission_note": "GEMS24 review | no assigned lane; no new TIFF or holdout; DO NOT SUBMIT",
+  "verdict": "negative",
+  "new_experiments": 0,
+  "new_tiffs": 0,
+  "competition_slots_used": 0,
+  "source_freshness": {
+    "measurement_type": "GITHUB-SOURCE-FRESHNESS (not a score or artifact audit)",
+    "checked_utc": "2026-10-27T19:18:47.697611+00:00",
+    "sites_checked": 9,
+    "changed_main_refs_vs_frozen_portfolio_pins": 9,
+    "failed_checks": 0,
+    "all_current_main_refs_differ_from_nine_file_audit_source_refs": true,
+    "interpretation": "Latest-main artifacts/cards were not fetched or re-audited; score feed not accessed.",
+    "gemsdoe24_current_main_ref": "af8576cf23d1e8cfda69fd859e1fb98d3d72194f"
+  },
+  "data_state": {
+    "small_committed_manifest_files_checked": 12,
+    "small_manifest_hashes_match": true,
+    "training_features_tif_present": false,
+    "prepared_feature_cache_present": false,
+    "owner_mirror_shard_metadata_checked_via_github_api": 5,
+    "owner_mirror_bytes_downloaded_or_assembled": false,
+    "organizer_data_provenance_authenticated": false,
+    "scientific_python_dependencies_installed": true,
+    "dependency_environment": ".venv/ from pinned requirements.txt; ignored and not committed"
+  },
+  "source_review": {
+    "official_reference_readme_ref": "aebe92f7c8a990f0e3443451b7a825d9afd6336b",
+    "official_reference_readme_sha256_revalidated": "cfa4d55559c9128313beb9417eae7e0a94c31677132afb1120f9e86222804239",
+    "external_official_geology_hosts_fetched": [],
+    "organizer_portal_or_leaderboard_fetched": false
+  },
+  "verification": {
+    "pass1": "Read README, AGENTS, active brief, current audit, source feed, metric implementation, holdout/writer, existing research and integrity receipts; added normalized brief, review and negative card.",
+    "pass2": "Verified all 12 small manifest hashes; refreshed the GitHub-only nine-repository source feed (9 changed, 0 failed); confirmed all nine current main refs differ from the exact-file audit source_ref. Unshallowed history with --filter=blob:none, then full pytest: 552 passed. The read-only uniqueness checker exited 2 as expected for both fixed budgets.",
+    "pass3": "scripts/build_site.py completed at 2026-10-27T19:19:09.891365+00:00 using the 19:18 feed. Generated pages were inspected, then left unchanged to avoid overlapping open PR #70 edits to the same pages; README and this review link the fresher feed directly. Confirmed the nine pinned focus files remain research-only, no score estimate is present, hypotheses are untested, and no new TIFF/holdout exists. Scientific evaluation remains blocked by the unassigned method paragraph and absent feature cache."
+  },
+  "limitations": [
+    "The single-method paragraph is absent; the requested top-candidate holdout cannot be run without selecting an unassigned lane.",
+    "No current-head TIFF/run-card audit was performed after the nine source repositories moved.",
+    "The literal 70% overlap rule is mathematically impossible for common 37,654- and 44,090-dot budgets against the retained calibration lattice; no policy exception was made.",
+    "The training raster and prepared feature stack are absent; only owner-mirror GitHub file metadata was checked, not payload content or organizer provenance.",
+    "No live DrivenData score, submission receipt, hidden labels, current quota, organizer acceptance, or leaderboard estimate was obtained.",
+    "The full focus-repository current-main artifact review is outstanding: the feed certifies commit identities only, not latest TIFF hashes, scores or leaderboard status."
+  ],
+  "tests": {
+    "command": "./.venv/bin/pytest -q",
+    "passed": 552,
+    "failed": 0,
+    "status": "PASS",
+    "historical_git_objects": "Fetched full commit/tree history from origin/main with --filter=blob:none; did not switch branches or weaken receipt checks.",
+    "site_build": {
+      "command": "./.venv/bin/python scripts/build_site.py",
+      "status": "PASS",
+      "generated_utc": "2026-10-27T19:19:09.891365+00:00",
+      "generated_outputs_retained_in_pr": false,
+      "reason_outputs_not_retained": "Generated overview/submission pages overlap open PR #70; tested successfully, retained the current report/feed rather than staging overlapping generated HTML."
+    },
+    "uniqueness_feasibility": {
+      "command": "./.venv/bin/python scripts/check_uniqueness_feasibility.py --dot-budget 37654 --dot-budget 44090",
+      "status": "EXPECTED_FAIL_CLOSED",
+      "exit_code": 2,
+      "checked_utc": "2026-10-27T19:12:01.511235+00:00",
+      "minimum_overlap_fractions": [
+        0.8234184947150369,
+        0.8491948287593558
+      ],
+      "classification": "REGISTRY-GEOMETRY (not score); necessary bound against one retained lattice witness."
+    }
+  },
+  "branch_head": "af8576cf23d1e8cfda69fd859e1fb98d3d72194f",
+  "main_head_at_rebase": "af8576cf23d1e8cfda69fd859e1fb98d3d72194f",
+  "concurrent_pull_request_review": {
+    "checked_utc": "2026-10-27T19:24:45.557384+00:00",
+    "current_main_head": "af8576cf23d1e8cfda69fd859e1fb98d3d72194f",
+    "merged_pr_71": "https://github.com/buffedlizard55-lab/GEMSDOE24/pull/71",
+    "open_prs_checked": [
+      7,
+      40,
+      43,
+      50,
+      61,
+      70
+    ],
+    "path_intersection_with_each_open_pr": [
+      "README.md"
+    ],
+    "new_files_outside_all_open_pr_file_lists": true,
+    "generated_pages_and_AGENTS_modified_by_this_pr": false,
+    "other_pr_branches_modified": false,
+    "note": "PR #70 overlaps the earlier signed-gradient/conditional-K method queue; PR #61 separately covers B2. Both remain open/dirty and do not assign this session a lane."
+  }
+}
