@@ -13,7 +13,6 @@ import time
 os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 os.environ.setdefault("OMP_NUM_THREADS", "1")
 
-import gc  # noqa: E402
 import sys  # noqa: E402
 from pathlib import Path  # noqa: E402
 
@@ -179,7 +178,9 @@ def main():
 
     content_id = submission.scored_content_id(final_dots, fp, catalogue)
     stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    fname = submission.make_filename("gems24", f"tmcg-{best_name.lower()}", stamp, content_id, "zeros")
+    fname = submission.make_filename(
+        "gems24", f"tmcg-{best_name.lower()}", stamp, content_id, "zeros"
+    )
     out_dir = ROOT / "docs/downloads"
     zeros = submission.write_submission(
         final_dots.astype(np.float32), template, out_dir / fname, outside="zero"
@@ -223,7 +224,11 @@ def main():
         {"canary": canary, "experiments": experiments, "novelty": nov},
         ROOT / "evidence/tmcg_experiment_20261027.json",
     )
-    print(json.dumps({"file": fname, "dti": best["holdout_dti"], "verdict": card["verdict"]}, indent=2))
+    print(
+        json.dumps(
+            {"file": fname, "dti": best["holdout_dti"], "verdict": card["verdict"]}, indent=2
+        )
+    )
 
 
 if __name__ == "__main__":

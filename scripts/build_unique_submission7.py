@@ -34,10 +34,10 @@ from scipy.ndimage import distance_transform_edt
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from gems import emission, footprint, holdout, novelty, submission  # noqa: E402
+from gems import emission, footprint, holdout, submission  # noqa: E402
+from gems.novelty import classify_space_filling_control, dot_overlap  # noqa: E402
 from gems.preflight import preflight  # noqa: E402
 from gems.validator import sha256_file  # noqa: E402
-from gems.novelty import classify_space_filling_control, dot_overlap  # noqa: E402
 
 TEMPLATE = ROOT / "data/bridge/sample_submission.tif"
 LABELS = ROOT / "data/bridge/labels.tif"
@@ -226,9 +226,7 @@ def main():
             lattice = ds.read(1) > 0
         lattice = lattice & fp
         lattice_ok = True
-        ctrl = classify_space_filling_control(
-            fp, lattice, radius_px=3.0, coverage_threshold=0.70
-        )
+        ctrl = classify_space_filling_control(fp, lattice, radius_px=3.0, coverage_threshold=0.70)
         lattice_bound = ctrl["pigeonhole_min_overlap_for_candidate_size"]
         report["registry_cache_available_locally"] = False
         report["local_novelty_surrogate"] = {
@@ -289,10 +287,10 @@ def main():
     print(f"Format valid: {checks['format_valid']}", flush=True)
 
     summary = (
-        f"vents+springs in {int(OFFSET_INNER_PX*100)}-{int(OFFSET_OUTER_PX*100)} m "
+        f"vents+springs in {int(OFFSET_INNER_PX * 100)}-{int(OFFSET_OUTER_PX * 100)} m "
         f"catalogue offset band | research; HOLDOUT-DTI {results['dti']:.5f} | id {content_id}"
     )
-    prefix = f"24GEMS H-UNIQUE-07 | "
+    prefix = "24GEMS H-UNIQUE-07 | "
     suffix = f" | id {content_id} | not yet live-scored"
     max_sum = 140 - len(prefix) - len(suffix)
     note = prefix + summary[:max_sum] + suffix

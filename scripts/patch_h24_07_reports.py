@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
 """Patch H-UNIQUE-07 reports with the actual measured lattice overlap."""
+
 from __future__ import annotations
 
 import json
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
-import numpy as np
 import rasterio
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from gems import footprint, novelty  # noqa: E402
 from gems.preflight import preflight  # noqa: E402
-from gems.submission import check_variants  # noqa: E402
 
 NAME = "24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.tif"
 TEMPLATE = ROOT / "data/bridge/sample_submission.tif"
@@ -103,5 +101,10 @@ pf = preflight(
     expected_template_sha256=str(__import__("hashlib").sha256(TEMPLATE.read_bytes()).hexdigest()),
 )
 PREFLIGHT.write_text(json.dumps(pf, indent=2, allow_nan=False) + "\n")
-print("preflight decision:", pf["decision"]["submission_status"], "| ready:", pf["decision"]["ready_to_submit"])
+print(
+    "preflight decision:",
+    pf["decision"]["submission_status"],
+    "| ready:",
+    pf["decision"]["ready_to_submit"],
+)
 print("updated", PREFLIGHT)
