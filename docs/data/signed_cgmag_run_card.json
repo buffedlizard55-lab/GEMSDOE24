@@ -1,0 +1,99 @@
+{
+  "lane_id": "H24-SIGNED-CGMAG",
+  "hypothesis": "Signed gravity-magnetic cross-gradient reversal across terrain tangent",
+  "mechanism": "Oblique buried splay rotates relative orientation of RTP vs gravity gradients; signed c reversal along terrain fabric marks it",
+  "non_fault_mimic": "Intrusive contact or GeoDAWN seam",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 7778.975412864129,
+    "FP_w": 34644.66847071632,
+    "FN_w": 53209.02458713587,
+    "n_truth": 60988.0,
+    "n_emitted": 38104.0,
+    "dti": 0.13581768525002275,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.12219475689431683,
+        0.148979020924013
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 1508.3944284751606,
+        "FP_w": 7810.588543813731,
+        "FN_w": 8656.60557152484,
+        "n_truth": 10165,
+        "n_emitted": 8515,
+        "dti": 0.15090287344346393,
+        "coverage": 0.14839099148796464
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 1995.7842691105704,
+        "FP_w": 9607.931154917307,
+        "FN_w": 10515.21573088943,
+        "n_truth": 12511,
+        "n_emitted": 10528,
+        "dti": 0.16187009164629193,
+        "coverage": 0.15952236185041727
+      },
+      {
+        "fold": "SW",
+        "TP_w": 1829.9442528225113,
+        "FP_w": 9726.998348281339,
+        "FN_w": 18704.05574717749,
+        "n_truth": 20534,
+        "n_emitted": 10535,
+        "dti": 0.09765646173606174,
+        "coverage": 0.08911776822940057
+      },
+      {
+        "fold": "SE",
+        "TP_w": 2444.852462455887,
+        "FP_w": 7499.150423703944,
+        "FN_w": 15333.147537544113,
+        "n_truth": 17778,
+        "n_emitted": 8526,
+        "dti": 0.15081254783032605,
+        "coverage": 0.13752123199774366
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "evaluator_version": "gems-segment-pooled-v1",
+  "n_withheld": 60988,
+  "budget": 37654,
+  "lattice_overlap": 0.996839645190418,
+  "correlation_overlap_vs_registry": {
+    "method_passed": true,
+    "literal_passed": false,
+    "max_overlap": 0.6389228236043979
+  },
+  "raster_sha256": "793ec5c67f06d9a6baea9b6145301bc893f5cc7ea27b8dba0d318233054f14be",
+  "submission_name": "gems24-signed-cgmag-reversal-hgb-20261027-52c0189a911b-zeros.tif",
+  "note": "GEMS24 SIGNED-CGMAG | K=37654 | id 52c0189a911b | HOLDOUT-DTI 0.1358 | research; see executive guide",
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false
+}

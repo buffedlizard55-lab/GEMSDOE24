@@ -1,0 +1,7 @@
+{
+  "file": "gems24-signed-cgmag-reversal-hgb-20261027-52c0189a911b-zeros.tif",
+  "sha256": "793ec5c67f06d9a6baea9b6145301bc893f5cc7ea27b8dba0d318233054f14be",
+  "holdout": 0.13581768525002275,
+  "method_passed": true,
+  "lattice_overlap": 0.996839645190418
+}

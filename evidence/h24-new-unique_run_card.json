@@ -1,0 +1,213 @@
+{
+  "schema_version": 2,
+  "generated_utc": "2026-10-27T17:37:14.203041+00:00",
+  "lane_id": "H24-NEW-UNIQUE",
+  "hypothesis": "H24-NEW-UNIQUE: 30ch baseline HGB with stratified D3-like sampling, no 1m DEM10, small-K budget to probe lattice lower bound; OOF stitching via max-aggregation",
+  "mechanism": "Potential-field + DEM + geodetic features predict fault likelihood; priority Poisson emission with 3px spacing; K=15000 probes pigeonhole lower bound 55.6% vs lattice but actual geological coherence drives ~99% overlap",
+  "non_fault_mimic": "Road/claim/access corridor or Lake Lahontan shoreline bench (same as prior lanes) \u2014 C2ST diagnostic checks this",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "TP_w": 8042.701892546585,
+    "FP_w": 34546.49625970137,
+    "FN_w": 52945.29810745342,
+    "n_truth": 60988.0,
+    "n_emitted": 38104.0,
+    "dti": 0.14034110878986453,
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "ci95": {
+      "level": 0.95,
+      "interval": [
+        0.1267718810803623,
+        0.15394145542299392
+      ],
+      "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "block_pixels": 100,
+      "block_size_m": 10000,
+      "n_blocks": 583,
+      "resamples": 1999,
+      "seed": 20261025,
+      "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+    },
+    "folds": [
+      {
+        "fold": "NW",
+        "TP_w": 1506.4035094581266,
+        "FP_w": 7812.745601695839,
+        "FN_w": 8658.596490541873,
+        "n_truth": 10165,
+        "n_emitted": 8515,
+        "dti": 0.15070319685643352,
+        "coverage": 0.14819513127969763
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "TP_w": 2160.3760140070517,
+        "FP_w": 9538.390970181787,
+        "FN_w": 10350.623985992948,
+        "n_truth": 12511,
+        "n_emitted": 10528,
+        "dti": 0.1749497244383936,
+        "coverage": 0.17267812437111754
+      },
+      {
+        "fold": "SW",
+        "TP_w": 1939.9072179459545,
+        "FP_w": 9682.274494055673,
+        "FN_w": 18594.092782054046,
+        "n_truth": 20534,
+        "n_emitted": 10535,
+        "dti": 0.10345268980868517,
+        "coverage": 0.09447293357095327
+      },
+      {
+        "fold": "SE",
+        "TP_w": 2436.0151511354525,
+        "FP_w": 7513.085193768072,
+        "FN_w": 15341.984848864548,
+        "n_truth": 17778,
+        "n_emitted": 8526,
+        "dti": 0.15025796225042135,
+        "coverage": 0.13702413944962608
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    }
+  },
+  "holdout_label": "HOLDOUT-DTI",
+  "evaluator_version": "gems-segment-pooled-v1",
+  "n_withheld_positive_pixels": 60988,
+  "budget_total": 37654,
+  "pigeonhole_min_overlap_for_K": 0.8234184947150369,
+  "actual_lattice_overlap": 0.9979285069315345,
+  "correlation_overlap_vs_registry": {
+    "pre_surface_max_abs_rho": 0.4603969420094692,
+    "final_max_abs_rho": 0.4897955859089526,
+    "final_max_overlap_competing": 0.6439953258617942,
+    "final_literal_max_overlap": 0.9979285069315345,
+    "method_lane_passed": true,
+    "literal_all_entries_passed": false,
+    "scope": "46 unique rasters + 0 extra locals in this minimal run"
+  },
+  "distance_profile": {
+    "n_dots": 37654,
+    "min_dist_px": 1.0,
+    "median_dist_px": 14.7648230602334,
+    "frac_le_2px": 0.12545811865937218,
+    "frac_2_to_9px": 0.24363945397567324,
+    "frac_gt_20px": 0.4025867105752377
+  },
+  "c2st": {
+    "passed": null
+  },
+  "raster_sha256": "53603c4744442a464abb03b887101b2377f033238b43b7a4a5c8dfb728a25bd3",
+  "nan_sha256": "965d10128f16bff8391467c3f3961e2eeda2b68300516d51c36285d7df2a4f9b",
+  "zip_sha256": "9dc2703afe4a80587df35f646616c49bf4a28a4eb9a114b66719cd7b8b5cc0e5",
+  "submission_name": "gems24-new-unique-hydro-gravity-hgb-20261027-df63489defe3-zeros.tif",
+  "nan_name": "gems24-new-unique-hydro-gravity-hgb-20261027-df63489defe3-nan.tif",
+  "zip_name": "gems24-new-unique-hydro-gravity-hgb-20261027-df63489defe3-zeros.zip",
+  "note": "GEMS24 NEW-UNIQUE | HGB 30ch K=37654 | id df63489defe3 | HOLDOUT-DTI 0.1403 | research; see executive guide",
+  "note_file": "note-gems24-new-unique-hydro-gravity-hgb-20261027-df63489defe3-zeros.txt",
+  "validator_output": {
+    "file": "gems24-new-unique-hydro-gravity-hgb-20261027-df63489defe3-zeros.tif",
+    "bytes": 827504,
+    "sha256": "53603c4744442a464abb03b887101b2377f033238b43b7a4a5c8dfb728a25bd3",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37654,
+    "in_footprint_mass": 37654.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "experiments_run": 1,
+  "submission_slots_used": 0,
+  "elapsed_seconds": 221.06623034299992
+}

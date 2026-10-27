@@ -1,0 +1,26 @@
+{
+  "file": "gems24-new-unique-hydro-gravity-hgb-20261027-df63489defe3-zeros.tif",
+  "sha256": "53603c4744442a464abb03b887101b2377f033238b43b7a4a5c8dfb728a25bd3",
+  "nan_file": "gems24-new-unique-hydro-gravity-hgb-20261027-df63489defe3-nan.tif",
+  "nan_sha256": "965d10128f16bff8391467c3f3961e2eeda2b68300516d51c36285d7df2a4f9b",
+  "zip_file": "gems24-new-unique-hydro-gravity-hgb-20261027-df63489defe3-zeros.zip",
+  "zip_sha256": "9dc2703afe4a80587df35f646616c49bf4a28a4eb9a114b66719cd7b8b5cc0e5",
+  "note": "GEMS24 NEW-UNIQUE | HGB 30ch K=37654 | id df63489defe3 | HOLDOUT-DTI 0.1403 | research; see executive guide",
+  "note_file": "note-gems24-new-unique-hydro-gravity-hgb-20261027-df63489defe3-zeros.txt",
+  "checks_file": "checks-gems24-new-unique-hydro-gravity-hgb-20261027-df63489defe3-zeros.json",
+  "pixel_count": 37654,
+  "holdout_dti": 0.14034110878986453,
+  "ci95": [
+    0.1267718810803623,
+    0.15394145542299392
+  ],
+  "method_lane_passed": true,
+  "literal_passed": false,
+  "max_competing_overlap": 0.6439953258617942,
+  "actual_lattice_overlap": 0.9979285069315345,
+  "pigeonhole_lb": 0.8234184947150369,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "verdict": "negative",
+  "role": "primary"
+}
