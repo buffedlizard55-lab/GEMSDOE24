@@ -15,10 +15,15 @@ first two prospective hypotheses: do not restart those ideas as untried lanes.
 ## Start here — current request and automated pre-training gate (2026-10-27)
 
 **Maximize P(Win) · Own the Outcome. No new TIFF is authorized to submit.**
-Read the [current normalized owner prompt](knowledge/owner_brief_2026-10-27_feasibility.md),
-[standing integrity rules](AGENTS.md), and [feasibility review](docs/feasibility-review-20261027.md)
-before any new work. The long historical prompt records below remain preserved;
-the current addendum is explicitly not a verbatim transcript.
+This Arena-branch update supersedes the preceding session note. Read the [active current-session owner brief](knowledge/owner_brief_2026-10-27_active.md),
+[standing integrity rules](AGENTS.md), and [current branch review](docs/repo-review-20261027-arena-68690fd4.md)
+before any new work; use the [feasibility review](docs/feasibility-review-20261027.md) for the necessary-condition gate. The active brief is normalized, not verbatim; historical prompts and site-score catalogue remain preserved below.
+
+**Current review status:** no candidate surface, holdout or new TIFF was generated. The [GitHub-only freshness receipt](docs/data/portfolio_freshness.json) checked all nine focus repositories at `2026-10-27T19:18:47Z`; every current `main` ref differs from its exact-file audit ref. New-head TIFFs/scores were not audited; leaderboard estimates remain **NOT ESTIMABLE**. [JSON run card](evidence/repo_review_20261027_arena_68690fd4.json).
+
+**GEMSDOE24 local research download:** [`gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif`](docs/downloads/gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif) — **DOWNLOAD: YES (research/audit) · SUBMIT: NO**. Source-recorded **HOLDOUT-DTI 0.166060**, `gems-segment-pooled-v1`, 60,988 withheld, 95% CI [0.151858, 0.180339], not replayed or a leaderboard score. See the [fail-closed exact-file decision](docs/data/current_best_review.json).
+
+**GEMSDOE32 H33-B2:** 0.2778 remains **OWNER-REPORTED / UNVERIFIED** without an artifact-linked organizer receipt. Open PRs #70 and #61 overlap candidate/B2 work and remain unmerged/dirty; their contents do not assign a method to this session.
 
 [**Executive status: research downloads only; SUBMIT NO**](docs/executive-summary.html#current-focus-files) ·
 [**Why ordinary dot budgets cannot pass the literal uniqueness gate**](docs/submission-readiness.html) ·

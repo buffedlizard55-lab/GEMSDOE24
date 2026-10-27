@@ -1,88 +1,88 @@
 {
   "scope": "GitHub source freshness only; not a leaderboard or scoring API",
-  "checked_utc": "2026-10-27T17:42:58.158871+00:00",
+  "checked_utc": "2026-10-27T19:18:47.697611+00:00",
   "status": "checked",
   "rows": [
     {
       "repo": "buffedlizard55-lab/GEMSDOE24",
       "pinned_ref": "46f663dad1a1c3d8231e5de5dbad4ee4d19e8d56",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE24",
-      "latest_main_ref": "3b60665bc5d21617372f080d951b77886f0374a6",
+      "latest_main_ref": "af8576cf23d1e8cfda69fd859e1fb98d3d72194f",
       "changed_since_review": true,
       "status": "checked",
-      "source_api": "github-graphql"
+      "source_api": "github-rest"
     },
     {
       "repo": "buffedlizard55-lab/GEMSDOE25",
       "pinned_ref": "fac6dbe5852baa0f0125d00ecc5cb1c16872741a",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE25",
-      "latest_main_ref": "5a60fb475b7171af93cfce795abe6d96c4021ea2",
+      "latest_main_ref": "eb70599f5cad08cb8808499dd38589d33fc183b5",
       "changed_since_review": true,
       "status": "checked",
-      "source_api": "github-graphql"
+      "source_api": "github-rest"
     },
     {
       "repo": "buffedlizard55-lab/GEMSDOE27",
       "pinned_ref": "cf8b4c201f2cc2ef649b6ca7cd32f235c2f6743a",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE27",
-      "latest_main_ref": "fbeac75371031b6932dca7314ec3c31aee206467",
+      "latest_main_ref": "4f34228a9f39e99da592aa34fd835c96d1b693f5",
       "changed_since_review": true,
       "status": "checked",
-      "source_api": "github-graphql"
+      "source_api": "github-rest"
     },
     {
       "repo": "buffedlizard55-lab/GEMSDOE28",
       "pinned_ref": "12ec4fea4c97a7887a7ca8a06f9bd94c7609ea07",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE28",
-      "latest_main_ref": "67dbdf4da84fc92a98dd9644ab816ed18ae36bcc",
+      "latest_main_ref": "4955e29c7b66503ba2178b25d356d713dc1bc534",
       "changed_since_review": true,
       "status": "checked",
-      "source_api": "github-graphql"
+      "source_api": "github-rest"
     },
     {
       "repo": "buffedlizard55-lab/GEMSDOE30",
       "pinned_ref": "35ce8911e2c3287eed973eacd12c252e8cb3f34c",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE30",
-      "latest_main_ref": "789144c2c5080816bd877a6d0907577b7f13dd75",
+      "latest_main_ref": "d21ddd9502f3c3911e8d77b8f1e6abfaadffc876",
       "changed_since_review": true,
       "status": "checked",
-      "source_api": "github-graphql"
+      "source_api": "github-rest"
     },
     {
       "repo": "buffedlizard55-lab/GEMSDOE31",
       "pinned_ref": "784d3ae2dc1d247323378074257eba4353b3d087",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE31",
-      "latest_main_ref": "fbebc01703a39a99528432892b7c11b716ca5ab3",
+      "latest_main_ref": "88ec212955353f7590e94b8ef2a9763ffa035d45",
       "changed_since_review": true,
       "status": "checked",
-      "source_api": "github-graphql"
+      "source_api": "github-rest"
     },
     {
       "repo": "buffedlizard55-lab/GEMSDOE32",
       "pinned_ref": "8b00ee91b9d6d7ef0e3762eb7bc0c92bee0928d1",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE32",
-      "latest_main_ref": "1398109a23f04a2ace71c1bd2f527cfba87860b5",
+      "latest_main_ref": "6a28a39a2bca6bbb49cd8a56292c78d474c9ef91",
       "changed_since_review": true,
       "status": "checked",
-      "source_api": "github-graphql"
+      "source_api": "github-rest"
     },
     {
       "repo": "buffedlizard55-lab/GEMSDOE33",
       "pinned_ref": "adf1f45ae0030de5e63d07655eaeb1a0ea4d96f3",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE33",
-      "latest_main_ref": "122e2240a835c9c84831943ee3489dbb48fd6e85",
+      "latest_main_ref": "844f514819041c7be9efd345a24cf5cd70263f00",
       "changed_since_review": true,
       "status": "checked",
-      "source_api": "github-graphql"
+      "source_api": "github-rest"
     },
     {
       "repo": "buffedlizard55-lab/GEMSDOE36",
       "pinned_ref": "6dae4545076c4e5fc2be1cf348fe740ba9508a1d",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE36",
-      "latest_main_ref": "7576942352382c557f074bae3f2c6eb72750fa44",
+      "latest_main_ref": "b9d8ce07c10a0adb08bb0302b867a0ccc1eba18e",
       "changed_since_review": true,
       "status": "checked",
-      "source_api": "github-graphql"
+      "source_api": "github-rest"
     }
   ],
   "updates": [
@@ -90,55 +90,55 @@
       "title": "GEMSDOE24: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE24",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-27T17:42:58.158871+00:00"
+      "checked_utc": "2026-10-27T19:18:47.697611+00:00"
     },
     {
       "title": "GEMSDOE25: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE25",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-27T17:42:58.158871+00:00"
+      "checked_utc": "2026-10-27T19:18:47.697611+00:00"
     },
     {
       "title": "GEMSDOE27: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE27",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-27T17:42:58.158871+00:00"
+      "checked_utc": "2026-10-27T19:18:47.697611+00:00"
     },
     {
       "title": "GEMSDOE28: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE28",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-27T17:42:58.158871+00:00"
+      "checked_utc": "2026-10-27T19:18:47.697611+00:00"
     },
     {
       "title": "GEMSDOE30: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE30",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-27T17:42:58.158871+00:00"
+      "checked_utc": "2026-10-27T19:18:47.697611+00:00"
     },
     {
       "title": "GEMSDOE31: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE31",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-27T17:42:58.158871+00:00"
+      "checked_utc": "2026-10-27T19:18:47.697611+00:00"
     },
     {
       "title": "GEMSDOE32: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE32",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-27T17:42:58.158871+00:00"
+      "checked_utc": "2026-10-27T19:18:47.697611+00:00"
     },
     {
       "title": "GEMSDOE33: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE33",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-27T17:42:58.158871+00:00"
+      "checked_utc": "2026-10-27T19:18:47.697611+00:00"
     },
     {
       "title": "GEMSDOE36: source changed after pinned review",
       "url": "https://github.com/buffedlizard55-lab/GEMSDOE36",
       "kind": "GitHub commit freshness; no score verification",
-      "checked_utc": "2026-10-27T17:42:58.158871+00:00"
+      "checked_utc": "2026-10-27T19:18:47.697611+00:00"
     }
   ],
   "leaderboard": null,
