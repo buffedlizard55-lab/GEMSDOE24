@@ -7,12 +7,15 @@ or perturbs a candidate to evade the thresholds.
 from __future__ import annotations
 
 import hashlib
+from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
 import rasterio
 from scipy.spatial import cKDTree
 from scipy.stats import rankdata
+
+from gems.uniqueness_budget import bounds as exact_budget_bounds
 
 
 def correlation(a, b):
@@ -139,6 +142,44 @@ def classify_space_filling_control(
         "footprint_3px_coverage": float(coverage),
         "coverage_threshold": float(coverage_threshold),
         "pigeonhole_min_overlap_for_candidate_size": pigeonhole_lb,
+    }
+
+
+def dot_budget_feasibility(
+    footprint_pixels: int, uncovered_pixels: int, candidate_dot_count: int
+) -> dict:
+    """Necessary-only pre-training bound for the literal >70% overlap stop rule.
+
+    For K distinct in-footprint dots and U pixels outside a reference's 3-px
+    union, at least max(0, K-U) dots must overlap it. Compare integers so a
+    bound of exactly 70% is NOT stopped by floating-point rounding. This says
+    nothing about surface correlation, geological skill, or smaller budgets'
+    actual overlap. Never use it to retune dots around a registry comparator.
+    """
+    if (
+        any(type(v) is not int for v in (footprint_pixels, uncovered_pixels, candidate_dot_count))
+        or footprint_pixels < 1
+        or not 0 <= uncovered_pixels <= footprint_pixels
+        or not 1 <= candidate_dot_count <= footprint_pixels
+    ):
+        raise ValueError(
+            "Integer footprint, uncovered count and distinct in-footprint budget required"
+        )
+    exact = exact_budget_bounds(
+        footprint_pixels - uncovered_pixels, uncovered_pixels, candidate_dot_count, Fraction(7, 10)
+    )
+    impossible = exact["necessarily_fails_literal_gate"]
+    return {
+        "candidate_dot_count": candidate_dot_count,
+        "minimum_overlapping_dots": max(0, candidate_dot_count - uncovered_pixels),
+        "minimum_overlap_fraction": exact["minimum_possible_directed_overlap"],
+        "overlap_limit_fraction": exact["overlap_limit"],
+        "strictly_exceeds_limit": impossible,
+        "status": "STOP_IMPOSSIBLE_BUDGET" if impossible else "NOT_RULED_OUT_NOT_A_PASS",
+        "maximum_budget_not_ruled_out_by_this_bound": exact[
+            "maximum_dots_not_ruled_out_by_this_bound"
+        ],
+        "submission_authorized": False,
     }
 
 

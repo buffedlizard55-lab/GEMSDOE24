@@ -21,12 +21,43 @@ def check(row):
     repo, ref = row["repo"], row["ref"]
     base = {"repo": repo, "pinned_ref": ref, "url": f"https://github.com/{repo}"}
     try:
-        value = subprocess.check_output(
-            ["gh", "api", f"repos/{repo}/commits/main", "--jq", ".sha"],
-            text=True,
-            stderr=subprocess.PIPE,
-            timeout=30,
-        ).strip()
+        try:
+            value = subprocess.check_output(
+                ["gh", "api", f"repos/{repo}/commits/main", "--jq", ".sha"],
+                text=True,
+                stderr=subprocess.PIPE,
+                timeout=30,
+            ).strip()
+            source_api = "github-rest"
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            # GitHub's REST and GraphQL quotas are independent. The fallback
+            # asks only for the public main-ref object ID, never a score, and
+            # retains an unknown status if either channel cannot verify it.
+            owner, name = repo.split("/", 1)
+            query = (
+                "query($owner:String!, $name:String!) { "
+                "repository(owner:$owner,name:$name) { "
+                'ref(qualifiedName:"refs/heads/main") { target { oid } } } }'
+            )
+            value = subprocess.check_output(
+                [
+                    "gh",
+                    "api",
+                    "graphql",
+                    "-f",
+                    f"owner={owner}",
+                    "-f",
+                    f"name={name}",
+                    "-f",
+                    f"query={query}",
+                    "--jq",
+                    ".data.repository.ref.target.oid",
+                ],
+                text=True,
+                stderr=subprocess.PIPE,
+                timeout=30,
+            ).strip()
+            source_api = "github-graphql"
         if len(value) != 40 or any(c not in "0123456789abcdef" for c in value):
             raise ValueError("Invalid Git commit returned")
         return {
@@ -34,6 +65,7 @@ def check(row):
             "latest_main_ref": value,
             "changed_since_review": value != ref,
             "status": "checked",
+            "source_api": source_api,
         }
     except (subprocess.CalledProcessError, subprocess.TimeoutExpired, OSError, ValueError) as exc:
         return {

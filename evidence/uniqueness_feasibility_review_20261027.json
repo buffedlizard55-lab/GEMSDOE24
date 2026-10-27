@@ -1,0 +1,144 @@
+{
+  "schema": "non-experimental-feasibility-review-v1",
+  "checked_utc": "2026-10-27T17:30:39.625499+00:00",
+  "hypothesis": "A retained space-filling comparator makes historical 37,654/44,090-dot budgets mathematically incompatible with the literal uniqueness rule.",
+  "mechanism": "Fresh hash/grid/content-validated 3-px reference union leaves U=6649 cells; any K distinct footprint dots overlap in at least max(0,K-U) cells.",
+  "named_non_fault_mimic": "Space-filling calibration geometry creates overlap without shared fault geology or scientific copying.",
+  "holdout": {
+    "label": "NOT RUN",
+    "dti": null,
+    "ci95": null,
+    "evaluator": null,
+    "withheld_positives": null,
+    "reason": "No assigned geological method paragraph; no new experiment authorized."
+  },
+  "correlation_overlap_vs_registry": {
+    "scope": "One pinned witness remeasured; universal necessary bound only; not full registry pass",
+    "witness": {
+      "path": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817"
+    },
+    "coverage": {
+      "is_space_filling_calibration_control": true,
+      "footprint_3px_covered_pixels": 5160724,
+      "footprint_3px_uncovered_pixels": 6649,
+      "footprint_3px_coverage": 0.9987132726822701,
+      "coverage_threshold": 0.7,
+      "pigeonhole_min_overlap_for_candidate_size": null
+    },
+    "budgets": [
+      {
+        "candidate_dot_count": 20000,
+        "minimum_overlapping_dots": 13351,
+        "minimum_overlap_fraction": 0.66755,
+        "overlap_limit_fraction": 0.7,
+        "strictly_exceeds_limit": false,
+        "status": "NOT_RULED_OUT_NOT_A_PASS",
+        "maximum_budget_not_ruled_out_by_this_bound": 22163,
+        "submission_authorized": false
+      },
+      {
+        "candidate_dot_count": 22163,
+        "minimum_overlapping_dots": 15514,
+        "minimum_overlap_fraction": 0.6999954879754546,
+        "overlap_limit_fraction": 0.7,
+        "strictly_exceeds_limit": false,
+        "status": "NOT_RULED_OUT_NOT_A_PASS",
+        "maximum_budget_not_ruled_out_by_this_bound": 22163,
+        "submission_authorized": false
+      },
+      {
+        "candidate_dot_count": 22164,
+        "minimum_overlapping_dots": 15515,
+        "minimum_overlap_fraction": 0.7000090236419418,
+        "overlap_limit_fraction": 0.7,
+        "strictly_exceeds_limit": true,
+        "status": "STOP_IMPOSSIBLE_BUDGET",
+        "maximum_budget_not_ruled_out_by_this_bound": 22163,
+        "submission_authorized": false
+      },
+      {
+        "candidate_dot_count": 37654,
+        "minimum_overlapping_dots": 31005,
+        "minimum_overlap_fraction": 0.8234184947150369,
+        "overlap_limit_fraction": 0.7,
+        "strictly_exceeds_limit": true,
+        "status": "STOP_IMPOSSIBLE_BUDGET",
+        "maximum_budget_not_ruled_out_by_this_bound": 22163,
+        "submission_authorized": false
+      },
+      {
+        "candidate_dot_count": 44090,
+        "minimum_overlapping_dots": 37441,
+        "minimum_overlap_fraction": 0.8491948287593558,
+        "overlap_limit_fraction": 0.7,
+        "strictly_exceeds_limit": true,
+        "status": "STOP_IMPOSSIBLE_BUDGET",
+        "maximum_budget_not_ruled_out_by_this_bound": 22163,
+        "submission_authorized": false
+      }
+    ],
+    "preplacement_correlation": null,
+    "final_dot_correlation": null,
+    "actual_candidate_overlap": null
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "candidate": "NOT RUN: no new TIFF",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "reference_input_checks": "PASS: pinned template and witness file/content hashes, single band, CRS/shape/transform alignment, finite in-footprint witness values in [0,1]"
+  },
+  "submission_name": null,
+  "note": "GEMS24 feasibility audit | no new TIFF or holdout | literal lattice gate blocks historical budgets | DO NOT SUBMIT",
+  "new_experiments": 0,
+  "new_tiffs": 0,
+  "competition_slots_used": 0,
+  "submission_authorized": false,
+  "leaderboard_estimate": null,
+  "verdict": "negative",
+  "verification": {
+    "full_suite": "510 passed in 207.99s",
+    "dependency_free_unittest": "6 passed without scientific dependencies",
+    "ruff_check": "PASS",
+    "ruff_format": "PASS: 203 files formatted",
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "javascript_syntax": "PASS",
+    "browser": {
+      "pages_and_device_combinations": 14,
+      "accessibility_violations": 0,
+      "errors": [],
+      "scope": "Local Chromium desktop/mobile; no external navigation; existing exact TIFF downloads hash checked",
+      "receipt": "docs/data/feasibility_browser_review_20261027.json"
+    }
+  },
+  "passes": [
+    {
+      "pass": 1,
+      "result": "Fresh raster readback, necessary bound, negative-only CLI and UI; first full suite 499 passed before concurrent integration."
+    },
+    {
+      "pass": 2,
+      "result": "Integrated PR67; shared dependency-free rational core; fixed merged root link and mobile keyboard-scroll accessibility; targeted 32 passed."
+    },
+    {
+      "pass": 3,
+      "result": "Final integrated suite 510 passed; browser 14 page/device combinations and zero accessibility violations; lint/format/compile/diff checks passed."
+    }
+  ],
+  "limitations": [
+    "No high-scoring unique TIFF achieved.",
+    "The single method lane paragraph is absent.",
+    "The literal retained-lattice gate makes common dot budgets impossible; no exemption added.",
+    "Source freshness does not refresh pinned artifact or scientific evidence.",
+    "No live DrivenData score, account quota, receipt or organizer acceptance verified.",
+    "No new official geological data fetched; organizer authentication of mirrored caches remains unresolved.",
+    "The current request is stored as a normalized requirements record, not claimed verbatim."
+  ],
+  "official_reference_receipt": "evidence/official_reference_review_20261027.json",
+  "feasibility_receipt": "docs/data/uniqueness_feasibility_20261027.json",
+  "feasibility_receipt_sha256": "9df84eee9ae01f355abf0aeac8977602450a4518affa56d90001aeadd2a71025"
+}

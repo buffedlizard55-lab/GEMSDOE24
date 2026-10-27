@@ -7,27 +7,15 @@ Consumes a frozen exact-file audit, not live data. No third-party dependencies.
 import argparse
 import hashlib
 import json
+import sys
 from fractions import Fraction
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def bounds(covered: int, uncovered: int, dots: int, limit: Fraction) -> dict:
-    if covered < 0 or uncovered < 0 or dots <= 0 or dots > covered + uncovered:
-        raise ValueError("Invalid footprint or candidate size")
-    if not 0 <= limit < 1:
-        raise ValueError("Overlap limit must be in [0, 1)")
-    minimum = Fraction(max(0, dots - uncovered), dots)
-    maximum = min(covered + uncovered, int(Fraction(uncovered) / (1 - limit)))
-    return {
-        "candidate_dots": dots,
-        "minimum_possible_directed_overlap": float(minimum),
-        "overlap_limit": float(limit),
-        "necessarily_fails_literal_gate": minimum > limit,
-        "maximum_dots_not_ruled_out_by_this_bound": maximum,
-        "interpretation": "Necessary condition only; not evidence of novelty or scientific merit",
-    }
+sys.path.insert(0, str(ROOT / "src"))
+from gems.uniqueness_budget import bounds  # noqa: E402
 
 
 def report(path: Path, dots: int) -> dict:
