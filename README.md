@@ -1,5 +1,20 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Start every session here: protocol feasibility continuation
+
+**No new submission is authorized.** Read the [standing owner brief](knowledge/owner_brief_verbatim.md),
+[latest integrity review](knowledge/31_current_integrity_review_2026-10-27.md) and
+[reproducible feasibility review](docs/protocol-feasibility-20261027.md) before experiments.
+Maximize P(Win) · Own the Outcome: do not spend experiments or slots on an
+arithmetically impossible novelty gate. The retained lattice forces at least
+82.34% overlap for any 37,654-dot in-footprint candidate, above the literal 70%
+limit. This is a geometric bound, not a score. The assigned single-method
+paragraph remains absent. No policy exception or new geological run was invented.
+
+Run `python scripts/check_protocol_feasibility.py` without scientific dependencies.
+[Negative continuation run card](evidence/protocol_continuation_run_card_20261027.json).
+The nine-site research download table remains below and in the executive guide.
+
 ## Current decision — 2026-10-27: research downloads only; **DO NOT SUBMIT**
 
 **No new TIFF or experiment was produced by this review, and no slot was used.**
