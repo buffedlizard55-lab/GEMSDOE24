@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="H24-CGMK1 executive summary: a new unique research GeoTIFF (DO NOT SUBMIT), nine-site decision table, GEMSDOE32 B2 analysis, and exact submission instructions for a future promoted file.">
+<title>Executive summary 2026-10-27 · H24-CGMK1 · GEMS DOE 24</title><link rel="stylesheet" href="assets/style.css"></head>
+<body><header><div class="nav"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">∿</span><span>GEMS DOE 24<small>Geologic mapping · evidence first</small></span></a>
+<nav class="navlinks" aria-label="Main navigation"><a href="index.html">Overview</a><a href="executive-summary.html">Submission guide</a><a href="research.html">Research</a><a href="sources.html">Sources &amp; audit</a></nav></div></header>
+<main>
+<div class="pagehead">
+<div class="eyebrow">Executive summary · 2026-10-27 · session arena/5ef84d43 · preregistered lane H24-CGMK1</div>
+<h1>A new unique .tif exists.<br>It is <span style="color:#9e3322">NOT OK to submit.</span></h1>
+<p>One preregistered, geophysics-only experiment was run and measured before this page was written.
+The generated file is downloadable below for research. Its internal holdout is far below the project
+floor, so the automated verdict is <strong>DO_NOT_SUBMIT</strong> — no human-inspection step can
+override it, and no competition slot was used. Full science: <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/33_CGMK1_findings_and_9site_executive_summary_2026-10-27.md">33_CGMK1 findings</a> ·
+<a href="data/cgmk1_run_card.json" download>JSON run card</a> ·
+<a href="data/nine_site_executive_summary_cgmk1_20261027.json" download>nine-site JSON</a>.</p>
+</div>
+
+<section class="hero" aria-label="New CGMK1 research GeoTIFF download">
+<div>
+<div class="eyebrow">H24-CGMK1 · signed gravity–magnetic reversal + conditional-K front · negative result</div>
+<h2>Download: YES (research)<br>Submit: NO</h2>
+<p class="lead"><strong><code>gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-zeros.tif</code></strong>
+was generated in this repository on 2026-10-27 from physical layers only — zero previous submission pixels
+copied. It passes every format check (strict whole-array [0,1], no NaN anywhere), passes leakage canaries,
+and passes the competing-method novelty test, but its <strong>HOLDOUT-DTI 0.08868</strong> is far below the
+<strong>0.17010</strong> selection floor.</p>
+<div class="status stopped" role="status"><strong>DO_NOT_SUBMIT.</strong> Automated gates: format PASS ·
+canary PASS (worst channel AUC extremity 0.5882) · competing-method novelty PASS (max 3-px overlap 62.05%,
+max |ρ| 0.3842, 39 local entries) · <strong>holdout FAIL</strong> · literal lattice-included novelty FAIL
+(100% vs the space-filling calibration lattice; pigeonhole minimum 82.34% at 37,654 dots — disclosed, never hidden).</div>
+<div class="actions">
+<a class="button primary" href="downloads/gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-zeros.tif" download>↓ Download CGMK1 research GeoTIFF (-zeros, DO NOT SUBMIT)</a>
+<a class="button" href="downloads/gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-zeros.zip" download>↓ Single-TIFF .zip</a>
+<a class="button" href="downloads/gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-nan.tif" download>NaN-outside twin (compatibility only)</a>
+<a class="button" href="downloads/checks-gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-zeros.json">Automated validator output</a>
+</div>
+<p class="fileline">gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-zeros.tif · 37,654 binary {0,1} dots · 0 on catalogue · min catalogue distance 2.236 px</p>
+<p class="hash">SHA-256 3258f3290390b92470e0eb9d92886f0ab1289df1abe46397fcfaf08f56b43070 · ZIP 7c000689906628e9f18c5f52de2e2fde5c4540b67bc015c46365a18d8c8c864f</p>
+<div class="note" id="note-cgmk1">GEMS24 CGMK1 | signed grav-mag reversal + cond-K front, geophys-only | id 62ca1c4977c5 | not yet live-scored</div>
+<div class="actions"><button class="button" data-copy="#note-cgmk1" data-feedback="#copy-feedback-cgmk1">Copy the 108-character note</button>
+<a class="button" href="downloads/note-gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-zeros.txt" download>Note .txt</a></div>
+<p id="copy-feedback-cgmk1" class="copyfeedback" aria-live="polite"></p>
+<p class="micro">108 characters · maximum 140 · recorded for identification only — pasting it into the portal is NOT authorized for this file.</p>
+</div>
+<aside class="card visual" aria-label="CGMK1 holdout result and preview">
+<div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Not a leaderboard score</span></div>
+<div class="result-number">0.08868</div>
+<p>95% CI [0.07565, 0.10234] · <code>gems-segment-pooled-v1</code> · 60,988 withheld positives<br>
+Matched control (no new channels): 0.08589 · paired Δ +0.00279 [−0.00222, +0.00768], 3/4 folds<br>
+Selection floor: 0.17010 (GEMSDOE36 KPL-36 record, unreplayed) · local point-best S3DEP1: 0.16606</p>
+<img class="raster-preview" src="assets/cgmk1-preview.png" alt="Downsampled preview of CGMK1 experimental fault dots (37,654 binary dots); not verified faults or geothermal vents">
+<p class="micro">Preview: 600 m any-in-cell downsample of the exact dots · not verified faults or vents</p>
+<p><span class="badge blue">Format PASS</span> <span class="badge blue">Canary PASS</span> <span class="badge danger">Holdout FAIL</span> <span class="badge gray">0 slots used</span></p>
+</aside>
+</section>
+
+<section aria-label="Nine-site executive decision table">
+<div class="sectionhead"><h2>Nine focus sites — what to download, what the evidence says, what to submit</h2>
+<p>Historical best = owner's highest listed name (<strong>UNVERIFIED-OWNER-REPORT</strong>, no organizer receipt anywhere).
+Holdouts come from the pinned 2026-10-27 audit and use different evaluators per site — never rank across rows.
+Leaderboard estimate: <strong>none defensible</strong> for every row.</p></div>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Nine-site executive table"><table>
+<thead><tr><th>Site</th><th>Historical best claim (unverified)</th><th>Best recorded evidence in this project</th><th>Unique vs registry?</th><th>OK to submit?</th></tr></thead><tbody>
+<tr><td><strong>GEMSDOE24</strong></td><td>h25-1 dotted h19-5 d1.5 — 0.2477</td><td>S3DEP1 HOLDOUT-DTI 0.16606 [0.15186, 0.18034] (60,988); <strong>new CGMK1 0.08868</strong> [0.07565, 0.10234]. Download CGMK1 above or S3DEP1 from the overview.</td><td>CGMK1: PASS vs competing methods (25–62%); FAIL literal lattice (100%, pigeonhole ≥82.34%)</td><td><strong>NO</strong></td></tr>
+<tr><td><strong>GEMSDOE25</strong></td><td>dotted h19-5 d2.8 — 0.2600</td><td>H74 source record 0.03906 [0.02608, 0.04889], own evaluator, 25,308 withheld</td><td>No — 100.00% lattice overlap (pinned audit)</td><td><strong>NO</strong></td></tr>
+<tr><td><strong>GEMSDOE27</strong></td><td>topo-gap-closure d1.5 — 0.2449</td><td>H31 source record 0.04730 [0.04453, 0.04962]; denominator disagreement unresolved</td><td>No — 99.61%</td><td><strong>NO</strong></td></tr>
+<tr><td><strong>GEMSDOE28</strong></td><td>h36-1 rung30 — 0.2710</td><td>S22C source record 0.12018 [0.10471, 0.13649], unbuffered protocol</td><td>No — 99.62%</td><td><strong>NO</strong></td></tr>
+<tr><td><strong>GEMSDOE30</strong></td><td>d28 poisson 44,090 — 0.2600</td><td>CSR-1 source record 0.15816 [0.14499, 0.17147], own evaluator, 60,988</td><td>No — 99.99%</td><td><strong>NO</strong></td></tr>
+<tr><td><strong>GEMSDOE31</strong></td><td>h27-4 solo d28 — 0.2708</td><td>H31-YM source record 0.15496 [0.14011, 0.17012], own evaluator, 60,988</td><td>No — 99.05%</td><td><strong>NO</strong></td></tr>
+<tr class="highlight"><td><strong>GEMSDOE32</strong></td><td><strong>h33-2 B2 — 0.2778 (highest focus claim)</strong></td><td>Deletion-only derivative of D2.8 (see analysis below); H47 source record 0.11977 [0.10573, 0.13290]</td><td>No — 99.61%; B2 itself is a subset of three earlier masks</td><td><strong>NO</strong></td></tr>
+<tr><td><strong>GEMSDOE33</strong></td><td>h33d tip-stepover — 0.2632</td><td>FSML2 source record 0.10308 [0.09414, 0.11294], gems-segment-pooled-v1, 60,988</td><td>No — 100.00%</td><td><strong>NO</strong></td></tr>
+<tr><td><strong>GEMSDOE36</strong></td><td>anderson PINN 38,854 — 0.2750</td><td>KPL-36 source record 0.17010 [0.15509, 0.18614], gems-segment-pooled-v1, 60,988 (unreplayed here)</td><td>No — 99.17%</td><td><strong>NO</strong></td></tr>
+</tbody></table></div>
+<p class="micro">Exact pinned file names, hashes, source URLs and download URLs for every row: <a href="data/nine_site_executive_summary_cgmk1_20261027.json" download>nine-site JSON</a>.
+Conflicting owner leader claims 0.4413 vs 0.3195 are both unverified and are not used as targets.</p>
+</section>
+
+<section aria-label="Why B2 reported the highest score">
+<h2>Why did GEMSDOE32's B2 report 0.2778?</h2>
+<div class="grid3">
+<article class="card"><div class="tagline">01 · Ancestry (computed)</div><h3>It is a deletion, not a detector</h3>
+<p>B2 (37,654 dots) is exactly the D2.8 mask (44,090, reported 0.2600) with every dot within 2 px of the
+public catalogue removed: <strong>6,436 removed, 0 added</strong> (recomputed mask equality). The same rule
+also derives B2 from the H27-family mask (40,199 → −2,545). The reported gain is +0.0178 from deletion alone.</p></article>
+<article class="card"><div class="tagline">02 · Mechanism (metric algebra)</div><h3>Halo dots pay full price, earn ~nothing</h3>
+<p>Catalogue pixels are masked exactly, but 1–2 px halo dots are not — each pays false-positive mass while the
+hidden-truth credit of the mapped trace's halo is near zero. In the lattice-calibrated sparse-truth model
+(hidden truth ≈12,632 px), the reported gain is consistent only with the deleted dots retaining
+<strong>≈100% of nothing</strong> (implied credit retention 0.999–1.002; break-even 0.934).</p></article>
+<article class="card"><div class="tagline">03 · What would beat it?</div><h3>Strong surface + sparse emission — not available yet</h3>
+<p>A holdout-strong surface emitted with sparse-truth-optimal geometry could in principle exceed it, but today's
+unique surface is holdout-weak, the literal novelty rule is unsatisfiable while the lattice is a comparator,
+and no organizer receipt calibrates holdout → leaderboard (the one paired point, GVC1, moved down).
+Spending a slot now would be guessing, not maximizing P(Win).</p></article>
+</div>
+<p class="micro">All three scores above are UNVERIFIED-OWNER-REPORT; the mechanism is a model-consistent
+explanation, not a causal proof about hidden labels. Full derivation and numbers:
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/33_CGMK1_findings_and_9site_executive_summary_2026-10-27.md">findings §B2</a>.</p>
+</section>
+
+<section aria-label="Estimated leaderboard score">
+<h2>Estimated leaderboard score for CGMK1</h2>
+<div class="tablewrap" tabindex="0"><table>
+<thead><tr><th>File</th><th>Measured evidence (labelled)</th><th>Leaderboard estimate</th><th>Unique?</th><th>Submit?</th></tr></thead><tbody>
+<tr><td><code>gems24-cgmk1-negative-…-62ca1c4977c5-zeros.tif</code></td>
+<td>HOLDOUT-DTI 0.08868 [0.07565, 0.10234], gems-segment-pooled-v1, 60,988 withheld</td>
+<td><strong>No score.</strong> MODEL PROJECTION (not a score): 0.0530–0.0655 sweep (central 0.0599) under stated lattice-model assumptions that are likely false in detail</td>
+<td>Competing-method PASS; literal lattice FAIL (disclosed)</td><td><strong>NO</strong></td></tr>
+<tr><td><code>gems24-s3dep1-negative-…-464fa34b4091-zeros.tif</code> (recorded local point-best)</td>
+<td>HOLDOUT-DTI 0.16606 [0.15186, 0.18034], same evaluator/count (source record)</td>
+<td><strong>No score.</strong> Same model arithmetic: ≈0.112 — illustrates why this is not a forecast</td>
+<td>FAIL (71.32% vs DKRN1 + lattice)</td><td><strong>NO</strong></td></tr>
+</tbody></table></div>
+</section>
+
+<section aria-label="How to submit when a file is promoted">
+<h2>How to submit — when (and only when) a future file says PROMOTE</h2>
+<ol class="steplist">
+<li><h3>Check the verdict first</h3><p>Only a run card with verdict <code>promote</code> from a separate selector step may be uploaded. CGMK1's verdict is <code>negative</code> — stop here for this file. Also confirm your remaining weekly allowance on the competition site (rules mention three per week; organizer staff say the website limit prevails). This project has not checked your account.</p></li>
+<li><h3>Download and verify the exact file</h3><p>Download the <code>-zeros.tif</code> (or the single-TIFF <code>.zip</code>) and verify its SHA-256 against the run card. The zeros variant is finite everywhere and passes the strict whole-array [0,1] check.</p></li>
+<li><h3>Create the submission</h3><p>DrivenData competition 306 → <em>New submission</em> → choose the file. It must be a single-band GeoTIFF (or a .zip containing exactly one) matching the submission format's CRS (EPSG:32611), shape (3730×3292) and geotransform — all machine-checked before release.</p></li>
+<li><h3>Paste the note</h3><p>Copy the run card's ≤140-character note into the <em>Note</em> field so the submission stays identifiable later.</p></li>
+<li><h3>If you see “Predicted values must be in range [0, 1]”</h3><p>Do not clamp or rescale anything. Confirm you selected the <code>-zeros</code> variant (the official-text NaN twin fails a strict whole-array test by construction), re-run the validator JSON next to the file, and record the rejection together with the file hash.</p></li>
+<li><h3>Record the receipt</h3><p>Save the displayed score with the exact file SHA-256 (<code>scripts/record_live_score.py</code>). Only an artifact-linked receipt creates an ORGANIZER-CONFIRMED score; until then every number stays HOLDOUT-DTI or UNVERIFIED-OWNER-REPORT.</p></li>
+</ol>
+</section>
+
+<section aria-label="Method and sources">
+<h2>Method, in one paragraph</h2>
+<p class="narrow">CGMK1 tests whether an oblique buried splay rotates the magnetic-basement and gravity-basement
+gradient fields against each other (signed cross-gradient sin/cos + |∇sin| reversal, two scales) and whether
+potassium that cannot be explained by thorium/uranium lithology (fold-fit conditional residual front) marks
+concealed conduits — supervised on <em>geophysics only</em>, with the topography trunk and LiDAR excluded so the
+detector cannot win by re-reading the same scarps the catalogue was mapped from. It cannot (0.0887 vs 0.1661
+trunk lanes), which quantifies how much of the internal holdout is same-modality rediscovery. Mimics that can
+produce the same signatures without a fault: intrusive contacts, remanent magnetization, survey seams,
+arkosic sediment sorting. Inputs: competition feature mirror (hash-verified, not organizer-authenticated) +
+USGS GeoDAWN radiometrics (DOI 10.5066/P93LGLVQ). Preregistration, 5-hypothesis ranking, irregularities and
+the external-data viability check: <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/32_preregistered_CGMK1_2026-10-27.md">32_preregistered_CGMK1</a>.</p>
+<p class="micro">Official sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" rel="noopener noreferrer" target="_blank">competition metric/format</a> ·
+<a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" rel="noopener noreferrer" target="_blank">NLR 96647 rules PDF</a> ·
+<a href="https://github.com/drivendataorg/gems-prize-reference-solution" rel="noopener noreferrer" target="_blank">reference solution</a> ·
+<a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and" rel="noopener noreferrer" target="_blank">USGS GeoDAWN</a> ·
+<a href="https://gdr.openei.org/submissions/1391" rel="noopener noreferrer" target="_blank">GDR INGENIOUS #1391</a> ·
+<a href="https://epsg.io/32611" rel="noopener noreferrer" target="_blank">EPSG:32611</a>. No DrivenData page was accessed while building this page.</p>
+</section>
+</main>
+<footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Scores marked owner-reported are not organizer receipts. No file on this page has a leaderboard score unless it says so — none does.</p><p><a href="executive-summary.html">Main submission guide</a> · <a href="sources.html">Sources, limitations &amp; review</a></p></footer>
+<script src="assets/app.js" defer></script></body></html>

@@ -1,5 +1,27 @@
 # Standing project instructions
 
+## H24-CGMK1 session — 2026-10-27 arena/5ef84d43 (executed; negative; do not retune)
+
+Read `knowledge/32_preregistered_CGMK1_2026-10-27.md` (commits `9b280a3`+`8dafdc5`),
+`knowledge/33_CGMK1_findings_and_9site_executive_summary_2026-10-27.md`, and
+`evidence/cgmk1_run_card_20261027.json` first.
+- No lane paragraph was supplied again; this session **disclosed a self-assignment** and
+  preregistered one narrow lane before running: signed gravity–magnetic cross-gradient
+  reversal + fold-fit conditional-K residual front, geophysics-only HGB (37 ch; no DEM
+  trunk, no LiDAR, no `tc`, no catalogue-distance features). EXP-1 **HOLDOUT-DTI 0.08868**
+  [0.07565, 0.10234] (`gems-segment-pooled-v1`, 60,988 withheld) vs EXP-2 control 0.08589
+  (paired +0.00279 [−0.00222, +0.00768]); both independently rescored exact.
+- Verdict **negative / DO_NOT_SUBMIT** (`gems24-cgmk1-negative-signed-gravmag-condk-20261027T173413Z-62ca1c4977c5-zeros.tif`,
+  SHA-256 `3258f3290390b92470e0eb9d92886f0ab1289df1abe46397fcfaf08f56b43070`): format and canary PASS,
+  competing-method novelty PASS (max overlap 62.05%, ~26% vs DPRF1/S3DEP1/DKRN1 over **39 local entries
+  only** — cross-repo registry rasters absent in that sandbox), literal lattice FAIL (100%, pigeonhole),
+  holdout far below the 0.17010 floor. **Do not rerun, retune, or re-emit CGMK1**; verify with
+  `.venv/bin/python scripts/run_cgmk1_lane.py --verify-recorded`. Never edit
+  `src/gems/cgmk1.py`/`scripts/run_cgmk1_lane.py` — their SHA-256s are inside the run card.
+- Next (require fresh preregistration / coordinator decisions): obtain ONE artifact-linked organizer
+  receipt; resolve the lattice comparator class; only then consider trunk-plus-new-channel or
+  OPERA/Sentinel-2/MT lanes from an environment where those official downloads are obtainable.
+
 ## 2026-10-27 integrity override — read before dated notes below
 
 - This review produced **no new TIFF, scientific run or slot**; the assigned
