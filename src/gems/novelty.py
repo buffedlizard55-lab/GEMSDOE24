@@ -142,6 +142,42 @@ def classify_space_filling_control(
     }
 
 
+def dot_budget_feasibility(
+    footprint_pixels: int, uncovered_pixels: int, candidate_dot_count: int
+) -> dict:
+    """Necessary-only pre-training bound for the literal >70% overlap stop rule.
+
+    For K distinct in-footprint dots and U pixels outside a reference's 3-px
+    union, at least max(0, K-U) dots must overlap it. Compare integers so a
+    bound of exactly 70% is NOT stopped by floating-point rounding. This says
+    nothing about surface correlation, geological skill, or smaller budgets'
+    actual overlap. Never use it to retune dots around a registry comparator.
+    """
+    if (
+        any(type(v) is not int for v in (footprint_pixels, uncovered_pixels, candidate_dot_count))
+        or footprint_pixels < 1
+        or not 0 <= uncovered_pixels <= footprint_pixels
+        or not 1 <= candidate_dot_count <= footprint_pixels
+    ):
+        raise ValueError(
+            "Integer footprint, uncovered count and distinct in-footprint budget required"
+        )
+    minimum_covered = max(0, candidate_dot_count - uncovered_pixels)
+    impossible = 10 * minimum_covered > 7 * candidate_dot_count
+    return {
+        "candidate_dot_count": candidate_dot_count,
+        "minimum_overlapping_dots": minimum_covered,
+        "minimum_overlap_fraction": minimum_covered / candidate_dot_count,
+        "overlap_limit_fraction": 0.70,
+        "strictly_exceeds_limit": impossible,
+        "status": "STOP_IMPOSSIBLE_BUDGET" if impossible else "NOT_RULED_OUT_NOT_A_PASS",
+        "maximum_budget_not_ruled_out_by_this_bound": min(
+            footprint_pixels, (10 * uncovered_pixels) // 3
+        ),
+        "submission_authorized": False,
+    }
+
+
 def compare_registry(
     surface,
     footprint,
