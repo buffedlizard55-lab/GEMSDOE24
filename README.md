@@ -20,6 +20,8 @@ The reported GEMSDOE32 B2 score of **0.2778** is owner-reported and unverified. 
 
 **Access-policy incident:** this review inadvertently used a web tool to open public DrivenData reference pages, contrary to the repository's no-automated-access policy. The lookups stopped; no login, leaderboard, submission portal or slot was accessed. See the [incident and source review](knowledge/31_current_integrity_review_2026-10-27.md#sources-data-provenance-quota-and-portal-error).
 
+The separately merged [earlier repository review](docs/repo-review-20261027.md) and its [negative run card](evidence/repo_review_20261027.json) are preserved. Its missing-cache observation describes that earlier checkout; this review restored an owner mirror without organizer authentication. The exact-file, lattice and leakage findings above supersede its concurrent-lane interpretations.
+
 ## H24-S3DEP1 (Current Recorded Local `HOLDOUT-DTI = 0.166060`, Zero 1 m LiDAR) & Frozen `2026-10-26` Nine-Site Forensic Snapshot (`DOWNLOAD: YES · SUBMIT: NO`)
 
 > **UNMISTAKABLE AUTOMATED VERDICT (ZERO HUMAN-INSPECTOR FALLBACK):**
