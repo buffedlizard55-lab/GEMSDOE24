@@ -1,0 +1,441 @@
+{
+  "schema_version": "gems-parallel-runcard-v3",
+  "session_branch": "arena/e0dc405d-gemsdoe32",
+  "generated_utc": "2026-10-26T23:15:06Z",
+  "candidate_id": "H47-1-LDGI",
+  "hypothesis": "H47-1 (LDGI-WCR): Unmapped Great Basin faults missed by the USGS/INGENIOUS active compilation form multi-kilometer damage corridors characterized by (1) high spatial lineament density (rho_lin at 0.8 & 1.8 km) and lineament intersection/relay density, (2) Getis-Ord Gi* hot-spot z-scores and bivariate local Moran's I gravity-topography cross-clustering, and (3) multi-scale 2-D Ricker wavelet ridges (1.0, 2.0, 3.5 km), SVD gravity inflection walls, and multi-altitude (0 m -> 150 m -> 4 km) magnetic persistence coupled to GDR #1391 hydrothermal vents \u2014 and allocating the 37,654-dot B=2 budget via the leak-free Catalogue-to-Lineament Completeness Ratio eta(V) = |V cap foot| / sum_{foot} rho_lin beats both the 0.2778 Champion and H38 on HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0 & GEMSDOE32-SGMC-CAL-v3.0) while passing the genuine 362-raster uniqueness gate (<= 0.90 Spearman, <= 70% 3-px dot overlap).",
+  "mechanism": "Reuses 35-ch template stack + 20-ch SPCP stack + 8-ch repaired TRHV stack + 8 new label-free LDGI channels (71 total; lineament density, intersection/relay density, Getis-Ord Gi*, bivariate Moran's I, multi-scale 2-D Ricker wavelet ridges, SVD gravity wall, multi-altitude magnetic + hydrothermal vent plume, and LDGI corridor composite) -> fold-local 4-quadrant (1.5 km collar) 63-ch + 71-ch ensemble modulated by visible tip/step-over cones (EXP2 HR=0.121959) + adaptive eta(V) Dual-Horizon Residual-Coverage CELF via emitter.emit initial_mask (18,846 Stage-1 Horizon-A + 18,808 Stage-2 Horizon-B LDGI-Crest dots = 37,654 binary {0,1} dots outside B=2, >200 m).",
+  "named_non_fault_mimic": "(1) US Census TIGER 2024 highway/railroad cut-and-fill embankment scarps (suppressed at the 150 m scale via tiger_road_clean_gate); (2) Flat playa floors and broad unlocalized alluvial basins that degraded H46-1 Stage 2 via piedmont_burial (IR-46-PLAYA-01; solved by gating LDGI corridor envelopes multiplicatively on sharp 100 m topographic/gravity/magnetic ridge crests without playa weighting); (3) Isotropic volcanic plug / caldera ring-dike clusters and drainage thalwegs (suppressed by directional streak coherence, positive Laplacian-of-elevation convexity veto, and bivariate Moran's I gravity-topography concordance).",
+  "experiments_used": 3,
+  "experiments_budget_cap": 3,
+  "weekly_slots_used": 0,
+  "runtime_seconds": 309.71,
+  "peak_rss_mb": 2892.5,
+  "holdout_dti": {
+    "primary_hide_and_recover": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3.0",
+      "n_withheld_positives": 22232,
+      "pooled_dti": 0.119765,
+      "ci95": [
+        0.105732,
+        0.132895
+      ],
+      "per_quadrant_dti": {
+        "NW": 0.139316,
+        "NE": 0.125191,
+        "SW": 0.083649,
+        "SE": 0.14163
+      }
+    },
+    "exp2_exposed71_hide_and_recover": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3.0",
+      "n_withheld_positives": 22232,
+      "pooled_dti": 0.121959,
+      "ci95": [
+        0.107709,
+        0.134901
+      ],
+      "per_quadrant_dti": {
+        "NW": 0.141381,
+        "NE": 0.126925,
+        "SW": 0.084662,
+        "SE": 0.145789
+      }
+    },
+    "exp1_unsup_ldgi_sgmc": {
+      "label": "HOLDOUT-DTI (off-catalogue USGS SGMC > 300 m, zero SGMC supervision)",
+      "evaluator_version": "GEMSDOE32-SGMC-CAL-v3.0",
+      "n_withheld_positives": 62703,
+      "raw_pooled_dti": 0.114403,
+      "raw_ci95": [
+        0.097299,
+        0.130116
+      ],
+      "prevalence_calibrated_dti": 0.07651,
+      "calibrated_ci95": [
+        0.064668,
+        0.086451
+      ]
+    },
+    "incumbent_02778_same_evaluator": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3.0",
+      "n_withheld_positives": 22232,
+      "pooled_dti": 0.099202,
+      "ci95": [
+        0.085951,
+        0.112668
+      ],
+      "per_quadrant_dti": {
+        "NW": 0.101257,
+        "NE": 0.112793,
+        "SW": 0.066499,
+        "SE": 0.12423
+      }
+    },
+    "paired_delta_vs_02778_champion": {
+      "mean_boot_delta": 0.02083146103737847,
+      "ci95": [
+        0.01085717511367539,
+        0.030862659485290756
+      ],
+      "prob_positive": 1.0
+    },
+    "paired_exp2_delta_vs_02778_champion": {
+      "mean_boot_delta": 0.022949541247358044,
+      "ci95": [
+        0.013042831050765563,
+        0.03289098913016735
+      ],
+      "prob_positive": 1.0
+    },
+    "repository_best_h38_same_evaluator": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3.0",
+      "n_withheld_positives": 22232,
+      "pooled_dti": 0.116958,
+      "ci95": [
+        0.100533,
+        0.13204
+      ],
+      "source": "evidence/h38_run_card.json (prior run; this checkout has no paired bootstrap draws for H38)"
+    },
+    "point_delta_vs_repository_best_h38": 0.002807,
+    "exp2_point_delta_vs_repository_best_h38": 0.005001,
+    "paired_delta_vs_repository_best_h38": null,
+    "paired_delta_note": "EXP2 (0.121959) and EXP3 (0.119653) both exceed H38 (0.116958) in point estimate on the exact same evaluator and n=22,232 withheld positives, and beat the 0.2778 Champion (0.099202) with paired 95% CI strictly above zero (p=1.000). Because H38's 1,000 spatial-bootstrap draw vector was not archived in evidence/h38_run_card.json, paired_delta_vs_repository_best_h38 is None and the fail-closed release gate holds the weekly submission slot.",
+    "paired_delta_vs_ctrl_35ch": {
+      "mean_boot_delta": 0.01824303355927432,
+      "ci95": [
+        0.00983458169065496,
+        0.025531257748380214
+      ],
+      "prob_positive": 1.0
+    },
+    "censorship_matched_d2": {
+      "label": "HOLDOUT-DTI (d_hidden > 2 px censorship-matched)",
+      "n_withheld_positives": 22232,
+      "pooled_dti": 0.005812,
+      "ci95": [
+        0.004926,
+        0.006707
+      ]
+    },
+    "detached_600m_segments": {
+      "label": "HOLDOUT-DTI (detached >= 600 m withheld segments)",
+      "n_withheld_positives": 15504,
+      "pooled_dti": 0.091842,
+      "ci95": [
+        0.077733,
+        0.105853
+      ]
+    },
+    "incumbent_detached_600m": {
+      "label": "HOLDOUT-DTI (detached >= 600 m withheld segments)",
+      "n_withheld_positives": 15504,
+      "pooled_dti": 0.094324,
+      "ci95": [
+        0.079248,
+        0.109825
+      ]
+    },
+    "paired_detached_delta_vs_02778_champion": {
+      "mean_boot_delta": -0.0020729321396962337,
+      "ci95": [
+        -0.012546079844793634,
+        0.008154170762065418
+      ],
+      "prob_positive": 0.348
+    },
+    "off_catalogue_sgmc": {
+      "label": "HOLDOUT-DTI (off-catalogue USGS SGMC > 300 m, zero SGMC supervision)",
+      "evaluator_version": "GEMSDOE32-SGMC-CAL-v3.0",
+      "n_withheld_positives": 62703,
+      "raw_pooled_dti": 0.098751,
+      "raw_ci95": [
+        0.086258,
+        0.109732
+      ],
+      "prevalence_calibrated_dti": 0.065888,
+      "calibrated_ci95": [
+        0.057664,
+        0.072551
+      ]
+    },
+    "incumbent_02778_sgmc": {
+      "label": "HOLDOUT-DTI (off-catalogue USGS SGMC > 300 m, zero SGMC supervision)",
+      "evaluator_version": "GEMSDOE32-SGMC-CAL-v3.0",
+      "n_withheld_positives": 62703,
+      "raw_pooled_dti": 0.09606,
+      "raw_ci95": [
+        0.08566,
+        0.107072
+      ],
+      "prevalence_calibrated_dti": 0.064121,
+      "calibrated_ci95": [
+        0.05673,
+        0.071649
+      ]
+    },
+    "paired_sgmc_calibrated_delta_vs_02778_champion": {
+      "mean_boot_delta": 0.0014269227374382033,
+      "ci95": [
+        -0.008001102170886001,
+        0.01100986809172696
+      ],
+      "prob_positive": 0.624
+    },
+    "paired_sgmc_dual_horizon_lift_over_exposed71": {
+      "mean_boot_delta": 0.019935090428918147,
+      "ci95": [
+        0.012370737365292256,
+        0.027448280984866225
+      ],
+      "prob_positive": 1.0
+    },
+    "paired_sgmc_exp1_delta_vs_02778_champion": {
+      "mean_boot_delta": 0.011859593129555052,
+      "ci95": [
+        -0.0007736076707446983,
+        0.0251583192505675
+      ],
+      "prob_positive": 0.965
+    }
+  },
+  "leakage_canary": {
+    "passed": true,
+    "threshold_auc": 0.9,
+    "n_features_tested": 71,
+    "max_oriented_auc": 0.586868,
+    "worst_channel": "curv_s2"
+  },
+  "correlation_and_overlap_vs_registry": {
+    "n_manifest_rasters_total": 362,
+    "n_unique_rasters_checked": 344,
+    "n_genuine_rasters_checked": 343,
+    "genuine_pre_placement_surface_passed": true,
+    "genuine_final_dots_passed": true,
+    "max_abs_surface_spearman": 0.153728,
+    "worst_genuine_surface_peer": {
+      "name": "GEMSDOE24:evidence/experiments/h24-2a-clipped-road-v1/prediction-4945c83d6f09.tif",
+      "sha256": "4945c83d6f09c8376963e32d5c36f65009122fd50d26473eda185e3674677589",
+      "other_dots": 126600,
+      "raw_in_foot_finite": true,
+      "is_calibration_lattice": false,
+      "surface_spearman": 0.153728,
+      "dots_spearman": 0.04385,
+      "within_3px_fraction": 0.475912
+    },
+    "max_genuine_3px_dot_overlap": 0.586657,
+    "worst_genuine_overlap_peer": {
+      "name": "GEMSDOE32:docs/downloads/gemsdoe32-h46-trhv-tworegime-ventconduit-37654-20261026T173000Z-6437b275-nan.tif",
+      "sha256": "44db5c6a7bff333fa8b5c9c3e0186f7bc6992c72f8994d4bb41540b20e686b97",
+      "other_dots": 37654,
+      "raw_in_foot_finite": true,
+      "is_calibration_lattice": false,
+      "surface_spearman": 0.102566,
+      "dots_spearman": 0.167176,
+      "within_3px_fraction": 0.586657
+    },
+    "literal_5px_calibration_lattice_probe": {
+      "name": "GEMSDOE24:inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "other_dots": 206895,
+      "raw_in_foot_finite": true,
+      "is_calibration_lattice": true,
+      "surface_spearman": -9.5e-05,
+      "dots_spearman": -0.000646,
+      "within_3px_fraction": 0.996149
+    },
+    "literal_all_rasters_final_passed": false
+  },
+  "artifacts": {
+    "primary_zeros_tif": "docs/downloads/gemsdoe32-h47-ldgi-dualhorizon-corridor-37654-20261026T230609Z-0eb8a25c-zeros.tif",
+    "primary_zeros_sha256": "d82d63ab9c935b4eb6d8886129a7820da4642d20c3304c57364c55380438f27a",
+    "primary_zeros_bytes": 211243,
+    "nan_companion_tif": "docs/downloads/gemsdoe32-h47-ldgi-dualhorizon-corridor-37654-20261026T230609Z-0eb8a25c-nan.tif",
+    "nan_companion_sha256": "95106d7c280ddd898dbb76ff637d8bc077fae70296e500b396cfcbbde2b14888",
+    "zip_archive": "docs/downloads/gemsdoe32-h47-ldgi-dualhorizon-corridor-37654-20261026T230609Z-0eb8a25c-zeros.zip",
+    "zip_sha256": "ac40e865423b223f09c7aeeb0ea7241c0d4999c96da89c3273d1c9897f794d40",
+    "audit_json": "docs/downloads/gemsdoe32-h47-ldgi-dualhorizon-corridor-37654-20261026T230609Z-0eb8a25c-audit.json",
+    "diagnostic_figure": "docs/assets/fig_h47_ldgi.png",
+    "emitted_dots": 37654,
+    "on_catalogue_dots": 0,
+    "spatial_allocation": {
+      "eta_live_full_map": 0.078381,
+      "frac_stage1_live": 0.5005,
+      "w_s1_live": 0.080917,
+      "stage1_exposed_dots": 18846,
+      "stage2_blind_ldgi_dots": 18808,
+      "le_2px_on_or_flank_frac": 0.0,
+      "apron_2_to_9px_frac": 0.4606947469060392,
+      "mid_9_to_20px_frac": 0.21439953258617941,
+      "far_gt_20px_blind_frac": 0.3249057205077814,
+      "median_dist_to_catalogue_px": 10.198039054870605,
+      "per_cell_eta_allocation": {
+        "draw20_fold0": {
+          "eta": 0.062848,
+          "frac_stage1": 0.916028,
+          "w_s1": 0.842718,
+          "stage1_dots": 7500,
+          "stage2_added_dots": 688,
+          "total_dots": 8188
+        },
+        "draw20_fold1": {
+          "eta": 0.062721,
+          "frac_stage1": 0.919432,
+          "w_s1": 0.848959,
+          "stage1_dots": 9342,
+          "stage2_added_dots": 819,
+          "total_dots": 10161
+        },
+        "draw20_fold2": {
+          "eta": 0.063054,
+          "frac_stage1": 0.910527,
+          "w_s1": 0.832633,
+          "stage1_dots": 8933,
+          "stage2_added_dots": 878,
+          "total_dots": 9811
+        },
+        "draw20_fold3": {
+          "eta": 0.062715,
+          "frac_stage1": 0.919604,
+          "w_s1": 0.849274,
+          "stage1_dots": 7269,
+          "stage2_added_dots": 635,
+          "total_dots": 7904
+        },
+        "draw21_fold0": {
+          "eta": 0.062656,
+          "frac_stage1": 0.92,
+          "w_s1": 0.85,
+          "stage1_dots": 7539,
+          "stage2_added_dots": 656,
+          "total_dots": 8195
+        },
+        "draw21_fold1": {
+          "eta": 0.062706,
+          "frac_stage1": 0.919845,
+          "w_s1": 0.849715,
+          "stage1_dots": 9342,
+          "stage2_added_dots": 814,
+          "total_dots": 10156
+        },
+        "draw21_fold2": {
+          "eta": 0.063007,
+          "frac_stage1": 0.911799,
+          "w_s1": 0.834966,
+          "stage1_dots": 8941,
+          "stage2_added_dots": 865,
+          "total_dots": 9806
+        },
+        "draw21_fold3": {
+          "eta": 0.062878,
+          "frac_stage1": 0.915237,
+          "w_s1": 0.841269,
+          "stage1_dots": 7229,
+          "stage2_added_dots": 669,
+          "total_dots": 7898
+        }
+      }
+    }
+  },
+  "raster_sha256": "d82d63ab9c935b4eb6d8886129a7820da4642d20c3304c57364c55380438f27a",
+  "validator_output": {
+    "validated_without_human_intervention": true,
+    "strict_cli_check_submission": {
+      "file_path": "docs/downloads/gemsdoe32-h47-ldgi-dualhorizon-corridor-37654-20261026T230609Z-0eb8a25c-zeros.tif",
+      "sha256": "d82d63ab9c935b4eb6d8886129a7820da4642d20c3304c57364c55380438f27a",
+      "passed": true,
+      "checks": [
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "shape (3730, 3292) (expected (3730, 3292))"
+        },
+        {
+          "name": "band_count",
+          "passed": true,
+          "detail": "bands: 1 (expected 1)"
+        },
+        {
+          "name": "crs",
+          "passed": true,
+          "detail": "CRS: EPSG:32611 (expected EPSG:32611)"
+        },
+        {
+          "name": "transform",
+          "passed": true,
+          "detail": "transform matched template"
+        },
+        {
+          "name": "dtype",
+          "passed": true,
+          "detail": "dtype: float32 (expected float32)"
+        },
+        {
+          "name": "in_footprint_range",
+          "passed": true,
+          "detail": "in-footprint range [0.0000, 1.0000], all finite"
+        },
+        {
+          "name": "portal_safe_whole_array",
+          "passed": true,
+          "detail": "whole-array range [0.0000, 1.0000], finite=True"
+        }
+      ]
+    },
+    "audit_geotiff_13_checks_passed": true,
+    "required_validator_flags": {
+      "single_band": true,
+      "finite": true,
+      "range_0_1": true,
+      "crs_match": true,
+      "shape_match": true,
+      "transform_match": true
+    },
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "nan_inside_footprint": 0,
+    "nan_anywhere_in_raster": 0,
+    "values_in_0_1": true,
+    "min_value": 0.0,
+    "max_value": 1.0
+  },
+  "submission_name": "GEMSDOE32-H47-LDGI-0EB8A25C",
+  "submission_note": "H47-1 LDGI dual-horizon 37654d B2 | HR=0.1198 SGMC=0.0659 | DO NOT SUBMIT",
+  "submission_note_length": 73,
+  "release_gate_decision": {
+    "gates": {
+      "lane": true,
+      "surface": true,
+      "final": false,
+      "canaries": true,
+      "holdout": true,
+      "paired_improvement": false,
+      "format": true
+    },
+    "verdict": "negative",
+    "selector_required": true,
+    "slot_used": false
+  },
+  "download_for_research_ok": true,
+  "ok_to_submit": false,
+  "verdict": "negative",
+  "results_doc": "docs/research/h47-ldgi-results-and-nine-site-executive-summary-20261026.md"
+}

@@ -12,7 +12,7 @@ Implements the locked specification in ``knowledge/29_preregistered_S3DEP1_2026-
      asymmetry channels (``data/dem10/*.f32.npy``, 100.00% footprint coverage), and
    - 6 new S3DEP1 tectonic-geomorphic & sub-alluvial crustal coupling channels.
 2. Fold-strict ``SelectiveNonTopographicResidualizer`` across all 19 regional potential-field,
-   gravity-terrain, geodetic, seismic, radiometric, and crustal-coupling channels, with Stage-2
+   gravity-gradient, geodetic, seismic, radiometric, and crustal-coupling channels, with Stage-2
    subsurface/conduit gate multipliers evaluated strictly AFTER residualization.
 3. Fold-strict ``UnconditionalNuisanceLogitCalibrator`` removing marginal ``road_m / claim_m /
    block_1..4`` log-odds drift on both Stage-1 and Stage-2 surfaces without slope conditioning.
@@ -483,9 +483,11 @@ def build_s3dep1_memmap(
         },
         "band_provenance_notes": {
             "bouguer_tc_mgal": (
-                "Band 6 ('tc') of data/training_features.tif; positive range [2.95, 88.57] mGal "
-                "matches USGS/INGENIOUS Complete Bouguer terrain correction rather than the "
-                "embedded bridge GDAL string ('Tilt angle or total curvature')."
+                "Historic feature alias retained unchanged for reproducibility; it does not "
+                "establish gravity, terrain correction or mGal units. Band 6 ('tc') is "
+                "strongly rank-correlated with cached GeoDAWN radiometric total count; the "
+                "mirror tag instead says magnetic tilt/curvature. Source and units remain "
+                "unverified; see evidence/band6_provenance_review_20261027.json."
             )
         },
     }

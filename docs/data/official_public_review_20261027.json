@@ -1,0 +1,32 @@
+{
+  "schema": "gems-public-official-source-review-v1",
+  "checked_utc": "2026-10-27",
+  "scope": "Public descriptions and indexed resource links only; not an account, score, archive-download, or deployment check",
+  "sources": [
+    {
+      "name": "USGS GeoDAWN",
+      "url": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+      "public_page_read": true,
+      "claim": "Magnetic and radiometric data release with linked GeoTIFF products; CC0 indicated",
+      "limit": "No new archive downloaded; competition-band identity and units not authenticated"
+    },
+    {
+      "name": "GDR INGENIOUS #1391",
+      "url": "https://gdr.openei.org/submissions/1391",
+      "public_page_read": true,
+      "claim": "Public resource listing for Great Basin geothermal, fault, geophysical and geodetic data; CC BY 4.0 indicated",
+      "limit": "No new archive downloaded or individual resource coverage independently checked"
+    },
+    {
+      "name": "USGS 3DEP products",
+      "url": "https://www.usgs.gov/3d-elevation-program/about-3dep-products-services",
+      "public_page_read": true,
+      "claim": "Descriptions of free lidar and DEM products",
+      "limit": "Specific tiles and coverage not verified"
+    }
+  ],
+  "drivendata_policy_incident": "Public DrivenData pages were inadvertently opened by a managed web tool despite the repo's no-automated-access policy; requests stopped. No login, leaderboard, portal, submission, or slot.",
+  "organizer_scores_confirmed": [],
+  "current_quota_known": false,
+  "deployment_verified": false
+}

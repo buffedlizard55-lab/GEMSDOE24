@@ -72,6 +72,10 @@ def test_prospective_novelty_separates_calibration_controls(tmp_path):
         "crs": "EPSG:32611",
         "transform": rasterio.Affine(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0),
     }
+    template = tmp_path / "data/bridge/sample_submission.tif"
+    template.parent.mkdir(parents=True)
+    with rasterio.open(template, "w", **profile) as dst:
+        dst.write(np.ones((20, 20), dtype=np.float32), 1)
     method_arr = np.zeros((20, 20), dtype=np.float32)
     method_arr[18, 2] = 1.0
     lattice_arr = np.zeros((20, 20), dtype=np.float32)

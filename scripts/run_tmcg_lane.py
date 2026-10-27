@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-"""H24-TMCG lane: 3 preregistered arms. Unique topo–magnetic cross-gradient.
+"""Stopped H24-TMCG lane; retained only for historical code review.
 
-Does not retune PTAR/GSD/S3DEP1. Uses SegmentHoldout + submission writer.
+The original local-download-only novelty helper omitted the registered calibration
+lattice and the surface-before-placement gate. The exact final TIFF was later
+measured at 100% overlap with that lattice. This lane cannot be restarted or used
+to select a file; use ``scripts/audit_tmcg_integrity.py`` for read-only checks.
 """
 
 from __future__ import annotations
@@ -43,7 +46,8 @@ def load_ch(name, fp, stack, meta):
 
 
 def registry_overlap(dots, fp, catalogue, template):
-    """Compare against local download TIFFs (peer registry proxy)."""
+    """Legacy incomplete proxy; never use it to certify uniqueness."""
+    raise RuntimeError("Stopped: local download TIFFs are not the full pinned registry")
     out = []
     dl = ROOT / "docs/downloads"
     cand = dots.astype(bool)
@@ -94,6 +98,11 @@ def emit_folds(score, support, context):
 
 
 def main():
+    raise SystemExit(
+        "H24-TMCG is stopped: 100% final-dot overlap with a registered lattice; "
+        "no rerun, new TIFF or competition slot is permitted. "
+        "Use scripts/audit_tmcg_integrity.py for a read-only audit."
+    )
     started = time.monotonic()
     template = ROOT / "data/bridge/sample_submission.tif"
     labels_path = ROOT / "data/bridge/labels.tif"

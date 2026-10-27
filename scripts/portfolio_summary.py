@@ -428,7 +428,7 @@ def build_portfolio(root):
         feed = validate_feed(json.loads(feed_path.read_text()), manifest["sources"])
         changed = sum(row["changed_since_review"] is True for row in feed["rows"])
         failed = sum(row["status"] == "failed" for row in feed["rows"])
-        freshness = f"GitHub refs checked {feed['checked_utc']}: {changed} changed since the artifact audit; {failed} failed checks. New commits have not been raster-audited here."
+        freshness = f"GitHub refs checked {feed['checked_utc']}: {changed} changed since the 2026-10-26 artifact audit; {failed} failed checks. The later nine-file review is separate and does not comprehensively inventory newer commits."
     else:
         freshness = "Source freshness has not been checked against this artifact snapshot."
     intro = f"""<section id="portfolio-audit"><h2>Nine-Site Executive Summary — refreshed artifact audit</h2>
@@ -483,7 +483,7 @@ The prompt still lacks its single-method paragraph. The required new gate-passin
 <li><h3>Download the exact released TIFF</h3><p>Match filename and SHA-256. Use a single-band GeoTIFF or a ZIP containing exactly that TIFF. Do not upload the feature stack, preview or an old renamed prediction.</p></li>
 <li><h3>Open the official competition submission page</h3><p>Use <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData GEMS</a> → Submit → Make new submission. The project does not automate that portal.</p></li>
 <li><h3>Choose the file and copy its note</h3><p>Use the validated filename and the release packet’s comment under Note (optional), at most 140 characters here. Preserve the artifact-linked result receipt.</p></li></ol>
-<p>Current account allowance is unknown. Historical references to three submissions per week are not a live quota check.</p>
+<p>Current account allowance is unknown. The rules mention three submissions per week; <a href="https://community.drivendata.org/t/submission-amount-question/11553/2">organizer staff state that the website limit prevails</a>. The owner’s stated weekly cap and the actual allowance remain binding constraints for this project.</p>
 <h3>“Predicted values must be in range [0, 1]”</h3><p>The local validator checks finite [0,1] values inside the pinned footprint and separately checks every stored cell. The DPRF1 zero variant is allfinite; its NaN-outside companion follows the inherited sample convention but fails a strict no-NaN test. The earlier portal rejection’s exact cause is unknown. Neither convention guarantees organizer acceptance.</p></section>"""
     buffer = io.StringIO(newline="")
     fields = list(csv_rows[0])

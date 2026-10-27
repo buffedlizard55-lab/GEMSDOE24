@@ -1,0 +1,556 @@
+{
+  "session_id": "G28-S22-20261026",
+  "date_utc": "2026-10-26",
+  "branch": "arena/f2afeb88-gemsdoe28",
+  "lane": "S22-H1 multi-scale spatial-context gradient boosting: shared 32-band stack + Gaussian-pyramid (sigma2/5 means, |grad sigma2|) context of 10 physical bands + structure-tensor coherence of lidar_step_max/tmi_hg; ridge-restricted 2.8px dot emission outside the <=2px catalogue ring. Self-assigned and frozen in knowledge/62 before any S22 canary/DTI (prompt's method paragraph absent).",
+  "hypothesis": "Explicit multi-scale spatial context closes the gap between a fresh per-pixel tabular detector (S21 PU-HGB, HOLDOUT-DTI 0.0839 vs 0.1062 baseline) and the H19-5 ensemble geography, because catalogue-missing faults are separated from unfaulted contacts by along-strike-coherent pattern at 200-500 m scales, not by per-pixel habitat values.",
+  "mechanism": "Young/buried normal faults sustain a scarp-step / potential-field gradient coherently along strike at a consistent piedmont position; pyramid means encode position, smoothed gradient magnitudes encode sustained edges, tensor coherence encodes linearity. The HGB learns their joint habitat from visible catalogue pixels only.",
+  "non_fault_mimic": "Roads, canals, paleo-shorelines, terrace risers, incised drainages and unfaulted lithologic contacts sustained along strike (linear context without slip).",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems27.metric.dti_binary + gems27.holdout quadrant component-hide 20% (gems-segment-pooled-v1 semantics, as S21)",
+    "raster_sha256": "77934be607d48a4daec5b046009cdabf61d3fdee210aadc75be82ac70f3beb2e",
+    "baseline_sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",
+    "baseline": "dotted H19-5 d2.8 file dots, pruned vs VISIBLE catalogue only (d>2), S21 construction",
+    "withheld_positives": 36596,
+    "seeds": [
+      360,
+      361,
+      362
+    ],
+    "n_cells": 12,
+    "dti": 0.12017683367908955,
+    "ci95": [
+      0.10470617816137097,
+      0.13649195962047952
+    ],
+    "baseline_dti": 0.1051933701996888,
+    "baseline_ci95": [
+      0.0919100976538022,
+      0.11914518327735546
+    ],
+    "control_dti": 0.0950545156501808,
+    "paired_gain": 0.014983463479400744,
+    "paired_gain_ci95": [
+      0.010665719023358328,
+      0.01931658931685161
+    ],
+    "paired_gain_vs_control": 0.02512231802890874,
+    "paired_gain_vs_control_ci95": [
+      0.01885142221057183,
+      0.03292956986594519
+    ],
+    "cells_lane_wins_vs_base": "12/12",
+    "whole_segments": true,
+    "buffered": false,
+    "buffer_note": "Quadrant component-hide: training labels come only from the other three quadrants and all features are label-free, so no label leakage path exists; there is no 600 m LOSFO buffer around hidden components. Buffered LOSFO confirmation is a named selector-level follow-up, not run here (3-experiment budget).",
+    "visible_only_features": true,
+    "pixel_exact_visible_mask": true,
+    "pooled": true,
+    "alpha": 0.2,
+    "beta": 0.8,
+    "kernel_m": 300,
+    "kernel": "triangular"
+  },
+  "feature_canaries": {
+    "mag_anom": 0.5430239428180142,
+    "rtp": 0.5163699305646117,
+    "tmi_hg": 0.5816986762450798,
+    "geod_2ndinv": 0.5372296060016597,
+    "iso_grav_anom_slope": 0.5003861947738328,
+    "geod_shearrate": 0.5426685262161677,
+    "geod_dilaterate": 0.5153709713196917,
+    "tmi_vg": 0.441249470082904,
+    "deq_n100a15": 0.49021396700026465,
+    "iso_grav_anom_vg": 0.5205120896575697,
+    "det_elev": 0.6571112672849417,
+    "iso_grav_anom": 0.4980450933765291,
+    "tmi": 0.5289259571109948,
+    "depth_to_base_surf": 0.47473709612559845,
+    "ieq_n100a15": 0.4918894904283659,
+    "cond_surf": 0.5184375926437653,
+    "iso_grav_anom_hg": 0.4976838167616918,
+    "det_elev_slope": 0.6751790606116135,
+    "lidar_ex_max": 0.6371999577262032,
+    "lidar_ex_mean": 0.6293357646323011,
+    "lidar_step_max": 0.655898244837296,
+    "lidar_lapneg_max": 0.6628418826642094,
+    "lidar_lappos_max": 0.6650353526294769,
+    "lidar_downface_max": 0.6618620507325569,
+    "lidar_upface_max": 0.6765976194651498,
+    "lidar_cross_max": 0.6780067904786607,
+    "lidar_relief": 0.7025031055237984,
+    "lidar_coh100": 0.4959272797345152,
+    "lidar_cos2strike": 0.477521275255093,
+    "lidar_sin2strike": 0.4709341475595551,
+    "det_local_relief": 0.4110326433124357,
+    "det_gradient": 0.6955105067202503,
+    "ctx_tmi_hg_g2": 0.5889417256826235,
+    "ctx_tmi_hg_g5": 0.5915151309938289,
+    "ctx_tmi_hg_grad_g2": 0.5903345847274014,
+    "ctx_iso_grav_anom_hg_g2": 0.4978835708717728,
+    "ctx_iso_grav_anom_hg_g5": 0.4989502714475427,
+    "ctx_iso_grav_anom_hg_grad_g2": 0.47620173246723946,
+    "ctx_cond_surf_g2": 0.5184262080746995,
+    "ctx_cond_surf_g5": 0.5188858783960295,
+    "ctx_cond_surf_grad_g2": 0.47379993433430884,
+    "ctx_det_elev_g2": 0.6597564079608957,
+    "ctx_det_elev_g5": 0.6653497851188797,
+    "ctx_det_elev_grad_g2": 0.7041544347194553,
+    "ctx_det_elev_slope_g2": 0.6810747997636707,
+    "ctx_det_elev_slope_g5": 0.6840794873547418,
+    "ctx_det_elev_slope_grad_g2": 0.70947473946529,
+    "ctx_lidar_step_max_g2": 0.6826041492331707,
+    "ctx_lidar_step_max_g5": 0.6965083444074234,
+    "ctx_lidar_step_max_grad_g2": 0.6445084404236181,
+    "ctx_lidar_ex_max_g2": 0.6719949431470775,
+    "ctx_lidar_ex_max_g5": 0.688528748515583,
+    "ctx_lidar_ex_max_grad_g2": 0.6277123241453392,
+    "ctx_lidar_lappos_max_g2": 0.6916679113210429,
+    "ctx_lidar_lappos_max_g5": 0.7007567776431625,
+    "ctx_lidar_lappos_max_grad_g2": 0.6454101425107035,
+    "ctx_lidar_coh100_g2": 0.5131948255272389,
+    "ctx_lidar_coh100_g5": 0.543765315083144,
+    "ctx_lidar_coh100_grad_g2": 0.49430773990546406,
+    "ctx_lidar_relief_g2": 0.7137456517665981,
+    "ctx_lidar_relief_g5": 0.7199948057905766,
+    "ctx_lidar_relief_grad_g2": 0.7021827181517949,
+    "ctx_lidar_step_max_tensor_coherence": 0.4763351918690286,
+    "ctx_tmi_hg_tensor_coherence": 0.4938548800804426
+  },
+  "canary_note": "AUC of each feature alone, hidden truth vs 20k allowed negatives, cell 360-NW. Worst 0.7200 (ctx_lidar_relief_g5) <= 0.90: physiographic habitat, label-free by construction; no leakage signature.",
+  "registry": {
+    "complete": false,
+    "completeness_note": "Snapshot registry of 30 distinct dot-sets (local docs/downloads allfinite files + byte-fetched GEMSDOE30/31/32/33/36 best files + H19-5 lineage), 2026-10-26. Not a synchronized global parallel registry; unmerged concurrent work is unknowable here.",
+    "manifest_sha256": "bfe52f5383582ac264210a7dd0d86adc18996c71dc0a882234630cb455d6a47f",
+    "members": [
+      "0419012029a214321f9691f13b3f22a96cbda2dc1a0e5b055a7ca7ecfda83e30",
+      "b36467dbcc1494cf2cee854bcf196bd392839fb58912ffcf28a53637961422d6",
+      "c0fe876244c547962770ca041730ea411c1003d928adf564a6b5300e4100a945",
+      "11d3cfcffdd0b7418681b0f2347660213b5b1d850ecc468f08fa2deaa9603122",
+      "d83b58548a01b6ecded1ccdda5482de24dd8d5fcca240fcffda1385821421faa",
+      "5c3b92980873e27fe8109d637a52011fdb711d226a6921046af0e5cb330152b4",
+      "525e938bbacbaebf588d66cc4e84771c5833aa2e8938539d513e4ea3ed28d36e",
+      "d25d6f80100192c530a66f64bc47b5fcc0245135d805b9eee08691eabd77b468",
+      "91e743495fad567a6aefc7f69925429cca17a369f01d1f97297abf305992c5b9",
+      "4f4621111460fadfb4754e6e98bacb8153796afc370fc29c8923f0998418f2e6",
+      "c97c2b16f10b48f83b6e12759fa6e356bb22f75f56b55a6d782068d3960002ac",
+      "fbe2448c0400930aa29cad9bcf84124e784d27c901b0f7c383518988b2bc074f",
+      "d2a82b50044a12662ff2f2c803624538fe9d084538cfd0550e2ed981e546b0e8",
+      "a6d9f63262e32b8f0efa0da0c0f71865a2dccb4dd4ca77dd121b92e0631e9acb",
+      "e75877f6b1dc64c6bbab1e969c253484b0d4e53be76af0709077de30f6605755",
+      "34f498c1fe2bf8005134c82b188715955053160c386d37fe4a8417890b87198b",
+      "d7167bbd52aa39fe5eb662dfeecfe7ad664999331986459f3317aeae5ce08434",
+      "627447f01df925a240d007d8b6f4f7e21a2b44e4bb0c967e6147825be57aefa4",
+      "9a05761b2a04d27942e116393a73c7de00005663bd7cf07b666ecae3cc410a1a",
+      "f3d6aded322cf9c49b4cafaeb6a027735828cc95fa8d1e65aa105489d48d040c",
+      "3338a7ac679b889b0b23b6f9ee460dae7e5f2bc89975c9f683472fd1beacaaf5",
+      "49eef619273b2f27d44c5751d5cae30e953ac208b69888bce88e8c58e653a799",
+      "ef50d177c365580f784deb3838452c9bb579be48b5e38705fce9d57baccfe8ab",
+      "ec004a987900953ccc0563a797fa4a1765a8d3db78a454fd05f22c081875470d",
+      "70053218731b292ba85a0f84e105529693fd75e3161cf326fc7d244d62511a9c",
+      "c928e233d07802983283e0c937f7b00ad8ab565a67800cc1c4c8ae812d21baf3",
+      "c255ab815cdad409456c20cd73ca9e2df2e54ff4aa065083da822d6e32f31ee8",
+      "7c387f08c16311bd7f9003b9795cfdcd8d2763f65c734f7c50f5cc894278cf64",
+      "4a2fdb41cc3d649fc98882a54ee3af239cd263cb514500eda1aa3af1eba417cc",
+      "94c9d1fdb83c4e8cfe109837985e7229388a136386dcb5e28ce31668ea9559ce"
+    ],
+    "member_identity": "dot-set SHA-256 (row/col int32 bytes), not file SHA-256",
+    "surface": [
+      {
+        "raster_sha256": "0419012029a214321f9691f13b3f22a96cbda2dc1a0e5b055a7ca7ecfda83e30",
+        "spearman": 0.10236896468924972
+      },
+      {
+        "raster_sha256": "b36467dbcc1494cf2cee854bcf196bd392839fb58912ffcf28a53637961422d6",
+        "spearman": 0.09725973840395824
+      },
+      {
+        "raster_sha256": "c0fe876244c547962770ca041730ea411c1003d928adf564a6b5300e4100a945",
+        "spearman": 0.1257565260899184
+      },
+      {
+        "raster_sha256": "11d3cfcffdd0b7418681b0f2347660213b5b1d850ecc468f08fa2deaa9603122",
+        "spearman": 0.09831070876546845
+      },
+      {
+        "raster_sha256": "d83b58548a01b6ecded1ccdda5482de24dd8d5fcca240fcffda1385821421faa",
+        "spearman": 0.09272296821994241
+      },
+      {
+        "raster_sha256": "5c3b92980873e27fe8109d637a52011fdb711d226a6921046af0e5cb330152b4",
+        "spearman": 0.09427588273598492
+      },
+      {
+        "raster_sha256": "525e938bbacbaebf588d66cc4e84771c5833aa2e8938539d513e4ea3ed28d36e",
+        "spearman": 0.15065272012402334
+      },
+      {
+        "raster_sha256": "d25d6f80100192c530a66f64bc47b5fcc0245135d805b9eee08691eabd77b468",
+        "spearman": 0.06668521270248039
+      },
+      {
+        "raster_sha256": "91e743495fad567a6aefc7f69925429cca17a369f01d1f97297abf305992c5b9",
+        "spearman": 0.10390828851381399
+      },
+      {
+        "raster_sha256": "4f4621111460fadfb4754e6e98bacb8153796afc370fc29c8923f0998418f2e6",
+        "spearman": 0.11901623698533174
+      },
+      {
+        "raster_sha256": "c97c2b16f10b48f83b6e12759fa6e356bb22f75f56b55a6d782068d3960002ac",
+        "spearman": 0.10290394590162605
+      },
+      {
+        "raster_sha256": "fbe2448c0400930aa29cad9bcf84124e784d27c901b0f7c383518988b2bc074f",
+        "spearman": 0.09026014611124146
+      },
+      {
+        "raster_sha256": "d2a82b50044a12662ff2f2c803624538fe9d084538cfd0550e2ed981e546b0e8",
+        "spearman": 0.08123696802985612
+      },
+      {
+        "raster_sha256": "a6d9f63262e32b8f0efa0da0c0f71865a2dccb4dd4ca77dd121b92e0631e9acb",
+        "spearman": 0.07439456672796037
+      },
+      {
+        "raster_sha256": "e75877f6b1dc64c6bbab1e969c253484b0d4e53be76af0709077de30f6605755",
+        "spearman": 0.08334585323047235
+      },
+      {
+        "raster_sha256": "34f498c1fe2bf8005134c82b188715955053160c386d37fe4a8417890b87198b",
+        "spearman": 0.0756706519265049
+      },
+      {
+        "raster_sha256": "d7167bbd52aa39fe5eb662dfeecfe7ad664999331986459f3317aeae5ce08434",
+        "spearman": 0.07776038568570857
+      },
+      {
+        "raster_sha256": "627447f01df925a240d007d8b6f4f7e21a2b44e4bb0c967e6147825be57aefa4",
+        "spearman": 0.075927272518667
+      },
+      {
+        "raster_sha256": "9a05761b2a04d27942e116393a73c7de00005663bd7cf07b666ecae3cc410a1a",
+        "spearman": 0.07283248825776127
+      },
+      {
+        "raster_sha256": "f3d6aded322cf9c49b4cafaeb6a027735828cc95fa8d1e65aa105489d48d040c",
+        "spearman": 0.07284616497355222
+      },
+      {
+        "raster_sha256": "3338a7ac679b889b0b23b6f9ee460dae7e5f2bc89975c9f683472fd1beacaaf5",
+        "spearman": 0.06905346868836758
+      },
+      {
+        "raster_sha256": "49eef619273b2f27d44c5751d5cae30e953ac208b69888bce88e8c58e653a799",
+        "spearman": 0.07199165239758357
+      },
+      {
+        "raster_sha256": "ef50d177c365580f784deb3838452c9bb579be48b5e38705fce9d57baccfe8ab",
+        "spearman": 0.07268668760798325
+      },
+      {
+        "raster_sha256": "ec004a987900953ccc0563a797fa4a1765a8d3db78a454fd05f22c081875470d",
+        "spearman": 0.07259558316706037
+      },
+      {
+        "raster_sha256": "70053218731b292ba85a0f84e105529693fd75e3161cf326fc7d244d62511a9c",
+        "spearman": 0.06744215351212672
+      },
+      {
+        "raster_sha256": "c928e233d07802983283e0c937f7b00ad8ab565a67800cc1c4c8ae812d21baf3",
+        "spearman": 0.06707589714670831
+      },
+      {
+        "raster_sha256": "c255ab815cdad409456c20cd73ca9e2df2e54ff4aa065083da822d6e32f31ee8",
+        "spearman": 0.06739963268891432
+      },
+      {
+        "raster_sha256": "7c387f08c16311bd7f9003b9795cfdcd8d2763f65c734f7c50f5cc894278cf64",
+        "spearman": 0.013041486519054235
+      },
+      {
+        "raster_sha256": "4a2fdb41cc3d649fc98882a54ee3af239cd263cb514500eda1aa3af1eba417cc",
+        "spearman": -0.0033372715068896836
+      },
+      {
+        "raster_sha256": "94c9d1fdb83c4e8cfe109837985e7229388a136386dcb5e28ce31668ea9559ce",
+        "spearman": -0.004905079651067946
+      }
+    ],
+    "dots": [
+      {
+        "raster_sha256": "0419012029a214321f9691f13b3f22a96cbda2dc1a0e5b055a7ca7ecfda83e30",
+        "spearman": 0.10236896468924972,
+        "within_3px_fraction": 0.6992351410208743
+      },
+      {
+        "raster_sha256": "b36467dbcc1494cf2cee854bcf196bd392839fb58912ffcf28a53637961422d6",
+        "spearman": 0.09725973840395824,
+        "within_3px_fraction": 0.6912678599883146
+      },
+      {
+        "raster_sha256": "c0fe876244c547962770ca041730ea411c1003d928adf564a6b5300e4100a945",
+        "spearman": 0.1257565260899184,
+        "within_3px_fraction": 0.6510862059807723
+      },
+      {
+        "raster_sha256": "11d3cfcffdd0b7418681b0f2347660213b5b1d850ecc468f08fa2deaa9603122",
+        "spearman": 0.09831070876546845,
+        "within_3px_fraction": 0.5912784830296914
+      },
+      {
+        "raster_sha256": "d83b58548a01b6ecded1ccdda5482de24dd8d5fcca240fcffda1385821421faa",
+        "spearman": 0.09272296821994241,
+        "within_3px_fraction": 0.5628884049503373
+      },
+      {
+        "raster_sha256": "5c3b92980873e27fe8109d637a52011fdb711d226a6921046af0e5cb330152b4",
+        "spearman": 0.09427588273598492,
+        "within_3px_fraction": 0.5414033037658682
+      },
+      {
+        "raster_sha256": "525e938bbacbaebf588d66cc4e84771c5833aa2e8938539d513e4ea3ed28d36e",
+        "spearman": 0.15065272012402334,
+        "within_3px_fraction": 0.4844903595899506
+      },
+      {
+        "raster_sha256": "d25d6f80100192c530a66f64bc47b5fcc0245135d805b9eee08691eabd77b468",
+        "spearman": 0.06668521270248039,
+        "within_3px_fraction": 0.48032081584957775
+      },
+      {
+        "raster_sha256": "91e743495fad567a6aefc7f69925429cca17a369f01d1f97297abf305992c5b9",
+        "spearman": 0.10390828851381399,
+        "within_3px_fraction": 0.4776650555053912
+      },
+      {
+        "raster_sha256": "4f4621111460fadfb4754e6e98bacb8153796afc370fc29c8923f0998418f2e6",
+        "spearman": 0.11901623698533174,
+        "within_3px_fraction": 0.47439847028204174
+      },
+      {
+        "raster_sha256": "c97c2b16f10b48f83b6e12759fa6e356bb22f75f56b55a6d782068d3960002ac",
+        "spearman": 0.10290394590162605,
+        "within_3px_fraction": 0.4650236362670633
+      },
+      {
+        "raster_sha256": "fbe2448c0400930aa29cad9bcf84124e784d27c901b0f7c383518988b2bc074f",
+        "spearman": 0.09026014611124146,
+        "within_3px_fraction": 0.45413501885589846
+      },
+      {
+        "raster_sha256": "d2a82b50044a12662ff2f2c803624538fe9d084538cfd0550e2ed981e546b0e8",
+        "spearman": 0.08123696802985612,
+        "within_3px_fraction": 0.4538694428214798
+      },
+      {
+        "raster_sha256": "a6d9f63262e32b8f0efa0da0c0f71865a2dccb4dd4ca77dd121b92e0631e9acb",
+        "spearman": 0.07439456672796037,
+        "within_3px_fraction": 0.44980612949487436
+      },
+      {
+        "raster_sha256": "e75877f6b1dc64c6bbab1e969c253484b0d4e53be76af0709077de30f6605755",
+        "spearman": 0.08334585323047235,
+        "within_3px_fraction": 0.4493280926329208
+      },
+      {
+        "raster_sha256": "34f498c1fe2bf8005134c82b188715955053160c386d37fe4a8417890b87198b",
+        "spearman": 0.0756706519265049,
+        "within_3px_fraction": 0.4451585488925479
+      },
+      {
+        "raster_sha256": "d7167bbd52aa39fe5eb662dfeecfe7ad664999331986459f3317aeae5ce08434",
+        "spearman": 0.07776038568570857,
+        "within_3px_fraction": 0.44505231847878046
+      },
+      {
+        "raster_sha256": "627447f01df925a240d007d8b6f4f7e21a2b44e4bb0c967e6147825be57aefa4",
+        "spearman": 0.075927272518667,
+        "within_3px_fraction": 0.44186540606575664
+      },
+      {
+        "raster_sha256": "9a05761b2a04d27942e116393a73c7de00005663bd7cf07b666ecae3cc410a1a",
+        "spearman": 0.07283248825776127,
+        "within_3px_fraction": 0.4367397886014766
+      },
+      {
+        "raster_sha256": "f3d6aded322cf9c49b4cafaeb6a027735828cc95fa8d1e65aa105489d48d040c",
+        "spearman": 0.07284616497355222,
+        "within_3px_fraction": 0.4357305996706857
+      },
+      {
+        "raster_sha256": "3338a7ac679b889b0b23b6f9ee460dae7e5f2bc89975c9f683472fd1beacaaf5",
+        "spearman": 0.06905346868836758,
+        "within_3px_fraction": 0.433499760981569
+      },
+      {
+        "raster_sha256": "49eef619273b2f27d44c5751d5cae30e953ac208b69888bce88e8c58e653a799",
+        "spearman": 0.07199165239758357,
+        "within_3px_fraction": 0.4333669729643597
+      },
+      {
+        "raster_sha256": "ef50d177c365580f784deb3838452c9bb579be48b5e38705fce9d57baccfe8ab",
+        "spearman": 0.07268668760798325,
+        "within_3px_fraction": 0.4322781112232432
+      },
+      {
+        "raster_sha256": "ec004a987900953ccc0563a797fa4a1765a8d3db78a454fd05f22c081875470d",
+        "spearman": 0.07259558316706037,
+        "within_3px_fraction": 0.4322781112232432
+      },
+      {
+        "raster_sha256": "70053218731b292ba85a0f84e105529693fd75e3161cf326fc7d244d62511a9c",
+        "spearman": 0.06744215351212672,
+        "within_3px_fraction": 0.42436394539756733
+      },
+      {
+        "raster_sha256": "c928e233d07802983283e0c937f7b00ad8ab565a67800cc1c4c8ae812d21baf3",
+        "spearman": 0.06707589714670831,
+        "within_3px_fraction": 0.4205396505019387
+      },
+      {
+        "raster_sha256": "c255ab815cdad409456c20cd73ca9e2df2e54ff4aa065083da822d6e32f31ee8",
+        "spearman": 0.06739963268891432,
+        "within_3px_fraction": 0.4192648855367292
+      },
+      {
+        "raster_sha256": "7c387f08c16311bd7f9003b9795cfdcd8d2763f65c734f7c50f5cc894278cf64",
+        "spearman": 0.013041486519054235,
+        "within_3px_fraction": 0.28506931534498325
+      },
+      {
+        "raster_sha256": "4a2fdb41cc3d649fc98882a54ee3af239cd263cb514500eda1aa3af1eba417cc",
+        "spearman": -0.0033372715068896836,
+        "within_3px_fraction": 0.2285547352206937
+      },
+      {
+        "raster_sha256": "94c9d1fdb83c4e8cfe109837985e7229388a136386dcb5e28ce31668ea9559ce",
+        "spearman": -0.004905079651067946,
+        "within_3px_fraction": 0.05484145110745206
+      }
+    ],
+    "worst_overlap3px": {
+      "file": "gems28-h37-1-probe-union-pool-r1-20261003-52a13184267e-allfinite.tif",
+      "dotset_sha256": "0419012029a214321f9691f13b3f22a96cbda2dc1a0e5b055a7ca7ecfda83e30",
+      "registry_dots": 38545,
+      "frac_our_dots_within3px": 0.6992351410208743,
+      "jaccard_exact": 0.029173813800834694,
+      "spearman_surface_vs_registry_sample200k": 0.10236896468924972
+    },
+    "vs_GEMSDOE32_champion": {
+      "file": "champion32_zeros.tif",
+      "dotset_sha256": "c928e233d07802983283e0c937f7b00ad8ab565a67800cc1c4c8ae812d21baf3",
+      "registry_dots": 37654,
+      "frac_our_dots_within3px": 0.4205396505019387,
+      "jaccard_exact": 0.019673684923160246,
+      "spearman_surface_vs_registry_sample200k": 0.06707589714670831
+    },
+    "thresholds": {
+      "abs_spearman_max": 0.9,
+      "within_3px_max": 0.7
+    },
+    "pass_snapshot": true,
+    "margin_warning": "Worst 3px overlap is 0.6992 vs the unscored dense H37-1 probe-union-pool raster (a union of many detectors' pools) - a pass by 0.0008. Against every SCORED raster the overlap is <=0.4845 (H19-5 parent) and 0.4205 vs the GEMSDOE32 champion."
+  },
+  "raster_sha256": "77934be607d48a4daec5b046009cdabf61d3fdee210aadc75be82ac70f3beb2e",
+  "dotset_sha256": "e23dabcec6e2b347901f093f96382ac84d027192c53290a07b08459a011e9de1",
+  "validator": {
+    "raster_sha256": "77934be607d48a4daec5b046009cdabf61d3fdee210aadc75be82ac70f3beb2e",
+    "no_nan_inside": true,
+    "no_nan_whole_array": true,
+    "range_0_1": true,
+    "value_set_inside": [
+      0.0,
+      1.0
+    ],
+    "crs_match": true,
+    "shape_match": true,
+    "transform_match": true,
+    "single_band": true
+  },
+  "submission_name": "GEMSDOE28-S22-ctxhgb-e23dabcec6e2",
+  "note": "S22 ctxHGB multiscale-context 37654d | HOLDOUT-DTI 0.1202 vs dotted 0.1052 (+0.0150) seeds360-362 | e23dabcec6e2",
+  "note_chars": 112,
+  "files": {
+    "primary_allfinite": "gems28-s22-ctxhgb-20261026-e23dabcec6e2-allfinite.tif",
+    "nan_twin": {
+      "name": "gems28-s22-ctxhgb-20261026-e23dabcec6e2-nan.tif",
+      "sha256": "0234de8e61d6eb037f06c8c6574e5dc5014111c16a1cbd30ed01d828e0469524",
+      "bytes": 1590692
+    },
+    "zip_single_nan": "gems28-s22-ctxhgb-20261026-e23dabcec6e2-nan.zip",
+    "allfinite_primary": {
+      "name": "gems28-s22-ctxhgb-20261026-e23dabcec6e2-allfinite.tif",
+      "sha256": "77934be607d48a4daec5b046009cdabf61d3fdee210aadc75be82ac70f3beb2e",
+      "bytes": 826194
+    },
+    "zip": {
+      "name": "gems28-s22-ctxhgb-20261026-e23dabcec6e2-nan.zip",
+      "sha256": "a7b2fc4eb5059c7d1f9e97078e3e016682d664db5291a69b58adce67465d4fe4",
+      "bytes": 293136
+    }
+  },
+  "n_dots": 37654,
+  "catalogue_distance_profile_px": {
+    "S22": {
+      "(2,3]": 6688,
+      "(3,5]": 5989,
+      "(5,10]": 9923,
+      ">10": 15054,
+      "median": 8.0
+    },
+    "GEMSDOE32_champion": {
+      "(2,3]": 2171,
+      "(3,5]": 3466,
+      "(5,10]": 5723,
+      ">10": 26294,
+      "median": 19.65
+    }
+  },
+  "live_projection": {
+    "label": "MODEL PROJECTION (not a score, not an organizer receipt)",
+    "method": "USER-REPORTED champion anchor 0.2778 x pooled HOLDOUT-DTI ratio lane/dotted_b2 (same ratio method as S21); bootstrap ratio CI from the 12 cells",
+    "ratio": 1.1424373366017042,
+    "ratio_ci95": [
+      1.1033,
+      1.1801
+    ],
+    "projected_live_dti": 0.31736909210795344,
+    "projected_ci95": [
+      0.30649674,
+      0.32783177999999996
+    ],
+    "caveats": [
+      "Anchor 0.2778 is USER-REPORTED; no organizer receipt exists in this repository.",
+      "Holdout truth is catalogue-internal hidden components; live truth is expert-mapped NEW faults. Transfer is unproven.",
+      "S22 dots sit closer to the catalogue than the champion's (median 8px vs 19.6px; ring (2,3] 17.8% vs 5.8%); live inversion proved ring <=2px earns ~0 and ring (2,3] live credit is unmeasured, so live transfer may be worse than this ratio.",
+      "Public leaderboard is a public/private split; a single GeoTIFF is also re-scored in the Final round on expanded labels."
+    ]
+  },
+  "forensic_anchor": {
+    "champion_file_sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+    "lineage_symdiffs_zero": true,
+    "all_nine_focus_bests_one_nested_family": true,
+    "detail": "evidence/s22_forensic.json"
+  },
+  "experiments_run": 3,
+  "experiment_cap": 3,
+  "verdict": "promote",
+  "verdict_scope": "Frozen S22 gate (knowledge/62) passed in full: canary, pooled HOLDOUT-DTI > baseline with CI>0, > control, snapshot uniqueness, validator. Shared promotion_gate still blocks on registry completeness + LOSFO buffer (see promotion_gate_output when run).",
+  "submission_ready": false,
+  "slot_selected": false,
+  "selector_checklist": [
+    "Confirm remaining weekly allowance on the authenticated DrivenData submission page (rules state 3/week; account state unknown here).",
+    "Decide whether to require the buffered LOSFO confirmation run first (recommended; next session, fresh seeds).",
+    "Upload ONLY docs/downloads/gems28-s22-ctxhgb-20261026-e23dabcec6e2-allfinite.tif (or the single-member ZIP of the NaN twin), paste the registered note, preserve the organizer receipt + this file's SHA-256.",
+    "Remember the single chosen GeoTIFF is re-scored in the Final Prize Round on expanded expert labels."
+  ],
+  "limitations": [
+    "Owner-mirrored inputs are hash-pinned but not organizer-authenticated.",
+    "Holdout truth is catalogue-internal; live expert-new-fault transfer unproven (near-catalogue dot concentration is the main risk).",
+    "12 cells / 4 geographic blocks: CIs are wide; seeds 360-362 claimed here for the first time.",
+    "Registry is snapshot-bounded; worst overlap margin vs an unscored union-pool raster is 0.0008.",
+    "No DrivenData account, receipt, or weekly-cap access in this sandbox; portal acceptance of any file is not guaranteed."
+  ]
+}

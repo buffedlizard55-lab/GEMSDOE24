@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any
 
 from . import submission
-from .benchmarks import EVALUATOR, recorded_point_best
+from .benchmarks import EVALUATOR, selection_floor
 from .validator import sha256_file
 
 SELECTOR_VERSION = "gems-selector-v2-literal-quota-fail-closed"
@@ -24,7 +24,7 @@ SELECTOR_VERSION = "gems-selector-v2-literal-quota-fail-closed"
 # Read the highest currently recorded declared-comparable point estimate.
 # This is a conservative floor, not certification that its method is promotable.
 try:
-    RECORDED_BEST_EVIDENCE = recorded_point_best(Path(__file__).resolve().parents[2])
+    RECORDED_BEST_EVIDENCE = selection_floor(Path(__file__).resolve().parents[2])
 except (OSError, ValueError, KeyError, TypeError):
     RECORDED_BEST_EVIDENCE = None
 RECORDED_BEST_DTI = (

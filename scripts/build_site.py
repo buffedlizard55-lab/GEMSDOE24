@@ -266,7 +266,7 @@ def build_independent_site(primary):
         "with zero human-inspector fallback; all current artifacts carry an automatic "
         "<code>DO_NOT_SUBMIT</code> decision.</p>"
     )
-    executive = f'''{cup1_exec}{crp1_exec}{gvc1_exec}{rshg1_exec}{latest}<div class="pagehead"><div class="eyebrow">Executive summary</div><h1>Is it okay to submit this file?</h1>{exec_intro}</div>{status}<div class="actions">{download}<a class="button" href="downloads/{e(primary["nan_file"])}" download>NaN-outside twin — also DO NOT SUBMIT</a></div>{file_info}{concurrent}<section><h2>Gate report</h2>{gates}</section><section class="grid2"><article class="card"><h3>What the file contains</h3><p>One float32 band, EPSG:32611, shape 3730 × 3292, 100 m pixels. Affine transform: [100, 0, 243350, 0, −100, 4508550]. Zero NaN/Inf in the entire zero-outside file; every value is in [0,1]. The NaN-outside twin follows the previously reviewed problem text's outside-footprint convention.</p><p>Both variants pass the local exact-grid validator. This is not proof of portal acceptance, scientific merit or eligibility.</p><a href="downloads/{e(primary["checks_file"])}">Full validator JSON →</a></article><article class="card"><h3>Unique name and short comment</h3>{note}</article></section><section><h2>How a future PASS packet would be submitted</h2><p><strong>These instructions do not authorize a negative file.</strong></p><ol class="steplist"><li><h3>Download only the selector's released PASS file</h3><p>Compare its filename and SHA-256 with its receipt. Never upload the training stack, a preview image or a renamed historical reference.</p></li><li><h3>Open the official submission page</h3><p>Sign in to <a href="{COMP}">DrivenData GEMS</a>, use Submit → Make new submission. The project does not automate DrivenData access.</p></li><li><h3>File to submit</h3><p>Choose the released single-band .tif, or a ZIP containing exactly that one GeoTIFF, matching the template CRS, shape and geotransform.</p></li><li><h3>Note (optional)</h3><p>Paste the released packet's comment, no more than 140 characters in this project.</p></li><li><h3>Check quota, submit and preserve the receipt</h3><p>Historical rules mention three submissions per week. The current account cap and remaining allowance are unknown here; confirm remaining allowance on the DrivenData submission page before uploading. Save an artifact-linked submission-page receipt before any value is labelled ORGANIZER-CONFIRMED.</p></li></ol></section><section><h2>If the portal says “Predicted values must be in range [0, 1]”</h2><p>The root cause of the earlier rejection is not established. The <code>-zeros.tif</code> download is allfinite, with zeros outside the footprint; the <code>-nan.tif</code> twin has NaN only outside. Neither contains sentinels, infinities, out-of-range values or NaN inside the footprint. The official reference notebook writes a single-band output using the labels' CRS and transform without setting a nodata tag; outside-convention differences are explicit here. No claim that a local validator can guarantee portal acceptance is made.</p></section>'''
+    executive = f'''{cup1_exec}{crp1_exec}{gvc1_exec}{rshg1_exec}{latest}<div class="pagehead"><div class="eyebrow">Executive summary</div><h1>Is it okay to submit this file?</h1>{exec_intro}</div>{status}<div class="actions">{download}<a class="button" href="downloads/{e(primary["nan_file"])}" download>NaN-outside twin — also DO NOT SUBMIT</a></div>{file_info}{concurrent}<section><h2>Gate report</h2>{gates}</section><section class="grid2"><article class="card"><h3>What the file contains</h3><p>One float32 band, EPSG:32611, shape 3730 × 3292, 100 m pixels. Affine transform: [100, 0, 243350, 0, −100, 4508550]. Zero NaN/Inf in the entire zero-outside file; every value is in [0,1]. The NaN-outside twin follows the previously reviewed problem text's outside-footprint convention.</p><p>Both variants pass the local exact-grid validator. This is not proof of portal acceptance, scientific merit or eligibility.</p><a href="downloads/{e(primary["checks_file"])}">Full validator JSON →</a></article><article class="card"><h3>Unique name and short comment</h3>{note}</article></section><section><h2>How a future PASS packet would be submitted</h2><p><strong>These instructions do not authorize a negative file.</strong></p><ol class="steplist"><li><h3>Download only the selector's released PASS file</h3><p>Compare its filename and SHA-256 with its receipt. Never upload the training stack, a preview image or a renamed historical reference.</p></li><li><h3>Open the official submission page</h3><p>Sign in to <a href="{COMP}">DrivenData GEMS</a>, use Submit → Make new submission. The scheduled repository feed does not automate DrivenData access.</p></li><li><h3>File to submit</h3><p>Choose the released single-band .tif, or a ZIP containing exactly that one GeoTIFF, matching the template CRS, shape and geotransform.</p></li><li><h3>Note (optional)</h3><p>Paste the released packet's comment, no more than 140 characters in this project.</p></li><li><h3>Check quota, submit and preserve the receipt</h3><p>The rules mention three submissions per week; <a href="https://community.drivendata.org/t/submission-amount-question/11553/2">organizer staff say the website limit prevails</a>. This project still follows the owner’s stated weekly cap. The actual account allowance is unknown here; a separate selector must check it before any upload. Save an artifact-linked submission-page receipt before any value is labelled ORGANIZER-CONFIRMED.</p></li></ol></section><section><h2>If the portal says “Predicted values must be in range [0, 1]”</h2><p>The root cause of the earlier rejection is not established. The <code>-zeros.tif</code> download is allfinite, with zeros outside the footprint; the <code>-nan.tif</code> twin has NaN only outside. Neither contains sentinels, infinities, out-of-range values or NaN inside the footprint. The official reference notebook writes a single-band output using the labels' CRS and transform without setting a nodata tag; outside-convention differences are explicit here. No claim that a local validator can guarantee portal acceptance is made.</p></section>'''
     ablation = card["magnetic_only_ablation"]
     alo, ahi = ablation["ci95"]["interval"]
     canary_rows = "".join(
@@ -472,6 +472,9 @@ def build_independent_site(primary):
     from portfolio_summary import build_portfolio
 
     portfolio = build_portfolio(ROOT)
+    from focus_audit_site import render as render_focus_audit
+
+    focus_review = render_focus_audit(ROOT)
     current_note = (
         '<details id="current-download-details"><summary>Exact filename, SHA-256 and research note</summary>'
         f'<p class="fileline">{e(current["submission_name"])}</p>'
@@ -483,10 +486,12 @@ def build_independent_site(primary):
     )
     overview = (
         current_banner
+        + focus_review["alert"]
         + current_note
         + s3dep1_hero
         + xvar1_hero
         + portfolio["intro"]
+        + focus_review["current"]
         + portfolio["historical"]
         + '<details id="portfolio-research-files"><summary>Current research file and HOLDOUT-DTI evidence for every site</summary>'
         + portfolio["current"]
@@ -502,12 +507,16 @@ def build_independent_site(primary):
     )
     executive = (
         current_banner
+        + focus_review["alert"]
         + current_note
         + s3dep1_exec
         + xvar1_exec
         + portfolio["intro"]
+        + focus_review["current"]
         + portfolio["historical"]
+        + '<details id="older-focus-research"><summary>Earlier 2026-10-26 pinned research files</summary>'
         + portfolio["current"]
+        + "</details>"
         + portfolio["obstruction"]
         + portfolio["guide"]
         + portfolio["late_integrations"]
@@ -534,9 +543,11 @@ def build_independent_site(primary):
         + "</details>"
     )
     source_page = (
-        "<section><h2>Immutable nine-site artifact audit and current source freshness</h2><p>The first-screen summary uses actual TIFF bytes from immutable audit refs, not only README text. "
-        "All nine GitHub sources have advanced since those refs; the current check is source provenance only and does not silently re-audit raster bytes. "
+        "<section><h2>Immutable nine-site artifact audits and source freshness</h2><p>The historical audit reopens TIFF bytes from its pinned refs; the separate October 27 audit checks one selected TIFF and run card per current focus source, not the complete newer registry. "
+        "The current freshness check is source provenance only and does not silently re-audit raster bytes. "
         'All original source restrictions and scientific caveats remain.</p><div class="actions">'
+        '<a class="button" href="data/current_focus_nine_file_audit_20261027.json">October 27 nine-file format and lattice audit</a>'
+        '<a class="button" href="data/band6_provenance_review_20261027.json">Band-6 provenance review</a>'
         '<a class="button" href="data/portfolio_artifact_audit_20261026.json">Complete frozen file/novelty audit</a>'
         '<a class="button" href="data/focus_source_refresh_20261026.json">Current focus-site GitHub source refs</a>'
         '<a class="button" href="data/review_e452969c_20261026.json">Three-pass review receipt</a>'
@@ -586,7 +597,15 @@ def build_independent_site(primary):
             'content="docs/data/source_health.json"', 'content="docs/data/priority_feed.json"'
         )
     )
+    (DOCS / "data/current_focus_source_pins_20261027.json").write_text(
+        (ROOT / "registry/current_focus_source_pins_20261027.json").read_text()
+    )
     for name in (
+        "site_browser_integrity_review_20261027.json",
+        "current_focus_nine_file_audit_20261027.json",
+        "tmcg_integrity_review_20261027.json",
+        "unique07_integrity_review_20261027.json",
+        "band6_provenance_review_20261027.json",
         "s3dep1_run_card_20261026.json",
         "s3dep1_experiment_20261026.json",
         "s3dep1_selector_20261026.json",
@@ -888,7 +907,7 @@ Current 2026-10-26 Recorded Local Point-Best `H24-S3DEP1` 61-Channel Zero-1m-LiD
 [`{s3dep1_card_site["submission_name"]}`](docs/downloads/{s3dep1_card_site["submission_name"]}) (`SHA-256: {s3dep1_card_site["raster_sha256"]}`),
 Single-GeoTIFF ZIP [`{s3dep1_card_site["zip_artifact"]}`](docs/downloads/{s3dep1_card_site["zip_artifact"]}), and
 NaN-outside twin [`{s3dep1_card_site["nan_outside_artifact"]}`](docs/downloads/{s3dep1_card_site["nan_outside_artifact"]}).
-Preregistered (`knowledge/29_preregistered_S3DEP1_2026-10-26.md` @ `{s3dep1_card_site["preregistration_commit"][:12]}`, 3/3 experiment budget spent, 0 slots spent): withholds all 15 1 m LiDAR channels across 100% of the footprint and fuses 12 seamless USGS 10 m 3DEP sub-cell gradients (`ScienceBase 4f70aa9fe4b058caae3f8de5`), 6 restored `training_features.tif` crustal/seismic channels (`mag_anom`, `geod_2ndinv`, `iso_grav_anom_slope`, Bouguer `tc`, `log1p(deq/ieq)`), 6 monoclinal step/incision operators, and 37 non-LiDAR base + OpenEI GDR #1391 hydrothermal + SAHG channels via Dual-Negative (`d3+d9`) Core + 300 m Kernel Log-Odds Blending (`37,654` binary `{{0,1}}` dots; zero copied pixels; strict `[0, 1]` PASS; 61/61 two-polarity leakage canaries PASS, worst extremity `0.6111 <= 0.90`; `{100 * s3dist["frac_2_to_9px_apron"]:.1f}%` apron / `{100 * s3dist["frac_gt_20px_farfield"]:.1f}%` `>2 km` far-field).
+Preregistered (`knowledge/29_preregistered_S3DEP1_2026-10-26.md` @ `{s3dep1_card_site["preregistration_commit"][:12]}`, 3/3 experiment budget spent, 0 slots spent): withholds all 15 1 m LiDAR channels across 100% of the footprint and fuses 12 seamless USGS 10 m 3DEP sub-cell gradients (`ScienceBase 4f70aa9fe4b058caae3f8de5`), 6 restored `training_features.tif` crustal/seismic channels (`mag_anom`, `geod_2ndinv`, `iso_grav_anom_slope`, `tc` (legacy alias; physical identity and units unverified), `log1p(deq/ieq)`), 6 monoclinal step/incision operators, and 37 non-LiDAR base + OpenEI GDR #1391 hydrothermal + SAHG channels via Dual-Negative (`d3+d9`) Core + 300 m Kernel Log-Odds Blending (`37,654` binary `{{0,1}}` dots; zero copied pixels; strict `[0, 1]` PASS; 61/61 two-polarity leakage canaries PASS, worst extremity `0.6111 <= 0.90`; `{100 * s3dist["frac_2_to_9px_apron"]:.1f}%` apron / `{100 * s3dist["frac_gt_20px_farfield"]:.1f}%` `>2 km` far-field).
 Is the **current recorded local point-best within GEMSDOE24’s declared comparable evaluator/count set**: `{s3h["evaluator_version"]}` = **{s3h["dti"]:.5f}** (95% CI **[{s3lo:.5f}, {s3hi:.5f}]**; Arm 1 Core **{s3arms["arm1_s3dep1_core_dualneg_61ch"]["dti"]:.5f}**; Arm 2 Kernel300 **{s3arms["arm2_s3dep1_kernel300_reg_61ch"]["dti"]:.5f}**; `NE_LidarGapHeavy` **0.21972**; `3.0 km` Bridge **{s3br["dti"]:.5f}**), surpassing recorded `H24-DPRF1` (`0.16379`) by **{s3pr_dprf["paired_delta_dti"]:+.5f}** (paired 95% CI **[{s3pr_dprf["paired_delta_ci95"][0]:+.5f}, {s3pr_dprf["paired_delta_ci95"][1]:+.5f}]**), beating `oof_multiphysics_hgb_d3` (`0.13000`) by **{s3pr_oof["paired_delta_dti"]:+.5f}** (**4/4 folds**), and passing 3-px dot novelty against `DPRF1` (**`{100 * s3nov["dot_overlap_within_3px_vs_dprf1"]:.2f}% <= 70%`**), `GEMSDOE32 B2` (**`{100 * s3nov["dot_overlap_within_3px_vs_gemsdoe32_b2"]:.2f}%`**), all 83 peer blobs (**`<= {100 * s3nov["peer_blobs_max_3px_dot_overlap"]:.2f}%`**), and all 32 sibling focus TIFFs in the frozen 2026-10-26 audit (**`<= {100 * s3nov["nine_site_20261026_max_3px_dot_overlap"]:.2f}%`**). Automatically held at **`DO_NOT_SUBMIT`** (not a literal-gate-unique or submit-ready candidate): `{100 * s3nov["dot_overlap_within_3px_vs_dkrn1"]:.2f}%` (>70%) 3-px overlap vs local stopped lane `DKRN1`, exact-file C2ST AUC `{s3c2["observed_auc"]:.4f}` (Holm *p* = `{s3c2["holm_p_value"]:.3f}` associated with unresidualized 10 m gradients and highway cut/fill corridors), paired CI vs `DPRF1` spanning zero, and retained spacing-5 lattice `registry-039`.
 [S3DEP1 JSON run card](evidence/s3dep1_run_card_20261026.json) · [S3DEP1 Selector v2 JSON](evidence/s3dep1_selector_20261026.json) · [Frozen 9-Site 2026-10-26 Audit JSON](evidence/nine_site_executive_summary_s3dep1_20261026.json) · [S3DEP1 preregistration](knowledge/29_preregistered_S3DEP1_2026-10-26.md) · [S3DEP1 PhD findings & 9-site synthesis](knowledge/30_S3DEP1_findings_and_9site_executive_summary_2026-10-26.md) · [Executive guide](docs/executive-summary.html#s3dep1)
 """

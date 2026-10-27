@@ -50,6 +50,11 @@ async function main() {
         assert.equal(await page.locator('#portfolio-current tbody tr').count(), 9);
         assert.equal(await page.locator('#portfolio-historical .portfolio-mobile > article').count(), 9);
         assert.equal(await page.locator('#portfolio-historical .portfolio-mobile').isVisible(), device === 'mobile');
+        assert.equal(await page.locator('#current-focus-files tbody tr').count(), 9);
+        assert.equal(await page.locator('#current-focus-files .portfolio-mobile > article').count(), 9);
+        assert.equal(await page.locator('#current-focus-files .portfolio-mobile').isVisible(), device === 'mobile');
+        assert.equal(await page.locator('#current-focus-files tbody tr strong').filter({hasText: 'NO'}).count(), 9);
+        assert(await page.getByText('all nine fail the literal 70% overlap rule').first().isVisible());
         if (!relative) await page.screenshot({path: path.join(root, `logs/tnr1-${device}.png`), fullPage: true});
         const [download] = await Promise.all([page.waitForEvent('download'), link.click()]);
         assert.equal(download.suggestedFilename(), card.submission_name);
@@ -65,7 +70,8 @@ async function main() {
           const result = await axe.run(document.querySelector('main'), {runOnly: {type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice']}});
           return result.violations.map(v => ({id: v.id, impact: v.impact, description: v.description, nodes: v.nodes.map(n => n.target)}));
         });
-        receipt.pages.push({device, page: relative || 'index.html', download_sha256: digest, first_screen_download: true, clipboard_matches: true, no_horizontal_overflow: true, accessibility_violations: accessibility});
+        const documentDigest = crypto.createHash('sha256').update(await response.body()).digest('hex');
+        receipt.pages.push({device, page: relative || 'index.html', document_sha256: documentDigest, current_focus_rows: 9, download_sha256: digest, first_screen_download: true, clipboard_matches: true, no_horizontal_overflow: true, accessibility_violations: accessibility});
       }
       for (const relative of ['docs/research.html', 'docs/sources.html']) {
         await page.goto(new URL(relative, base).href, {waitUntil: 'networkidle'});

@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Experiment 7 (this session): catalogue-offset geothermal surface proximity.
+"""Stopped H-UNIQUE-07: retained for historical review, not for rerunning.
+
+The historic fold placement support used the full label catalogue, including
+withheld segments, and the final dots failed the literal registry lattice gate.
+The original experiment and TIFF are quarantined; see
+``scripts/audit_unique07_integrity.py``. The following text is historical.
+
+Experiment 7 (prior session): catalogue-offset geothermal surface proximity.
 
 Hypothesis H-UNIQUE-07: Geothermal surface features (volcanic vents, hot springs)
 mark concealed fault conduits absent from the USGS/INGENIOUS fault catalogue
@@ -112,11 +119,15 @@ def main():
     ap.add_argument("--verify-recorded", action="store_true")
     args = ap.parse_args()
     if args.verify_recorded:
-        if RESULT.exists():
-            print(RESULT.read_text())
-        else:
-            print(json.dumps({"status": "no_recorded_experiment"}))
+        from audit_unique07_integrity import audit
+
+        print(json.dumps(audit(), indent=2, allow_nan=False))
         return
+    raise SystemExit(
+        "H-UNIQUE-07 is stopped: full-catalogue support leaked withheld labels "
+        "and the saved dots failed literal novelty. No rerun or slot is permitted. "
+        "Use --verify-recorded for a read-only exact-file audit."
+    )
 
     started = time.monotonic()
     fp = footprint.load_footprint()

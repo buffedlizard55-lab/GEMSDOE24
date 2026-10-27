@@ -1,0 +1,167 @@
+{
+  "schema": "unique07-read-only-integrity-v1",
+  "checked_utc": "2026-10-27T11:52:32.574835+00:00",
+  "source_ref": "a1ecb683a9fda2aa4612f27e28896ebb8b19ad08",
+  "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/a1ecb683a9fda2aa4612f27e28896ebb8b19ad08/docs/downloads/24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.tif",
+  "source_pr": "https://github.com/buffedlizard55-lab/GEMSDOE24/pull/64",
+  "historic_runner_blob": "7311f5ec95a1a2122669e446e63d68bf7c641848",
+  "original_card_blob": "d489c4b5a93ad25db6e41006d5d8b45f2905c1fa",
+  "raster_git_blob": "b756808d355df853168199f568d5dedcaffaec91",
+  "generated_by_this_session": false,
+  "new_experiments": 0,
+  "competition_slots_used": 0,
+  "hypothesis": "H-UNIQUE-07 catalogue-offset geothermal surface-feature proximity: vents + hot springs mark concealed conduits absent from the catalogue; dots restricted to the 200-900 m offset band from visible faults (H33-B2 offset insight), never conditioned on labels",
+  "mechanism": "Hot springs and volcanic vents mark geothermal fluid reaching the surface; the fault conduit connects them to depth. Dots near surface geothermal features target concealed faults missing from USGS/INGENIOUS, placed outside the already-mapped fault halo.",
+  "named_non_fault_mimic": "Cold springs, non-geothermal seeps, surface water, gravel pits",
+  "recorded_holdout": {
+    "evaluator_version": "gems-segment-pooled-v1",
+    "label": "HOLDOUT-DTI",
+    "dti": 0.0011237887893642653,
+    "ci95": [
+      0.0008597455616431262,
+      0.0014311645702315392
+    ],
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 1500,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    },
+    "status": "INVALID FOR COMPARISON: fold placement used a support derived from the full label catalogue, including withheld components"
+  },
+  "fold_leakage": {
+    "detected": true,
+    "explanation": "The original runner computes the 200\u2013900 m support from labels.tif before splitting and reuses it for every fold. The hidden catalogue therefore affects placement eligibility; removing visible pixels afterwards does not remove this leak. Canaries on the raw trigger surfaces do not test the eligibility mask.",
+    "source_code_review_only": true,
+    "scientific_replay": false
+  },
+  "preplacement_surface_novelty": null,
+  "final_dots": 1814,
+  "comparison_scope": "One hash-pinned registered lattice, a decisive failure witness; not all registries",
+  "correlation_overlap_vs_registry": {
+    "stage": "final_dots",
+    "passed": false,
+    "registry_unique_rasters": 1,
+    "raw_rank_scope": "exact over all footprint pixels",
+    "raw_rank_pixels": 5167373,
+    "kernel_rank_sample_size": 200000,
+    "rank_sample_seed": 20261025,
+    "rank_limit": 0.9,
+    "overlap_limit": 0.7,
+    "overlap_distance_px": 3,
+    "overlap_scope": "ALL candidate dots, not a sample",
+    "max_abs_rank_correlation": 0.0021186287191500815,
+    "max_dot_overlap": 0.9977949283351709,
+    "rows": [
+      {
+        "registry_id": "registry-160",
+        "file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817",
+        "raw_spearman": -0.00013859602258008442,
+        "kernel_spearman": 0.0021186287191500815,
+        "candidate_dot_overlap_within_3px": 0.9977949283351709,
+        "duplicate": true,
+        "correlation_defined": true
+      }
+    ]
+  },
+  "validator_output": {
+    "file": "24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.tif",
+    "bytes": 755390,
+    "sha256": "fe6d637fad5b8fb435988b3ab31af8ae777380f78046577c505275e2e725a795",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 1814,
+    "in_footprint_mass": 1814.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "submission_name": "24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.tif",
+  "raster_sha256": "fe6d637fad5b8fb435988b3ab31af8ae777380f78046577c505275e2e725a795",
+  "note": "GEMS24 H-UNIQUE-07 | leaked holdout; duplicate; research only; DO NOT SUBMIT",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "verdict": "negative"
+}

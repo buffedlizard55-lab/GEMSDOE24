@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-COPY = ["docs", "evidence", "registry", "scripts", "src", "knowledge"]
+COPY = ["docs", "evidence", "registry", "scripts", "src", "knowledge", "inputs"]
 
 
 @pytest.fixture(scope="module")
@@ -417,5 +417,28 @@ def test_site_refuses_tampered_peer_scientific_source_card(built):
             [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
         )
         assert result.returncode != 0 and "Pinned peer source card changed" in result.stderr
+    finally:
+        path.write_text(original)
+
+
+@pytest.mark.parametrize("tamper", ["source_blob", "source_holdout", "positive_decision"])
+def test_site_rejects_tampered_current_focus_audit(built, tamper):
+    """A displayed source or upload decision may not drift from its pinned receipt."""
+    path = built / "evidence/current_focus_nine_file_audit_20261027.json"
+    original = path.read_text()
+    data = json.loads(original)
+    if tamper == "source_blob":
+        data["rows"][0]["source_file"]["git_blob"] = "0" * 40
+    elif tamper == "source_holdout":
+        data["rows"][1]["holdout"]["value"] += 0.00001
+    else:
+        data["rows"][0]["ok_to_submit"] = True
+    try:
+        path.write_text(json.dumps(data))
+        result = subprocess.run(
+            [sys.executable, "scripts/build_site.py"], cwd=built, capture_output=True, text=True
+        )
+        assert result.returncode != 0
+        assert "audit" in result.stderr.lower() or "source" in result.stderr.lower()
     finally:
         path.write_text(original)

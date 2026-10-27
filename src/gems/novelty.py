@@ -151,6 +151,7 @@ def compare_registry(
     dots=None,
     sample_size=200000,
     separate_calibration_controls: bool = False,
+    template_path: Path | str | None = None,
 ):
     """Test surface before placement, or final dots afterward, against every entry.
 
@@ -158,23 +159,44 @@ def compare_registry(
     fixed reproducible uniform sample. Dot overlap is
     exact over ALL candidate dots, directional candidate -> registry, <=3 px.
 
-    When ``separate_calibration_controls=False`` (default, preserving frozen MTR1
-    receipt verification), every entry applies the literal overlap rule. When
-    ``separate_calibration_controls=True``, entries remain in ``rows`` (never deleted),
-    Spearman rank gates (``|rho| <= 0.90``) apply to ALL entries, and directional 3-px
-    overlap (``<= 0.70``) is gated across competing detector entries while reporting
-    both ``competing_method_passed`` and ``literal_unseparated_passed`` plus exact
-    pigeonhole lower bounds for space-filling calibration lattices.
+    The top-level ``passed`` and each row's ``duplicate`` always enforce the
+    literal all-entry rule. Separating controls adds an informational diagnostic
+    only; it cannot exempt any comparator. Undefined rank correlations cannot
+    certify a pass. Every reference must match the trusted template's grid and
+    its registered footprint hash.
     """
-    surface, footprint = np.asarray(surface), np.asarray(footprint, bool)
+    surface, raw_footprint = np.asarray(surface), np.asarray(footprint)
+    if (
+        raw_footprint.ndim != 2
+        or not np.isfinite(raw_footprint).all()
+        or not np.isin(raw_footprint, (0, 1)).all()
+    ):
+        raise ValueError("Footprint must be a finite two-dimensional binary mask")
+    footprint = raw_footprint.astype(bool)
     if (
         surface.shape != footprint.shape
-        or footprint.ndim != 2
         or not footprint.any()
+        or type(sample_size) is not int
         or sample_size < 1
         or not np.isfinite(surface[footprint]).all()
     ):
         raise ValueError("Finite footprint-aligned candidate surface required")
+    template = (
+        Path(template_path)
+        if template_path is not None
+        else Path(root) / "data/bridge/sample_submission.tif"
+    )
+    if not template.is_file():
+        raise ValueError("A template is required to validate comparator CRS and transform")
+    with rasterio.open(template) as ds:
+        if (
+            ds.count != 1
+            or ds.crs is None
+            or ds.shape != footprint.shape
+            or not np.array_equal(np.isfinite(ds.read(1)), footprint)
+        ):
+            raise ValueError("Template grid or finite footprint does not match the candidate")
+        template_crs, template_transform = ds.crs, ds.transform
     ids = np.flatnonzero(footprint)
     rng = np.random.default_rng(20261025)
     sample = rng.choice(ids, min(sample_size, len(ids)), replace=False)
@@ -183,8 +205,15 @@ def compare_registry(
     values = surface.ravel()[sample]
     full_ranks = rankdata(surface.ravel()[ids])
     if dots is not None:
-        dots = np.asarray(dots, bool)
-        if dots.shape != surface.shape or np.any(dots & ~footprint) or not dots.any():
+        dots = np.asarray(dots)
+        if (
+            dots.shape != surface.shape
+            or not np.isfinite(dots).all()
+            or not np.isin(dots, (0, 1)).all()
+        ):
+            raise ValueError("Candidate dots must be a finite binary mask")
+        dots = dots.astype(bool)
+        if np.any(dots & ~footprint) or not dots.any():
             raise ValueError("Nonempty candidate dots inside footprint required")
         dot_yx = np.argwhere(dots)
         candidate_kernel = np.maximum(1 - cKDTree(dot_yx).query(sample_yx)[0] / 3, 0)
@@ -195,12 +224,19 @@ def compare_registry(
     for row in entries:
         path = Path(root) / row["cache_path"]
         with rasterio.open(path) as ds:
-            if ds.shape != footprint.shape:
+            if (
+                ds.count != 1
+                or ds.shape != footprint.shape
+                or ds.crs != template_crs
+                or ds.transform != template_transform
+            ):
                 raise ValueError(f"Registry grid mismatch: {path}")
             a = ds.read(1)
+        if not np.isfinite(a[footprint]).all() or np.any((a[footprint] < 0) | (a[footprint] > 1)):
+            raise ValueError(f"Registry footprint has invalid values: {path}")
         content = hashlib.sha256(np.asarray(a[footprint], dtype="<f4").tobytes()).hexdigest()
-        if content != row["footprint_sha256"]:
-            raise ValueError(f"Registry footprint checksum mismatch: {path}")
+        if content != row.get("footprint_sha256"):
+            raise ValueError(f"Registry footprint checksum missing or mismatched: {path}")
         registry_dots = footprint & np.isfinite(a) & (a > 0)
         registry_yx = np.argwhere(registry_dots)
         tree = cKDTree(registry_yx) if len(registry_yx) else None
@@ -218,6 +254,7 @@ def compare_registry(
         )
         rank_dup = any(abs(x) > 0.90 for x in (raw_rank, kernel_rank) if x is not None)
         literal_duplicate = rank_dup or (overlap is not None and overlap > 0.70)
+        correlation_defined = raw_rank is not None and kernel_rank is not None
         entry_dict = {
             "registry_id": row["id"],
             "file": row["file"],
@@ -226,6 +263,7 @@ def compare_registry(
             "kernel_spearman": kernel_rank,
             "candidate_dot_overlap_within_3px": overlap,
             "duplicate": bool(literal_duplicate),
+            "correlation_defined": correlation_defined,
         }
         if separate_calibration_controls:
             ctrl = classify_space_filling_control(
@@ -246,12 +284,12 @@ def compare_registry(
                 pigeonhole_min_overlap=ctrl["pigeonhole_min_overlap_for_candidate_size"],
                 literal_duplicate=bool(literal_duplicate),
                 competing_method_duplicate=bool(competing_dup),
-                duplicate=bool(competing_dup),
             )
         rows.append(entry_dict)
     out = {
         "stage": "final_dots" if dots is not None else "surface_before_placement",
-        "passed": bool(rows) and not any(row["duplicate"] for row in rows),
+        "passed": bool(rows)
+        and all(row["correlation_defined"] and not row["duplicate"] for row in rows),
         "registry_unique_rasters": len(rows),
         "raw_rank_scope": "exact over all footprint pixels",
         "raw_rank_pixels": len(ids),
@@ -290,8 +328,8 @@ def compare_registry(
             competing_method_rasters=len(comp_rows),
             calibration_control_rasters=len(ctrl_rows),
             competing_method_passed=bool(comp_rows)
-            and not any(r["competing_method_duplicate"] for r in rows),
-            literal_unseparated_passed=bool(rows) and not any(r["literal_duplicate"] for r in rows),
+            and all(r["correlation_defined"] and not r["competing_method_duplicate"] for r in rows),
+            literal_unseparated_passed=out["passed"],
             max_competing_dot_overlap=max(
                 (
                     r["candidate_dot_overlap_within_3px"]
@@ -381,7 +419,9 @@ def compare_prospective_registry(
         ),
         default=None,
     )
-    method_passed = bool(method_rows) and not any(r["duplicate"] for r in method_rows)
+    method_passed = bool(method_rows) and all(
+        r["correlation_defined"] and not r["duplicate"] for r in method_rows
+    )
     return {
         **base,
         "method_lane_passed": method_passed,

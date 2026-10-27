@@ -1,5 +1,13 @@
 # Repository review — 2026-10-27
 
+> **Later integrity correction:** This is a preserved earlier snapshot. The
+> current [exact-file review](../knowledge/31_current_integrity_review_2026-10-27.md)
+> found TMCG 100% lattice overlap and H-UNIQUE-07 full-catalogue fold leakage;
+> its reported holdout is invalid. This later checkout restored an owner-mirror
+> feature cache, not organizer-authenticated data. Both files remain **DO NOT
+> SUBMIT**. The earlier checkout's 462-test result and cache status are not
+> current measurements.
+
 ## Decision
 
 **No new experiment, prediction surface, TIFF, or submission slot was used. Nothing is approved to submit.** This was a repository, evidence, and test review only. The parallel-run protocol's required single-method paragraph is absent, so selecting a lane would be an unauthorized experiment. The requested high-scoring unique submission is **not achieved**.
