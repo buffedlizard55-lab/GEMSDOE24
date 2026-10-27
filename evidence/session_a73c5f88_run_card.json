@@ -1,0 +1,48 @@
+{
+  "schema": "gems-review-negative-v1",
+  "session": "a73c5f88",
+  "date_utc": "2026-10-27",
+  "hypothesis": "No geological experiment assigned: the required single-method paragraph is absent. Review existing submission safety and uniqueness prerequisites.",
+  "mechanism": "Reopen the pinned registry witness to compute necessary geometric overlap bounds; preserve exact input bytes during shared preflight receipt export.",
+  "named_non_fault_process_that_could_mimic_it": "Intrusive lithologic contacts and survey seams can mimic the prospective signed magnetic-gravity front; it was not tested here.",
+  "holdout_dti": null,
+  "holdout_ci95": null,
+  "evaluator_version": null,
+  "withheld_positives": null,
+  "holdout_status": "NOT RUN; no new surface, training or scientific replay",
+  "correlation_overlap_vs_registry": {
+    "preplacement_surface": null,
+    "final_dots": null,
+    "scope": "One mandatory registered lattice; necessary lower bound only, not full current registry coverage",
+    "reference_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+    "minimum_overlap_at_37654_dots": 0.8234184947150369,
+    "minimum_overlap_at_44090_dots": 0.8491948287593558,
+    "literal_overlap_limit": 0.7,
+    "receipt": "evidence/session_a73c5f88_feasibility.json"
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "status": "NOT RUN: no candidate raster created",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "submission_authorized": false
+  },
+  "submission_name": null,
+  "note": "No candidate: lane absent; literal lattice gate blocks usual budgets. Preserve evidence. DO NOT SUBMIT.",
+  "leaderboard_estimate": null,
+  "organizer_confirmed_score": null,
+  "new_tiffs": 0,
+  "new_experiments": 0,
+  "competition_slots_used": 0,
+  "verdict": "negative",
+  "limitations": [
+    "No assigned geological lane",
+    "No new approved unique TIFF; owner request remains unachieved",
+    "All nine GitHub source tips changed after the pinned artifact review; fresh tips are not fresh artifact audits",
+    "No organizer score receipt or verified account submission allowance",
+    "No independently replayed scientific holdout or current complete registry comparison",
+    "No new external official raster obtained; non-GitHub official hosts outside sandbox outbound allowlist",
+    "Concurrent PR 70 overlaps first two historical prospective hypotheses; do not call them untried"
+  ]
+}

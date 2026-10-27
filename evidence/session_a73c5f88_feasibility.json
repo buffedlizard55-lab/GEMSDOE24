@@ -1,0 +1,58 @@
+{
+  "schema": "uniqueness-budget-feasibility-v1",
+  "checked_utc": "2026-10-27T18:50:11.898622+00:00",
+  "scope": "One necessary geometric gate; NOT a complete registry audit or scientific experiment",
+  "registry": {
+    "path": "registry/priority_rasters_20261026_portfolio.json",
+    "sha256": "d60551fec38ffe9ce58f1ac6ee0a6b2effb30bb6590ad15859bedcaa578d1580"
+  },
+  "template": {
+    "path": "data/bridge/sample_submission.tif",
+    "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
+  },
+  "witness": {
+    "path": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+    "footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817"
+  },
+  "coverage": {
+    "is_space_filling_calibration_control": true,
+    "footprint_3px_covered_pixels": 5160724,
+    "footprint_3px_uncovered_pixels": 6649,
+    "footprint_3px_coverage": 0.9987132726822701,
+    "coverage_threshold": 0.7,
+    "pigeonhole_min_overlap_for_candidate_size": null
+  },
+  "budgets": [
+    {
+      "candidate_dot_count": 37654,
+      "minimum_overlapping_dots": 31005,
+      "minimum_overlap_fraction": 0.8234184947150369,
+      "overlap_limit_fraction": 0.7,
+      "strictly_exceeds_limit": true,
+      "status": "STOP_IMPOSSIBLE_BUDGET",
+      "maximum_budget_not_ruled_out_by_this_bound": 22163,
+      "submission_authorized": false
+    },
+    {
+      "candidate_dot_count": 44090,
+      "minimum_overlapping_dots": 37441,
+      "minimum_overlap_fraction": 0.8491948287593558,
+      "overlap_limit_fraction": 0.7,
+      "strictly_exceeds_limit": true,
+      "status": "STOP_IMPOSSIBLE_BUDGET",
+      "maximum_budget_not_ruled_out_by_this_bound": 22163,
+      "submission_authorized": false
+    }
+  ],
+  "impossible_budget_found": true,
+  "preplacement_surface_test": "NOT RUN: no surface generated",
+  "final_dot_test": "NOT RUN: no dots generated; universal lower bound only",
+  "leaderboard_estimate": null,
+  "holdout_dti": null,
+  "submission_authorized": false,
+  "new_tiffs": 0,
+  "new_experiments": 0,
+  "competition_slots_used": 0,
+  "warning": "Do not change a stopped lane's budget or registry to evade this gate."
+}

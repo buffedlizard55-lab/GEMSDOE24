@@ -25,6 +25,18 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from gems.preflight import concise_status, preflight  # noqa: E402
+from gems.submission import _same_file  # noqa: E402
+
+
+def protect_inputs(output: Path | None, *inputs: Path | None) -> None:
+    """A receipt must never overwrite the exact bytes it claims to inspect."""
+    if output is not None and any(
+        source is not None and _same_file(output, source) for source in inputs
+    ):
+        raise ValueError(
+            "Receipt output must not overwrite an artifact, template, run card or note"
+        )
+
 
 DEFAULT_TEMPLATE = ROOT / "data/bridge/sample_submission.tif"
 
@@ -70,6 +82,8 @@ def main() -> int:
     parser.add_argument("--output", type=Path, default=None, help="write full JSON receipt here")
     args = parser.parse_args()
 
+    # Check before reading/evaluating anything, including symlinks and hardlinks.
+    protect_inputs(args.output, args.artifact, args.template, args.run_card, args.note_file)
     note = args.note
     if args.note_file is not None:
         note = args.note_file.read_text().rstrip("\r\n")

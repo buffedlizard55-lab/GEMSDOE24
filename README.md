@@ -1,5 +1,17 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Latest continuation — 2026-10-27, session a73c5f88
+
+**SUBMIT: NO. No new TIFF or slot.** Read the [current owner requirements](knowledge/owner_brief_2026-10-27_feasibility.md)
+and [three-pass review and next steps](docs/session-review-a73c5f88-20261027.md) at session start.
+The full historical owner prompt remains below; the linked current record is normalized, not verbatim.
+The shared preflight now refuses a receipt path that would overwrite its TIFF, template,
+run card or note (including symlinks/hardlinks). All nine source tips have moved since
+pinned review; freshness is not a new artifact audit. Open PR #70 overlaps the earlier
+first two prospective hypotheses: do not restart those ideas as untried lanes.
+[Executive file/estimate/uniqueness table](docs/executive-summary.html#current-focus-files).
+
+
 ## Start here — current request and automated pre-training gate (2026-10-27)
 
 **Maximize P(Win) · Own the Outcome. No new TIFF is authorized to submit.**
