@@ -130,7 +130,7 @@ the program never writes a TIFF or uploads anything. <a href="data/uniqueness_fe
 SHA-256 <code>{e(report["witness"]["sha256"])}</code>. This is one decisive comparator,
 not a complete fresh census of the registry.</p>
 <p>The operative prompt still lacks its single-method lane paragraph. Preserve stopped lanes.
-The <a href="../knowledge/31_current_integrity_review_2026-10-27.md">ranked geological hypotheses and integrity review</a>
+The <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/main/knowledge/31_current_integrity_review_2026-10-27.md">ranked geological hypotheses and integrity review</a>
 remain prospective. Catalogue-hide-and-recover tests measure fault recovery, not geothermal vent confirmation.
 The <a href="executive-summary.html">submission guide</a> distinguishes numeric/grid validity from eligibility.</p>
 </main></body></html>\n"""

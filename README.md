@@ -27,6 +27,13 @@ shift dots or remove comparators to evade the protocol. No surface, training,
 new holdout, TIFF or slot was generated in this continuation. A separate
 scientific lane assignment and all existing gates remain required.
 
+The concurrent PR #67 added a dependency-free frozen-count check:
+`python scripts/check_protocol_feasibility.py`.
+Its [prior review](docs/protocol-feasibility-20261027.md) and
+[negative card](evidence/protocol_continuation_run_card_20261027.json) are preserved.
+Both entrypoints now reuse one exact-arithmetic implementation; the fresh
+checker additionally reopens the pinned template and reference raster.
+
 ## Current decision — 2026-10-27: research downloads only; **DO NOT SUBMIT**
 
 **No new TIFF or experiment was produced by this review, and no slot was used.**

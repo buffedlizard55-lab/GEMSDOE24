@@ -47,6 +47,17 @@ Malformed, missing or changed evidence raises an error. The new check is a
 pre-training command and shared API, **not a claim that every historical runner
 has been retrofitted**. Stopped runners remain stopped.
 
+## Concurrent-work integration
+
+While this work was in progress, PR #67 merged an arithmetic-only check over
+frozen audit counts. Its evidence is preserved. Rather than keep two formulas,
+`scripts/check_protocol_feasibility.py` and the fresh raster checker now share
+`gems.uniqueness_budget.bounds`, a standard-library-only exact-rational core.
+The old command remains usable without NumPy. The fresh command adds raster
+remeasurement, content/grid checks, multi-budget diagnostics and explicit stop
+exit status. Neither can authorize a slot. Invalid booleans, floats and
+non-rational thresholds now fail closed in the shared core.
+
 ## Scientific queue: ranked before implementation, not assigned
 
 The existing three unexecuted hypotheses are retained rather than relabelled

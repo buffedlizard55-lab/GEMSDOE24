@@ -7,12 +7,15 @@ or perturbs a candidate to evade the thresholds.
 from __future__ import annotations
 
 import hashlib
+from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
 import rasterio
 from scipy.spatial import cKDTree
 from scipy.stats import rankdata
+
+from gems.uniqueness_budget import bounds as exact_budget_bounds
 
 
 def correlation(a, b):
@@ -162,18 +165,20 @@ def dot_budget_feasibility(
         raise ValueError(
             "Integer footprint, uncovered count and distinct in-footprint budget required"
         )
-    minimum_covered = max(0, candidate_dot_count - uncovered_pixels)
-    impossible = 10 * minimum_covered > 7 * candidate_dot_count
+    exact = exact_budget_bounds(
+        footprint_pixels - uncovered_pixels, uncovered_pixels, candidate_dot_count, Fraction(7, 10)
+    )
+    impossible = exact["necessarily_fails_literal_gate"]
     return {
         "candidate_dot_count": candidate_dot_count,
-        "minimum_overlapping_dots": minimum_covered,
-        "minimum_overlap_fraction": minimum_covered / candidate_dot_count,
-        "overlap_limit_fraction": 0.70,
+        "minimum_overlapping_dots": max(0, candidate_dot_count - uncovered_pixels),
+        "minimum_overlap_fraction": exact["minimum_possible_directed_overlap"],
+        "overlap_limit_fraction": exact["overlap_limit"],
         "strictly_exceeds_limit": impossible,
         "status": "STOP_IMPOSSIBLE_BUDGET" if impossible else "NOT_RULED_OUT_NOT_A_PASS",
-        "maximum_budget_not_ruled_out_by_this_bound": min(
-            footprint_pixels, (10 * uncovered_pixels) // 3
-        ),
+        "maximum_budget_not_ruled_out_by_this_bound": exact[
+            "maximum_dots_not_ruled_out_by_this_bound"
+        ],
         "submission_authorized": False,
     }
 
