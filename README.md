@@ -1,5 +1,12 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current continuation — 2026-10-28: no submission authorized
+
+**SUBMIT: NO. No new TIFF, holdout or submission slot.** Read the [current review](docs/repo-review-20261028-history-guard.md), [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md) and [standing instructions](AGENTS.md) at session start. The [nine-site executive table](docs/executive-summary.html#current-focus-files) contains research downloads only; its historical snapshots are not a current leaderboard or a uniqueness approval. The specified single-method paragraph is absent; the retained lattice also makes common dot budgets fail the literal overlap rule. No leaderboard estimate is established.
+
+Before running historical receipt checks, run `python scripts/check_git_history.py`. A shallow checkout fails with an actionable message; full history alone does not verify any pinned commit. This session completed the prior shallow-history guard, reran the pinned geometric preflight and passed the complete automated suite; see the review for limitations and next steps. **Maximize P(Win) · Own the Outcome.**
+
+
 ## Verified repository review — 2026-10-28 (branch `arena/9e77df06-gemsdoe24`)
 
 **NO NEW TIFF · NO EXPERIMENT · DO NOT SUBMIT.** Full test suite **552/552 passed** and ruff clean (with full git history; a shallow clone fails 6 tests). All 57 downloaded GeoTIFFs read back in [0, 1]. The "[0, 1]" portal error is **not explained**: the organizer example mirror also uses NaN outside the footprint. Read [the verified review](docs/repo-review-20261028-verified.md) first.
