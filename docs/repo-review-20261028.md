@@ -56,3 +56,14 @@ The repository contains an extensive evidence trail, submission writer/validator
   "verdict": "negative"
 }
 ```
+## Additional checkout-specific verification — fixed Arena branch, 2026-10-28
+
+A separate pass on `arena/23763912-gemsdoe24` reproduced the frozen count and confirmed the environment's narrower limits:
+
+- `docs/data/portfolio_freshness.json` is stamped `2026-10-27T19:18:47Z`; each of its nine focus rows says `changed_since_review: true`. Thus the pinned nine-file receipt is stale for current-head claims. It is only a GitHub freshness feed, not a leaderboard feed.
+- `evidence/current_focus_nine_file_audit_20261027.json` contains nine site rows and sets `submission_authorized: false`; each row's `ok_to_submit` is false. The lattice overlaps in the selected files range 99.0466–100%. These are per-file fail witnesses, not a full census or proof about untested candidates.
+- Runtime is Python 3.11.2. `pytest` and NumPy are not installed. The 6-test `unittest` protocol-feasibility module passed; importing the pytest-based uniqueness tests failed due to missing pytest. The raster-backed uniqueness script fails at import because NumPy is absent. Full tests/scientific code were not claimed as run.
+- `python -m compileall -q src scripts`, `git diff --check`, and `node --check docs/assets/app.js` passed. The standalone frozen-count checker passed explicit assertions that the 37,654-dot bound fails and never authorizes a submission.
+- Checked open overlapping PRs #70 (CGMK1) and #61 (B2 work). This pass did not duplicate either experiment or alter their branches. The review-only PR for this branch later conflicted after main advanced with a separate review; that overlap was resolved by retaining main's review and adding only the checkout-specific verification above.
+
+This supplemental pass generated no candidate, TIFF, holdout, score estimate or slot. It does not update the freshness timestamp or audit newer source-head artifacts.
