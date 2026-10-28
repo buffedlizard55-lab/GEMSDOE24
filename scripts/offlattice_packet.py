@@ -132,7 +132,7 @@ def render(root: Path) -> dict[str, str]:
 <p><strong>DOWNLOAD: YES (research only) · SUBMIT: NO.</strong> This file is not cleared as a unique submission. The merged PR #85 artifact remains available for audit, but its run card does not establish protocol-compliant uniqueness or submission eligibility.</p>
 <p><a class=\"button primary\" href=\"downloads/{escaped_name}\" download=\"{escaped_name}\">Download exact PR #85 research GeoTIFF — DO NOT SUBMIT</a> · <a href=\"data/{card_link}\" download>Run-card JSON</a> · <a href=\"downloads/{checks_link}\" download>Local format-check JSON</a></p>
 <p class=\"fileline\">{escaped_name}</p><p class=\"hash\">SHA-256 {escaped_hash}</p>
-<div class=\"tablewrap\"><table><tbody>
+<div class=\"tablewrap\" tabindex=\"0\" role=\"region\" aria-label=\"PR #85 research TIFF evidence details\"><table><tbody>
 <tr><th>Run-card result</th><td><strong>HOLDOUT-DTI {dti_text}</strong>; reported 95% CI {ci_text}; <code>gems-segment-pooled-v1</code>; {n_withheld:,} withheld positives; {buffer_m:,} m buffer. Internal result only, not replayed here or organizer-confirmed.</td></tr>
 <tr><th>Comparable score / leaderboard</th><td>The 3,000 m collar differs from the 1,500 m comparison cards; treat this estimate as a different protocol, not a directly comparable score. Leaderboard estimate: <strong>NOT ESTIMABLE</strong>.</td></tr>
 <tr><th>Uniqueness</th><td><strong>NOT ESTABLISHED.</strong> The reported 0.0000 dot overlap is against the retained spacing-5 lattice only; the generator deliberately selects cells more than 3 px from that lattice. The pre-placement surface and complete registry were not checked. Selecting lattice holes conflicts with the no-evasion rule; do not use this as a uniqueness pass.</td></tr>

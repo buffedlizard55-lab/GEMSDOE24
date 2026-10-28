@@ -92,6 +92,9 @@ def test_pr85_raster_is_prominent_but_never_mislabeled_as_unique(built):
         assert "NOT ESTABLISHED" in text and "no-evasion rule" in text
         assert "complete registry were not checked" in text
         assert "New unique submission" not in text
+        evidence_table = section.find("div", class_="tablewrap")
+        assert evidence_table is not None
+        assert evidence_table.get("tabindex") == "0" and evidence_table.get("role") == "region"
         download = section.find("a", href=lambda href: href and filename in href)
         assert download is not None and download.has_attr("download")
     status = (

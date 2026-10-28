@@ -1,7 +1,7 @@
 {
   "schema": "gems-integrity-review-card-v1",
   "session_id": "2dd70faf-gemsdoe24",
-  "generated_utc": "2026-10-28T19:00:21Z",
+  "generated_utc": "2026-10-28T19:28:55Z",
   "review_outcome": "negative; no protocol-compliant unique submission achieved",
   "assignment": {
     "single_method_paragraph_present": false,
@@ -83,7 +83,7 @@
   "review_passes": [
     "Protocol and provenance review: PR #85 is not a full-registry uniqueness pass; no new experiment because the assigned method paragraph is absent.",
     "Adversarial code and CI review: fixed the benchmark inventory regression for the explicit 3 km PR #85 buffer and added tests; reviewed PR #84 source evidence and implementation.",
-    "Site and decision review: regenerated status labels the TIFF research-only, displays exact identity and score scope, and archives the obsolete unique-submission page."
+    "Site and decision review: regenerated status labels the TIFF research-only, displays exact identity and score scope, and archives the obsolete unique-submission page; fixed the scrollable evidence table for keyboard access after the first CI browser review and verified desktop/mobile with no accessibility violations."
   ],
   "verdict": "negative",
   "experiments_run": 0,
