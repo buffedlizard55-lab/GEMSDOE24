@@ -36,7 +36,7 @@ def main():
         with rasterio.open(args.prediction) as s, rasterio.open(args.template) as t:
             if (s.shape, s.crs, s.transform, s.count) != (t.shape, t.crs, t.transform, 1):
                 raise SystemExit("Prediction must match the template grid and be single-band")
-            a = s.read(1)
+            a = s.read(1, masked=True)
     p = write_submission(a, args.template, args.output, outside=args.outside)
     checks = check_variants(p, args.template)
     print(json.dumps(checks, indent=2))

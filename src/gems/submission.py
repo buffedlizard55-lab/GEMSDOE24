@@ -78,11 +78,17 @@ def write_submission(
     with rasterio.open(template_path) as t:
         profile = t.profile.copy()
         footprint = np.isfinite(t.read(1))
+        template_mask = np.ma.getmaskarray(t.read(1, masked=True))
+    if np.any(template_mask & footprint):
+        raise ValueError("Template masks finite pixels inside its prediction footprint")
     if not footprint.any():
         raise ValueError("template contains no finite prediction footprint")
+    pred_mask = np.ma.getmaskarray(pred_2d)
     pred_2d = np.asarray(pred_2d)
     if pred_2d.shape != footprint.shape:
         raise ValueError(f"prediction shape {pred_2d.shape} != template {footprint.shape}")
+    if np.any(pred_mask & footprint):
+        raise ValueError("Predictions inside the footprint must not be masked")
     values = pred_2d[footprint]
     if not np.isfinite(values).all() or np.any((values < 0) | (values > 1)):
         raise ValueError(
@@ -131,6 +137,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         t_arr = t.read(1)
         t_prof = t.profile
         footprint = np.isfinite(t_arr)
+        template_mask = np.ma.getmaskarray(t.read(1, masked=True))
         t_crs, t_tr, t_shape = t.crs, t.transform, t.shape
     with rasterio.open(path) as s:
         arr = s.read(1)
@@ -172,6 +179,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         and tuple(t_tr)[:6] == EXPECTED["transform"]
         and int(footprint.sum()) == EXPECTED["footprint_pixels"]
         and footprint_sha256(footprint) == EXPECTED["footprint_sha256"]
+        and not np.any(template_mask & footprint)
     )
     add(
         "official_template_grid_and_footprint",
@@ -184,6 +192,15 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
     add("shape_matches_template", shape == t_shape, f"{shape} vs {t_shape}")
     add("geotransform_matches_template", tr == t_tr, f"{tuple(tr)[:6]}")
     if shape_ok:
+        masked_inside = np.ma.getmaskarray(masked)[footprint]
+        # Preserve immutable historical receipts for clean rasters, but fail closed
+        # with an explicit new hard check whenever the reader masks scored pixels.
+        if masked_inside.any():
+            add(
+                "footprint_unmasked",
+                False,
+                f"{int(masked_inside.sum())} masked pixels inside the prediction footprint",
+            )
         add(
             "footprint_all_finite",
             bool(fin_in.all()),

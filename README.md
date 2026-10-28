@@ -1,5 +1,12 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current session — 2026-10-28 (`arena/1f6ab8e3-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [three-pass review](docs/repo-review-20261028-arena-1f6ab8e3.md), [run card](evidence/session_1f6ab8e3_20261028_run_card.json), [mission prompt](docs/MISSION_PROMPT.md), and [AGENTS.md](AGENTS.md) before continuing. The [nine-site table](docs/historical-champions.html) is a pinned historical research snapshot, not a live leaderboard or submission recommendation.
+
+This session fixed a shared validator/writer defect that could silently accept or erase masked in-footprint values. The full suite passed: **583 tests**. This does not explain the portal range rejection or establish organizer acceptance. The method lane is missing, the full feature cache is absent, and the literal lattice rule blocks the standard dot budgets; no score forecast or new TIFF is supported. See the review for next steps and do not evade the registry gate.
+
+
 ## Current session review — 2026-10-28 (`arena/932e2262-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO SLOT · NO SCORE PROJECTION.** Read this [current repo review](docs/repo-review-20261028-arena-932e2262.md), its [run card](evidence/repo_review_20261028_arena_932e2262_run_card.json), the [mission prompt](docs/MISSION_PROMPT.md), the [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md), and [AGENTS.md](AGENTS.md) before each session. The complete historical owner prompt remains below in this README/`knowledge/`.
