@@ -408,6 +408,14 @@ def verify_recorded(root=ROOT, *, source_history=True):
         run_card_path=card_path,
         expected_template_sha256=report["inputs"]["data/bridge/sample_submission.tif"],
     )
+    # The archived receipt predates the stricter driver/mask checks. Require
+    # those checks to pass now, then compare the remaining historical fields
+    # exactly; do not rewrite the frozen receipt.
+    current_checks = fresh_preflight["format_validation"]["checks"]
+    for key in ("geotiff_driver", "footprint_unmasked"):
+        if current_checks.get(key, {}).get("pass") is not True:
+            raise ValueError(f"TNR1 strict format check failed: {key}")
+        del current_checks[key]
     # Paths vary between the execution machine, local clones and CI. All
     # scientific/format/hash/decision fields must still match exactly.
     pre["run_card"]["path"] = fresh_preflight["run_card"]["path"]

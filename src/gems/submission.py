@@ -125,7 +125,15 @@ def zip_single(tif_path: Path | str, zip_path: Path | str | None = None) -> Path
     return zip_path
 
 
-def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any]:
+def check_variants(
+    path: Path | str, template_path: Path | str, *, strict: bool = False
+) -> dict[str, Any]:
+    """Validate format; strict mode adds driver and in-footprint mask checks.
+
+    The default preserves frozen historical receipt comparisons. New file
+    preflight and the writer CLI must use strict=True; neither mode authorizes
+    a competition slot.
+    """
     path = Path(path)
     with rasterio.open(template_path) as t:
         t_arr = t.read(1)
@@ -178,12 +186,24 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         expected_template,
         "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
     )
+    if strict:
+        add("geotiff_driver", prof.get("driver") == "GTiff", f"driver={prof.get('driver')}")
     add("single_band", count == 1, f"count={count}")
     add("dtype_float32", dtypes == ("float32",), f"dtypes={dtypes}")
     add("crs_epsg_32611", crs is not None and crs.to_epsg() == 32611 and crs == t_crs, f"{crs}")
     add("shape_matches_template", shape == t_shape, f"{shape} vs {t_shape}")
     add("geotransform_matches_template", tr == t_tr, f"{tuple(tr)[:6]}")
     if shape_ok:
+        # A finite raw value can still be suppressed by nodata or an internal/
+        # external GDAL mask. Reject ambiguous predictions instead of assuming
+        # the portal uses a raw rather than a masked read.
+        if strict:
+            masked_inside = np.ma.getmaskarray(masked)[footprint]
+            add(
+                "footprint_unmasked",
+                not masked_inside.any(),
+                f"{int(masked_inside.sum())} masked pixels inside the footprint",
+            )
         add(
             "footprint_all_finite",
             bool(fin_in.all()),
@@ -201,7 +221,10 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
             hard=False,
         )
     else:
-        for name in ("footprint_all_finite", "footprint_range_0_1"):
+        names = ["footprint_all_finite", "footprint_range_0_1"]
+        if strict:
+            names.insert(0, "footprint_unmasked")
+        for name in names:
             add(name, False, "not evaluated: the raster does not have the template's shape")
         add(
             "outside_is_nan_official_text",

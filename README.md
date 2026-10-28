@@ -1,5 +1,15 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Latest continuation — 2026-10-28 (`arena/f7f69bc3-gemsdoe24`)
+
+**NO NEW TIFF · DO NOT SUBMIT.** The requested unique, high-scoring submission
+has not been validated. The shared preflight and writer now additionally reject
+masked in-footprint values and non-GeoTIFF drivers; this is not portal acceptance
+or scientific authorization. Read the [latest review and next steps](docs/session-review-f7f69bc3-20261028.md),
+the [nine-site historical research table](docs/historical-champions.html), and
+the standing instructions below. Previous score claims are owner-reported unless
+linked to an organizer receipt; no current leaderboard estimate is available.
+
 ## Current session review — 2026-10-28 (`arena/932e2262-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO SLOT · NO SCORE PROJECTION.** Read this [current repo review](docs/repo-review-20261028-arena-932e2262.md), its [run card](evidence/repo_review_20261028_arena_932e2262_run_card.json), the [mission prompt](docs/MISSION_PROMPT.md), the [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md), and [AGENTS.md](AGENTS.md) before each session. The complete historical owner prompt remains below in this README/`knowledge/`.

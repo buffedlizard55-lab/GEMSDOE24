@@ -38,7 +38,7 @@ def main():
                 raise SystemExit("Prediction must match the template grid and be single-band")
             a = s.read(1)
     p = write_submission(a, args.template, args.output, outside=args.outside)
-    checks = check_variants(p, args.template)
+    checks = check_variants(p, args.template, strict=True)
     print(json.dumps(checks, indent=2))
     if not checks["format_valid"]:
         raise SystemExit("Written file failed pinned-grid format validation")
