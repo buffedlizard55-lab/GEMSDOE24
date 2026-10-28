@@ -1,0 +1,30 @@
+{
+  "schema": "gems-session-run-card-v1",
+  "date_utc": "2026-10-28",
+  "hypothesis": null,
+  "mechanism": "No lane assigned; no geological experiment run. Validator review only.",
+  "named_non_fault_mimic": null,
+  "holdout_dti": null,
+  "holdout_ci95": null,
+  "evaluator_version": null,
+  "withheld_positives": null,
+  "correlation_overlap_vs_registry": {
+    "surface": null,
+    "final_dots": null,
+    "reason": "No candidate surface or dots; mathematical feasibility check is not a full novelty audit."
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "candidate": "NOT RUN: no competition candidate",
+    "synthetic_mask_test": "FAIL: one finite, in-range footprint pixel was GDAL-masked but starting validator reported format_valid true",
+    "no_nan_inside_footprint": null,
+    "range_0_1": null,
+    "crs_shape_transform_match": null
+  },
+  "submission_name": null,
+  "note": "No candidate; do not submit.",
+  "verdict": "negative",
+  "submission_authorized": false,
+  "experiments_run": 0,
+  "slots_used": 0
+}
