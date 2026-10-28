@@ -1,5 +1,18 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current session — 2026-10-28 (branch `arena/c88278d6-gemsdo24`) — READ FIRST
+
+**Task:** generate a UNIQUE submission TIF for the GEMS DOE competition; produce a nine-site executive summary (GEMSDOE24/25/27/28/30/31/32/33/36) with file-to-download, estimate score and uniqueness; make the download + submit decision obvious; validate on the spatially blocked holdout before any slot.
+
+**Result this session:** built and validated one catalogue-blind unique GeoTIFF:
+`docs/downloads/24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif`
+(SHA-256 `e6460446…dd55`, 37,722 dots, all values finite in [0,1], zeros outside footprint).
+- **OK to download: YES** — format, whole-array [0,1] and local novelty (max 0.5747 ≤ 0.70) PASS.
+- **OK to submit: NO** — HOLDOUT-DTI 0.06882 (CI [0.05811, 0.08000]) is below the current comparable holdout best 0.13000; full 46-raster registry novelty could not be re-run (GitHub raw-asset network blocked); no selector/quota certificate. Zero slots spent.
+**Full detail:** `docs/executive-summary-unique.html` · `docs/data/blind_upwell_run_card.json` · `evidence/blind_upwell_experiment.json` · `scripts/build_blind_upwell_submission.py`.
+
+**Read before continuing:** `docs/executive-summary-unique.html` (nine-site table + how-to-submit), `AGENTS.md` (standing rules: no DrivenData automation, no slot unless beating holdout best + gates + selector), and the branch reviews below. Do not fabricate organizer-confirmed scores or submit a renamed historical reference.
+
 ## Arena branch continuation — 2026-10-28 (`arena/c81bb5d5-gemsdoe24`)
 
 **NO NEW TIFF · NO GEOLOGICAL EXPERIMENT · NO SCORE PROJECTION · DO NOT SUBMIT.** Read this [branch-specific review](docs/session-review-c81bb5d5-20261028.md) and [run card](evidence/session_c81bb5d5_run_card_20261028.json), then the current [freshness/protocol review](docs/repo-review-20261028-freshness.md), [historical-champion table](docs/historical-champions.html), and [standing instructions](AGENTS.md). This branch integrated newer `main` work during review; the final integrated suite passed **567 tests**. The assigned method paragraph and full training-feature stack are absent, and no current leaderboard estimate or submit-authorized artifact exists.

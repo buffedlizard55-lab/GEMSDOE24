@@ -9,19 +9,20 @@
 
   <div class="status stop" role="status" aria-live="polite">
     <strong>DOWNLOAD: YES · SUBMIT: NO. NOT OK TO SUBMIT.</strong><br>
-    Automated verdict: <strong>NEGATIVE</strong>. HOLDOUT-DTI 0.02235 (95% CI [0.0180, 0.0272]) is below the current comparable holdout best (0.13000), and the final-dot novelty gate failed (99.7% of dots within 3 px of a registry raster, limit 70%). Zero competition slots spent. No human-inspector fallback, no retuning.
+    Automated verdict: <strong>NEGATIVE</strong>. HOLDOUT-DTI 0.06882 (95% CI [0.05811, 0.08000], gems-segment-pooled-v1, 60,988 withheld positives) is below the current comparable holdout best (0.13000), so no weekly submission slot should be spent on it. Local novelty vs sibling TIFFs PASSES (max 0.5747 of dots within 3 px, limit 0.70). Format and whole-array [0,1] checks PASS — zeros outside the footprint fixes the "Predicted values must be in range [0, 1]" portal error. Zero competition slots spent. No human-inspector fallback, no retuning.
   </div>
 
   <div class="actions">
-    <a class="button primary" href="downloads/24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.tif" download>↓ Download 24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.tif</a>
-    <a class="button" href="downloads/checks-24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.json" download>Validator JSON</a>
-    <a class="button" href="downloads/note-24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.txt" download>Note .txt</a>
-    <a class="button" href="downloads/preflight-24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.json" download>Preflight JSON</a>
-    <a class="button" href="data/unique_run_card.json" download>Full run card JSON</a>
+    <a class="button primary" href="downloads/24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif" download>↓ Download 24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif</a>
+    <a class="button" href="downloads/24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.zip" download>↓ Download .zip (single GeoTIFF)</a>
+    <a class="button" href="downloads/checks-24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.json" download>Validator JSON</a>
+    <a class="button" href="downloads/note-24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.txt" download>Note .txt</a>
+    <a class="button" href="downloads/preflight-24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.json" download>Preflight JSON</a>
+    <a class="button" href="data/blind_upwell_run_card.json" download>Full run card JSON</a>
   </div>
 
-  <p class="fileline">24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.tif</p>
-  <p class="hash">SHA-256: 20a619dd806be92a27961cc48df7ca63486c1120d852907fe7418b7708333aad</p>
+  <p class="fileline">24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif</p>
+  <p class="hash">SHA-256: e64604460ad2d4b1afcacab81aba8c501844c9333a1f92f7931d4a02d3b0dd55</p>
 
   <div class="grid2">
     <article class="card">
@@ -33,25 +34,25 @@
         <li><strong>Transform:</strong> [100, 0, 243350, 0, −100, 4508550]</li>
         <li><strong>Values:</strong> All finite, all in [0,1] — no NaN/Inf inside the footprint</li>
         <li><strong>Outside footprint:</strong> Zeros (fixes “Predicted values must be in range [0, 1]”)</li>
-        <li><strong>Positive dots:</strong> 8,830 (0.17% of footprint)</li>
-        <li><strong>Unique:</strong> Yes — new content ID dd2fff044fc1, not a copy of any prior submission</li>
+        <li><strong>Positive dots:</strong> 37,722 (0.73% of footprint)</li>
+        <li><strong>Unique:</strong> Yes — new content ID 5b6e6af2ed3b, not a copy of any prior submission; local max dot-overlap 0.5747 ≤ 0.70 limit</li>
       </ul>
     </article>
     <article class="card">
       <h3>Short note for the submission form (≤140 chars)</h3>
-      <div class="note" id="note-unique">24GEMS geothermal-surface-proximity vents+springs | catalogue-independent | research; HOLDOUT-DTI 0.02235 | id dd2fff044fc1</div>
-      <div class="actions" style="margin-top:8px"><button class="button" data-copy="#note-unique" data-feedback="#fb-unique">Copy note</button><a class="button" href="downloads/note-24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.txt" download>Note .txt</a></div>
+      <div class="note" id="note-unique">24GEMS blind-upwell U/Thxdemagxscarp | catalogue-blind | research; HOLDOUT-DTI 0.06882 | id 5b6e6af2ed3b</div>
+      <div class="actions" style="margin-top:8px"><button class="button" data-copy="#note-unique" data-feedback="#fb-unique">Copy note</button><a class="button" href="downloads/note-24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.txt" download>Note .txt</a></div>
       <p id="fb-unique" class="copyfeedback"></p>
-      <p class="micro">123 characters · within the 140-character project limit</p>
+      <p class="micro">104 characters · within the 140-character project limit</p>
     </article>
   </div>
 
   <div class="callout warn">
     <h3>Why this file is NOT cleared to submit</h3>
     <ul>
-      <li><strong>Holdout DTI too low:</strong> 0.02235 vs current comparable best 0.13000 (OOF multi-physics HGB). A submission slot should only be spent on a candidate that beats the current best on the spatially blocked holdout.</li>
-      <li><strong>Novelty gate failed:</strong> 99.68% of emitted dots fall within 3 px of a registry raster (limit 70%). Geothermal springs and vents co-locate with mapped faults at the surface, so dots placed near them overlap existing catalogue-derived rasters.</li>
-      <li><strong>No independent selector certificate:</strong> The separate scientific selector / weekly-quota verification is not implemented.</li>
+      <li><strong>Holdout DTI too low:</strong> 0.06882 vs current comparable holdout best 0.13000 (OOF multi-physics HGB). A submission slot should only be spent on a candidate that beats the current best on the spatially blocked holdout.</li>
+      <li><strong>Full registry novelty not re-verified:</strong> GitHub raw asset network is blocked from this sandbox, so the pinned 46-raster registry comparison could not be re-run; only local sibling-TIFF dot-overlap was checked (0.5747 PASS). A fresh selector/registry run is required before any slot.</li>
+      <li><strong>No independent selector certificate:</strong> The separate scientific selector / weekly-quota verification is not implemented. No organizer-confirmed score exists.</li>
     </ul>
   </div>
 </section>
@@ -59,13 +60,13 @@
 <!-- ============================================================ NINE-SITE EXECUTIVE SUMMARY ============================================================ -->
 <section id="nine-site">
   <div class="pagehead"><div class="eyebrow">Nine-site executive summary</div><h1>GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36 — best submission per site</h1></div>
-  <p class="micro">All score values below are <strong>OWNER-REPORTED / UNVERIFIED</strong> (not ORGANIZER-CONFIRMED; no artifact-linked submission-page receipt exists). Conflicting leader claims (0.3195 snapshot vs 0.4413 prompt text) remain unresolved. HOLDOUT-DTI values are local spatially-blocked holdout measurements, not leaderboard scores.</p>
+  <p class="micro">All score values below are <strong>OWNER-REPORTED / UNVERIFIED</strong> (not ORGANIZER-CONFIRMED; no artifact-linked submission-page receipt exists). Conflicting leader claims (0.3195 snapshot vs 0.4413 prompt text) remain unresolved. HOLDOUT-DTI values are local spatially-blocked holdout measurements, not leaderboard scores. Every historical champion below FAILS the literal uniqueness gate (≥99% of dots within 3 px of the registered lattice, limit 70%) — none is a unique new submission.</p>
 
   <div class="tablewrap">
     <table>
       <thead>
         <tr>
-          <th>Rank</th><th>Site</th><th>Best historical submission (owner-reported)</th><th>Reported score</th><th>Local holdout (HOLDOUT-DTI)</th><th>Clear verdict</th>
+          <th>Rank</th><th>Site</th><th>Best historical submission (owner-reported)</th><th>File to download</th><th>Reported score</th><th>Local holdout (HOLDOUT-DTI)</th><th>Unique?</th><th>Clear verdict</th>
         </tr>
       </thead>
       <tbody>
@@ -73,82 +74,100 @@
           <td>1</td>
           <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html" target="_blank" rel="noopener">GEMSDOE32</a></td>
           <td><code>h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros</code></td>
+          <td><a href="https://github.com/buffedlizard55-lab/GEMSDOE32/raw/012e17b2a115c3c0d5e7885bea625bf9657c99fc/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif" target="_blank" rel="noopener">GEMSDOE32 H33-B2 (.tif)</a></td>
           <td><strong>0.2778</strong></td>
           <td>No valid local holdout (no unique artifact in repo)</td>
-          <td><strong>DO NOT SUBMIT</strong> — H33-B2 is the earlier H27-4 emission with dots ≤2 px from the public catalogue deleted (emission-efficiency change, not a new detector). Zero dots added. No proof the hidden-score gain came from FP reduction. Reported 0.2778 is unverified.</td>
+          <td><strong>NO</strong> — emission-thinned copy of H27-4, zero new dots</td>
+          <td><strong>DO NOT SUBMIT</strong> — highest owner-reported score here (0.2778) but unverified, not a new detector, fails uniqueness</td>
         </tr>
         <tr>
           <td>2</td>
-          <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE28/" target="_blank" rel="noopener">GEMSDOE28</a></td>
-          <td><code>h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan</code></td>
-          <td><strong>0.2710</strong></td>
-          <td>−0.0879 (FAIL)</td>
-          <td><strong>DO NOT SUBMIT</strong> — failed the GEMSDOE28 holdout gate; already scored 0.0217 live.</td>
+          <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE36/docs/" target="_blank" rel="noopener">GEMSDOE36</a></td>
+          <td><code>anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros</code></td>
+          <td><a href="https://github.com/buffedlizard55-lab/GEMSDOE36/raw/c9ad59ec6f969ed931d089a03044c1567a633e84/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" target="_blank" rel="noopener">GEMSDOE36 Anderson-PINN (.tif)</a></td>
+          <td><strong>0.2750</strong></td>
+          <td>No valid unique candidate (legacy copied/leaky code retired)</td>
+          <td><strong>NO</strong> — physics-model name is not proof of vent discovery; fails uniqueness</td>
+          <td><strong>DO NOT SUBMIT</strong> — unverified, fails uniqueness</td>
         </tr>
         <tr>
           <td>3</td>
-          <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE31/docs/" target="_blank" rel="noopener">GEMSDOE31</a></td>
-          <td><code>h27-4-solo-d28-20261004-8acb75e1-nan</code></td>
-          <td><strong>0.2708</strong></td>
-          <td>0.1247 (PASS)</td>
-          <td><strong>UNSCORED SIBLING CANDIDATE</strong> — holdout passes but the artifact (47.9% apron share) is not yet in this repo's downloads; would need regeneration with a new content ID.</td>
+          <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE28/" target="_blank" rel="noopener">GEMSDOE28</a></td>
+          <td><code>h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan</code></td>
+          <td><a href="https://github.com/buffedlizard55-lab/GEMSDOE28/raw/78e724f95337a6528b1248be5c113c6d6d502891/docs/downloads/gemsdoe28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif" target="_blank" rel="noopener">GEMSDOE28 H36-1 (.tif)</a></td>
+          <td><strong>0.2710</strong></td>
+          <td>−0.0879 (FAIL)</td>
+          <td><strong>NO</strong> — fails uniqueness (≥99% lattice overlap)</td>
+          <td><strong>DO NOT SUBMIT</strong> — failed the GEMSDOE28 holdout gate; already scored 0.0217 live</td>
         </tr>
         <tr>
           <td>4</td>
-          <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE36/docs/" target="_blank" rel="noopener">GEMSDOE36</a></td>
-          <td><code>anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros</code></td>
-          <td><strong>0.2750</strong></td>
-<td>No valid unique candidate (legacy copied/leaky code retired)</td>
-          <td><strong>DO NOT SUBMIT</strong> — no non-copied, unique candidate exists on GEMSDOE36 in this repository.</td>
+          <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE31/docs/" target="_blank" rel="noopener">GEMSDOE31</a></td>
+          <td><code>h27-4-solo-d28-20261004-8acb75e1-nan</code></td>
+          <td><a href="https://github.com/buffedlizard55-lab/GEMSDOE31/raw/cf13282fcd86290f1539f0a86446c8ba7205a79b/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif" target="_blank" rel="noopener">GEMSDOE31 H27-4 (.tif)</a></td>
+          <td><strong>0.2708</strong></td>
+          <td>0.1247 (PASS)</td>
+          <td><strong>NO</strong> — same reported value as GEMSDOE28 H27-4; fails uniqueness</td>
+          <td><strong>UNSCORED SIBLING CANDIDATE</strong> — holdout passes but not regenerated with a new content ID in this repo</td>
         </tr>
         <tr>
           <td>5</td>
           <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE33/" target="_blank" rel="noopener">GEMSDOE33</a></td>
           <td><code>h33d-analog-tip-stepover-r30-20261004-cb490425926e</code></td>
+          <td><a href="https://github.com/buffedlizard55-lab/GEMSDOE33/raw/f52533110fe62cd03e77f1228e9e5ecac412c463/docs/downloads/gemsdoe33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif" target="_blank" rel="noopener">GEMSDOE33 H33D (.tif)</a></td>
           <td><strong>0.2632</strong></td>
           <td>FAIL (NEGATIVE)</td>
-          <td><strong>DO NOT SUBMIT</strong> — failed the GEMSDOE33 holdout gate.</td>
+          <td><strong>NO</strong> — fails uniqueness</td>
+          <td><strong>DO NOT SUBMIT</strong> — failed the GEMSDOE33 holdout gate</td>
         </tr>
         <tr>
           <td>6</td>
           <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE25/" target="_blank" rel="noopener">GEMSDOE25</a></td>
           <td><code>dotted-h19-5-d2-8-20261002-e56ea318af89-nan</code></td>
+          <td><a href="https://github.com/buffedlizard55-lab/GEMSDOE25/raw/04333cc3fbf7486c56e0324fd07aee684be614dc/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif" target="_blank" rel="noopener">GEMSDOE25 dotted-H19 (.tif)</a></td>
           <td><strong>0.2600</strong></td>
-          <td>0.0742 live; holdout −0.00224 (FAIL)</td>
-          <td><strong>DO NOT RESUBMIT</strong> — already scored 0.0742 live; apron collapsed from 69.6%.</td>
+          <td>holdout −0.00224 (FAIL)</td>
+          <td><strong>NO</strong> — wider dot spacing on H19; not independent; fails uniqueness</td>
+          <td><strong>DO NOT RESUBMIT</strong> — already scored 0.0742 live; holdout fails</td>
         </tr>
         <tr>
           <td>7</td>
           <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE30/" target="_blank" rel="noopener">GEMSDOE30</a></td>
           <td><code>d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca</code></td>
+          <td><a href="https://github.com/buffedlizard55-lab/GEMSDOE30/raw/3d5bec2af5f29291617f97c9e2dfe443be6f55c3/docs/downloads/gems30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif" target="_blank" rel="noopener">GEMSDOE30 D28-Poisson (.tif)</a></td>
           <td><strong>0.2600</strong></td>
           <td>0.1462 live (18.2% at d_cat ≤ 200 m)</td>
-          <td><strong>DO NOT RESUBMIT</strong> — already scored 0.1462 live; flank/apron drag reduces credit.</td>
+          <td><strong>NO</strong> — off-catalogue Poisson emission; fails uniqueness</td>
+          <td><strong>DO NOT RESUBMIT</strong> — already scored 0.1462 live; flank/apron drag reduces credit</td>
         </tr>
         <tr>
           <td>8</td>
           <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE24/" target="_blank" rel="noopener">GEMSDOE24</a></td>
           <td><code>h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan</code></td>
+          <td><a href="https://github.com/buffedlizard55-lab/GEMSDOE24/raw/07345ea0604953d7efb858d9cfbc21e20c7aca0b/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif" target="_blank" rel="noopener">GEMSDOE24 H25-1 (.tif)</a></td>
           <td><strong>0.2477</strong></td>
           <td>HOLDOUT-DTI 0.16379 (H24-DPRF1, 4/4 folds)</td>
-          <td><strong>RECORDED LOCAL POINT-BEST</strong> — H24-DPRF1 is the repository's highest local holdout but remains DO_NOT_SUBMIT under the literal lattice/quota selector hold.</td>
+          <td><strong>NO</strong> — dotted-H19 ancestry; fails uniqueness</td>
+          <td><strong>RECORDED LOCAL POINT-BEST</strong> — H24-DPRF1 is this repo's highest local holdout but DO_NOT_SUBMIT under lattice/quota hold</td>
         </tr>
         <tr>
           <td>9</td>
           <td><a href="https://buffedlizard55-lab.github.io/GEMSDOE27/" target="_blank" rel="noopener">GEMSDOE27</a></td>
           <td><code>topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan</code></td>
+          <td><a href="https://github.com/buffedlizard55-lab/GEMSDOE27/raw/b8dd298e10884afffa05436673ac73aeaf850b8c/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif" target="_blank" rel="noopener">GEMSDOE27 topo-gap (.tif)</a></td>
           <td><strong>0.2449</strong></td>
           <td>0.2190 live (stitched-OOF + CELF)</td>
-          <td><strong>BEST ALREADY-SCORED UNIQUE METHOD (2026-10-25)</strong> — do not resubmit a duplicate.</td>
+          <td><strong>NO</strong> — topographic gap-closure variant; fails uniqueness</td>
+          <td><strong>BEST ALREADY-SCORED UNIQUE METHOD (2026-10-25)</strong> — do not resubmit a duplicate</td>
         </tr>
       </tbody>
     </table>
   </div>
 
   <div class="callout info">
-    <h3>How to read this table</h3>
-    <p><strong>Estimated score column</strong> = the owner-reported live competition score (UNVERIFIED, no organizer receipt). <strong>Local holdout column</strong> = HOLDOUT-DTI from the spatially blocked SegmentHoldout evaluator (alpha 0.2, beta 0.8, 300 m triangular kernel, pooled components, 95% CI). A high reported score with a failing local holdout (e.g. GEMSDOE28 at −0.0879) indicates the reported value may not generalize. A high local holdout with no reported score (e.g. GEMSDOE31 at 0.1247 PASS) is an unscored sibling candidate.</p>
-    <p><strong>Clear executive verdict:</strong> For GEMSDOE32 — the site with the highest reported score (0.2778) — the best course is <strong>DO NOT SUBMIT</strong> H33-B2 because it is an emission-thinned copy of H27-4, not a new detector, and its reported score is unverified. The repository's own best local holdout is H24-DPRF1 at 0.16379, which also remains DO_NOT_SUBMIT pending selector/quota authorization.</p>
+    <h3>How to read this table &amp; executive verdict</h3>
+    <p><strong>Reported score column</strong> = the owner-reported live competition score (UNVERIFIED, no organizer receipt). <strong>Local holdout column</strong> = HOLDOUT-DTI from the spatially blocked SegmentHoldout evaluator (alpha 0.2, beta 0.8, 300 m triangular kernel, pooled components, 95% CI). <strong>Unique?</strong> = whether the submission is unlike any other GEMSDOE site listed; measured as ≤70% of dots within 3 px of a registry raster and |rank correlation| ≤ 0.90.</p>
+    <p><strong>Clear executive verdict:</strong> For GEMSDOE32 — the site with the highest reported score (0.2778) — the best course is <strong>DO NOT SUBMIT</strong> H33-B2 because it is an emission-thinned copy of H27-4 (zero dots added), not a new detector, and its reported score is unverified. No file among the nine focus sites is unique, so none can be submitted as a new entry. The repository's own newly generated unique TIF (this page's download) is catalogued-blind, passes local novelty, but scores HOLDOUT-DTI 0.06882 — below the current comparable best 0.13000 — so it is <strong>OK to download, NOT OK to submit</strong> until a candidate beats the holdout best and clears the selector.</p>
   </div>
 </section>
 
@@ -160,7 +179,7 @@
     <li><h3>1 · Download only a selector-released PASS file</h3><p>Compare its filename and SHA-256 to its hash-bound run-card receipt. Never upload a renamed historical reference, a preview image, or the feature stack. The file on this page is explicitly <strong>NOT OK TO SUBMIT</strong>.</p></li>
     <li><h3>2 · Open the official competition page</h3><p>Sign in at <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener noreferrer">DrivenData GEMS</a>, then Submit → Make new submission. The project never automates DrivenData access (its Terms of Use forbid robots).</p></li>
     <li><h3>3 · File to submit</h3><p>Choose a single-band GeoTIFF (.tif), or a .zip containing exactly one GeoTIFF. It must match the submission format's CRS (EPSG:32611), shape (3730 × 3292), and geotransform ([100, 0, 243350, 0, −100, 4508550]). All footprint values must be finite and in [0,1].</p></li>
-    <li><h3>4 · Note (optional)</h3><p>Paste the packet's short comment — at most 140 characters in this project. Example from this file: <code>24GEMS geothermal-surface-proximity vents+springs | catalogue-independent | research; HOLDOUT-DTI 0.02235 | id dd2fff044fc1</code> (123 chars).</p></li>
+    <li><h3>4 · Note (optional)</h3><p>Paste the packet's short comment — at most 140 characters in this project. Example from this file: <code>24GEMS blind-upwell U/Thxdemagxscarp | catalogue-blind | research; HOLDOUT-DTI 0.06882 | id 5b6e6af2ed3b</code> (104 chars).</p></li>
     <li><h3>5 · Check quota and submit</h3><p>Historical rules mention three submissions per week; one final submission is chosen without seeing private scores. Confirm your remaining allowance on the DrivenData submission page before uploading. Save an artifact-linked submission-page receipt before calling any score ORGANIZER-CONFIRMED.</p></li>
     <li><h3>6 · If the portal says “Predicted values must be in range [0, 1]”</h3><p>Stop and do not rescale. (a) Confirm you chose the single-band file by SHA-256. (b) Try a zeros-outside encoding (all values finite and in [0,1], zeros outside the footprint) — this file uses that encoding. (c) Contact the organizers with the checks JSON. The cause of any portal rejection is not established locally.</p></li>
   </ol>
@@ -168,21 +187,21 @@
 
 <!-- ============================================================ HYPOTHESES ============================================================ -->
 <section id="hypotheses">
-  <div class="pagehead"><div class="eyebrow">Ranked hypotheses</div><h1>3–5 candidate geological hypotheses (not yet tried)</h1></div>
-  <p class="micro">Each names the layers, physical signature, missing-catalogue rationale, distinction from repo methods, expected DTI benefit, and cost. Ranked by expected DTI improvement × P(validatable) ÷ cost. The top two were validated on the spatially blocked holdout and both failed the novelty gate (negative results are deliverables).</p>
+  <div class="pagehead"><div class="eyebrow">Tested hypotheses</div><h1>Candidate geological hypotheses tested this session</h1></div>
+  <p class="micro">Each names the layers, physical signature, missing-catalogue rationale, distinction from repo methods, holdout result, and cost. All three were validated on the spatially blocked holdout before any slot was considered; all three are negative (do not spend a slot). Negative results are deliverables.</p>
   <div class="tablewrap">
     <table>
-      <thead><tr><th>Rank</th><th>Hypothesis</th><th>Layers</th><th>Physical signature / missing-fault rationale</th><th>Differs from repo</th><th>Expected ΔDTI · cost · status</th></tr></thead>
+      <thead><tr><th>Rank</th><th>Hypothesis</th><th>Layers</th><th>Physical signature / missing-fault rationale</th><th>Differs from repo</th><th>Holdout DTI · cost · status</th></tr></thead>
       <tbody>
-        <tr><td><strong>1</strong></td><td>Concealed basin-margin step</td><td>gravity horizontal gradient, depth-to-basement, LiDAR relief</td><td>Basement step + co-located gravity-gradient lineament under cover; no surface rupture → absent from catalogue</td><td>Not scarp-, catalogue-, or magnetics-based</td><td>Low-mod · Low · Tested: NEGATIVE (DTI 0.0594, novelty FAIL)</td></tr>
-        <tr><td><strong>2</strong></td><td>Geothermal surface-feature proximity</td><td>Volcanic vents + hot springs (GDR/INGENIOUS CSVs, temperature-weighted)</td><td>Springs/vents mark geothermal fluid at surface; fault conduit connects to depth; dots near features target concealed faults</td><td>No LiDAR/gravity/magnetics/DEM; orthogonal to all fault rasters</td><td>Low · Low · Tested: NEGATIVE (DTI 0.02235, novelty FAIL; canary PASS)</td></tr>
-        <tr><td><strong>3</strong></td><td>Strike-compatibility prior</td><td>LiDAR strike band, visible-fault strike field</td><td>Andersonian strike family filters random-orientation false positives</td><td>No reviewed method uses orientation priors on dots</td><td>0.00–0.01 · Low · Untried</td></tr>
-        <tr><td><strong>4</strong></td><td>Scarp cross-profile template</td><td>3DEP 1 m DEM tiles; matched cross-profile filter</td><td>Concave-up free face + colluvial apron catches subtle scarps below mapping threshold</td><td>Uses profile shape, not per-pixel relief maxima</td><td>0.01–0.03 · Medium · Untried (needs 3DEP tiles)</td></tr>
-        <tr><td><strong>5</strong></td><td>Map-scale correction corridor</td><td>INGENIOUS MAPSCALE per trace + LiDAR scarps</td><td>Catalogue positional uncertainty (~400 m off) as a prior, not a halo</td><td>Catalogue as uncertainty band, not exact trace</td><td>Unknown · Medium · Untried (needs GDR 1391 raster)</td></tr>
+        <tr><td><strong>1</strong></td><td>Blind upwelling conduit — U/Th depletion × demag × scarp (H-BLIND-UPWELL-01)</td><td>geodawn_rad U, Th; geodawn_extensions TMI_up150; lidar lapneg_max</td><td>Mobile-U leaching (low U/Th), demagnetisation halo and base-concave scarps mark concealed conduits absent from USGS/INGENIOUS; catalogue-blind score surface</td><td>No catalogue conditioning; unlike MTR1 (Th/K enrichment) and GVC1 (SGMC fault-anchored)</td><td>0.06882 [0.05811, 0.08000] · Low · NEGATIVE (novelty PASS, below best 0.13000)</td></tr>
+        <tr><td><strong>2</strong></td><td>Sharpened squared-channel blind upwelling (H-BLIND-UPWELL-02)</td><td>Same layers as #1, each channel squared</td><td>Same physical signature; sharper peaks (monotonic transform → identical dot ranking to #1)</td><td>Same as #1 (rank-equivalent)</td><td>0.06882 (identical to #1) · Low · NEGATIVE (rank-equivalent duplicate)</td></tr>
+        <tr><td><strong>3</strong></td><td>Potassic-alteration blind conduit (H-K-ANOM-03)</td><td>geodawn_rad K; TMI_up150; lidar lapneg_max</td><td>K-metasomatism along concealed conduits; high-K radiometric anomaly × scarp × demag</td><td>K anomaly instead of U/Th depletion; unlike MTR1</td><td>0.06425 [0.05363, 0.07459] · Low · NEGATIVE (novelty PASS, below best 0.13000)</td></tr>
+        <tr><td><strong>4</strong></td><td>Scarp cross-profile template (untried)</td><td>USGS 3DEP 1 m DEM tiles; matched cross-profile filter</td><td>Concave-up free face + colluvial apron catches subtle scarps below mapping threshold</td><td>Uses profile shape, not per-pixel relief maxima; no repo method uses 1 m DEM profile matching</td><td>0.01–0.03 · Medium · Untried (needs free USGS 3DEP tiles: https://www.usgs.gov/3d-elevation-program/data-tools)</td></tr>
+        <tr><td><strong>5</strong></td><td>U/Th leaching + total-count low (untried)</td><td>geodawn_rad U, Th, TC; lidar relief</td><td>Hydrothermal leaching depresses U and total count; blind to catalogue faults</td><td>Uses total-count depletion, not yet a primary surface in this repo</td><td>Unknown · Low · Untried (uses committed rasters only)</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="micro">Full hypothesis documentation: <a href="../knowledge/25_hypotheses_unique_geothermal_2026-10-26.md" target="_blank" rel="noopener">knowledge/25_hypotheses_unique_geothermal_2026-10-26.md</a>. Recommendation: pursue H-UNIQUE-B (scarp cross-profile template) — it changes detection geometry from amplitude to profile shape, potentially avoiding registry overlap. Requires free USGS 3DEP 1 m DEM tiles (<a href="https://www.usgs.gov/3d-elevation-program/data-tools" target="_blank" rel="noopener noreferrer">USGS 3DEP</a>).</p>
+  <p class="micro">Budget: 3 experiments run, 0 submission slots spent. Recommendation: pursue the untried scarp cross-profile template (rank 4) or U/Th + total-count (rank 5) only after a fresh preregistration and after each beats the current holdout best (0.13000) on the spatially blocked holdout. Full hypothesis documentation: <a href="../knowledge/25_hypotheses_unique_geothermal_2026-10-26.md" target="_blank" rel="noopener">knowledge/25_hypotheses_unique_geothermal_2026-10-26.md</a>.</p>
 </section>
 
 <!-- ============================================================ LIMITATIONS ============================================================ -->
@@ -190,6 +209,7 @@
   <div class="pagehead"><div class="eyebrow">Limitations &amp; access</div><h1>What this project can and cannot do</h1></div>
   <ul class="prose">
     <li><strong>No DrivenData access:</strong> Cannot download training_features.tif, labels.tif, sample_submission.tif, or 1m_DEM_links.csv (login required). Cannot auto-read the leaderboard, forum, or submission pages (Terms of Use forbid robots). All scores above are owner-reported snapshots, not organizer receipts.</li>
+    <li><strong>Registry novelty not fully re-verified:</strong> GitHub raw-asset network is blocked from this sandbox, so the pinned 46-raster registry comparison could not be re-downloaded. Local sibling-TIFF dot-overlap (0.5747 PASS) was used instead. A fresh selector/registry run is required before any slot.</li>
     <li><strong>No GPU:</strong> Training is CPU-only; the shared pipeline runs on CPU but GPU is needed for the reference-solution CNN training path.</li>
     <li><strong>No organizer authentication:</strong> Hash-pinned mirrors verify byte integrity, not organizer provenance. No ORGANIZER-CONFIRMED score exists for any generated file.</li>
     <li><strong>No human-inspection exception:</strong> All validation is automated (format, range, canary, novelty, holdout). Format PASS never authorizes a weekly slot.</li>
@@ -199,13 +219,12 @@
 
 <section class="micro" style="margin-top:24px;border-top:1px solid #e5e5e5;padding-top:12px">
   <p>Sources: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener noreferrer">DrivenData GEMS #306</a> · <a href="https://github.com/drivendataorg/gems-prize-reference-solution" target="_blank" rel="noopener noreferrer">Reference solution</a> · <a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and" target="_blank" rel="noopener noreferrer">USGS GeoDAWN (DOI 10.5066/P93LGLVQ)</a> · <a href="https://gdr.openei.org/submissions/1391" target="_blank" rel="noopener noreferrer">GDR INGENIOUS #1391</a> · <a href="https://epsg.io/32611" target="_blank" rel="noopener noreferrer">EPSG:32611</a> · <a href="https://en.wikipedia.org/wiki/Tversky_index" target="_blank" rel="noopener noreferrer">Tversky index</a></p>
-  <p class="micro">AI-assisted development disclosed per competition rules §3.2. Generated 2026-10-26 UTC. No scores fabricated.</p>
+  <p class="micro">AI-assisted development disclosed per competition rules §3.2. Generated 2026-10-28 UTC. No scores fabricated.</p>
 </section>
 
 </main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong> Local validation is not hidden-fault truth. Association is not causation. No file on this site has a leaderboard score unless it says so.</p><p>GitHub Pages: <a href="https://buffedlizard55-lab.github.io/GEMSDOE24/" target="_blank" rel="noopener noreferrer">buffedlizard55-lab.github.io/GEMSDOE24</a></p></footer><style>
-/* Inline critical styles so the page is self-contained */
 :root{--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--bg:#ffffff;--card:#f8fafc;--stop:#b91c1c;--go:#15803d;--warn:#b45309;--info:#1d4ed8}
-*{-box-sizing:border-box}html{font-size:16px}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);line-height:1.55;background:var(--bg)}
+*{box-sizing:border-box}html{font-size:16px}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);line-height:1.55;background:var(--bg)}
 header{background:#0f172a;color:#fff;padding:14px 0}header .nav{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:0 20px}header .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:700}header .mark{font-size:22px}header .small{font-size:0.75em;opacity:0.8}header nav{margin-left:auto}header a{color:#cbd5e1;margin-left:18px;text-decoration:none;font-size:0.95em}header a.active{color:#60a5fa;text-decoration:underline}
 main{max-width:1200px;margin:24px auto;padding:0 20px}
 .hero{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px;margin-bottom:24px}.hero .eyebrow{font-size:0.85em;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}.hero h1{margin:6px 0 10px;font-size:1.5em}.lead{color:var(--muted);margin:0 0 14px}
@@ -217,7 +236,7 @@ main{max-width:1200px;margin:24px auto;padding:0 20px}
 .card{border:1px solid var(--line);border-radius:10px;padding:18px;margin:14px 0;background:#fff}
 .note{background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:10px 14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.85em;color:#1e3a8a;margin:8px 0;word-break:break-all}
 .copyfeedback{color:var(--muted);font-size:0.85em;margin-top:4px}
-table{width:100%;border-collapse:collapse;font-size:0.9em;margin:12px 0}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:#f1f5f9;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:0.85em;margin:12px 0}th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}th{background:#f1f5f9;font-weight:600}
 code{background:#f1f5f9;padding:0 4px;border-radius:4px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.85em}
 .callout{border-radius:8px;padding:16px;margin:16px 0}.callout.warn{background:#fffbeb;border:1px solid #fde68a;color:#78350f}.callout.info{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a}
 .pagehead{margin:28px 0 10px;border-bottom:2px solid var(--line);padding-bottom:6px}.pagehead .eyebrow{font-size:0.8em;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}.pagehead h1{margin:4px 0 0;font-size:1.35em}
