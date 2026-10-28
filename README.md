@@ -6,6 +6,18 @@
 
 This session fixed a shared validator/writer defect that could silently accept or erase masked in-footprint values. The full suite passed: **592 tests** after integrating the concurrent strict-preflight fix. This does not explain the portal range rejection or establish organizer acceptance. The method lane is missing, the full feature cache is absent, and the literal lattice rule blocks the standard dot budgets; no score forecast or new TIFF is supported. See the review for next steps and do not evade the registry gate.
 
+## Current session review — 2026-10-28 (`arena/06c138ea-gemsdoe24`)
+
+**NO NEW TIFF · NO NEW EXPERIMENT · NO SLOT · NO SUBMISSION AUTHORIZATION.** Read this [current branch review](docs/repo-review-20261028-arena-06c138ea.md), its [run card](evidence/repo_review_20261028_arena_06c138ea_run_card.json), the [mission prompt](docs/MISSION_PROMPT.md), [standing instructions](AGENTS.md), and the [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md) before continuing. The complete historical prompt is preserved below in this README; avoid adding another duplicate.
+
+No assigned single-method paragraph is present, the full `data/training_features.tif` / prepared feature cache is absent, and the fixed standard dot budgets fail the literal 70% overlap condition against one retained lattice witness. The nine-site score claims remain **OWNER-REPORTED / UNVERIFIED**; a leaderboard estimate is **NOT ESTIMABLE**. No candidate was generated or validated, no weekly slot was used, and no listed artifact is authorized to submit. The integrated full suite passed **587 tests** after restoring Git history; this is a documentation-only negative result.
+
+## Integrated-main validator update — 2026-10-28
+
+The newly merged shared preflight/writer hardening (PR #96 on `main`) routes new-file preflight through strict validation, rejects a masked pixel inside the prediction footprint, checks the actual GeoTIFF driver, and addresses existing external sidecars. This fixes the documented local false-pass risk for the strict preflight path; it does not prove that an organizer accepts a file or replace the scientific/novelty gates. Historical receipt compatibility checks intentionally remain distinct; revalidate the exact artifact with strict preflight before any future selection. The `0.90`/`70%` novelty limits in the parallel protocol are project gates, not a claim about DrivenData's written competition rules. The reported portal `[0,1]` error remains owner-reported and its exact trigger is not established.
+
+The older dated session notes follow for audit history; the current branch review above supersedes their branch-specific status.
+
 ## Latest continuation — 2026-10-28 (`arena/f7f69bc3-gemsdoe24`)
 
 **NO NEW TIFF · DO NOT SUBMIT.** The requested unique, high-scoring submission
