@@ -1,0 +1,55 @@
+{
+  "schema": "session-run-card-v1",
+  "checked_utc": "2026-10-28T18:50:40Z",
+  "branch": "arena/932e2262-gemsdoe24",
+  "hypothesis": "No geological hypothesis tested in this review; the parallel-run method paragraph is unassigned. Ranked candidate concepts are proposals only, not scored or approved.",
+  "mechanism": "Read-only repository and pinned historical-artifact review; shared benchmark inventory now accepts an unambiguous pooled_dti alias. No raster prediction mechanism evaluated.",
+  "named_non_fault_process_that_could_mimic_it": "No new geological surface was generated. For the reviewed candidate concepts, named mimics include intrusive/lithologic contacts, remanent magnetization, survey seams, basin fill, groundwater withdrawal, seasonal loading, landslides, and weathering/vegetation effects.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN in this review; no candidate surface or experiment. Existing repository run-card records were inspected, not replayed."
+  },
+  "correlation_overlap_vs_registry": {
+    "preplacement_surface_rank_correlation": null,
+    "final_candidate_dot_overlap": null,
+    "status": "NOT RUN for a new candidate. Frozen geometry checks are necessary-condition bounds only.",
+    "frozen_lattice_lower_bound": {
+      "witness": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "witness_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "candidate_dot_budget_37654_minimum_overlap": 0.8234184947150369,
+      "candidate_dot_budget_44090_minimum_overlap": 0.8491948287593558,
+      "witness_3px_footprint_coverage": 0.9987132726822701,
+      "scope": "Pinned one-witness geometric bound; not a candidate measurement, not a full registry audit, not a score."
+    }
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "candidate_raster": "NOT GENERATED IN THIS REVIEW",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "scope": "No new candidate to validate. Historical files and the existing lattice-hole file are not newly validated here."
+  },
+  "submission_name": null,
+  "submission_note": "No candidate generated; submission not authorized.",
+  "verdict": "negative",
+  "experiments_run_this_review": 0,
+  "competition_slots_used": 0,
+  "organizer_confirmed_scores": [],
+  "leaderboard_estimate": null,
+  "submission_authorized": false,
+  "tests": {
+    "pytest": "570 passed",
+    "ruff_check": "passed",
+    "ruff_format_check": "passed (211 files)",
+    "compileall": "passed",
+    "javascript_syntax": "passed",
+    "git_diff_check": "passed",
+    "history_guard": "full history detected",
+    "uniqueness_feasibility": "Fresh checker reproduced 99.8713% witness coverage; diagnostic budgets 37654 and 44090 stop with exit 2"
+  }
+}

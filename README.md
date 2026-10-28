@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current session review — 2026-10-28 (`arena/932e2262-gemsdoe24`)
+
+**NO NEW TIFF · NO NEW EXPERIMENT · NO SCORE PROJECTION · DO NOT SUBMIT.** Start with this [current repo review](docs/repo-review-20261028-arena-932e2262.md), its [JSON run card](evidence/repo_review_20261028_arena_932e2262_run_card.json), the [active normalized owner brief](knowledge/owner_brief_2026-10-27_feasibility.md), and [standing instructions](AGENTS.md). The full historical owner prompt and requirements are retained in this README/`knowledge/`; read this start section and governing prompt each session. The reviewed nine-site champion files are research-only, their owner-reported scores are unverified, the leaderboard estimate is NOT ESTIMABLE, and the literal lattice overlap gate blocks promotion. A recently added lattice-hole TIFF is a negative protocol-irregular result (HOLDOUT-DTI recorded 0.003802, not replayed here), not an approved workaround. This review fixes the shared benchmark reader for unambiguous `pooled_dti` records. Final suite: **570 passed**. No organizer-confirmed score, slot or submission authorization.
+
 ## Arena branch continuation — 2026-10-28 (`arena/c81bb5d5-gemsdoe24`)
 
 **NO NEW TIFF · NO GEOLOGICAL EXPERIMENT · NO SCORE PROJECTION · DO NOT SUBMIT.** Read this [branch-specific review](docs/session-review-c81bb5d5-20261028.md) and [run card](evidence/session_c81bb5d5_run_card_20261028.json), then the current [freshness/protocol review](docs/repo-review-20261028-freshness.md), [historical-champion table](docs/historical-champions.html), and [standing instructions](AGENTS.md). This branch integrated newer `main` work during review; the final integrated suite passed **567 tests**. The assigned method paragraph and full training-feature stack are absent, and no current leaderboard estimate or submit-authorized artifact exists.

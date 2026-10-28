@@ -49,6 +49,24 @@ def test_new_records_are_discovered_without_changing_a_hardcoded_floor(tmp_path)
     assert recorded_point_best(tmp_path)["lane"] == "S3DEP1"
 
 
+def test_new_record_with_explicit_pooled_dti_alias_is_normalized(tmp_path):
+    evidence = _seed(tmp_path)
+    card = json.loads((ROOT / "evidence/tnr1_run_card_20261026.json").read_text())
+    card["holdout"]["pooled_dti"] = card["holdout"].pop("dti")
+    (evidence / "future_pooled_run_card.json").write_text(json.dumps(card))
+    row = next(row for row in recorded_points(tmp_path) if row["lane"] == "FUTURE_POOLED")
+    assert row["holdout"]["dti"] == 0.13219180093505795
+
+
+def test_conflicting_dti_aliases_fail_closed(tmp_path):
+    evidence = _seed(tmp_path)
+    card = json.loads((ROOT / "evidence/tnr1_run_card_20261026.json").read_text())
+    card["holdout"]["pooled_dti"] = 0.9
+    (evidence / "future_conflicting_run_card.json").write_text(json.dumps(card))
+    with pytest.raises(ValueError, match="Conflicting benchmark"):
+        recorded_points(tmp_path)
+
+
 def test_bad_known_benchmark_cannot_silently_lower_the_current_best(tmp_path):
     evidence = _seed(tmp_path)
     card = json.loads((ROOT / "evidence/gvc1_run_card_20261025.json").read_text())
