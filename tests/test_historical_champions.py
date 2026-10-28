@@ -69,3 +69,14 @@ def test_published_readback_has_all_sites_no_estimate_and_no_authorization():
     assert "SUBMIT NO" in html and "NOT ESTIMABLE" in html
     assert "../evidence/" not in html
     assert html.count('<th scope="row">GEMSDOE') == 9
+
+
+def test_render_displays_actual_validator_results_not_unconditional_pass():
+    report = json.loads((ROOT / "docs/data/historical_champions_20261028.json").read_text())
+    html = review.render(report)
+    assert html.count("Local checks: PASS; exterior-NaN check: FAIL / UNKNOWN") == 9
+    report["rows"][0]["validator_output"]["format_valid"] = False
+    report["rows"][0]["validator_output"]["checks"]["outside_is_nan_official_text"]["pass"] = True
+    html = review.render(report)
+    assert "Local checks: FAIL / UNKNOWN; exterior-NaN check: PASS" in html
+    assert "<td>Format PASS;" not in html
