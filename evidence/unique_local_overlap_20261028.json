@@ -1,0 +1,104 @@
+{
+  "candidate": "docs/downloads/24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-zeros.tif",
+  "candidate_dots": 3165,
+  "candidate_sha256": "379bf97792355bb48acec703939537a62bb8492705997e043c235bd9029c44db",
+  "encoding_aliases_same_dots": [
+    "docs/downloads/24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-nan.tif"
+  ],
+  "generated_utc": "2026-10-28T18:50:05.435850+00:00",
+  "max_forward_overlap": 0.4685624012638231,
+  "max_forward_reference": "inputs/calibration/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+  "passes_local_rule": true,
+  "references_compared": 69,
+  "rule": "fail if candidate-within-3px-of-reference > 0.7 (directed, inclusive radius)",
+  "schema": "unique-local-overlap-v1",
+  "scope": "Local same-grid GeoTIFFs in this checkout only (docs/downloads, inputs, evidence). NOT the full 167-alias registry and NOT other GEMSDOE repositories.",
+  "submission_authorized": false,
+  "top_references": [
+    {
+      "candidate_within_3px_of_reference": 0.4685624012638231,
+      "file": "inputs/calibration/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+      "reference_dots": 69281,
+      "reference_within_3px_of_candidate": 0.008212929951934874,
+      "sha256": "7637b72d4c6c3e10226bf46bd72a20272d62ccbe29743062632d10b158b49c58"
+    },
+    {
+      "candidate_within_3px_of_reference": 0.4410742496050553,
+      "file": "inputs/calibration/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+      "reference_dots": 174232,
+      "reference_within_3px_of_candidate": 0.008442765967216126,
+      "sha256": "1381e784fb8b8340beffd0e735ac9eea89ad35d1a807f8a9bab5506e3fc8275e"
+    },
+    {
+      "candidate_within_3px_of_reference": 0.3118483412322275,
+      "file": "docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-nan.tif",
+      "reference_dots": 37654,
+      "reference_within_3px_of_candidate": 0.009613852445955277,
+      "sha256": "bb7896cb6419c7a380491e8b106b8c100c6322a3fabba42dbb9d7afceed46190"
+    },
+    {
+      "candidate_within_3px_of_reference": 0.3118483412322275,
+      "file": "docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif",
+      "reference_dots": 37654,
+      "reference_within_3px_of_candidate": 0.009613852445955277,
+      "sha256": "a9db98b61dbd1db1a2b904f47a24f830af08006ef66b316b31ce36c3b8d302fc"
+    },
+    {
+      "candidate_within_3px_of_reference": 0.30995260663507107,
+      "file": "inputs/calibration/8GEMSDOE_Hedge-v2_submission.tif",
+      "reference_dots": 227507,
+      "reference_within_3px_of_candidate": 0.004478983064257364,
+      "sha256": "052688eafbc7a55d90caab72252a50304fe5caa8ecf973f8e791b4ae910f0792"
+    },
+    {
+      "candidate_within_3px_of_reference": 0.292259083728278,
+      "file": "docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif",
+      "reference_dots": 37722,
+      "reference_within_3px_of_candidate": 0.009543502465404804,
+      "sha256": "2641944cf4fa7ae7960243f738e89a8fe020c09b22275c00f033155e0197ef4a"
+    },
+    {
+      "candidate_within_3px_of_reference": 0.292259083728278,
+      "file": "docs/downloads/gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif",
+      "reference_dots": 37722,
+      "reference_within_3px_of_candidate": 0.009543502465404804,
+      "sha256": "06d28182d9fea06d1d4ac3fc603bada748306e68350ebe432e3ff9f82fd3703e"
+    },
+    {
+      "candidate_within_3px_of_reference": 0.2859399684044234,
+      "file": "docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.tif",
+      "reference_dots": 37654,
+      "reference_within_3px_of_candidate": 0.008657778722048122,
+      "sha256": "b537611d648d0f4fd40115f1d4b8eb97fe0febccc4686b80e7db21ee9c287a96"
+    },
+    {
+      "candidate_within_3px_of_reference": 0.2859399684044234,
+      "file": "docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif",
+      "reference_dots": 37654,
+      "reference_within_3px_of_candidate": 0.008657778722048122,
+      "sha256": "b5ca6f1755af059e17f5edf0940fd7e945d43a1359e103a4789eae33c536ad41"
+    },
+    {
+      "candidate_within_3px_of_reference": 0.2830963665086888,
+      "file": "docs/downloads/gems24-tmcg-b-decoupled-basin-20261027T113937Z-6f8d042d5ee4-zeros.tif",
+      "reference_dots": 37722,
+      "reference_within_3px_of_candidate": 0.009331424632840252,
+      "sha256": "9df52a41c34d4f508b57128c1bc6c2dd716c6149d22dd8717137baa463ed0336"
+    },
+    {
+      "candidate_within_3px_of_reference": 0.2821484992101106,
+      "file": "docs/downloads/gems24-myhgb-regime-hydro-hgb-20261026-3e38453a8fb9-nan.tif",
+      "reference_dots": 38239,
+      "reference_within_3px_of_candidate": 0.009022202463453543,
+      "sha256": "175d67eb1ef2dadd5f84d89223a8904d8c6dac71f4c970671ea116903e97928a"
+    },
+    {
+      "candidate_within_3px_of_reference": 0.2821484992101106,
+      "file": "docs/downloads/gems24-myhgb-regime-hydro-hgb-20261026-3e38453a8fb9-zeros.tif",
+      "reference_dots": 38239,
+      "reference_within_3px_of_candidate": 0.009022202463453543,
+      "sha256": "718eefa37ab40399697967df926c38927d01ebfd01cf0efdd8640c3903955064"
+    }
+  ],
+  "unreadable_skipped": []
+}
