@@ -1,5 +1,10 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Latest review — 2026-10-28 (`arena/2727fc4d-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF.** Read the [current review](docs/repo-review-20261028-arena-2727fc4d.md) and [nine-site historical table](docs/historical-champions.html). This continuation corrected an ambiguous local format PASS; the recorded exterior-NaN check fails for the all-finite historical files. No new model, TIFF, holdout, portal receipt, or competition upload was produced. The required method-lane paragraph is missing and the literal lattice novelty gate blocks standard budgets. Historical files are research only; **SUBMIT NO**.
+
+
 ## Current session review — 2026-10-28 (`arena/932e2262-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO SLOT · NO SCORE PROJECTION.** Read this [current repo review](docs/repo-review-20261028-arena-932e2262.md), its [run card](evidence/repo_review_20261028_arena_932e2262_run_card.json), the [mission prompt](docs/MISSION_PROMPT.md), the [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md), and [AGENTS.md](AGENTS.md) before each session. The complete historical owner prompt remains below in this README/`knowledge/`.
