@@ -1,5 +1,15 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## CURRENT MISSION (this session — read first)
+
+**Goal:** generate a **unique TIF submission** for the DrivenData GEMS competition and publish an executive summary that makes the best submission obvious and one-click downloadable. Full prompt: [`docs/MISSION_PROMPT.md`](docs/MISSION_PROMPT.md).
+
+**Key requirements:** unique (non-copied) TIF · values in [0, 1] (zeros outside footprint to pass the portal range gate) · unique name + note <= 140 chars · executive summary table over GEMSDOE 24/25/27/28/30/31/32/33/36 (file to download · estimated score · unique flag) · how-to-submit subpage · validation with no human intervention (no NaN inside footprint, CRS/shape/transform match EPSG:32611 3730x3292 @100 m) · PR merged to main · no hallucinations.
+
+**Result this session:** new unique submission `docs/downloads/24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif` (SHA-256 `603d21db…9626`), 37,722 dots, HOLDOUT-DTI 0.1223 [0.1111, 0.1337], unique vs all competing prior submissions, format-valid (strict [0,1] PASS). **ok_to_download: YES · ok_to_submit: NO** (literal lattice gate reported; no slot spent; awaits lane + selector + organizer receipt). See `docs/executive-summary.html#unique-submission` and `docs/data/ventrad_run_card.json`.
+
+---
+
 ## Continuation — 2026-10-28 (branch `arena/2812634d-gemsdoe24`): unique GeoTIFF download, SUBMIT NO
 
 **One automated, unique GeoTIFF is downloadable for research. It is NOT approved to submit.** Estimate: **NOT ESTIMABLE**.
@@ -22,6 +32,7 @@
 - The owner-reported 0.2778 (GEMSDOE32 H33-B2) and leader snapshots 0.3195 / 0.4413 are **not reproducible** here; no organizer receipt exists.
 
 **Next blockers:** a coordinator-assigned method paragraph; a prospective resolution of the literal retained-lattice rule (any budget above ≈22,163 dots is impossible under it, see `scripts/check_uniqueness_feasibility.py`); `data/training_features.tif` is absent from this checkout (verified) and no DEM file was found; a verified weekly-slot allowance from the live submission page.
+
 
 
 ## Arena branch continuation — 2026-10-28 (`arena/c81bb5d5-gemsdoe24`)
