@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Fail clearly before provenance verification if the Git checkout is shallow.
+"""Fail early if historical preregistration checks cannot trust a shallow checkout.
 
-Full history is necessary, not sufficient, for verifying historical source commits.
-This check does not fetch anything or verify a particular experiment.
+Full history is necessary, not sufficient: individual verification scripts must
+still check that their exact pinned commits exist and satisfy ancestry rules.
 """
 
 from __future__ import annotations
@@ -14,33 +14,34 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def check_history(root: Path) -> None:
+def check_history(root: Path) -> tuple[bool, str]:
     try:
-        output = subprocess.check_output(
+        result = subprocess.run(
             ["git", "rev-parse", "--is-shallow-repository"],
             cwd=root,
+            capture_output=True,
             text=True,
-            stderr=subprocess.PIPE,
-            timeout=30,
-        ).strip()
-    except (OSError, subprocess.SubprocessError) as exc:
-        raise ValueError(
-            "Cannot determine Git history state; provenance remains unverified"
-        ) from exc
-    if output == "true":
-        raise ValueError("Shallow checkout: fetch full Git history before provenance checks")
-    if output != "false":
-        raise ValueError("Unexpected Git history state; provenance remains unverified")
+            check=False,
+        )
+    except OSError as exc:
+        return False, f"Cannot check git history: {exc}"
+    if result.returncode != 0:
+        return False, f"Cannot check git history: {result.stderr.strip() or 'git failed'}"
+    state = result.stdout.strip()
+    if state == "true":
+        return False, (
+            "Shallow checkout: historical preregistration verification requires full history. "
+            "Run 'git fetch --unshallow origin' or use checkout fetch-depth: 0."
+        )
+    if state != "false":
+        return False, f"Cannot determine git history depth: unexpected git output {state!r}"
+    return True, "Full history detected; pinned commits and ancestry still require verification."
 
 
 def main() -> int:
-    try:
-        check_history(ROOT)
-    except ValueError as exc:
-        print(str(exc), file=sys.stderr)
-        return 1
-    print("Git history is not shallow; individual provenance checks are still required")
-    return 0
+    ok, message = check_history(ROOT)
+    print(message, file=sys.stdout if ok else sys.stderr)
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

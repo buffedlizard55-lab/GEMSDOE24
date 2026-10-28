@@ -28,8 +28,10 @@ estimate is not supported.
   human-read leaderboard snapshot fresh. The 12-hour interval is a project UI
   policy based on the six-hour schedule, not an organizer guarantee. Static
   table source statuses are explicitly dated and remain snapshots.
-- Added `python scripts/check_git_history.py` to CI before historical provenance
-  checks. Shallow or unavailable Git history fails with a specific diagnostic;
+- Concurrent PR #80 independently merged the same preflight into main. During
+  integration we retained its shared `python scripts/check_git_history.py` and
+  single CI step instead of keeping a private duplicate. Shallow or unavailable
+  Git history fails with a specific diagnostic;
   a non-shallow repository is necessary but does not prove any individual commit
   or scientific result. A fresh clone can be repaired with
   `git fetch --unshallow origin` when GitHub access is permitted.
@@ -81,10 +83,12 @@ No credentials or unauthenticated portal automation were used.
 1. Reviewed the standing instructions, recent continuation, scientific gates,
    shared evaluator/writer and source feed; refreshed GitHub refs and independently
    checked the lattice/template necessary bound.
-2. Added stale/unknown feed warnings and shallow-history preflight. Regression
+2. Added stale/unknown feed warnings; reconciled the concurrently merged shared
+   shallow-history preflight. Regression
    tests cover actual shallow and non-repository checkouts, exact age boundary,
    invalid/future timestamps, source failure, and old leaderboard vs new source time.
 3. Rebuilt the site from recorded evidence and checked the original request:
    research downloads remain visibly **DO NOT SUBMIT**, no output is passed off
    as an organizer score or a new model, and the outstanding scientific goal
-   remains explicit. Test outcomes are recorded in the session run card.
+   remains explicit. The complete post-integration suite passed 560 tests; Ruff,
+   Node syntax and diff checks passed. [Session run card](../evidence/2026-10-28_freshness_continuation_run_card.json).

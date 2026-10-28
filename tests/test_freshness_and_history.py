@@ -6,8 +6,6 @@ import importlib.util
 import subprocess
 from pathlib import Path
 
-import pytest
-
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
     "check_git_history", ROOT / "scripts/check_git_history.py"
@@ -31,16 +29,16 @@ def test_history_detects_real_shallow_checkout(tmp_path):
     subprocess.run(
         ["git", "clone", "-q", "--depth", "1", origin.as_uri(), str(shallow)], check=True
     )
-    history.check_history(origin)
-    with pytest.raises(ValueError, match="Shallow checkout"):
-        history.check_history(shallow)
+    assert history.check_history(origin)[0] is True
+    ok, message = history.check_history(shallow)
+    assert ok is False and "Shallow checkout" in message
     subprocess.run(["git", "-C", str(shallow), "fetch", "-q", "--unshallow"], check=True)
-    history.check_history(shallow)
+    assert history.check_history(shallow)[0] is True
 
 
 def test_history_refuses_non_repository(tmp_path):
-    with pytest.raises(ValueError, match="provenance remains unverified"):
-        history.check_history(tmp_path)
+    ok, message = history.check_history(tmp_path)
+    assert ok is False and "Cannot check git history" in message
 
 
 def test_browser_freshness_uses_source_timestamp_not_fetch_time():
