@@ -22,6 +22,21 @@ function sourceDate(value) {
   return Number.isNaN(date.getTime()) ? 'time unavailable' : date.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
 }
 
+// A successful fetch of a static JSON file does not mean its underlying checks are fresh.
+// The Pages job is scheduled every six hours; two missed intervals triggers a warning.
+function sourceFreshness(value, now = Date.now()) {
+  if (typeof value !== 'string') return 'unknown';
+  const match = /^(\d{4})-(\d{2})-(\d{2})T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.exec(value);
+  if (!match) return 'unknown';
+  const [, year, month, day] = match.map(Number);
+  if (year < 1900) return 'unknown';
+  const calendar = new Date(Date.UTC(year, month - 1, day));
+  if (calendar.getUTCFullYear() !== year || calendar.getUTCMonth() !== month - 1 || calendar.getUTCDate() !== day) return 'unknown';
+  const timestamp = Date.parse(value);
+  if (!Number.isFinite(timestamp) || timestamp > now + 300000) return 'unknown';
+  return now - timestamp > 12 * 60 * 60 * 1000 ? 'old' : 'recent';
+}
+
 async function refreshSourceFeed() {
   const path = document.querySelector('meta[name="source-feed"]')?.content;
   if (!path) return;
@@ -37,10 +52,17 @@ async function refreshSourceFeed() {
     for (const node of document.querySelectorAll('[data-source-time]')) {
       node.textContent = sourceDate(data.last_success_utc || data.checked_utc);
     }
+    // For a leaderboard snapshot, the separate automatic source check cannot refresh
+    // the human-read leaderboard timestamp. A date-only timestamp is unknown.
+    const freshness = sourceFreshness(data.scope?.startsWith('GitHub') ? data.checked_utc : data.last_success_utc);
+    const freshnessWarning = freshness === 'old'
+      ? ' Source check is over 12 hours old; current state unknown.'
+      : freshness === 'unknown' ? ' Source check time is unavailable or invalid; current state unknown.' : '';
     for (const node of document.querySelectorAll('[data-source-state]')) {
-      node.textContent = data.scope?.startsWith('GitHub')
-        ? (data.status === 'stale' ? 'Some GitHub checks failed — pinned experiment unchanged' : 'GitHub source freshness only — no score verification or automatic promotion')
-        : (data.status === 'failed' || data.status === 'stale' ? 'Fetch failed — showing last verified snapshot' : 'Latest verified snapshot, not a live scoring API');
+      const state = data.scope?.startsWith('GitHub')
+        ? (data.status === 'checked' ? 'GitHub source freshness only — no score verification or automatic promotion' : 'Some GitHub checks failed or are unknown — pinned experiment unchanged')
+        : (data.status === 'failed' || data.status === 'stale' ? 'Fetch failed — showing last verified snapshot' : 'Recorded snapshot, not a live scoring API');
+      node.textContent = state + freshnessWarning;
     }
     const feed = document.querySelector('#source-feed-list');
     if (feed && Array.isArray(data.updates)) {

@@ -1,0 +1,48 @@
+{
+  "schema": "gems-continuation-run-card-v1",
+  "branch": "arena/bab77a13-gemsdoe24",
+  "hypothesis": "No geological hypothesis tested: the requested single method lane is not specified.",
+  "mechanism": "GitHub source-freshness and provenance-preflight reliability review; remeasurement of the existing lattice necessary bound.",
+  "named_non_fault_process_that_could_mimic_it": "Space-filling calibration lattice creates high overlap regardless of geological similarity; intrusive contacts can mimic prospective magnetic-gravity gradients.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN; no geological experiment"
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "candidate_dot_overlap": null,
+    "status": "NOT RUN; no candidate surface or dots",
+    "lattice_necessary_minimum_overlap_for_37654_distinct_in_footprint_dots": 0.8234184947150369,
+    "interpretation": "Remeasured necessary geometric bound against one retained witness, not a candidate measurement or complete registry audit."
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "status": "NOT RUN on a new raster: no candidate generated",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "submission_authorized": false
+  },
+  "submission_name": null,
+  "submission_note": "No new TIFF; no submission authorized.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "organizer_confirmed_score": null,
+  "leaderboard_estimate": null,
+  "verification": {
+    "pass_1": "Read standing instructions, current scientific review, shared tooling and prior next steps; refreshed GitHub source refs and remeasured the lattice bound.",
+    "pass_2": "Added static-feed age warnings and real shallow-clone tests; integrated the concurrently merged shared history guard, corrected calendar-date validation and kept leaderboard and GitHub timestamps separate.",
+    "pass_3": "After integrating concurrent main changes, full pytest passed 567 tests; 15 related tests were rerun after formatting the newly integrated historical audit. Ruff, Node syntax and diff checks passed. No model replay or portal access is claimed."
+  },
+  "limitations": [
+    "No method lane assigned and no policy resolution for the retained space-filling comparator.",
+    "Training raster and prepared feature stack absent in this checkout; mirror provenance is not organizer authentication.",
+    "All nine checked GitHub main refs differ from the frozen nine-file audit; new artifacts were not re-audited.",
+    "No current competition receipt, leaderboard, quota, portal rejection trace or organizer acceptance obtained."
+  ]
+}

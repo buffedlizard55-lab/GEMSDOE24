@@ -8,6 +8,23 @@ The shared TIFF validator/writer and novelty comparator now reject masked/NoData
 
 [Three-pass review and four ranked prospective hypotheses](docs/session-review-c1d3a8b8-20261028.md) · [Executive guide and nine-site table](docs/executive-summary.html) · [Negative session run card](evidence/session_c1d3a8b8_run_card_20261028.json) · [S2D peer-file audit](evidence/peer_s2d36_audit_20261028.json). **Maximize P(Win) · Own the Outcome.**
 
+## Current continuation — 2026-10-28 (branch `arena/bab77a13-gemsdoe24`)
+
+**NO NEW TIFF · NO EXPERIMENT · SUBMIT: NO.** Read the [current review](docs/repo-review-20261028-freshness.md), [normalized owner requirements](knowledge/owner_brief_2026-10-27_feasibility.md), and [standing instructions](AGENTS.md) before continuing. The historical owner prompt remains below. The [nine-site table](docs/executive-summary.html#current-focus-files) contains research-only downloads; no leaderboard estimate is supported. Both the missing assigned method lane and literal registry lattice rule remain binding. A refreshed GitHub commit feed does not audit new artifacts or scores. Check `python scripts/check_git_history.py` before provenance checks; full history alone is not verification.
+
+## Current continuation — 2026-10-28, session b87d739e
+
+**NO NEW TIFF · NO EXPERIMENT · SUBMIT NO.** Start with the [nine historical champions executive table](docs/historical-champions.html) and [three-pass review / next steps](docs/session-review-b87d739e-20261028.md). All nine owner-named historical champion artifacts were freshly downloaded at immutable commits, hash-checked and read back with the shared validator. All pass local format checks; **all fail the literal lattice uniqueness rule**. GEMSDOE25 and GEMSDOE30 have identical in-footprint predictions. Exact research downloads, full validator results, unknown leaderboard estimates and explicit submission decisions are in the [machine-readable report](docs/data/historical_champions_20261028.json).
+
+**Read the owner prompt below and the [standing normalized requirements](knowledge/owner_brief_2026-10-27_feasibility.md) every session.** This request repeats the nine-site focus, unique TIFF requirement, holdout/novelty gates, three-pass review, scientific research, prominent download guide and PR/merge requirement. Maximize P(Win) and Own the Outcome mean not fabricating success: the method paragraph remains absent, standard budgets fail the retained-lattice gate, and no candidate is approved. Do not restart stopped lanes, invent a lane, claim an unverified score is organizer-confirmed, or use a weekly slot. The full historical prompt remains preserved below; this note is normalized, not a verbatim transcript. [Current negative run card](evidence/session_b87d739e_run_card.json).
+
+## Concurrent continuation — 2026-10-28: history guard
+
+**SUBMIT: NO. No new TIFF, holdout or submission slot.** Read the [current review](docs/repo-review-20261028-history-guard.md), [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md) and [standing instructions](AGENTS.md) at session start. The [nine-site executive table](docs/executive-summary.html#current-focus-files) contains research downloads only; its historical snapshots are not a current leaderboard or a uniqueness approval. The specified single-method paragraph is absent; the retained lattice also makes common dot budgets fail the literal overlap rule. No leaderboard estimate is established.
+
+Before running historical receipt checks, run `python scripts/check_git_history.py`. A shallow checkout fails with an actionable message; full history alone does not verify any pinned commit. This session completed the prior shallow-history guard, reran the pinned geometric preflight and passed the complete automated suite; see the review for limitations and next steps. **Maximize P(Win) · Own the Outcome.**
+
+
 ## Verified repository review — 2026-10-28 (branch `arena/9e77df06-gemsdoe24`)
 
 **NO NEW TIFF · NO EXPERIMENT · DO NOT SUBMIT.** Full test suite **552/552 passed** and ruff clean (with full git history; a shallow clone fails 6 tests). All 57 downloaded GeoTIFFs read back in [0, 1]. The "[0, 1]" portal error is **not explained**: the organizer example mirror also uses NaN outside the footprint. Read [the verified review](docs/repo-review-20261028-verified.md) first.
