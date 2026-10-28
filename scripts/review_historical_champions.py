@@ -145,7 +145,9 @@ def render(report):
         validator = r["validator_output"]
         local_status = "PASS" if validator.get("format_valid") is True else "FAIL / UNKNOWN"
         exterior_status = (
-            "PASS" if validator.get("checks", {}).get("outside_is_nan_official_text", {}).get("pass") is True
+            "PASS"
+            if validator.get("checks", {}).get("outside_is_nan_official_text", {}).get("pass")
+            is True
             else "FAIL / UNKNOWN"
         )
         rows.append(
