@@ -1,0 +1,43 @@
+{
+  "schema": "documentation-only-review-card-v1",
+  "review_date": "2026-10-28",
+  "branch": "arena/c81bb5d5-gemsdoe24",
+  "hypothesis": "No geological hypothesis tested: the active parallel-run protocol names a single assigned method paragraph, but none is present.",
+  "mechanism": "Read-only repository review, frozen nine-site evidence review, automated tests/lint/syntax checks, and one-witness necessary uniqueness feasibility calculation; no prediction mechanism evaluated.",
+  "named_non_fault_mimic": "Not applicable; no candidate surface or geological signal was generated.",
+  "holdout_dti": null,
+  "holdout_ci95": null,
+  "holdout_status": "NOT RUN; no candidate, withheld-positive count, or evaluator run.",
+  "correlation_or_overlap_vs_registry": {
+    "preplacement_surface_rank_correlation": null,
+    "final_dot_overlap": null,
+    "diagnostic_necessary_lower_bounds_only": {
+      "registry_witness": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "candidate_dot_budget_37654": 0.8234184947150369,
+      "candidate_dot_budget_44090": 0.8491948287593558,
+      "scope": "One pinned lattice witness; universal geometric bound, not candidate measurement or full registry audit"
+    }
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "candidate_raster": null,
+    "no_nan_inside_footprint": null,
+    "values_in_range_0_1": null,
+    "crs_shape_transform_match": null,
+    "explanation": "No candidate raster was produced; these candidate validation checks were not run. Pinned reference/template checks were performed by check_uniqueness_feasibility.py."
+  },
+  "submission_name": null,
+  "submission_note": "No candidate generated; no submission authorized.",
+  "verdict": "negative",
+  "tests": {
+    "pytest": "564 passed after main integration and format normalization",
+    "ruff_check": "passed",
+    "ruff_format_check": "passed; 318 files already formatted",
+    "compileall": "passed",
+    "javascript_syntax": "passed",
+    "git_diff_check": "passed"
+  },
+  "submission_authorized": false,
+  "competition_slots_used": 0,
+  "leaderboard_estimate": null
+}

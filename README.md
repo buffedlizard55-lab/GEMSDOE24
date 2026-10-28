@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Arena branch continuation — 2026-10-28 (`arena/c81bb5d5-gemsdoe24`)
+
+**NO NEW TIFF · NO GEOLOGICAL EXPERIMENT · NO SCORE PROJECTION · DO NOT SUBMIT.** Read this [branch-specific review](docs/session-review-c81bb5d5-20261028.md) and [run card](evidence/session_c81bb5d5_run_card_20261028.json), then the current [freshness/protocol review](docs/repo-review-20261028-freshness.md), [historical-champion table](docs/historical-champions.html), and [standing instructions](AGENTS.md). This branch integrated newer `main` work during review; the final integrated suite passed **567 tests**. The assigned method paragraph and full training-feature stack are absent, and no current leaderboard estimate or submit-authorized artifact exists.
+
 ## Current continuation — 2026-10-28 (branch `arena/bab77a13-gemsdoe24`)
 
 **NO NEW TIFF · NO EXPERIMENT · SUBMIT: NO.** Read the [current review](docs/repo-review-20261028-freshness.md), [normalized owner requirements](knowledge/owner_brief_2026-10-27_feasibility.md), and [standing instructions](AGENTS.md) before continuing. The historical owner prompt remains below. The [nine-site table](docs/executive-summary.html#current-focus-files) contains research-only downloads; no leaderboard estimate is supported. Both the missing assigned method lane and literal registry lattice rule remain binding. A refreshed GitHub commit feed does not audit new artifacts or scores. Check `python scripts/check_git_history.py` before provenance checks; full history alone is not verification.

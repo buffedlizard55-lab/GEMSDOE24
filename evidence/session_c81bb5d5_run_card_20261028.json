@@ -1,0 +1,52 @@
+{
+  "schema": "session-run-card-v1",
+  "checked_utc": "2026-10-28",
+  "branch": "arena/c81bb5d5-gemsdoe24",
+  "hypothesis": "No geological hypothesis tested; the required single assigned method paragraph is absent and common diagnostic budgets fail the retained-lattice necessary condition.",
+  "mechanism": "Read-only repository and historical-champion evidence review, full test/lint verification, and fixed-budget necessary-condition check; no prediction mechanism evaluated.",
+  "named_non_fault_process_that_could_mimic_it": "A space-filling calibration lattice creates high spatial overlap independent of geological similarity; intrusive contacts, remanent magnetization and survey seams can mimic the proposed geophysical signals.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN; no candidate surface or geological experiment."
+  },
+  "correlation_overlap_vs_registry": {
+    "preplacement_surface_rank_correlation": null,
+    "final_candidate_dot_overlap": null,
+    "status": "NOT RUN for a candidate",
+    "fixed_budget_necessary_lower_bound_vs_lattice_witness": {
+      "witness": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "K_37654": 0.8234184947150369,
+      "K_44090": 0.8491948287593558,
+      "interpretation": "Necessary pigeonhole bound against one pinned witness; not a candidate measurement or complete registry audit."
+    }
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "candidate_raster": "NOT GENERATED",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "scope": "No candidate to validate; pinned reference/template checks only."
+  },
+  "submission_name": null,
+  "submission_note": "No candidate generated; no submission authorized.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "new_tiffs": 0,
+  "competition_slots_used": 0,
+  "organizer_confirmed_score": null,
+  "leaderboard_estimate": null,
+  "tests": {
+    "pytest": "567 passed on final integrated run",
+    "ruff_check": "passed",
+    "ruff_format": "passed",
+    "node_syntax": "passed",
+    "history_guard": "passed",
+    "CI_browser_review": "passed"
+  },
+  "submission_authorized": false
+}
