@@ -58,6 +58,11 @@ def recorded_points(root: Path) -> list[dict]:
             if source in known:
                 raise ValueError("Known benchmark no longer has the declared evaluator/count")
             continue  # Other metric/split records are not comparable even by declaration.
+        if "dti" not in result and "pooled_dti" in result:
+            # Newer shared cards name the pooled DTI `pooled_dti` (same protocol and
+            # evaluator). Normalise the alias once so the card is not silently
+            # dropped or treated as malformed (this broke every site build).
+            result = {**result, "dti": result["pooled_dti"]}
         dti = result.get("dti")
         ci = result.get("ci95")
         interval = ci.get("interval") if isinstance(ci, dict) else ci
