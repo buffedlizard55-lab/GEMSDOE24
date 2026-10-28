@@ -10,6 +10,31 @@
 
 ---
 
+## Continuation — 2026-10-28 (branch `arena/2812634d-gemsdoe24`): unique GeoTIFF download, SUBMIT NO
+
+**One automated, unique GeoTIFF is downloadable for research. It is NOT approved to submit.** Estimate: **NOT ESTIMABLE**.
+- Download: [`24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-zeros.tif`](docs/downloads/24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-zeros.tif), SHA-256 `379bf97792355bb48acec703939537a62bb8492705997e043c235bd9029c44db`. Note (107 chars): `24GEMS interior-offlattice geothermal dots | HOLDOUT-DTI 0.0038 | id e5a3c34b27db | research; DO NOT SUBMIT`.
+- Uniqueness, measured: directed 3-px overlap **0.4686** (limit 0.70) against **69 local same-grid rasters** ([receipt](evidence/unique_local_overlap_20261028.json)). This is **not** a scan of the full 167-alias registry or the other GEMSDOE repositories, and the retained-lattice rule remains binding.
+- Holdout (internal, `gems-segment-pooled-v1`, 60,988 withheld, 95% CI): **HOLDOUT-DTI 0.0038 [0.0021, 0.0057]**. This is far below every recorded local point-best, so the file does not compete for a leaderboard slot.
+- Format: single-band float32, EPSG:32611, 3730×3292, zeros outside, whole-array finite in [0,1]. The portal's "[0, 1]" rejection cause is **not established**; this encoding is a hedge.
+
+**Fixes this session (shared tools, fixed once):**
+1. `src/gems/benchmarks.py`: newer evidence cards name the pooled DTI `pooled_dti`; the loader treated it as malformed, which **broke every site build** (25 site-test errors). Alias normalised; recorded point-best unchanged (S3DEP1 0.16606).
+2. `scripts/build_site.py`: the featured unique-GeoTIFF section was hand-edited into `executive-summary.html` by commit 6adbdd8 and erased by the next rebuild. It is now generated from its run card, file hash, note file and overlap receipt, and **fails closed** on any mismatch.
+3. `scripts/audit_unique_local_overlap.py`: reproducible directed 3-px overlap scan with an explicit scope statement.
+
+**Verification:** full suite **572 passed** with full git history (`git fetch --unshallow` was required; a shallow clone fails history tests). `ruff` clean.
+
+**Irregularities for review (not resolved):**
+- `data/bridge/labels.tif` is **byte-identical** to `data/bridge/existing_faults.tif` (both SHA-256 `7ba308cc…4093`).
+- The official-format `sample_submission.tif` has exactly **60,988** in-footprint positives, identical to the public catalogue (`existing_faults` value 1). The local holdout therefore measures recovery of *public catalogue* faults, not the hidden competition labels.
+- Official hosts (`drivendata.org`, `docs.nlr.gov`, `gdr.openei.org`, `epsg.io`) and `raw.githubusercontent.com` were **unreachable from this sandbox**. Only the DrivenData reference README at its pinned commit was read (via GitHub page fetch); it states no [0,1] or NaN convention.
+- The owner-reported 0.2778 (GEMSDOE32 H33-B2) and leader snapshots 0.3195 / 0.4413 are **not reproducible** here; no organizer receipt exists.
+
+**Next blockers:** a coordinator-assigned method paragraph; a prospective resolution of the literal retained-lattice rule (any budget above ≈22,163 dots is impossible under it, see `scripts/check_uniqueness_feasibility.py`); `data/training_features.tif` is absent from this checkout (verified) and no DEM file was found; a verified weekly-slot allowance from the live submission page.
+
+
+
 ## Arena branch continuation — 2026-10-28 (`arena/c81bb5d5-gemsdoe24`)
 
 **NO NEW TIFF · NO GEOLOGICAL EXPERIMENT · NO SCORE PROJECTION · DO NOT SUBMIT.** Read this [branch-specific review](docs/session-review-c81bb5d5-20261028.md) and [run card](evidence/session_c81bb5d5_run_card_20261028.json), then the current [freshness/protocol review](docs/repo-review-20261028-freshness.md), [historical-champion table](docs/historical-champions.html), and [standing instructions](AGENTS.md). This branch integrated newer `main` work during review; the final integrated suite passed **567 tests**. The assigned method paragraph and full training-feature stack are absent, and no current leaderboard estimate or submit-authorized artifact exists.
