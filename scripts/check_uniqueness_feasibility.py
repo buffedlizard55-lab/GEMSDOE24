@@ -23,7 +23,11 @@ import rasterio
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from gems.novelty import classify_space_filling_control, dot_budget_feasibility  # noqa: E402
+from gems.novelty import (  # noqa: E402
+    classify_space_filling_control,
+    dot_budget_feasibility,
+    interior_lattice_coverage,
+)
 from gems.validator import sha256_file  # noqa: E402
 
 REGISTRY = "registry/priority_rasters_20261026_portfolio.json"
@@ -68,6 +72,7 @@ def audit(root: Path, budgets: list[int]) -> dict:
     if content_sha != row["footprint_sha256"]:
         raise ValueError("Witness footprint content hash mismatch")
     coverage = classify_space_filling_control(fp, fp & (values > 0), radius_px=3.0)
+    interior = interior_lattice_coverage(fp, fp & (values > 0), radius_px=3.0)
     results = [
         dot_budget_feasibility(int(fp.sum()), coverage["footprint_3px_uncovered_pixels"], k)
         for k in budgets
@@ -80,6 +85,7 @@ def audit(root: Path, budgets: list[int]) -> dict:
         "template": {"path": TEMPLATE, "sha256": template_sha},
         "witness": {"path": WITNESS, "sha256": row["sha256"], "footprint_sha256": content_sha},
         "coverage": coverage,
+        "interior_coverage": interior,
         "budgets": results,
         "impossible_budget_found": any(r["strictly_exceeds_limit"] for r in results),
         "preplacement_surface_test": "NOT RUN: no surface generated",
