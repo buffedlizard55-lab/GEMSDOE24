@@ -127,6 +127,12 @@ def preflight(
     artifact_sha256 = sha256_file(artifact)
     template_sha256 = sha256_file(template)
     checks = submission.check_variants(artifact, template)
+    # Bind the raster read, the run card and the pinned template to the same
+    # bytes, rather than reporting a potentially stale hash after a mutation.
+    if checks.get("sha256") != artifact_sha256 or sha256_file(artifact) != artifact_sha256:
+        raise ValueError("Artifact changed during preflight; no receipt can be issued")
+    if sha256_file(template) != template_sha256:
+        raise ValueError("Template changed during preflight; no receipt can be issued")
     strict_range = checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
     template_pinned = (
         expected_template_sha256 is not None and template_sha256 == expected_template_sha256

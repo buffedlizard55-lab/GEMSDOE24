@@ -10,7 +10,7 @@ from pathlib import Path
 
 from gems import selector
 from gems.receipts import research_receipt
-from gems.submission import check_variants
+from gems.submission import check_variants, recorded_validation_matches
 from gems.validator import sha256_file
 
 
@@ -68,7 +68,7 @@ def dprf1_packet(root):
             not fresh["format_valid"]
             or not row["format_valid"]
             or fresh.get("submission_authorized") is not False
-            or any(fresh.get(field) != value for field, value in row.items())
+            or not recorded_validation_matches(fresh, row)
         ):
             raise ValueError(f"DPRF1 download variant invalid or stale: {key}")
 
@@ -616,7 +616,7 @@ def gvc1_packet(root):
             not fresh["format_valid"]
             or not row["format_valid"]
             or fresh.get("submission_authorized") is not False
-            or any(fresh.get(field) != value for field, value in row.items())
+            or not recorded_validation_matches(fresh, row)
         ):
             raise ValueError(f"GVC1 download variant invalid or stale: {key}")
     zip_target = root / "docs/downloads" / checks["nan_zip_file"]
@@ -1477,7 +1477,7 @@ def trsg1_packet(root: Path) -> tuple[str, str, str]:
             not fresh["format_valid"]
             or not row["format_valid"]
             or fresh.get("submission_authorized") is not False
-            or any(fresh.get(field) != value for field, value in row.items())
+            or not recorded_validation_matches(fresh, row)
         ):
             raise ValueError(f"TRSG1 download variant invalid or stale: {key}")
 
@@ -1899,7 +1899,7 @@ def eul1_packet(root):
             not fresh["format_valid"]
             or not row["format_valid"]
             or fresh.get("submission_authorized") is not False
-            or any(fresh.get(field) != value for field, value in row.items())
+            or not recorded_validation_matches(fresh, row)
         ):
             raise ValueError(f"EUL1 download variant invalid or stale: {key}")
 
@@ -2020,7 +2020,7 @@ def dkrn1_packet(root):
             not fresh["format_valid"]
             or not row["format_valid"]
             or fresh.get("submission_authorized") is not False
-            or any(fresh.get(field) != value for field, value in row.items())
+            or not recorded_validation_matches(fresh, row)
         ):
             raise ValueError(f"DKRN1 download variant invalid or stale: {key}")
 
@@ -2198,7 +2198,7 @@ def xfront_packet(root):
             not fresh["format_valid"]
             or not row["format_valid"]
             or fresh.get("submission_authorized") is not False
-            or any(fresh.get(field) != value for field, value in row.items())
+            or not recorded_validation_matches(fresh, row)
         ):
             raise ValueError(f"XFRONT download variant invalid or stale: {key}")
     zip_target = root / "docs/downloads" / checks["zeros_zip_file"]
@@ -2255,18 +2255,19 @@ def xfront_packet(root):
         f"<strong>HOLDOUT-DTI {score['dti']:.5f}</strong> [{lo:.5f}, {hi:.5f}] on "
         f"<code>{e(score['evaluator_version'])}</code> ({score['n_withheld_positive_pixels']:,} withheld positives) — "
         f"far below the recorded point-best <strong>0.16379</strong>, so no slot may be spent on it. "
-        f"The orientation-null factor is actively harmful: arm B (corroboration alone) beats arm A by "
+        f"In this recorded comparison, arm B (corroboration alone) beats arm A by "
         f"<strong>{paired['paired_delta_dti']:+.5f}</strong> (95% CI [{paired['ci95'][0]:+.5f}, {paired['ci95'][1]:+.5f}]). "
-        f"Registry novelty PASSES (max |rho| {nov['final_dots']['method_lane_max_abs_rank_correlation']:.4f}, "
+        f"The historical method-only novelty subset reported PASS (max |rho| {nov['final_dots']['method_lane_max_abs_rank_correlation']:.4f}, "
         f"max 3-px dot overlap {nov['final_dots']['method_lane_max_dot_overlap']:.4f} over "
-        f"{nov['final_dots']['competing_method_rasters_count']} competing method rasters), leakage canaries PASS "
-        f"(worst extremity {canary['worst_polarity_extremity']:.4f}), strict [0,1] format PASS — but the exact-file "
+        f"{nov['final_dots']['competing_method_rasters_count']} competing method rasters); it does not establish all-entry novelty. "
+        f"The retained lattice makes this raster's {dl['pixel_count']:,} dots fail the literal gate. The historical value-canary screen reported PASS "
+        f"(worst extremity {canary['worst_polarity_extremity']:.4f}); a complete modern missingness canary was not verified here. Strict [0,1] format PASS — but the exact-file "
         f"C2ST nuisance audit FLAGS this raster (AUC {c2['observed_auc']:.4f}, Holm p {c2['holm_p_value']}), and the "
         "quota/replay gates remain fail-closed. <strong>Do not submit; do not retune.</strong></div>"
     )
-    hero_html = f"""<div class="hero"><div><div class="eyebrow">H24-XFRONT · cross-modal oriented-step corroboration · preregistered · negative</div><h2>Six layers, one strike.<br>The holdout said: not enough.</h2><p class="lead">A label-free detector that looks for the <strong>step a buried fault imposes on independent layers</strong> — RTP magnetics, isostatic gravity, AEM depth-to-basement, AEM conductivity, DEM and GNSS shear-strain rate — and scores each pixel by how many layers corroborate it and how far their across-strike orientations exceed a rotation null. It is a genuinely new geometry, it is unique against every raster in the registry, and it is <strong>not competitive</strong>.</p>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download>Download XFRONT research GeoTIFF (-zeros)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="executive-summary.html#xfront">Why NOT OK to submit →</a></div><p class="micro">{dl["pixel_count"]:,} binary dots (budget cap {dl["requested_budget"]:,}) · strict whole-array [0,1] PASS · SHA-256 <span class="hash">{e(digest)}</span> · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><p class="micro"><span class="badge blue">Format PASS</span> <span class="badge blue">Novelty PASS</span> <span class="badge danger">Holdout FAIL · C2ST FLAG</span> <span class="badge blue">No slot used</span></p></div><aside class="card visual" aria-label="H24-XFRONT holdout result and raster preview"><div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Not a leaderboard score</span></div><div class="result-number">{score["dti"]:.5f}</div><p>95% CI [{lo:.5f}, {hi:.5f}] · <code>{e(score["evaluator_version"])}</code> · {score["n_withheld_positive_pixels"]:,} withheld positives</p><img class="raster-preview" src="assets/xfront-preview.png" alt="Downsampled map of XFRONT experimental fault dots, not verified faults or geothermal vents"><p class="micro">Experiment preview · downsampled 100 m grid · not verified faults or vents</p></aside></div>"""
-    exec_html = f"""<section id="xfront"><h2>H24-XFRONT — cross-modal oriented-step corroboration (2026-10-26) · NOT OK to submit</h2>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">Download XFRONT research GeoTIFF (research only — do not submit)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="downloads/{e(dl["nan_file"])}" download>NaN-outside twin</a><a class="button" href="downloads/{e(dl["selector_file"])}">Selector receipt</a></div><p class="micro"><span class="hash">{e(name)}</span> · SHA-256 <span class="hash">{e(digest)}</span> · {dl["pixel_count"]:,} dots · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><p><strong>What to do instead:</strong> nothing in this portfolio is submit-authorized. S3DEP1 is the current recorded local point-best at the top of this page, but remains <strong>not a literal-gate-unique or submit-ready candidate</strong>: the synthetic spacing-5 lattice <code>registry-039</code> is retained, the live weekly quota is unknown, and no independent replay certificate exists. DPRF1 and XFRONT are historical research downloads only.</p><h3>Preregistered arm × budget sweep (selection statistic = 20 % sparse-simulated DTI)</h3><div class="tablewrap" tabindex="0" role="region" aria-label="XFRONT arm and budget sweep"><table><thead><tr><th>Arm</th><th>Budget</th><th>Dense HOLDOUT-DTI</th><th>Sparse 20 %</th><th>Sparse 10 %</th><th>Sparse 5 %</th></tr></thead><tbody>{sweep_rows}</tbody></table></div><p>Arm A = corroboration × excess orientation coherence over the 19-draw rotation null; arm B = corroboration alone on the identical eligible set. The selected pair (arm {e(card["selected_arm"])}, budget {card["selected_budget"]:,}) is a <strong>boundary</strong> optimum: the selection statistic rises monotonically across the whole preregistered grid, so the lane shows <em>under</em>-emission throughout 15 k–45 k for this detector — not the “fewer dots win” pattern the owner-reported live scores suggest.</p><h3>Independent selector screen</h3><div class="tablewrap" tabindex="0" role="region" aria-label="XFRONT selector gates"><table><thead><tr><th>Gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div><p class="micro">Distance profile: {100 * dist["frac_2_to_9px_apron"]:.1f}% in the 200–900 m catalogue apron, {100 * dist["frac_gt_20px_farfield"]:.1f}% beyond 2 km, median {dist["median_dist_px"]:.1f} px. No organizer-confirmed score exists; HOLDOUT-DTI is not a leaderboard forecast.</p></section>"""
-    research_html = f"""<section><h2>H24-XFRONT (2026-10-26) — preregistered method, result and what it rules out</h2><p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p><p><strong>Mechanism:</strong> {e(card["mechanism"])}</p><p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p><h3>Result: the orientation-null factor is the problem</h3><p>Arm A (with the rotation-null excess factor) scores <strong>{paired["baseline_dti"]:.5f}</strong>; arm B (corroboration alone) scores <strong>{paired["candidate_dti"]:.5f}</strong>; paired Δ <strong>{paired["paired_delta_dti"]:+.5f}</strong> (95% CI [{paired["ci95"][0]:+.5f}, {paired["ci95"][1]:+.5f}], {paired["fold_wins"]}/{paired["n_folds"]} folds). The canary already showed why: corroboration carries a weak but real signal (AUC {canary["per_feature"]["xfront_corroboration_raw"]["pooled_auc"]:.4f}) while the excess-coherence factor is at chance (AUC {canary["per_feature"]["xfront_excess_coherence"]["pooled_auc"]:.4f}) — because the six orientation fields share a strong regional structural grain, so translating them cannot destroy their agreement. Multiplying by it removes the signal.</p><h3>Leakage canary, feature by feature</h3><div class="tablewrap" tabindex="0" role="region" aria-label="XFRONT leakage canary"><table><thead><tr><th>Feature</th><th>Pooled diagnostic AUC</th><th>Threshold 0.90</th></tr></thead><tbody>{canary_rows}</tbody></table></div><h3>Exact-file nuisance audit flagged this raster</h3><p>The emitted dots are distinguishable from 10 km block-swapped nulls using <em>only</em> road, mining-claim and acquisition-block features (AUC {c2["observed_auc"]:.4f}, Holm p {c2["holm_p_value"]}, null p95 {c2["null_p95"]:.4f}); the training labels themselves are not (AUC {card["c2st_exact_file"]["labels_first"]["observed_auc"]:.4f}). Roads and claims follow valley floors and basin margins — exactly where DEM, gravity, AEM and magnetic steps co-locate — so part of this detector's corroboration is <strong>access and cultural structure, not fault structure</strong>. This is a real confound, recorded as a gate failure rather than explained away.</p><p>Spec frozen in <code>knowledge/25_preregistered_XFRONT_2026-10-26.md</code> with amendments <code>knowledge/26_…</code> (≥2-layer corroboration) and <code>knowledge/27_…</code> (pre-specified ablation arm and arm-selection rule), both filed before the run. Findings: <code>knowledge/28_XFRONT_findings_and_9site_executive_summary_2026-10-26.md</code>.</p></section>"""
+    hero_html = f"""<div class="hero"><div><div class="eyebrow">H24-XFRONT · cross-modal oriented-step corroboration · preregistered · negative</div><h2>Six layers, one strike.<br>The holdout said: not enough.</h2><p class="lead">A label-free detector that looks for the <strong>step a buried fault imposes on independent layers</strong> — RTP magnetics, isostatic gravity, AEM depth-to-basement, AEM conductivity, DEM and GNSS shear-strain rate — and scores each pixel by how many layers corroborate it and how far their across-strike orientations exceed a translation null. The earlier method-only comparator subset passed, but the retained lattice blocks literal all-entry uniqueness, and the result is <strong>not competitive</strong>.</p>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download>Download XFRONT research GeoTIFF (-zeros)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="executive-summary.html#xfront">Why NOT OK to submit →</a></div><p class="micro">{dl["pixel_count"]:,} binary dots (budget cap {dl["requested_budget"]:,}) · strict whole-array [0,1] PASS · SHA-256 <span class="hash">{e(digest)}</span> · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><p class="micro"><span class="badge blue">Format PASS</span> <span class="badge danger">Literal novelty FAIL</span> <span class="badge danger">Holdout FAIL · C2ST FLAG</span> <span class="badge blue">No slot used</span></p></div><aside class="card visual" aria-label="H24-XFRONT holdout result and raster preview"><div class="cardtop"><h3>HOLDOUT-DTI</h3><span class="badge amber">Not a leaderboard score</span></div><div class="result-number">{score["dti"]:.5f}</div><p>95% CI [{lo:.5f}, {hi:.5f}] · <code>{e(score["evaluator_version"])}</code> · {score["n_withheld_positive_pixels"]:,} withheld positives</p><img class="raster-preview" src="assets/xfront-preview.png" alt="Downsampled map of XFRONT experimental fault dots, not verified faults or geothermal vents"><p class="micro">Experiment preview · downsampled 100 m grid · not verified faults or vents</p></aside></div>"""
+    exec_html = f"""<section id="xfront"><h2>H24-XFRONT — cross-modal oriented-step corroboration (2026-10-26) · NOT OK to submit</h2>{status_box}<div class="actions"><a class="button" href="downloads/{e(name)}" download="{e(name)}">Download XFRONT research GeoTIFF (research only — do not submit)</a><a class="button" href="downloads/{e(dl["zip_file"])}" download>ZIP (one GeoTIFF)</a><a class="button" href="downloads/{e(dl["nan_file"])}" download>NaN-outside twin</a><a class="button" href="downloads/{e(dl["selector_file"])}">Selector receipt</a></div><p class="micro"><span class="hash">{e(name)}</span> · SHA-256 <span class="hash">{e(digest)}</span> · {dl["pixel_count"]:,} dots · note ({len(dl["note"])} chars): <code>{e(dl["note"])}</code></p><p><strong>What to do instead:</strong> nothing in this portfolio is submit-authorized. S3DEP1 is the current recorded local point-best at the top of this page, but remains <strong>not a literal-gate-unique or submit-ready candidate</strong>: the synthetic spacing-5 lattice <code>registry-039</code> is retained, the live weekly quota is unknown, and no independent replay certificate exists. DPRF1 and XFRONT are historical research downloads only.</p><h3>Preregistered arm × budget sweep (selection statistic = 20 % sparse-simulated DTI)</h3><div class="tablewrap" tabindex="0" role="region" aria-label="XFRONT arm and budget sweep"><table><thead><tr><th>Arm</th><th>Budget</th><th>Dense HOLDOUT-DTI</th><th>Sparse 20 %</th><th>Sparse 10 %</th><th>Sparse 5 %</th></tr></thead><tbody>{sweep_rows}</tbody></table></div><p>Arm A = corroboration × excess orientation coherence over the 19-draw translation null; arm B = corroboration alone on the identical eligible set. The selected pair (arm {e(card["selected_arm"])}, budget {card["selected_budget"]:,}) is a <strong>boundary</strong> optimum: the selection statistic rises monotonically across the whole preregistered grid, so the lane shows <em>under</em>-emission throughout 15 k–45 k for this detector — not the “fewer dots win” pattern the owner-reported live scores suggest.</p><h3>Independent selector screen</h3><div class="tablewrap" tabindex="0" role="region" aria-label="XFRONT selector gates"><table><thead><tr><th>Gate</th><th>Decision</th></tr></thead><tbody>{gate_rows}</tbody></table></div><p class="micro">Distance profile: {100 * dist["frac_2_to_9px_apron"]:.1f}% in the 200–900 m catalogue apron, {100 * dist["frac_gt_20px_farfield"]:.1f}% beyond 2 km, median {dist["median_dist_px"]:.1f} px. No organizer-confirmed score exists; HOLDOUT-DTI is not a leaderboard forecast.</p></section>"""
+    research_html = f"""<section><h2>H24-XFRONT (2026-10-26) — preregistered method, result and what it rules out</h2><p><strong>Hypothesis:</strong> {e(card["hypothesis"])}</p><p><strong>Mechanism:</strong> {e(card["mechanism"])}</p><p><strong>Named non-fault mimic:</strong> {e(card["named_non_fault_mimic"])}</p><h3>Result: the orientation-null arm underperformed</h3><p>Arm A (with the translation-null excess factor) scores <strong>{paired["baseline_dti"]:.5f}</strong>; arm B (corroboration alone) scores <strong>{paired["candidate_dti"]:.5f}</strong>; paired Δ <strong>{paired["paired_delta_dti"]:+.5f}</strong> (95% CI [{paired["ci95"][0]:+.5f}, {paired["ci95"][1]:+.5f}], {paired["fold_wins"]}/{paired["n_folds"]} folds). The historical value canary reported that corroboration has a modest association (AUC {canary["per_feature"]["xfront_corroboration_raw"]["pooled_auc"]:.4f}) while the excess-coherence factor is at chance (AUC {canary["per_feature"]["xfront_excess_coherence"]["pooled_auc"]:.4f}) — regional structural grain is one possible explanation, but these diagnostics do not establish causation.</p><h3>Historical value canary, feature by feature</h3><p>This recorded screen was not a fresh complete missingness-canary replay.</p><div class="tablewrap" tabindex="0" role="region" aria-label="XFRONT leakage canary"><table><thead><tr><th>Feature</th><th>Pooled diagnostic AUC</th><th>Threshold 0.90</th></tr></thead><tbody>{canary_rows}</tbody></table></div><h3>Exact-file nuisance audit flagged this raster</h3><p>The emitted dots are distinguishable from 10 km block-swapped nulls using <em>only</em> road, mining-claim and acquisition-block features (AUC {c2["observed_auc"]:.4f}, Holm p {c2["holm_p_value"]}, null p95 {c2["null_p95"]:.4f}); the training labels themselves are not (AUC {card["c2st_exact_file"]["labels_first"]["observed_auc"]:.4f}). Roads and claims follow valley floors and basin margins — exactly where DEM, gravity, AEM and magnetic steps co-locate — so the association is a <strong>potential access and cultural confound</strong>, not proof that any particular dot is non-fault. The nuisance audit remains a gate failure.</p><p>Spec frozen in <code>knowledge/25_preregistered_XFRONT_2026-10-26.md</code> with amendments <code>knowledge/26_…</code> (≥2-layer corroboration) and <code>knowledge/27_…</code> (pre-specified ablation arm and arm-selection rule), both filed before the run. Findings: <code>knowledge/28_XFRONT_findings_and_9site_executive_summary_2026-10-26.md</code>.</p></section>"""
     return hero_html, exec_html, research_html
 
 
@@ -2327,7 +2328,7 @@ def s3dep1_packet(root):
             not fresh["format_valid"]
             or not row["format_valid"]
             or fresh.get("submission_authorized") is not False
-            or any(fresh.get(field) != value for field, value in row.items())
+            or not recorded_validation_matches(fresh, row)
         ):
             raise ValueError(f"S3DEP1 download variant invalid or stale: {key}")
 
@@ -2497,7 +2498,7 @@ def xvar1_packet(root):
             not fresh["format_valid"]
             or not row["format_valid"]
             or fresh.get("submission_authorized") is not False
-            or any(fresh.get(field) != value for field, value in row.items())
+            or not recorded_validation_matches(fresh, row)
         ):
             raise ValueError(f"XVAR1 download variant invalid or stale: {key}")
 

@@ -101,7 +101,7 @@ def recorded_point_best(root: Path) -> dict:
     return rows[0]
 
 
-# Two out-of-tree source receipts are pinned separately from main-branch records.
+# Out-of-tree source receipts are pinned separately from main-branch records.
 # They are conservative prospective floors, not endorsed models or upload decisions.
 EXTERNAL_RECORDS = (
     {
@@ -128,6 +128,20 @@ EXTERNAL_RECORDS = (
             "61783525af4aa6dcf8da0bc68b06fa38b89ed27a/"
             "evidence/kpl36_run_card_20261026.json"
         ),
+        "selected_arm": "EXP-3",
+    },
+    {
+        "lane": "S2D-36",
+        "source": "evidence/external/s2d36-4b717aaf.json",
+        "sha256": "5df79bfe5d1da5c04bac8e57d78333385105a31f5777eabfe452441ba2f2114c",
+        "ref": "4b717aaff6eaf5de9b53030e637f8e1cf0d56e43",
+        "git_blob": "fa8b5e3403fb4965a9e1f33cc2e52f6aaf328ab5",
+        "source_url": (
+            "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/"
+            "4b717aaff6eaf5de9b53030e637f8e1cf0d56e43/"
+            "evidence/s2d36_run_card_20261027.json"
+        ),
+        "selected_arm": "EXP-2",
     },
 )
 
@@ -147,11 +161,12 @@ def selection_floor(root: Path) -> dict:
             raise ValueError("Pinned concurrent benchmark receipt missing or changed")
         card = json.loads(path.read_text())
         result = card.get("holdout", {})
-        if source["lane"] == "KPL-36":
-            # This peer receipt stores the primary measurement under its selected arm.
-            if card.get("best_arm") != "EXP-3" or result.get("best_arm") != "EXP-3":
+        if "selected_arm" in source:
+            # These peer receipts store the primary measurement under a pinned selected arm.
+            selected_arm = source["selected_arm"]
+            if card.get("best_arm") != selected_arm or result.get("best_arm") != selected_arm:
                 raise ValueError("Peer benchmark selected arm changed")
-            arm = result.get("arms", {}).get("EXP-3", {})
+            arm = result.get("arms", {}).get(selected_arm, {})
             result = {
                 "label": result.get("label"),
                 "evaluator_version": result.get("evaluator_version"),

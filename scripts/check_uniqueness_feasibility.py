@@ -52,6 +52,11 @@ def audit(root: Path, budgets: list[int]) -> dict:
     if sha256_file(root / WITNESS) != row["sha256"]:
         raise ValueError("Registry witness checksum mismatch")
     with rasterio.open(root / TEMPLATE) as t, rasterio.open(root / WITNESS) as r:
+        if any(
+            len(ds.files) != 1 or Path(ds.files[0]).resolve() != (root / path).resolve()
+            for ds, path in ((t, TEMPLATE), (r, WITNESS))
+        ):
+            raise ValueError("Template and witness must be self-contained without sidecars")
         if (
             t.count != 1
             or t.crs is None
@@ -59,6 +64,11 @@ def audit(root: Path, budgets: list[int]) -> dict:
         ):
             raise ValueError("Single-band template and witness must share CRS/shape/transform")
         fp = np.isfinite(t.read(1))
+        if (
+            np.ma.getmaskarray(t.read(1, masked=True))[fp].any()
+            or np.ma.getmaskarray(r.read(1, masked=True))[fp].any()
+        ):
+            raise ValueError("Template or witness has masked or NoData pixels inside footprint")
         values = r.read(1)
     if not fp.any() or not np.isfinite(values[fp]).all():
         raise ValueError("Nonempty footprint and finite witness values required")

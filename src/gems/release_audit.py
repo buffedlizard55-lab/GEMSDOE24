@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 import rasterio
 
-from .submission import check_variants
+from .submission import check_variants, recorded_validation_matches
 
 
 def verify_research_release(root: Path) -> dict:
@@ -65,8 +65,8 @@ def verify_research_release(root: Path) -> dict:
             raise ValueError("Exact-file hash or format verification failed")
         # Validators may add explanatory fields after a frozen run. Every
         # recorded field must still match; never rewrite historical receipts.
-        if not stored == row.get("validator_output", card_receipt) == card_receipt or any(
-            fresh.get(key) != value for key, value in stored.items()
+        if not stored == row.get("validator_output", card_receipt) == card_receipt or not (
+            recorded_validation_matches(fresh, stored)
         ):
             raise ValueError("Fresh validator output disagrees with stored receipts")
         with rasterio.open(path) as ds:
@@ -218,7 +218,7 @@ def verify_featured_downloads(root: Path) -> dict:
         if not fresh["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]:
             raise ValueError(f"{lane}: whole-array finite [0,1] check failed")
         stored = card.get("validator_output", {})
-        if not stored or any(fresh.get(k) != v for k, v in stored.items()):
+        if not recorded_validation_matches(fresh, stored):
             raise ValueError(f"{lane}: stored validator output mismatch")
         rows.append({"lane": lane, "file": name, "note": note, "validator_output": fresh})
     return {

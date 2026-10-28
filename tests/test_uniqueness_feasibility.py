@@ -146,3 +146,16 @@ def test_cli_exit_zero_does_not_mean_authorized(tmp_path, k, exit_code):
 def test_shared_dependency_free_core_rejects_ambiguous_numbers(args):
     with pytest.raises(ValueError):
         bounds(*args)
+
+
+@pytest.mark.parametrize("relative", [TEMPLATE, WITNESS])
+def test_witness_or_template_external_mask_not_bound_by_hash_fails(packet, relative):
+    import numpy as np
+    import rasterio
+
+    target = packet / relative
+    with rasterio.Env(GDAL_TIFF_INTERNAL_MASK=False):
+        with rasterio.open(target, "r+") as ds:
+            ds.write_mask(np.full(ds.shape, 255, dtype="uint8"))
+    with pytest.raises(ValueError, match="self-contained"):
+        audit(packet, [37654])

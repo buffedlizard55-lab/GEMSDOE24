@@ -28,3 +28,5 @@ code{color:var(--ink)}main p a{text-decoration:underline;text-underline-offset:2
   .portfolio-mobile p, .portfolio-mobile code, #xvar1-research code, #xvar1 code, #latest-xvar1-packet code { overflow-wrap: anywhere; word-break: break-word; }
   .portfolio-mobile .portfolio-file { max-width: 100%; }
 }
+
+#oct27-integrity code.peer-sha { color: var(--ink); overflow-wrap: anywhere; word-break: break-all; }

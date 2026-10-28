@@ -59,7 +59,7 @@ def verify_recorded(root=ROOT):
         if sha256_file(path) != card["raster_sha256"]:
             raise ValueError("OJ1 raster checksum mismatch")
         checks = submission.check_variants(path, root / TEMPLATE.relative_to(ROOT))
-        if checks != card["validator_output"]:
+        if not submission.recorded_validation_matches(checks, card["validator_output"]):
             raise ValueError("OJ1 exact-file validator output changed")
         if not checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]:
             raise ValueError("OJ1 strict range failed")

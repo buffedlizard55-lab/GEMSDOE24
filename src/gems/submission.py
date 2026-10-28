@@ -47,6 +47,8 @@ def _same_file(a: Path | str, b: Path | str) -> bool:
 
 def footprint_sha256(footprint: np.ndarray) -> str:
     """Hash an exact binary footprint, independent of GeoTIFF encoding."""
+    if np.ma.isMaskedArray(footprint) and np.ma.getmaskarray(footprint).any():
+        raise ValueError("Footprint cannot contain masked pixels")
     footprint = np.asarray(footprint)
     if footprint.ndim != 2 or not np.isin(footprint, (0, 1)).all():
         raise ValueError("Footprint must be a two-dimensional binary grid")
@@ -61,7 +63,7 @@ def write_submission(
     *,
     outside: str = "zero",
 ) -> Path:
-    """Write ``pred_2d`` using the template profile and a portal-safe default.
+    """Write ``pred_2d`` using the template profile and a testable zero-exterior default.
 
     The default is an all-finite ``0.0`` exterior to test a possible strict
     whole-array [0,1] validation. The cause of the reported portal rejection
@@ -74,15 +76,29 @@ def write_submission(
     out_path = Path(out_path)
     if _same_file(out_path, template_path):
         raise ValueError("Output must not overwrite the template")
+    # A stale GDAL sidecar can override the TIFF's embedded mask or metadata.
+    # Refuse to overwrite it; silently removing it could destroy user data.
+    for suffix in (".msk", ".aux.xml", ".ovr"):
+        sidecar = Path(str(out_path) + suffix)
+        if sidecar.exists() or sidecar.is_symlink():
+            raise ValueError(f"Output has an existing external sidecar: {sidecar}")
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with rasterio.open(template_path) as t:
+        if len(t.files) != 1 or Path(t.files[0]).resolve() != Path(template_path).resolve():
+            raise ValueError("template must be self-contained without sidecars")
+        if t.count != 1:
+            raise ValueError("template must contain exactly one band")
         profile = t.profile.copy()
         footprint = np.isfinite(t.read(1))
+        if np.ma.getmaskarray(t.read(1, masked=True))[footprint].any():
+            raise ValueError("template has masked or NoData pixels inside the footprint")
     if not footprint.any():
         raise ValueError("template contains no finite prediction footprint")
+    if np.shape(pred_2d) != footprint.shape:
+        raise ValueError(f"prediction shape {np.shape(pred_2d)} != template {footprint.shape}")
+    if np.ma.isMaskedArray(pred_2d) and np.ma.getmaskarray(pred_2d)[footprint].any():
+        raise ValueError("Predictions inside the footprint must not be masked or NoData")
     pred_2d = np.asarray(pred_2d)
-    if pred_2d.shape != footprint.shape:
-        raise ValueError(f"prediction shape {pred_2d.shape} != template {footprint.shape}")
     values = pred_2d[footprint]
     if not np.isfinite(values).all() or np.any((values < 0) | (values > 1)):
         raise ValueError(
@@ -106,6 +122,10 @@ def zip_single(tif_path: Path | str, zip_path: Path | str | None = None) -> Path
     zip_path = Path(zip_path) if zip_path else tif_path.with_suffix(".zip")
     if tif_path.suffix.lower() != ".tif" or not tif_path.is_file():
         raise ValueError("ZIP input must be an existing .tif")
+    with rasterio.open(tif_path) as dataset:
+        files = dataset.files
+    if len(files) != 1 or Path(files[0]).resolve() != tif_path.resolve():
+        raise ValueError("ZIP input must be a self-contained TIFF without external sidecars")
     if _same_file(tif_path, zip_path):
         raise ValueError("ZIP output must not overwrite the source TIFF")
     zip_path.parent.mkdir(parents=True, exist_ok=True)
@@ -131,11 +151,17 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         t_arr = t.read(1)
         t_prof = t.profile
         footprint = np.isfinite(t_arr)
+        t_masked_inside = int(
+            np.count_nonzero(np.ma.getmaskarray(t.read(1, masked=True)) & footprint)
+        )
+        t_files = list(t.files)
+        t_count = t.count
         t_crs, t_tr, t_shape = t.crs, t.transform, t.shape
     with rasterio.open(path) as s:
         arr = s.read(1)
         masked = s.read(1, masked=True)
         prof = s.profile
+        dataset_files = list(s.files)
         crs, tr, shape, count, dtypes, nodata = (
             s.crs,
             s.transform,
@@ -178,12 +204,32 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         expected_template,
         "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
     )
+    t_self_contained = (
+        len(t_files) == 1 and Path(t_files[0]).resolve() == Path(template_path).resolve()
+    )
+    add(
+        "template_unmasked_and_self_contained",
+        t_count == 1 and t_masked_inside == 0 and t_self_contained,
+        f"count={t_count}; masked inside={t_masked_inside}; self-contained={t_self_contained}",
+    )
     add("single_band", count == 1, f"count={count}")
+    self_contained = len(dataset_files) == 1 and Path(dataset_files[0]).resolve() == path.resolve()
+    add(
+        "self_contained_single_tiff",
+        self_contained,
+        f"Rasterio dataset files: {[Path(f).name for f in dataset_files]}; sidecars are not included in a single-TIFF submission",
+    )
     add("dtype_float32", dtypes == ("float32",), f"dtypes={dtypes}")
     add("crs_epsg_32611", crs is not None and crs.to_epsg() == 32611 and crs == t_crs, f"{crs}")
     add("shape_matches_template", shape == t_shape, f"{shape} vs {t_shape}")
     add("geotransform_matches_template", tr == t_tr, f"{tuple(tr)[:6]}")
     if shape_ok:
+        masked_inside = int(np.count_nonzero(np.ma.getmaskarray(masked) & footprint))
+        add(
+            "footprint_unmasked",
+            masked_inside == 0,
+            f"{masked_inside} masked/NoData pixels inside the {int(footprint.sum()):,}-pixel footprint",
+        )
         add(
             "footprint_all_finite",
             bool(fin_in.all()),
@@ -201,7 +247,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
             hard=False,
         )
     else:
-        for name in ("footprint_all_finite", "footprint_range_0_1"):
+        for name in ("footprint_unmasked", "footprint_all_finite", "footprint_range_0_1"):
             add(name, False, "not evaluated: the raster does not have the template's shape")
         add(
             "outside_is_nan_official_text",
@@ -253,14 +299,83 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         "submission_authorized": False,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": hard_fail,
+        "template_grid_and_footprint_match_pinned_mirror": bool(expected_template),
+        "template_origin_authenticated": False,
+        "template_provenance_limit": (
+            "The owner-mirror grid/footprint match does not authenticate organizer origin."
+        ),
+        # Legacy field: a local NaN-outside/grid diagnostic, not organizer
+        # authentication or proof that the portal will accept the file.
         "official_format_compliant": checks["outside_is_nan_official_text"]["pass"]
         and not hard_fail,
+        "official_format_compliant_scope": (
+            "Legacy diagnostic only: local mirror-grid and NaN-outside match; "
+            "neither organizer authentication nor portal acceptance is established."
+        ),
         "in_footprint_positive_pixels": int((inside > 0).sum()),
         "in_footprint_mass": round(float(np.nansum(inside, dtype=np.float64)), 2)
         if inside.size
         else 0.0,
         "checks": checks,
     }
+
+
+def recorded_validation_matches(
+    fresh: dict[str, Any], recorded: dict[str, Any], *, ignore_fields: tuple[str, ...] = ()
+) -> bool:
+    """Compare every frozen finding while also requiring the *current* checks to pass.
+
+    Validator releases may add new hard checks; historical receipts are immutable.
+    New checks must pass in ``fresh`` but cannot be expected to exist in an older
+    receipt. Every recorded check and every other recorded field must still match.
+    """
+    if (
+        not isinstance(fresh, dict)
+        or not isinstance(recorded, dict)
+        or not set(ignore_fields).issubset({"upload_authorization"})
+    ):
+        return False
+    old_checks, new_checks = recorded.get("checks"), fresh.get("checks")
+    if (
+        fresh.get("format_valid") is not True
+        or recorded.get("format_valid") is not True
+        or not isinstance(old_checks, dict)
+        or not old_checks
+        or not isinstance(new_checks, dict)
+        or not new_checks
+        or fresh.get("hard_failures") != []
+        or not recorded.get("sha256")
+        or fresh.get("sha256") != recorded.get("sha256")
+    ):
+        return False
+    if any(
+        not isinstance(check, dict)
+        or type(check.get("pass")) is not bool
+        or type(check.get("hard_requirement")) is not bool
+        or (check["hard_requirement"] and not check["pass"])
+        for check in new_checks.values()
+    ):
+        return False
+    for name in (
+        "footprint_unmasked",
+        "self_contained_single_tiff",
+        "template_unmasked_and_self_contained",
+    ):
+        if (
+            name not in new_checks
+            or not new_checks[name]["hard_requirement"]
+            or not new_checks[name]["pass"]
+        ):
+            return False
+    if any(
+        name not in new_checks or new_checks[name] != value for name, value in old_checks.items()
+    ):
+        return False
+    return all(
+        key in fresh and fresh[key] == value
+        for key, value in recorded.items()
+        if key != "checks" and key not in ignore_fields
+    )
 
 
 def scored_content_id(pred_2d: np.ndarray, footprint: np.ndarray, catalogue: np.ndarray) -> str:

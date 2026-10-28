@@ -1,6 +1,6 @@
 {
   "schema": "historical-champion-readback-v1",
-  "checked_utc": "2026-10-28T16:12:25.592225+00:00",
+  "checked_utc": "2026-10-28T16:30:02.308327+00:00",
   "scope": "Nine owner-named historical champions, not latest heads or all files; no scientific replay",
   "source_record_sha256": "f04b77833ee508ca92e15f9297df787fc4b22b368cf116854edc23a4a3a69f69",
   "witness": {
@@ -34,7 +34,11 @@
         "submission_authorized": false,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": [],
+        "template_grid_and_footprint_match_pinned_mirror": true,
+        "template_origin_authenticated": false,
+        "template_provenance_limit": "The owner-mirror grid/footprint match does not authenticate organizer origin.",
         "official_format_compliant": false,
+        "official_format_compliant_scope": "Legacy diagnostic only: local mirror-grid and NaN-outside match; neither organizer authentication nor portal acceptance is established.",
         "in_footprint_positive_pixels": 60069,
         "in_footprint_mass": 60069.0,
         "checks": {
@@ -43,9 +47,19 @@
             "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
             "hard_requirement": true
           },
+          "template_unmasked_and_self_contained": {
+            "pass": true,
+            "detail": "count=1; masked inside=0; self-contained=True",
+            "hard_requirement": true
+          },
           "single_band": {
             "pass": true,
             "detail": "count=1",
+            "hard_requirement": true
+          },
+          "self_contained_single_tiff": {
+            "pass": true,
+            "detail": "Rasterio dataset files: ['gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif']; sidecars are not included in a single-TIFF submission",
             "hard_requirement": true
           },
           "dtype_float32": {
@@ -66,6 +80,11 @@
           "geotransform_matches_template": {
             "pass": true,
             "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_unmasked": {
+            "pass": true,
+            "detail": "0 masked/NoData pixels inside the 5,167,373-pixel footprint",
             "hard_requirement": true
           },
           "footprint_all_finite": {
@@ -142,7 +161,11 @@
         "submission_authorized": false,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": [],
+        "template_grid_and_footprint_match_pinned_mirror": true,
+        "template_origin_authenticated": false,
+        "template_provenance_limit": "The owner-mirror grid/footprint match does not authenticate organizer origin.",
         "official_format_compliant": false,
+        "official_format_compliant_scope": "Legacy diagnostic only: local mirror-grid and NaN-outside match; neither organizer authentication nor portal acceptance is established.",
         "in_footprint_positive_pixels": 44090,
         "in_footprint_mass": 44090.0,
         "checks": {
@@ -151,9 +174,19 @@
             "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
             "hard_requirement": true
           },
+          "template_unmasked_and_self_contained": {
+            "pass": true,
+            "detail": "count=1; masked inside=0; self-contained=True",
+            "hard_requirement": true
+          },
           "single_band": {
             "pass": true,
             "detail": "count=1",
+            "hard_requirement": true
+          },
+          "self_contained_single_tiff": {
+            "pass": true,
+            "detail": "Rasterio dataset files: ['gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif']; sidecars are not included in a single-TIFF submission",
             "hard_requirement": true
           },
           "dtype_float32": {
@@ -174,6 +207,11 @@
           "geotransform_matches_template": {
             "pass": true,
             "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_unmasked": {
+            "pass": true,
+            "detail": "0 masked/NoData pixels inside the 5,167,373-pixel footprint",
             "hard_requirement": true
           },
           "footprint_all_finite": {
@@ -252,7 +290,11 @@
         "submission_authorized": false,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": [],
+        "template_grid_and_footprint_match_pinned_mirror": true,
+        "template_origin_authenticated": false,
+        "template_provenance_limit": "The owner-mirror grid/footprint match does not authenticate organizer origin.",
         "official_format_compliant": false,
+        "official_format_compliant_scope": "Legacy diagnostic only: local mirror-grid and NaN-outside match; neither organizer authentication nor portal acceptance is established.",
         "in_footprint_positive_pixels": 61328,
         "in_footprint_mass": 61328.0,
         "checks": {
@@ -261,9 +303,19 @@
             "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
             "hard_requirement": true
           },
+          "template_unmasked_and_self_contained": {
+            "pass": true,
+            "detail": "count=1; masked inside=0; self-contained=True",
+            "hard_requirement": true
+          },
           "single_band": {
             "pass": true,
             "detail": "count=1",
+            "hard_requirement": true
+          },
+          "self_contained_single_tiff": {
+            "pass": true,
+            "detail": "Rasterio dataset files: ['gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif']; sidecars are not included in a single-TIFF submission",
             "hard_requirement": true
           },
           "dtype_float32": {
@@ -284,6 +336,11 @@
           "geotransform_matches_template": {
             "pass": true,
             "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_unmasked": {
+            "pass": true,
+            "detail": "0 masked/NoData pixels inside the 5,167,373-pixel footprint",
             "hard_requirement": true
           },
           "footprint_all_finite": {
@@ -360,7 +417,11 @@
         "submission_authorized": false,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": [],
+        "template_grid_and_footprint_match_pinned_mirror": true,
+        "template_origin_authenticated": false,
+        "template_provenance_limit": "The owner-mirror grid/footprint match does not authenticate organizer origin.",
         "official_format_compliant": false,
+        "official_format_compliant_scope": "Legacy diagnostic only: local mirror-grid and NaN-outside match; neither organizer authentication nor portal acceptance is established.",
         "in_footprint_positive_pixels": 37660,
         "in_footprint_mass": 37660.0,
         "checks": {
@@ -369,9 +430,19 @@
             "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
             "hard_requirement": true
           },
+          "template_unmasked_and_self_contained": {
+            "pass": true,
+            "detail": "count=1; masked inside=0; self-contained=True",
+            "hard_requirement": true
+          },
           "single_band": {
             "pass": true,
             "detail": "count=1",
+            "hard_requirement": true
+          },
+          "self_contained_single_tiff": {
+            "pass": true,
+            "detail": "Rasterio dataset files: ['gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif']; sidecars are not included in a single-TIFF submission",
             "hard_requirement": true
           },
           "dtype_float32": {
@@ -392,6 +463,11 @@
           "geotransform_matches_template": {
             "pass": true,
             "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_unmasked": {
+            "pass": true,
+            "detail": "0 masked/NoData pixels inside the 5,167,373-pixel footprint",
             "hard_requirement": true
           },
           "footprint_all_finite": {
@@ -468,7 +544,11 @@
         "submission_authorized": false,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": [],
+        "template_grid_and_footprint_match_pinned_mirror": true,
+        "template_origin_authenticated": false,
+        "template_provenance_limit": "The owner-mirror grid/footprint match does not authenticate organizer origin.",
         "official_format_compliant": false,
+        "official_format_compliant_scope": "Legacy diagnostic only: local mirror-grid and NaN-outside match; neither organizer authentication nor portal acceptance is established.",
         "in_footprint_positive_pixels": 44090,
         "in_footprint_mass": 44090.0,
         "checks": {
@@ -477,9 +557,19 @@
             "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
             "hard_requirement": true
           },
+          "template_unmasked_and_self_contained": {
+            "pass": true,
+            "detail": "count=1; masked inside=0; self-contained=True",
+            "hard_requirement": true
+          },
           "single_band": {
             "pass": true,
             "detail": "count=1",
+            "hard_requirement": true
+          },
+          "self_contained_single_tiff": {
+            "pass": true,
+            "detail": "Rasterio dataset files: ['gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif']; sidecars are not included in a single-TIFF submission",
             "hard_requirement": true
           },
           "dtype_float32": {
@@ -500,6 +590,11 @@
           "geotransform_matches_template": {
             "pass": true,
             "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_unmasked": {
+            "pass": true,
+            "detail": "0 masked/NoData pixels inside the 5,167,373-pixel footprint",
             "hard_requirement": true
           },
           "footprint_all_finite": {
@@ -578,7 +673,11 @@
         "submission_authorized": false,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": [],
+        "template_grid_and_footprint_match_pinned_mirror": true,
+        "template_origin_authenticated": false,
+        "template_provenance_limit": "The owner-mirror grid/footprint match does not authenticate organizer origin.",
         "official_format_compliant": false,
+        "official_format_compliant_scope": "Legacy diagnostic only: local mirror-grid and NaN-outside match; neither organizer authentication nor portal acceptance is established.",
         "in_footprint_positive_pixels": 40199,
         "in_footprint_mass": 40199.0,
         "checks": {
@@ -587,9 +686,19 @@
             "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
             "hard_requirement": true
           },
+          "template_unmasked_and_self_contained": {
+            "pass": true,
+            "detail": "count=1; masked inside=0; self-contained=True",
+            "hard_requirement": true
+          },
           "single_band": {
             "pass": true,
             "detail": "count=1",
+            "hard_requirement": true
+          },
+          "self_contained_single_tiff": {
+            "pass": true,
+            "detail": "Rasterio dataset files: ['gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif']; sidecars are not included in a single-TIFF submission",
             "hard_requirement": true
           },
           "dtype_float32": {
@@ -610,6 +719,11 @@
           "geotransform_matches_template": {
             "pass": true,
             "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_unmasked": {
+            "pass": true,
+            "detail": "0 masked/NoData pixels inside the 5,167,373-pixel footprint",
             "hard_requirement": true
           },
           "footprint_all_finite": {
@@ -687,7 +801,11 @@
         "submission_authorized": false,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": [],
+        "template_grid_and_footprint_match_pinned_mirror": true,
+        "template_origin_authenticated": false,
+        "template_provenance_limit": "The owner-mirror grid/footprint match does not authenticate organizer origin.",
         "official_format_compliant": false,
+        "official_format_compliant_scope": "Legacy diagnostic only: local mirror-grid and NaN-outside match; neither organizer authentication nor portal acceptance is established.",
         "in_footprint_positive_pixels": 37654,
         "in_footprint_mass": 37654.0,
         "checks": {
@@ -696,9 +814,19 @@
             "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
             "hard_requirement": true
           },
+          "template_unmasked_and_self_contained": {
+            "pass": true,
+            "detail": "count=1; masked inside=0; self-contained=True",
+            "hard_requirement": true
+          },
           "single_band": {
             "pass": true,
             "detail": "count=1",
+            "hard_requirement": true
+          },
+          "self_contained_single_tiff": {
+            "pass": true,
+            "detail": "Rasterio dataset files: ['gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif']; sidecars are not included in a single-TIFF submission",
             "hard_requirement": true
           },
           "dtype_float32": {
@@ -719,6 +847,11 @@
           "geotransform_matches_template": {
             "pass": true,
             "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_unmasked": {
+            "pass": true,
+            "detail": "0 masked/NoData pixels inside the 5,167,373-pixel footprint",
             "hard_requirement": true
           },
           "footprint_all_finite": {
@@ -795,7 +928,11 @@
         "submission_authorized": false,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": [],
+        "template_grid_and_footprint_match_pinned_mirror": true,
+        "template_origin_authenticated": false,
+        "template_provenance_limit": "The owner-mirror grid/footprint match does not authenticate organizer origin.",
         "official_format_compliant": false,
+        "official_format_compliant_scope": "Legacy diagnostic only: local mirror-grid and NaN-outside match; neither organizer authentication nor portal acceptance is established.",
         "in_footprint_positive_pixels": 41865,
         "in_footprint_mass": 41865.0,
         "checks": {
@@ -804,9 +941,19 @@
             "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
             "hard_requirement": true
           },
+          "template_unmasked_and_self_contained": {
+            "pass": true,
+            "detail": "count=1; masked inside=0; self-contained=True",
+            "hard_requirement": true
+          },
           "single_band": {
             "pass": true,
             "detail": "count=1",
+            "hard_requirement": true
+          },
+          "self_contained_single_tiff": {
+            "pass": true,
+            "detail": "Rasterio dataset files: ['GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif']; sidecars are not included in a single-TIFF submission",
             "hard_requirement": true
           },
           "dtype_float32": {
@@ -827,6 +974,11 @@
           "geotransform_matches_template": {
             "pass": true,
             "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_unmasked": {
+            "pass": true,
+            "detail": "0 masked/NoData pixels inside the 5,167,373-pixel footprint",
             "hard_requirement": true
           },
           "footprint_all_finite": {
@@ -904,7 +1056,11 @@
         "submission_authorized": false,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": [],
+        "template_grid_and_footprint_match_pinned_mirror": true,
+        "template_origin_authenticated": false,
+        "template_provenance_limit": "The owner-mirror grid/footprint match does not authenticate organizer origin.",
         "official_format_compliant": false,
+        "official_format_compliant_scope": "Legacy diagnostic only: local mirror-grid and NaN-outside match; neither organizer authentication nor portal acceptance is established.",
         "in_footprint_positive_pixels": 38854,
         "in_footprint_mass": 38854.0,
         "checks": {
@@ -913,9 +1069,19 @@
             "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
             "hard_requirement": true
           },
+          "template_unmasked_and_self_contained": {
+            "pass": true,
+            "detail": "count=1; masked inside=0; self-contained=True",
+            "hard_requirement": true
+          },
           "single_band": {
             "pass": true,
             "detail": "count=1",
+            "hard_requirement": true
+          },
+          "self_contained_single_tiff": {
+            "pass": true,
+            "detail": "Rasterio dataset files: ['gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif']; sidecars are not included in a single-TIFF submission",
             "hard_requirement": true
           },
           "dtype_float32": {
@@ -936,6 +1102,11 @@
           "geotransform_matches_template": {
             "pass": true,
             "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+            "hard_requirement": true
+          },
+          "footprint_unmasked": {
+            "pass": true,
+            "detail": "0 masked/NoData pixels inside the 5,167,373-pixel footprint",
             "hard_requirement": true
           },
           "footprint_all_finite": {

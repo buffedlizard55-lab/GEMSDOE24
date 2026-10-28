@@ -371,7 +371,10 @@ def verify_recorded(root=ROOT, *, source_history=True):
         raise ValueError("Invalid TNR1 note")
     path = root / "docs/downloads" / name
     fresh = submission.check_variants(path, root / "data/bridge/sample_submission.tif")
-    if fresh != card["validator_output"] or fresh["sha256"] != card["raster_sha256"]:
+    if (
+        not submission.recorded_validation_matches(fresh, card["validator_output"])
+        or fresh["sha256"] != card["raster_sha256"]
+    ):
         raise ValueError("TNR1 exact-file format/hash receipt changed")
     if (
         not fresh["format_valid"]
@@ -384,9 +387,9 @@ def verify_recorded(root=ROOT, *, source_history=True):
     if Path(twin["file"]).name != twin["file"] or not twin["file"].endswith("-nan.tif"):
         raise ValueError("Unsafe TNR1 companion name")
     twin_path = root / "docs/downloads" / twin["file"]
-    if (
-        submission.check_variants(twin_path, root / "data/bridge/sample_submission.tif")
-        != twin["validator_output"]
+    if not submission.recorded_validation_matches(
+        submission.check_variants(twin_path, root / "data/bridge/sample_submission.tif"),
+        twin["validator_output"],
     ):
         raise ValueError("TNR1 companion receipt changed")
     with rasterio.open(root / "data/bridge/sample_submission.tif") as ds:
@@ -408,10 +411,17 @@ def verify_recorded(root=ROOT, *, source_history=True):
         run_card_path=card_path,
         expected_template_sha256=report["inputs"]["data/bridge/sample_submission.tif"],
     )
-    # Paths vary between the execution machine, local clones and CI. All
-    # scientific/format/hash/decision fields must still match exactly.
+    # Paths vary between the execution machine, local clones and CI. The
+    # current validator may add hard checks, all of which must pass, while
+    # every issuance-time format finding and all other fields must still match.
     pre["run_card"]["path"] = fresh_preflight["run_card"]["path"]
-    if pre != fresh_preflight or card.get("ok_to_download") is not True:
+    old_format = pre.pop("format_validation")
+    new_format = fresh_preflight.pop("format_validation")
+    if (
+        not submission.recorded_validation_matches(new_format, old_format)
+        or pre != fresh_preflight
+        or card.get("ok_to_download") is not True
+    ):
         raise ValueError("TNR1 exact-file preflight no longer reproduces")
     return card
 
