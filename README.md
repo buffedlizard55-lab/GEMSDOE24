@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Verified repository review — 2026-10-28 (branch `arena/9e77df06-gemsdoe24`)
+
+**NO NEW TIFF · NO EXPERIMENT · DO NOT SUBMIT.** Full test suite **552/552 passed** and ruff clean (with full git history; a shallow clone fails 6 tests). All 57 downloaded GeoTIFFs read back in [0, 1]. The "[0, 1]" portal error is **not explained**: the organizer example mirror also uses NaN outside the footprint. Read [the verified review](docs/repo-review-20261028-verified.md) first.
+
 ## Latest continuation — 2026-10-27, session a73c5f88
 
 **SUBMIT: NO. No new TIFF or slot.** Read the [current owner requirements](knowledge/owner_brief_2026-10-27_feasibility.md)
