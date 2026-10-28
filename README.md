@@ -1,10 +1,18 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Current session — 2026-10-28 (branch `arena/c88278d6-gemsdo24`) — READ FIRST
+## CURRENT MISSION (this session — read first)
 
-**Task:** generate a UNIQUE submission TIF for the GEMS DOE competition; produce a nine-site executive summary (GEMSDOE24/25/27/28/30/31/32/33/36) with file-to-download, estimate score and uniqueness; make the download + submit decision obvious; validate on the spatially blocked holdout before any slot.
+**Goal:** generate a **unique TIF submission** for the DrivenData GEMS competition and publish an executive summary that makes the best submission obvious and one-click downloadable. Full prompt: [`docs/MISSION_PROMPT.md`](docs/MISSION_PROMPT.md).
 
-**Result this session:** built and validated one catalogue-blind unique GeoTIFF:
+**Key requirements:** unique (non-copied) TIF · values in [0, 1] (zeros outside footprint to pass the portal range gate) · unique name + note <= 140 chars · executive summary table over GEMSDOE 24/25/27/28/30/31/32/33/36 (file to download · estimated score · unique flag) · how-to-submit subpage · validation with no human intervention (no NaN inside footprint, CRS/shape/transform match EPSG:32611 3730x3292 @100 m) · PR merged to main · no hallucinations.
+
+---
+
+## This branch (arena/c88278d6-gemsdoe24) — unique submission artifact
+
+**Task:** generate a UNIQUE submission TIF and a nine-site executive summary (GEMSDOE24/25/27/28/30/31/32/33/36) with file-to-download, estimate score and uniqueness; make the download + submit decision obvious; validate on the spatially blocked holdout before any slot.
+
+**Result this branch:** built and validated one catalogue-blind unique GeoTIFF:
 `docs/downloads/24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif`
 (SHA-256 `e6460446…dd55`, 37,722 dots, all values finite in [0,1], zeros outside footprint).
 - **OK to download: YES** — format, whole-array [0,1] and local novelty (max 0.5747 ≤ 0.70) PASS.
