@@ -142,12 +142,19 @@ def render(report):
     for r in report["rows"]:
         claim = r["owner_reported_unverified"]["owner_reported"]
         aliases = ", ".join(r["exact_in_footprint_aliases"]) or "None among these nine"
+        validator = r["validator_output"]
+        local_status = "PASS" if validator.get("format_valid") is True else "FAIL / UNKNOWN"
+        exterior_status = (
+            "PASS" if validator.get("checks", {}).get("outside_is_nan_official_text", {}).get("pass") is True
+            else "FAIL / UNKNOWN"
+        )
         rows.append(
             f'<tr><th scope="row">{e(r["site"])}</th><td><a href="{e(r["download_url"], quote=True)}">'
             f"{e(r['file'])}</a><br><small>Research only; SHA-256 {r['sha256']}</small></td>"
             f"<td>{claim:.4f} OWNER-REPORTED / UNVERIFIED</td><td>NOT ESTIMABLE</td>"
             f"<td>{e(aliases)}</td><td>{r['lattice_overlap_within_3px']:.2%}; {r['literal_uniqueness']}</td>"
-            "<td>Format PASS; <strong>SUBMIT NO</strong></td></tr>"
+            f"<td>Local checks: {local_status}; exterior-NaN check: {exterior_status}; "
+            "<strong>SUBMIT NO</strong></td></tr>"
         )
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -159,7 +166,7 @@ The requested new, unique high-scoring TIFF has not been achieved. No experiment
 No file below is recommended for a fresh competition submission. All are prior artifacts, not newly generated predictions.
 The downloadable variants are exactly identified below; a filename variant does not prove it is the byte-identical artifact scored by the portal.</p>
 <p>Read back {e(report["checked_utc"])} at immutable commits. Scope: {e(report["scope"])}.
-No new-head, pre-placement-surface or exhaustive registry certification follows. Local format PASS is not organizer acceptance.</p>
+No new-head, pre-placement-surface or exhaustive registry certification follows. Local checks do not establish official format compliance or organizer acceptance.</p>
 <div class="tablewrap" role="region" aria-label="Historical champion download and decision table" tabindex="0"><table>
 <caption>Prior champion artifacts — none eligible as a new unique submission</caption><thead><tr><th>Site</th><th>Exact research download</th>
 <th>Historical claim (not estimated)</th><th>Leaderboard estimate</th><th>Identical footprint predictions</th><th>3-pixel lattice overlap / uniqueness</th><th>Decision</th></tr></thead>
@@ -170,7 +177,7 @@ No new-head, pre-placement-surface or exhaustive registry certification follows.
 <h2>Next action, without spending a slot</h2><p>The method-lane paragraph is missing. Common fixed dot budgets cannot pass the literal retained-lattice rule; do not remove the comparator, shift dots into its holes or retune a stopped method. Resolve the protocol prospectively before training.
 <a href="research-directions-20261027.md">Four ranked research directions, novelty caveats and source availability</a> remain proposals, not validated discoveries. The main training raster and prepared cache are absent in this checkout.</p>
 <p>After a lane is assigned: use the shared buffered whole-segment holdout, visible-only catalogue features, feature canaries, pooled 300 m DTI and paired confidence intervals; check surfaces and final dots against the complete registry. Only a separately authorized selector with verified quota can promote a candidate. A CPU pipeline exists; GPU access is not universally required.</p>
-<h2>Format and upload guide</h2><p>The shared validator checked single-band grid alignment and finite in-footprint values in [0,1]. No raster was repaired or rewritten here. A prior portal range error cannot be diagnosed from its text alone; exterior NaNs and out-of-range values must both be checked. Do not assume renaming or clipping establishes scientific eligibility.</p>
+<h2>Format and upload guide</h2><p>The shared validator checked single-band grid alignment and finite in-footprint values in [0,1]. The separate exterior-NaN check reflects the validator’s recorded interpretation of the official text; it conflicts with a strict whole-array no-NaN check. Portal behavior is not established here. No raster was repaired or rewritten here. A prior portal range error cannot be diagnosed from its text alone; exterior NaNs and out-of-range values must both be checked. Do not assume renaming or clipping establishes scientific eligibility.</p>
 <p>When a future candidate passes every gate, download its exact hash-bound TIFF, use its unique submission name and note (at most 140 characters), and upload it on the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">competition submission page</a>. Save the artifact-linked organizer receipt. For now, do not upload any file from this table.</p>
 <p><a href="data/historical_champions_20261028.json">Full machine-readable validator and overlap receipt</a> ·
 <a href="https://github.com/drivendataorg/gems-prize-reference-solution">Official reference solution</a> ·
