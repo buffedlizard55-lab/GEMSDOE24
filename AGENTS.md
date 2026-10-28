@@ -1,5 +1,14 @@
 # Standing project instructions
 
+## 2026-10-28 historical-champion continuation
+
+Read `docs/session-review-b87d739e-20261028.md` and the existing owner brief with README.
+`scripts/review_historical_champions.py` reopens the nine owner-named historical
+champions using immutable URLs, hashes, the shared validator and retained lattice.
+Its report is geometry/format only, not new HOLDOUT-DTI, score estimates, a current-head
+registry census or permission to submit. Every historical champion remains SUBMIT NO.
+No lane was assigned, new TIFF generated or stopped budget retuned.
+
 ## Pre-training feasibility continuation — 2026-10-27
 
 Read `knowledge/owner_brief_2026-10-27_feasibility.md` and

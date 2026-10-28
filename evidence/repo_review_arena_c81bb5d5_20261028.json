@@ -30,9 +30,9 @@
   "submission_note": "No candidate generated; no submission authorized.",
   "verdict": "negative",
   "tests": {
-    "pytest": "552 passed in 202.48 seconds",
+    "pytest": "564 passed after main integration and format normalization",
     "ruff_check": "passed",
-    "ruff_format_check": "passed; 310 files already formatted",
+    "ruff_format_check": "passed; 318 files already formatted",
     "compileall": "passed",
     "javascript_syntax": "passed",
     "git_diff_check": "passed"
