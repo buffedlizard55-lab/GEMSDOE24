@@ -50,7 +50,15 @@ def test_download_is_on_the_first_screen_and_the_file_is_the_registered_one(buil
     for page in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         html = (built / page).read_text()
         assert row["file"] in html and 'download="' + row["file"] + '"' in html
-        # the download button precedes any metrics/sections: it sits in the hero
+        assert 'id="unique-submission"' in html
+        assert "Per-site final-dot comparison" in html
+        # Both the explicit audit download and current artifact are on the initial page.
+        next_sections = [
+            html.index(marker)
+            for marker in ('class="metrics"', 'class="pagehead"')
+            if marker in html
+        ]
+        assert next_sections and html.index('id="unique-submission"') < min(next_sections)
         assert (
             html.index(row["file"]) < html.index('class="metrics"')
             if 'class="metrics"' in html

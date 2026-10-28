@@ -255,5 +255,3 @@ def test_postprocess_audit_label_selects_the_right_reference_entry():
     assert out["slot_recommendation"] == "not_recommended"  # judged on ITS audit, not the primary's
     with pytest.raises(ValueError, match="same_exact_candidate_audited"):
         require_postprocess_evidence("ref", "alt", True, v, a)  # default label points at "cand"
-
-

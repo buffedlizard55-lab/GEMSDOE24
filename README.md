@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current continuation — 2026-10-28 (`arena/be366ea4-gemsdoe24`): nine historical files audited; SUBMIT NO
+
+**The existing research TIFF remains downloadable but unauthorized for submission.** No new TIFF, experiment, slot, or organizer score was created in this review. The nine pinned historical champion TIFFs were hash-verified; the maximum directed 3-pixel candidate-dot overlap is **0.24328593996840442** (GEMSDOE24), with no exact dot-mask alias. This covers only those nine historic files—not current heads, the full registry, other competitors, or pre-placement rank correlation. The candidate's HOLDOUT-DTI 0.003802 remains internal and very low; leaderboard estimate: **NOT ESTIMABLE**. GEMSDOE32's 0.2778 remains owner-reported/unverified; this comparison does not explain or predict it. Read the [three-pass review](docs/repo-review-arena-be366ea4-20261028.md), [full overlap receipt](evidence/historical_champion_overlap_20261028.json), and [current download/submission guide](docs/executive-summary.html). **Method-lane assignment and separate weekly-slot approval remain blockers.**
+
 ## Continuation — 2026-10-28 (branch `arena/2812634d-gemsdoe24`): unique GeoTIFF download, SUBMIT NO
 
 **One automated, unique GeoTIFF is downloadable for research. It is NOT approved to submit.** Estimate: **NOT ESTIMABLE**.

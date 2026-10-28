@@ -16,6 +16,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 CARD = "evidence/24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db_run_card.json"
 RECEIPT = "evidence/unique_local_overlap_20261028.json"
+FOCUS_OVERLAP = "evidence/historical_champion_overlap_20261028.json"
 
 
 def _load_build_site():
@@ -30,7 +31,14 @@ def _load_build_site():
 
 
 def _mirror(tmp: Path) -> Path:
-    for rel in (CARD, RECEIPT, "docs/downloads", "docs/data"):
+    for rel in (
+        CARD,
+        RECEIPT,
+        FOCUS_OVERLAP,
+        "docs/data/historical_champions_20261028.json",
+        "docs/downloads",
+        "docs/data",
+    ):
         src = ROOT / rel
         dst = tmp / rel
         if src.is_dir():
@@ -48,6 +56,8 @@ def test_real_section_is_do_not_submit_and_links_resolve():
     assert "SUBMIT: NO" in html
     assert "NOT ESTIMABLE" in html
     assert "SUBMIT: YES" not in html.upper().replace("SUBMIT: NO", "")
+    assert "0.2433" in html and "GEMSDOE24" in html
+    assert "historical-file comparison only" in html
     note = re.search(r"Note \(≤140 chars, (\d+) used\)", html)
     assert note and int(note.group(1)) <= 140
     for href in re.findall(r'href="(downloads/[^"]+|data/[^"]+)"', html):
@@ -84,4 +94,26 @@ def test_section_refuses_a_receipt_for_a_different_file(tmp_path):
     receipt["candidate_sha256"] = "0" * 64
     rp.write_text(json.dumps(receipt))
     with pytest.raises(ValueError, match="does not describe this GeoTIFF"):
+        bs.render_unique_submission(tmp)
+
+
+def test_section_refuses_a_misleading_historical_overlap_receipt(tmp_path):
+    bs = _load_build_site()
+    tmp = _mirror(tmp_path)
+    rp = tmp / FOCUS_OVERLAP
+    receipt = json.loads(rp.read_text())
+    receipt["full_registry_uniqueness"] = "PASS"
+    rp.write_text(json.dumps(receipt))
+    with pytest.raises(ValueError, match="stale or permissive"):
+        bs.render_unique_submission(tmp)
+
+
+def test_section_refuses_a_tampered_per_site_comparison(tmp_path):
+    bs = _load_build_site()
+    tmp = _mirror(tmp_path)
+    rp = tmp / FOCUS_OVERLAP
+    receipt = json.loads(rp.read_text())
+    receipt["comparisons"][0]["candidate_within_3px_of_reference"] = 0.71
+    rp.write_text(json.dumps(receipt))
+    with pytest.raises(ValueError, match="incomplete, stale or permissive"):
         bs.render_unique_submission(tmp)
