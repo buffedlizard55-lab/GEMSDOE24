@@ -1,5 +1,11 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current continuation — 2026-10-28, session b87d739e
+
+**NO NEW TIFF · NO EXPERIMENT · SUBMIT NO.** Start with the [nine historical champions executive table](docs/historical-champions.html) and [three-pass review / next steps](docs/session-review-b87d739e-20261028.md). All nine owner-named historical champion artifacts were freshly downloaded at immutable commits, hash-checked and read back with the shared validator. All pass local format checks; **all fail the literal lattice uniqueness rule**. GEMSDOE25 and GEMSDOE30 have identical in-footprint predictions. Exact research downloads, full validator results, unknown leaderboard estimates and explicit submission decisions are in the [machine-readable report](docs/data/historical_champions_20261028.json).
+
+**Read the owner prompt below and the [standing normalized requirements](knowledge/owner_brief_2026-10-27_feasibility.md) every session.** This request repeats the nine-site focus, unique TIFF requirement, holdout/novelty gates, three-pass review, scientific research, prominent download guide and PR/merge requirement. Maximize P(Win) and Own the Outcome mean not fabricating success: the method paragraph remains absent, standard budgets fail the retained-lattice gate, and no candidate is approved. Do not restart stopped lanes, invent a lane, claim an unverified score is organizer-confirmed, or use a weekly slot. The full historical prompt remains preserved below; this note is normalized, not a verbatim transcript. [Current negative run card](evidence/session_b87d739e_run_card.json).
+
 ## Verified repository review — 2026-10-28 (branch `arena/9e77df06-gemsdoe24`)
 
 **NO NEW TIFF · NO EXPERIMENT · DO NOT SUBMIT.** Full test suite **552/552 passed** and ruff clean (with full git history; a shallow clone fails 6 tests). All 57 downloaded GeoTIFFs read back in [0, 1]. The "[0, 1]" portal error is **not explained**: the organizer example mirror also uses NaN outside the footprint. Read [the verified review](docs/repo-review-20261028-verified.md) first.

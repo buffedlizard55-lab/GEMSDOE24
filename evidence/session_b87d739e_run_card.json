@@ -1,0 +1,111 @@
+{
+  "schema": "session-review-run-card-v1",
+  "checked_utc": "2026-10-28T16:17:25.358430+00:00",
+  "hypothesis": "Audit whether the nine owner-named historical champions qualify as unique new submissions.",
+  "mechanism": "Immutable download, SHA-256 readback, shared format validator, in-footprint aliases and retained-lattice distance union; no geological experiment.",
+  "non_fault_mimic": "Space-filling calibration geometry can trigger high overlap without shared geological reasoning; intrusive contacts and survey seams can mimic proposed geophysical fronts.",
+  "holdout_dti": null,
+  "ci95": null,
+  "evaluator_version": null,
+  "n_withheld_positive_pixels": null,
+  "holdout_status": "NOT RUN; no assigned method paragraph; common fixed budgets fail necessary novelty gate.",
+  "correlation_overlap_vs_registry": {
+    "rank_correlation": null,
+    "surface_test": "NOT RUN; no surface generated",
+    "final_dot_scope": "Nine historical champion files vs one retained lattice; not exhaustive registry",
+    "rows": [
+      {
+        "site": "GEMSDOE24",
+        "candidate_dot_overlap_within_3px": 0.9992175664652316,
+        "exact_in_footprint_aliases": []
+      },
+      {
+        "site": "GEMSDOE25",
+        "candidate_dot_overlap_within_3px": 0.9991608074393287,
+        "exact_in_footprint_aliases": [
+          "GEMSDOE30"
+        ]
+      },
+      {
+        "site": "GEMSDOE27",
+        "candidate_dot_overlap_within_3px": 0.9992336290112184,
+        "exact_in_footprint_aliases": []
+      },
+      {
+        "site": "GEMSDOE28",
+        "candidate_dot_overlap_within_3px": 0.9990971853425386,
+        "exact_in_footprint_aliases": []
+      },
+      {
+        "site": "GEMSDOE30",
+        "candidate_dot_overlap_within_3px": 0.9991608074393287,
+        "exact_in_footprint_aliases": [
+          "GEMSDOE25"
+        ]
+      },
+      {
+        "site": "GEMSDOE31",
+        "candidate_dot_overlap_within_3px": 0.9991790840568173,
+        "exact_in_footprint_aliases": []
+      },
+      {
+        "site": "GEMSDOE32",
+        "candidate_dot_overlap_within_3px": 0.9991501566898603,
+        "exact_in_footprint_aliases": []
+      },
+      {
+        "site": "GEMSDOE33",
+        "candidate_dot_overlap_within_3px": 0.9991400931565747,
+        "exact_in_footprint_aliases": []
+      },
+      {
+        "site": "GEMSDOE36",
+        "candidate_dot_overlap_within_3px": 0.9991764039738509,
+        "exact_in_footprint_aliases": []
+      }
+    ]
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_raster": "NOT GENERATED",
+    "historical_files_checked": 9,
+    "all_local_format_valid": true,
+    "full_receipt": "docs/data/historical_champions_20261028.json",
+    "checks": "Single-band CRS/shape/transform match; finite values inside footprint in [0,1]. No organizer acceptance established."
+  },
+  "submission_name": null,
+  "note": "Historical champion readback only; all nine fail literal uniqueness. No new TIFF, holdout, or slot; DO NOT SUBMIT.",
+  "verdict": "negative",
+  "submission_authorized": false,
+  "new_tiffs": 0,
+  "new_experiments": 0,
+  "competition_slots_used": 0,
+  "source_freshness": "Nine GitHub main heads checked 2026-10-28T16:07:47Z; all differ from portfolio pins. Not a current-head artifact audit.",
+  "official_source": {
+    "url": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/README.md",
+    "sha256": "cfa4d55559c9128313beb9417eae7e0a94c31677132afb1120f9e86222804239",
+    "freshly_fetched": true
+  },
+  "verification": {
+    "pass1": "Nine immutable files downloaded, hashes and shared validation replayed. Initial full suite: 548 passed, 4 failed before complete history restoration.",
+    "pass2": "Full history restored; seven new regression tests passed; wrong Pages evidence link fixed; site build passed; whole-repo ruff clean.",
+    "pass3": "Full suite 559 passed in 256.55s after history restoration; whole-repo ruff and diff whitespace checks passed; all nine hashes and new-page local links rechecked. No new TIFF/holdout or score estimate."
+  },
+  "limitations": [
+    "No new high-scoring unique TIFF achieved.",
+    "Missing assigned method paragraph.",
+    "Literal lattice gate blocks common budgets; no exemption made.",
+    "Training raster and prepared cache absent; not restored because prior blockers prevent authorized experiment.",
+    "No live organizer receipts, leaderboard, quota or hidden labels.",
+    "Fresh current-head exhaustive artifact audit and new scientific holdout not performed.",
+    "First two historical prospective hypotheses overlap open PR #70; not certified untried."
+  ],
+  "pull_request": null,
+  "tests": {
+    "command": ".venv/bin/pytest -q",
+    "passed": 559,
+    "failed": 0,
+    "ruff": "All checks passed",
+    "site_build": "PASS"
+  }
+}
