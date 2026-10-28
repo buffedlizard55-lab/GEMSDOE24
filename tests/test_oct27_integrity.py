@@ -97,8 +97,8 @@ def test_unique07_read_only_review_reproduces_leak_and_exact_duplicate():
 
 
 def test_selector_uses_pinned_external_point_floor_but_never_authorizes_it():
-    assert selector.RECORDED_BEST_EVIDENCE["lane"] == "KPL-36"
-    assert selector.RECORDED_BEST_DTI == pytest.approx(0.17010000946379217)
+    assert selector.RECORDED_BEST_EVIDENCE["lane"] == "S2D-36"
+    assert selector.RECORDED_BEST_DTI == pytest.approx(0.2007657135656901)
     assert selector.RECORDED_BEST_EVIDENCE["ok_to_submit"] is False
     assert "not independently replayed" in selector.RECORDED_BEST_EVIDENCE["scope"]
 

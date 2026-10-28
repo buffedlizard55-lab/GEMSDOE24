@@ -1,0 +1,192 @@
+{
+  "schema": "peer-s2d36-research-audit-v1",
+  "checked_utc": "2026-10-28T16:24:12.613976+00:00",
+  "scope": "Exact peer TIFF, source evidence identity/arithmetic, and one lattice comparator; not a current nine-site census, full novelty audit, or scientific replay.",
+  "source_commit": "4b717aaff6eaf5de9b53030e637f8e1cf0d56e43",
+  "source_identities": {
+    "raster": {
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/4b717aaff6eaf5de9b53030e637f8e1cf0d56e43/docs/downloads/gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.tif",
+      "git_blob": "6e07be6811545c8022d52a942d941b5fdb33b18c",
+      "sha256": "d3ba2fdb987bec34fc0c61148829032a431a95b8921b1bd66d61ddd047f56b72",
+      "bytes": 825930
+    },
+    "card": {
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/4b717aaff6eaf5de9b53030e637f8e1cf0d56e43/evidence/s2d36_run_card_20261027.json",
+      "git_blob": "fa8b5e3403fb4965a9e1f33cc2e52f6aaf328ab5",
+      "sha256": "5df79bfe5d1da5c04bac8e57d78333385105a31f5777eabfe452441ba2f2114c",
+      "bytes": 22149
+    },
+    "holdout": {
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/4b717aaff6eaf5de9b53030e637f8e1cf0d56e43/evidence/s2d36_holdout_experiments_20261027.json",
+      "git_blob": "d99dd80faf0e05fe135eef224577b3acdf195099",
+      "sha256": "2a6dc20fb835ce227b506582d7d88b480a257c7d210f9061309f4d1fa213f9c2",
+      "bytes": 33848
+    },
+    "canary": {
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/4b717aaff6eaf5de9b53030e637f8e1cf0d56e43/evidence/s2d36_leakage_canary_20261027.json",
+      "git_blob": "7963061a465eaa5b19bb5c1ec79c7ce3caa259d3",
+      "sha256": "e41216e203a00c147aebd8ab1ac3a4a7e46f930752a26423208fb644d54c534a",
+      "bytes": 15717
+    },
+    "preregistration": {
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/4b717aaff6eaf5de9b53030e637f8e1cf0d56e43/evidence/s2d36_preregistration_20261027.json",
+      "git_blob": "02a67b6aeaf0e7c66fc05ecb3c1207352f03e260",
+      "sha256": "0cb39811a8caf986cd503b3e194923745e6819bfe3f3fc155c049462c91c9ac1",
+      "bytes": 10435
+    }
+  },
+  "recorded_holdout": {
+    "label": "HOLDOUT-DTI",
+    "value": 0.2007657135656901,
+    "ci95": [
+      0.18648773519590356,
+      0.21533340056778932
+    ],
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positive_pixels": 60988,
+    "source_ci_method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+    "source_ci_resamples": 1999,
+    "scope": "Source-recorded only; pooled arithmetic rechecked, no model/fold/bootstrap replay.",
+    "canary_scope": "Source reports 122 value features using reused receipts; this canary file contains 21 new value rows. No complete independent missingness-canary replay was performed.",
+    "source_document_discrepancy": "The peer research prose describes 1,000 segment-cluster resamples, while the pinned holdout JSON records 1,999 spatial-block resamples for this CI; not reconciled."
+  },
+  "local_format_validation": {
+    "file": "gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.tif",
+    "bytes": 825930,
+    "sha256": "d3ba2fdb987bec34fc0c61148829032a431a95b8921b1bd66d61ddd047f56b72",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "template_grid_and_footprint_match_pinned_mirror": true,
+    "template_origin_authenticated": false,
+    "template_provenance_limit": "The owner-mirror grid/footprint match does not authenticate organizer origin.",
+    "official_format_compliant": false,
+    "official_format_compliant_scope": "Legacy diagnostic only: local mirror-grid and NaN-outside match; neither organizer authentication nor portal acceptance is established.",
+    "in_footprint_positive_pixels": 37654,
+    "in_footprint_mass": 37654.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "template_unmasked_and_self_contained": {
+        "pass": true,
+        "detail": "count=1; masked inside=0; self-contained=True",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "self_contained_single_tiff": {
+        "pass": true,
+        "detail": "Rasterio dataset files: ['gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.tif']; sidecars are not included in a single-TIFF submission",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_unmasked": {
+        "pass": true,
+        "detail": "0 masked/NoData pixels inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "literal_lattice_overlap": {
+    "candidate_within_3px_of_reference": 0.9947947097253944,
+    "reference_within_3px_of_candidate": 0.09541071558036686,
+    "radius_px": 3.0,
+    "candidate_dots": 37654,
+    "reference_dots": 206895
+  },
+  "literal_lattice_limit": 0.7,
+  "literal_uniqueness_pass": false,
+  "source_control_witness": {
+    "path": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+    "footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817"
+  },
+  "source_control_budget_bound": {
+    "candidate_dot_count": 37654,
+    "minimum_overlapping_dots": 31005,
+    "minimum_overlap_fraction": 0.8234184947150369,
+    "overlap_limit_fraction": 0.7,
+    "strictly_exceeds_limit": true,
+    "status": "STOP_IMPOSSIBLE_BUDGET",
+    "maximum_budget_not_ruled_out_by_this_bound": 22163,
+    "submission_authorized": false
+  },
+  "preplacement_surface_test": "NOT REPLAYED",
+  "full_registry_test": "NOT REPLAYED; one decisive literal comparator fails",
+  "leaderboard_score": null,
+  "organizer_receipt": null,
+  "submission_authorized": false,
+  "verdict": "negative",
+  "new_experiments": 0,
+  "new_geological_tiffs": 0,
+  "competition_slots_used": 0
+}

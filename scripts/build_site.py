@@ -77,7 +77,7 @@ def page(title, active, body, prefix=""):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="DOE GEMS fault research: independent GeoTIFF downloads, automated negative submission gates, and reproducible evidence."><meta name="source-feed" content="{prefix}data/source_health.json"><title>{e(title)} · GEMS DOE 24</title><link rel="stylesheet" href="{prefix}assets/style.css"></head>
 <body><header><div class="nav"><a class="brand" href="{prefix}index.html"><span class="mark" aria-hidden="true">∿</span><span>GEMS DOE 24<small>Geologic mapping · evidence first</small></span></a><nav class="navlinks" aria-label="Main navigation">{"".join(nav)}</nav></div></header>
-<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}session-review-a73c5f88-20261027.md">Latest three-pass review and next-session blockers</a> · <a href="{prefix}submission-readiness.html">Pre-training feasibility gate: why common dot budgets cannot pass uniqueness</a> · <a href="{prefix}portfolio-review-20261026.md">Current audit &amp; blockers</a> · <a href="{prefix}artifact-audit.html">Earlier Git-object inventory</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone. <a href="{prefix}metric-integrity-20261026.md">Corrected B2 metric explanation</a>.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
+<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}session-review-c1d3a8b8-20261028.md">Latest three-pass review and next-session blockers</a> · <a href="{prefix}submission-readiness.html">Pre-training feasibility gate: why common dot budgets cannot pass uniqueness</a> · <a href="{prefix}portfolio-review-20261026.md">Current audit &amp; blockers</a> · <a href="{prefix}artifact-audit.html">Earlier Git-object inventory</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone. <a href="{prefix}metric-integrity-20261026.md">Corrected B2 metric explanation</a>.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
 
 
 def download_button(row, prefix, label="Download submission .tif", primary=True):
@@ -125,7 +125,7 @@ def build_independent_site(primary):
         raise SystemExit("Current download checksum does not match the run card")
     if primary["ok_to_submit"] or card["verdict"] != "negative" or card["ok_to_submit"]:
         raise SystemExit("Stopped negative artifact cannot be presented as submit-ready")
-    from gems.submission import check_variants
+    from gems.submission import check_variants, recorded_validation_matches
 
     for key, row in checks.items():
         target = DOCS / "downloads" / row["file"]
@@ -133,7 +133,7 @@ def build_independent_site(primary):
         if (
             not fresh["format_valid"]
             or not row["format_valid"]
-            or any(fresh.get(field) != value for field, value in row.items())
+            or not recorded_validation_matches(fresh, row)
         ):
             raise SystemExit(f"Invalid, changed or stale download variant: {key}")
     if primary["file"] != card["submission_name"] or primary["note"] != card["note"]:
@@ -486,8 +486,8 @@ def build_independent_site(primary):
     )
     overview = (
         current_banner
-        + focus_review["current"]
         + focus_review["alert"]
+        + focus_review["current"]
         + current_note
         + s3dep1_hero
         + xvar1_hero
@@ -507,8 +507,8 @@ def build_independent_site(primary):
     )
     executive = (
         current_banner
-        + focus_review["current"]
         + focus_review["alert"]
+        + focus_review["current"]
         + current_note
         + s3dep1_exec
         + xvar1_exec
@@ -607,6 +607,8 @@ def build_independent_site(primary):
     for name in (
         "site_browser_integrity_review_20261027.json",
         "current_focus_nine_file_audit_20261027.json",
+        "peer_s2d36_audit_20261028.json",
+        "session_c1d3a8b8_run_card_20261028.json",
         "tmcg_integrity_review_20261027.json",
         "unique07_integrity_review_20261027.json",
         "band6_provenance_review_20261027.json",

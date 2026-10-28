@@ -69,12 +69,26 @@ def render(root: Path) -> dict[str, str]:
     )
     band = json.loads((root / "evidence/band6_provenance_review_20261027.json").read_text())
     floor = selection_floor(root)
+    peer = json.loads((root / "evidence/peer_s2d36_audit_20261028.json").read_text())
+    if (
+        peer.get("schema") != "peer-s2d36-research-audit-v1"
+        or peer.get("verdict") != "negative"
+        or peer.get("submission_authorized") is not False
+        or peer["source_identities"]["card"]["sha256"] != floor["source_sha256"]
+        or peer["recorded_holdout"]["value"] != floor["holdout"]["dti"]
+        or peer["local_format_validation"]["sha256"]
+        != peer["source_identities"]["raster"]["sha256"]
+        or peer["local_format_validation"]["format_valid"] is not True
+        or peer["literal_lattice_overlap"]["candidate_within_3px_of_reference"] <= 0.70
+        or peer.get("literal_uniqueness_pass") is not False
+    ):
+        raise ValueError("Peer research audit or negative decision changed")
     if (
         band["schema"] != "band6-provenance-audit-v1"
         or band["organizer_authentication"] != "not established"
     ):
         raise ValueError("Band-6 provenance audit is malformed")
-    if floor["lane"] != "KPL-36" or floor["ok_to_submit"] is not False:
+    if floor["lane"] != "S2D-36" or floor["ok_to_submit"] is not False:
         raise ValueError("External comparison floor or fail-closed status changed")
     e = escape
     tr, mobile = [], []
@@ -90,6 +104,7 @@ def render(root: Path) -> dict[str, str]:
         )
         owner = row["historical_best_owner_reported_unverified"]
         history = f"{owner['owner_reported']:.4f} OWNER-REPORTED / UNVERIFIED"
+        historical_file = f"<code>{e(owner['name'])}</code>"
         source = f'<a href="{e(row["source_card"]["source_url"], quote=True)}">Source run card</a>'
         file_link = (
             f'<a href="{href}"><code class="portfolio-file">{e(name)}</code></a>'
@@ -106,12 +121,13 @@ def render(root: Path) -> dict[str, str]:
             source_state = "UNCHANGED since audited commit"
         tr.append(
             f'<tr><th scope="row">{e(row["site"])}</th><td>{file_link}</td><td>{score}</td>'
-            f'<td>NOT ESTIMABLE</td><td>{e(history)}<br><span class="micro">Not linked to an organizer receipt.</span></td>'
+            f"<td>NOT ESTIMABLE</td><td>{historical_file}<br>{e(history)}<br>"
+            f'<span class="micro">Claimed filename/score; no organizer receipt.</span></td>'
             f"<td>{novelty}</td><td>{e(source_state)}</td><td><strong>NO</strong></td></tr>"
         )
         mobile.append(
             f"<article><h3>{e(row['site'])}</h3><p>{file_link}</p><p>{score}</p>"
-            f"<p>Leaderboard estimate: NOT ESTIMABLE</p><p>{e(history)}</p><p>{novelty}</p>"
+            f"<p>Leaderboard estimate: NOT ESTIMABLE</p><p>{historical_file}<br>{e(history)}</p><p>{novelty}</p>"
             f"<p>Source: {e(source_state)}</p><p><strong>SUBMIT: NO</strong></p></article>"
         )
     research = f"""<section id="current-focus-files"><h2>Current nine-site research file review</h2>
@@ -122,11 +138,13 @@ def render(root: Path) -> dict[str, str]:
 <div class="portfolio-mobile">{"".join(mobile)}</div><p><a href="data/current_focus_nine_file_audit_20261027.json">Machine-readable nine-file audit</a> · <a href="data/current_focus_source_pins_20261027.json">Pinned source identities</a> · <a href="data/portfolio_freshness.json">Source feed</a></p></section>"""
     tmcg_name = e(tmcg["submission_name"], quote=True)
     unique_name = e(unique["submission_name"], quote=True)
+    peer_url = peer["source_identities"]["raster"]["source_url"].replace("/blob/", "/raw/", 1)
     alert = f"""<section class="card" id="oct27-integrity"><h2>New integrity review: download for research; do not submit</h2>
 <p><strong>No new TIFF or experiment was produced by this review; no slot was spent.</strong> Two files from concurrent merged sessions remain research artifacts. Both fail literal uniqueness. H-UNIQUE-07 also used the full fault catalogue in fold eligibility, including withheld segments; its reported holdout is invalid. Its raw-feature canary did not test that mask.</p>
-<div class="actions"><a class="button" href="downloads/{tmcg_name}" download>Download TMCG — research only</a><a class="button" href="downloads/{unique_name}" download>Download quarantined H-UNIQUE-07 — research only</a></div>
+<div class="actions"><a class="button" href="{e(peer_url, quote=True)}">Download pinned S2D-36 TIFF — research only, SUBMIT: NO</a><a class="button" href="downloads/{tmcg_name}" download>Download TMCG — research only</a><a class="button" href="downloads/{unique_name}" download>Download quarantined H-UNIQUE-07 — research only</a></div>
+<p>S2D-36 exact-file recheck: SHA-256 <code class="hash">{peer["source_identities"]["raster"]["sha256"]}</code>; local float32/grid/range and strict whole-array [0,1] checks pass, but <strong>{peer["literal_lattice_overlap"]["candidate_within_3px_of_reference"]:.2%}</strong> of its dots are within 3 pixels of the retained lattice (limit 70%). Neither template organizer origin nor portal acceptance is established. <a href="data/peer_s2d36_audit_20261028.json">Read the independent research audit</a>.</p>
 <p>TMCG: {tmcg["correlation_overlap_vs_registry"]["rows"][0]["candidate_dot_overlap_within_3px"]:.2%} final-dot overlap with the lattice; source-recorded HOLDOUT-DTI {tmcg["holdout"]["dti"]:.5f} [0.06271, 0.08168], <code>gems-segment-pooled-v1</code>, 60,988 withheld, not replayed. H-UNIQUE-07: {unique["correlation_overlap_vs_registry"]["rows"][0]["candidate_dot_overlap_within_3px"]:.2%} lattice overlap and leaked holdout. Neither original pre-placement check is established.</p>
-<p>The highest local main-branch point record remains S3DEP1 (0.16606, not replayed). A pinned GEMSDOE36 KPL-36 source reports a higher same-version/count point of <strong>HOLDOUT-DTI {floor["holdout"]["dti"]:.5f}</strong> [0.15509, 0.18614], 60,988 withheld. It is a conservative prospective floor, not a scientifically replayed or proven comparable winner; its own exact TIFF also fails the lattice gate. Open PR #50 separately reports DRAIN5 0.16950; it is unmerged and duplicate.</p>
+<p>The highest local main-branch point record remains S3DEP1 (0.16606, not replayed). A pinned GEMSDOE36 S2D-36 source reports <strong>HOLDOUT-DTI {floor["holdout"]["dti"]:.6f}</strong> [{floor["holdout"]["ci95"]["interval"][0]:.6f}, {floor["holdout"]["ci95"]["interval"][1]:.6f}], <code>gems-segment-pooled-v1</code>, 60,988 withheld. We conservatively use this as a prospective comparison floor; it is not a scientifically replayed or proven comparable winner. Its exact TIFF also fails the literal lattice gate; the source reports a historical feature-value canary, not an independently verified full missingness screen. <a href="https://github.com/buffedlizard55-lab/GEMSDOE36/blob/4b717aaff6eaf5de9b53030e637f8e1cf0d56e43/evidence/s2d36_run_card_20261027.json">Pinned source run card</a>. KPL-36 reports 0.17010; open PR #50 separately reports DRAIN5 0.16950. Neither is a submit authorization.</p>
 <p>Band-6 correction: the legacy name <code>bouguer_tc_mgal</code> does not establish gravity or mGal units. In a fixed 250,000-pixel sample it has Spearman {band["correlations"]["TC"]["spearman"]:.5f} with cached GeoDAWN radiometric total count, while the mirror tag says magnetic tilt/curvature. Identity and source authentication remain unverified.</p>
 <p><strong>Official-text distinction:</strong> the public format text calls for single-band float32 in [0,1], the supplied grid, and null/NaN outside bounds. Our allfinite variant instead writes zero outside the sample footprint. The earlier portal rejection cause is unknown; neither variant has an organizer acceptance receipt. <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official format</a> · <a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4">Pixel-exact mask clarification</a>.</p>
 <p><a href="data/tmcg_integrity_review_20261027.json">TMCG exact-file audit</a> · <a href="data/unique07_integrity_review_20261027.json">H-UNIQUE-07 leakage audit</a> · <a href="data/band6_provenance_review_20261027.json">Band-6 provenance audit</a> · <a href="data/official_public_review_20261027.json">Official-source review and access-policy incident</a> · <a href="data/site_browser_integrity_review_20261027.json">Browser accessibility review</a></p></section>"""

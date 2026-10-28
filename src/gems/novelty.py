@@ -20,6 +20,8 @@ from gems.uniqueness_budget import bounds as exact_budget_bounds
 
 def correlation(a, b):
     """Spearman rho with explicit undefined status for constant arrays."""
+    if any(np.ma.isMaskedArray(x) and np.ma.getmaskarray(x).any() for x in (a, b)):
+        raise ValueError("Correlation vectors must not contain masked pixels")
     a, b = np.asarray(a), np.asarray(b)
     if a.shape != b.shape or a.ndim != 1 or not len(a):
         raise ValueError("Nonempty aligned vectors required")
@@ -32,6 +34,8 @@ def correlation(a, b):
 
 def rank_correlation(ranks_a, b):
     """Spearman given precomputed average ranks for the first vector."""
+    if any(np.ma.isMaskedArray(x) and np.ma.getmaskarray(x).any() for x in (ranks_a, b)):
+        raise ValueError("Correlation vectors must not contain masked pixels")
     ra = np.asarray(ranks_a, dtype=np.float64)
     b = np.asarray(b)
     if (
@@ -55,10 +59,23 @@ def rank_correlation(ranks_a, b):
 
 
 def dot_overlap(candidate, reference, radius_px=3.0):
-    """Directional inclusive-radius coverage, not a symmetric similarity score."""
-    c, r = np.asarray(candidate, bool), np.asarray(reference, bool)
-    if c.shape != r.shape or c.ndim != 2 or not np.isfinite(radius_px) or radius_px < 0:
-        raise ValueError("Aligned masks and nonnegative radius required")
+    """Directional inclusive-radius coverage for explicit finite binary masks.
+
+    Raw GeoTIFFs with NaN outside must be clipped to the footprint by the
+    caller; NaN is truthy in NumPy and must never be silently counted as a dot.
+    """
+    if any(np.ma.isMaskedArray(x) and np.ma.getmaskarray(x).any() for x in (candidate, reference)):
+        raise ValueError("Dot masks cannot contain masked pixels")
+    c, r = np.asarray(candidate), np.asarray(reference)
+    if (
+        c.shape != r.shape
+        or c.ndim != 2
+        or not np.isin(c, [0, 1]).all()
+        or not np.isin(r, [0, 1]).all()
+        or not np.isfinite(radius_px)
+        or radius_px < 0
+    ):
+        raise ValueError("Aligned finite binary masks and nonnegative radius required")
     cp, rp = np.argwhere(c), np.argwhere(r)
     forward = None if not len(cp) else 0.0
     reverse = None if not len(rp) else 0.0
@@ -97,6 +114,10 @@ def classify_space_filling_control(
     overlap at radius ``radius_px`` cannot distinguish an unrelated detector from a copy,
     whereas full-footprint Spearman rank correlation (``|rho| <= 0.90``) remains informative.
     """
+    if any(
+        np.ma.isMaskedArray(x) and np.ma.getmaskarray(x).any() for x in (footprint, reference_dots)
+    ):
+        raise ValueError("Footprint and reference masks cannot contain masked pixels")
     fp_raw, ref_raw = np.asarray(footprint), np.asarray(reference_dots)
     if (
         fp_raw.ndim != 2
@@ -206,7 +227,9 @@ def compare_registry(
     certify a pass. Every reference must match the trusted template's grid and
     its registered footprint hash.
     """
-    surface, raw_footprint = np.asarray(surface), np.asarray(footprint)
+    if np.ma.isMaskedArray(footprint) and np.ma.getmaskarray(footprint).any():
+        raise ValueError("Footprint must not contain masked pixels")
+    raw_footprint = np.asarray(footprint)
     if (
         raw_footprint.ndim != 2
         or not np.isfinite(raw_footprint).all()
@@ -214,6 +237,11 @@ def compare_registry(
     ):
         raise ValueError("Footprint must be a finite two-dimensional binary mask")
     footprint = raw_footprint.astype(bool)
+    if np.shape(surface) != footprint.shape:
+        raise ValueError("Finite footprint-aligned candidate surface required")
+    if np.ma.isMaskedArray(surface) and np.ma.getmaskarray(surface)[footprint].any():
+        raise ValueError("Candidate surface must not contain masked pixels inside the footprint")
+    surface = np.asarray(surface)
     if (
         surface.shape != footprint.shape
         or not footprint.any()
@@ -230,6 +258,8 @@ def compare_registry(
     if not template.is_file():
         raise ValueError("A template is required to validate comparator CRS and transform")
     with rasterio.open(template) as ds:
+        if len(ds.files) != 1 or Path(ds.files[0]).resolve() != template.resolve():
+            raise ValueError("Template must be self-contained, without external sidecars")
         if (
             ds.count != 1
             or ds.crs is None
@@ -237,6 +267,8 @@ def compare_registry(
             or not np.array_equal(np.isfinite(ds.read(1)), footprint)
         ):
             raise ValueError("Template grid or finite footprint does not match the candidate")
+        if np.ma.getmaskarray(ds.read(1, masked=True))[footprint].any():
+            raise ValueError("Template has masked or NoData pixels inside the footprint")
         template_crs, template_transform = ds.crs, ds.transform
     ids = np.flatnonzero(footprint)
     rng = np.random.default_rng(20261025)
@@ -246,6 +278,8 @@ def compare_registry(
     values = surface.ravel()[sample]
     full_ranks = rankdata(surface.ravel()[ids])
     if dots is not None:
+        if np.ma.isMaskedArray(dots) and np.ma.getmaskarray(dots).any():
+            raise ValueError("Candidate dots must not contain masked pixels")
         dots = np.asarray(dots)
         if (
             dots.shape != surface.shape
@@ -265,6 +299,8 @@ def compare_registry(
     for row in entries:
         path = Path(root) / row["cache_path"]
         with rasterio.open(path) as ds:
+            if len(ds.files) != 1 or Path(ds.files[0]).resolve() != path.resolve():
+                raise ValueError(f"Registry must be self-contained, without sidecars: {path}")
             if (
                 ds.count != 1
                 or ds.shape != footprint.shape
@@ -272,6 +308,8 @@ def compare_registry(
                 or ds.transform != template_transform
             ):
                 raise ValueError(f"Registry grid mismatch: {path}")
+            if np.ma.getmaskarray(ds.read(1, masked=True))[footprint].any():
+                raise ValueError(f"Registry has masked or NoData pixels inside footprint: {path}")
             a = ds.read(1)
         if not np.isfinite(a[footprint]).all() or np.any((a[footprint] < 0) | (a[footprint] > 1)):
             raise ValueError(f"Registry footprint has invalid values: {path}")

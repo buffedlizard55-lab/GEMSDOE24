@@ -40,13 +40,11 @@ def research_receipt(downloads: Path, row: dict, *, template: Path | None = None
     if checks.get("submission_authorized") is not False or checks.get("ok_to_upload") is not False:
         raise ValueError("Research receipt cannot grant upload authorization")
     if template is not None:
-        from .submission import check_variants
+        from .submission import check_variants, recorded_validation_matches
 
         fresh = check_variants(path, template)
-        # New shared-validator versions may add this explanatory annotation.
-        # Ignore only that non-decision prose, never a check or authorization flag.
-        fresh_comparable = {k: v for k, v in fresh.items() if k != "upload_authorization"}
-        recorded_comparable = {k: v for k, v in checks.items() if k != "upload_authorization"}
-        if fresh_comparable != recorded_comparable:
+        # Immutable receipts may predate additional hard checks. Every recorded
+        # decision must still agree, and every new hard check must pass today.
+        if not recorded_validation_matches(fresh, checks, ignore_fields=("upload_authorization",)):
             raise ValueError("Fresh exact-file validation disagrees with retained receipt")
     return checks

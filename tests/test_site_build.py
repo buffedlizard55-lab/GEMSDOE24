@@ -104,7 +104,9 @@ def test_nine_site_review_is_prominent_and_shows_per_site_source_state(built):
         "docs/executive-summary.html",
     ):
         html = (built / path).read_text()
-        assert html.index('id="current-focus-files"') < html.index('id="oct27-integrity"')
+        assert html.index('id="oct27-integrity"') < html.index('id="current-focus-files"')
+        assert "Download pinned S2D-36 TIFF — research only, SUBMIT: NO" in html
+        assert "99.48%" in html and "HOLDOUT-DTI 0.200766" in html
         section = BeautifulSoup(html, "html.parser").find(id="current-focus-files")
         table = section.find("table")
         rows = table.find("tbody").find_all("tr", recursive=False)
@@ -122,6 +124,7 @@ def test_nine_site_review_is_prominent_and_shows_per_site_source_state(built):
                 )
             )
             assert recorded["site"] in text and expected in text
+            assert recorded["historical_best_owner_reported_unverified"]["name"] in text
             assert "NOT ESTIMABLE" in text and "UNVERIFIED" in text and "NO" in text
             assert rendered.find("a", href=lambda href: href and recorded["source_ref"] in href)
 
@@ -478,3 +481,18 @@ def test_site_rejects_tampered_current_focus_audit(built, tamper):
         assert "audit" in result.stderr.lower() or "source" in result.stderr.lower()
     finally:
         path.write_text(original)
+
+
+def test_archived_xfront_packet_does_not_claim_all_registry_novelty(built):
+    from bs4 import BeautifulSoup
+
+    text = BeautifulSoup((built / "docs/executive-summary.html").read_text(), "html.parser")
+    packet = text.find(id="xfront").get_text(" ", strip=True)
+    assert "historical method-only novelty subset reported PASS" in packet
+    assert "does not establish all-entry novelty" in packet
+    assert "retained lattice" in packet and "fail the literal gate" in packet
+    assert "complete modern missingness canary was not verified" in packet
+    assert "Registry novelty PASSES" not in packet
+    research = (built / "docs/research.html").read_text()
+    assert "unique against every raster in the registry" not in research
+    assert "19-draw translation null" in (built / "docs/executive-summary.html").read_text()

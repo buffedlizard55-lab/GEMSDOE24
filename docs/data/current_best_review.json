@@ -200,7 +200,11 @@
     "submission_authorized": false,
     "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
     "hard_failures": [],
+    "template_grid_and_footprint_match_pinned_mirror": true,
+    "template_origin_authenticated": false,
+    "template_provenance_limit": "The owner-mirror grid/footprint match does not authenticate organizer origin.",
     "official_format_compliant": false,
+    "official_format_compliant_scope": "Legacy diagnostic only: local mirror-grid and NaN-outside match; neither organizer authentication nor portal acceptance is established.",
     "in_footprint_positive_pixels": 37654,
     "in_footprint_mass": 37654.0,
     "checks": {
@@ -209,9 +213,19 @@
         "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
         "hard_requirement": true
       },
+      "template_unmasked_and_self_contained": {
+        "pass": true,
+        "detail": "count=1; masked inside=0; self-contained=True",
+        "hard_requirement": true
+      },
       "single_band": {
         "pass": true,
         "detail": "count=1",
+        "hard_requirement": true
+      },
+      "self_contained_single_tiff": {
+        "pass": true,
+        "detail": "Rasterio dataset files: ['gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif']; sidecars are not included in a single-TIFF submission",
         "hard_requirement": true
       },
       "dtype_float32": {
@@ -232,6 +246,11 @@
       "geotransform_matches_template": {
         "pass": true,
         "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_unmasked": {
+        "pass": true,
+        "detail": "0 masked/NoData pixels inside the 5,167,373-pixel footprint",
         "hard_requirement": true
       },
       "footprint_all_finite": {
@@ -278,7 +297,7 @@
   },
   "selector": {
     "selector_version": "gems-selector-v2-literal-quota-fail-closed",
-    "decided_utc": "2026-10-27T18:51:54.381842+00:00",
+    "decided_utc": "2026-10-28T16:26:34.004150+00:00",
     "artifact": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
     "artifact_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
     "human_inspection_used": false,
@@ -300,10 +319,10 @@
     "decision": "DO_NOT_SUBMIT",
     "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
     "recorded_scientific_screen_passed": false,
-    "current_point_best_source": "evidence/external/kpl36-61783525.json",
+    "current_point_best_source": "evidence/external/s2d36-4b717aaf.json",
     "reasons": [
       "g2_leakage_canary: passed=True, worst extremity=0.6111369065925026; complete per-feature and per-fold value/missingness AUC evidence required",
-      "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.16606013635163805 vs recorded best 0.17010000946379217, paired CI lower=0.020819191342639203",
+      "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.16606013635163805 vs recorded best 0.2007657135656901, paired CI lower=0.020819191342639203",
       "g4_registry_novelty: surface|rho|=0.4273787790875911, final|rho|=0.5509969596285441, method overlap=0.7131778828278537, peer overlap=0.5433154512136825",
       "g5_exact_file_c2st: strict C2ST gate not passed on the exact file",
       "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",

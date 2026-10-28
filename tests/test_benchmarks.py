@@ -93,8 +93,9 @@ def test_pinned_concurrent_results_raise_the_conservative_selection_floor(tmp_pa
         shutil.copyfile(ROOT / row["source"], external)
     assert recorded_point_best(tmp_path)["lane"] == "S3DEP1"  # local main remains unchanged
     result = selection_floor(tmp_path)
-    assert result["lane"] == "KPL-36"
-    assert result["holdout"]["dti"] == 0.17010000946379217
+    assert result["lane"] == "S2D-36"
+    assert result["holdout"]["dti"] == 0.2007657135656901
+    assert result["holdout"]["ci95"]["interval"] == [0.18648773519590356, 0.21533340056778932]
     assert result["ok_to_submit"] is False
     assert "not independently replayed" in result["scope"]
     for row in EXTERNAL_RECORDS:
