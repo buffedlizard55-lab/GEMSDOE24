@@ -47,11 +47,55 @@ def test_real_section_is_do_not_submit_and_links_resolve():
     assert 'id="unique-submission"' in html
     assert "SUBMIT: NO" in html
     assert "NOT ESTIMABLE" in html
+    assert 'tabindex="0" role="region" aria-label="Unique research TIFF validation details"' in html
     assert "SUBMIT: YES" not in html.upper().replace("SUBMIT: NO", "")
     note = re.search(r"Note \(≤140 chars, (\d+) used\)", html)
     assert note and int(note.group(1)) <= 140
     for href in re.findall(r'href="(downloads/[^"]+|data/[^"]+)"', html):
         assert (ROOT / "docs" / href).is_file(), href
+
+
+def test_research_card_does_not_displace_current_best_download():
+    bs = _load_build_site()
+    content = '<section id="current-best-review">best CTA</section><p>more</p>'
+    result = bs.place_unique_section_after_current_best(
+        content, '<section id="unique-submission">research</section>'
+    )
+    assert result.index("best CTA") < result.index("unique-submission") < result.index("more")
+
+
+def test_section_placement_fails_closed_without_current_best():
+    bs = _load_build_site()
+    with pytest.raises(ValueError, match="missing the current point-best"):
+        bs.place_unique_section_after_current_best("<main></main>", "<section>research</section>")
+
+
+def test_parallel_candidate_section_reports_only_supported_negative_claims():
+    bs = _load_build_site()
+    html = bs.render_parallel_candidate_summary(ROOT)
+    assert 'id="parallel-research-candidates"' in html
+    assert "VENTRAD — research only; SUBMIT: NO" in html
+    assert "H-BLIND-UPWELL — research only; SUBMIT: NO" in html
+    assert "0.99817" in html
+    assert "Full registry novelty is <strong>not re-verified</strong>" in html
+    assert "HOLDOUT-DTI" in html and "NOT ESTIMABLE" in html
+    assert "not replayed in this review" in html
+    assert "SUBMIT: YES" not in html
+    for href in re.findall(
+        r'href="(downloads/[^"]+|data/[^"]+|executive-summary-unique\.html)"', html
+    ):
+        assert (ROOT / "docs" / href).is_file(), href
+
+
+def test_parallel_candidate_placement_keeps_point_best_first():
+    bs = _load_build_site()
+    content = '<section id="current-best-review">best CTA</section><p>more</p>'
+    candidate_cards = '<section id="parallel-research-candidates">negative candidates</section>'
+    lattice_card = '<section id="unique-submission">negative card</section>'
+    result = bs.place_unique_section_after_current_best(content, candidate_cards + lattice_card)
+    assert result.index("best CTA") < result.index("parallel-research-candidates")
+    assert result.index("parallel-research-candidates") < result.index("unique-submission")
+    assert result.index("unique-submission") < result.index("more")
 
 
 def test_section_refuses_a_tampered_geotiff(tmp_path):

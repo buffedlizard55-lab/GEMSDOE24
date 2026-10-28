@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a UNIQUE GEMS submission GeoTIFF — catalogue-blind upwelling conduit.
+"""Build a research-only GEMS candidate GeoTIFF — catalogue-blind upwelling conduit.
 
 Hypothesis (H-BLIND-UPWELL-01): Blind hydrothermal upwelling conduits.
 Geothermal fluids leach mobile Uranium relative to immobile Thorium (low U/Th),
@@ -25,9 +25,10 @@ produce low-U/Th + steep-slope coincidences.
 
 Protocol: SegmentHoldout hide-and-recover (buffer 15 px), pooled DTI
 (alpha 0.2, beta 0.8, 300 m triangular kernel), per-channel leakage canary,
-local dot-overlap novelty vs downloaded sibling TIFFs, exact-grid float32
-GeoTIFF with zeros outside the footprint (finite [0,1] everywhere — addresses
-the "[0, 1]" portal rejection).
+a local sibling-TIFF dot-overlap diagnostic (not a full registry check),
+exact-grid float32 GeoTIFF with zeros outside the footprint (finite [0,1]
+everywhere). This does not establish portal acceptance or the cause of the
+"[0, 1]" rejection.
 
 Outputs:
   docs/downloads/24gems-blind-upwell-conduit-<date>-<content_id>-zeros.tif
@@ -37,6 +38,7 @@ Outputs:
 
 Verdict set by gates. No upload occurs.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -52,7 +54,7 @@ from scipy.ndimage import distance_transform_edt, gaussian_filter, sobel
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from gems import emission, footprint, holdout, novelty, submission  # noqa: E402
+from gems import emission, footprint, holdout, submission  # noqa: E402
 from gems.preflight import preflight  # noqa: E402
 from gems.validator import sha256_file  # noqa: E402
 
@@ -63,7 +65,7 @@ LIDAR = ROOT / "data/external/lidar_scarp_features_u8.tif"
 RAD = ROOT / "data/external/geodawn_rad_u8.tif"
 EXT = ROOT / "data/external/geodawn_extensions_u8.tif"
 
-BUDGET_FRACTION = 0.0073      # ~0.73% of footprint pixels as dots
+BUDGET_FRACTION = 0.0073  # ~0.73% of footprint pixels as dots
 MIN_DIST_PX = 3.0
 RESULT = ROOT / "evidence/blind_upwell_experiment.json"
 DOWNLOADS = ROOT / "docs/downloads"
@@ -97,13 +99,12 @@ def build_score_surface(fp):
         t_fp = np.isfinite(t.read(1))
 
     lidar_valid = read_u8(LIDAR, 12) > 0
-    lapneg = read_u8(LIDAR, 5)       # lapneg_max
-    u_band = read_u8(RAD, 3)         # U
-    th_band = read_u8(RAD, 2)        # Th
-    tmi_up = read_u8(EXT, 4)         # TMI_up150
+    lapneg = read_u8(LIDAR, 5)  # lapneg_max
+    u_band = read_u8(RAD, 3)  # U
+    th_band = read_u8(RAD, 2)  # Th
+    tmi_up = read_u8(EXT, 4)  # TMI_up150
 
-    for name, arr in (("lapneg", lapneg), ("u", u_band), ("th", th_band),
-                      ("tmi_up", tmi_up)):
+    for name, arr in (("lapneg", lapneg), ("u", u_band), ("th", th_band), ("tmi_up", tmi_up)):
         if arr.shape != t_shape:
             raise SystemExit(f"{name} shape {arr.shape} != template {t_shape}")
 
@@ -111,7 +112,7 @@ def build_score_surface(fp):
     with np.errstate(divide="ignore", invalid="ignore"):
         uth = np.where((th_band > 0) & lidar_valid, u_band / np.maximum(th_band, 1), np.nan)
     uth_valid = lidar_valid & np.isfinite(uth)
-    uth_depletion = 1.0 - norm01(uth, uth_valid)   # low ratio -> high score
+    uth_depletion = 1.0 - norm01(uth, uth_valid)  # low ratio -> high score
 
     # Demagnetisation halo: gradient of upward-continued TMI.
     tmi_fill = tmi_up.astype(np.float64)
@@ -133,13 +134,17 @@ def build_score_surface(fp):
     score = uth_depletion * tmi_grad_n * lapneg_n
     support = fp & lidar_valid & uth_valid & valid_tmi & t_fp
     score = np.where(support, score, 0.0).astype(np.float32)
-    return score, support, {"uth_depletion": uth_depletion, "tmi_grad": tmi_grad_n,
-                            "lapneg": lapneg_n}
+    return (
+        score,
+        support,
+        {"uth_depletion": uth_depletion, "tmi_grad": tmi_grad_n, "lapneg": lapneg_n},
+    )
 
 
 def novelty_vs_local(comparator_tifs, fp, dots):
     """Local novelty: 3px dot overlap vs sibling TIFFs (candidate -> comparator)."""
     from scipy.spatial import cKDTree
+
     results = []
     cp = np.argwhere(dots)
     for path in comparator_tifs:
@@ -159,19 +164,24 @@ def novelty_vs_local(comparator_tifs, fp, dots):
             forward = float(np.mean(cKDTree(rp).query(cp)[0] <= 3.0))
         else:
             forward = 0.0
-        results.append({
-            "file": path.name,
-            "comparator_dots": int(rp.sum()),
-            "dots_within_3px": forward,
-            "overlap_gt_70": forward > 0.70,
-        })
+        results.append(
+            {
+                "file": path.name,
+                "comparator_dots": int(rp.sum()),
+                "dots_within_3px": forward,
+                "overlap_gt_70": forward > 0.70,
+            }
+        )
     return results
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--verify-recorded", action="store_true",
-                    help="Inspect recorded evidence; do not run a new experiment")
+    ap.add_argument(
+        "--verify-recorded",
+        action="store_true",
+        help="Inspect recorded evidence; do not run a new experiment",
+    )
     args = ap.parse_args()
 
     if args.verify_recorded:
@@ -185,9 +195,6 @@ def main():
     fp = footprint.load_footprint()
     with rasterio.open(LABELS) as s:
         catalogue = (s.read(1) > 0) & fp
-    with rasterio.open(EXISTING) as s:
-        existing = (s.read(1) > 0) & fp
-
     score, support, channels = build_score_surface(fp)
     print(f"Support pixels: {int(support.sum()):,}", flush=True)
     print(f"Score>0 pixels: {int((score > 0).sum()):,}", flush=True)
@@ -217,13 +224,24 @@ def main():
         "experiment_number": 1,
         "maximum_experiments": 3,
         "maximum_session_hours": 2,
-        "input_provenance": ("Committed external mirrors (USGS GeoDAWN DOI 10.5066/P93LGLVQ, 3DEP LiDAR derivatives)"),
-        "inputs": {str(p.relative_to(ROOT)): sha256_file(p)
-                   for p in (TEMPLATE, LABELS, EXISTING, LIDAR, RAD, EXT)},
-        "code_sha256": {str(p.relative_to(ROOT)): sha256_file(p)
-                        for p in (Path(__file__), ROOT / "src/gems/holdout.py",
-                                  ROOT / "src/gems/metric.py", ROOT / "src/gems/emission.py",
-                                  ROOT / "src/gems/novelty.py", ROOT / "src/gems/submission.py")},
+        "input_provenance": (
+            "Committed external mirrors (USGS GeoDAWN DOI 10.5066/P93LGLVQ, 3DEP LiDAR derivatives)"
+        ),
+        "inputs": {
+            str(p.relative_to(ROOT)): sha256_file(p)
+            for p in (TEMPLATE, LABELS, EXISTING, LIDAR, RAD, EXT)
+        },
+        "code_sha256": {
+            str(p.relative_to(ROOT)): sha256_file(p)
+            for p in (
+                Path(__file__),
+                ROOT / "src/gems/holdout.py",
+                ROOT / "src/gems/metric.py",
+                ROOT / "src/gems/emission.py",
+                ROOT / "src/gems/novelty.py",
+                ROOT / "src/gems/submission.py",
+            )
+        },
         "supported_pixels": int(support.sum()),
         "catalogue_features": [],
         "prediction_inputs_include_registry_rasters": False,
@@ -233,17 +251,24 @@ def main():
         "lane_status": "new lane: catalogue-blind upwelling conduit detector",
     }
 
-    report["fold_integrity"] = [{
-        "name": f["name"], "withheld_positive_pixels": int(f["truth"].sum()),
-        "hidden_whole_components": len(f["hidden_component_ids"]),
-        "visible_fault_pixels": int(f["visible"].sum()),
-        "train_validation_overlap": bool((f["train"] & f["valid"]).any()),
-    } for f in context.folds]
+    report["fold_integrity"] = [
+        {
+            "name": f["name"],
+            "withheld_positive_pixels": int(f["truth"].sum()),
+            "hidden_whole_components": len(f["hidden_component_ids"]),
+            "visible_fault_pixels": int(f["visible"].sum()),
+            "train_validation_overlap": bool((f["train"] & f["valid"]).any()),
+        }
+        for f in context.folds
+    ]
 
     report["canary"] = context.canary(canary_features)
     if not report["canary"]["passed"]:
-        report.update(verdict="negative", stopped_reason="leakage-canary",
-                      elapsed_seconds=time.monotonic() - started)
+        report.update(
+            verdict="negative",
+            stopped_reason="leakage-canary",
+            elapsed_seconds=time.monotonic() - started,
+        )
         save(report, RESULT)
         raise SystemExit("Leakage canary failed; no candidate packaged")
     print("Canaries passed", flush=True)
@@ -261,24 +286,33 @@ def main():
     print(f"HOLDOUT-DTI {results['dti']} CI {results['ci95']['interval']}", flush=True)
 
     # ---- Final dots on full support, excluding catalogue ----
-    final = emission.priority_poisson(score, support & ~catalogue,
-                                      round(BUDGET_FRACTION * fp.sum()), min_dist=MIN_DIST_PX)
+    final = emission.priority_poisson(
+        score, support & ~catalogue, round(BUDGET_FRACTION * fp.sum()), min_dist=MIN_DIST_PX
+    )
     if not final.any():
         raise SystemExit("No positive evidence; refusing an empty submission")
 
     # ---- Local novelty on final dots vs sibling TIFFs ----
     comparators = sorted(LOCAL_COMPARATORS.glob("*.tif"))
     dot_novelty = novelty_vs_local(comparators, fp, final)
-    max_overlap = max((r.get("dots_within_3px", 0.0) for r in dot_novelty
-                       if isinstance(r.get("dots_within_3px"), (int, float))),
-                      default=0.0)
+    max_overlap = max(
+        (
+            r.get("dots_within_3px", 0.0)
+            for r in dot_novelty
+            if isinstance(r.get("dots_within_3px"), (int, float))
+        ),
+        default=0.0,
+    )
     report["final_novelty_local"] = {
         "n_comparators": len(comparators),
         "max_dot_overlap": max_overlap,
         "comparators": dot_novelty,
     }
     novelty_pass = max_overlap <= 0.70
-    print(f"Final dots novelty (max local dot overlap): {max_overlap:.4f} pass={novelty_pass}", flush=True)
+    print(
+        f"Final dots novelty (max local dot overlap): {max_overlap:.4f} pass={novelty_pass}",
+        flush=True,
+    )
 
     # ---- Package TIF (zeros outside = finite [0,1] everywhere) ----
     content_id = submission.scored_content_id(final, fp, catalogue)
@@ -291,8 +325,10 @@ def main():
     if not checks["format_valid"]:
         raise SystemExit("Exact-file format checks failed; do not publish")
 
-    note = (f"24GEMS blind-upwell U/Thxdemagxscarp | catalogue-blind | "
-            f"research; HOLDOUT-DTI {results['dti']:.5f} | id {content_id}")
+    note = (
+        f"24GEMS blind-upwell U/Thxdemagxscarp | catalogue-blind | "
+        f"research; HOLDOUT-DTI {results['dti']:.5f} | id {content_id}"
+    )
     if len(note) > 140:
         note = note[:137] + "..."
     note_file = f"note-{name[:-4]}.txt"
@@ -302,21 +338,40 @@ def main():
     save(checks, DOWNLOADS / checks_file)
     raster_sha256 = sha256_file(zeros)
 
-    preflight_report = preflight(zeros, TEMPLATE, run_card_path=None, note=note,
-                                 expected_template_sha256=sha256_file(TEMPLATE))
+    preflight_report = preflight(
+        zeros,
+        TEMPLATE,
+        run_card_path=None,
+        note=note,
+        expected_template_sha256=sha256_file(TEMPLATE),
+    )
     preflight_file = f"preflight-{name[:-4]}.json"
     save(preflight_report, DOWNLOADS / preflight_file)
 
     # ---- Zip twin ----
     zip_path = submission.zip_single(zeros, DOWNLOADS / (name[:-4] + ".zip"))
 
-    beats_current_best = results["dti"] > 0.13000
-    ok_to_submit = (checks["format_valid"]
-                    and checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
-                    and novelty_pass
-                    and report["canary"]["passed"]
-                    and beats_current_best)
-    verdict = "promote" if ok_to_submit else "negative"
+    comparator = json.loads((ROOT / "evidence/s3dep1_run_card_20261026.json").read_text())
+    comparator_holdout = comparator.get("holdout", {})
+    if (
+        comparator_holdout.get("evaluator_version") != results["evaluator_version"]
+        or comparator_holdout.get("n_withheld_positive_pixels")
+        != results["n_withheld_positive_pixels"]
+    ):
+        raise SystemExit("Current point-best comparator protocol does not match this holdout")
+    current_best_dti = comparator_holdout["dti"]
+    beats_current_best = results["dti"] > current_best_dti
+    local_gates_pass = (
+        checks["format_valid"]
+        and checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
+        and novelty_pass
+        and report["canary"]["passed"]
+        and beats_current_best
+    )
+    # This research runner has no independent selector or quota receipt. It can
+    # record local evidence, but it can never authorize a competition slot.
+    ok_to_submit = False
+    verdict = "negative"
 
     card = {
         "hypothesis": report["hypothesis"],
@@ -344,28 +399,49 @@ def main():
         "note_limit": 140,
         "verdict": verdict,
         "ok_to_download": checks["format_valid"],
-        "ok_to_submit": ok_to_submit,
-        "reasons": ([] if ok_to_submit else
-                    ([f"holdout DTI does not beat current comparable best 0.13000"]
-                     if not beats_current_best else [])
-                    + (["format or range check failed"] if not checks["format_valid"] else [])
-                    + (["novelty gate failed"] if not novelty_pass else [])
-                    + (["canary failed"] if not report["canary"]["passed"] else [])),
+        "ok_to_submit": False,
+        "submission_authorized": False,
+        "local_gates_pass": local_gates_pass,
+        "current_comparator": {
+            "artifact": "H24-S3DEP1",
+            "evaluator_version": comparator_holdout["evaluator_version"],
+            "dti": current_best_dti,
+            "n_withheld_positive_pixels": comparator_holdout["n_withheld_positive_pixels"],
+        },
+        "selector_and_quota": "NOT RUN; independent selector has sole authorization authority",
+        "reasons": (
+            (
+                ["HOLDOUT-DTI does not beat repository-recorded S3DEP1 point-best"]
+                if not beats_current_best
+                else []
+            )
+            + (["format or range check failed"] if not checks["format_valid"] else [])
+            + (["novelty gate failed"] if not novelty_pass else [])
+            + (["canary failed"] if not report["canary"]["passed"] else [])
+            + [
+                "independent selector and live quota verification not run; submission not authorized"
+            ]
+        ),
         "organizer_confirmed_score": None,
         "experiments_run": 1,
         "submission_slots_used": 0,
-        "verdict": verdict,
         "elapsed_seconds": time.monotonic() - started,
     }
     save(card, RESULT)
     save(card, DATA_OUT / "blind_upwell_run_card.json")
 
     download_entry = {
-        "file": name, "sha256": raster_sha256, "content_id": content_id,
+        "file": name,
+        "sha256": raster_sha256,
+        "content_id": content_id,
         "pixel_count": int(final.sum()),
-        "note": note, "note_file": note_file, "checks_file": checks_file,
-        "preflight_file": preflight_file, "zip_file": zip_path.name,
-        "role": "primary", "format_valid": checks["format_valid"],
+        "note": note,
+        "note_file": note_file,
+        "checks_file": checks_file,
+        "preflight_file": preflight_file,
+        "zip_file": zip_path.name,
+        "role": "primary",
+        "format_valid": checks["format_valid"],
         "strict_range_ok": checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"],
         "ok_to_download": checks["format_valid"],
         "ok_to_submit": ok_to_submit,
@@ -374,12 +450,24 @@ def main():
         "run_card": "blind_upwell_run_card.json",
     }
     save(download_entry, DATA_OUT / "blind_upwell_download.json")
-    print(json.dumps({
-        "file": name, "pixels": int(final.sum()), "sha256": raster_sha256,
-        "holdout_dti": results["dti"], "ci95": results["ci95"]["interval"],
-        "max_dot_overlap": max_overlap, "novelty_pass": novelty_pass,
-        "note_characters": len(note), "verdict": verdict, "ok_to_submit": ok_to_submit,
-    }, indent=2), flush=True)
+    print(
+        json.dumps(
+            {
+                "file": name,
+                "pixels": int(final.sum()),
+                "sha256": raster_sha256,
+                "holdout_dti": results["dti"],
+                "ci95": results["ci95"]["interval"],
+                "max_dot_overlap": max_overlap,
+                "novelty_pass": novelty_pass,
+                "note_characters": len(note),
+                "verdict": verdict,
+                "ok_to_submit": False,
+            },
+            indent=2,
+        ),
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

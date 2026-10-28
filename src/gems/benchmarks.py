@@ -58,12 +58,20 @@ def recorded_points(root: Path) -> list[dict]:
             if source in known:
                 raise ValueError("Known benchmark no longer has the declared evaluator/count")
             continue  # Other metric/split records are not comparable even by declaration.
+        # Some newer experiment cards label the pooled metric explicitly. Treat
+        # that schema as an alias only when it agrees with any canonical ``dti``;
+        # otherwise fail closed instead of silently selecting one of two values.
         if "dti" not in result and "pooled_dti" in result:
             # Newer shared cards name the pooled DTI `pooled_dti` (same protocol and
             # evaluator). Normalise the alias once so the card is not silently
             # dropped or treated as malformed (this broke every site build).
             result = {**result, "dti": result["pooled_dti"]}
         dti = result.get("dti")
+        pooled_dti = result.get("pooled_dti")
+        if dti is not None and pooled_dti is not None and dti != pooled_dti:
+            raise ValueError("Conflicting benchmark dti and pooled_dti")
+        if dti is None:
+            dti = pooled_dti
         ci = result.get("ci95")
         interval = ci.get("interval") if isinstance(ci, dict) else ci
         if isinstance(ci, list):
@@ -85,6 +93,8 @@ def recorded_points(root: Path) -> list[dict]:
             or not 0 <= interval[0] <= interval[1] <= 1
         ):
             raise ValueError("Malformed benchmark DTI/CI")
+        if result.get("dti") is None:
+            result = {**result, "dti": dti}
         rows.append(
             {
                 "lane": lane,

@@ -1,6 +1,6 @@
 {
   "selector_version": "gems-selector-v2-literal-quota-fail-closed",
-  "decided_utc": "2026-10-28T18:51:55.279490+00:00",
+  "decided_utc": "2026-10-28T19:44:10.447637+00:00",
   "artifact": "gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif",
   "artifact_sha256": "f02859b3e881b942919deb267cad23673d6a6a1bc0148b2116ff1b706cba8978",
   "human_inspection_used": false,

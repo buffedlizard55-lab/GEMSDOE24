@@ -1,25 +1,23 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## CURRENT MISSION (this session — read first)
+## Current session review — 2026-10-28 (`arena/932e2262-gemsdoe24`)
 
-**Goal:** generate a **unique TIF submission** for the DrivenData GEMS competition and publish an executive summary that makes the best submission obvious and one-click downloadable. Full prompt: [`docs/MISSION_PROMPT.md`](docs/MISSION_PROMPT.md).
+**NO SUBMISSION-AUTHORIZED TIFF · NO SLOT · NO SCORE PROJECTION.** Read this [current repo review](docs/repo-review-20261028-arena-932e2262.md), its [run card](evidence/repo_review_20261028_arena_932e2262_run_card.json), the [mission prompt](docs/MISSION_PROMPT.md), the [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md), and [AGENTS.md](AGENTS.md) before each session. The complete historical owner prompt remains below in this README/`knowledge/`.
 
-**Key requirements:** unique (non-copied) TIF · values in [0, 1] (zeros outside footprint to pass the portal range gate) · unique name + note <= 140 chars · executive summary table over GEMSDOE 24/25/27/28/30/31/32/33/36 (file to download · estimated score · unique flag) · how-to-submit subpage · validation with no human intervention (no NaN inside footprint, CRS/shape/transform match EPSG:32611 3730x3292 @100 m) · PR merged to main · no hallucinations.
+**Current evidence, not a submission recommendation:** the repository-recorded S3DEP1 point-best is `HOLDOUT-DTI 0.16606` [0.15186, 0.18034] (`gems-segment-pooled-v1`, 60,988 withheld positives); the source measurement was not replayed in this review, it is not a leaderboard estimate, and the file is **SUBMIT: NO**. Download for research only: [`gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif`](docs/downloads/gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif).
 
----
+Parallel main-branch research cards are also negative: VENTRAD records `HOLDOUT-DTI 0.12234` [0.11110, 0.13366] and 99.8171% dot overlap against the retained lattice; H-BLIND-UPWELL records `HOLDOUT-DTI 0.06882` [0.05811, 0.07998] but no complete registry novelty result; and the lattice-hole card records `HOLDOUT-DTI 0.003802`. These figures are source-recorded, not independently replayed here, and none is a leaderboard score. The lattice-hole placement violates the standing no-evasion rule. All these files are **research only / SUBMIT: NO**. The standard 37k/44k dot budgets cannot pass the literal lattice rule; do not shrink, shift, or exempt a file to evade it.
 
-## This branch (arena/c88278d6-gemsdoe24) — unique submission artifact
+The nine-site historical scores remain OWNER-REPORTED / UNVERIFIED and leaderboard estimates **NOT ESTIMABLE**. The source-pinned nine-file audit found every exact file fails the literal lattice comparison; GEMSDOE25 and GEMSDOE30 selected files have identical in-footprint predictions. No organizer receipt or verified slot quota is present. The current branch review fixes the shared `pooled_dti` benchmark-card alias, keeps the point-best download above the fold, and records a **578-passed** test suite plus a passing 16-view desktop/mobile browser audit. No TIFF was generated and no experiment/slot was used by this review.
 
-**Task:** generate a UNIQUE submission TIF and a nine-site executive summary (GEMSDOE24/25/27/28/30/31/32/33/36) with file-to-download, estimate score and uniqueness; make the download + submit decision obvious; validate on the spatially blocked holdout before any slot.
+## Prior main continuation — 2026-10-28 (`arena/823062f0` / `arena/c88278d6`)
 
-**Result this branch:** built and validated one catalogue-blind unique GeoTIFF:
-`docs/downloads/24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif`
-(SHA-256 `e6460446…dd55`, 37,722 dots, all values finite in [0,1], zeros outside footprint).
-- **OK to download: YES** — format, whole-array [0,1] and local novelty (max 0.5747 ≤ 0.70) PASS.
-- **OK to submit: NO** — HOLDOUT-DTI 0.06882 (CI [0.05811, 0.08000]) is below the current comparable holdout best 0.13000; full 46-raster registry novelty could not be re-run (GitHub raw-asset network blocked); no selector/quota certificate. Zero slots spent.
-**Full detail:** `docs/executive-summary-unique.html` · `docs/data/blind_upwell_run_card.json` · `evidence/blind_upwell_experiment.json` · `scripts/build_blind_upwell_submission.py`.
+Those concurrent sessions added VENTRAD and H-BLIND-UPWELL research artifacts, a nine-site executive subpage, and the normalized mission document. Their TIFs are not approved to submit. See `docs/executive-summary-unique.html`, `docs/data/ventrad_run_card.json`, `docs/data/blind_upwell_run_card.json`, and this session's [audit](docs/repo-review-20261028-arena-932e2262.md). A local-neighbor overlap pass excludes the retained lattice or does not cover the entire registry; it is not the literal full-registry uniqueness certificate.
 
-**Read before continuing:** `docs/executive-summary-unique.html` (nine-site table + how-to-submit), `AGENTS.md` (standing rules: no DrivenData automation, no slot unless beating holdout best + gates + selector), and the branch reviews below. Do not fabricate organizer-confirmed scores or submit a renamed historical reference.
+
+**Upstream PR #89 candidate (research only):** `docs/downloads/24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif` (SHA-256 `e6460446…dd55`, 37,722 dots). Its run card source-records HOLDOUT-DTI 0.06882 [0.05811, 0.07998] (`gems-segment-pooled-v1`, 60,988 withheld positives), below the repository-recorded S3DEP1 point-best 0.16606 [0.15186, 0.18034] (not replayed in this review). The local sibling overlap 0.5747 is not full-registry novelty; based on the frozen lattice bound, this dot budget has a minimum 82.37% overlap, above the 70% gate. Format checks passed in the upstream card, but do not prove portal acceptance or submission eligibility. **Download for research: YES · SUBMIT: NO · not protocol-unique.** No slot was spent.
+
+Full upstream packet: `docs/executive-summary-unique.html` · `docs/data/blind_upwell_run_card.json` · `evidence/blind_upwell_experiment.json` · `scripts/build_blind_upwell_submission.py`. The current generated executive guide keeps the repository-recorded S3DEP1 card first, then reports VENTRAD and H-BLIND-UPWELL as negative research candidates; neither gets a submission selector approval. Do not fabricate organizer-confirmed scores or submit a renamed historical reference.
 
 ## Arena branch continuation — 2026-10-28 (`arena/c81bb5d5-gemsdoe24`)
 

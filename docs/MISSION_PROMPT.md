@@ -1,6 +1,6 @@
 # GEMS DOE 24 — Current Mission Prompt (normalized summary)
 
-**Branch:** `arena/823062f0-gemsdoe24` (status: active). **Date:** 2026-10-28.
+**Source task context:** `arena/823062f0-gemsdoe24` (historical; not the current branch). **Current branch:** `arena/932e2262-gemsdoe24`. **Date:** 2026-10-28.
 
 ## Objective
 Place top of the DrivenData GEMS competition leaderboard (https://www.drivendata.org/competitions/306/competition-doe-gems/) by generating a **unique TIF submission** and publishing an executive summary that makes the best submission obvious and downloadable.
@@ -30,7 +30,7 @@ GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31, GEMSDOE32, GEM
 ## Known state (verified in this session)
 - Owner-reported historical highs (GEMSDOE32 B2 0.2778, GEMSDOE36 Anderson 0.2750, etc.) are **NOT organizer-confirmed**; no DrivenData auth is available, so live scores are NOT ESTIMABLE.
 - Every dotted budget fails the literal all-entries lattice gate (spacing-5 lattice covers 99.87% of footprint within 3 px -> >= 82.34% overlap). Reported, not evaded.
-- New unique submission generated: `docs/downloads/24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif` (SHA-256 `603d21db…9626`), 37,722 dots, HOLDOUT-DTI 0.1223 [0.1111, 0.1337], unique vs all 10 competing method rasters, format-valid (strict [0,1] PASS, no NaN inside footprint). ok_to_download: YES. ok_to_submit: NO (literal lattice gate; no slot; awaits lane + selector + receipt).
+- Research-only VENTRAD candidate: `docs/downloads/24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif` (SHA-256 `603d21db…9626`), 37,722 dots, source-recorded HOLDOUT-DTI 0.1223 [0.1111, 0.1337] (`gems-segment-pooled-v1`, 60,988 withheld positives). A narrow 10-method comparison is not the protocol registry test: the required retained-lattice overlap is 0.99817 (>0.70), so protocol uniqueness FAILS. The candidate is format-valid, `ok_to_download: YES`, `ok_to_submit: NO`; no slot was spent. Its measurement was not independently replayed in the current review.
 
 ## Off-limits / do-not
 - Do not claim an unverified score is organizer-confirmed.

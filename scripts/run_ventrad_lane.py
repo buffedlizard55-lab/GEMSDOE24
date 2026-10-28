@@ -25,10 +25,11 @@ Protocol (parallel-run):
     of the footprint within 3 px, so every dotted budget fails the literal
     all-entries gate; that geometric bound is reported, not evaded.)
   * Submission written with submission_writer (strict whole-array [0, 1], zero
-    outside the footprint so the portal range gate passes), validated with
+    outside the footprint; this check does not establish portal acceptance or explain the earlier range rejection), validated with
     check_variants, then published to docs/downloads/.
   * No upload, no organizer score, no score projection. Numbers are HOLDOUT-DTI.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -75,7 +76,6 @@ def build_ventrad_surface(fp):
     rtp.ravel()[idx] = stack[:, names.index("rtp")]
     del stack
 
-
     vent_grid = np.zeros(fp.shape, bool)
     with open(ROOT / "data/external/gdr_volcanic_vents_in_footprint.csv") as f:
         _ = f.readline()
@@ -116,8 +116,11 @@ def build_ventrad_surface(fp):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--verify-recorded", action="store_true",
-                    help="Check immutable VENTRAD evidence; do not run the lane")
+    ap.add_argument(
+        "--verify-recorded",
+        action="store_true",
+        help="Check immutable VENTRAD evidence; do not run the lane",
+    )
     ap.add_argument("--work-dir", type=Path, default=Path("/tmp/gems_work"))
     _ = ap.parse_args()
     started = time.monotonic()
@@ -141,15 +144,15 @@ def main():
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "lane": "H24-VENTRAD",
         "hypothesis": "Blind geothermal upwelling: volcanic vent proximity + potassic "
-                      "alteration (low Th/K) + magnetic demagnetization target fault "
-                      "segments missing from the USGS/INGENIOUS catalogue.",
+        "alteration (low Th/K) + magnetic demagnetization target fault "
+        "segments missing from the USGS/INGENIOUS catalogue.",
         "mechanism": "Vents are independent point heat sources (11/21 >20 px from any "
-                     "known fault); low Th/K marks potassic hydrothermal alteration; "
-                     "low rtp marks demagnetization. Weighted surface emits Poisson dots "
-                     "ranked by propensity, min 3 px spacing.",
+        "known fault); low Th/K marks potassic hydrothermal alteration; "
+        "low rtp marks demagnetization. Weighted surface emits Poisson dots "
+        "ranked by propensity, min 3 px spacing.",
         "non_fault_mimic": "Magnetite-poor alluvial paleochannel with K-rich detritus "
-                           "can mimic potassic alteration; young basalt without geothermal "
-                           "circulation is a vent false positive.",
+        "can mimic potassic alteration; young basalt without geothermal "
+        "circulation is a vent false positive.",
         "preregistration": "knowledge/25_unique_hypothesis_2026-10-25.md (adapted)",
         "input_provenance": "hash-pinned owner mirrors; not organizer-authenticated",
         "inputs": {
@@ -200,17 +203,33 @@ def main():
         predictions.append(emission.priority_poisson(surface, eligible, budget, min_dist=MIN_DIST))
     holdout_summary = ctx.summarize(predictions)
     report["holdout"] = holdout_summary
-    print("VENTRAD HOLDOUT-DTI", holdout_summary["dti"], holdout_summary["ci95"]["interval"],
-          "withheld", holdout_summary["n_truth"], flush=True)
+    print(
+        "VENTRAD HOLDOUT-DTI",
+        holdout_summary["dti"],
+        holdout_summary["ci95"]["interval"],
+        "withheld",
+        holdout_summary["n_truth"],
+        flush=True,
+    )
 
     # ---- Leakage canary: every feature alone ----
-    canary_in = {name: np.where(fp & np.isfinite(arr), arr, np.nan)
-                 for name, arr in built.items() if name != "surface" and name != "n_vents"}
+    canary_in = {
+        name: np.where(fp & np.isfinite(arr), arr, np.nan)
+        for name, arr in built.items()
+        if name != "surface" and name != "n_vents"
+    }
     canary_in["surface"] = surface
     canary = ctx.canary(canary_in, max_per_class=8000)
     report["canary"] = canary
-    print("Canary worst feature:", canary["worst_feature"], "AUC", round(canary["worst_pooled_auc"], 4),
-          "passed:", canary["passed"], flush=True)
+    print(
+        "Canary worst feature:",
+        canary["worst_feature"],
+        "AUC",
+        round(canary["worst_pooled_auc"], 4),
+        "passed:",
+        canary["passed"],
+        flush=True,
+    )
     if not canary["passed"]:
         report.update(verdict="negative", stopped_reason="leakage-canary")
         save(report, RESULT)
@@ -223,8 +242,7 @@ def main():
         p = ROOT / e["file"]
         if p.exists():
             entries.append({**e, "cache_path": str(p.relative_to(ROOT))})
-    surface_novelty = novelty.compare_registry(surface, fp, entries, ROOT,
-                                               template_path=template)
+    surface_novelty = novelty.compare_registry(surface, fp, entries, ROOT, template_path=template)
     report["surface_novelty"] = surface_novelty
     if not surface_novelty["passed"]:
         report.update(verdict="negative", stopped_reason="duplicate-surface")
@@ -243,39 +261,61 @@ def main():
     # compare_prospective_registry separates the synthetic spacing-5 calibration lattice
     # (a geometric control that covers 99.87% of the footprint within 3 px, hence overlaps
     # every dotted budget) from the competing method lanes (the actual prior submissions).
-    final_novelty = novelty.compare_prospective_registry(final.astype(np.float32), fp, entries, ROOT,
-                                                         dots=final, template_path=template)
+    final_novelty = novelty.compare_prospective_registry(
+        final.astype(np.float32), fp, entries, ROOT, dots=final, template_path=template
+    )
     report["final_novelty"] = final_novelty
-    method_rows = [r for r in final_novelty["rows"] if r.get("entry_role") == "competing_method_lane"]
+    method_rows = [
+        r for r in final_novelty["rows"] if r.get("entry_role") == "competing_method_lane"
+    ]
     method_dup = any(r["duplicate"] for r in method_rows)
-    max_comp_overlap = max((r["candidate_dot_overlap_within_3px"] for r in method_rows), default=None)
+    max_comp_overlap = max(
+        (r["candidate_dot_overlap_within_3px"] for r in method_rows), default=None
+    )
     report["final_novelty"]["competing_method_duplicate"] = bool(method_dup)
     report["final_novelty"]["max_competing_method_overlap"] = max_comp_overlap
-    print("Final dots vs competing methods: max rank corr",
-          round(final_novelty["method_lane_max_abs_rank_correlation"], 4),
-          "max 3-px overlap", round(max_comp_overlap, 4) if max_comp_overlap is not None else None,
-          "duplicate:", method_dup, flush=True)
+    print(
+        "Final dots vs competing methods: max rank corr",
+        round(final_novelty["method_lane_max_abs_rank_correlation"], 4),
+        "max 3-px overlap",
+        round(max_comp_overlap, 4) if max_comp_overlap is not None else None,
+        "duplicate:",
+        method_dup,
+        flush=True,
+    )
     if method_dup:
         report.update(verdict="negative", stopped_reason="duplicate-final-dots-vs-competing-method")
         save(report, RESULT)
-        raise SystemExit("Duplicate final dots vs competing methods; lane stopped without packaging")
-    print("Final dots unique vs all competing method rasters; lattice overlap is the documented "
-          "geometric bound (reported, not evaded)", flush=True)
+        raise SystemExit(
+            "Duplicate final dots vs competing methods; lane stopped without packaging"
+        )
+    print(
+        "Final dots unique vs all competing method rasters; lattice overlap is the documented "
+        "geometric bound (reported, not evaded)",
+        flush=True,
+    )
 
-    # ---- Write submission TIF (zero outside -> strict whole-array [0,1] passes portal) ----
+    # ---- Write a research TIF (whole-array [0,1] validation is not portal approval) ----
     content_id = submission.scored_content_id(final, fp, labels)
-    name = submission.make_filename("24GEMSDOE", "ventrad-blind-geothermal", "20261028", content_id, "zero")
+    name = submission.make_filename(
+        "24GEMSDOE", "ventrad-blind-geothermal", "20261028", content_id, "zero"
+    )
     zeros = submission.write_submission(final, template, DOWNLOADS / name, outside="zero")
     nan_name = name.replace("-zero.tif", "-nan.tif")
     nan = submission.write_submission(final, template, DOWNLOADS / nan_name, outside="nan")
-    checks = {"zero_outside": submission.check_variants(zeros, template),
-              "nan_outside": submission.check_variants(nan, template)}
+    checks = {
+        "zero_outside": submission.check_variants(zeros, template),
+        "nan_outside": submission.check_variants(nan, template),
+    }
     if not all(c["format_valid"] for c in checks.values()):
         raise SystemExit("Exact-file format checks failed; do not publish")
 
     note = submission.make_note(
-        "VENTRAD", "blind geothermal upwelling vents+pottassic alteration, unique vs competing methods, holdout DTI 0.122",
-        content_id, family="24GEMSDOE")
+        "VENTRAD",
+        "blind geothermal upwelling vents+pottassic alteration, unique vs competing methods, holdout DTI 0.122",
+        content_id,
+        family="24GEMSDOE",
+    )
     note_file = f"note-{name[:-4]}.txt"
     (DOWNLOADS / note_file).write_text(note + "\n")
     checks_file = f"checks-{name[:-4]}.json"
@@ -328,11 +368,18 @@ def main():
             "max_abs_rank_correlation": final_novelty["max_abs_rank_correlation"],
             "max_dot_overlap_within_3px": final_novelty["max_dot_overlap"],
             "literal_all_entries_passed": final_novelty["passed"],
-            "lattice_overlap": [r for r in final_novelty["rows"]
-                                if r.get("entry_role") == "synthetic_spacing5_calibration_lattice"],
+            "lattice_overlap": [
+                r
+                for r in final_novelty["rows"]
+                if r.get("entry_role") == "synthetic_spacing5_calibration_lattice"
+            ],
             "competing_method_overlaps": [
-                {"registry_id": r["registry_id"], "file": r["file"],
-                 "overlap": r["candidate_dot_overlap_within_3px"], "rho": r["raw_spearman"]}
+                {
+                    "registry_id": r["registry_id"],
+                    "file": r["file"],
+                    "overlap": r["candidate_dot_overlap_within_3px"],
+                    "rho": r["raw_spearman"],
+                }
                 for r in final_novelty["rows"]
                 if r.get("entry_role") == "competing_method_lane"
             ],
@@ -374,11 +421,22 @@ def main():
         "run_card": "ventrad_run_card.json",
     }
     save(download, ROOT / "docs/data/ventrad_download.json")
-    print(json.dumps({
-        "file": name, "pixels": int(final.sum()), "sha256": report["raster_sha256"],
-        "holdout_dti": holdout_summary["dti"], "holdout_ci95": holdout_summary["ci95"]["interval"],
-        "note_characters": len(note), "verdict": "negative", "ok_to_submit": False,
-    }, indent=2), flush=True)
+    print(
+        json.dumps(
+            {
+                "file": name,
+                "pixels": int(final.sum()),
+                "sha256": report["raster_sha256"],
+                "holdout_dti": holdout_summary["dti"],
+                "holdout_ci95": holdout_summary["ci95"]["interval"],
+                "note_characters": len(note),
+                "verdict": "negative",
+                "ok_to_submit": False,
+            },
+            indent=2,
+        ),
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

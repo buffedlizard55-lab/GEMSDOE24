@@ -19,6 +19,7 @@ async function main() {
   assert.equal(currentBest.submission_name, card.submission_name);
   assert.equal(currentBest.raster_sha256, card.raster_sha256);
   const noteCard = card;
+  const blindCandidate = JSON.parse(await fs.readFile(path.join(root, 'docs/data/blind_upwell_download.json'), 'utf8'));
   const libs = await inflate(path.join(modules, '@sparticuz/chromium/bin/al2023.tar.br'));
   setupLambdaEnvironment(path.join(libs, 'lib'));
   const browser = await playwright.launch({args: chromium.args.filter(value => value !== "--single-process"), executablePath: await chromium.executablePath(), headless: true});
@@ -72,6 +73,33 @@ async function main() {
         });
         const documentDigest = crypto.createHash('sha256').update(await response.body()).digest('hex');
         receipt.pages.push({device, page: relative || 'index.html', document_sha256: documentDigest, current_focus_rows: 9, download_sha256: digest, first_screen_download: true, clipboard_matches: true, no_horizontal_overflow: true, accessibility_violations: accessibility});
+      }
+      {
+        const relative = 'docs/executive-summary-unique.html';
+        const response = await page.goto(new URL(relative, base).href, {waitUntil: 'networkidle'});
+        assert.equal(response.status(), 200);
+        const link = page.getByRole('link', {name: /Download for research — DO NOT SUBMIT/}).first();
+        const box = await link.boundingBox();
+        assert(box && box.x >= 0 && box.x + box.width <= viewport.width + 1);
+        assert(box.y >= 0 && box.y + box.height <= viewport.height, `Research download off-screen: ${device} ${JSON.stringify(box)}`);
+        assert(await page.getByText('NOT protocol-unique and NOT OK to submit', {exact: false}).isVisible());
+        assert.equal(await page.locator('#nine-site tbody tr').count(), 9);
+        assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `Horizontal overflow: ${device} ${relative}`);
+        const [candidateDownload] = await Promise.all([page.waitForEvent('download'), link.click()]);
+        assert.equal(candidateDownload.suggestedFilename(), blindCandidate.file);
+        const candidateBytes = await fs.readFile(await candidateDownload.path());
+        const candidateDigest = crypto.createHash('sha256').update(candidateBytes).digest('hex');
+        assert.equal(candidateDigest, blindCandidate.sha256);
+        await page.locator('[data-copy="#note-unique"]').click();
+        await page.waitForFunction(() => document.querySelector('#fb-unique')?.textContent === 'Copied to clipboard.');
+        assert.equal(await page.evaluate(() => navigator.clipboard.readText()), (await page.locator('#note-unique').textContent()).trim());
+        await page.addScriptTag({path: axeSource});
+        const accessibility = await page.evaluate(async () => {
+          const result = await axe.run(document.querySelector('main'), {runOnly: {type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice']}});
+          return result.violations.map(v => ({id: v.id, impact: v.impact, nodes: v.nodes.map(n => n.target)}));
+        });
+        const documentDigest = crypto.createHash('sha256').update(await response.body()).digest('hex');
+        receipt.pages.push({device, page: relative, document_sha256: documentDigest, nine_site_rows: 9, download_sha256: candidateDigest, first_screen_download: true, clipboard_matches: true, no_horizontal_overflow: true, accessibility_violations: accessibility});
       }
       for (const relative of ['docs/research.html', 'docs/sources.html']) {
         await page.goto(new URL(relative, base).href, {waitUntil: 'networkidle'});
