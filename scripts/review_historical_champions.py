@@ -4,6 +4,7 @@
 Downloads only immutable, hash-pinned research artifacts. Reuses the shared
 validator and lattice geometry; never writes predictions or estimates scores.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -52,7 +53,9 @@ def geometry(values, footprint, lattice_distance):
         raise ValueError("Empty champion")
     return {
         "dots": count,
-        "footprint_content_sha256": hashlib.sha256(values[footprint].astype("<f4").tobytes()).hexdigest(),
+        "footprint_content_sha256": hashlib.sha256(
+            values[footprint].astype("<f4").tobytes()
+        ).hexdigest(),
         "lattice_overlap_within_3px": float(np.count_nonzero(lattice_distance[dots] <= 3) / count),
     }
 
@@ -71,7 +74,9 @@ def build(root=ROOT):
         lattice_distance = distance_transform_edt(~(fp & (ds.read(1) > 0)))
     claims = {
         r["site"]: r["historical_best_owner_reported_unverified"]
-        for r in json.loads((root / "evidence/current_focus_nine_file_audit_20261027.json").read_text())["rows"]
+        for r in json.loads(
+            (root / "evidence/current_focus_nine_file_audit_20261027.json").read_text()
+        )["rows"]
     }
     rows = []
     for record in records:
@@ -88,32 +93,45 @@ def build(root=ROOT):
             geom = geometry(ds.read(1), fp, lattice_distance)
         if geom["dots"] != record["dot_count"]:
             raise ValueError("Historical dot count changed")
-        rows.append({
-            "site": record["repo"], "source_url": record["url"],
-            "download_url": record["url"].replace("/blob/", "/raw/"),
-            "file": Path(path).name, "sha256": record["sha256"],
-            "owner_reported_unverified": claims[record["repo"]],
-            "leaderboard_estimate": None, "holdout_dti": None,
-            "validator_output": checked, **geom,
-            "preplacement_surface": "NOT AVAILABLE; not replayed",
-            "full_registry_pass": False, "submission_authorized": False,
-        })
+        rows.append(
+            {
+                "site": record["repo"],
+                "source_url": record["url"],
+                "download_url": record["url"].replace("/blob/", "/raw/"),
+                "file": Path(path).name,
+                "sha256": record["sha256"],
+                "owner_reported_unverified": claims[record["repo"]],
+                "leaderboard_estimate": None,
+                "holdout_dti": None,
+                "validator_output": checked,
+                **geom,
+                "preplacement_surface": "NOT AVAILABLE; not replayed",
+                "full_registry_pass": False,
+                "submission_authorized": False,
+            }
+        )
     for row in rows:
         row["exact_in_footprint_aliases"] = [
-            r["site"] for r in rows if r["site"] != row["site"]
+            r["site"]
+            for r in rows
+            if r["site"] != row["site"]
             and r["footprint_content_sha256"] == row["footprint_content_sha256"]
         ]
         row["literal_uniqueness"] = (
-            "FAIL" if row["lattice_overlap_within_3px"] > .70 else "NOT ESTABLISHED"
+            "FAIL" if row["lattice_overlap_within_3px"] > 0.70 else "NOT ESTABLISHED"
         )
     return {
         "schema": "historical-champion-readback-v1",
         "checked_utc": datetime.now(timezone.utc).isoformat(),
         "scope": "Nine owner-named historical champions, not latest heads or all files; no scientific replay",
-        "source_record_sha256": sha256_file(source), "witness": witness["witness"],
+        "source_record_sha256": sha256_file(source),
+        "witness": witness["witness"],
         "score_status": "OWNER-REPORTED / UNVERIFIED; not organizer-confirmed or score estimates",
-        "organizer_confirmed_scores": [], "rows": rows,
-        "new_tiffs": 0, "new_experiments": 0, "slots_used": 0,
+        "organizer_confirmed_scores": [],
+        "rows": rows,
+        "new_tiffs": 0,
+        "new_experiments": 0,
+        "slots_used": 0,
         "submission_authorized": False,
     }
 
@@ -126,12 +144,12 @@ def render(report):
         aliases = ", ".join(r["exact_in_footprint_aliases"]) or "None among these nine"
         rows.append(
             f'<tr><th scope="row">{e(r["site"])}</th><td><a href="{e(r["download_url"], quote=True)}">'
-            f'{e(r["file"])}</a><br><small>Research only; SHA-256 {r["sha256"]}</small></td>'
-            f'<td>{claim:.4f} OWNER-REPORTED / UNVERIFIED</td><td>NOT ESTIMABLE</td>'
-            f'<td>{e(aliases)}</td><td>{r["lattice_overlap_within_3px"]:.2%}; {r["literal_uniqueness"]}</td>'
-            '<td>Format PASS; <strong>SUBMIT NO</strong></td></tr>'
+            f"{e(r['file'])}</a><br><small>Research only; SHA-256 {r['sha256']}</small></td>"
+            f"<td>{claim:.4f} OWNER-REPORTED / UNVERIFIED</td><td>NOT ESTIMABLE</td>"
+            f"<td>{e(aliases)}</td><td>{r['lattice_overlap_within_3px']:.2%}; {r['literal_uniqueness']}</td>"
+            "<td>Format PASS; <strong>SUBMIT NO</strong></td></tr>"
         )
-    return f'''<!doctype html>
+    return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nine historical champions — submission decision</title><link rel="stylesheet" href="assets/style.css"></head>
 <body><main><p><a href="executive-summary.html">Executive guide</a> · <a href="submission-readiness.html">Uniqueness feasibility</a></p>
@@ -145,7 +163,7 @@ No new-head, pre-placement-surface or exhaustive registry certification follows.
 <div class="tablewrap" role="region" aria-label="Historical champion download and decision table" tabindex="0"><table>
 <caption>Prior champion artifacts — none eligible as a new unique submission</caption><thead><tr><th>Site</th><th>Exact research download</th>
 <th>Historical claim (not estimated)</th><th>Leaderboard estimate</th><th>Identical footprint predictions</th><th>3-pixel lattice overlap / uniqueness</th><th>Decision</th></tr></thead>
-<tbody>{''.join(rows)}</tbody></table></div>
+<tbody>{"".join(rows)}</tbody></table></div>
 <h2>Why B2 may have helped — and what is actually known</h2>
 <p>The <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fdd41b075a05e7df5b222e6e3644344cecc65746/evidence/oj1_priority_ancestry_replay.json">recorded geometry replay</a> found B2 is the 44,090-dot GEMSDOE25 pattern after removing 6,436 dots within 200 m of the visible catalogue. It is also GEMSDOE31 minus 2,545 dots. This is pruning, not evidence of a new subsurface model or vent discovery. That prior replay is not rerun by this table.</p>
 <p>Sparse emission and removal of redundant predictions near visible faults could reduce false-positive mass under distance-based Tversky scoring. Whether it actually did so on hidden labels, and how much true-positive mass it lost, cannot be established from geometry or one reported result. Predicting a result above 0.2778, 0.3195 or 0.4413 would be unsupported. The two leader values in the request are conflicting snapshots, not verified current standings.</p>
@@ -157,7 +175,7 @@ No new-head, pre-placement-surface or exhaustive registry certification follows.
 <p><a href="data/historical_champions_20261028.json">Full machine-readable validator and overlap receipt</a> ·
 <a href="https://github.com/drivendataorg/gems-prize-reference-solution">Official reference solution</a> ·
 <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official problem description (not fetched here)</a>.</p>
-</main></body></html>\n'''
+</main></body></html>\n"""
 
 
 if __name__ == "__main__":

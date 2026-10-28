@@ -20,7 +20,8 @@ def test_sources_require_immutable_matching_focus_repository():
     assert review.parse_source(row)[0] == "buffedlizard55-lab/GEMSDOE24"
     for update in (
         {"url": row["url"].replace("07345ea0604953d7efb858d9cfbc21e20c7aca0b", "main")},
-        {"repo": "GEMSDOE25"}, {"sha256": "bad"},
+        {"repo": "GEMSDOE25"},
+        {"sha256": "bad"},
         {"url": row["url"].replace("github.com", "example.com")},
     ):
         with pytest.raises(ValueError):
@@ -29,15 +30,20 @@ def test_sources_require_immutable_matching_focus_repository():
 
 def test_geometry_measures_inclusive_three_pixel_overlap_and_ignores_exterior():
     fp = np.array([[True, True, True, False]])
-    a = np.array([[1., 1., 0., np.nan]])
-    result = review.geometry(a, fp, np.array([[3., 3.01, 0., 0.]]))
+    a = np.array([[1.0, 1.0, 0.0, np.nan]])
+    result = review.geometry(a, fp, np.array([[3.0, 3.01, 0.0, 0.0]]))
     assert result["dots"] == 2
-    assert result["lattice_overlap_within_3px"] == .5
+    assert result["lattice_overlap_within_3px"] == 0.5
     a[0, 3] = 1
-    assert review.geometry(a, fp, np.zeros_like(a))["footprint_content_sha256"] == result["footprint_content_sha256"]
+    assert (
+        review.geometry(a, fp, np.zeros_like(a))["footprint_content_sha256"]
+        == result["footprint_content_sha256"]
+    )
 
 
-@pytest.mark.parametrize("a", [np.array([[np.nan]]), np.array([[2.]]), np.array([[0.]]), np.array([[.5]])])
+@pytest.mark.parametrize(
+    "a", [np.array([[np.nan]]), np.array([[2.0]]), np.array([[0.0]]), np.array([[0.5]])]
+)
 def test_invalid_or_empty_binary_champion_fails_closed(a):
     with pytest.raises(ValueError):
         review.geometry(a, np.ones_like(a, dtype=bool), np.zeros_like(a))

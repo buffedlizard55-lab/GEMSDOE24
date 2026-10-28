@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current continuation — 2026-10-28 (branch `arena/bab77a13-gemsdoe24`)
+
+**NO NEW TIFF · NO EXPERIMENT · SUBMIT: NO.** Read the [current review](docs/repo-review-20261028-freshness.md), [normalized owner requirements](knowledge/owner_brief_2026-10-27_feasibility.md), and [standing instructions](AGENTS.md) before continuing. The historical owner prompt remains below. The [nine-site table](docs/executive-summary.html#current-focus-files) contains research-only downloads; no leaderboard estimate is supported. Both the missing assigned method lane and literal registry lattice rule remain binding. A refreshed GitHub commit feed does not audit new artifacts or scores. Check `python scripts/check_git_history.py` before provenance checks; full history alone is not verification.
+
 ## Current continuation — 2026-10-28, session b87d739e
 
 **NO NEW TIFF · NO EXPERIMENT · SUBMIT NO.** Start with the [nine historical champions executive table](docs/historical-champions.html) and [three-pass review / next steps](docs/session-review-b87d739e-20261028.md). All nine owner-named historical champion artifacts were freshly downloaded at immutable commits, hash-checked and read back with the shared validator. All pass local format checks; **all fail the literal lattice uniqueness rule**. GEMSDOE25 and GEMSDOE30 have identical in-footprint predictions. Exact research downloads, full validator results, unknown leaderboard estimates and explicit submission decisions are in the [machine-readable report](docs/data/historical_champions_20261028.json).
