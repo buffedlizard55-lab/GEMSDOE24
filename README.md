@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Latest session — 2026-10-28 (`arena/c2acc046-gemsdoe24`)
+
+**NO NEW TIFF · NO EXPERIMENT · SUBMIT: NO for every file.** Read [this review](docs/session-review-c2acc046-20261028.md) first. Verified here: full suite **578 passed**, ruff clean, and the uniqueness feasibility gate returns exit 2 at 37,654 and 44,090 dots (minimum lattice overlap 82.34% and 84.92%). The official rules PDF ([NLR, Sept 2026](https://docs.nlr.gov/docs/fy26osti/96647.pdf)) requires one single-band GeoTIFF at 100 m over the whole GeoDAWN area, scored with a distance-weighted Tversky index, three submissions per week. It does **not** state a [0, 1] range rule, a NaN convention or a 70% overlap gate. The 0.2778 H33-B2 record is owner-reported, unverified, and matches the D2.8 family with catalogue-adjacent dots removed (overlap 99.92%). Blockers: `data/training_features.tif` absent (needs DrivenData login), no assigned method paragraph, and the lattice gate fails standard budgets. The "[0, 1]" portal error is still unexplained.
+
 ## Current session review — 2026-10-28 (`arena/932e2262-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO SLOT · NO SCORE PROJECTION.** Read this [current repo review](docs/repo-review-20261028-arena-932e2262.md), its [run card](evidence/repo_review_20261028_arena_932e2262_run_card.json), the [mission prompt](docs/MISSION_PROMPT.md), the [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md), and [AGENTS.md](AGENTS.md) before each session. The complete historical owner prompt remains below in this README/`knowledge/`.
