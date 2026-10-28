@@ -140,7 +140,7 @@ def zip_single(tif_path: Path | str, zip_path: Path | str | None = None) -> Path
 def check_variants(
     path: Path | str, template_path: Path | str, *, strict: bool = False
 ) -> dict[str, Any]:
-    """Validate format; strict mode adds driver and in-footprint mask checks.
+    """Validate format; strict mode adds driver and explicit mask checks.
 
     The default preserves frozen historical receipt comparisons. New file
     preflight and the writer CLI must use strict=True; neither mode authorizes
@@ -152,7 +152,7 @@ def check_variants(
         t_prof = t.profile
         footprint = np.isfinite(t_arr)
         t_files = list(t.files) if strict else []
-        t_masked = np.ma.getmaskarray(t.read(1, masked=True)) if strict else None
+        t_masked = np.ma.getmaskarray(t.read(1, masked=True))
         t_crs, t_tr, t_shape = t.crs, t.transform, t.shape
     with rasterio.open(path) as s:
         arr = s.read(1)
@@ -195,6 +195,7 @@ def check_variants(
         and tuple(t_tr)[:6] == EXPECTED["transform"]
         and int(footprint.sum()) == EXPECTED["footprint_pixels"]
         and footprint_sha256(footprint) == EXPECTED["footprint_sha256"]
+        and not t_masked[footprint].any()
     )
     add(
         "official_template_grid_and_footprint",
@@ -225,8 +226,10 @@ def check_variants(
         # A finite raw value can still be suppressed by nodata or an internal/
         # external GDAL mask. Reject ambiguous predictions instead of assuming
         # the portal uses a raw rather than a masked read.
-        if strict:
-            masked_inside = np.ma.getmaskarray(masked)[footprint]
+        masked_inside = np.ma.getmaskarray(masked)[footprint]
+        # Preserve successful historical receipt bytes in legacy mode, but
+        # never silently pass a masked in-footprint prediction in either mode.
+        if strict or masked_inside.any():
             add(
                 "footprint_unmasked",
                 not masked_inside.any(),

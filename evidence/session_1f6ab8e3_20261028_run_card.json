@@ -1,0 +1,49 @@
+{
+  "schema": "session-run-card-v1",
+  "branch": "arena/1f6ab8e3-gemsdoe24",
+  "date_utc": "2026-10-28",
+  "hypothesis": "No geological hypothesis tested: the required assigned single-method paragraph was absent.",
+  "mechanism": "Review and repair of the shared TIFF writer and format validator; no new prediction mechanism was evaluated.",
+  "named_non_fault_process_that_could_mimic_it": "Not applicable: no geological surface tested. Prior proposed hypotheses name geological and survey mimics in docs/repo-review-20261028-arena-932e2262.md.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "Not run; no candidate or estimate."
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "final_dot_overlap": null,
+    "status": "Not run; no new surface or candidate dots. One pinned lattice was independently checked as a geometric necessary-condition witness, not as a full-registry audit.",
+    "fixed_budget_bounds": {
+      "37654": 0.8234184947150369,
+      "44090": 0.8491948287593558
+    },
+    "limit": 0.7
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "candidate": "Not generated",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "No new candidate to validate; tests use synthetic rasters and historical files."
+  },
+  "submission_name": null,
+  "submission_note": "No candidate generated; do not submit.",
+  "verdict": "negative",
+  "submission_authorized": false,
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "organizer_confirmed_scores": [],
+  "leaderboard_estimate": null,
+  "tests": {
+    "full_pytest": "592 passed after integrating concurrent main",
+    "ruff": "modified Python files pass check and format",
+    "git_diff_check": "passed",
+    "feasibility": "Pinned lattice checker stopped both tested dot budgets; bounds are not individual-candidate measurements.",
+    "limitations": "Historical score measurements not replayed; no organizer portal acceptance or official data provenance verified."
+  }
+}

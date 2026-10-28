@@ -1,5 +1,11 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current session — 2026-10-28 (`arena/1f6ab8e3-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [three-pass review](docs/repo-review-20261028-arena-1f6ab8e3.md), [run card](evidence/session_1f6ab8e3_20261028_run_card.json), [mission prompt](docs/MISSION_PROMPT.md), and [AGENTS.md](AGENTS.md) before continuing. The [nine-site table](docs/historical-champions.html) is a pinned historical research snapshot, not a live leaderboard or submission recommendation.
+
+This session fixed a shared validator/writer defect that could silently accept or erase masked in-footprint values. The full suite passed: **592 tests** after integrating the concurrent strict-preflight fix. This does not explain the portal range rejection or establish organizer acceptance. The method lane is missing, the full feature cache is absent, and the literal lattice rule blocks the standard dot budgets; no score forecast or new TIFF is supported. See the review for next steps and do not evade the registry gate.
+
 ## Current session review — 2026-10-28 (`arena/06c138ea-gemsdoe24`)
 
 **NO NEW TIFF · NO NEW EXPERIMENT · NO SLOT · NO SUBMISSION AUTHORIZATION.** Read this [current branch review](docs/repo-review-20261028-arena-06c138ea.md), its [run card](evidence/repo_review_20261028_arena_06c138ea_run_card.json), the [mission prompt](docs/MISSION_PROMPT.md), [standing instructions](AGENTS.md), and the [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md) before continuing. The complete historical prompt is preserved below in this README; avoid adding another duplicate.
@@ -12,6 +18,18 @@ The newly merged shared preflight/writer hardening (PR #96 on `main`) routes new
 
 The older dated session notes follow for audit history; the current branch review above supersedes their branch-specific status.
 
+## Latest continuation — 2026-10-28 (`arena/f7f69bc3-gemsdoe24`)
+
+**NO NEW TIFF · DO NOT SUBMIT.** The requested unique, high-scoring submission
+has not been validated. The shared preflight and writer now additionally reject
+masked in-footprint values and non-GeoTIFF drivers; this is not portal acceptance
+or scientific authorization. Read the [latest review and next steps](docs/session-review-f7f69bc3-20261028.md),
+the [nine-site historical research table](docs/historical-champions.html), and
+the standing instructions below. Previous score claims are owner-reported unless
+linked to an organizer receipt; no current leaderboard estimate is available.
+## Latest session — 2026-10-28 (`arena/c2acc046-gemsdoe24`)
+
+**NO NEW TIFF · NO EXPERIMENT · SUBMIT: NO for every file.** Read [this review](docs/session-review-c2acc046-20261028.md) first. Verified here: full suite **578 passed**, ruff clean, and the uniqueness feasibility gate returns exit 2 at 37,654 and 44,090 dots (minimum lattice overlap 82.34% and 84.92%). The official rules PDF ([NLR, Sept 2026](https://docs.nlr.gov/docs/fy26osti/96647.pdf)) requires one single-band GeoTIFF at 100 m over the whole GeoDAWN area, scored with a distance-weighted Tversky index, three submissions per week. It does **not** state a [0, 1] range rule, a NaN convention or a 70% overlap gate. The 0.2778 H33-B2 record is owner-reported, unverified, and matches the D2.8 family with catalogue-adjacent dots removed (overlap 99.92%). Blockers: `data/training_features.tif` absent (needs DrivenData login), no assigned method paragraph, and the lattice gate fails standard budgets. The "[0, 1]" portal error is still unexplained.
 ## Latest review — 2026-10-28 (`arena/2727fc4d-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF.** Read the [current review](docs/repo-review-20261028-arena-2727fc4d.md) and [nine-site historical table](docs/historical-champions.html). This continuation corrected an ambiguous local format PASS; the recorded exterior-NaN check fails for the all-finite historical files. No new model, TIFF, holdout, portal receipt, or competition upload was produced. The required method-lane paragraph is missing and the literal lattice novelty gate blocks standard budgets. Historical files are research only; **SUBMIT NO**.

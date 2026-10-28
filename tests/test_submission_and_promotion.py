@@ -380,3 +380,80 @@ def test_masked_template_is_rejected_by_writer_and_strict_validator(tmp_path, mo
     assert not checks["checks"]["template_footprint_unmasked"]["pass"]
     with pytest.raises(ValueError, match="Template contains masked"):
         submission.write_submission(np.ones(fp.shape), t, tmp_path / "new.tif")
+
+
+def _pin_small_template(monkeypatch, t, fp):
+    """Test gate logic on an artificial grid, without claiming organizer provenance."""
+    with rasterio.open(t) as src:
+        monkeypatch.setitem(submission.EXPECTED, "shape", src.shape)
+        monkeypatch.setitem(submission.EXPECTED, "transform", tuple(src.transform)[:6])
+    monkeypatch.setitem(submission.EXPECTED, "footprint_pixels", int(fp.sum()))
+    monkeypatch.setitem(submission.EXPECTED, "footprint_sha256", submission.footprint_sha256(fp))
+
+
+@pytest.mark.parametrize("mask_kind", ["nodata", "dataset_mask"])
+def test_preflight_rejects_finite_but_masked_prediction_pixels(tmp_path, monkeypatch, mask_kind):
+    t, fp = template(tmp_path)
+    _pin_small_template(monkeypatch, t, fp)
+    a = np.full(fp.shape, 0.5, np.float32)
+    a[3, 4] = 0
+    p = submission.write_submission(a, t, tmp_path / "masked.tif")
+    assert submission.check_variants(p, t)["format_valid"]
+    with rasterio.open(p, "r+") as dst:
+        if mask_kind == "nodata":
+            dst.nodata = 0
+        else:
+            mask = np.full(fp.shape, 255, dtype=np.uint8)
+            mask[3, 4] = 0
+            dst.write_mask(mask)
+    checks = submission.check_variants(p, t)
+    assert checks["checks"]["footprint_all_finite"]["pass"]
+    assert not checks["checks"]["footprint_unmasked"]["pass"]
+    assert "footprint_unmasked" in checks["hard_failures"]
+    assert not checks["format_valid"] and not checks["submission_authorized"]
+
+
+def test_writer_rejects_masked_predictions_inside_but_not_outside(tmp_path):
+    t, fp = template(tmp_path)
+    a = np.ma.array(np.full(fp.shape, 0.5), mask=~fp)
+    submission.write_submission(a, t, tmp_path / "good.tif")
+    a.mask[3, 4] = True
+    with pytest.raises(ValueError, match="must not be masked"):
+        submission.write_submission(a, t, tmp_path / "bad.tif")
+    assert not (tmp_path / "bad.tif").exists()
+
+
+def test_masked_finite_template_pixels_do_not_certify_or_write(tmp_path, monkeypatch):
+    t, fp = template(tmp_path)
+    _pin_small_template(monkeypatch, t, fp)
+    p = submission.write_submission(np.full(fp.shape, 0.5), t, tmp_path / "out.tif")
+    with rasterio.Env(GDAL_TIFF_INTERNAL_MASK=True), rasterio.open(t, "r+") as dst:
+        mask = np.where(fp, 255, 0).astype(np.uint8)
+        mask[3, 4] = 0
+        dst.write_mask(mask)
+    checks = submission.check_variants(p, t)
+    assert not checks["checks"]["official_template_grid_and_footprint"]["pass"]
+    with pytest.raises(ValueError, match="Template contains masked"):
+        submission.write_submission(np.ones(fp.shape), t, tmp_path / "new.tif")
+
+
+def test_writer_cli_rejects_nodata_masked_prediction(tmp_path):
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    t, fp = template(tmp_path)
+    p = submission.write_submission(np.zeros(fp.shape), t, tmp_path / "input.tif")
+    with rasterio.open(p, "r+") as dst:
+        dst.nodata = 0
+    out = tmp_path / "output.tif"
+    root = Path(__file__).resolve().parents[1]
+    result = subprocess.run(
+        [sys.executable, "scripts/submission_writer.py", str(p), str(out), "--template", str(t)],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "must not be masked" in result.stderr
+    assert not out.exists()
