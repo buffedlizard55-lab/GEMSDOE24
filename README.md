@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Validator review — 2026-10-28
+
+**NO SUBMISSION-AUTHORIZED TIFF.** A synthetic test exposed a finite-but-GDAL-masked footprint pixel that the current shared validator accepts. See the [reproduction, concurrent shared-fix status and next steps](docs/session-review-20261028-mask.md) and [negative run card](docs/data/session-mask-review-20261028.json). No candidate, geological experiment, or submission slot was created in this review. Read the [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at the start of each session.
+
 ## Review — 2026-10-28 (`arena/a4397407-gemsdoe24`)
 
 **SUBMIT: NO · no new TIFF · no slot.** Verified review (tests, validator, feasibility gate, official rules): [docs/repo-review-20261028-a4397407.md](docs/repo-review-20261028-a4397407.md). The uniqueness gate fails at standard dot budgets (82.34% minimum lattice overlap at 37,654 dots); the owner must decide the registry-raster rule before any TIFF can be certified unique.
