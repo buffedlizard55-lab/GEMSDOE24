@@ -75,10 +75,13 @@
   ],
   "verification": {
     "full_pytest": "pending",
-    "ruff_check": "pending",
-    "ruff_format_check": "pending",
-    "site_build": "pending",
-    "browser_check": "pending"
+    "ruff_check": "passed",
+    "ruff_format_check": "passed (214 files)",
+    "site_build": "passed",
+    "browser_check": "16 desktop/mobile pages checked, 0 accessibility violations, 0 page errors; checksum and clipboard verified",
+    "integrated_pytest": "606 passed in 255.04 seconds; final expanded suite in progress",
+    "archived_receipt_verifiers": "11 passed",
+    "pinned_peer_refetch": "5 source files reverified at immutable GitHub commit"
   },
   "limitations": [
     "Organizer provenance and portal acceptance are not established by owner-mirror hashes.",
