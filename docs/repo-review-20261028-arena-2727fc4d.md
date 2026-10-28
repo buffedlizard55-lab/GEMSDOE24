@@ -52,6 +52,10 @@ no inference is made about other sites' present state.
    and reran: 579 tests passed. No evidence tests were weakened. The requested new
    TIFF and prospective holdout remain unmet, not implicitly passed by these tests.
 
+## Concurrent finding
+
+The newly integrated [validator review](session-review-20261028-mask.md) reports a synthetic finite but GDAL-masked footprint pixel that the current shared validator accepts. This is an additional local false-pass risk; the historical local results do not certify masks. Coordinate the shared fix before any selector can authorize a file. That finding was not reproduced in this continuation.
+
 ## Next steps
 
 Coordinate the missing method assignment and a prospective resolution of the literal
