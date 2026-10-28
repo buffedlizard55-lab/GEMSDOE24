@@ -74,21 +74,27 @@ def write_submission(
     out_path = Path(out_path)
     if _same_file(out_path, template_path):
         raise ValueError("Output must not overwrite the template")
+    # Refuse stale GDAL sidecars; silently deleting them would destroy data.
+    for suffix in (".msk", ".aux.xml", ".ovr"):
+        sidecar = Path(str(out_path) + suffix)
+        if sidecar.exists() or sidecar.is_symlink():
+            raise ValueError(f"Output has an existing external sidecar: {sidecar}")
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with rasterio.open(template_path) as t:
+        if len(t.files) != 1 or Path(t.files[0]).resolve() != Path(template_path).resolve():
+            raise ValueError("Template must be self-contained without sidecars")
         profile = t.profile.copy()
         footprint = np.isfinite(t.read(1))
-        template_mask = np.ma.getmaskarray(t.read(1, masked=True))
-    if np.any(template_mask & footprint):
-        raise ValueError("Template masks finite pixels inside its prediction footprint")
+        if np.ma.getmaskarray(t.read(1, masked=True))[footprint].any():
+            raise ValueError("Template contains masked pixels inside the footprint")
     if not footprint.any():
         raise ValueError("template contains no finite prediction footprint")
-    pred_mask = np.ma.getmaskarray(pred_2d)
+    if np.ma.isMaskedArray(pred_2d) and np.shape(pred_2d) == footprint.shape:
+        if np.ma.getmaskarray(pred_2d)[footprint].any():
+            raise ValueError("Predictions inside the footprint must not be masked")
     pred_2d = np.asarray(pred_2d)
     if pred_2d.shape != footprint.shape:
         raise ValueError(f"prediction shape {pred_2d.shape} != template {footprint.shape}")
-    if np.any(pred_mask & footprint):
-        raise ValueError("Predictions inside the footprint must not be masked")
     values = pred_2d[footprint]
     if not np.isfinite(values).all() or np.any((values < 0) | (values > 1)):
         raise ValueError(
@@ -131,18 +137,28 @@ def zip_single(tif_path: Path | str, zip_path: Path | str | None = None) -> Path
     return zip_path
 
 
-def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any]:
+def check_variants(
+    path: Path | str, template_path: Path | str, *, strict: bool = False
+) -> dict[str, Any]:
+    """Validate format; strict mode adds driver and explicit mask checks.
+
+    The default preserves frozen historical receipt comparisons. New file
+    preflight and the writer CLI must use strict=True; neither mode authorizes
+    a competition slot.
+    """
     path = Path(path)
     with rasterio.open(template_path) as t:
         t_arr = t.read(1)
         t_prof = t.profile
         footprint = np.isfinite(t_arr)
-        template_mask = np.ma.getmaskarray(t.read(1, masked=True))
+        t_files = list(t.files) if strict else []
+        t_masked = np.ma.getmaskarray(t.read(1, masked=True))
         t_crs, t_tr, t_shape = t.crs, t.transform, t.shape
     with rasterio.open(path) as s:
         arr = s.read(1)
         masked = s.read(1, masked=True)
         prof = s.profile
+        s_files = list(s.files) if strict else []
         crs, tr, shape, count, dtypes, nodata = (
             s.crs,
             s.transform,
@@ -179,27 +195,45 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         and tuple(t_tr)[:6] == EXPECTED["transform"]
         and int(footprint.sum()) == EXPECTED["footprint_pixels"]
         and footprint_sha256(footprint) == EXPECTED["footprint_sha256"]
-        and not np.any(template_mask & footprint)
+        and not t_masked[footprint].any()
     )
     add(
         "official_template_grid_and_footprint",
         expected_template,
         "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
     )
+    if strict:
+        # GDAL-discovered sidecars are not covered by the TIFF byte hash or
+        # included in the single-file upload; require self-contained datasets.
+        template_self_contained = (
+            len(t_files) == 1 and Path(t_files[0]).resolve() == Path(template_path).resolve()
+        )
+        raster_self_contained = len(s_files) == 1 and Path(s_files[0]).resolve() == path.resolve()
+        add("template_self_contained", template_self_contained, f"files={t_files}")
+        add("raster_self_contained", raster_self_contained, f"files={s_files}")
+        add(
+            "template_footprint_unmasked",
+            not t_masked[footprint].any(),
+            "Template footprint has no masked pixels",
+        )
+        add("geotiff_driver", prof.get("driver") == "GTiff", f"driver={prof.get('driver')}")
     add("single_band", count == 1, f"count={count}")
     add("dtype_float32", dtypes == ("float32",), f"dtypes={dtypes}")
     add("crs_epsg_32611", crs is not None and crs.to_epsg() == 32611 and crs == t_crs, f"{crs}")
     add("shape_matches_template", shape == t_shape, f"{shape} vs {t_shape}")
     add("geotransform_matches_template", tr == t_tr, f"{tuple(tr)[:6]}")
     if shape_ok:
+        # A finite raw value can still be suppressed by nodata or an internal/
+        # external GDAL mask. Reject ambiguous predictions instead of assuming
+        # the portal uses a raw rather than a masked read.
         masked_inside = np.ma.getmaskarray(masked)[footprint]
-        # Preserve immutable historical receipts for clean rasters, but fail closed
-        # with an explicit new hard check whenever the reader masks scored pixels.
-        if masked_inside.any():
+        # Preserve successful historical receipt bytes in legacy mode, but
+        # never silently pass a masked in-footprint prediction in either mode.
+        if strict or masked_inside.any():
             add(
                 "footprint_unmasked",
-                False,
-                f"{int(masked_inside.sum())} masked pixels inside the prediction footprint",
+                not masked_inside.any(),
+                f"{int(masked_inside.sum())} masked pixels inside the footprint",
             )
         add(
             "footprint_all_finite",
@@ -218,7 +252,10 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
             hard=False,
         )
     else:
-        for name in ("footprint_all_finite", "footprint_range_0_1"):
+        names = ["footprint_all_finite", "footprint_range_0_1"]
+        if strict:
+            names.insert(0, "footprint_unmasked")
+        for name in names:
             add(name, False, "not evaluated: the raster does not have the template's shape")
         add(
             "outside_is_nan_official_text",

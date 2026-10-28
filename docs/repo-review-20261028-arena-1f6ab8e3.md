@@ -12,7 +12,7 @@ GEMSDOE32 B2 has the highest **owner-reported, unverified** result among the nin
 
 **Pass 2 — compatibility and edge cases.** The initial implementation added a passing check to all receipts, breaking site construction and historical receipt equality tests. That design was corrected without rewriting any frozen receipt. Regression tests cover both nodata and dataset masks, masked source arrays, masked templates, masked source CLI files, and a permitted exterior mask. The focused submission, site and historical receipt tests passed. Existing successful validator-output text retains its legacy name `official_template_grid_and_footprint`; the pinned template is an owner mirror, not organizer-authenticated by this test.
 
-**Pass 3 — final check.** The full suite passed: `583 passed` using `.venv/bin/pytest -q`. Ruff and `git diff --check` passed on the modified code. The Git history was unshallowed; that alone does not verify every historical commit or receipt. No portal was contacted, no new geological holdout or feature canary ran, and prior scientific measurements were not replayed.
+**Pass 3 — final check.** The full suite passed: `592 passed` using `.venv/bin/pytest -q` after integrating the concurrent main-branch strict-preflight and sidecar checks. The CLI additionally preserves source masks; legacy receipt validation fails closed for masked in-footprint pixels without changing clean receipt output. Ruff and `git diff --check` passed on the modified code. The Git history was unshallowed; that alone does not verify every historical commit or receipt. No portal was contacted, no new geological holdout or feature canary ran, and prior scientific measurements were not replayed.
 
 ## Confirmed constraints and next steps
 

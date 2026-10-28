@@ -1,0 +1,42 @@
+{
+  "schema": "gems-continuation-run-card-v1",
+  "hypothesis": "No new geological hypothesis tested: no single method lane was assigned.",
+  "mechanism": "Shared exact-file validation and GitHub source-freshness review; no scientific experiment.",
+  "named_non_fault_process_that_could_mimic_it": "A space-filling calibration lattice can create dot overlap independent of geological similarity.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN"
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "final_dot_overlap": null,
+    "status": "NOT RUN: no candidate surface or dots",
+    "bound_note": "Pinned lattice makes the 37654- and 44090-dot budgets necessarily exceed the literal overlap threshold; not a complete registry comparison."
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_raster": "NOT RUN: no new raster",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "submission_authorized": false,
+    "existing_research_file_preflight": "evidence/s3dep1_strict_preflight_20261028_arena_f7f69bc3.json"
+  },
+  "submission_name": null,
+  "submission_note": "No candidate; do not submit.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "leaderboard_estimate": null,
+  "limitations": [
+    "No assigned method paragraph, and the literal lattice policy blocks common dot budgets.",
+    "Training raster and prepared feature stack are absent; mirror hashes do not authenticate provenance.",
+    "GitHub source freshness is not a current registry raster audit or a score receipt.",
+    "No current organizer leaderboard, portal rejection diagnostics, account quota or organizer acceptance.",
+    "No independently verified selector receipt implementation exists; format checks alone cannot authorize submission."
+  ]
+}

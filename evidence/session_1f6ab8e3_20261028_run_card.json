@@ -40,7 +40,7 @@
   "organizer_confirmed_scores": [],
   "leaderboard_estimate": null,
   "tests": {
-    "full_pytest": "583 passed",
+    "full_pytest": "592 passed after integrating concurrent main",
     "ruff": "modified Python files pass check and format",
     "git_diff_check": "passed",
     "feasibility": "Pinned lattice checker stopped both tested dot budgets; bounds are not individual-candidate measurements.",
