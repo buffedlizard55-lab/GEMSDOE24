@@ -43,14 +43,46 @@
   "leaderboard_estimate": null,
   "submission_authorized": false,
   "tests": {
-    "pytest": "576 passed",
-    "ruff_check": "passed",
-    "ruff_format_check": "passed (213 files)",
+    "pytest": "578 passed",
+    "ruff_check": "passed after upstream script review fixes",
+    "ruff_format_check": "passed (215 files)",
     "compileall": "passed",
-    "javascript_syntax": "passed",
-    "browser_review": "14 desktop/mobile checks passed; first-screen download/hash/note/tables/overflow verified; zero Axe violations or page errors",
+    "javascript_syntax": "passed (app.js and audit runner)",
+    "browser_review": "16 desktop/mobile page checks passed, including H-BLIND-UPWELL research subpage: first-screen CTAs, exact TIFF hashes, copied notes, nine-site rows, no overflow/page errors/external requests, zero Axe violations",
     "git_diff_check": "passed",
     "history_guard": "full history detected",
-    "uniqueness_feasibility": "Fresh checker reproduced 99.8713% witness coverage; diagnostic budgets 37654 and 44090 stop with exit 2"
+    "uniqueness_feasibility": "Fresh checker reproduced 99.8713% witness coverage; diagnostic budgets 37654 and 44090 stop with exit 2",
+    "browser_review_receipt": "evidence/site_audit_20261028_arena_932e2262.json"
+  },
+  "parallel_candidate_review": {
+    "source_commit": "839c457",
+    "candidate_measurements_replayed": false,
+    "official_external_data_provenance_verified": false,
+    "VENTRAD": {
+      "HOLDOUT_DTI": 0.1223432906586298,
+      "ci95": [
+        0.11109942107246935,
+        0.13366146771534174
+      ],
+      "evaluator": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "lattice_overlap": 0.9981708286941308,
+      "literal_all_entries_passed": false,
+      "submission_authorized": false
+    },
+    "H_BLIND_UPWELL": {
+      "HOLDOUT_DTI": 0.06882106257102054,
+      "ci95": [
+        0.05811247647644545,
+        0.07998196406075422
+      ],
+      "evaluator": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "full_registry_novelty": "NOT_REVERIFIED",
+      "candidate_dot_count": 37722,
+      "geometric_min_lattice_overlap": 0.8237368114097843,
+      "submission_authorized": false
+    },
+    "both_research_only": true
   }
 }

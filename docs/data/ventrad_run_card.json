@@ -1,0 +1,204 @@
+{
+  "hypothesis": "Blind geothermal upwelling: volcanic vent proximity + potassic alteration (low Th/K) + magnetic demagnetization target fault segments missing from the USGS/INGENIOUS catalogue.",
+  "mechanism": "Vents are independent point heat sources (11/21 >20 px from any known fault); low Th/K marks potassic hydrothermal alteration; low rtp marks demagnetization. Weighted surface emits Poisson dots ranked by propensity, min 3 px spacing.",
+  "non_fault_mimic": "Magnetite-poor alluvial paleochannel with K-rich detritus can mimic potassic alteration; young basalt without geothermal circulation is a vent false positive.",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "n_withheld_positive_pixels": 60988,
+    "dti": 0.1223432906586298,
+    "ci95": [
+      0.11109942107246935,
+      0.13366146771534174
+    ],
+    "protocol": "pooled TPw/FPw/FNw, 10 km spatial block bootstrap, alpha 0.2 beta 0.8, 300 m triangular kernel, buffer 15 px"
+  },
+  "leakage_canary": {
+    "passed": true,
+    "worst_feature": "K",
+    "worst_pooled_auc": 0.4060854584960939,
+    "threshold": 0.9
+  },
+  "correlation_overlap_vs_registry": {
+    "method_lane_passed_vs_competing_methods": true,
+    "max_abs_rank_correlation": 0.1256392969486038,
+    "max_dot_overlap_within_3px": 0.9981708286941308,
+    "literal_all_entries_passed": false,
+    "lattice_overlap": [
+      {
+        "registry_id": "registry-039",
+        "file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817",
+        "raw_spearman": 0.00042508643505494197,
+        "kernel_spearman": 0.0031431204399097567,
+        "candidate_dot_overlap_within_3px": 0.9981708286941308,
+        "duplicate": true,
+        "correlation_defined": true,
+        "entry_role": "synthetic_spacing5_calibration_lattice"
+      }
+    ],
+    "competing_method_overlaps": [
+      {
+        "registry_id": "registry-001",
+        "file": "docs/downloads/gems24-h24-0-mirror-h19-5-group-best-20261002-e27054cf-allfinite.tif",
+        "overlap": 0.057844228831981336,
+        "rho": -0.009680066289411827
+      },
+      {
+        "registry_id": "registry-002",
+        "file": "docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
+        "overlap": 0.05275436085043211,
+        "rho": -0.006882241368076955
+      },
+      {
+        "registry_id": "registry-003",
+        "file": "docs/downloads/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-allfinite.tif",
+        "overlap": 0.049970839298022374,
+        "rho": -0.005384667062462126
+      },
+      {
+        "registry_id": "registry-040",
+        "file": "inputs/calibration/8GEMSDOE_Hedge-v2_submission.tif",
+        "overlap": 0.15012459572663167,
+        "rho": -0.009649313991683537
+      },
+      {
+        "registry_id": "registry-041",
+        "file": "inputs/calibration/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+        "overlap": 0.196039446476857,
+        "rho": -0.00520022461980384
+      },
+      {
+        "registry_id": "registry-042",
+        "file": "inputs/calibration/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+        "overlap": 0.2141986108901967,
+        "rho": -0.0025251724305284545
+      },
+      {
+        "registry_id": "registry-043",
+        "file": "inputs/calibration/gemsdoe-ens12-adopted-7f00890a.tif",
+        "overlap": 0.10542919251365251,
+        "rho": -0.009841826052213672
+      },
+      {
+        "registry_id": "registry-044",
+        "file": "inputs/calibration/gemsdoe9-PLACEHOLDER-2314b599.tif",
+        "overlap": 0.0786808758814485,
+        "rho": 0.004023469847815043
+      },
+      {
+        "registry_id": "registry-045",
+        "file": "inputs/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+        "overlap": 0.062059275754201795,
+        "rho": -0.009773005582998477
+      },
+      {
+        "registry_id": "registry-046",
+        "file": "inputs/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-allfinite.tif",
+        "overlap": 0.06041567255182652,
+        "rho": -0.009851004038980109
+      }
+    ]
+  },
+  "raster_sha256": "603d21dbb482200336499a05725310398a265c9dd618826d921ab260ec4d9626",
+  "validator_output": {
+    "file": "24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif",
+    "bytes": 823778,
+    "sha256": "603d21dbb482200336499a05725310398a265c9dd618826d921ab260ec4d9626",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37722,
+    "in_footprint_mass": 37722.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "submission_name": "24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif",
+  "note": "24GEMSDOE VENTRAD | blind geothermal upwelling vents+pottassic alteration, unique vs competing metho | id 34b558b554fb | not yet live-scored",
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "reasons": [
+    "Literal all-entries uniqueness gate fails vs the spacing-5 calibration lattice (documented geometric bound: every dotted budget overlaps it >= 82.3%); passes vs every competing method raster.",
+    "No organizer-confirmed score; DrivenData submission slot not available/used."
+  ],
+  "organizer_confirmed_score": null,
+  "experiments_run": 1,
+  "submission_slots_used": 0,
+  "elapsed_seconds": 33.22557565499983
+}

@@ -1,16 +1,15 @@
 {
-  "hypothesis": "H24-BLIND-UPWELL H1: concealed-fault geothermal upwelling -- LiDAR ex_mean flexure x GeoDAWN K x low Th/K x INGENIOUS vent/spring thermal field; catalogue-independent scoring; emission excludes catalogue pixels",
-  "mechanism": "Blind faults hosting geothermal upwelling express subtle curvature flexure, K enrichment, low Th/K (argillic) and shallow thermal anomalies without a mappable surface trace, so they are missing from the USGS/INGENIOUS catalogue; catalogue faults are used only for holdout masking/evaluation, never to build the score surface.",
-  "non_fault_mimic": "K-rich alluvial fans / paleochannels with shallow warm groundwater produce steep + K + warm coincidence without a fault.",
+  "hypothesis": "H-BLIND-UPWELL-01 blind hydrothermal upwelling: U/Th depletion x TMI-up150 demagnetisation gradient x LiDAR lapneg scarp convexity",
+  "mechanism": "Mobile-U leaching (low U/Th), demagnetisation halo and subtle base-concave scarps mark concealed conduits absent from the USGS/INGENIOUS catalogue; score is catalogue-blind",
+  "non_fault_mimic": "K-rich alluvial-fan toes, gravel pits and road cut/fill",
   "holdout": {
     "evaluator_version": "gems-segment-pooled-v1",
-    "dti": 0.06448444342931338,
+    "dti": 0.06882106257102054,
     "ci95": [
-      0.05575265073698321,
-      0.07400415098713126
+      0.05811247647644545,
+      0.07998196406075422
     ],
     "n_withheld_positive_pixels": 60988,
-    "n_unique_withheld_components": 3199,
     "protocol": {
       "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
       "buffer_m": 1500,
@@ -22,32 +21,317 @@
       "triangular_kernel_radius_m": 300
     }
   },
-  "correlation_overlap_vs_registry": {
-    "surface_max_abs_rank_correlation": 0.29619680327595976,
-    "final_max_abs_rank_correlation": 0.26804949275064877,
-    "final_max_overlap_within_3px": 0.9985684746301893,
-    "method_lane_passed": true,
-    "literal_all_entries_passed": false,
-    "scope": "All published docs/downloads/*.tif in the nine pinned priority repositories plus local inputs; not every unseen registry in parallel sessions",
-    "rank_limit": 0.9,
-    "overlap_limit": 0.7
+  "novelty_local": {
+    "n_comparators": 60,
+    "max_dot_overlap": 0.5746779067917925,
+    "comparators": [
+      {
+        "file": "24gems-blind-upwell-conduit-20261028T190010Z-63519df3ad00-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "24gems-catalogue-offset-geothermal-proximity-20261027T114303Z-578c30176163-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "24gems-doer-fault-guided-k-20261025T220208Z-dedb860f7e83-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "24gems-gapfill-near-fault-20261026T203338Z-1b2b4ccc37b0-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "24gems-geothermal-surface-proximity-20261026T163058Z-dd2fff044fc1-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-nan.tif",
+        "comparator_dots": 11728801,
+        "dots_within_3px": 0.0038174009861619215,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-nan.tif",
+        "comparator_dots": 116787962,
+        "dots_within_3px": 0.4641058268384497,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-aspc-20261025-6393e9d9b0df-RESEARCH-NOT-SUBMISSION-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-con-claycap-strain-saddle-20261025-ded121060878-nan.tif",
+        "comparator_dots": 97320407,
+        "dots_within_3px": 0.11078415778590743,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-con-claycap-strain-saddle-20261025-ded121060878-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-nan.tif",
+        "comparator_dots": 113663078,
+        "dots_within_3px": 0.21515296113673718,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-nan.tif",
+        "comparator_dots": 111187481,
+        "dots_within_3px": 0.20688192566671967,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-nan.tif",
+        "comparator_dots": 91895255,
+        "dots_within_3px": 0.2069614548539314,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-dkrn1-negative-d8-knick-kernel-20261026-7f031285130c-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif",
+        "comparator_dots": 98605912,
+        "dots_within_3px": 0.2327819309686655,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-eul1-negative-euler-contact-20261026-eda170f04847-nan.tif",
+        "comparator_dots": 98438735,
+        "dots_within_3px": 0.23572451089549865,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-eul1-negative-euler-contact-20261026-eda170f04847-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-nan.tif",
+        "comparator_dots": 114894550,
+        "dots_within_3px": 0.36376650230634644,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-fuse-fuse-hcw-hgb-20261025-3fd41218a10a-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-gsd-strain-gravity-20261026-060688cf983e-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-nan.tif",
+        "comparator_dots": 111101733,
+        "dots_within_3px": 0.21175971581570435,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-h24-0-mirror-h19-5-group-best-20261002-e27054cf-allfinite.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-h24-0-mirror-h19-5-group-best-20261002-e27054cf-nan.tif",
+        "comparator_dots": 336694796,
+        "dots_within_3px": 0.3175070250782037,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+        "comparator_dots": 166341073,
+        "dots_within_3px": 0.2923227824611632,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-allfinite.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+        "comparator_dots": 122083763,
+        "dots_within_3px": 0.2776629022851386,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-nan.tif",
+        "comparator_dots": 103022983,
+        "dots_within_3px": 0.23283495042680663,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-mtr1-negative-paired-trough-20261025-ed7243e6d163-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-myhgb-regime-hydro-hgb-20261026-3e38453a8fb9-nan.tif",
+        "comparator_dots": 104625223,
+        "dots_within_3px": 0.15211282540692433,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-myhgb-regime-hydro-hgb-20261026-3e38453a8fb9-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-nan.tif",
+        "comparator_dots": 92135191,
+        "dots_within_3px": 0.26528285880918295,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-ptar-tilt-relief-20261026-51e626fecdc6-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-reference-h19-5-20261002-80d47e1ab2ee-allfinite.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-reference-h19-5-20261002-80d47e1ab2ee-nan.tif",
+        "comparator_dots": 336694796,
+        "dots_within_3px": 0.3175070250782037,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-nan.tif",
+        "comparator_dots": 103032884,
+        "dots_within_3px": 0.1570966544721913,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-rshg1-regime-hydro-hgb-20261025-98f69d77e868-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-nan.tif",
+        "comparator_dots": 88198816,
+        "dots_within_3px": 0.17514977996924871,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif",
+        "comparator_dots": 118254096,
+        "dots_within_3px": 0.5746779067917925,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-tmcg-b-decoupled-basin-20261027T113937Z-6f8d042d5ee4-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-nan.tif",
+        "comparator_dots": 118562324,
+        "dots_within_3px": 0.3083611685488574,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-tnr1-56dfd14b88db-20261026-RESEARCH-NOT-SUBMISSION-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-nan.tif",
+        "comparator_dots": 77804716,
+        "dots_within_3px": 0.18625735644981709,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-trsg1-tworegime-seismic-geo-oof-20261026-7f301fc433f0-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-vent-quat-bridge-20261026-a6e191937e80-nan.tif",
+        "comparator_dots": 116942000,
+        "dots_within_3px": 0.10198292773447855,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-nan.tif",
+        "comparator_dots": 115453376,
+        "dots_within_3px": 0.2972270823392185,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-xfront-c-corrob-45000-20261026T162655Z-921f4f037290-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      },
+      {
+        "file": "gems24-xvar1-duplicate-semivariogram-20261026-7d909c75458c-nan.tif",
+        "comparator_dots": 99076753,
+        "dots_within_3px": 0.19704681618153863,
+        "overlap_gt_70": false
+      },
+      {
+        "file": "gems24-xvar1-duplicate-semivariogram-20261026-7d909c75458c-zeros.tif",
+        "skipped": "grid/footprint mismatch"
+      }
+    ]
   },
   "leakage_canary": {
     "passed": true,
     "threshold": 0.9,
     "features": {
-      "curvature_ex_mean": 0.5537686707418938,
-      "k_anomaly": 0.4490876442782291,
-      "alteration_low_thk": 0.5199462921127902,
-      "thermal_vent_spring": 0.5004404963044524,
-      "score_surface": 0.509901531215987
+      "uth_depletion": 0.4771400255018098,
+      "tmi_gradient": 0.5274092830068089,
+      "lapneg_scarp": 0.570943072588402,
+      "score_surface": 0.5426114169640823
     }
   },
-  "raster_sha256": "a59b772423a42676fadbdaf6bdc556e350e51c0f13a560b96d40821822550122",
+  "raster_sha256": "e64604460ad2d4b1afcacab81aba8c501844c9333a1f92f7931d4a02d3b0dd55",
   "validator_output": {
-    "file": "24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.tif",
-    "bytes": 826252,
-    "sha256": "a59b772423a42676fadbdaf6bdc556e350e51c0f13a560b96d40821822550122",
+    "file": "24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif",
+    "bytes": 826638,
+    "sha256": "e64604460ad2d4b1afcacab81aba8c501844c9333a1f92f7931d4a02d3b0dd55",
     "format_valid": true,
     "ok_to_upload": false,
     "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
@@ -141,18 +425,18 @@
     ],
     "scope": "No portal upload occurs. OK_TO_SUBMIT is a local evidence decision, not an organizer receipt or a leaderboard score."
   },
-  "submission_name": "24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.tif",
-  "note": "24GEMS blind-upwelling LiDARxKxThKxthermal | catalogue-independent | research; HOLDOUT-DTI 0.06448 | id a23f2207f2c0",
-  "note_characters": 116,
+  "submission_name": "24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif",
+  "note": "24GEMS blind-upwell U/Thxdemagxscarp | catalogue-blind | research; HOLDOUT-DTI 0.06882 | id 5b6e6af2ed3b",
+  "note_characters": 104,
   "note_limit": 140,
   "verdict": "negative",
   "ok_to_download": true,
   "ok_to_submit": false,
   "reasons": [
-    "holdout DTI 0.06448 does not beat current comparable best 0.13"
+    "holdout DTI does not beat current comparable best 0.13000"
   ],
   "organizer_confirmed_score": null,
   "experiments_run": 1,
   "submission_slots_used": 0,
-  "elapsed_seconds": 79.33386910699994
+  "elapsed_seconds": 25.355422800000042
 }

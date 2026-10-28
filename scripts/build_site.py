@@ -162,11 +162,10 @@ def render_unique_submission(root: Path) -> str:
 
 
 def place_unique_section_after_current_best(executive: str, featured: str) -> str:
-    """Keep the recorded point-best download visible before a weak experiment card.
+    """Keep the recorded point-best download visible before negative experiment cards.
 
-    The two cards are both explicitly research-only. A promoted-looking but low-DTI
-    negative should not displace the repository's recorded point-best CTA above the
-    fold merely because it is the newest artifact.
+    All featured cards are explicitly research-only. A newer low-DTI negative must
+    not displace the repository's recorded point-best CTA above the fold.
     """
     marker = 'id="current-best-review"'
     start = executive.find(marker)
@@ -177,6 +176,111 @@ def place_unique_section_after_current_best(executive: str, featured: str) -> st
         raise ValueError("current point-best section is unterminated")
     end += len("</section>")
     return executive[:end] + featured + executive[end:]
+
+
+def render_parallel_candidate_summary(root: Path) -> str:
+    """Render the incoming parallel candidates without overstating novelty or authority."""
+    rows = (
+        (
+            "VENTRAD",
+            "docs/data/ventrad_download.json",
+            "docs/data/ventrad_run_card.json",
+            "docs/downloads/24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif",
+            "docs/data/ventrad_run_card.json",
+        ),
+        (
+            "H-BLIND-UPWELL",
+            "docs/data/blind_upwell_download.json",
+            "docs/data/blind_upwell_run_card.json",
+            "docs/downloads/24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif",
+            "docs/data/blind_upwell_run_card.json",
+        ),
+    )
+    cards = []
+    for label, download_rel, run_rel, raster_rel, run_link in rows:
+        download = json.loads((root / download_rel).read_text())
+        run = json.loads((root / run_rel).read_text())
+        raster = root / raster_rel
+        expected_sha = download.get("sha256")
+        if (
+            download.get("ok_to_submit") is not False
+            or download.get("verdict") != "negative"
+            or run.get("ok_to_submit") is not False
+            or run.get("verdict") != "negative"
+            or not expected_sha
+            or not raster.is_file()
+            or sha256_file(raster) != expected_sha
+        ):
+            raise ValueError(
+                f"{label} candidate must remain a hash-bound negative research artifact"
+            )
+        holdout = run.get("holdout", {})
+        ci = holdout.get("ci95")
+        if not isinstance(ci, list) or len(ci) != 2:
+            raise ValueError(f"{label} run card must include its HOLDOUT-DTI confidence interval")
+        evaluator = holdout.get("evaluator_version")
+        n = holdout.get("n_withheld_positive_pixels")
+        score = holdout.get("dti")
+        if not evaluator or not isinstance(n, int) or not isinstance(score, (int, float)):
+            raise ValueError(f"{label} run card is missing named HOLDOUT-DTI evidence")
+        if label == "VENTRAD":
+            novelty = run.get("correlation_overlap_vs_registry", {})
+            lattice = novelty.get("lattice_overlap", [])
+            if novelty.get("literal_all_entries_passed") is not False or not lattice:
+                raise ValueError("VENTRAD must retain its recorded all-entry novelty failure")
+            overlap = lattice[0].get("candidate_dot_overlap_within_3px")
+            novelty_text = (
+                f"Required all-entry lattice gate: <strong>FAIL</strong>; recorded overlap {overlap:.5f} "
+                "(limit 0.70). The narrower method-only comparison is not the protocol gate."
+            )
+        else:
+            if run.get("correlation_overlap_vs_registry") is not None:
+                raise ValueError(
+                    "H-BLIND-UPWELL registry novelty must remain explicitly unverified"
+                )
+            feasibility_path = root / "evidence/repo_review_20261028_arena_932e2262_run_card.json"
+            feasibility = json.loads(feasibility_path.read_text())[
+                "correlation_overlap_vs_registry"
+            ]["frozen_lattice_lower_bound"]
+            base_dots = 37654
+            uncovered_cells = round(
+                base_dots * (1 - feasibility["candidate_dot_budget_37654_minimum_overlap"])
+            )
+            dots = download.get("pixel_count")
+            if not isinstance(dots, int) or dots < base_dots:
+                raise ValueError(
+                    "H-BLIND-UPWELL dot budget must retain the recorded feasibility bound"
+                )
+            min_overlap = (dots - uncovered_cells) / dots
+            novelty_text = (
+                "Full registry novelty is <strong>not re-verified</strong>. From the frozen lattice bound, "
+                f"at most {uncovered_cells:,} dots could avoid its 3-px neighborhood; for {dots:,} dots the "
+                f"minimum overlap is {min_overlap:.5f} (limit 0.70), so protocol uniqueness fails geometrically."
+            )
+        name = download.get("file")
+        point_best = (
+            "Below the repository-recorded S3DEP1 point-best HOLDOUT-DTI 0.16606 [0.15186, 0.18034]; "
+            "that source measurement was not replayed here."
+        )
+        cards.append(
+            f'<article class="card"><h3>{e(label)} — research only; SUBMIT: NO</h3>'
+            f'<p><a href="{e(raster_rel.removeprefix("docs/"))}" download>Download research GeoTIFF — DO NOT SUBMIT</a>'
+            f' · <a href="{e(run_link.removeprefix("docs/"))}">run card</a></p>'
+            f"<p>HOLDOUT-DTI {score:.5f}, 95% CI [{ci[0]:.5f}, {ci[1]:.5f}], "
+            f"<code>{e(evaluator)}</code>, {n:,} withheld positives. Source-recorded; not replayed in this review; "
+            f"not an organizer score or leaderboard estimate. {point_best} {novelty_text}</p>"
+            f'<p class="micro">File: <code style="overflow-wrap:anywhere">{e(name)}</code> · SHA-256 '
+            f'<code style="overflow-wrap:anywhere">{e(expected_sha)}</code>. '
+            "No selector authorization or organizer receipt. Submission is not authorized.</p></article>"
+        )
+    return (
+        '<section class="card" id="parallel-research-candidates">'
+        "<h2>Recent parallel candidates — research only; none is submission-authorized</h2>"
+        "<p>These main-branch artifacts are recorded negative results. Do not interpret a file hash, a method-only comparison, or a local download pass as proof of protocol novelty. "
+        "Their external-data provenance and measurements were not independently authenticated or replayed in this review. Leaderboard estimate: <strong>NOT ESTIMABLE</strong>.</p>"
+        f'<div class="grid2">{"".join(cards)}</div>'
+        '<p><a href="executive-summary-unique.html">Blind-upwell research page and nine-site table</a></p></section>'
+    )
 
 
 def build_independent_site(primary):
@@ -623,7 +727,9 @@ def build_independent_site(primary):
         '<a class="button" href="data/portfolio_freshness.json">Current audit-pin freshness</a></div></section>'
     ) + source_page
     (DOCS / "data" / Path(UNIQUE_OVERLAP).name).write_text((ROOT / UNIQUE_OVERLAP).read_text())
-    executive = place_unique_section_after_current_best(executive, render_unique_submission(ROOT))
+    executive = place_unique_section_after_current_best(
+        executive, render_parallel_candidate_summary(ROOT) + render_unique_submission(ROOT)
+    )
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),
@@ -659,6 +765,7 @@ def build_independent_site(primary):
         "executive-summary.html",
         "research.html",
         "sources.html",
+        "executive-summary-unique.html",
         "data/",
         "portfolio-review-20261026.md",
         "protocol-feasibility-20261027.md",
@@ -1464,7 +1571,9 @@ def main():
 <section><div class="grid2"><article class="card"><h3>Limitations and access needs</h3><ul class="prose"><li>I cannot reach the DrivenData portal, the private leaderboard or hidden labels, nor upload or verify scores.</li><li>Hand-labelled lidar scarps are allowed by staff (labels must be saved) and need a geologist.</li><li>Official flight-number → block mapping needs the S3-hosted profile archives (anonymous GET returns 403).</li><li>DrivenData figures are human-read snapshots: re-verify by hand; no job here may access that site automatically.</li></ul></article><article class="card"><h3>Three-pass review</h3><p>{e(review.get("summary", "Review in progress."))}</p><div class="actions"><a class="button" href="data/source_health.json" download>Source feed</a><a class="button" href="data/audit.json" download>Audit receipt</a></div></article></div></section>"""
 
     # ------------------------------------------------------------------ write
-    executive = place_unique_section_after_current_best(executive, render_unique_submission(ROOT))
+    executive = place_unique_section_after_current_best(
+        executive, render_parallel_candidate_summary(ROOT) + render_unique_submission(ROOT)
+    )
     bodies = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),
