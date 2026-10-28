@@ -6,34 +6,20 @@
 
 **Key requirements:** unique (non-copied) TIF · values in [0, 1] (zeros outside footprint to pass the portal range gate) · unique name + note <= 140 chars · executive summary table over GEMSDOE 24/25/27/28/30/31/32/33/36 (file to download · estimated score · unique flag) · how-to-submit subpage · validation with no human intervention (no NaN inside footprint, CRS/shape/transform match EPSG:32611 3730x3292 @100 m) · PR merged to main · no hallucinations.
 
-**Result this session:** new unique submission `docs/downloads/24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif` (SHA-256 `603d21db…9626`), 37,722 dots, HOLDOUT-DTI 0.1223 [0.1111, 0.1337], unique vs all competing prior submissions, format-valid (strict [0,1] PASS). **ok_to_download: YES · ok_to_submit: NO** (literal lattice gate reported; no slot spent; awaits lane + selector + organizer receipt). See `docs/executive-summary.html#unique-submission` and `docs/data/ventrad_run_card.json`.
-
 ---
 
-## Continuation — 2026-10-28 (branch `arena/2812634d-gemsdoe24`): unique GeoTIFF download, SUBMIT NO
+## This branch (arena/c88278d6-gemsdoe24) — unique submission artifact
 
-**One automated, unique GeoTIFF is downloadable for research. It is NOT approved to submit.** Estimate: **NOT ESTIMABLE**.
-- Download: [`24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-zeros.tif`](docs/downloads/24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-zeros.tif), SHA-256 `379bf97792355bb48acec703939537a62bb8492705997e043c235bd9029c44db`. Note (107 chars): `24GEMS interior-offlattice geothermal dots | HOLDOUT-DTI 0.0038 | id e5a3c34b27db | research; DO NOT SUBMIT`.
-- Uniqueness, measured: directed 3-px overlap **0.4686** (limit 0.70) against **69 local same-grid rasters** ([receipt](evidence/unique_local_overlap_20261028.json)). This is **not** a scan of the full 167-alias registry or the other GEMSDOE repositories, and the retained-lattice rule remains binding.
-- Holdout (internal, `gems-segment-pooled-v1`, 60,988 withheld, 95% CI): **HOLDOUT-DTI 0.0038 [0.0021, 0.0057]**. This is far below every recorded local point-best, so the file does not compete for a leaderboard slot.
-- Format: single-band float32, EPSG:32611, 3730×3292, zeros outside, whole-array finite in [0,1]. The portal's "[0, 1]" rejection cause is **not established**; this encoding is a hedge.
+**Task:** generate a UNIQUE submission TIF and a nine-site executive summary (GEMSDOE24/25/27/28/30/31/32/33/36) with file-to-download, estimate score and uniqueness; make the download + submit decision obvious; validate on the spatially blocked holdout before any slot.
 
-**Fixes this session (shared tools, fixed once):**
-1. `src/gems/benchmarks.py`: newer evidence cards name the pooled DTI `pooled_dti`; the loader treated it as malformed, which **broke every site build** (25 site-test errors). Alias normalised; recorded point-best unchanged (S3DEP1 0.16606).
-2. `scripts/build_site.py`: the featured unique-GeoTIFF section was hand-edited into `executive-summary.html` by commit 6adbdd8 and erased by the next rebuild. It is now generated from its run card, file hash, note file and overlap receipt, and **fails closed** on any mismatch.
-3. `scripts/audit_unique_local_overlap.py`: reproducible directed 3-px overlap scan with an explicit scope statement.
+**Result this branch:** built and validated one catalogue-blind unique GeoTIFF:
+`docs/downloads/24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif`
+(SHA-256 `e6460446…dd55`, 37,722 dots, all values finite in [0,1], zeros outside footprint).
+- **OK to download: YES** — format, whole-array [0,1] and local novelty (max 0.5747 ≤ 0.70) PASS.
+- **OK to submit: NO** — HOLDOUT-DTI 0.06882 (CI [0.05811, 0.08000]) is below the current comparable holdout best 0.13000; full 46-raster registry novelty could not be re-run (GitHub raw-asset network blocked); no selector/quota certificate. Zero slots spent.
+**Full detail:** `docs/executive-summary-unique.html` · `docs/data/blind_upwell_run_card.json` · `evidence/blind_upwell_experiment.json` · `scripts/build_blind_upwell_submission.py`.
 
-**Verification:** full suite **572 passed** with full git history (`git fetch --unshallow` was required; a shallow clone fails history tests). `ruff` clean.
-
-**Irregularities for review (not resolved):**
-- `data/bridge/labels.tif` is **byte-identical** to `data/bridge/existing_faults.tif` (both SHA-256 `7ba308cc…4093`).
-- The official-format `sample_submission.tif` has exactly **60,988** in-footprint positives, identical to the public catalogue (`existing_faults` value 1). The local holdout therefore measures recovery of *public catalogue* faults, not the hidden competition labels.
-- Official hosts (`drivendata.org`, `docs.nlr.gov`, `gdr.openei.org`, `epsg.io`) and `raw.githubusercontent.com` were **unreachable from this sandbox**. Only the DrivenData reference README at its pinned commit was read (via GitHub page fetch); it states no [0,1] or NaN convention.
-- The owner-reported 0.2778 (GEMSDOE32 H33-B2) and leader snapshots 0.3195 / 0.4413 are **not reproducible** here; no organizer receipt exists.
-
-**Next blockers:** a coordinator-assigned method paragraph; a prospective resolution of the literal retained-lattice rule (any budget above ≈22,163 dots is impossible under it, see `scripts/check_uniqueness_feasibility.py`); `data/training_features.tif` is absent from this checkout (verified) and no DEM file was found; a verified weekly-slot allowance from the live submission page.
-
-
+**Read before continuing:** `docs/executive-summary-unique.html` (nine-site table + how-to-submit), `AGENTS.md` (standing rules: no DrivenData automation, no slot unless beating holdout best + gates + selector), and the branch reviews below. Do not fabricate organizer-confirmed scores or submit a renamed historical reference.
 
 ## Arena branch continuation — 2026-10-28 (`arena/c81bb5d5-gemsdoe24`)
 
