@@ -78,3 +78,26 @@ def test_pinned_card_cannot_be_silently_changed(tmp_path, monkeypatch):
     destination.unlink()
     with pytest.raises(ValueError, match="missing"):
         peer.verify_source_bytes(tmp_path)
+
+
+@pytest.mark.parametrize("preexisting", [True, False])
+def test_bad_download_cannot_overwrite_frozen_peer_evidence(tmp_path, monkeypatch, preexisting):
+    row = peer.SOURCES["card"]
+    destination = tmp_path / row["local"]
+    original = (ROOT / row["local"]).read_bytes()
+    if preexisting:
+        destination.parent.mkdir(parents=True)
+        destination.write_bytes(original)
+    monkeypatch.setattr(peer, "SOURCES", {"card": row})
+
+    def bad_fetch(_repo, _ref, _source, target):
+        target.write_bytes(b"not the pinned bytes")
+        return {"git_blob": row["blob"], "sha256": row["sha256"]}
+
+    monkeypatch.setattr(peer, "fetch", bad_fetch)
+    with pytest.raises(ValueError, match="identity"):
+        peer.verify_source_bytes(tmp_path, download=True)
+    if preexisting:
+        assert destination.read_bytes() == original
+    else:
+        assert not destination.exists()

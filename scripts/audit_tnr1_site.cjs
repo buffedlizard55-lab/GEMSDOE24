@@ -55,6 +55,10 @@ async function main() {
         assert.equal(await page.locator('#current-focus-files .portfolio-mobile').isVisible(), device === 'mobile');
         assert.equal(await page.locator('#current-focus-files tbody tr strong').filter({hasText: 'NO'}).count(), 9);
         assert(await page.getByText('all nine fail the literal 70% overlap rule').first().isVisible());
+        const peerLink = page.getByRole('link', {name: 'Download pinned S2D-36 TIFF — research only, SUBMIT: NO'});
+        assert(await peerLink.isVisible());
+        assert.match(await peerLink.getAttribute('href'), /4b717aaff6eaf5de9b53030e637f8e1cf0d56e43/);
+        assert(await page.getByText('99.48%', {exact: false}).first().isVisible());
         if (!relative) await page.screenshot({path: path.join(root, `logs/tnr1-${device}.png`), fullPage: true});
         const [download] = await Promise.all([page.waitForEvent('download'), link.click()]);
         assert.equal(download.suggestedFilename(), card.submission_name);
@@ -92,6 +96,17 @@ async function main() {
       receipt.pages.at(-1).owner_table_rows = 92;
       receipt.pages.at(-1).accessibility_violations.push(...expandedAccess);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+      const champions = await page.goto(new URL('docs/historical-champions.html', base).href, {waitUntil: 'networkidle'});
+      assert.equal(champions.status(), 200);
+      assert.equal(await page.locator('tbody tr').count(), 9);
+      assert.equal(await page.locator('tbody tr strong').filter({hasText: 'SUBMIT NO'}).count(), 9);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+      await page.addScriptTag({path: axeSource});
+      const championAccess = await page.evaluate(async () => {
+        const result = await axe.run(document.querySelector('main'), {runOnly: {type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice']}});
+        return result.violations.map(v => ({id: v.id, impact: v.impact, nodes: v.nodes.map(n => n.target)}));
+      });
+      receipt.pages.push({device, page: 'docs/historical-champions.html', no_horizontal_overflow: true, accessibility_violations: championAccess, historical_champion_rows: 9});
       const readiness = await page.goto(new URL('docs/submission-readiness.html', base).href, {waitUntil: 'networkidle'});
       assert.equal(readiness.status(), 200);
       assert(await page.getByRole('heading', {name: 'No submission-authorized TIFF', exact: true}).isVisible());

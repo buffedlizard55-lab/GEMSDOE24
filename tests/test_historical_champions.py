@@ -60,6 +60,13 @@ def test_published_readback_has_all_sites_no_estimate_and_no_authorization():
         assert row["leaderboard_estimate"] is row["holdout_dti"] is None
         assert row["validator_output"]["sha256"] == row["sha256"]
         assert row["validator_output"]["format_valid"] is True
+        assert row["validator_output"]["template_origin_authenticated"] is False
+        for name in (
+            "footprint_unmasked",
+            "self_contained_single_tiff",
+            "template_unmasked_and_self_contained",
+        ):
+            assert row["validator_output"]["checks"][name]["pass"] is True
         assert row["submission_authorized"] is False
         assert row["literal_uniqueness"] == "FAIL"
     aliases = {r["site"]: r["exact_in_footprint_aliases"] for r in report["rows"]}
@@ -69,3 +76,14 @@ def test_published_readback_has_all_sites_no_estimate_and_no_authorization():
     assert "SUBMIT NO" in html and "NOT ESTIMABLE" in html
     assert "../evidence/" not in html
     assert html.count('<th scope="row">GEMSDOE') == 9
+
+
+def test_geometry_rejects_masked_or_nonfinite_comparator_inputs():
+    fp = np.array([[True, True]])
+    values = np.array([[1.0, 0.0]])
+    masked = np.ma.array(values, mask=[[True, False]])
+    with pytest.raises(ValueError, match="masked"):
+        review.geometry(masked, fp, np.zeros_like(values))
+    for invalid in (np.array([[np.nan, 0.0]]), np.array([[-1.0, 0.0]])):
+        with pytest.raises(ValueError, match="distance"):
+            review.geometry(values, fp, invalid)

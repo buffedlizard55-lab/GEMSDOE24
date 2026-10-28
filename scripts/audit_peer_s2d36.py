@@ -13,6 +13,7 @@ import argparse
 import json
 import math
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -72,9 +73,23 @@ def verify_source_bytes(root: Path, *, download: bool = False) -> dict:
     for name, pin in SOURCES.items():
         path = root / pin["local"]
         if download:
-            got = fetch(REPO, REF, pin["source"], path)
-            if got["git_blob"] != pin["blob"] or got["sha256"] != pin["sha256"]:
-                raise ValueError(f"GitHub identity does not match pinned {name}")
+            # Never overwrite frozen evidence before verifying the response. A
+            # changed/malicious source or a local modified receipt must fail
+            # without destroying the local bytes.
+            with tempfile.TemporaryDirectory() as temp_dir:
+                temporary = Path(temp_dir) / "source"
+                got = fetch(REPO, REF, pin["source"], temporary)
+                if (
+                    got["git_blob"] != pin["blob"]
+                    or got["sha256"] != pin["sha256"]
+                    or sha256_file(temporary) != pin["sha256"]
+                    or git_blob_sha(temporary.read_bytes()) != pin["blob"]
+                ):
+                    raise ValueError(f"GitHub identity does not match pinned {name}")
+                if not path.exists():
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    with path.open("xb") as stream:
+                        stream.write(temporary.read_bytes())
         if not path.is_file():
             raise ValueError(f"Pinned {name} missing; use --fetch to retrieve it from GitHub")
         if sha256_file(path) != pin["sha256"] or git_blob_sha(path.read_bytes()) != pin["blob"]:

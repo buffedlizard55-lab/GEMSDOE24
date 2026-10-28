@@ -6,7 +6,7 @@
 
 The shared TIFF validator/writer and novelty comparator now reject masked/NoData footprint cells and sidecar-dependent evidence; the exact-file preflight detects readback mutation. A pinned GEMSDOE36 S2D-36 **research-only** TIFF was independently read back and has **99.4795%** lattice overlap, so it is **not eligible to submit**. Its source reports **HOLDOUT-DTI 0.200766**, CI [0.186488, 0.215333], `gems-segment-pooled-v1`, 60,988 withheld; this is not a replay, cross-site ranking, or organizer score. Source evidence reports a conflicting bootstrap description, documented in the review.
 
-[Three-pass review and four ranked prospective hypotheses](docs/session-review-c1d3a8b8-20261028.md) · [Executive guide and nine-site table](docs/executive-summary.html) · [Negative session run card](evidence/session_c1d3a8b8_run_card_20261028.json) · [S2D peer-file audit](evidence/peer_s2d36_audit_20261028.json). **Maximize P(Win) · Own the Outcome.**
+[Three-pass review and four ranked prospective hypotheses](docs/session-review-c1d3a8b8-20261028.md) · [Executive guide and nine-site table](docs/executive-summary.html) · [Nine historical champions](docs/historical-champions.html) · [Negative session run card](evidence/session_c1d3a8b8_run_card_20261028.json) · [S2D peer-file audit](evidence/peer_s2d36_audit_20261028.json). **Maximize P(Win) · Own the Outcome.**
 
 ## Current continuation — 2026-10-28 (branch `arena/bab77a13-gemsdoe24`)
 

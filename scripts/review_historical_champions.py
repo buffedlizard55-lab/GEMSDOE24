@@ -43,8 +43,20 @@ def parse_source(row):
 
 
 def geometry(values, footprint, lattice_distance):
+    if any(
+        np.ma.isMaskedArray(x) and np.ma.getmaskarray(x).any()
+        for x in (values, footprint, lattice_distance)
+    ):
+        raise ValueError("Geometry inputs must not contain masked pixels")
     if values.shape != footprint.shape or lattice_distance.shape != footprint.shape:
         raise ValueError("Geometry grids differ")
+    if not np.isin(footprint, [0, 1]).all():
+        raise ValueError("Geometry footprint must be binary")
+    footprint = np.asarray(footprint, dtype=bool)
+    if not np.isfinite(lattice_distance[footprint]).all() or np.any(
+        lattice_distance[footprint] < 0
+    ):
+        raise ValueError("Geometry distance must be finite and nonnegative inside footprint")
     if not np.isfinite(values[footprint]).all() or not np.isin(values[footprint], [0, 1]).all():
         raise ValueError("Historical champion must be finite binary inside footprint")
     dots = footprint & (values > 0)
@@ -168,7 +180,7 @@ No new-head, pre-placement-surface or exhaustive registry certification follows.
 <p>The <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fdd41b075a05e7df5b222e6e3644344cecc65746/evidence/oj1_priority_ancestry_replay.json">recorded geometry replay</a> found B2 is the 44,090-dot GEMSDOE25 pattern after removing 6,436 dots within 200 m of the visible catalogue. It is also GEMSDOE31 minus 2,545 dots. This is pruning, not evidence of a new subsurface model or vent discovery. That prior replay is not rerun by this table.</p>
 <p>Sparse emission and removal of redundant predictions near visible faults could reduce false-positive mass under distance-based Tversky scoring. Whether it actually did so on hidden labels, and how much true-positive mass it lost, cannot be established from geometry or one reported result. Predicting a result above 0.2778, 0.3195 or 0.4413 would be unsupported. The two leader values in the request are conflicting snapshots, not verified current standings.</p>
 <h2>Next action, without spending a slot</h2><p>The method-lane paragraph is missing. Common fixed dot budgets cannot pass the literal retained-lattice rule; do not remove the comparator, shift dots into its holes or retune a stopped method. Resolve the protocol prospectively before training.
-<a href="research-directions-20261027.md">Four ranked research directions, novelty caveats and source availability</a> remain proposals, not validated discoveries. The main training raster and prepared cache are absent in this checkout.</p>
+<a href="research-directions-20261027.md">Four ranked research directions, novelty caveats and source availability</a> remain proposals, not validated discoveries. The published site does not include raw training rasters or the prepared feature cache; this audit does not authenticate their provenance.</p>
 <p>After a lane is assigned: use the shared buffered whole-segment holdout, visible-only catalogue features, feature canaries, pooled 300 m DTI and paired confidence intervals; check surfaces and final dots against the complete registry. Only a separately authorized selector with verified quota can promote a candidate. A CPU pipeline exists; GPU access is not universally required.</p>
 <h2>Format and upload guide</h2><p>The shared validator checked single-band grid alignment and finite in-footprint values in [0,1]. No raster was repaired or rewritten here. A prior portal range error cannot be diagnosed from its text alone; exterior NaNs and out-of-range values must both be checked. Do not assume renaming or clipping establishes scientific eligibility.</p>
 <p>When a future candidate passes every gate, download its exact hash-bound TIFF, use its unique submission name and note (at most 140 characters), and upload it on the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">competition submission page</a>. Save the artifact-linked organizer receipt. For now, do not upload any file from this table.</p>

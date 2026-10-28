@@ -66,7 +66,7 @@
     },
     {
       "pass": 2,
-      "result": "Reproduced and fixed masked/NaN novelty comparator defects; audited pinned peer S2D evidence and exact TIFF; corrected historical XFRONT wording without rewriting frozen receipts."
+      "result": "Reproduced and fixed masked/NaN novelty comparator defects; audited pinned peer S2D evidence and exact TIFF; corrected historical XFRONT wording without rewriting frozen receipts. Integrated and rechecked nine concurrent historical champion artifacts with current mask checks; all fail literal lattice overlap."
     },
     {
       "pass": 3,
@@ -90,5 +90,17 @@
   "next_steps": [
     "Prospectively assign a single method lane and resolve the literal lattice policy without retrospective exemptions.",
     "Preregister any permitted new experiment and run all independent leakage, full novelty, holdout, exact-file and quota-aware gates before considering a slot."
-  ]
+  ],
+  "historical_peer_review": {
+    "report": "docs/data/historical_champions_20261028.json",
+    "count": 9,
+    "local_mask_self_contained_grid_range_pass_count": 9,
+    "lattice_overlap_range": [
+      0.9990971853425386,
+      0.9992336290112184
+    ],
+    "submission_authorized": false,
+    "scientific_replay": false,
+    "note": "Exact pinned historical champion files, not a current-head census or verified organizer score."
+  }
 }

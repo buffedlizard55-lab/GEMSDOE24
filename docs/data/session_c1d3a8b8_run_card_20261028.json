@@ -1,0 +1,106 @@
+{
+  "schema": "gems-session-run-card-v1",
+  "session": "2026-10-28 arena/c1d3a8b8-gemsdoe24",
+  "hypothesis": null,
+  "mechanism": null,
+  "named_non_fault_mimic": null,
+  "hypotheses_scope": "Four ranked conceptual directions in docs/session-review-c1d3a8b8-20261028.md; none assigned, preregistered or run.",
+  "holdout": null,
+  "holdout_dti": null,
+  "holdout_ci95": null,
+  "evaluator_version": null,
+  "withheld_positive_pixels": null,
+  "correlation_overlap_vs_registry": {
+    "surface_max_abs_rank_correlation": null,
+    "final_dot_overlap_within_3px": null,
+    "candidate_comparison_status": "NOT RUN: no candidate surface or dots"
+  },
+  "geometric_witness": {
+    "registry_file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "registry_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+    "uncovered_footprint_pixels": 6649,
+    "bound_at_37654": 0.8234184947150369,
+    "bound_at_44090": 0.8491948287593558,
+    "interpretation": "Necessary-only bound; not a candidate comparison, copying finding, score, or smaller-budget approval."
+  },
+  "raster_sha256": null,
+  "validator_output": null,
+  "validation": {
+    "nan_count": null,
+    "finite_range": null,
+    "crs": null,
+    "shape": null,
+    "transform": null,
+    "reason": "No candidate raster was created."
+  },
+  "submission_name": null,
+  "note": "Negative review: no assigned lane; literal lattice uniqueness blocks standard budgets. Do not submit.",
+  "note_length": 101,
+  "verdict": "negative",
+  "ok_to_download_candidate": false,
+  "ok_to_submit": false,
+  "leaderboard_estimate": null,
+  "organizer_confirmed_score": null,
+  "remaining_quota": null,
+  "new_geological_tiffs": 0,
+  "experiments_executed": 0,
+  "competition_slots_used": 0,
+  "peer_research_only": {
+    "source": "evidence/peer_s2d36_audit_20261028.json",
+    "raster_sha256": "d3ba2fdb987bec34fc0c61148829032a431a95b8921b1bd66d61ddd047f56b72",
+    "source_recorded_holdout_dti": 0.2007657135656901,
+    "source_recorded_ci95": [
+      0.18648773519590356,
+      0.21533340056778932
+    ],
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positive_pixels": 60988,
+    "candidate_overlap_vs_lattice": 0.9947947097253944,
+    "scientific_replay": false,
+    "submit_authorized": false
+  },
+  "review_passes": [
+    {
+      "pass": 1,
+      "result": "Restored hash-pinned owner mirrors, checked lane and lattice constraints; implemented shared mask/sidecar safety with reproducible regression tests. No candidate run."
+    },
+    {
+      "pass": 2,
+      "result": "Reproduced and fixed masked/NaN novelty comparator defects; audited pinned peer S2D evidence and exact TIFF; corrected historical XFRONT wording without rewriting frozen receipts. Integrated and rechecked nine concurrent historical champion artifacts with current mask checks; all fail literal lattice overlap."
+    },
+    {
+      "pass": 3,
+      "result": "Rechecked user requirements, source freshness and no-submission state; final test and lint counts recorded below."
+    }
+  ],
+  "verification": {
+    "full_pytest": "pending",
+    "ruff_check": "pending",
+    "ruff_format_check": "pending",
+    "site_build": "pending",
+    "browser_check": "pending"
+  },
+  "limitations": [
+    "Organizer provenance and portal acceptance are not established by owner-mirror hashes.",
+    "No assigned method lane; all retained registry entries remain binding.",
+    "Peer holdout, folds, complete canaries and CI were not scientifically replayed.",
+    "Current nine GitHub HEADs were source-inspected, not fully audited for all artifact changes.",
+    "Competition account quota, organizer score and hidden truth are unknown."
+  ],
+  "next_steps": [
+    "Prospectively assign a single method lane and resolve the literal lattice policy without retrospective exemptions.",
+    "Preregister any permitted new experiment and run all independent leakage, full novelty, holdout, exact-file and quota-aware gates before considering a slot."
+  ],
+  "historical_peer_review": {
+    "report": "docs/data/historical_champions_20261028.json",
+    "count": 9,
+    "local_mask_self_contained_grid_range_pass_count": 9,
+    "lattice_overlap_range": [
+      0.9990971853425386,
+      0.9992336290112184
+    ],
+    "submission_authorized": false,
+    "scientific_replay": false,
+    "note": "Exact pinned historical champion files, not a current-head census or verified organizer score."
+  }
+}
