@@ -45,7 +45,7 @@ The historical GEMSDOE32 B2 value **0.2778 is owner-reported and unverified**, n
 
 ## Test and access limits
 
-A virtual environment was installed from `requirements.txt`; the reproducible geometry check exited 2 as designed. The site builder ran successfully on the unmodified shared validator; generated timestamp-only changes were discarded. A full suite was started after restoring Git history; see the final session report/PR for its outcome. This environment allows GitHub and package hosts, not the DrivenData portal, NLR, USGS or Dropbox. No current quota, organizer receipt, official data download or live leaderboard was verified. Existing cached external rasters and bridge rasters are present, but the main training raster/feature stack is absent in this checkout. Public source descriptions and their caveats are listed in the prospective hypotheses document.
+A virtual environment was installed from `requirements.txt`; the reproducible geometry check exited 2 as designed. The site builder ran successfully on the unmodified shared validator; generated timestamp-only changes were discarded. After restoring shallow Git history, the full suite passed: **578 tests** in 249.40 seconds on the unmodified shared validator. This environment allows GitHub and package hosts, not the DrivenData portal, NLR, USGS or Dropbox. No current quota, organizer receipt, official data download or live leaderboard was verified. Existing cached external rasters and bridge rasters are present, but the main training raster/feature stack is absent in this checkout. Public source descriptions and their caveats are listed in the prospective hypotheses document.
 
 ## Three-pass review
 
