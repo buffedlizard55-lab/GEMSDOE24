@@ -61,6 +61,11 @@ def recorded_points(root: Path) -> list[dict]:
         # Some newer experiment cards label the pooled metric explicitly. Treat
         # that schema as an alias only when it agrees with any canonical ``dti``;
         # otherwise fail closed instead of silently selecting one of two values.
+        if "dti" not in result and "pooled_dti" in result:
+            # Newer shared cards name the pooled DTI `pooled_dti` (same protocol and
+            # evaluator). Normalise the alias once so the card is not silently
+            # dropped or treated as malformed (this broke every site build).
+            result = {**result, "dti": result["pooled_dti"]}
         dti = result.get("dti")
         pooled_dti = result.get("pooled_dti")
         if dti is not None and pooled_dti is not None and dti != pooled_dti:

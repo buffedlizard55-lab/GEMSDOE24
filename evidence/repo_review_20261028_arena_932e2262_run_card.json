@@ -1,6 +1,6 @@
 {
   "schema": "session-run-card-v1",
-  "checked_utc": "2026-10-28T18:50:40Z",
+  "checked_utc": "2026-10-28T19:03:30Z",
   "branch": "arena/932e2262-gemsdoe24",
   "hypothesis": "No geological hypothesis tested in this review; the parallel-run method paragraph is unassigned. Ranked candidate concepts are proposals only, not scored or approved.",
   "mechanism": "Read-only repository and pinned historical-artifact review; shared benchmark inventory now accepts an unambiguous pooled_dti alias. No raster prediction mechanism evaluated.",
@@ -43,9 +43,9 @@
   "leaderboard_estimate": null,
   "submission_authorized": false,
   "tests": {
-    "pytest": "570 passed",
+    "pytest": "574 passed",
     "ruff_check": "passed",
-    "ruff_format_check": "passed (211 files)",
+    "ruff_format_check": "passed (213 files)",
     "compileall": "passed",
     "javascript_syntax": "passed",
     "git_diff_check": "passed",
