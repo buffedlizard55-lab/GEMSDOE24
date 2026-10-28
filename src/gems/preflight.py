@@ -126,7 +126,7 @@ def preflight(
 
     artifact_sha256 = sha256_file(artifact)
     template_sha256 = sha256_file(template)
-    checks = submission.check_variants(artifact, template)
+    checks = submission.check_variants(artifact, template, strict=True)
     strict_range = checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
     template_pinned = (
         expected_template_sha256 is not None and template_sha256 == expected_template_sha256

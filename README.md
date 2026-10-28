@@ -4,11 +4,21 @@
 
 **NO NEW TIFF · NO NEW EXPERIMENT · NO SLOT · NO SUBMISSION AUTHORIZATION.** Read this [current branch review](docs/repo-review-20261028-arena-06c138ea.md), its [run card](evidence/repo_review_20261028_arena_06c138ea_run_card.json), the [mission prompt](docs/MISSION_PROMPT.md), [standing instructions](AGENTS.md), and the [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md) before continuing. The complete historical prompt is preserved below in this README; avoid adding another duplicate.
 
-No assigned single-method paragraph is present, the full `data/training_features.tif` / prepared feature cache is absent, and the fixed standard dot budgets fail the literal 70% overlap condition against one retained lattice witness. The nine-site score claims remain **OWNER-REPORTED / UNVERIFIED**; a leaderboard estimate is **NOT ESTIMABLE**. No candidate was generated or validated, no weekly slot was used, and no listed artifact is authorized to submit. Full tests passed after restoring Git history; this is a documentation-only negative result.
+No assigned single-method paragraph is present, the full `data/training_features.tif` / prepared feature cache is absent, and the fixed standard dot budgets fail the literal 70% overlap condition against one retained lattice witness. The nine-site score claims remain **OWNER-REPORTED / UNVERIFIED**; a leaderboard estimate is **NOT ESTIMABLE**. No candidate was generated or validated, no weekly slot was used, and no listed artifact is authorized to submit. The integrated full suite passed **587 tests** after restoring Git history; this is a documentation-only negative result.
 
-## Integrated-main findings to carry forward — 2026-10-28
+## Integrated-main validator update — 2026-10-28
 
-The latest merged-main review corrected the historical champions page so local hard checks and its separate exterior-NaN result are shown distinctly; this does not diagnose the portal's prior `[0,1]` rejection. A separate synthetic test reported a finite, in-range pixel masked by GDAL that the shared validator accepts. I reviewed that report but did not rerun its reproduction; see [validator review and shared-fix status](docs/session-review-20261028-mask.md). Treat this as an unresolved validator false-pass risk; do not authorize any file from a format PASS alone. Concurrent PR #84's proposed fix still needs review/integration and exact-file revalidation.
+The newly merged shared preflight/writer hardening (PR #96 on `main`) routes new-file preflight through strict validation, rejects a masked pixel inside the prediction footprint, checks the actual GeoTIFF driver, and addresses existing external sidecars. This fixes the documented local false-pass risk for the strict preflight path; it does not prove that an organizer accepts a file or replace the scientific/novelty gates. Historical receipt compatibility checks intentionally remain distinct; revalidate the exact artifact with strict preflight before any future selection. The `0.90`/`70%` novelty limits in the parallel protocol are project gates, not a claim about DrivenData's written competition rules. The reported portal `[0,1]` error remains owner-reported and its exact trigger is not established.
+
+The older dated session notes follow for audit history; the current branch review above supersedes their branch-specific status.
+
+## Latest review — 2026-10-28 (`arena/2727fc4d-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF.** Read the [current review](docs/repo-review-20261028-arena-2727fc4d.md) and [nine-site historical table](docs/historical-champions.html). This continuation corrected an ambiguous local format PASS; the recorded exterior-NaN check fails for the all-finite historical files. No new model, TIFF, holdout, portal receipt, or competition upload was produced. The required method-lane paragraph is missing and the literal lattice novelty gate blocks standard budgets. Historical files are research only; **SUBMIT NO**.
+
+## Validator review — 2026-10-28
+
+**NO SUBMISSION-AUTHORIZED TIFF.** A synthetic test exposed a finite-but-GDAL-masked footprint pixel that the legacy receipt validator accepted; the latest continuation adds strict preflight checks. See the [reproduction, concurrent shared-fix status and next steps](docs/session-review-20261028-mask.md) and [negative run card](docs/data/session-mask-review-20261028.json). No candidate, geological experiment, or submission slot was created in this review. Read the [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at the start of each session.
 
 ## Review — 2026-10-28 (`arena/a4397407-gemsdoe24`)
 

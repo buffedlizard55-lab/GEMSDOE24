@@ -45,10 +45,10 @@
   "new_tiffs": 0,
   "competition_slots_used": 0,
   "tests": {
-    "pytest": "578 passed after fetching full Git history on the original base; after integrating the advanced origin/main, 579 passed. Initial shallow checkout had 6 history-dependent failures and 572 passes.",
+    "pytest": "587 passed after restoring full Git history and integrating the latest origin/main, including strict preflight hardening. Earlier runs passed 578 and then 579 tests as main advanced; initial shallow checkout had 6 history-dependent failures and 572 passes.",
     "targeted_historical_champions_tests_after_format_fix": "8 passed",
     "ruff_check": "passed",
-    "ruff_format": "passed after formatting one incoming file; 332 files formatted",
+    "ruff_format": "passed after formatting one incoming file; 334 files formatted",
     "compileall": "passed",
     "node_syntax": "passed",
     "git_diff_check": "passed",
