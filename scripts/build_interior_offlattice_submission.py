@@ -1,27 +1,21 @@
 #!/usr/bin/env python3
 """
-Generate a UNIQUE, research-only GEMS submission: geothermal-prioritized
-interior off-lattice binary dots.
+Historical PR #85 geothermal research generator — preserved for audit only; do not rerun.
 
-Design (deterministic; no ML training lane required):
-  * Lattice holes: footprint cells whose nearest spacing-5 lattice dot is
-    strictly > 3 px away (the "interior off-lattice" support, 6,649 cells).
-    Every dot lives in a lattice hole, so directed overlap vs the retained
-    spacing-5 lattice is exactly 0.0 (<= 0.70 Rule-1 ceiling).
-  * Geothermal favorability on the interior support: potassium anomaly
-    (GeoDAWN K), low Th/K argillic overprint (GeoDAWN extensions ThK),
-    vent/spring proximity (triangular kernel credit, R=300 m), and LiDAR
-    short-wavelength scarp flexure (ex_mean). Multiplicative score, in [0,1].
-  * Dots = top-N interior cells by favorability, binary {0,1} surface.
-  * Segment holdout (gems-segment-pooled-v1, buffer 30 px) against the
-    restored bridge labels (60,988 positives) gives HOLDOUT-DTI + 95% CI.
-  * Strict whole-array [0,1] finite GeoTIFF (zeros outside footprint) to avoid
-    the portal "Predicted values must be in range [0, 1]" rejection mode.
+This is **not a unique submission** and is not a currently assigned method
+lane. The generator deliberately restricts every dot to a cell more than 3 px
+from one retained spacing-5 lattice. Its zero overlap and rank-correlation
+numbers therefore apply only to that single comparator; they do not establish
+the required pre-placement or complete-registry novelty checks. Targeting those
+holes conflicts with the project's no-evasion rule. Do not rerun this script as
+a candidate generator, do not call its output unique, and do not submit it.
 
-This is a RESEARCH construction, not an assigned parallel-run method lane.
-HOLDOUT-DTI is an internal validation measurement, not an organizer score or
-a leaderboard projection. SUBMIT: NO pending a coordinator-assigned lane,
-complete selector/quota evidence, and an artifact-linked organizer receipt.
+The frozen research result used geothermal favorability from potassium,
+Th/K, vent/spring proximity and LiDAR flexure, then emitted binary dots. Its
+run card reports a 3 km buffered HOLDOUT-DTI and a strict local finite [0,1]
+GeoTIFF check. Neither result establishes a directly comparable 1.5 km score,
+organizer-confirmed score, portal acceptance, or submission authorization.
+Preserve the recorded raster and scientific run card unchanged.
 """
 
 from __future__ import annotations

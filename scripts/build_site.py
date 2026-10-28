@@ -431,6 +431,9 @@ def build_independent_site(primary):
         '<a href="executive-summary.html#s3dep1">H24-S3DEP1 packet</a> · '
         '<a href="#current-focus-files">Nine-site artifact comparison</a></p></section>'
     )
+    from offlattice_packet import render as render_offlattice_packet
+
+    offlattice_packet = render_offlattice_packet(ROOT)
     # Preserve the concurrent VENT negative packet through scheduled rebuilds.
     vent_html = ""
     vent = load("evidence/vent_run_card_20261026.json")
@@ -486,6 +489,7 @@ def build_independent_site(primary):
     )
     overview = (
         current_banner
+        + offlattice_packet["html"]
         + focus_review["current"]
         + focus_review["alert"]
         + current_note
@@ -507,6 +511,7 @@ def build_independent_site(primary):
     )
     executive = (
         current_banner
+        + offlattice_packet["html"]
         + focus_review["current"]
         + focus_review["alert"]
         + current_note
@@ -571,6 +576,7 @@ def build_independent_site(primary):
         "executive-summary.html",
         "research.html",
         "sources.html",
+        "session-review-2dd70faf-20261028.md",
         "data/",
         "portfolio-review-20261026.md",
         "protocol-feasibility-20261027.md",
@@ -589,6 +595,7 @@ def build_independent_site(primary):
         "executive-summary.html",
         "research.html",
         "sources.html",
+        "session-review-2dd70faf-20261028.md",
         "data/",
         "portfolio-review-20261026.md",
         "protocol-feasibility-20261027.md",
@@ -606,6 +613,7 @@ def build_independent_site(primary):
     )
     for name in (
         "site_browser_integrity_review_20261027.json",
+        "session_2dd70faf_run_card_20261028.json",
         "current_focus_nine_file_audit_20261027.json",
         "tmcg_integrity_review_20261027.json",
         "unique07_integrity_review_20261027.json",
@@ -1079,6 +1087,7 @@ Earlier scores/forecasts below are historical, not current promotion authority.
         )
     if tnr1:
         md = tnr1["status_md"] + md
+    md = offlattice_packet["markdown"] + "\n\n" + md
     readme = ROOT / "README.md"
     readme.write_text(
         re.sub(

@@ -3,6 +3,8 @@
 A later point-best record must not be hidden by comparing a new candidate only
 to an easier old benchmark. Matching label/version/count is not an independent
 certificate of protocol equivalence, leakage control, a paired gain or novelty.
+The inventory excludes explicitly non-standard spatial buffers before parsing
+score fields; otherwise a different holdout can poison the comparable record set.
 """
 
 from __future__ import annotations
@@ -15,6 +17,7 @@ from .validator import sha256_file
 
 EVALUATOR = "gems-segment-pooled-v1"
 WITHHELD = 60988
+COMPARABLE_BUFFER_M = 1500
 RECORDS = (
     ("GVC1", "evidence/gvc1_run_card_20261025.json", "holdout"),
     ("CRP1", "evidence/crp1_run_card_20261026.json", "holdout"),
@@ -58,6 +61,15 @@ def recorded_points(root: Path) -> list[dict]:
             if source in known:
                 raise ValueError("Known benchmark no longer has the declared evaluator/count")
             continue  # Other metric/split records are not comparable even by declaration.
+        protocol = result.get("protocol")
+        declared_buffer_m = protocol.get("buffer_m") if isinstance(protocol, dict) else None
+        declared_buffer_px = result.get("buffer_px")
+        if (declared_buffer_m is not None and declared_buffer_m != COMPARABLE_BUFFER_M) or (
+            declared_buffer_px is not None and declared_buffer_px != 15
+        ):
+            if source in known:
+                raise ValueError("Known benchmark no longer uses the declared 1.5 km buffer")
+            continue  # A different spatial collar is a different holdout protocol.
         dti = result.get("dti")
         ci = result.get("ci95")
         interval = ci.get("interval") if isinstance(ci, dict) else ci

@@ -1,0 +1,92 @@
+{
+  "schema": "gems-integrity-review-card-v1",
+  "session_id": "2dd70faf-gemsdoe24",
+  "generated_utc": "2026-10-28T19:00:21Z",
+  "review_outcome": "negative; no protocol-compliant unique submission achieved",
+  "assignment": {
+    "single_method_paragraph_present": false,
+    "hypothesis": null,
+    "mechanism": null,
+    "named_non_fault_mimic": null
+  },
+  "new_scientific_run": {
+    "experiments_executed": 0,
+    "holdout": null,
+    "holdout_dti": null,
+    "holdout_ci95": null,
+    "evaluator_version": null,
+    "withheld_positive_pixels": null,
+    "raster_sha256": null,
+    "submission_name": null,
+    "validator_output": null,
+    "leaderboard_estimate": null,
+    "organizer_confirmed_score": null
+  },
+  "reviewed_pr85_artifact": {
+    "source_pull_request": 85,
+    "file": "docs/downloads/24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-zeros.tif",
+    "sha256": "379bf97792355bb48acec703939537a62bb8492705997e043c235bd9029c44db",
+    "research_download_available": true,
+    "submission_authorized": false,
+    "run_card": "evidence/24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db_run_card.json",
+    "reported_holdout": {
+      "label": "HOLDOUT-DTI",
+      "value": 0.003802043130574802,
+      "ci95": [
+        0.0020611852216874654,
+        0.0057182128659556235
+      ],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "buffer_m": 3000,
+      "source_replayed_in_this_review": false
+    },
+    "local_format_check": {
+      "format_valid": true,
+      "template_origin_authenticated": false,
+      "organizer_portal_acceptance_established": false
+    },
+    "uniqueness": {
+      "status": "NOT ESTABLISHED; DO NOT SUBMIT",
+      "reported_comparator_scope": "retained spacing-5 lattice only",
+      "generator_targets_cells_more_than_3px_from_that_lattice": true,
+      "full_registry_preplacement_and_final_dot_checks": false,
+      "no_evasion_rule_compliant": false
+    },
+    "organizer_confirmed_score": null,
+    "leaderboard_estimate": null,
+    "slots_used": 0,
+    "scientific_result_modified": false
+  },
+  "reviewed_pr84": {
+    "pull_request": 84,
+    "head_sha": "5931b144d825dc8ddd2a05cd2456a929740cfada",
+    "reviewed": true,
+    "remote_test_check": "passed on the recorded PR head before PR #85 was merged; must be rerun against current main",
+    "changed_files_reviewed": 50
+  },
+  "source_freshness": {
+    "checked_utc": "2026-10-28T18:39:14.480790+00:00",
+    "repositories_checked": 9,
+    "changed_since_pinned_review": 9,
+    "failures": 0,
+    "scope": "GitHub source refs only; no artifact, score, or leaderboard verification"
+  },
+  "submission_status": {
+    "ok_to_download_new_candidate": false,
+    "ok_to_download_pr85_for_research_only": true,
+    "ok_to_submit": false,
+    "quota_status": "unknown; no portal access",
+    "competition_slots_used": 0,
+    "unique_submission_achieved": false
+  },
+  "review_passes": [
+    "Protocol and provenance review: PR #85 is not a full-registry uniqueness pass; no new experiment because the assigned method paragraph is absent.",
+    "Adversarial code and CI review: fixed the benchmark inventory regression for the explicit 3 km PR #85 buffer and added tests; reviewed PR #84 source evidence and implementation.",
+    "Site and decision review: regenerated status labels the TIFF research-only, displays exact identity and score scope, and archives the obsolete unique-submission page."
+  ],
+  "verdict": "negative",
+  "experiments_run": 0,
+  "new_geological_tiffs": 0,
+  "submission_authorized": false
+}

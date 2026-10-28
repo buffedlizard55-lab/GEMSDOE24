@@ -1,5 +1,14 @@
 # Standing project instructions
 
+## 2026-10-28 PR #85 integrity override — current status
+
+- PR #85 merged a research GeoTIFF, but **did not achieve protocol-compliant uniqueness**. Its generator deliberately selects cells more than 3 px from the retained spacing-5 lattice, and its reported 0.0000 overlap/Spearman 0.0051 are against that lattice only. This is hole-targeting, not a full-registry uniqueness pass; it conflicts with the no-evasion rule. Do not call the TIFF unique or submit-ready, and do not rerun its generator.
+- Frozen artifact: `docs/downloads/24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-zeros.tif`, SHA-256 `379bf97792355bb48acec703939537a62bb8492705997e043c235bd9029c44db`. The PR #85 run card reports HOLDOUT-DTI `0.0038020431`, 95% CI `[0.0020611852, 0.0057182129]`, `gems-segment-pooled-v1`, 60,988 withheld positives, with a 3,000 m buffer. Do not compare it directly with 1,500 m records. It is not an organizer score; no leaderboard estimate or submission authorization exists.
+- The exact TIFF remains downloadable for research/audit only. Format checks pass against the pinned owner-mirror grid, but `template_origin_authenticated=false`; no portal acceptance is established. Preserve the original scientific card and score unchanged.
+- No single geological-method paragraph has been assigned. Do not create another TIFF, run a holdout, start a stopped lane, or use a competition slot. Keep the all-entry registry, pre-placement and final-dot checks; never target comparator holes to escape a stop.
+- The source-freshness receipt at `docs/data/portfolio_freshness.json` is GitHub-ref freshness only, not an artifact census or score verification. The full current-registry novelty test has not been run for the PR #85 file.
+- Benchmark inventory readers must exclude explicitly non-standard 3,000 m/30 px holdouts before parsing score fields; keep malformed standard 1,500 m records fail-closed. PR #85's card is not a comparable benchmark record.
+
 ## 2026-10-28 historical-champion continuation
 
 Read `docs/session-review-b87d739e-20261028.md` and the existing owner brief with README.

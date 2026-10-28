@@ -73,6 +73,36 @@ def test_pages_state_the_unscored_status_and_never_invent_a_score(built):
     assert "not a leaderboard result" in status and "No weekly slot has been spent" in status
 
 
+def test_pr85_raster_is_prominent_but_never_mislabeled_as_unique(built):
+    from bs4 import BeautifulSoup
+
+    filename = "24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-zeros.tif"
+    for page in (
+        "index.html",
+        "docs/index.html",
+        "executive-summary.html",
+        "docs/executive-summary.html",
+    ):
+        soup = BeautifulSoup((built / page).read_text(), "html.parser")
+        section = soup.find(id="pr85-research-raster")
+        assert section is not None
+        text = section.get_text(" ", strip=True)
+        assert "DOWNLOAD: YES (research only) · SUBMIT: NO" in text
+        assert "HOLDOUT-DTI 0.003802043" in text and "3,000 m buffer" in text
+        assert "NOT ESTABLISHED" in text and "no-evasion rule" in text
+        assert "complete registry were not checked" in text
+        assert "New unique submission" not in text
+        download = section.find("a", href=lambda href: href and filename in href)
+        assert download is not None and download.has_attr("download")
+    status = (
+        (built / "README.md")
+        .read_text()
+        .split("<!-- STATUS:START -->")[1]
+        .split("<!-- STATUS:END -->")[0]
+    )
+    assert filename in status and "Literal uniqueness is not established" in status
+
+
 def test_contradictory_hunique_packet_is_quarantined_without_tiff_link(built):
     from bs4 import BeautifulSoup
 

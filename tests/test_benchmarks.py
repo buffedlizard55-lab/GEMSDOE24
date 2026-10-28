@@ -49,6 +49,31 @@ def test_new_records_are_discovered_without_changing_a_hardcoded_floor(tmp_path)
     assert recorded_point_best(tmp_path)["lane"] == "S3DEP1"
 
 
+def test_different_buffer_record_is_excluded_before_score_schema_validation(tmp_path):
+    evidence = _seed(tmp_path)
+    card = json.loads((ROOT / "evidence/tnr1_run_card_20261026.json").read_text())
+    # PR #85's research receipt reports the same evaluator/count but a 3 km
+    # collar and stores its metric as pooled_dti. It is not comparable to the
+    # declared 1.5 km benchmark set and must not break the site/selector reader.
+    card["holdout"]["protocol"]["buffer_m"] = 3000
+    card["holdout"]["buffer_px"] = 30
+    card["holdout"]["pooled_dti"] = 0.003802043130574802
+    del card["holdout"]["dti"]
+    (evidence / "three_km_run_card_fixture.json").write_text(json.dumps(card))
+
+    assert recorded_point_best(tmp_path)["lane"] == "S3DEP1"
+    assert all(row["lane"] != "THREE_KM" for row in recorded_points(tmp_path))
+
+
+def test_malformed_same_buffer_discovered_record_still_fails_closed(tmp_path):
+    evidence = _seed(tmp_path)
+    card = json.loads((ROOT / "evidence/tnr1_run_card_20261026.json").read_text())
+    del card["holdout"]["dti"]
+    (evidence / "same_buffer_run_card_fixture.json").write_text(json.dumps(card))
+    with pytest.raises(ValueError, match="Malformed benchmark DTI/CI"):
+        recorded_points(tmp_path)
+
+
 def test_bad_known_benchmark_cannot_silently_lower_the_current_best(tmp_path):
     evidence = _seed(tmp_path)
     card = json.loads((ROOT / "evidence/gvc1_run_card_20261025.json").read_text())
