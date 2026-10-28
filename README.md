@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Review — 2026-10-28 (`arena/a4397407-gemsdoe24`)
+
+**SUBMIT: NO · no new TIFF · no slot.** Verified review (tests, validator, feasibility gate, official rules): [docs/repo-review-20261028-a4397407.md](docs/repo-review-20261028-a4397407.md). The uniqueness gate fails at standard dot budgets (82.34% minimum lattice overlap at 37,654 dots); the owner must decide the registry-raster rule before any TIFF can be certified unique.
+
 ## Current session review — 2026-10-28 (`arena/932e2262-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO SLOT · NO SCORE PROJECTION.** Read this [current repo review](docs/repo-review-20261028-arena-932e2262.md), its [run card](evidence/repo_review_20261028_arena_932e2262_run_card.json), the [mission prompt](docs/MISSION_PROMPT.md), the [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md), and [AGENTS.md](AGENTS.md) before each session. The complete historical owner prompt remains below in this README/`knowledge/`.
