@@ -90,5 +90,7 @@ No credentials or unauthenticated portal automation were used.
 3. Rebuilt the site from recorded evidence and checked the original request:
    research downloads remain visibly **DO NOT SUBMIT**, no output is passed off
    as an organizer score or a new model, and the outstanding scientific goal
-   remains explicit. The complete post-integration suite passed 560 tests; Ruff,
+   remains explicit. Concurrent PR #82 added an independently audited
+   [historical-champion table](historical-champions.html); its research downloads
+   are also not approved for submission. The complete final integrated suite passed 567 tests; Ruff,
    Node syntax and diff checks passed. [Session run card](../evidence/2026-10-28_freshness_continuation_run_card.json).

@@ -37,7 +37,7 @@
   "verification": {
     "pass_1": "Read standing instructions, current scientific review, shared tooling and prior next steps; refreshed GitHub source refs and remeasured the lattice bound.",
     "pass_2": "Added static-feed age warnings and real shallow-clone tests; integrated the concurrently merged shared history guard, corrected calendar-date validation and kept leaderboard and GitHub timestamps separate.",
-    "pass_3": "Rebuilt the static site, integrated concurrent main changes, ran the complete post-integration suite (560 passed), and checked Ruff, Node syntax and git diff whitespace. No model replay or portal access is claimed."
+    "pass_3": "After integrating concurrent main changes, full pytest passed 567 tests; 15 related tests were rerun after formatting the newly integrated historical audit. Ruff, Node syntax and diff checks passed. No model replay or portal access is claimed."
   },
   "limitations": [
     "No method lane assigned and no policy resolution for the retained space-filling comparator.",
