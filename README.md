@@ -3,6 +3,9 @@
 ## Verified repository review — 2026-10-28 (branch `arena/9e77df06-gemsdoe24`)
 
 **NO NEW TIFF · NO EXPERIMENT · DO NOT SUBMIT.** Full test suite **552/552 passed** and ruff clean (with full git history; a shallow clone fails 6 tests). All 57 downloaded GeoTIFFs read back in [0, 1]. The "[0, 1]" portal error is **not explained**: the organizer example mirror also uses NaN outside the footprint. Read [the verified review](docs/repo-review-20261028-verified.md) first.
+## Latest continuation — 2026-10-28 repository review
+
+**NO NEW TIFF · NO EXPERIMENT · DO NOT SUBMIT.** Read the [current repository review](docs/repo-review-20261028.md) before continuing. The parallel-run prompt provides no assigned method paragraph, and the literal registry rule conflicts with the retained calibration-lattice witness at standard dot budgets; neither constraint was changed. The frozen feasibility tests pass (6/6); full `pytest` could not run because pytest is absent from this runtime. No score estimate, fresh holdout, current-head artifact audit, or organizer-confirmed receipt was produced.
 
 ## Latest continuation — 2026-10-27, session a73c5f88
 
