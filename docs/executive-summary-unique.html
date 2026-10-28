@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="GEMS DOE 24 — unique submission TIF download, automated submission gates, and nine-site executive summary."><title>Unique submission TIF · GEMS DOE 24</title><link rel="stylesheet" href="assets/style.css"></head><body><header><div class="nav"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">∿</span><span>GEMS DOE 24<small>Geologic mapping · evidence first</small></span></a><nav class="navlinks" aria-label="Main navigation"><a href="index.html">Overview</a><a class="active" href="executive-summary-unique.html">Unique submission</a><a href="executive-summary.html">Full executive guide</a><a href="research.html">Research</a><a href="sources.html">Sources &amp; audit</a></nav></div></header><main>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="GEMS DOE 24 — research-only GeoTIFF download, automated submission gates, and nine-site executive summary."><title>Research GeoTIFF · SUBMIT NO · GEMS DOE 24</title><link rel="stylesheet" href="assets/style.css"></head><body><header><div class="nav"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">∿</span><span>GEMS DOE 24<small>Geologic mapping · evidence first</small></span></a><nav class="navlinks" aria-label="Main navigation"><a href="index.html">Overview</a><a class="active" href="executive-summary-unique.html">Research TIFF · SUBMIT NO</a><a href="executive-summary.html">Full executive guide</a><a href="research.html">Research</a><a href="sources.html">Sources &amp; audit</a></nav></div></header><main>
 
 <!-- ============================================================ TOP SCREEN: DOWNLOAD + VERDICT ============================================================ -->
 <section class="hero" id="top">
-  <div class="eyebrow">GEMS DOE 24 · Unique submission TIF</div>
+  <div class="eyebrow">GEMS DOE 24 · Research-only TIFF · DO NOT SUBMIT</div>
   <h1>Download the generated submission file</h1>
-  <p class="lead">One-click download of a newly computed, unique single-band GeoTIFF. It is <strong>OK to download</strong> for audit and education. It is <strong>NOT OK to submit</strong> — see the automated verdict below.</p>
+  <p class="lead">One-click download of a newly computed research GeoTIFF. It has a distinct content ID, but only a local sibling-file overlap check is recorded—not full-registry uniqueness or clearance under the literal lattice rule. It is <strong>OK to download</strong> for audit and education and <strong>NOT OK to submit</strong> — see the automated verdict below.</p>
 
   <div class="status stop" role="status" aria-live="polite">
     <strong>DOWNLOAD: YES · SUBMIT: NO. NOT OK TO SUBMIT.</strong><br>
-    Automated verdict: <strong>NEGATIVE</strong>. HOLDOUT-DTI 0.06882 (95% CI [0.05811, 0.08000], gems-segment-pooled-v1, 60,988 withheld positives) is below the current comparable holdout best (0.13000), so no weekly submission slot should be spent on it. Local novelty vs sibling TIFFs PASSES (max 0.5747 of dots within 3 px, limit 0.70). Format and whole-array [0,1] checks PASS — zeros outside the footprint fixes the "Predicted values must be in range [0, 1]" portal error. Zero competition slots spent. No human-inspector fallback, no retuning.
+    Automated verdict: <strong>NEGATIVE</strong>. HOLDOUT-DTI 0.06882 (95% CI [0.05811, 0.07998], gems-segment-pooled-v1, 60,988 withheld positives) is below both the recorded 0.13000 comparable baseline and the 0.16606 local point-best; these are internal holdouts, not leaderboard scores, so no weekly slot should be spent on it. The local sibling scan reports max 0.5747 of dots within 3 px, but it did not re-run the pinned full registry or pre-placement rank correlation. Format and whole-array [0,1] checks pass; zeros outside are an encoding choice, not a verified fix for the organizer's earlier range error. Zero competition slots spent. No human-inspector fallback, no retuning.
   </div>
 
   <div class="actions">
@@ -33,9 +33,10 @@
         <li><strong>Shape:</strong> 3730 × 3292 (100 m pixels)</li>
         <li><strong>Transform:</strong> [100, 0, 243350, 0, −100, 4508550]</li>
         <li><strong>Values:</strong> All finite, all in [0,1] — no NaN/Inf inside the footprint</li>
-        <li><strong>Outside footprint:</strong> Zeros (fixes “Predicted values must be in range [0, 1]”)</li>
+        <li><strong>Outside footprint:</strong> Zeros; portal acceptance of this convention remains unverified</li>
         <li><strong>Positive dots:</strong> 37,722 (0.73% of footprint)</li>
-        <li><strong>Unique:</strong> Yes — new content ID 5b6e6af2ed3b, not a copy of any prior submission; local max dot-overlap 0.5747 ≤ 0.70 limit</li>
+        <li><strong>Identity / local overlap:</strong> New content ID 5b6e6af2ed3b; no prior submission pixels copied. Local sibling max dot-overlap 0.5747 ≤ 0.70, but the full registry/current heads and pre-placement surface were not checked.</li>
+        <li><strong>Literal lattice gate:</strong> Not established for this candidate; the nine-site comparison below does not clear it.</li>
       </ul>
     </article>
     <article class="card">
@@ -50,11 +51,29 @@
   <div class="callout warn">
     <h3>Why this file is NOT cleared to submit</h3>
     <ul>
-      <li><strong>Holdout DTI too low:</strong> 0.06882 vs current comparable holdout best 0.13000 (OOF multi-physics HGB). A submission slot should only be spent on a candidate that beats the current best on the spatially blocked holdout.</li>
+      <li><strong>Holdout DTI too low:</strong> 0.06882 is below the recorded 0.13000 comparable baseline and 0.16606 local point-best (both internal holdouts, not leaderboard scores). A submission slot should only be spent on a candidate that beats the current comparable best on the spatially blocked holdout.</li>
       <li><strong>Full registry novelty not re-verified:</strong> GitHub raw asset network is blocked from this sandbox, so the pinned 46-raster registry comparison could not be re-run; only local sibling-TIFF dot-overlap was checked (0.5747 PASS). A fresh selector/registry run is required before any slot.</li>
       <li><strong>No independent selector certificate:</strong> The separate scientific selector / weekly-quota verification is not implemented. No organizer-confirmed score exists.</li>
     </ul>
   </div>
+</section>
+
+<section id="pinned-historical-overlap" class="card">
+  <div class="pagehead"><div class="eyebrow">Pinned artifact audit · final-dot overlap only</div><h2>Three generated files vs. the nine historical champion TIFFs</h2></div>
+  <p>All nine historical files were pinned to immutable commits and SHA-256 verified. Values below are the directed share of each candidate's dots within 3 px of that site's historical TIFF. No exact dot-mask aliases were found. These are <strong>not</strong> checks of current heads, every file in those repositories, the complete 167-alias registry, other competitors, or pre-placement continuous-surface correlation; passing this nine-file threshold does not authorize submission.</p>
+  <div class="tablewrap"><table><thead><tr><th>Site / pinned historical artifact</th><th>Earlier e5 research TIFF</th><th>VENTRAD</th><th>Blind Upwell</th><th>Historical score provenance</th></tr></thead><tbody>
+    <tr><th scope="row"><a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/07345ea0604953d7efb858d9cfbc21e20c7aca0b/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif">GEMSDOE24</a></th><td>24.33%</td><td>5.28%</td><td>29.23%</td><td>0.2477 — OWNER-REPORTED / UNVERIFIED</td></tr>
+    <tr><th scope="row"><a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/b8dd298e10884afffa05436673ac73aeaf850b8c/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif">GEMSDOE27</a></th><td>24.33%</td><td>5.93%</td><td>29.53%</td><td>0.2449 — OWNER-REPORTED / UNVERIFIED</td></tr>
+    <tr><th scope="row"><a href="https://github.com/buffedlizard55-lab/GEMSDOE25/blob/04333cc3fbf7486c56e0324fd07aee684be614dc/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif">GEMSDOE25</a></th><td>22.43%</td><td>5.00%</td><td>27.77%</td><td>0.2600 — OWNER-REPORTED / UNVERIFIED</td></tr>
+    <tr><th scope="row"><a href="https://github.com/buffedlizard55-lab/GEMSDOE30/blob/3d5bec2af5f29291617f97c9e2dfe443be6f55c3/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif">GEMSDOE30</a></th><td>22.43%</td><td>5.00%</td><td>27.77%</td><td>0.2600 — OWNER-REPORTED / UNVERIFIED</td></tr>
+    <tr><th scope="row"><a href="https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f52533110fe62cd03e77f1228e9e5ecac412c463/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif">GEMSDOE33</a></th><td>20.92%</td><td>4.93%</td><td>27.00%</td><td>0.2632 — OWNER-REPORTED / UNVERIFIED</td></tr>
+    <tr><th scope="row"><a href="https://github.com/buffedlizard55-lab/GEMSDOE31/blob/cf13282fcd86290f1539f0a86446c8ba7205a79b/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif">GEMSDOE31</a></th><td>19.53%</td><td>4.68%</td><td>26.32%</td><td>0.2708 — OWNER-REPORTED / UNVERIFIED</td></tr>
+    <tr><th scope="row"><a href="https://github.com/buffedlizard55-lab/GEMSDOE28/blob/78e724f95337a6528b1248be5c113c6d6d502891/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif">GEMSDOE28</a></th><td>19.08%</td><td>4.60%</td><td>25.90%</td><td>0.2710 — OWNER-REPORTED / UNVERIFIED</td></tr>
+    <tr><th scope="row"><a href="https://github.com/buffedlizard55-lab/GEMSDOE32/blob/012e17b2a115c3c0d5e7885bea625bf9657c99fc/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif">GEMSDOE32</a></th><td>17.06%</td><td>4.49%</td><td>25.04%</td><td>0.2778 — OWNER-REPORTED / UNVERIFIED</td></tr>
+    <tr><th scope="row"><a href="https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c9ad59ec6f969ed931d089a03044c1567a633e84/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif">GEMSDOE36</a></th><td>17.06%</td><td>4.62%</td><td>26.90%</td><td>0.2750 — OWNER-REPORTED / UNVERIFIED</td></tr>
+  </tbody></table></div>
+  <p><strong>Per-candidate maxima:</strong> earlier e5 24.33% (GEMSDOE24; no exact alias), VENTRAD 5.93% (GEMSDOE27; no exact alias), Blind Upwell 29.53% (GEMSDOE27; no exact alias). VENTRAD has HOLDOUT-DTI 0.12234 [0.11110, 0.13366], still below the 0.13000 comparable baseline and 0.16606 recorded local point-best; its run card reports maximum absolute rank correlation 0.1256, but 99.82% dot overlap with the spacing-5 lattice, so that literal overlap rule fails. Blind Upwell has HOLDOUT-DTI 0.06882 [0.05811, 0.07998], below both internal references; its full registry and pre-placement correlation were not rerun here. All holdout values are internal, not leaderboard scores. Each artifact remains <strong>SUBMIT: NO</strong>; the cross-site historical comparison cannot override a lattice stop, incomplete registry scope, weaker-than-baseline holdout, or absent selector.</p>
+  <p class="actions"><a class="button" href="data/historical_champion_overlap_20261028.json" download>Earlier e5 overlap receipt</a><a class="button" href="data/historical_champion_overlap_ventrad_20261028.json" download>VENTRAD overlap receipt</a><a class="button" href="data/historical_champion_overlap_blind_upwell_20261028.json" download>Blind Upwell overlap receipt</a></p>
 </section>
 
 <!-- ============================================================ NINE-SITE EXECUTIVE SUMMARY ============================================================ -->

@@ -4,7 +4,13 @@
 
 **Goal:** generate a **unique TIF submission** for the DrivenData GEMS competition and publish an executive summary that makes the best submission obvious and one-click downloadable. Full prompt: [`docs/MISSION_PROMPT.md`](docs/MISSION_PROMPT.md).
 
-**Key requirements:** unique (non-copied) TIF · values in [0, 1] (zeros outside footprint to pass the portal range gate) · unique name + note <= 140 chars · executive summary table over GEMSDOE 24/25/27/28/30/31/32/33/36 (file to download · estimated score · unique flag) · how-to-submit subpage · validation with no human intervention (no NaN inside footprint, CRS/shape/transform match EPSG:32611 3730x3292 @100 m) · PR merged to main · no hallucinations.
+**Key requirements:** unique (non-copied) TIF · values in [0, 1] (zero-outside is a tested encoding, not a proven portal fix) · unique name + note <= 140 chars · executive summary table over GEMSDOE 24/25/27/28/30/31/32/33/36 (file to download · estimated score · unique flag) · how-to-submit subpage · validation with no human intervention (no NaN inside footprint, CRS/shape/transform match EPSG:32611 3730x3292 @100 m) · PR merged to main · no hallucinations.
+
+## Current review on `arena/be366ea4-gemsdoe24` — historical-file audit; SUBMIT NO
+
+No new TIFF, geology experiment, competition slot, or organizer-confirmed score was created by this review. The retained candidate in the earlier nine-file audit (HOLDOUT-DTI 0.003802) is not the latest generated file. Current main also contains VENTRAD (HOLDOUT-DTI 0.12234 [0.11110, 0.13366]) and Blind Upwell (0.06882 [0.05811, 0.07998]); both are below the recorded 0.13000 comparable baseline and neither has a submission authorization. VENTRAD also records max rank correlation 0.12564 but 99.82% overlap with the spacing-5 lattice, above the 70% stop threshold. Blind Upwell's full-registry and pre-placement correlation checks were not rerun here.
+
+The three generated files were compared to exactly nine pinned, hash-verified historical champion TIFFs: max directed 3-px candidate-dot overlap is **24.33%** for the earlier e5 candidate (GEMSDOE24), **5.93%** for VENTRAD (GEMSDOE27), and **29.53%** for Blind Upwell (GEMSDOE27); none is an exact dot-mask alias. This narrow audit is not a full-registry/current-head or pre-placement-surface pass and does not overrule the lattice veto, score gate, or missing selector. The updated [unique-download and nine-site page](docs/executive-summary-unique.html) and [three-pass audit report](docs/repo-review-arena-be366ea4-20261028.md) preserve the details and unverified score provenance.
 
 ---
 

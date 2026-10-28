@@ -104,7 +104,9 @@ def scan(candidate: Path, stamp: str, out: Path) -> dict:
         "unreadable_skipped": skipped,
         "max_forward_overlap": worst["candidate_within_3px_of_reference"] if worst else None,
         "max_forward_reference": worst["file"] if worst else None,
-        "passes_local_rule": bool(worst is None or worst["candidate_within_3px_of_reference"] <= LIMIT),
+        "passes_local_rule": bool(
+            worst is None or worst["candidate_within_3px_of_reference"] <= LIMIT
+        ),
         "top_references": rows[:12],
         "submission_authorized": False,
     }
@@ -120,7 +122,15 @@ def main() -> int:
     cand = args.candidate if args.candidate.is_absolute() else ROOT / args.candidate
     stamp = datetime.now(UTC).strftime("%Y%m%d")
     receipt = scan(cand, stamp, args.out if args.out.is_absolute() else ROOT / args.out)
-    print(json.dumps({k: receipt[k] for k in ("references_compared", "max_forward_overlap", "passes_local_rule")}, indent=2))
+    print(
+        json.dumps(
+            {
+                k: receipt[k]
+                for k in ("references_compared", "max_forward_overlap", "passes_local_rule")
+            },
+            indent=2,
+        )
+    )
     return 0 if receipt["passes_local_rule"] else 2
 
 
