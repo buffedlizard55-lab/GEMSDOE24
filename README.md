@@ -1,11 +1,10 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Verified repository review — 2026-10-28 (branch `arena/9e77df06-gemsdoe24`)
+## Current session review — 2026-10-28 (branch `arena/c81bb5d5-gemsdoe24`)
 
-**NO NEW TIFF · NO EXPERIMENT · DO NOT SUBMIT.** Full test suite **552/552 passed** and ruff clean (with full git history; a shallow clone fails 6 tests). All 57 downloaded GeoTIFFs read back in [0, 1]. The "[0, 1]" portal error is **not explained**: the organizer example mirror also uses NaN outside the footprint. Read [the verified review](docs/repo-review-20261028-verified.md) first.
-## Latest continuation — 2026-10-28 repository review
+**NO NEW TIFF · NO EXPERIMENT · NO SCORE PROJECTION · DO NOT SUBMIT.** This branch review supersedes earlier same-date notes written on other Arena branches. Read [the current review](docs/repo-review-20261028-arena-c81bb5d5.md), [its JSON run card](evidence/repo_review_arena_c81bb5d5_20261028.json), and the [standing project instructions](AGENTS.md) before continuing. The full test suite passed (**552 tests**), Ruff check/format passed, and the pinned 37,654/44,090-dot feasibility checks returned the expected impossible-budget stop against the retained lattice. This is a necessary geometric bound, not a candidate novelty result or score.
 
-**NO NEW TIFF · NO EXPERIMENT · DO NOT SUBMIT.** Read the [current repository review](docs/repo-review-20261028.md) before continuing. The parallel-run prompt provides no assigned method paragraph, and the literal registry rule conflicts with the retained calibration-lattice witness at standard dot budgets; neither constraint was changed. The frozen feasibility tests pass (6/6); full `pytest` could not run because pytest is absent from this runtime. No score estimate, fresh holdout, current-head artifact audit, or organizer-confirmed receipt was produced.
+The assigned method paragraph is still absent, and `data/training_features.tif` plus a prepared feature cache are absent. No holdout or candidate validation was possible; the requested unique high-scoring submission remains unfinished. The nine-site audit is pinned to 2026-10-27 source refs and must not be described as current-head verification. Current leaderboard estimates are **NOT ESTIMABLE**; no organizer receipt or account quota was checked. The summary page is research-only: [nine-site table and submission guide](docs/executive-summary.html#current-focus-files).
 
 ## Latest continuation — 2026-10-27, session a73c5f88
 
