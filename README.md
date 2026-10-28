@@ -9,6 +9,17 @@ or scientific authorization. Read the [latest review and next steps](docs/sessio
 the [nine-site historical research table](docs/historical-champions.html), and
 the standing instructions below. Previous score claims are owner-reported unless
 linked to an organizer receipt; no current leaderboard estimate is available.
+## Latest review — 2026-10-28 (`arena/2727fc4d-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF.** Read the [current review](docs/repo-review-20261028-arena-2727fc4d.md) and [nine-site historical table](docs/historical-champions.html). This continuation corrected an ambiguous local format PASS; the recorded exterior-NaN check fails for the all-finite historical files. No new model, TIFF, holdout, portal receipt, or competition upload was produced. The required method-lane paragraph is missing and the literal lattice novelty gate blocks standard budgets. Historical files are research only; **SUBMIT NO**.
+
+## Validator review — 2026-10-28
+
+**NO SUBMISSION-AUTHORIZED TIFF.** A synthetic test exposed a finite-but-GDAL-masked footprint pixel that the current shared validator accepts. See the [reproduction, concurrent shared-fix status and next steps](docs/session-review-20261028-mask.md) and [negative run card](docs/data/session-mask-review-20261028.json). No candidate, geological experiment, or submission slot was created in this review. Read the [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at the start of each session.
+
+## Review — 2026-10-28 (`arena/a4397407-gemsdoe24`)
+
+**SUBMIT: NO · no new TIFF · no slot.** Verified review (tests, validator, feasibility gate, official rules): [docs/repo-review-20261028-a4397407.md](docs/repo-review-20261028-a4397407.md). The uniqueness gate fails at standard dot budgets (82.34% minimum lattice overlap at 37,654 dots); the owner must decide the registry-raster rule before any TIFF can be certified unique.
 
 ## Current session review — 2026-10-28 (`arena/932e2262-gemsdoe24`)
 

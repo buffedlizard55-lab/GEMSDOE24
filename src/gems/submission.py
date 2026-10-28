@@ -74,12 +74,24 @@ def write_submission(
     out_path = Path(out_path)
     if _same_file(out_path, template_path):
         raise ValueError("Output must not overwrite the template")
+    # Refuse stale GDAL sidecars; silently deleting them would destroy data.
+    for suffix in (".msk", ".aux.xml", ".ovr"):
+        sidecar = Path(str(out_path) + suffix)
+        if sidecar.exists() or sidecar.is_symlink():
+            raise ValueError(f"Output has an existing external sidecar: {sidecar}")
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with rasterio.open(template_path) as t:
+        if len(t.files) != 1 or Path(t.files[0]).resolve() != Path(template_path).resolve():
+            raise ValueError("Template must be self-contained without sidecars")
         profile = t.profile.copy()
         footprint = np.isfinite(t.read(1))
+        if np.ma.getmaskarray(t.read(1, masked=True))[footprint].any():
+            raise ValueError("Template contains masked pixels inside the footprint")
     if not footprint.any():
         raise ValueError("template contains no finite prediction footprint")
+    if np.ma.isMaskedArray(pred_2d) and np.shape(pred_2d) == footprint.shape:
+        if np.ma.getmaskarray(pred_2d)[footprint].any():
+            raise ValueError("Predictions inside the footprint must not be masked")
     pred_2d = np.asarray(pred_2d)
     if pred_2d.shape != footprint.shape:
         raise ValueError(f"prediction shape {pred_2d.shape} != template {footprint.shape}")
@@ -139,11 +151,14 @@ def check_variants(
         t_arr = t.read(1)
         t_prof = t.profile
         footprint = np.isfinite(t_arr)
+        t_files = list(t.files) if strict else []
+        t_masked = np.ma.getmaskarray(t.read(1, masked=True)) if strict else None
         t_crs, t_tr, t_shape = t.crs, t.transform, t.shape
     with rasterio.open(path) as s:
         arr = s.read(1)
         masked = s.read(1, masked=True)
         prof = s.profile
+        s_files = list(s.files) if strict else []
         crs, tr, shape, count, dtypes, nodata = (
             s.crs,
             s.transform,
@@ -187,6 +202,19 @@ def check_variants(
         "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
     )
     if strict:
+        # GDAL-discovered sidecars are not covered by the TIFF byte hash or
+        # included in the single-file upload; require self-contained datasets.
+        template_self_contained = (
+            len(t_files) == 1 and Path(t_files[0]).resolve() == Path(template_path).resolve()
+        )
+        raster_self_contained = len(s_files) == 1 and Path(s_files[0]).resolve() == path.resolve()
+        add("template_self_contained", template_self_contained, f"files={t_files}")
+        add("raster_self_contained", raster_self_contained, f"files={s_files}")
+        add(
+            "template_footprint_unmasked",
+            not t_masked[footprint].any(),
+            "Template footprint has no masked pixels",
+        )
         add("geotiff_driver", prof.get("driver") == "GTiff", f"driver={prof.get('driver')}")
     add("single_band", count == 1, f"count={count}")
     add("dtype_float32", dtypes == ("float32",), f"dtypes={dtypes}")

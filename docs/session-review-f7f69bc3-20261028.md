@@ -31,10 +31,13 @@ not prove that a masked reader would see all those predictions. This is a
 format ambiguity, **not an established explanation of the reported portal error**.
 
 The shared validator now has a `strict=True` mode which requires the `GTiff`
-driver and no masked in-footprint pixels. The shared writer CLI and exact-file
-preflight use strict mode. Its legacy default is retained only for reproducing
+driver, self-contained raster and template, and no masked in-footprint pixels.
+The writer refuses stale output sidecars and masked predictions. The shared
+writer CLI and exact-file preflight use strict mode. This addresses the related
+risk independently identified in [concurrent PR #84](https://github.com/buffedlizard55-lab/GEMSDOE24/pull/84);
+that PR also contains other changes not integrated by this review. Its legacy default is retained only for reproducing
 frozen historical receipts; it does **not** imply those receipts were tested
-against the new checks. TNR1 historical verification separately requires both
+against the new checks. TNR1 historical verification separately requires the
 new checks before comparing its unchanged old receipt. Neither mode authorizes
 a competition slot. A future selector must require strict checks, independent
 science evidence and actual quota; the independent selector-receipt verifier
@@ -102,7 +105,7 @@ Mirror hashes establish byte identity, not organizer provenance.
    legacy receipt format, made new preflights strict, and required TNR1's two
    new checks before comparing its historical receipt. No old receipt was
    rewritten to claim a new historical test.
-3. Rebuilt the site, reran the complete suite (**583 passed**), Ruff checks,
+3. Rebuilt the site, integrated concurrent main changes and reran the complete suite (**587 passed**), Ruff checks,
    formatter, JavaScript syntax and diff whitespace checks. Verified the exact
    S3DEP1 research artifact with strict preflight: format/range passed but
    submission authorization remained false. No browser-based visual review,

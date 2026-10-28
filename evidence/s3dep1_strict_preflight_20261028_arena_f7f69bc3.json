@@ -33,6 +33,21 @@
         "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
         "hard_requirement": true
       },
+      "template_self_contained": {
+        "pass": true,
+        "detail": "files=['/home/user/GEMSDOE24/data/bridge/sample_submission.tif']",
+        "hard_requirement": true
+      },
+      "raster_self_contained": {
+        "pass": true,
+        "detail": "files=['docs/downloads/gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif']",
+        "hard_requirement": true
+      },
+      "template_footprint_unmasked": {
+        "pass": true,
+        "detail": "Template footprint has no masked pixels",
+        "hard_requirement": true
+      },
       "geotiff_driver": {
         "pass": true,
         "detail": "driver=GTiff",
