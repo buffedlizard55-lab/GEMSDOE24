@@ -1,5 +1,15 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## CURRENT MISSION (this session — read first)
+
+**Goal:** generate a **unique TIF submission** for the DrivenData GEMS competition and publish an executive summary that makes the best submission obvious and one-click downloadable. Full prompt: [`docs/MISSION_PROMPT.md`](docs/MISSION_PROMPT.md).
+
+**Key requirements:** unique (non-copied) TIF · values in [0, 1] (zeros outside footprint to pass the portal range gate) · unique name + note <= 140 chars · executive summary table over GEMSDOE 24/25/27/28/30/31/32/33/36 (file to download · estimated score · unique flag) · how-to-submit subpage · validation with no human intervention (no NaN inside footprint, CRS/shape/transform match EPSG:32611 3730x3292 @100 m) · PR merged to main · no hallucinations.
+
+**Result this session:** new unique submission `docs/downloads/24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif` (SHA-256 `603d21db…9626`), 37,722 dots, HOLDOUT-DTI 0.1223 [0.1111, 0.1337], unique vs all competing prior submissions, format-valid (strict [0,1] PASS). **ok_to_download: YES · ok_to_submit: NO** (literal lattice gate reported; no slot spent; awaits lane + selector + organizer receipt). See `docs/executive-summary.html#unique-submission` and `docs/data/ventrad_run_card.json`.
+
+---
+
 ## Arena branch continuation — 2026-10-28 (`arena/c81bb5d5-gemsdoe24`)
 
 **NO NEW TIFF · NO GEOLOGICAL EXPERIMENT · NO SCORE PROJECTION · DO NOT SUBMIT.** Read this [branch-specific review](docs/session-review-c81bb5d5-20261028.md) and [run card](evidence/session_c81bb5d5_run_card_20261028.json), then the current [freshness/protocol review](docs/repo-review-20261028-freshness.md), [historical-champion table](docs/historical-champions.html), and [standing instructions](AGENTS.md). This branch integrated newer `main` work during review; the final integrated suite passed **567 tests**. The assigned method paragraph and full training-feature stack are absent, and no current leaderboard estimate or submit-authorized artifact exists.
