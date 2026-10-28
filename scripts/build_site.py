@@ -68,6 +68,7 @@ def page(title, active, body, prefix=""):
     for name, path in (
         ("Overview", "index.html"),
         ("Submission guide", "executive-summary.html"),
+        ("Research download · SUBMIT NO", "executive-summary-unique.html"),
         ("Research", "research.html"),
         ("Sources & audit", "sources.html"),
     ):
@@ -116,6 +117,11 @@ UNIQUE_CARD = (
 )
 UNIQUE_OVERLAP = "evidence/unique_local_overlap_20261028.json"
 FOCUS_OVERLAP = "evidence/historical_champion_overlap_20261028.json"
+HISTORICAL_OVERLAP_RECEIPTS = (
+    FOCUS_OVERLAP,
+    "evidence/historical_champion_overlap_ventrad_20261028.json",
+    "evidence/historical_champion_overlap_blind_upwell_20261028.json",
+)
 
 
 def render_unique_submission(root: Path) -> str:
@@ -663,7 +669,7 @@ def build_independent_site(primary):
         '<a class="button" href="data/portfolio_source_claims_20261026.json">Official reference quotes and blocked sources</a>'
         '<a class="button" href="data/portfolio_freshness.json">Current audit-pin freshness</a></div></section>'
     ) + source_page
-    for receipt_path in (UNIQUE_OVERLAP, FOCUS_OVERLAP):
+    for receipt_path in (UNIQUE_OVERLAP, *HISTORICAL_OVERLAP_RECEIPTS):
         (DOCS / "data" / Path(receipt_path).name).write_text((ROOT / receipt_path).read_text())
     unique_section = render_unique_submission(ROOT)
     overview = unique_section + overview
@@ -1508,6 +1514,8 @@ def main():
 <section><div class="grid2"><article class="card"><h3>Limitations and access needs</h3><ul class="prose"><li>I cannot reach the DrivenData portal, the private leaderboard or hidden labels, nor upload or verify scores.</li><li>Hand-labelled lidar scarps are allowed by staff (labels must be saved) and need a geologist.</li><li>Official flight-number → block mapping needs the S3-hosted profile archives (anonymous GET returns 403).</li><li>DrivenData figures are human-read snapshots: re-verify by hand; no job here may access that site automatically.</li></ul></article><article class="card"><h3>Three-pass review</h3><p>{e(review.get("summary", "Review in progress."))}</p><div class="actions"><a class="button" href="data/source_health.json" download>Source feed</a><a class="button" href="data/audit.json" download>Audit receipt</a></div></article></div></section>"""
 
     # ------------------------------------------------------------------ write
+    for receipt_path in (UNIQUE_OVERLAP, *HISTORICAL_OVERLAP_RECEIPTS):
+        (DOCS / "data" / Path(receipt_path).name).write_text((ROOT / receipt_path).read_text())
     unique_section = render_unique_submission(ROOT)
     overview = unique_section + overview
     executive = unique_section + executive

@@ -1,0 +1,23 @@
+{
+  "file": "24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif",
+  "nan_file": "24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-nan.tif",
+  "sha256": "603d21dbb482200336499a05725310398a265c9dd618826d921ab260ec4d9626",
+  "content_id": "34b558b554fb",
+  "pixel_count": 37722,
+  "note": "24GEMSDOE VENTRAD | blind geothermal upwelling vents+pottassic alteration, unique vs competing metho | id 34b558b554fb | not yet live-scored",
+  "note_file": "note-24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.txt",
+  "checks_file": "checks-24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.json",
+  "role": "primary",
+  "format_valid": true,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "recommended_for_new_slot": false,
+  "slot_recommendation": "not_recommended",
+  "verdict": "negative",
+  "holdout_dti": 0.1223432906586298,
+  "holdout_ci95": [
+    0.11109942107246935,
+    0.13366146771534174
+  ],
+  "run_card": "ventrad_run_card.json"
+}

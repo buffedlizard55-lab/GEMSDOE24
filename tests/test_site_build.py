@@ -50,6 +50,7 @@ def test_download_is_on_the_first_screen_and_the_file_is_the_registered_one(buil
     for page in ("index.html", "docs/index.html", "docs/executive-summary.html"):
         html = (built / page).read_text()
         assert row["file"] in html and 'download="' + row["file"] + '"' in html
+        assert "Research download · SUBMIT NO" in html
         assert 'id="unique-submission"' in html
         assert "Per-site final-dot comparison" in html
         # Both the explicit audit download and current artifact are on the initial page.
@@ -65,6 +66,47 @@ def test_download_is_on_the_first_screen_and_the_file_is_the_registered_one(buil
             else True
         )
     assert (built / "docs/downloads" / row["file"]).exists()
+
+
+def test_historical_overlap_matrix_is_published_with_fail_closed_receipts(built):
+    from bs4 import BeautifulSoup
+
+    page = built / "docs/executive-summary-unique.html"
+    html = page.read_text()
+    assert 'id="pinned-historical-overlap"' in html
+    assert "5.93%" in html and "29.53%" in html and "24.33%" in html
+    assert "not full-registry uniqueness" in html
+    for receipt in (
+        "historical_champion_overlap_20261028.json",
+        "historical_champion_overlap_ventrad_20261028.json",
+        "historical_champion_overlap_blind_upwell_20261028.json",
+    ):
+        result = json.loads((built / "docs/data" / receipt).read_text())
+        assert result["references_compared"] == 9
+        assert result["submission_authorized"] is False
+        assert result["full_registry_uniqueness"] == "NOT ESTABLISHED"
+    soup = BeautifulSoup(html, "html.parser")
+    section = soup.find(id="pinned-historical-overlap")
+    receipts = [
+        json.loads((built / "evidence" / receipt).read_text())
+        for receipt in (
+            "historical_champion_overlap_20261028.json",
+            "historical_champion_overlap_ventrad_20261028.json",
+            "historical_champion_overlap_blind_upwell_20261028.json",
+        )
+    ]
+    expected = [{row["site"]: row for row in receipt["comparisons"]} for receipt in receipts]
+    table_rows = section.select("tbody tr")
+    assert len(table_rows) == 9
+    for row in table_rows:
+        cells = row.find_all(["th", "td"])
+        site = cells[0].get_text(strip=True)
+        assert [cell.get_text(strip=True) for cell in cells[1:4]] == [
+            f"{record[site]['candidate_within_3px_of_reference']:.2%}" for record in expected
+        ]
+        assert cells[0].find("a")["href"] == expected[0][site]["source_url"]
+    for link in soup.select('a[href^="data/historical_champion_overlap_"]'):
+        assert (built / "docs" / link["href"]).is_file(), link["href"]
 
 
 def test_pages_state_the_unscored_status_and_never_invent_a_score(built):

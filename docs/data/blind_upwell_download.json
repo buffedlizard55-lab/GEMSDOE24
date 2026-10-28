@@ -1,22 +1,19 @@
 {
-  "file": "24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.tif",
-  "sha256": "a59b772423a42676fadbdaf6bdc556e350e51c0f13a560b96d40821822550122",
-  "content_id": "a23f2207f2c0",
+  "file": "24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif",
+  "sha256": "e64604460ad2d4b1afcacab81aba8c501844c9333a1f92f7931d4a02d3b0dd55",
+  "content_id": "5b6e6af2ed3b",
   "pixel_count": 37722,
-  "note": "24GEMS blind-upwelling LiDARxKxThKxthermal | catalogue-independent | research; HOLDOUT-DTI 0.06448 | id a23f2207f2c0",
-  "note_file": "note-24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.txt",
-  "checks_file": "checks-24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.json",
-  "preflight_file": "preflight-24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.json",
+  "note": "24GEMS blind-upwell U/Thxdemagxscarp | catalogue-blind | research; HOLDOUT-DTI 0.06882 | id 5b6e6af2ed3b",
+  "note_file": "note-24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.txt",
+  "checks_file": "checks-24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.json",
+  "preflight_file": "preflight-24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.json",
+  "zip_file": "24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.zip",
   "role": "primary",
   "format_valid": true,
   "strict_range_ok": true,
   "ok_to_download": true,
   "ok_to_submit": false,
   "verdict": "negative",
-  "holdout_dti": 0.06448444342931338,
-  "holdout_ci95": [
-    0.05575265073698321,
-    0.07400415098713126
-  ],
+  "holdout_dti": 0.06882106257102054,
   "run_card": "blind_upwell_run_card.json"
 }

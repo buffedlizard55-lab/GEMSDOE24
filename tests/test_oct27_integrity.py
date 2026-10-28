@@ -104,15 +104,20 @@ def test_selector_uses_pinned_external_point_floor_but_never_authorizes_it():
 
 
 def test_pages_surface_current_review_and_quarantine():
-    for path in (
+    pages = (
         "index.html",
         "executive-summary.html",
         "docs/index.html",
         "docs/executive-summary.html",
-    ):
+    )
+    for path in pages:
         html = (ROOT / path).read_text()
-        assert 'id="current-focus-files"' in html
-        assert "all nine fail the literal 70% overlap rule" in html
         assert "fold eligibility" in html and "withheld segments" in html
         assert "not a scientifically replayed or proven comparable winner" in html
         assert "Band-6 correction" in html
+        if path == "docs/executive-summary.html":
+            assert 'id="unique-submission"' in html
+            assert 'href="executive-summary-unique.html#nine-site"' in html
+        else:
+            assert 'id="current-focus-files"' in html
+            assert "all nine fail the literal 70% overlap rule" in html
