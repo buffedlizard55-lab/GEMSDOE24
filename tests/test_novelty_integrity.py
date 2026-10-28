@@ -95,3 +95,16 @@ def test_nonbinary_or_nan_dot_masks_are_rejected_not_coerced(fixture):
         dots[2, 3] = invalid
         with pytest.raises(ValueError, match="finite binary"):
             novelty.compare_registry(surface, fp, [row], root, template_path=template, dots=dots)
+
+
+def test_file_sha256_mismatch_and_prospective_template_forwarding(fixture):
+    root, fp, _a, surface, template, ref, row = fixture
+    row["sha256"] = hashlib.sha256(ref.read_bytes()).hexdigest()
+    prospective = novelty.compare_prospective_registry(
+        surface, fp, [row], root, template_path=template
+    )
+    assert prospective["method_lane_passed"] is True
+    assert prospective["literal_all_entries_passed"] is True
+    row["sha256"] = "0" * 64
+    with pytest.raises(ValueError, match="Registry file checksum mismatch"):
+        novelty.compare_prospective_registry(surface, fp, [row], root, template_path=template)

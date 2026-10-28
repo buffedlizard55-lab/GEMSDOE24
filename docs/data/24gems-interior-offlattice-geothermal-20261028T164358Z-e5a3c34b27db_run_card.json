@@ -1,0 +1,199 @@
+{
+  "schema": "interior-offlattice-submission-v1",
+  "generated_utc": "2026-10-28T16:43:58.309308+00:00",
+  "hypothesis": "Geothermal feeder faults missed by the catalogue lie in spacing-5 lattice 3-px coverage holes; prioritizing those holes by public geothermal favorability recovers unmapped faults without touching any catalogue-adjacent dot.",
+  "mechanism": "Binary dots at interior cells >3 px from the retained lattice, ranked by potassium anomaly, low Th/K, vent/spring proximity and LiDAR flexure.",
+  "named_non_fault_mimic": "Erosional scarps, paleo-shoreline risers, lithologic contacts, dike edges, survey seams.",
+  "interior_cells": 6649,
+  "dots_emitted": 3165,
+  "favorability_positive_cells": 3165,
+  "min_dot_favorability": 0.00035797993768937886,
+  "thermal": {
+    "n_thermal_px": 593,
+    "n_vents": 21,
+    "n_springs": 973
+  },
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "n_withheld_positive_pixels": 60988,
+    "n_unique_withheld_components": 3199,
+    "pooled_dti": 0.003802043130574802,
+    "ci95": [
+      0.0020611852216874654,
+      0.0057182128659556235
+    ],
+    "folds": [
+      {
+        "fold": "NW",
+        "tp_w": 0.0,
+        "fp_w": 106.0,
+        "fn_w": 10165.0,
+        "n_truth": 10165,
+        "n_emitted": 106,
+        "dti": 0.0,
+        "coverage": 0.0
+      },
+      {
+        "fold": "NE_LidarGapHeavy",
+        "tp_w": 2.666666666666667,
+        "fp_w": 208.49290288820637,
+        "fn_w": 12508.333333333334,
+        "n_truth": 12511,
+        "n_emitted": 212,
+        "dti": 0.00026531272504959184,
+        "coverage": 0.00021314576506008048
+      },
+      {
+        "fold": "SW",
+        "tp_w": 85.0902751827261,
+        "fp_w": 1286.2398184430526,
+        "fn_w": 20448.909724817273,
+        "n_truth": 20534,
+        "n_emitted": 1381,
+        "dti": 0.005094778810843077,
+        "coverage": 0.004143872366939033
+      },
+      {
+        "fold": "SE",
+        "tp_w": 100.15143388348822,
+        "fp_w": 1374.3563912630948,
+        "fn_w": 17677.84856611651,
+        "n_truth": 17778,
+        "n_emitted": 1466,
+        "dti": 0.0068987637567613,
+        "coverage": 0.00563344773784949
+      }
+    ],
+    "protocol": {
+      "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+      "buffer_m": 3000,
+      "whole_components_hidden_everywhere": true,
+      "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+      "catalogue_features": "must be constructed from fold.visible only",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_kernel_radius_m": 300
+    },
+    "alpha": 0.2,
+    "beta": 0.8,
+    "radius_m": 300,
+    "buffer_px": 30
+  },
+  "novelty_vs_lattice": {
+    "lattice_dots": 206895,
+    "lattice_overlap_within_3px": 0.0,
+    "lattice_duplicate_stop": false,
+    "surface_abs_spearman_vs_lattice": 0.0050558971165330325,
+    "surface_spearman_defined": true
+  },
+  "raster_sha256": "379bf97792355bb48acec703939537a62bb8492705997e043c235bd9029c44db",
+  "submission_name": "24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db",
+  "note": "24GEMS interior-offlattice geothermal dots | HOLDOUT-DTI 0.0038 | id e5a3c34b27db | research; DO NOT SUBMIT",
+  "note_chars": 107,
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "submission_authorized": false,
+  "slots_used": 0,
+  "experiments_run": 1,
+  "organizer_confirmed_score": null,
+  "leaderboard_estimate": null,
+  "score_status": "NOT ESTIMABLE; internal holdout only, not an organizer score",
+  "validator_output": {
+    "file": "24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-zeros.tif",
+    "bytes": 757156,
+    "sha256": "379bf97792355bb48acec703939537a62bb8492705997e043c235bd9029c44db",
+    "format_valid": true,
+    "template_origin_authenticated": false,
+    "exterior_encoding": "zero_outside_whole_array_finite",
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 3165,
+    "in_footprint_mass": 3165.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Matches pinned sample_submission.tif grid and footprint SHA-256 constants (not an arbitrary raster; organizer origin not authenticated)",
+        "hard_requirement": true
+      },
+      "pinned_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Exact match to pinned owner-bridge sample_submission.tif grid and footprint SHA-256",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "note_file": "24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-note.txt",
+  "zip_sha256": "5f21845069b705cc1284ed5e558c9a796ec4008cdb5d2187c2c0c0234a455582"
+}

@@ -1,6 +1,6 @@
 {
   "selector_version": "gems-selector-v2-literal-quota-fail-closed",
-  "decided_utc": "2026-10-28T16:22:27.174068+00:00",
+  "decided_utc": "2026-10-28T16:51:19.227491+00:00",
   "artifact": "gems24-crp1-compfront-xdepth-saddle-20261026-c679a967f700-zeros.tif",
   "artifact_sha256": "f02859b3e881b942919deb267cad23673d6a6a1bc0148b2116ff1b706cba8978",
   "human_inspection_used": false,
@@ -22,10 +22,10 @@
   "decision": "DO_NOT_SUBMIT",
   "quota_status": "unknown_BLOCKED_no_manual_confirmation_exception",
   "recorded_scientific_screen_passed": false,
-  "current_point_best_source": "evidence/external/kpl36-61783525.json",
+  "current_point_best_source": null,
   "reasons": [
     "g2_leakage_canary: passed=True, worst extremity=0.5991458124509581; complete per-feature and per-fold value/missingness AUC evidence required",
-    "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.13747112113439836 vs recorded best 0.17010000946379217, paired CI lower=-0.0024205517437371734",
+    "g3_holdout_beats_recorded_best_and_paired_baseline: dti=0.13747112113439836 vs recorded best inf, paired CI lower=-0.0024205517437371734",
     "g4_registry_novelty: surface|rho|=0.5305606362661548, final|rho|=0.5878166547508024, method overlap=0.8070091723662585, peer overlap=0.8070091723662585",
     "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
     "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"

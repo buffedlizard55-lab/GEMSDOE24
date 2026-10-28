@@ -79,6 +79,9 @@ def test_fresh_readback_matches_recorded_receipt_and_no_positive_claim(packet):
     assert fresh["impossible_budget_found"] and not fresh["submission_authorized"]
     assert fresh["new_tiffs"] == fresh["new_experiments"] == fresh["competition_slots_used"] == 0
     assert fresh["holdout_dti"] is fresh["leaderboard_estimate"] is None
+    assert fresh["interior_coverage"]["footprint_3px_uncovered_pixels"] == 6649
+    assert fresh["interior_coverage"]["interior_l1_3px_uncovered_pixels"] == 69
+    assert fresh["interior_coverage"]["interior_linf_3px_uncovered_pixels"] == 0
     html = render(fresh)
     assert "SUBMIT: NO" in html and "NOT_RULED_OUT is not PASS" in html
     assert "Catalogue-hide-and-recover" in html

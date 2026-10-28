@@ -145,6 +145,58 @@ def classify_space_filling_control(
     }
 
 
+def interior_lattice_coverage(
+    footprint: np.ndarray,
+    reference_dots: np.ndarray,
+    *,
+    radius_px: float = 3.0,
+) -> dict[str, float | int]:
+    """Measure 3-px coverage inside the boundary-eroded footprint interior.
+
+    On Z^2, the 5Z x 5Z lattice has Euclidean covering radius sqrt(2^2 + 2^2) =
+    sqrt(8) ~= 2.8284 <= 3.0 px, so every interior pixel whose nearest lattice
+    point lies inside the footprint is covered within 3 px. Uncovered pixels can
+    exist ONLY within the narrow polygon-boundary rim where exterior nodata clips
+    nearby lattice vertices.
+    """
+    from scipy.ndimage import binary_erosion, distance_transform_edt
+
+    fp_raw, ref_raw = np.asarray(footprint), np.asarray(reference_dots)
+    if (
+        fp_raw.ndim != 2
+        or fp_raw.shape != ref_raw.shape
+        or not np.isin(fp_raw, [0, 1]).all()
+        or not np.isin(ref_raw, [0, 1]).all()
+        or not fp_raw.any()
+    ):
+        raise ValueError("Aligned nonempty finite binary footprint and reference masks required")
+    if type(radius_px) not in (int, float) or not np.isfinite(radius_px) or radius_px < 0:
+        raise ValueError("Finite nonnegative radius required")
+    fp = fp_raw.astype(bool)
+    ref = ref_raw.astype(bool) & fp
+    dist = distance_transform_edt(~ref) if ref.any() else np.full(fp.shape, np.inf)
+    uncov_fp = fp & (dist > float(radius_px))
+    er3_manhattan = binary_erosion(fp, iterations=3)
+    er3_box7 = binary_erosion(fp, structure=np.ones((7, 7), dtype=bool), border_value=False)
+    n_uncov_all = int(uncov_fp.sum())
+    n_uncov_l1 = int((uncov_fp & er3_manhattan).sum())
+    n_uncov_linf = int((uncov_fp & er3_box7).sum())
+    return {
+        "footprint_pixels": int(fp.sum()),
+        "footprint_3px_uncovered_pixels": n_uncov_all,
+        "interior_l1_3px_pixels": int(er3_manhattan.sum()),
+        "interior_l1_3px_uncovered_pixels": n_uncov_l1,
+        "interior_linf_3px_pixels": int(er3_box7.sum()),
+        "interior_linf_3px_uncovered_pixels": n_uncov_linf,
+        "boundary_rim_l1_fraction_of_uncovered": (
+            float((n_uncov_all - n_uncov_l1) / n_uncov_all) if n_uncov_all > 0 else 1.0
+        ),
+        "max_l1_interior_budget_not_ruled_out": (3 * n_uncov_l1) // 1
+        if n_uncov_l1 == 0
+        else int((10 * n_uncov_l1) // 3),
+    }
+
+
 def dot_budget_feasibility(
     footprint_pixels: int, uncovered_pixels: int, candidate_dot_count: int
 ) -> dict:
@@ -264,6 +316,10 @@ def compare_registry(
     n_cand_dots = len(dot_yx) if dot_yx is not None else None
     for row in entries:
         path = Path(root) / row["cache_path"]
+        if row.get("sha256") is not None:
+            file_digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            if file_digest != row["sha256"]:
+                raise ValueError(f"Registry file checksum mismatch: {path}")
         with rasterio.open(path) as ds:
             if (
                 ds.count != 1
@@ -424,6 +480,7 @@ def compare_prospective_registry(
     dots=None,
     sample_size=200000,
     extra_entries=(),
+    template_path: Path | str | None = None,
 ):
     """Prospective registry comparison that separates synthetic calibration lattices from method lanes.
 
@@ -433,7 +490,15 @@ def compare_prospective_registry(
     calibration lattice as a method lane) are reported explicitly.
     """
     combined = list(entries) + list(extra_entries)
-    base = compare_registry(surface, footprint, combined, root, dots=dots, sample_size=sample_size)
+    base = compare_registry(
+        surface,
+        footprint,
+        combined,
+        root,
+        dots=dots,
+        sample_size=sample_size,
+        template_path=template_path,
+    )
     method_rows = []
     control_rows = []
     for entry, row in zip(combined, base["rows"]):
