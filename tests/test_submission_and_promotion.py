@@ -255,3 +255,128 @@ def test_postprocess_audit_label_selects_the_right_reference_entry():
     assert out["slot_recommendation"] == "not_recommended"  # judged on ITS audit, not the primary's
     with pytest.raises(ValueError, match="same_exact_candidate_audited"):
         require_postprocess_evidence("ref", "alt", True, v, a)  # default label points at "cand"
+
+
+def _pin_test_template(monkeypatch, fp):
+    # Use a miniature grid so these tests exercise the complete format decision.
+    monkeypatch.setitem(submission.EXPECTED, "shape", fp.shape)
+    monkeypatch.setitem(submission.EXPECTED, "footprint_pixels", int(fp.sum()))
+    monkeypatch.setitem(submission.EXPECTED, "footprint_sha256", submission.footprint_sha256(fp))
+
+
+def test_nodata_masks_inside_are_not_accepted_as_valid_probabilities(tmp_path, monkeypatch):
+    t, fp = template(tmp_path)
+    _pin_test_template(monkeypatch, fp)
+    p = submission.write_submission(np.full(fp.shape, 0.7), t, tmp_path / "out.tif")
+    with rasterio.open(p, "r+") as dataset:
+        a = dataset.read(1)
+        a[3, 3] = 0
+        dataset.write(a, 1)
+        dataset.nodata = 0
+    checks = submission.check_variants(p, t, strict=True)
+    assert checks["checks"]["footprint_all_finite"]["pass"]
+    assert checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
+    assert not checks["checks"]["footprint_unmasked"]["pass"]
+    assert not checks["format_valid"] and "footprint_unmasked" in checks["hard_failures"]
+
+
+def test_internal_mask_inside_is_rejected_even_without_nodata(tmp_path, monkeypatch):
+    t, fp = template(tmp_path)
+    _pin_test_template(monkeypatch, fp)
+    p = submission.write_submission(np.full(fp.shape, 0.7), t, tmp_path / "out.tif")
+    mask = np.full(fp.shape, 255, dtype=np.uint8)
+    mask[4, 4] = 0
+    with rasterio.Env(GDAL_TIFF_INTERNAL_MASK=True), rasterio.open(p, "r+") as dataset:
+        dataset.write_mask(mask)
+    checks = submission.check_variants(p, t, strict=True)
+    assert checks["checks"]["variant_masked_read"]["pass"]
+    assert not checks["checks"]["footprint_unmasked"]["pass"]
+    assert not checks["format_valid"]
+
+
+def test_geotiff_extension_cannot_disguise_a_vrt(tmp_path, monkeypatch):
+    from rasterio.shutil import copy as rio_copy
+
+    t, fp = template(tmp_path)
+    _pin_test_template(monkeypatch, fp)
+    source = submission.write_submission(np.full(fp.shape, 0.7), t, tmp_path / "source.tif")
+    disguised = tmp_path / "not-a-geotiff.tif"
+    rio_copy(source, disguised, driver="VRT")
+    checks = submission.check_variants(disguised, t, strict=True)
+    assert checks["checks"]["single_band"]["pass"]
+    assert checks["checks"]["footprint_unmasked"]["pass"]
+    assert not checks["checks"]["geotiff_driver"]["pass"]
+    assert not checks["format_valid"] and "geotiff_driver" in checks["hard_failures"]
+
+
+def test_masking_only_exterior_does_not_fail_interior_gate(tmp_path, monkeypatch):
+    t, fp = template(tmp_path)
+    _pin_test_template(monkeypatch, fp)
+    p = submission.write_submission(np.full(fp.shape, 0.7), t, tmp_path / "out.tif")
+    with rasterio.open(p, "r+") as dataset:
+        dataset.nodata = 0
+    checks = submission.check_variants(p, t, strict=True)
+    assert checks["checks"]["footprint_unmasked"]["pass"]
+    assert checks["format_valid"]
+
+
+def test_preflight_applies_strict_mask_and_driver_checks(tmp_path, monkeypatch):
+    from gems.preflight import preflight
+
+    t, fp = template(tmp_path)
+    _pin_test_template(monkeypatch, fp)
+    p = submission.write_submission(np.full(fp.shape, 0.7), t, tmp_path / "out.tif")
+    with rasterio.open(p, "r+") as dataset:
+        a = dataset.read(1)
+        a[3, 3] = 0
+        dataset.write(a, 1)
+        dataset.nodata = 0
+    report = preflight(p, t)
+    checks = report["format_validation"]["checks"]
+    assert checks["geotiff_driver"]["pass"]
+    assert not checks["footprint_unmasked"]["pass"]
+    assert not report["requirements"]["single_tif_and_footprint_format"]
+    assert not report["decision"]["ready_to_submit"]
+
+
+def test_strict_check_rejects_external_mask_even_when_all_pixels_valid(tmp_path, monkeypatch):
+    t, fp = template(tmp_path)
+    _pin_test_template(monkeypatch, fp)
+    p = submission.write_submission(np.full(fp.shape, 0.7), t, tmp_path / "out.tif")
+    with rasterio.Env(GDAL_TIFF_INTERNAL_MASK=False), rasterio.open(p, "r+") as dataset:
+        dataset.write_mask(np.full(fp.shape, 255, np.uint8))
+    assert (tmp_path / "out.tif.msk").exists()
+    checks = submission.check_variants(p, t, strict=True)
+    assert checks["checks"]["footprint_unmasked"]["pass"]
+    assert not checks["checks"]["raster_self_contained"]["pass"]
+    assert not checks["format_valid"]
+
+
+def test_writer_refuses_stale_sidecar_and_masked_input(tmp_path):
+    t, fp = template(tmp_path)
+    output = tmp_path / "out.tif"
+    sidecar = tmp_path / "out.tif.msk"
+    sidecar.write_bytes(b"do not remove")
+    with pytest.raises(ValueError, match="sidecar"):
+        submission.write_submission(np.ones(fp.shape), t, output)
+    assert sidecar.read_bytes() == b"do not remove" and not output.exists()
+    sidecar.unlink()
+    masked = np.ma.array(np.ones(fp.shape), mask=np.zeros(fp.shape, dtype=bool))
+    masked.mask[3, 3] = True
+    with pytest.raises(ValueError, match="must not be masked"):
+        submission.write_submission(masked, t, output)
+    assert not output.exists()
+
+
+def test_masked_template_is_rejected_by_writer_and_strict_validator(tmp_path, monkeypatch):
+    t, fp = template(tmp_path)
+    _pin_test_template(monkeypatch, fp)
+    p = submission.write_submission(np.full(fp.shape, 0.7), t, tmp_path / "out.tif")
+    mask = np.full(fp.shape, 255, dtype=np.uint8)
+    mask[3, 3] = 0
+    with rasterio.Env(GDAL_TIFF_INTERNAL_MASK=True), rasterio.open(t, "r+") as dataset:
+        dataset.write_mask(mask)
+    checks = submission.check_variants(p, t, strict=True)
+    assert not checks["checks"]["template_footprint_unmasked"]["pass"]
+    with pytest.raises(ValueError, match="Template contains masked"):
+        submission.write_submission(np.ones(fp.shape), t, tmp_path / "new.tif")
