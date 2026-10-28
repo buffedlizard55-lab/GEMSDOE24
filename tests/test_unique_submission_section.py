@@ -47,11 +47,27 @@ def test_real_section_is_do_not_submit_and_links_resolve():
     assert 'id="unique-submission"' in html
     assert "SUBMIT: NO" in html
     assert "NOT ESTIMABLE" in html
+    assert 'tabindex="0" role="region" aria-label="Unique research TIFF validation details"' in html
     assert "SUBMIT: YES" not in html.upper().replace("SUBMIT: NO", "")
     note = re.search(r"Note \(≤140 chars, (\d+) used\)", html)
     assert note and int(note.group(1)) <= 140
     for href in re.findall(r'href="(downloads/[^"]+|data/[^"]+)"', html):
         assert (ROOT / "docs" / href).is_file(), href
+
+
+def test_research_card_does_not_displace_current_best_download():
+    bs = _load_build_site()
+    content = '<section id="current-best-review">best CTA</section><p>more</p>'
+    result = bs.place_unique_section_after_current_best(
+        content, '<section id="unique-submission">research</section>'
+    )
+    assert result.index("best CTA") < result.index("unique-submission") < result.index("more")
+
+
+def test_section_placement_fails_closed_without_current_best():
+    bs = _load_build_site()
+    with pytest.raises(ValueError, match="missing the current point-best"):
+        bs.place_unique_section_after_current_best("<main></main>", "<section>research</section>")
 
 
 def test_section_refuses_a_tampered_geotiff(tmp_path):
