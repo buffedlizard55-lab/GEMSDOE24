@@ -100,12 +100,13 @@
     "Fresh current-head exhaustive artifact audit and new scientific holdout not performed.",
     "First two historical prospective hypotheses overlap open PR #70; not certified untried."
   ],
-  "pull_request": null,
+  "pull_request": "https://github.com/buffedlizard55-lab/GEMSDOE24/pull/82",
   "tests": {
     "command": ".venv/bin/pytest -q",
     "passed": 559,
     "failed": 0,
     "ruff": "All checks passed",
     "site_build": "PASS"
-  }
+  },
+  "concurrent_integration": "Merged main PR #79 and #80 into the fixed session branch; retained both README status notes and the new shallow-history CI guard."
 }

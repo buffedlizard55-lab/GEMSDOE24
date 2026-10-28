@@ -6,6 +6,13 @@
 
 **Read the owner prompt below and the [standing normalized requirements](knowledge/owner_brief_2026-10-27_feasibility.md) every session.** This request repeats the nine-site focus, unique TIFF requirement, holdout/novelty gates, three-pass review, scientific research, prominent download guide and PR/merge requirement. Maximize P(Win) and Own the Outcome mean not fabricating success: the method paragraph remains absent, standard budgets fail the retained-lattice gate, and no candidate is approved. Do not restart stopped lanes, invent a lane, claim an unverified score is organizer-confirmed, or use a weekly slot. The full historical prompt remains preserved below; this note is normalized, not a verbatim transcript. [Current negative run card](evidence/session_b87d739e_run_card.json).
 
+## Concurrent continuation — 2026-10-28: history guard
+
+**SUBMIT: NO. No new TIFF, holdout or submission slot.** Read the [current review](docs/repo-review-20261028-history-guard.md), [active owner brief](knowledge/owner_brief_2026-10-27_feasibility.md) and [standing instructions](AGENTS.md) at session start. The [nine-site executive table](docs/executive-summary.html#current-focus-files) contains research downloads only; its historical snapshots are not a current leaderboard or a uniqueness approval. The specified single-method paragraph is absent; the retained lattice also makes common dot budgets fail the literal overlap rule. No leaderboard estimate is established.
+
+Before running historical receipt checks, run `python scripts/check_git_history.py`. A shallow checkout fails with an actionable message; full history alone does not verify any pinned commit. This session completed the prior shallow-history guard, reran the pinned geometric preflight and passed the complete automated suite; see the review for limitations and next steps. **Maximize P(Win) · Own the Outcome.**
+
+
 ## Verified repository review — 2026-10-28 (branch `arena/9e77df06-gemsdoe24`)
 
 **NO NEW TIFF · NO EXPERIMENT · DO NOT SUBMIT.** Full test suite **552/552 passed** and ruff clean (with full git history; a shallow clone fails 6 tests). All 57 downloaded GeoTIFFs read back in [0, 1]. The "[0, 1]" portal error is **not explained**: the organizer example mirror also uses NaN outside the footprint. Read [the verified review](docs/repo-review-20261028-verified.md) first.
