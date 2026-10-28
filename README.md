@@ -1,8 +1,8 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Latest repository review — 2026-10-28
+## Latest continuation — 2026-10-28 repository review
 
-**SUBMIT: NO. No new TIFF, experiment, score estimate or slot.** The checkout's pinned nine-site audit is stale relative to the GitHub freshness snapshot (checked 2026-10-27); it does not audit the newest site artifacts. The execution environment lacks NumPy and pytest, so raster-backed checks and pytest suites were not run. See [the 2026-10-28 review](docs/repo-review-20261028.md) for exact commands, evidence limits, and next steps. The protocol-only frozen-count check passes but is not scientific validation or submission authorization.
+**NO NEW TIFF · NO EXPERIMENT · DO NOT SUBMIT.** Read the [current repository review](docs/repo-review-20261028.md) before continuing. The parallel-run prompt provides no assigned method paragraph, and the literal registry rule conflicts with the retained calibration-lattice witness at standard dot budgets; neither constraint was changed. The frozen feasibility tests pass (6/6); full `pytest` could not run because pytest is absent from this runtime. No score estimate, fresh holdout, current-head artifact audit, or organizer-confirmed receipt was produced.
 
 ## Latest continuation — 2026-10-27, session a73c5f88
 

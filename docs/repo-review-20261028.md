@@ -1,55 +1,69 @@
 # Repository review — 2026-10-28
 
-**Decision: research-only downloads; no TIFF is authorized to submit.** This was a read-only review at `a73f9ff` on the fixed branch `arena/23763912-gemsdoe24`. No experiment, raster, score estimate, upload, or slot was created/used. The operative single-method paragraph is still missing, so selecting a geological lane would violate the parallel-run protocol.
+## Executive decision
 
-## Executive findings
+**No new submission TIFF; no experiment or competition slot used; do not submit any file on the basis of this review.** This is a documentation and validation review only. The parallel-run instruction requires work inside one assigned method paragraph, but no such paragraph is identified in the active brief. Selecting a lane from the research queue would violate that constraint. The previously documented lattice bound also rules out the standard 37,654-dot budget under the literal 70% overlap gate; this is a geometric feasibility result, not a score or a reason to change the budget or place dots strategically.
 
-1. **No actionable “best submission” is established.** The nine-site audit at `evidence/current_focus_nine_file_audit_20261027.json` explicitly says it covers one selected source-featured TIFF per site at pinned feed refs, not every current TIFF; it did no scientific replay, pre-placement surface comparison, or leaderboard access. Its nine rows all say `ok_to_submit: false`; their recorded 3-pixel lattice overlaps range from 99.0466% to 100%. Those are specific duplicate-gate failures against the retained lattice, not proof that every possible submission is duplicate.
-2. **The current comparison cannot be refreshed from this checkout.** `docs/data/portfolio_freshness.json` is timestamped `2026-10-27T19:18:47Z` and reports all nine focus repositories changed since their pinned review refs. Consequently, it cannot support claims about each site's newest artifacts today. The freshness feed is GitHub-source freshness only, not a scoring/leaderboard feed.
-3. **Scores are correctly not projected.** The nine-site audit labels its local measurements `SOURCE-RECORDED`, not replayed and not organizer-confirmed. For example, GEMSDOE36's recorded HOLDOUT-DTI is `0.170100...` with CI `[0.155089..., 0.186138...]`, but the audit itself says the protocol is not independently validated and its artifact fails the lattice gate. H33-B2 `0.2778` and the prompt's `0.3195` / `0.4413` leaderboard claims remain unverified; the repository has no defensible hidden-score estimate.
-4. **Data/training are not currently executable here.** `data/bridge/sample_submission.tif` and small bridge labels are present, but `data/training_features.tif` and prepared feature cache are absent (also stated in `knowledge/owner_brief_2026-10-27_active.md`). The runtime has Python 3.11.2 but neither NumPy nor pytest. The owner-supplied GitHub mirror is not organizer authentication. Do not claim training or scientific holdout replay in this environment.
-5. **The protocol feasibility receipt is reproducible and conservative.** `python scripts/check_protocol_feasibility.py --dots 37654` yields a necessary-only minimum lattice overlap of 82.3418% and `submission_authorized: false`; this is arithmetic on a frozen audit, not a new raster measurement or a score. The companion raster-backed uniqueness checker cannot run here because NumPy/rasterio are missing. A 18,000-dot budget is merely not ruled out by this one bound, not approved and must not be chosen just to evade the lattice.
-6. **No confirmed code defect was demonstrated in this pass.** Python `compileall`, `git diff --check`, and Node syntax check for `docs/assets/app.js` passed. The focused protocol feasibility unittest module passed 6/6. `pytest` tests and scientific suites were not run: pytest/NumPy/rasterio are unavailable. The attempted unittest import of the pytest-dependent uniqueness tests failed for that missing dependency; this is an environment limitation, not a passing test.
+The repository contains an extensive evidence trail, submission writer/validator, holdout tooling, site generator, source freshness records and a nine-site table. These are useful foundations, but do not support the requested claim that a new unique TIFF beats a particular leaderboard score: live leaderboard access, a verified organizer receipt, current source artifact re-audit, comparable fresh holdout, and an assigned method are absent.
 
-## Review passes
+## Review scope and verified checks
 
-### Pass 1 — map the project and reproduce the principal guardrail
+- Confirmed the active branch is `arena/31593f7c-gemsdoe24`; initial worktree was clean.
+- Read the README start section, standing `AGENTS.md`, normalized active owner brief, existing nine-site audit and prior feasibility review.
+- Checked the frozen feasibility tool: `python scripts/check_protocol_feasibility.py --dots 37654` reports the bound from the pinned count receipt. Its reported 82.3418% minimum overlap is explicitly **not HOLDOUT-DTI, not an organizer result, and not a full registry audit**.
+- Ran `python -m unittest discover -s tests -p test_protocol_feasibility.py -v`: **6 tests passed**.
+- Attempted `python -m pytest -q`: unavailable because this runtime's system Python has no `pytest` module. No attempt was made to install dependencies or run a different environment; therefore the full test suite remains **not run in this review**.
+- The research queue in `docs/research-directions-20261027.md` lists four ranked, untested operators. They are plans only; no score lift or global novelty is established. The active data/cache limitations and source-fetch boundaries are detailed in the current owner brief.
 
-Read the root README, `AGENTS.md`, current owner brief, current integrity review, executive page, freshness feed, the nine-site audit, and both feasibility scripts. Confirmed working tree clean at start and fixed branch `arena/23763912-gemsdoe24`; `git fetch origin` completed. GitHub PR listing showed overlapping open work, including PR #70 (CGMK1 / signed geophysics and potassium ideas) and PR #61 (B2 investigation). This review therefore adds no parallel experiment and does not alter/merge another lane.
+## Findings / issues to resolve
 
-Ran:
+1. **Blocking protocol ambiguity:** the user-provided parallel-run text references a single method paragraph but does not provide one. Do not infer it from the ranked candidate list. A coordinator must assign the paragraph/lane.
+2. **Blocking registry-control conflict:** the retained lattice is a calibration raster but the literal comparator rule also counts it. The fixed standard dot budget necessarily fails the stated overlap ceiling against this witness. A policy owner must prospectively decide whether the witness is a valid novelty comparator; until then, do not remove it, weaken the gate, or evade it by changing placement.
+3. **No current, comparable performance estimate:** owner-reported 0.2778 (and inconsistent 0.3195/0.4413 snapshots) are not artifact-linked organizer confirmations. Existing HOLDOUT-DTI records are source-recorded, version/split-specific and not freshly replayed here. Do not label them leaderboard projections.
+4. **Stale-by-design nine-site inventory:** the frozen audit is pinned to source revisions. Its prior freshness check detected later source movement; that feed is historical and does not audit new artifacts. Re-audit exact artifacts and receipts against current heads before describing any file as current.
+5. **Data/test environment:** the active brief says the raw training raster and prepared feature cache are absent. The owner-mirror restore path is not organizer authentication. Full pytest could not run in this runtime. No new official geological layer's access/coverage was independently verified here.
+6. **Submission status must remain fail-closed:** old research TIFFs are not newly generated or authorized. A passing format validator alone cannot establish scientific merit, uniqueness, score improvement or weekly-slot eligibility.
 
-- `python scripts/check_protocol_feasibility.py --dots 37654` — emitted the frozen-receipt result above.
-- `python -m unittest discover -s tests -p 'test_protocol_feasibility.py' -v` — 6 tests passed.
-- `python -m compileall -q src scripts` — passed.
-- `git diff --check` and `node --check docs/assets/app.js` — passed.
+## Required next steps
 
-### Pass 2 — challenge stale, misleading, and edge-case claims
+1. Receive the exact assigned method paragraph and prospective written resolution of the calibration-lattice comparison policy.
+2. Restore required data only from an allowed source; record provenance separately from byte hashes and verify the cached stack against its manifest.
+3. Re-audit current focus-site artifacts/receipts; rerun the full test suite in the project's pinned environment.
+4. For only the assigned hypothesis, preregister at most three arms; test each feature alone for leakage; run the shared buffered whole-segment holdout and paired uncertainty comparison to a protocol-comparable baseline.
+5. Check surface novelty before placement and final-dot overlap afterward. Apply exact-format read-back validation and the separate selector. No slot until every gate passes and quota is confirmed.
 
-- The freshness timestamp predates this review date, and all nine rows already report newer source heads than the pinned artifact reviews. Do not render these rows as “latest submission” or use their historical best entries as current winners until a fresh repository audit is done.
-- The current exact-file table is deliberately a *selected-file* audit, not an exhaustive registry census. A lattice failure suffices for a negative verdict; a lattice pass alone would not prove uniqueness.
-- `check_protocol_feasibility.py` explicitly uses frozen audit counts and exact rational comparison. Its output is bounded to necessary geometry. `check_uniqueness_feasibility.py` additionally reopens pinned rasters and is the stronger check, but currently cannot be executed in this runtime.
-- `scripts/refresh_source_feed.py` documents a policy that excludes automatic DrivenData requests; its leaderboard input is human-saved. No DrivenData page or score was accessed in this review. Outbound hosts are constrained by the execution environment; no new USGS/NLR/OpenEI dataset access was attempted.
-- The pytest invocation failed because pytest is not installed; NumPy is also absent. No test failure should be re-described as a scientific result.
+## Three-pass self-review
 
-### Pass 3 — original-request acceptance check
+1. **Initial review:** read the governing brief and repo state; ran the standalone frozen-count checker and its unit tests.
+2. **Adversarial pass:** separated frozen source claims from fresh measurements; identified missing pytest and the difference between a feasibility bound and an actual novelty result; did not interpret scores as projections.
+3. **Requirement pass:** confirmed no new TIFF, candidate, holdout, organizer score, quota check or submission occurred; left the protocol's lane and registry gates unchanged. This review does not claim the requested higher-scoring submission was produced.
 
-The repository already contains the prominent executive summary and machine-readable nine-site table, exact download links, automated `[0,1]`/grid validation artifacts, and a detailed submission guide. But there is **no current authorized unique TIFF**, no current all-nine source-head artifact audit, no valid current leaderboard projection, and no successful science replay in this runtime. Those are blockers, not work completed by this review. The review leaves them visible and does not manufacture a TIFF or a numerical score estimate.
+## Run card (documentation-only negative result)
 
-## Recommended next work
+```json
+{
+  "hypothesis": "No geological hypothesis tested; method lane is unassigned.",
+  "mechanism": "Documentation and frozen-count feasibility audit only; no raster prediction mechanism.",
+  "named_non_fault_mimic": "Not applicable; no geological signal was tested.",
+  "holdout_dti": null,
+  "holdout_ci95": null,
+  "holdout_status": "NOT RUN; no new experiment or withheld-positive count",
+  "correlation_or_overlap_vs_registry": "No candidate surface or final dots generated. Frozen geometry receipt reports 82.3418% necessary minimum overlap for 37,654 dots against one lattice witness; this is not a candidate novelty measurement.",
+  "raster_sha256": null,
+  "validator_output": "No new raster to validate; no NaN/range/CRS/shape/transform result for a candidate.",
+  "submission_name": null,
+  "submission_note": "No candidate generated; no submission authorized.",
+  "verdict": "negative"
+}
+```
+## Additional checkout-specific verification — fixed Arena branch, 2026-10-28
 
-1. Resolve coordination first: supply the exact assigned one-paragraph method and prospectively settle how the literal 70%/3-pixel gate treats the known space-filling lattice. Do not change the gate, budget, or comparator after seeing a candidate.
-2. Reconcile the open PRs and evaluate their test/merge status before repeating any ideas they contain. Keep the fixed Arena branch; do not work on their branches.
-3. Restore the permitted feature stack from its pinned source, record source hashes and provenance, and install the locked project/test dependencies. Authentication-gated competition data must remain clearly distinguished from an owner mirror.
-4. Refresh GitHub source heads, then audit the exact current artifact and its receipts for all nine sites before updating the executive table. Continue to label historical scores and local holdouts by evidence type.
-5. Only after lane assignment and a valid data environment: preregister, reuse the shared holdout/writer, run feature-alone leakage canaries, compare pre-placement surface and final dots against the complete registry, and stop at the stated budget. Promote only through the separate selector; a format-valid TIFF is not upload authorization.
+A separate pass on `arena/23763912-gemsdoe24` reproduced the frozen count and confirmed the environment's narrower limits:
 
-## Reproduction and source links
+- `docs/data/portfolio_freshness.json` is stamped `2026-10-27T19:18:47Z`; each of its nine focus rows says `changed_since_review: true`. Thus the pinned nine-file receipt is stale for current-head claims. It is only a GitHub freshness feed, not a leaderboard feed.
+- `evidence/current_focus_nine_file_audit_20261027.json` contains nine site rows and sets `submission_authorized: false`; each row's `ok_to_submit` is false. The lattice overlaps in the selected files range 99.0466–100%. These are per-file fail witnesses, not a full census or proof about untested candidates.
+- Runtime is Python 3.11.2. `pytest` and NumPy are not installed. The 6-test `unittest` protocol-feasibility module passed; importing the pytest-based uniqueness tests failed due to missing pytest. The raster-backed uniqueness script fails at import because NumPy is absent. Full tests/scientific code were not claimed as run.
+- `python -m compileall -q src scripts`, `git diff --check`, and `node --check docs/assets/app.js` passed. The standalone frozen-count checker passed explicit assertions that the 37,654-dot bound fails and never authorizes a submission.
+- Checked open overlapping PRs #70 (CGMK1) and #61 (B2 work). This pass did not duplicate either experiment or alter their branches. The review-only PR for this branch later conflicted after main advanced with a separate review; that overlap was resolved by retaining main's review and adding only the checkout-specific verification above.
 
-- [Current executive summary](executive-summary.html#current-focus-files)
-- [Pinned nine-site exact-file receipt](../evidence/current_focus_nine_file_audit_20261027.json)
-- [GitHub-only freshness snapshot](data/portfolio_freshness.json)
-- [Current normalized owner brief](../knowledge/owner_brief_2026-10-27_active.md)
-- [Current integrity and protocol review](../knowledge/31_current_integrity_review_2026-10-27.md)
-- [Protocol feasibility page](protocol-feasibility-20261027.md)
-- Competition official problem/format references supplied in README: <https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/> and organizer reference code: <https://github.com/drivendataorg/gems-prize-reference-solution>. Links are references only; this session did not fetch DrivenData.
+This supplemental pass generated no candidate, TIFF, holdout, score estimate or slot. It does not update the freshness timestamp or audit newer source-head artifacts.
