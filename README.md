@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current continuation — 2026-10-28 (branch `arena/bab77a13-gemsdoe24`)
+
+**NO NEW TIFF · NO EXPERIMENT · SUBMIT: NO.** Read the [current review](docs/repo-review-20261028-freshness.md), [normalized owner requirements](knowledge/owner_brief_2026-10-27_feasibility.md), and [standing instructions](AGENTS.md) before continuing. The historical owner prompt remains below. The [nine-site table](docs/executive-summary.html#current-focus-files) contains research-only downloads; no leaderboard estimate is supported. Both the missing assigned method lane and literal registry lattice rule remain binding. A refreshed GitHub commit feed does not audit new artifacts or scores. Check `python scripts/check_git_history.py` before provenance checks; full history alone is not verification.
+
 ## Verified repository review — 2026-10-28 (branch `arena/9e77df06-gemsdoe24`)
 
 **NO NEW TIFF · NO EXPERIMENT · DO NOT SUBMIT.** Full test suite **552/552 passed** and ruff clean (with full git history; a shallow clone fails 6 tests). All 57 downloaded GeoTIFFs read back in [0, 1]. The "[0, 1]" portal error is **not explained**: the organizer example mirror also uses NaN outside the footprint. Read [the verified review](docs/repo-review-20261028-verified.md) first.

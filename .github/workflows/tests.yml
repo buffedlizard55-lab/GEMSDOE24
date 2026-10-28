@@ -27,6 +27,8 @@ jobs:
           node-version: '22'
       - run: pip install -r requirements.txt
       - run: pip install --no-deps -e .
+      - name: Check full history before provenance verification
+        run: python scripts/check_git_history.py
       - run: python scripts/evaluate_holdout.py --verify-recorded
       - run: python scripts/evaluate_holdout.py --verify-tnr1
       - run: python scripts/review_owner_sites.py --offline
