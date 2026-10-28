@@ -9,13 +9,16 @@ or scientific authorization. Read the [latest review and next steps](docs/sessio
 the [nine-site historical research table](docs/historical-champions.html), and
 the standing instructions below. Previous score claims are owner-reported unless
 linked to an organizer receipt; no current leaderboard estimate is available.
+## Latest session — 2026-10-28 (`arena/c2acc046-gemsdoe24`)
+
+**NO NEW TIFF · NO EXPERIMENT · SUBMIT: NO for every file.** Read [this review](docs/session-review-c2acc046-20261028.md) first. Verified here: full suite **578 passed**, ruff clean, and the uniqueness feasibility gate returns exit 2 at 37,654 and 44,090 dots (minimum lattice overlap 82.34% and 84.92%). The official rules PDF ([NLR, Sept 2026](https://docs.nlr.gov/docs/fy26osti/96647.pdf)) requires one single-band GeoTIFF at 100 m over the whole GeoDAWN area, scored with a distance-weighted Tversky index, three submissions per week. It does **not** state a [0, 1] range rule, a NaN convention or a 70% overlap gate. The 0.2778 H33-B2 record is owner-reported, unverified, and matches the D2.8 family with catalogue-adjacent dots removed (overlap 99.92%). Blockers: `data/training_features.tif` absent (needs DrivenData login), no assigned method paragraph, and the lattice gate fails standard budgets. The "[0, 1]" portal error is still unexplained.
 ## Latest review — 2026-10-28 (`arena/2727fc4d-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF.** Read the [current review](docs/repo-review-20261028-arena-2727fc4d.md) and [nine-site historical table](docs/historical-champions.html). This continuation corrected an ambiguous local format PASS; the recorded exterior-NaN check fails for the all-finite historical files. No new model, TIFF, holdout, portal receipt, or competition upload was produced. The required method-lane paragraph is missing and the literal lattice novelty gate blocks standard budgets. Historical files are research only; **SUBMIT NO**.
 
 ## Validator review — 2026-10-28
 
-**NO SUBMISSION-AUTHORIZED TIFF.** A synthetic test exposed a finite-but-GDAL-masked footprint pixel that the current shared validator accepts. See the [reproduction, concurrent shared-fix status and next steps](docs/session-review-20261028-mask.md) and [negative run card](docs/data/session-mask-review-20261028.json). No candidate, geological experiment, or submission slot was created in this review. Read the [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at the start of each session.
+**NO SUBMISSION-AUTHORIZED TIFF.** A synthetic test exposed a finite-but-GDAL-masked footprint pixel that the legacy receipt validator accepted; the latest continuation adds strict preflight checks. See the [reproduction, concurrent shared-fix status and next steps](docs/session-review-20261028-mask.md) and [negative run card](docs/data/session-mask-review-20261028.json). No candidate, geological experiment, or submission slot was created in this review. Read the [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at the start of each session.
 
 ## Review — 2026-10-28 (`arena/a4397407-gemsdoe24`)
 
