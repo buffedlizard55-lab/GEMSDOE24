@@ -45,9 +45,10 @@
   "new_tiffs": 0,
   "competition_slots_used": 0,
   "tests": {
-    "pytest": "578 passed after fetching full Git history; initial shallow-history run had 6 history-dependent failures and 572 passes.",
+    "pytest": "578 passed after fetching full Git history on the original base; after integrating the advanced origin/main, 579 passed. Initial shallow checkout had 6 history-dependent failures and 572 passes.",
+    "targeted_historical_champions_tests_after_format_fix": "8 passed",
     "ruff_check": "passed",
-    "ruff_format": "passed; 328 files already formatted",
+    "ruff_format": "passed after formatting one incoming file; 332 files formatted",
     "compileall": "passed",
     "node_syntax": "passed",
     "git_diff_check": "passed",
