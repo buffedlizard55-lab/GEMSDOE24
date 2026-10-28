@@ -1,7 +1,7 @@
 {
   "schema": "gems-integrity-review-card-v1",
   "session_id": "2dd70faf-gemsdoe24",
-  "generated_utc": "2026-10-28T19:28:55Z",
+  "generated_utc": "2026-10-28T20:02:20Z",
   "review_outcome": "negative; no protocol-compliant unique submission achieved",
   "assignment": {
     "single_method_paragraph_present": false,
@@ -83,10 +83,30 @@
   "review_passes": [
     "Protocol and provenance review: PR #85 is not a full-registry uniqueness pass; no new experiment because the assigned method paragraph is absent.",
     "Adversarial code and CI review: fixed the benchmark inventory regression for the explicit 3 km PR #85 buffer and added tests; reviewed PR #84 source evidence and implementation.",
-    "Site and decision review: regenerated status labels the TIFF research-only, displays exact identity and score scope, and archives the obsolete unique-submission page; fixed the scrollable evidence table for keyboard access after the first CI browser review and verified desktop/mobile with no accessibility violations."
+    "Site and decision review: generated status is research-only and archives obsolete uniqueness claims; made the evidence table keyboard-accessible and kept the current point-best CTA above the new local-audit card; final desktop/mobile browser audit passed with no accessibility violations."
   ],
   "verdict": "negative",
   "experiments_run": 0,
   "new_geological_tiffs": 0,
-  "submission_authorized": false
+  "submission_authorized": false,
+  "main_advanced_during_pr_integration": {
+    "merged_pr_numbers": [
+      87,
+      88,
+      89
+    ],
+    "artifacts_created_by_this_review": 0,
+    "pr85_posthoc_local_overlap": {
+      "receipt": "evidence/unique_local_overlap_20261028.json",
+      "candidate_sha256": "379bf97792355bb48acec703939537a62bb8492705997e043c235bd9029c44db",
+      "references_compared": 69,
+      "max_directed_overlap": 0.4685624012638231,
+      "full_167_alias_registry_checked": false,
+      "other_repositories_checked": false,
+      "preplacement_check": false,
+      "submission_authorized": false
+    },
+    "pr87_blind_upwell_scientific_replay_in_this_review": false,
+    "pr88_ventrad_scientific_review_in_this_session": false
+  }
 }

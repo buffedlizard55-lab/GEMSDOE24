@@ -1,5 +1,21 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## CURRENT MISSION (this session — read first)
+
+**Goal:** generate a **unique TIF submission** for the DrivenData GEMS competition and publish an executive summary that makes the best submission obvious and one-click downloadable. Full prompt: [`docs/MISSION_PROMPT.md`](docs/MISSION_PROMPT.md).
+
+**Key requirements:** unique (non-copied) TIF · values in [0, 1] (zeros outside footprint to pass the portal range gate) · unique name + note <= 140 chars · executive summary table over GEMSDOE 24/25/27/28/30/31/32/33/36 (file to download · estimated score · unique flag) · how-to-submit subpage · validation with no human intervention (no NaN inside footprint, CRS/shape/transform match EPSG:32611 3730x3292 @100 m) · PR merged to main · no hallucinations.
+
+---
+
+## Prior branch artifact — blind-upwell research TIFF (uniqueness not established)
+
+The earlier `arena/c88278d6-gemsdoe24` branch generated `docs/downloads/24gems-blind-upwell-conduit-20261028T190216Z-5b6e6af2ed3b-zeros.tif` (SHA-256 `e64604460ad2d4b1afcacab81aba8c501844c9333a1f92f7931d4a02d3b0dd55`). **DOWNLOAD: YES (research only) · SUBMIT: NO.** Its run card reports HOLDOUT-DTI `0.0688211` (95% CI `[0.0581125, 0.0799820]`, `gems-segment-pooled-v1`, 60,988 withheld positives, 1,500 m buffer), below recorded local S3DEP1 `0.1660601` under the same evaluator/count/buffer. These are internal records, not organizer scores or leaderboard estimates.
+
+The reported post-placement local overlap maximum `0.5747` covers 60 comparators only. The pinned 46-raster registry comparison and pre-placement test were not completed; the receipt does not cover the full 167-alias / other-repository registry. Literal uniqueness is **NOT ESTABLISHED**. Local format checks do not establish portal acceptance or submission eligibility. The assigned lane and independent selector/quota evidence remain absent.
+
+**Full detail:** `docs/executive-summary-unique.html` · `docs/data/blind_upwell_run_card.json` · `evidence/blind_upwell_experiment.json` · `scripts/build_blind_upwell_submission.py`.
+
 ## Arena branch continuation — 2026-10-28 (`arena/c81bb5d5-gemsdoe24`)
 
 **NO NEW TIFF · NO GEOLOGICAL EXPERIMENT · NO SCORE PROJECTION · DO NOT SUBMIT.** Read this [branch-specific review](docs/session-review-c81bb5d5-20261028.md) and [run card](evidence/session_c81bb5d5_run_card_20261028.json), then the current [freshness/protocol review](docs/repo-review-20261028-freshness.md), [historical-champion table](docs/historical-champions.html), and [standing instructions](AGENTS.md). This branch integrated newer `main` work during review; the final integrated suite passed **567 tests**. The assigned method paragraph and full training-feature stack are absent, and no current leaderboard estimate or submit-authorized artifact exists.

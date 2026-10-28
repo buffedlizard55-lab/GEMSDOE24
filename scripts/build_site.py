@@ -111,6 +111,69 @@ def pct(x):
     return "n/a" if x is None else f"{100 * x:+.0f}%"
 
 
+PR85_CARD = (
+    "evidence/24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db_run_card.json"
+)
+PR85_LOCAL_OVERLAP = "evidence/unique_local_overlap_20261028.json"
+
+
+def render_pr85_research_review(root: Path) -> str:
+    """Render PR #85 as research-only; a local subset is not full-registry uniqueness."""
+    card = json.loads((root / PR85_CARD).read_text())
+    if (
+        card.get("schema") != "interior-offlattice-submission-v1"
+        or card.get("ok_to_submit") is not False
+        or card.get("submission_authorized") is not False
+        or card.get("verdict") != "negative"
+    ):
+        raise ValueError("PR #85 research card must remain DO NOT SUBMIT")
+    name = card["submission_name"]
+    filename = f"{name}-zeros.tif"
+    f = root / "docs/downloads" / filename
+    if not f.is_file() or sha256_file(f) != card["raster_sha256"]:
+        raise ValueError("PR #85 research GeoTIFF is missing or does not match its run card")
+    note = card["note"]
+    note_file = root / "docs/downloads" / f"{name}-note.txt"
+    if len(note) > 140 or not note_file.is_file() or note_file.read_text().strip() != note:
+        raise ValueError("PR #85 note must be <= 140 characters and match the note file")
+    receipt = json.loads((root / PR85_LOCAL_OVERLAP).read_text())
+    if (
+        receipt.get("candidate_sha256") != card["raster_sha256"]
+        or receipt.get("schema") != "unique-local-overlap-v1"
+        or receipt.get("submission_authorized") is not False
+        or receipt.get("scope")
+        != "Local same-grid GeoTIFFs in this checkout only (docs/downloads, inputs, evidence). NOT the full 167-alias registry and NOT other GEMSDOE repositories."
+    ):
+        raise ValueError("PR #85 local overlap receipt identity or scope changed")
+
+    holdout = card["holdout"]
+    lo, hi = holdout["ci95"]
+    lattice = card["novelty_vs_lattice"]
+    max_overlap = receipt.get("max_forward_overlap")
+    local_count = receipt.get("references_compared")
+    if (
+        type(max_overlap) not in (int, float)
+        or not 0 <= max_overlap <= 1
+        or type(local_count) is not int
+        or local_count < 1
+        or lattice.get("lattice_overlap_within_3px") != 0.0
+    ):
+        raise ValueError("PR #85 local overlap diagnostics are malformed or changed")
+
+    escaped_name = e(filename)
+    escaped_hash = e(card["raster_sha256"])
+    escaped_note = e(note)
+    local_overlap_text = (
+        f"The post-hoc local screen reports max directed overlap {max_overlap:.4f} "
+        f"across {local_count} same-grid rasters ({e(receipt.get('max_forward_reference', ''))}); "
+        "its receipt explicitly excludes the full 167-alias registry and other repositories. "
+        "This does not establish the required complete-registry or pre-placement check. "
+        "The generator deliberately targeted cells more than 3 px from one retained lattice, "
+        "which conflicts with the no-evasion rule."
+    )
+    return f"""<section class="card research-warning" id="pr85-posthoc-overlap" aria-label="PR 85 local overlap review — not a uniqueness pass"><h2>PR #85 geothermal TIFF — research-only; literal uniqueness NOT ESTABLISHED</h2><p><strong>DOWNLOAD: YES (research only) · SUBMIT: NO.</strong> This is an archived artifact for audit, not a submission recommendation. Its local overlap screen is limited in scope and does not cure the generator's lattice-hole targeting.</p><p><a class="button primary" href="downloads/{escaped_name}" download="{escaped_name}">Download exact PR #85 research GeoTIFF — DO NOT SUBMIT</a></p><div class="tablewrap" tabindex="0" role="region" aria-label="PR 85 local overlap and run-card evidence"><table><thead><tr><th>Item</th><th>Recorded evidence and limits</th></tr></thead><tbody><tr><td>File and hash</td><td><code>{escaped_name}</code><br>SHA-256 <code>{escaped_hash}</code></td></tr><tr><td>Local overlap receipt</td><td>{local_overlap_text}</td></tr><tr><td>Original lattice diagnostic</td><td>Reported overlap {lattice["lattice_overlap_within_3px"]:.4f} and absolute Spearman {lattice["surface_abs_spearman_vs_lattice"]:.4f} against one retained spacing-5 lattice only; dots were deliberately constrained to its &gt;3 px holes.</td></tr><tr><td>HOLDOUT-DTI</td><td><strong>{holdout["pooled_dti"]:.9f}</strong>, reported 95% CI [{lo:.9f}, {hi:.9f}], <code>{e(holdout["evaluator_version"])}</code>, {holdout["n_withheld_positive_pixels"]:,} withheld positives, {holdout["protocol"]["buffer_m"]:,} m buffer. This 3 km collar differs from the 1.5 km standard comparison; not a directly comparable score, organizer score, or leaderboard estimate.</td></tr><tr><td>Leaderboard estimate</td><td><strong>NOT ESTIMABLE</strong> — no artifact-linked organizer receipt; the 3 km holdout is not directly comparable to standard 1.5 km cards.</td></tr><tr><td>Decision</td><td><strong>DO NOT SUBMIT.</strong> Full registry and pre-placement novelty were not established; no organizer receipt or quota authorization exists.</td></tr><tr><td>Research note</td><td><code>{escaped_note}</code></td></tr></tbody></table></div><p><a href="data/{e(Path(PR85_CARD).name)}" download>Frozen PR #85 run card</a> · <a href="data/{e(Path(PR85_LOCAL_OVERLAP).name)}" download>Post-hoc local overlap JSON</a> · <a href="session-review-2dd70faf-20261028.md">Three-pass review</a></p></section>"""
+
+
 def build_independent_site(primary):
     """Current evidence-first view. Legacy pages are not promotion authority."""
     card = load("evidence/mtr1_run_card.json")
@@ -512,6 +575,7 @@ def build_independent_site(primary):
     executive = (
         current_banner
         + offlattice_packet["html"]
+        + render_pr85_research_review(ROOT)
         + focus_review["current"]
         + focus_review["alert"]
         + current_note
@@ -559,6 +623,9 @@ def build_independent_site(primary):
         '<a class="button" href="data/portfolio_source_claims_20261026.json">Official reference quotes and blocked sources</a>'
         '<a class="button" href="data/portfolio_freshness.json">Current audit-pin freshness</a></div></section>'
     ) + source_page
+    (DOCS / "data" / Path(PR85_LOCAL_OVERLAP).name).write_text(
+        (ROOT / PR85_LOCAL_OVERLAP).read_text()
+    )
     pages = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),
@@ -1403,6 +1470,7 @@ def main():
 <section><div class="grid2"><article class="card"><h3>Limitations and access needs</h3><ul class="prose"><li>I cannot reach the DrivenData portal, the private leaderboard or hidden labels, nor upload or verify scores.</li><li>Hand-labelled lidar scarps are allowed by staff (labels must be saved) and need a geologist.</li><li>Official flight-number → block mapping needs the S3-hosted profile archives (anonymous GET returns 403).</li><li>DrivenData figures are human-read snapshots: re-verify by hand; no job here may access that site automatically.</li></ul></article><article class="card"><h3>Three-pass review</h3><p>{e(review.get("summary", "Review in progress."))}</p><div class="actions"><a class="button" href="data/source_health.json" download>Source feed</a><a class="button" href="data/audit.json" download>Audit receipt</a></div></article></div></section>"""
 
     # ------------------------------------------------------------------ write
+    executive = render_pr85_research_review(ROOT) + executive
     bodies = {
         "index.html": ("Overview", "Overview", overview),
         "executive-summary.html": ("Submission guide", "Submission guide", executive),

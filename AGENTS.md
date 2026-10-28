@@ -7,6 +7,7 @@
 - The exact TIFF remains downloadable for research/audit only. Format checks pass against the pinned owner-mirror grid, but `template_origin_authenticated=false`; no portal acceptance is established. Preserve the original scientific card and score unchanged.
 - No single geological-method paragraph has been assigned. Do not create another TIFF, run a holdout, start a stopped lane, or use a competition slot. Keep the all-entry registry, pre-placement and final-dot checks; never target comparator holes to escape a stop.
 - The source-freshness receipt at `docs/data/portfolio_freshness.json` is GitHub-ref freshness only, not an artifact census or score verification. The full current-registry novelty test has not been run for the PR #85 file.
+- During integration, `main` advanced through concurrent PRs #87–#89. Their artifacts are inherited from main, not created or scientifically replayed by this continuation. PR #89's PR #85 audit is local-only (69 same-grid rasters), with no full-registry or pre-placement pass; the no-evasion issue remains. See `docs/session-review-2dd70faf-20261028.md`; do not infer submission authorization for any inherited artifact.
 - Benchmark inventory readers must exclude explicitly non-standard 3,000 m/30 px holdouts before parsing score fields; keep malformed standard 1,500 m records fail-closed. PR #85's card is not a comparable benchmark record.
 
 ## 2026-10-28 historical-champion continuation

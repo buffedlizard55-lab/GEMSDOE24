@@ -70,6 +70,10 @@ def recorded_points(root: Path) -> list[dict]:
             if source in known:
                 raise ValueError("Known benchmark no longer uses the declared 1.5 km buffer")
             continue  # A different spatial collar is a different holdout protocol.
+        if "dti" not in result and "pooled_dti" in result:
+            # Normalize the recorded pooled-DTI alias only after the spatial protocol
+            # is checked. Different buffers are not comparable, even by field name.
+            result = {**result, "dti": result["pooled_dti"]}
         dti = result.get("dti")
         ci = result.get("ci95")
         interval = ci.get("interval") if isinstance(ci, dict) else ci

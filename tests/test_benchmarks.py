@@ -65,6 +65,19 @@ def test_different_buffer_record_is_excluded_before_score_schema_validation(tmp_
     assert all(row["lane"] != "THREE_KM" for row in recorded_points(tmp_path))
 
 
+def test_standard_buffer_pooled_dti_alias_is_normalized(tmp_path):
+    evidence = _seed(tmp_path)
+    card = json.loads((ROOT / "evidence/tnr1_run_card_20261026.json").read_text())
+    card["holdout"]["pooled_dti"] = 0.17
+    del card["holdout"]["dti"]
+    (evidence / "standard_buffer_pooled_alias_run_card_fixture.json").write_text(json.dumps(card))
+
+    row = next(
+        row for row in recorded_points(tmp_path) if row["lane"] == "STANDARD_BUFFER_POOLED_ALIAS"
+    )
+    assert row["holdout"]["dti"] == 0.17
+
+
 def test_malformed_same_buffer_discovered_record_still_fails_closed(tmp_path):
     evidence = _seed(tmp_path)
     card = json.loads((ROOT / "evidence/tnr1_run_card_20261026.json").read_text())
