@@ -1,5 +1,11 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current review continuation — 2026-10-29 (`arena/7b3c8e4b-gemsdoe24`)
+
+No new TIFF, geological experiment, holdout score, leaderboard estimate, organizer receipt, or competition slot was produced. The executive guide now labels the 3,165-dot lattice-hole artifact **NOT UNIQUE · SUBMIT: NO**: its zero lattice overlap is by construction and is not a protocol pass. The 69-raster local comparison is not a full registry audit. The shared feasibility check still stops the 37,654- and 44,090-dot budgets at 82.34% and 84.92% minimum lattice overlap. All nine focus-site GitHub refs changed since the pinned audit, so no current-head raster review or score recheck is claimed. The training feature raster/cache and assigned method paragraph are absent.
+
+Three ranked hypotheses remain proposals only; none was validated. The exact-file/estimate/uniqueness table, B2 caveats, three-pass review, and limitations are in [`docs/repo-review-20261029-arena-7b3c8e4b.md`](docs/repo-review-20261029-arena-7b3c8e4b.md) and [`evidence/session_7b3c8e4b_20261029_run_card.json`](evidence/session_7b3c8e4b_run_card.json). Site build passed; full tests: **664 passed**; Ruff and whitespace checks passed. No PR has yet been opened from this branch.
+
 ## Current session — 2026-10-29 (`arena/3f1f513d-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [current review](docs/repo-review-20261029-arena-3f1f513d.md), [run card](evidence/session_3f1f513d_20261029_run_card.json), [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at session start. The [nine-site historical table](docs/historical-champions.html) is a research-only snapshot, not a current leaderboard or recommendation. This continuation hardens shared single-TIFF ZIP and preflight receipt sidecar handling; format checks cannot authorize a slot. No method lane is assigned, the full feature stack is absent, and the retained lattice blocks the usual dot budgets under the literal uniqueness rule. The full test suite passed 619 tests; no hidden-score forecast, organizer receipt or new TIFF was produced.

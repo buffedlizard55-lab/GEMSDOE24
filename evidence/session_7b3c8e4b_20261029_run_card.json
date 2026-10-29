@@ -1,0 +1,238 @@
+{
+  "schema": "repo-review-run-card-v1",
+  "session_id": "7b3c8e4b",
+  "checked_utc": "2026-10-29T17:06:04Z",
+  "scope": "Repository and documentation integrity review; no geological experiment, new prediction, submission, or leaderboard estimate",
+  "verdict": "negative",
+  "submission_authorized": false,
+  "download_status": "No new TIFF. The pre-existing lattice-hole diagnostic is downloadable for research only and is explicitly NOT UNIQUE.",
+  "submit_status": "DO_NOT_SUBMIT",
+  "score_estimate": "NOT ESTIMABLE",
+  "hypothesis": "NONE ASSIGNED — the required single-method paragraph was not supplied; no scientific lane was selected.",
+  "mechanism": null,
+  "named_non_fault_mimic": null,
+  "ranked_hypotheses": [
+    {
+      "rank": 1,
+      "name": "Directional cross-bicoherence",
+      "layers": ["rtp", "iso_grav_anom"],
+      "physical_signature": "Prespecified directional third-order phase coupling between a fundamental and harmonic across independent potential fields.",
+      "catalogue_gap_rationale": "A concealed sharp offset might retain cross-field phase coupling despite weak surface expression.",
+      "non_fault_mimics": ["intrusive contacts", "volcanic boundaries", "survey leveling"],
+      "difference_from_local_methods": "Third-order phase coupling differs from XVAR1 second-order semivariogram increments and EUL1 gradients; related to earlier QPC3 phase proposal.",
+      "relative_cost": "medium-high",
+      "status": "proposal only; not assigned, implemented, or validated",
+      "expected_holdout_dti": null
+    },
+    {
+      "rank": 2,
+      "name": "Conductivity/basement contour-component persistence",
+      "layers": ["cond_surf", "depth_to_base_surf"],
+      "physical_signature": "Persistence of contour-component merges under a fixed threshold filtration where a conductive corridor crosses a basement step.",
+      "catalogue_gap_rationale": "A buried discontinuity might connect conductive patches across structural relief without a mapped surface scarp.",
+      "non_fault_mimics": ["clay-rich basin fill", "saline groundwater"],
+      "difference_from_local_methods": "Threshold-dependent connectivity rather than CON's pointwise saddle/Hessian or a single-amplitude edge.",
+      "relative_cost": "medium-high",
+      "status": "proposal only; not assigned, implemented, or validated",
+      "expected_holdout_dti": null
+    },
+    {
+      "rank": 3,
+      "name": "Conditioned partial wavelet coherence",
+      "layers": ["rtp", "iso_grav_anom", "depth_to_base_surf"],
+      "physical_signature": "Scale-specific partial wavelet coherence and a preregistered signed cross-front phase lag after fold-fitted basement conditioning.",
+      "catalogue_gap_rationale": "A scale-stable residual boundary might persist where a fault is concealed after removal of broad basement trends.",
+      "non_fault_mimics": ["igneous contacts", "volcanic structures", "survey artifacts"],
+      "difference_from_local_methods": "Conditioned cross-spectra differ from unsigned TMCG cross-gradients and QPC3 quadrature phase congruency, but overlap earlier phase-family proposals.",
+      "relative_cost": "high",
+      "status": "proposal only; not assigned, implemented, or validated",
+      "expected_holdout_dti": null
+    }
+  ],
+  "holdout": {
+    "status": "NOT RUN — no new surface or candidate",
+    "evaluator_version": null,
+    "n_withheld_positive_pixels": null,
+    "dti": null,
+    "ci95": null
+  },
+  "registry_checks": {
+    "preplacement_surface_rank_correlation": "NOT RUN — no surface generated",
+    "final_dot_overlap": "NOT RUN — no candidate dots generated",
+    "retained_lattice_feasibility": {
+      "status": "STOP_IMPOSSIBLE_BUDGET",
+      "receipt_command_exit_code": 2,
+      "scope": "Necessary geometric lower bound only; not a complete registry audit or scientific experiment",
+      "witness": {
+        "path": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+        "is_space_filling_calibration_control": true
+      },
+      "footprint_pixels": 5167373,
+      "covered_within_3px": 5160724,
+      "uncovered_pixels": 6649,
+      "coverage_fraction": 0.9987132726822701,
+      "overlap_limit_fraction": 0.7,
+      "candidate_budgets": [
+        {
+          "dots": 37654,
+          "minimum_overlapping_dots": 31005,
+          "minimum_overlap_fraction": 0.8234184947150369,
+          "status": "STOP_IMPOSSIBLE_BUDGET"
+        },
+        {
+          "dots": 44090,
+          "minimum_overlapping_dots": 37441,
+          "minimum_overlap_fraction": 0.8491948287593558,
+          "status": "STOP_IMPOSSIBLE_BUDGET"
+        }
+      ],
+      "submission_authorized": false
+    },
+    "no_comparator_removed_or_weakened": true,
+    "no_lattice_hole_evasion": true
+  },
+  "new_artifact": {
+    "generated": false,
+    "file": null,
+    "sha256": null,
+    "validator_output": "NOT RUN — no new TIFF",
+    "submission_name": null,
+    "note": null,
+    "note_character_limit": 140
+  },
+  "preexisting_lattice_hole_diagnostic": {
+    "file": "24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db-zeros.tif",
+    "sha256": "379bf97792355bb48acec703939537a62bb8492705997e043c235bd9029c44db",
+    "modified_this_review": false,
+    "dots": 3165,
+    "construction": "Dots selected from retained spacing-5 lattice 3-px coverage holes.",
+    "lattice_overlap_fraction": 0.0,
+    "lattice_result_status": "INVALID AS A UNIQUENESS PASS — zero overlap is by construction and this strategy is prohibited.",
+    "local_overlap_receipt": {
+      "recorded_max_candidate_within_3px": 0.4685624012638231,
+      "references_compared": 69,
+      "scope": "Local same-grid rasters only; not full 167-alias registry and not other repositories.",
+      "replayed_this_review": false
+    },
+    "source_recorded_holdout": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "n_withheld_positive_pixels": 60988,
+      "dti": 0.003802043130574802,
+      "ci95": [0.0020611852216874654, 0.0057182128659556235],
+      "replayed_this_review": false,
+      "organizer_score": false
+    },
+    "recorded_format_check": {
+      "format_valid": true,
+      "official_format_compliant": false,
+      "template_origin_authenticated": false,
+      "source": "Historical run card only; not rerun in this review."
+    },
+    "ok_to_download_for_research": true,
+    "ok_to_submit": false,
+    "historical_submission_name": "24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db",
+    "historical_note": "24GEMS interior-offlattice geothermal dots | HOLDOUT-DTI 0.0038 | id e5a3c34b27db | research; DO NOT SUBMIT",
+    "historical_note_characters": 107,
+    "verdict": "negative"
+  },
+  "nine_site_score_status": {
+    "sites": ["GEMSDOE24", "GEMSDOE25", "GEMSDOE27", "GEMSDOE28", "GEMSDOE30", "GEMSDOE31", "GEMSDOE32", "GEMSDOE33", "GEMSDOE36"],
+    "leaderboard_estimate_for_every_site": "NOT ESTIMABLE",
+    "historical_owner_reports": "Unverified and pinned in docs/historical-champions.html; not current organizer receipts.",
+    "current_peer_heads_reaudited": false
+  },
+  "b2_interpretation": {
+    "reported_score": 0.2778,
+    "status": "OWNER-REPORTED / UNVERIFIED",
+    "receipt": null,
+    "prior_geometry_record": "Deletion-only subset of GEMSDOE25 after 6,436 dots within 200 m of visible catalogue were removed; also GEMSDOE31 minus 2,545 dots.",
+    "replayed_this_review": false,
+    "causal_score_explanation": "UNKNOWN — hidden labels are unavailable; geometry cannot determine hidden true-positive credit or false-positive mass."
+  },
+  "source_freshness": {
+    "path": "docs/data/priority_feed.json",
+    "checked_utc": "2026-10-29T16:41:18.983147+00:00",
+    "sources_checked": 9,
+    "changed_refs": 9,
+    "failures": 0,
+    "scope": "GitHub source refs only; no TIFF, score, or organizer-receipt re-audit",
+    "current_main_refs": {
+      "GEMSDOE24": "6284a525a9425ed442f8e3fc0e04dfbd6fce537d",
+      "GEMSDOE25": "2bd14f28f32603da8dffedf3396c12231371f180",
+      "GEMSDOE27": "494ec17625bf8fe9e19510ec3f39912451c4f7f7",
+      "GEMSDOE28": "a1c0e18f4a4f7394ce549f1d61f2a229d5cfabfa",
+      "GEMSDOE30": "d855914332b29c0b36974d5462ba9fd5dca21136",
+      "GEMSDOE31": "adf37ffd9d6a78e5b90a68bfe2033509124517d1",
+      "GEMSDOE32": "0ffda7162e76291df34359345488ff08b4115aac",
+      "GEMSDOE33": "1a7f53ca35648900998a061d7e864ab41ee1334d",
+      "GEMSDOE36": "e280188adbbe762e6b7ac6f3b8e105e8e7915026"
+    }
+  },
+  "official_source_review": {
+    "source": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/README.md",
+    "commit": "aebe92f7c8a990f0e3443451b7a825d9afd6336b",
+    "readme_sha256": "cfa4d55559c9128313beb9417eae7e0a94c31677132afb1120f9e86222804239",
+    "verified": ["Competition download goes in data/.", "CPU-only environment is supported."],
+    "not_verified": ["DrivenData availability here", "Current rules", "Current leaderboard", "Account quota", "Hidden labels", "Organizer receipts"]
+  },
+  "review_passes": [
+    {
+      "pass": 1,
+      "focus": "Repository, branch, nine-site evidence, data availability, source freshness, official reference source",
+      "status": "complete",
+      "new_experiment": false
+    },
+    {
+      "pass": 2,
+      "focus": "Reproduce lattice feasibility blocker; correct generated page terminology and add regression",
+      "status": "complete",
+      "new_experiment": false
+    },
+    {
+      "pass": 3,
+      "focus": "Rebuild generated site and run focused/full verification",
+      "status": "complete",
+      "new_experiment": false
+    }
+  ],
+  "verification": {
+    "site_build": {
+      "command": ".venv/bin/python scripts/build_site.py",
+      "exit_code": 0,
+      "generated_pages": ["docs/index.html", "docs/executive-summary.html", "docs/research.html", "docs/sources.html"],
+      "no_scores_fabricated": true,
+      "new_slot_eligible": false
+    },
+    "focused_tests": {
+      "command": ".venv/bin/python -m pytest -q tests/test_unique_submission_section.py tests/test_site_build.py",
+      "passed": 34,
+      "duration_seconds": 107.53
+    },
+    "full_tests": {
+      "command": ".venv/bin/python -m pytest -q",
+      "passed": 664,
+      "duration_seconds": 223.34
+    },
+    "ruff_check": "PASS",
+    "ruff_format": "PASS — 343 files already formatted",
+    "git_diff_check": "PASS",
+    "full_git_history_check": "PASS — scripts/check_git_history.py"
+  },
+  "resources": {
+    "training_features_tif_present": false,
+    "prepared_features_npy_present": false,
+    "geofeat_cache_present": false,
+    "new_tiffs": 0,
+    "experiments_run": 0,
+    "competition_slots_used": 0
+  },
+  "organizer_confirmed_score": null,
+  "leaderboard_estimate": null,
+  "leaderboard_estimate_status": "NOT ESTIMABLE",
+  "organizer_receipt": null,
+  "submission_name": null,
+  "note": null,
+  "verdict": "negative"
+}

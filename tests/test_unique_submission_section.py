@@ -1,7 +1,8 @@
-"""The generated unique-GeoTIFF section on the submission guide must stay truthful and fail closed.
+"""The generated lattice-hole diagnostic section must stay truthful and fail closed.
 
-Regression for: a hand-edited featured block was silently erased by the next site rebuild.
-The section is now generated from its run card, file, note and overlap receipt.
+Regression for a prior page that prominently called a by-construction lattice-hole
+artifact a "Unique GeoTIFF." The section must identify it as non-unique and retain
+its explicit research-only / do-not-submit status.
 """
 
 import importlib.util
@@ -41,33 +42,59 @@ def _mirror(tmp: Path) -> Path:
     return tmp
 
 
-def test_real_section_is_do_not_submit_and_links_resolve():
+def test_real_section_labels_lattice_hole_diagnostic_not_unique_and_do_not_submit():
     bs = _load_build_site()
-    html = bs.render_unique_submission(ROOT)
-    assert 'id="unique-submission"' in html
+    html = bs.render_lattice_hole_diagnostic(ROOT)
+    assert 'id="lattice-hole-diagnostic"' in html
+    assert "NOT UNIQUE" in html
+    assert "NOT protocol-unique" in html
+    assert "INVALID AS A UNIQUENESS PASS" in html
+    assert "placement by construction" in html
     assert "SUBMIT: NO" in html
     assert "NOT ESTIMABLE" in html
-    assert 'tabindex="0" role="region" aria-label="Unique research TIFF validation details"' in html
-    assert "SUBMIT: YES" not in html.upper().replace("SUBMIT: NO", "")
-    note = re.search(r"Note \(≤140 chars, (\d+) used\)", html)
+    assert "HOLDOUT-DTI 0.0038" in html
+    assert "not a full registry or other-repository comparison" in html
+    assert "Unique GeoTIFF" not in html
+    assert "SUBMIT: YES" not in html
+    assert 'tabindex="0" role="region" aria-label="Lattice-hole diagnostic TIFF details"' in html
+    note = re.search(r"Historical note \(≤140 chars, (\d+) used\)", html)
     assert note and int(note.group(1)) <= 140
     for href in re.findall(r'href="(downloads/[^"]+|data/[^"]+)"', html):
         assert (ROOT / "docs" / href).is_file(), href
 
 
+def test_published_pages_have_no_false_unique_geotiff_label():
+    pages = (
+        "docs/index.html",
+        "docs/executive-summary.html",
+        "docs/research.html",
+        "docs/sources.html",
+    )
+    for path in pages:
+        html = (ROOT / path).read_text()
+        assert "Unique GeoTIFF" not in html, path
+    executive = (ROOT / "docs/executive-summary.html").read_text()
+    assert 'id="lattice-hole-diagnostic"' in executive
+    assert "NOT protocol-unique" in executive
+    assert "INVALID AS A UNIQUENESS PASS" in executive
+    assert "SUBMIT: NO" in executive
+
+
 def test_research_card_does_not_displace_current_best_download():
     bs = _load_build_site()
     content = '<section id="current-best-review">best CTA</section><p>more</p>'
-    result = bs.place_unique_section_after_current_best(
-        content, '<section id="unique-submission">research</section>'
+    result = bs.place_research_diagnostic_after_current_best(
+        content, '<section id="lattice-hole-diagnostic">research</section>'
     )
-    assert result.index("best CTA") < result.index("unique-submission") < result.index("more")
+    assert result.index("best CTA") < result.index("lattice-hole-diagnostic") < result.index("more")
 
 
 def test_section_placement_fails_closed_without_current_best():
     bs = _load_build_site()
     with pytest.raises(ValueError, match="missing the current point-best"):
-        bs.place_unique_section_after_current_best("<main></main>", "<section>research</section>")
+        bs.place_research_diagnostic_after_current_best(
+            "<main></main>", "<section>research</section>"
+        )
 
 
 def test_parallel_candidate_section_reports_only_supported_negative_claims():
@@ -87,15 +114,15 @@ def test_parallel_candidate_section_reports_only_supported_negative_claims():
         assert (ROOT / "docs" / href).is_file(), href
 
 
-def test_parallel_candidate_placement_keeps_point_best_first():
+def test_diagnostic_placement_keeps_point_best_first():
     bs = _load_build_site()
     content = '<section id="current-best-review">best CTA</section><p>more</p>'
     candidate_cards = '<section id="parallel-research-candidates">negative candidates</section>'
-    lattice_card = '<section id="unique-submission">negative card</section>'
-    result = bs.place_unique_section_after_current_best(content, candidate_cards + lattice_card)
+    diagnostic = '<section id="lattice-hole-diagnostic">negative diagnostic</section>'
+    result = bs.place_research_diagnostic_after_current_best(content, candidate_cards + diagnostic)
     assert result.index("best CTA") < result.index("parallel-research-candidates")
-    assert result.index("parallel-research-candidates") < result.index("unique-submission")
-    assert result.index("unique-submission") < result.index("more")
+    assert result.index("parallel-research-candidates") < result.index("lattice-hole-diagnostic")
+    assert result.index("lattice-hole-diagnostic") < result.index("more")
 
 
 def test_section_refuses_a_tampered_geotiff(tmp_path):
@@ -105,8 +132,8 @@ def test_section_refuses_a_tampered_geotiff(tmp_path):
     tif = tmp / "docs/downloads" / f"{name}-zeros.tif"
     with tif.open("ab") as f:
         f.write(b"\x00")  # any byte change must break the card's SHA-256 binding
-    with pytest.raises(ValueError, match="does not match its run card"):
-        bs.render_unique_submission(tmp)
+    with pytest.raises(ValueError, match="hash changed"):
+        bs.render_lattice_hole_diagnostic(tmp)
 
 
 def test_section_refuses_a_card_that_authorizes_submission(tmp_path):
@@ -117,7 +144,7 @@ def test_section_refuses_a_card_that_authorizes_submission(tmp_path):
     card["ok_to_submit"] = True
     card_path.write_text(json.dumps(card))
     with pytest.raises(ValueError, match="must remain DO NOT SUBMIT"):
-        bs.render_unique_submission(tmp)
+        bs.render_lattice_hole_diagnostic(tmp)
 
 
 def test_section_refuses_a_receipt_for_a_different_file(tmp_path):
@@ -127,5 +154,5 @@ def test_section_refuses_a_receipt_for_a_different_file(tmp_path):
     receipt = json.loads(rp.read_text())
     receipt["candidate_sha256"] = "0" * 64
     rp.write_text(json.dumps(receipt))
-    with pytest.raises(ValueError, match="does not describe this GeoTIFF"):
-        bs.render_unique_submission(tmp)
+    with pytest.raises(ValueError, match="does not describe this diagnostic TIFF"):
+        bs.render_lattice_hole_diagnostic(tmp)
