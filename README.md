@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current continuation — 2026-10-29 (`arena/248af4f4-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · SUBMIT: NO.** The assigned method lane is absent, the full prepared training stack is unavailable in this checkout, and the literal lattice gate blocks standard dot budgets. The claimed portal range-error cause remains unknown. The [three-pass review](docs/repo-review-20261029-arena-248af4f4.md), [negative run card](evidence/session_248af4f4_20261029_run_card.json), [mission summary](docs/MISSION_PROMPT.md), and [nine-site historical research table](docs/historical-champions.html) distinguish evidence from estimates. The requested high-scoring unique entry is not yet achieved. This continuation protects the shared feasibility checker's input files and corrects mission-summary overclaims; it did not refresh or modify the other sites, replay a holdout, or use a slot.
+
 ## Current review — 2026-10-29 (`arena/fc014f14-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · SUBMIT: NO.** Read the [three-pass executive review](docs/repo-review-20261029-fc014f14.md), [run card](evidence/session_fc014f14_run_card.json), [mission prompt](docs/MISSION_PROMPT.md), and AGENTS before continuing. Shared writer/sanitizer/content-ID now reject complex and nonnumeric predictions instead of silently discarding information. Full suite after integrating concurrent main: **603 passed**. Fresh nine-repository ref checks all succeeded, but all differ from the pinned audit: no new scientific or leaderboard validation follows. The method lane and full feature cache remain missing; standard dot budgets fail the retained-lattice gate. No new prediction TIFF, experiment or slot; leaderboard estimates remain **NOT ESTIMABLE**. [Nine-site historical download/estimate/uniqueness table](docs/historical-champions.html).

@@ -27,7 +27,7 @@ GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31, GEMSDOE32, GEM
 - End with one JSON run card: hypothesis; mechanism; named non-fault mimic; holdout DTI + CI; correlation/overlap vs registry; raster sha256; validator output; submission name + <=140-char note; verdict promote/negative.
 - Budget: stop after 3 experiments or 2 hours. No submission slot spent without a selector step.
 
-## Historical state (2026-10-28; recheck before relying on it)
+## Historical state (2026-10-28; source-recorded; recheck before use)
 - Owner-reported historical highs (GEMSDOE32 B2 0.2778, GEMSDOE36 Anderson 0.2750, etc.) are **NOT organizer-confirmed**; no DrivenData auth is available, so live scores are NOT ESTIMABLE.
 - The retained spacing-5 lattice covers approximately 99.87% of the footprint within 3 px. The geometric lower bound exceeds the 70% limit for any set of at least 22,164 distinct in-footprint dots; at 37,654 dots it is about 82.34%. Smaller budgets are not ruled out by this bound alone and are not certified unique. Do not evade the gate by targeting lattice holes.
 - Research-only VENTRAD candidate: `docs/downloads/24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif` (SHA-256 `603d21db…9626`), 37,722 dots, source-recorded HOLDOUT-DTI 0.1223 [0.1111, 0.1337] (`gems-segment-pooled-v1`, 60,988 withheld positives). A narrow 10-method comparison is not the protocol registry test: the required retained-lattice overlap is 0.99817 (>0.70), so protocol uniqueness FAILS. The candidate is format-valid, `ok_to_download: YES`, `ok_to_submit: NO`; no slot was spent. Its measurement was not independently replayed in the current review.

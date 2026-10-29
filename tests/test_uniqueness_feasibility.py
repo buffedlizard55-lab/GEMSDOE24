@@ -15,6 +15,7 @@ from gems.uniqueness_budget import bounds
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+import check_uniqueness_feasibility as feasibility  # noqa: E402
 from check_uniqueness_feasibility import REGISTRY, TEMPLATE, WITNESS, audit, render  # noqa: E402
 
 
@@ -149,3 +150,50 @@ def test_cli_exit_zero_does_not_mean_authorized(tmp_path, k, exit_code):
 def test_shared_dependency_free_core_rejects_ambiguous_numbers(args):
     with pytest.raises(ValueError):
         bounds(*args)
+
+
+@pytest.mark.parametrize("role", [REGISTRY, TEMPLATE, WITNESS, "data/manifest.json"])
+@pytest.mark.parametrize("output_flag", ["--output", "--html"])
+@pytest.mark.parametrize("alias", ["direct", "symlink", "hardlink"])
+def test_cli_never_overwrites_evidence(tmp_path, monkeypatch, role, output_flag, alias):
+    source = tmp_path / role
+    source.parent.mkdir(parents=True, exist_ok=True)
+    source.write_bytes(b"frozen evidence")
+    dest = source if alias == "direct" else tmp_path / "alias"
+    if alias == "symlink":
+        dest.symlink_to(source)
+    elif alias == "hardlink":
+        dest.hardlink_to(source)
+    monkeypatch.setattr(feasibility, "ROOT", tmp_path)
+    monkeypatch.setattr(sys, "argv", ["check", "--dot-budget", "1", output_flag, str(dest)])
+    with pytest.raises(ValueError, match="must not overwrite"):
+        feasibility.main()
+    assert source.read_bytes() == b"frozen evidence"
+
+
+@pytest.mark.parametrize("alias", ["direct", "symlink", "hardlink"])
+def test_outputs_must_not_alias(tmp_path, alias):
+    output = tmp_path / "receipt"
+    output.write_text("untouched")
+    html = output if alias == "direct" else tmp_path / "html"
+    if alias == "symlink":
+        html.symlink_to(output)
+    elif alias == "hardlink":
+        html.hardlink_to(output)
+    with pytest.raises(ValueError, match="must be distinct"):
+        feasibility.protect_outputs(tmp_path, output, html)
+    assert output.read_text() == "untouched"
+
+
+@pytest.mark.parametrize("raster", [TEMPLATE, WITNESS])
+@pytest.mark.parametrize("suffix", [".msk", ".aux.xml", ".ovr"])
+def test_output_cannot_create_or_overwrite_input_sidecar(tmp_path, raster, suffix):
+    sidecar = Path(str(tmp_path / raster) + suffix)
+    with pytest.raises(ValueError, match="must not overwrite"):
+        feasibility.protect_outputs(tmp_path, sidecar, None)
+    assert not sidecar.exists()
+
+
+def test_distinct_outputs_are_allowed(tmp_path):
+    feasibility.protect_outputs(tmp_path, tmp_path / "receipt.json", tmp_path / "report.html")
+    feasibility.protect_outputs(tmp_path, None, None)
