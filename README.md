@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current review — 2026-10-29 (`arena/a59e7e98-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Start with the [three-pass review](docs/repo-review-20261029-a59e7e98.md), [run card](evidence/session_a59e7e98_20261029_run_card.json), [mission](docs/MISSION_PROMPT.md), standing instructions in [AGENTS.md](AGENTS.md), and the owner brief below. The [nine-site table](docs/historical-champions.html) offers research-only historical downloads, not leaderboard estimates or new entries. The assigned method paragraph and full feature stack are absent; standard dot budgets fail the literal retained-lattice gate. The shared CLI now validates before atomically replacing an output; format alone does not authorize a slot or establish a portal fix. The requested high-scoring unique TIFF remains unachieved.
+
 ## Current session — 2026-10-28 (`arena/1f6ab8e3-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [three-pass review](docs/repo-review-20261028-arena-1f6ab8e3.md), [run card](evidence/session_1f6ab8e3_20261028_run_card.json), [mission prompt](docs/MISSION_PROMPT.md), and [AGENTS.md](AGENTS.md) before continuing. The [nine-site table](docs/historical-champions.html) is a pinned historical research snapshot, not a live leaderboard or submission recommendation.
