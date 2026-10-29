@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current repository review — 2026-10-29 (`arena/30d63154-gemsdoe24`)
+
+**NO NEW TIFF · NO HOLDOUT · NO SCORE ESTIMATE · SUBMIT: NO.** Read the [repo review](docs/repo-review-20261029-arena-30d63154.md), [run card](evidence/session_30d63154_run_card_20261029.json), [mission prompt](docs/MISSION_PROMPT.md), and [standing instructions](AGENTS.md) first. The complete suite passed **663 tests** after restoring full Git history; the first run's six failures came from the shallow checkout omitting historical commits used by receipt-verification tests. Both documented standard dot budgets fail the necessary-only 70% lattice-overlap gate. The full organizer feature stack and assigned method paragraph are absent. No candidate or new TIFF was created; leaderboard estimates remain **NOT ESTIMABLE**. All earlier branch-specific session headings below are historical records, not the active branch.
+
 ## Current session — 2026-10-29 (`arena/3f1f513d-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [current review](docs/repo-review-20261029-arena-3f1f513d.md), [run card](evidence/session_3f1f513d_20261029_run_card.json), [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at session start. The [nine-site historical table](docs/historical-champions.html) is a research-only snapshot, not a current leaderboard or recommendation. This continuation hardens shared single-TIFF ZIP and preflight receipt sidecar handling; format checks cannot authorize a slot. No method lane is assigned, the full feature stack is absent, and the retained lattice blocks the usual dot budgets under the literal uniqueness rule. The full test suite passed 619 tests; no hidden-score forecast, organizer receipt or new TIFF was produced.

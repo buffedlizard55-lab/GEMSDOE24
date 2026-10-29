@@ -1,0 +1,60 @@
+{
+  "schema": "gems-repository-review-run-card-v1",
+  "review_date_utc": "2026-10-29",
+  "branch": "arena/30d63154-gemsdoe24",
+  "hypothesis": "No geological hypothesis tested; no assigned method lane was present.",
+  "mechanism": "Read-only repository review, full test suite, code-style checks, Git history restoration for frozen receipt verification, and necessary-only uniqueness feasibility checks.",
+  "named_non_fault_process_that_could_mimic_it": "Not applicable: no geology/prediction experiment was run. Previously proposed potential-field phase features could be mimicked by intrusive lithologic contacts, but none were evaluated here.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN; no candidate surface or assigned lane"
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "final_dot_overlap": null,
+    "status": "NOT RUN; no candidate",
+    "lattice_witness_coverage_fraction": 0.9987132726822701,
+    "minimum_overlap_lower_bound_at_37654_dots": 0.8234184947150369,
+    "minimum_overlap_lower_bound_at_44090_dots": 0.8491948287593558,
+    "scope": "Necessary geometric bound against one hash-pinned witness only; not candidate measurement or full-registry audit"
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_candidate_raster": "NOT GENERATED",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "submission_authorized": false
+  },
+  "submission_name": null,
+  "submission_note": "No new raster. No submission authorized.",
+  "verdict": "negative",
+  "verification": {
+    "pytest": "663 passed after full Git history was restored",
+    "initial_shallow_clone_pytest": "657 passed, 6 failed due to missing historical Git objects; failures passed after unshallow fetch",
+    "ruff_check": "PASS",
+    "ruff_format_check": "PASS",
+    "git_diff_check": "PASS",
+    "uniqueness_budget_37654": "STOP_IMPOSSIBLE_BUDGET; exit 2; lower bound 0.8234184947150369",
+    "uniqueness_budget_44090": "STOP_IMPOSSIBLE_BUDGET; exit 2; lower bound 0.8491948287593558",
+    "training_features_tif_present": false,
+    "prepared_feature_cache_present": false,
+    "experiments_run": 0,
+    "competition_slots_used": 0
+  },
+  "leaderboard_estimate": "NOT ESTIMABLE",
+  "organizer_confirmed_score": null,
+  "limitations": [
+    "No assigned single-method paragraph in the active request",
+    "Full data/training_features.tif and prepared feature cache absent",
+    "Both fixed standard dot budgets fail the literal 70 percent overlap rule against one retained lattice witness",
+    "No current-head nine-site artifact census was run",
+    "No current leaderboard, organizer receipt, submission quota, or portal acceptance verified",
+    "Non-GitHub official sources were not fetched in this session",
+    "First test invocation demonstrated frozen receipt tests require complete Git history"
+  ]
+}
