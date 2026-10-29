@@ -1,0 +1,49 @@
+{
+  "schema": "session-run-card-v1",
+  "branch": "arena/a59e7e98-gemsdoe24",
+  "date_utc": "2026-10-29",
+  "hypothesis": "No geological hypothesis tested: the parallel-run protocol's single assigned method paragraph is absent.",
+  "mechanism": "Submission CLI writes to a temporary location and publishes only after strict local format validation; no prediction mechanism was evaluated.",
+  "named_non_fault_process_that_could_mimic_it": "Not applicable to this engineering-only review; no geological surface tested.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "Not run; no score or forecast."
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "final_dot_overlap": null,
+    "status": "Not run: no candidate surface or dots. One pinned lattice was remeasured as a necessary-condition witness, not a full-registry audit.",
+    "fixed_budget_lower_bounds": {
+      "37654": 0.8234184947150369,
+      "44090": 0.8491948287593558
+    },
+    "overlap_limit": 0.7
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "candidate": "Not generated",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "No new candidate to validate; synthetic TIFFs were used for tests."
+  },
+  "submission_name": null,
+  "submission_note": "No candidate generated; do not submit.",
+  "verdict": "negative",
+  "submission_authorized": false,
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "organizer_confirmed_scores": [],
+  "leaderboard_estimate": null,
+  "tests": {
+    "focused_pytest": "62 passed",
+    "full_pytest": "Before integrating main PR #99, 603 passed across two disjoint test-file groups: 268 and 335. An earlier unsplit attempt timed out after at least 71% progress and is not counted as a completed run. After integrating PR #99, 70 impacted protocol and submission tests passed; the complete integrated suite was not rerun.",
+    "ruff": "All source, scripts and tests passed lint and formatting checks.",
+    "feasibility": "Pinned lattice check exited 2 for both specified budgets; lower bounds do not establish individual-candidate overlap.",
+    "limitations": "No new scientific experiment, leakage or full-registry test; no organizer portal acceptance, quota, leaderboard or official training-data provenance verified."
+  }
+}
