@@ -67,6 +67,7 @@ def page(title, active, body, prefix=""):
     nav = []
     for name, path in (
         ("Overview", "index.html"),
+        ("Nine-site summary", "executive-summary-9sites.html"),
         ("Submission guide", "executive-summary.html"),
         ("Research", "research.html"),
         ("Sources & audit", "sources.html"),

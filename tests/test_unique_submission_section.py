@@ -67,6 +67,7 @@ def test_published_pages_have_no_false_unique_geotiff_label():
     pages = (
         "docs/index.html",
         "docs/executive-summary.html",
+        "docs/executive-summary-9sites.html",
         "docs/research.html",
         "docs/sources.html",
     )
@@ -156,3 +157,37 @@ def test_section_refuses_a_receipt_for_a_different_file(tmp_path):
     rp.write_text(json.dumps(receipt))
     with pytest.raises(ValueError, match="does not describe this diagnostic TIFF"):
         bs.render_lattice_hole_diagnostic(tmp)
+
+
+def test_geo1_summary_labels_download_as_research_only_not_unique():
+    page = ROOT / "docs/executive-summary-9sites.html"
+    html = page.read_text()
+    assert "GEO1 Research TIFF" in html
+    assert "DOWNLOAD: YES — research only" in html
+    assert "NOT PROTOCOL-UNIQUE" in html
+    assert "NOT UNIQUE — DO NOT SUBMIT" in html
+    assert "99.25%" in html and "70%" in html
+    assert "NOT ESTABLISHED against current peer heads" in html
+    assert "official-format compliant" in html
+    assert "HOLDOUT-DTI" in html and "NOT ESTIMABLE" in html
+    assert "YES (by bytes)" not in html
+    assert "Unique TIF Submission" not in html
+    assert "unique, freshly computed TIF" not in html
+    root_index = (ROOT / "index.html").read_text()
+    assert 'href="docs/executive-summary-9sites.html"' in root_index
+
+
+def test_session_run_card_rejects_duplicate_json_keys():
+    path = ROOT / "evidence/session_7b3c8e4b_20261029_run_card.json"
+
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"duplicate JSON key: {key}")
+            result[key] = value
+        return result
+
+    card = json.loads(path.read_text(), object_pairs_hook=unique_object)
+    assert card["verdict"] == "negative"
+    assert card["submission_authorized"] is False

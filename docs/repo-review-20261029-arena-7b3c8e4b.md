@@ -1,6 +1,6 @@
 # Three-pass repository review — 29 October 2026
 
-**Decision: DOWNLOAD: research-only diagnostics · SUBMIT: NO.** No newly generated TIFF, geological experiment, holdout evaluation, score estimate, competition slot, selector approval, or organizer receipt was produced. The requested unique, validated, high-scoring submission remains unmet. In particular, this review rejects the prominent label “Unique GeoTIFF” for a 3,165-dot artifact whose placement was restricted to holes in a retained lattice: the zero overlap is by construction and is not protocol uniqueness.
+**Decision: no submission-authorized file · SUBMIT: NO.** This review branch generated no new TIFF, geological experiment, holdout evaluation, score estimate, competition slot, selector approval, or organizer receipt. The requested unique, validated, high-scoring submission remains unmet. The review rejects the prominent label “Unique GeoTIFF” for a 3,165-dot lattice-hole artifact whose zero overlap is by construction. It also re-reviewed the separately merged GEO1 research TIFF on current `origin/main`; that new artifact fails protocol uniqueness (99.25% lattice overlap) and is not authorized to submit.
 
 [Submission guide](executive-summary.html) · [Historical nine-site exact-file table](historical-champions.html) · [GitHub source freshness record](data/priority_feed.json) · [Machine-readable run card](../evidence/session_7b3c8e4b_20261029_run_card.json) · [Standing method and submission rules](MISSION_PROMPT.md).
 
@@ -21,6 +21,18 @@ The exact downloads below come from the pinned 2026-10-28 audit. The score colum
 | GEMSDOE36 | `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif` | 0.2750 | **NOT ESTIMABLE** | 99.92% · FAIL | Research only · SUBMIT NO |
 
 No value in the “historical claim” column is an organizer-confirmed score. No score is projected from a holdout metric.
+
+## GEO1 on current main — a research negative, not a unique submission
+
+During this review `origin/main` advanced from `6284a52` to `946e381` through PRs #105–#107. PR #107 added a separate GEO1 run and TIFF from branch `arena/06c9bde0`; this branch did not generate or retune it. The merged run card records:
+
+- Exact zero-outside file: `GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif`; SHA-256 `ee37d94deb3545af1f814df61ec5acd7addafe01a4833384c2e25d1a5e6b384d`; 129,184 in-footprint binary dots.
+- **HOLDOUT-DTI 0.1426949**, 95% CI [0.1322931, 0.1523671], `gems-segment-pooled-v1`, 60,988 withheld positives. This is a source-recorded internal result, not independently replayed here, not an organizer score, and not a leaderboard estimate.
+- Pre-placement max |Spearman ρ| 0.210739 versus 8 locally cached registry rasters; final-dot max overlap **0.9925378** versus the retained spacing-5 lattice (threshold 0.70). The source run is a negative result: the exact file is not protocol-unique, and the current peer-head registry was not completely audited. **DOWNLOAD: research only · SUBMIT: NO.**
+- The zero-outside variant’s receipt says `format_valid: true` but `official_format_compliant: false`; the NaN-outside twin has the opposite local whole-array NaN result. This does not diagnose portal acceptance. No slot was spent and no organizer receipt exists.
+- Implementation irregularity: `scripts/build_unique_geothermal_submission.py` passes the same `TMI_up150` grid as both `rtp_like` and `tmi_up150`. The run’s `tmi_up150_edge` and `rtp_proxy_edge` canaries are numerically identical. The “RTP proxy” is therefore not an independent channel. This is disclosed, not repaired by retuning the stopped experiment.
+
+The current [`executive-summary-9sites.html`](executive-summary-9sites.html) now describes GEO1 as a research TIFF, labels it **NOT UNIQUE · SUBMIT: NO**, limits the uniqueness claim to the available comparison scope, and discloses the format limitation. The older lattice-hole diagnostic is separately labelled **NOT UNIQUE** in the submission guide.
 
 ## GEMSDOE32 B2: what the 0.2778 report does and does not establish
 

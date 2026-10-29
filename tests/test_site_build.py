@@ -59,6 +59,20 @@ def test_download_is_on_the_first_screen_and_the_file_is_the_registered_one(buil
     assert (built / "docs/downloads" / row["file"]).exists()
 
 
+def test_generated_navigation_links_the_nine_site_summary(built):
+    summary = built / "docs/executive-summary-9sites.html"
+    assert summary.is_file()
+    for page in (
+        "docs/index.html",
+        "docs/executive-summary.html",
+        "docs/research.html",
+        "docs/sources.html",
+    ):
+        html = (built / page).read_text()
+        assert 'href="executive-summary-9sites.html"' in html
+        assert "Nine-site summary" in html
+
+
 def test_pages_state_the_unscored_status_and_never_invent_a_score(built):
     text = (built / "docs/index.html").read_text()
     assert "not yet scored" in text.lower() and "not leaderboard scores" in text.lower()
@@ -149,6 +163,7 @@ def test_site_never_links_a_missing_local_file(built):
         "executive-summary.html",
         "docs/index.html",
         "docs/executive-summary.html",
+        "docs/executive-summary-9sites.html",
         "docs/research.html",
         "docs/sources.html",
         "docs/submission-readiness.html",
