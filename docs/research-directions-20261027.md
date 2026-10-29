@@ -1,5 +1,7 @@
 # Four prospective fault-detection directions — not executed
 
+> **Current-checkout correction (2026-10-29):** The data-availability paragraph below records a historical 2026-10-27 state. In this checkout, `data/training_features.tif`, `data/labels.tif`, and the prepared feature stack are absent. The previously recorded owner-mirror hashes do not mean those files are currently present or authenticate them as organizer originals. See the [current repository review](repo-review-20261029-arena-1ec38571.md).
+
 > **Later concurrency check (session a73c5f88, 2026-10-27):**
 > [open PR #70](https://github.com/buffedlizard55-lab/GEMSDOE24/pull/70) at
 > `845adf5b6e762290462fb4896d339b0acfce78e8` describes a signed magnetic–gravity /

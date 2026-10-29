@@ -44,6 +44,12 @@ def verify(root: Path = ROOT) -> dict:
         raise ValueError("GEO1 must remain negative and not authorized to submit")
     if evidence.get("verdict") != "negative" or evidence.get("submission_slot_spent") is not False:
         raise ValueError("Experiment receipt must retain its negative/no-slot decision")
+    validator_record = card.get("validator_output", {})
+    if (
+        validator_record.get("official_format_compliant") is not False
+        or validator_record.get("submission_authorized") is not False
+    ):
+        raise ValueError("GEO1 source card must preserve its non-compliant, unauthorized status")
 
     name = card.get("submission_name")
     if not isinstance(name, str) or Path(name).name != name or not name.endswith(".tif"):
@@ -111,7 +117,10 @@ def verify(root: Path = ROOT) -> dict:
         "raster_sha256": digest,
         "format_valid": True,
         "strict_whole_array_0_1": True,
+        "official_format_compliant": False,
+        "scientific_authorization": False,
         "holdout_label": holdout["label"],
+        "holdout_integrity_status": "COMPROMISED: full-label catalogue masks fold eligibility; not a valid comparable holdout",
         "holdout_evaluator_version": holdout.get("evaluator_version"),
         "holdout_value": holdout.get("dti"),
         "withheld_positive_pixels": holdout.get("n_withheld_positive_pixels"),

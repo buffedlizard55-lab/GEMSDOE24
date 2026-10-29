@@ -24,7 +24,10 @@ def test_geo1_receipt_verifier_reopens_exact_tiff_and_reports_negative_decision(
     assert receipt["verified"] is True
     assert receipt["format_valid"] is True
     assert receipt["strict_whole_array_0_1"] is True
+    assert receipt["official_format_compliant"] is False
+    assert receipt["scientific_authorization"] is False
     assert receipt["holdout_label"] == "HOLDOUT-DTI"
+    assert receipt["holdout_integrity_status"].startswith("COMPROMISED:")
     assert receipt["holdout_evaluator_version"] == "gems-segment-pooled-v1"
     assert receipt["withheld_positive_pixels"] == 60988.0
     assert receipt["verdict"] == "negative"
@@ -102,6 +105,8 @@ def test_nine_site_executive_page_has_download_links_that_resolve_and_clear_subm
     assert "DOWNLOAD: YES · SUBMIT: NO" in text
     assert "NOT submission-authorized" in text
     assert "official_format_compliant: false" in text
+    assert "COMPROMISED HOLDOUT — DO NOT COMPARE" in text
+    assert "full-label eligibility leak invalidates comparison" in text
     assert "NOT ESTIMABLE" in text
     assert "GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif" in text
     table = soup.find(id="nine-site-table").find("table")
