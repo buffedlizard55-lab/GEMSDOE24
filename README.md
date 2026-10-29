@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current continuation — 2026-10-29 (`arena/a52178c4-gemsdoe24`)
+
+**NO NEW TIFF · NO EXPERIMENT · SUBMIT: NO.** Read the [three-pass review](docs/repo-review-20261029-a52178c4.md), [run card](evidence/session_a52178c4_run_card_20261029.json), [mission prompt](docs/MISSION_PROMPT.md), and [AGENTS.md](AGENTS.md) at session start. The [nine historical champions](docs/historical-champions.html) have now been rechecked with the shared strict validator; all remain research-only and fail the retained lattice novelty rule. The refreshed GitHub source feed is not an audit of the new heads or a leaderboard. The method paragraph is absent, the main feature stack is missing, and the independent selector verifier is not implemented. No score projection or portal acceptance is established.
+
 ## Current review — 2026-10-29 (`arena/a59e7e98-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Start with the [three-pass review](docs/repo-review-20261029-a59e7e98.md), [run card](evidence/session_a59e7e98_20261029_run_card.json), [mission](docs/MISSION_PROMPT.md), standing instructions in [AGENTS.md](AGENTS.md), and the owner brief below. The [nine-site table](docs/historical-champions.html) offers research-only historical downloads, not leaderboard estimates or new entries. The assigned method paragraph and full feature stack are absent; standard dot budgets fail the literal retained-lattice gate. The shared CLI now validates before atomically replacing an output; format alone does not authorize a slot or establish a portal fix. The requested high-scoring unique TIFF remains unachieved.
