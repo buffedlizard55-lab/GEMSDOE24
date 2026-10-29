@@ -1,0 +1,70 @@
+{
+  "session_branch": "arena/1d1bdb94-gemsdoe24",
+  "date_utc": "2026-10-29",
+  "review_doc": "docs/repo-review-20261029-arena-1d1bdb94.md",
+  "hypothesis": "NONE EXECUTED. No new geological hypothesis was tested: the feature stack and an assigned method lane are absent.",
+  "mechanism": "not applicable",
+  "named_non_fault_mimic": "not applicable",
+  "holdout_dti": null,
+  "holdout_ci_95": null,
+  "holdout_status": "NOT MEASURED. Feature stack data/training_features.tif absent (DrivenData login required).",
+  "leaderboard_estimate": null,
+  "organizer_confirmed_score": null,
+  "correlation_overlap_vs_registry": {
+    "witness": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "footprint_3px_coverage": 0.9987132726822701,
+    "min_overlap_37654_dots": 0.8234184947150369,
+    "min_overlap_44090_dots": 0.8491948287593558,
+    "largest_budget_not_ruled_out": 22163,
+    "gate_result": "STOP_IMPOSSIBLE_BUDGET (exit 2)",
+    "rank_correlation_check": "NOT RUN: no candidate raster"
+  },
+  "raster_sha256": {
+    "gemsdoe32_b2_zeros_github_head": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+    "bridge_sample_submission": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
+  },
+  "validator_output": {
+    "gemsdoe32_b2_zeros": {
+      "shape": [3730, 3292],
+      "crs": "EPSG:32611",
+      "transform": [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0],
+      "dtype": "float32",
+      "nan_count": 0,
+      "min": 0.0,
+      "max": 1.0,
+      "format": true,
+      "strict_range": true,
+      "scientific_authorization": false,
+      "submission": "DO_NOT_SUBMIT"
+    },
+    "bridge_sample_submission": {
+      "shape": [3730, 3292],
+      "crs": "EPSG:32611",
+      "transform": [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0],
+      "dtype": "float32",
+      "nan_count": 7111787,
+      "format": true,
+      "strict_range": false,
+      "positives_identical_to_labels_tif": true,
+      "submission": "DO_NOT_SUBMIT"
+    }
+  },
+  "submission_name": "none",
+  "submission_note": "none (no candidate)",
+  "competition_slots_used": 0,
+  "new_tiffs": 0,
+  "verdict": "negative",
+  "submit": false,
+  "irregularities": [
+    "Owner-cited leaderboard figures 0.4413 and 0.3195 differ from official snapshot top 0.4544 (snapshot time unknown).",
+    "data/bridge/sample_submission.tif positives identical to labels.tif; official page describes an all-absence template.",
+    "Official text 'outside the bounds is null or nan' vs reference notebook zeros-over-grid; portal [0,1] rejection cause unconfirmed.",
+    "Uniqueness rule infeasible at >22,163 dots when a space-filling lattice is in the registry; owner decision required."
+  ],
+  "sources": [
+    "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+    "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+    "https://github.com/drivendataorg/gems-prize-reference-solution (commit aebe92f7c8a990f0e3443451b7a825d9afd6336b)",
+    "https://github.com/buffedlizard55-lab/GEMSDOE32 (HEAD 0ffda7162e76291df34359345488ff08b4115aac)"
+  ]
+}
