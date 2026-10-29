@@ -30,7 +30,7 @@ addopts = "-ra"
 [tool.ruff]
 target-version = "py311"
 line-length = 100
-# Frozen, source-hashed experiment runners are excluded; keep their receipt bytes/code immutable.
+# Frozen, source-hashed experiment runners are excluded; preserve the exact code tied to their receipts.
 exclude = [
   "archive",
   "data",
