@@ -149,6 +149,7 @@ def test_site_never_links_a_missing_local_file(built):
         "executive-summary.html",
         "docs/index.html",
         "docs/executive-summary.html",
+        "docs/executive-summary-9sites.html",
         "docs/research.html",
         "docs/sources.html",
         "docs/submission-readiness.html",

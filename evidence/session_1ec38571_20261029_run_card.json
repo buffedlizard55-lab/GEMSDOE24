@@ -1,0 +1,105 @@
+{
+  "schema": "gems-continuation-run-card-v1",
+  "branch": "arena/1ec38571-gemsdoe24",
+  "review_date_utc": "2026-10-29",
+  "hypothesis": "No geological hypothesis tested: the requested single-method paragraph is absent, and the literal retained-lattice overlap gate blocks the standard dot budgets before training.",
+  "mechanism": "Read-only repository review, strict preflight of an existing negative research artifact, and shared necessary-only lattice feasibility check.",
+  "named_non_fault_process_that_could_mimic_it": "A space-filling calibration lattice can create high geometric dot overlap without geological similarity; shoreline benches, roads and lithologic contacts can mimic fault-like terrain/geophysical signatures.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN: no geological experiment or candidate surface"
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "candidate_dot_overlap": null,
+    "status": "NOT RUN: no new candidate surface/dots; no complete current registry audit",
+    "necessary_geometric_bound_against_one_pinned_lattice_witness": {
+      "witness_path": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "witness_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "footprint_pixels": 5167373,
+      "uncovered_within_3px": 6649,
+      "dot_budgets": [
+        {
+          "dots": 37654,
+          "minimum_overlapping_dots": 31005,
+          "minimum_overlap_fraction": 0.8234184947150369,
+          "gate": "STOP_IMPOSSIBLE_BUDGET"
+        },
+        {
+          "dots": 44090,
+          "minimum_overlapping_dots": 37441,
+          "minimum_overlap_fraction": 0.8491948287593558,
+          "gate": "STOP_IMPOSSIBLE_BUDGET"
+        }
+      ],
+      "scope": "Necessary bound against one witness only; not an observed candidate overlap, full-registry certification, geological-copying claim or score."
+    }
+  },
+  "raster_sha256": null,
+  "reviewed_parallel_artifact": {
+    "file": "docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif",
+    "sha256": "ee37d94deb3545af1f814df61ec5acd7addafe01a4833384c2e25d1a5e6b384d",
+    "decision": "DOWNLOAD: research only; SUBMIT: NO",
+    "source_run_card_official_format_compliant": false,
+    "format_note": "Local grid/range checks pass, but the artifact has zeros outside the footprint and no NaN nodata tag; organizer acceptance is not established.",
+    "source_experiment_count": 1,
+    "source_submission_slots_used": 0,
+    "recorded_holdout_dti": {
+      "label": "HOLDOUT-DTI",
+      "value": 0.14269491602190398,
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "ci95": [0.13229313491455882, 0.1523670504192869],
+      "review_status": "COMPROMISED: holdout emission eligibility used the complete labels grid rather than fold.visible; not a valid comparable holdout"
+    },
+    "novelty": {
+      "surface_max_abs_spearman_vs_8_cached_registry_rasters": 0.21073900596297743,
+      "final_dot_overlap_within_3px": 0.9925377755759227,
+      "full_registry_entries": 46,
+      "literal_70_percent_gate": "FAIL"
+    },
+    "source_code_irregularities": [
+      "Holdout emission eligibility is fp & fold.valid & ~full_catalogue, which leaks withheld target locations into placement eligibility.",
+      "rtp_like and tmi_up150 are assigned the same TMI_up150 raster; the same Sobel edge is counted twice instead of supplying independent RTP corroboration."
+    ],
+    "scope": "Read-only source review; no re-run or scientific result asserted. Preserve original run card and TIFF as historical evidence."
+  },
+  "validator_output": {
+    "new_raster": false,
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "NOT APPLICABLE: no new TIFF",
+    "existing_s3dep1_strict_preflight": "FORMAT: True | STRICT_RANGE: True | SCIENTIFIC_AUTHORIZATION: False | SUBMISSION: DO_NOT_SUBMIT",
+    "preflight_scope": "Local pinned bridge template and exact existing research bytes only; not organizer acceptance."
+  },
+  "submission_name": null,
+  "submission_note": "No new TIFF; no submission authorized.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "leaderboard_estimate": null,
+  "organizer_confirmed_score": null,
+  "verification": {
+    "pass_1": "Reviewed repository instructions, records, data placement, nine-site pinned table, lane status and open PR metadata.",
+    "pass_2": "Reproduced uniqueness bounds; strict-preflighted an existing negative TIFF; initial 6 source-history failures traced to shallow Git history, then resolved by unshallow fetch.",
+    "pass_3": "52 targeted tests passed after history restoration; full suite 663 passed; Ruff and git diff --check passed. No scientific experiment, new TIFF, or competition upload."
+  },
+  "limitations": [
+    "No assigned single-method paragraph; existing proposals are not certified as untried.",
+    "Complete training raster, labels and prepared feature stack absent in this checkout.",
+    "The retained lattice proves standard fixed dot budgets impossible under the literal 70% gate, but the calculation is a necessary bound against one witness and not full-registry novelty evidence.",
+    "Nine-site scores are historical owner claims, not organizer receipts; leaderboard estimate is not estimable.",
+    "Pinned peer KPL-36 HOLDOUT-DTI is not independently replayed or certified protocol-equivalent; no cross-site promotion follows.",
+    "No current site-content or live leaderboard refresh; DrivenData, NLR, USGS, OpenEI and Dropbox hosts were not accessed here.",
+    "Portal range-error cause, weekly quota, organizer acceptance and submission receipt remain unknown.",
+    "No independent positive-authorization selector/replay certificate is implemented.",
+    "The parallel GEO1 artifact is research-only; its source-recorded HOLDOUT-DTI is compromised by full-label eligibility leakage, and its 99.25% final overlap fails the literal registry rule.",
+    "The frozen GEO1 source-hashed runner contains nine Ruff findings and is excluded from Ruff instead of being modified, preserving the recorded executed-code hash."
+  ]
+}
