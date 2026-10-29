@@ -1,0 +1,26 @@
+{
+  "hypothesis": null,
+  "mechanism": null,
+  "named_non_fault_mimic": null,
+  "holdout_dti": null,
+  "holdout_dti_status": "NOT RUN: no assigned method paragraph and no new candidate",
+  "withheld_positives": null,
+  "ci95": null,
+  "correlation_overlap_vs_registry": {
+    "surface": "NOT RUN: no candidate surface",
+    "final_dots": "NOT RUN: no candidate dots",
+    "geometric_feasibility": "Fresh pinned lattice check: minimum directed overlap 0.8234184947150369 for 37654 dots and 0.8491948287593558 for 44090 dots; necessary bound only, not a score or proof of copying."
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "no_nan_inside_footprint": "NOT RUN: no new candidate",
+    "values_in_0_1": "NOT RUN: no new candidate",
+    "crs_shape_transform_match": "NOT RUN: no new candidate"
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "verdict": "negative",
+  "submission_authorized": false,
+  "new_experiments": 0,
+  "submission_slots_used": 0
+}

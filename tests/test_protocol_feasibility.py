@@ -1,6 +1,10 @@
 """These tests also run without scientific dependencies via unittest."""
 
 import importlib.util
+import json
+import subprocess
+import sys
+import tempfile
 import unittest
 from fractions import Fraction
 from pathlib import Path
@@ -38,6 +42,27 @@ class FeasibilityTests(unittest.TestCase):
         ]:
             with self.assertRaises(ValueError):
                 MODULE.bounds(*args)
+
+    def test_modified_threshold_is_rejected(self):
+        source = SCRIPT.parents[1] / "evidence/current_focus_nine_file_audit_20261027.json"
+        audit = json.loads(source.read_text())
+        audit["lattice"]["coverage_threshold"] = 0.99
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "audit.json"
+            path.write_text(json.dumps(audit))
+            with self.assertRaises(ValueError):
+                MODULE.report(path, 37654)
+
+    def test_cli_exit_codes(self):
+        for dots, expected in [(37654, 2), (20000, 0)]:
+            completed = subprocess.run(
+                [sys.executable, str(SCRIPT), "--dots", str(dots)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(completed.returncode, expected, completed.stderr)
+            self.assertFalse(json.loads(completed.stdout)["submission_authorized"])
 
     def test_frozen_receipt_never_authorizes(self):
         result = MODULE.report(
