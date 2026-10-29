@@ -1,8 +1,14 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Current session — 2026-10-29 (`arena/3f1f513d-gemsdoe24`)
+## Current review — 2026-10-29 (`arena/464e7405-gemsdoe24`)
 
-**NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [current review](docs/repo-review-20261029-arena-3f1f513d.md), [run card](evidence/session_3f1f513d_20261029_run_card.json), [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at session start. The [nine-site historical table](docs/historical-champions.html) is a research-only snapshot, not a current leaderboard or recommendation. This continuation hardens shared single-TIFF ZIP and preflight receipt sidecar handling; format checks cannot authorize a slot. No method lane is assigned, the full feature stack is absent, and the retained lattice blocks the usual dot budgets under the literal uniqueness rule. The full test suite passed 619 tests; no hidden-score forecast, organizer receipt or new TIFF was produced.
+**NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · SUBMIT: NO.** Read this [three-pass repository review](docs/repo-review-20261029-arena-464e7405.md), its [negative JSON run card](evidence/session_464e7405_20261029_run_card.json), the [mission prompt](docs/MISSION_PROMPT.md), and [standing instructions](AGENTS.md) first. The requested high-scoring unique submission is not achieved. The nine GitHub focus-site refs were refreshed at 2026-10-29 16:45 UTC; all nine moved since the frozen artifact audit, so their current-head TIFFs and scores remain unaudited. The claimed 0.2778, 0.3195 and 0.4413 are not organizer-confirmed; no leaderboard estimate is defensible. No new TIFF or slot was produced. The full test suite passed 663 tests after the shallow Git history was restored. The [nine-site research-only table](docs/historical-champions.html) is historical, not a recommendation.
+
+**Read this README at every session start.** The full owner prompt is preserved below; `docs/MISSION_PROMPT.md` is a normalized summary, not the verbatim original. Later dated session notes are historical and do not supersede this current review. Core values: **Maximize P(Win)** and **Own the Outcome**.
+
+## Historical continuation — 2026-10-29 (`arena/3f1f513d-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [historical review](docs/repo-review-20261029-arena-3f1f513d.md), [run card](evidence/session_3f1f513d_20261029_run_card.json), [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at session start. The [nine-site historical table](docs/historical-champions.html) is a research-only snapshot, not a current leaderboard or recommendation. This continuation hardens shared single-TIFF ZIP and preflight receipt sidecar handling; format checks cannot authorize a slot. No method lane is assigned, the full feature stack is absent, and the retained lattice blocks the usual dot budgets under the literal uniqueness rule. No hidden-score forecast, organizer receipt or new TIFF was produced.
 
 ## Current continuation — 2026-10-29 (`arena/248af4f4-gemsdoe24`)
 
