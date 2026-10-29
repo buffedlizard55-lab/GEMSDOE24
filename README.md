@@ -1,5 +1,10 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+
+## Current continuation — 2026-10-29 (`arena/a52178c4-gemsdoe24`)
+
+**NO NEW TIFF · NO EXPERIMENT · SUBMIT: NO.** Read the [three-pass review](docs/repo-review-20261029-a52178c4.md), [run card](evidence/session_a52178c4_run_card_20261029.json), [mission prompt](docs/MISSION_PROMPT.md), and [AGENTS.md](AGENTS.md) at session start. The [nine historical champions](docs/historical-champions.html) have now been rechecked with the shared strict validator; all remain research-only and fail the retained lattice novelty rule. The refreshed GitHub source feed is not an audit of the new heads or a leaderboard. The method paragraph is absent, the main feature stack is missing, and the independent selector verifier is not implemented. No score projection or portal acceptance is established.
+
 ## Current session — 2026-10-28 (`arena/1f6ab8e3-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [three-pass review](docs/repo-review-20261028-arena-1f6ab8e3.md), [run card](evidence/session_1f6ab8e3_20261028_run_card.json), [mission prompt](docs/MISSION_PROMPT.md), and [AGENTS.md](AGENTS.md) before continuing. The [nine-site table](docs/historical-champions.html) is a pinned historical research snapshot, not a live leaderboard or submission recommendation.

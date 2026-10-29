@@ -1,0 +1,51 @@
+{
+  "schema": "gems-continuation-run-card-v1",
+  "hypothesis": "No geological hypothesis tested: the requested single assigned method paragraph was not supplied.",
+  "mechanism": "Audit historical pinned rasters using the existing shared strict validator; refresh GitHub source refs without changing scientific pins.",
+  "named_non_fault_process_that_could_mimic_it": "A space-filling calibration lattice can cause high 3-pixel overlap without geological copying.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN: no geological experiment"
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "candidate_dot_overlap": null,
+    "status": "NOT RUN: no candidate surface or dots. Historic pinned files fail the lattice witness; not a complete registry audit.",
+    "lattice_necessary_minimum_overlap_for_37654_distinct_in_footprint_dots": 0.8234184947150369,
+    "lattice_necessary_minimum_overlap_for_44090_distinct_in_footprint_dots": 0.8491948287593558
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "status": "NOT RUN on a new candidate; nine existing pinned historical rasters separately rechecked using strict mode",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "submission_authorized": false,
+    "historical_readback": "docs/data/historical_champions_20261028.json"
+  },
+  "submission_name": null,
+  "submission_note": "No new TIFF; do not submit.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "leaderboard_estimate": null,
+  "organizer_confirmed_score": null,
+  "limitations": [
+    "No assigned method paragraph or prospective lattice-policy decision.",
+    "Training raster and prepared feature stack absent; organizer provenance not authenticated.",
+    "Nine GitHub heads refreshed, but current-head artifacts and full registry not audited.",
+    "No live leaderboard, quota, portal acceptance or artifact-linked organizer receipt.",
+    "Independent selector receipt verifier not implemented; preflight fails closed."
+  ],
+  "verification": {
+    "historical_artifacts_strictly_validated": 9,
+    "all_historical_lattice_witnesses_failed": true,
+    "full_test_suite": "593 passed before site regeneration",
+    "focused_tests": "72 passed before site regeneration; 94 site, freshness and validator tests passed after regeneration",
+    "other_checks": "ruff lint and format, Node syntax, git diff --check passed after site regeneration"
+  }
+}
