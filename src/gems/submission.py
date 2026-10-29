@@ -28,8 +28,15 @@ EXPECTED = {
 }
 
 
+def _require_real_probabilities(pred: np.ndarray) -> None:
+    """Do not silently discard an imaginary component or coerce text/object data."""
+    if np.asarray(pred).dtype.kind not in "biuf":
+        raise ValueError("Predictions must have a real numeric or boolean dtype")
+
+
 def sanitize(pred: np.ndarray) -> np.ndarray:
     """NaN/Inf-safe float32 in [0, 1]. NaN -> 0 (no evidence), +Inf -> 1, -Inf -> 0, then clip."""
+    _require_real_probabilities(pred)
     a = np.nan_to_num(np.asarray(pred, dtype=np.float64), nan=0.0, posinf=1.0, neginf=0.0)
     return np.clip(a, 0.0, 1.0).astype(np.float32)
 
@@ -69,6 +76,7 @@ def write_submission(
     explicitly labelled compatibility twin; it is never the recommended upload
     artifact and must fail the strict whole-array preflight diagnostic.
     """
+    _require_real_probabilities(pred_2d)
     if outside not in ("nan", "zero"):
         raise ValueError("outside must be 'nan' or 'zero'")
     out_path = Path(out_path)
@@ -337,6 +345,7 @@ def check_variants(
 
 
 def scored_content_id(pred_2d: np.ndarray, footprint: np.ndarray, catalogue: np.ndarray) -> str:
+    _require_real_probabilities(pred_2d)
     pred_2d, footprint, catalogue = (
         np.asarray(pred_2d),
         np.asarray(footprint, bool),

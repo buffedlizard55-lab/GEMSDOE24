@@ -511,3 +511,31 @@ def test_writer_cli_rejects_nodata_masked_prediction(tmp_path):
     assert result.returncode != 0
     assert "must not be masked" in result.stderr
     assert not out.exists()
+
+
+@pytest.mark.parametrize("dtype", [np.complex64, np.complex128, object, "U8"])
+def test_non_real_predictions_cannot_be_silently_coerced(tmp_path, dtype):
+    t, fp = template(tmp_path)
+    values = np.full(fp.shape, 0.5, dtype=dtype)
+    if np.issubdtype(values.dtype, np.complexfloating):
+        values[3, 4] += 10j  # NumPy's range comparison alone accepts this value.
+    output = tmp_path / "must-not-exist.tif"
+    for operation in (
+        lambda: submission.write_submission(values, t, output),
+        lambda: submission.sanitize(values),
+        lambda: submission.scored_content_id(values, fp, np.zeros_like(fp)),
+    ):
+        with pytest.raises(ValueError, match="real numeric or boolean dtype"):
+            operation()
+    assert not output.exists()
+
+
+@pytest.mark.parametrize("dtype", [np.bool_, np.uint8, np.int32, np.float32, np.float64])
+def test_real_prediction_dtypes_remain_supported(tmp_path, dtype):
+    t, fp = template(tmp_path)
+    values = np.ones(fp.shape, dtype=dtype)
+    output = submission.write_submission(values, t, tmp_path / "valid.tif")
+    assert np.all(submission.sanitize(values) == 1)
+    assert submission.scored_content_id(values, fp, np.zeros_like(fp))
+    with rasterio.open(output) as dataset:
+        assert np.all(dataset.read(1)[fp] == 1)
