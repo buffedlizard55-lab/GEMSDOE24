@@ -1,0 +1,75 @@
+{
+  "schema": "gems-continuation-run-card-v1",
+  "branch": "arena/1ec38571-gemsdoe24",
+  "review_date_utc": "2026-10-29",
+  "hypothesis": "No geological hypothesis tested: the requested single-method paragraph is absent, and the literal retained-lattice overlap gate blocks the standard dot budgets before training.",
+  "mechanism": "Read-only repository review, strict preflight of an existing negative research artifact, and shared necessary-only lattice feasibility check.",
+  "named_non_fault_process_that_could_mimic_it": "A space-filling calibration lattice can create high geometric dot overlap without geological similarity; shoreline benches, roads and lithologic contacts can mimic fault-like terrain/geophysical signatures.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN: no geological experiment or candidate surface"
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "candidate_dot_overlap": null,
+    "status": "NOT RUN: no new candidate surface/dots; no complete current registry audit",
+    "necessary_geometric_bound_against_one_pinned_lattice_witness": {
+      "witness_path": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "witness_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "footprint_pixels": 5167373,
+      "uncovered_within_3px": 6649,
+      "dot_budgets": [
+        {
+          "dots": 37654,
+          "minimum_overlapping_dots": 31005,
+          "minimum_overlap_fraction": 0.8234184947150369,
+          "gate": "STOP_IMPOSSIBLE_BUDGET"
+        },
+        {
+          "dots": 44090,
+          "minimum_overlapping_dots": 37441,
+          "minimum_overlap_fraction": 0.8491948287593558,
+          "gate": "STOP_IMPOSSIBLE_BUDGET"
+        }
+      ],
+      "scope": "Necessary bound against one witness only; not an observed candidate overlap, full-registry certification, geological-copying claim or score."
+    }
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_raster": false,
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "NOT APPLICABLE: no new TIFF",
+    "existing_s3dep1_strict_preflight": "FORMAT: True | STRICT_RANGE: True | SCIENTIFIC_AUTHORIZATION: False | SUBMISSION: DO_NOT_SUBMIT",
+    "preflight_scope": "Local pinned bridge template and exact existing research bytes only; not organizer acceptance."
+  },
+  "submission_name": null,
+  "submission_note": "No new TIFF; no submission authorized.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "leaderboard_estimate": null,
+  "organizer_confirmed_score": null,
+  "verification": {
+    "pass_1": "Reviewed repository instructions, records, data placement, nine-site pinned table, lane status and open PR metadata.",
+    "pass_2": "Reproduced uniqueness bounds; strict-preflighted an existing negative TIFF; initial 6 source-history failures traced to shallow Git history, then resolved by unshallow fetch.",
+    "pass_3": "52 targeted tests passed after history restoration; full suite 663 passed; Ruff and git diff --check passed. No scientific experiment, new TIFF, or competition upload."
+  },
+  "limitations": [
+    "No assigned single-method paragraph; existing proposals are not certified as untried.",
+    "Complete training raster, labels and prepared feature stack absent in this checkout.",
+    "The retained lattice proves standard fixed dot budgets impossible under the literal 70% gate, but the calculation is a necessary bound against one witness and not full-registry novelty evidence.",
+    "Nine-site scores are historical owner claims, not organizer receipts; leaderboard estimate is not estimable.",
+    "Pinned peer KPL-36 HOLDOUT-DTI is not independently replayed or certified protocol-equivalent; no cross-site promotion follows.",
+    "No current site-content or live leaderboard refresh; DrivenData, NLR, USGS, OpenEI and Dropbox hosts were not accessed here.",
+    "Portal range-error cause, weekly quota, organizer acceptance and submission receipt remain unknown.",
+    "No independent positive-authorization selector/replay certificate is implemented."
+  ]
+}

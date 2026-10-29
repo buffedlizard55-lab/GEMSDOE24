@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current repository review — 2026-10-29 (`arena/1ec38571-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF · DO NOT SUBMIT.** This review produced no new TIFF, geological experiment, leaderboard estimate, organizer receipt, or competition-slot use. The literal retained-lattice gate makes the common 37,654- and 44,090-dot budgets mathematically impossible under the project's 70% rule; no lane paragraph was assigned, and the full feature stack is absent. Read the [three-pass repository review](docs/repo-review-20261029-arena-1ec38571.md), its [negative run card](evidence/session_1ec38571_20261029_run_card.json), the [nine-site historical download/decision table](docs/historical-champions.html), the [mission prompt](docs/MISSION_PROMPT.md), and [standing instructions](AGENTS.md). Historical scores are owner-reported unless backed by an organizer receipt; the leaderboard estimate is **NOT ESTIMABLE**. Tests: **663 passed** after restoring full Git history; Ruff and `git diff --check` passed.
+
 ## Current session — 2026-10-29 (`arena/3f1f513d-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [current review](docs/repo-review-20261029-arena-3f1f513d.md), [run card](evidence/session_3f1f513d_20261029_run_card.json), [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at session start. The [nine-site historical table](docs/historical-champions.html) is a research-only snapshot, not a current leaderboard or recommendation. This continuation hardens shared single-TIFF ZIP and preflight receipt sidecar handling; format checks cannot authorize a slot. No method lane is assigned, the full feature stack is absent, and the retained lattice blocks the usual dot budgets under the literal uniqueness rule. The full test suite passed 619 tests; no hidden-score forecast, organizer receipt or new TIFF was produced.
