@@ -15,6 +15,20 @@ review = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(review)
 
 
+def test_fresh_historical_readback_uses_strict_shared_validator(monkeypatch):
+    calls = []
+
+    def validator(path, template, *, strict=False):
+        calls.append((path, template, strict))
+        return {"format_valid": False}
+
+    monkeypatch.setattr(review, "check_variants", validator)
+    assert review.validate_historical_artifact("candidate.tif", "template.tif") == {
+        "format_valid": False
+    }
+    assert calls == [("candidate.tif", "template.tif", True)]
+
+
 def test_sources_require_immutable_matching_focus_repository():
     row = json.loads((ROOT / "evidence/peer_forensics_20261025.json").read_text())["artifacts"][0]
     assert review.parse_source(row)[0] == "buffedlizard55-lab/GEMSDOE24"
@@ -60,6 +74,18 @@ def test_published_readback_has_all_sites_no_estimate_and_no_authorization():
         assert row["leaderboard_estimate"] is row["holdout_dti"] is None
         assert row["validator_output"]["sha256"] == row["sha256"]
         assert row["validator_output"]["format_valid"] is True
+        # Fresh readbacks must include strict-only checks, not merely the
+        # legacy fields retained for historical receipt compatibility.
+        checks = row["validator_output"]["checks"]
+        for name in (
+            "template_self_contained",
+            "raster_self_contained",
+            "template_footprint_unmasked",
+            "footprint_unmasked",
+            "geotiff_driver",
+        ):
+            assert checks[name]["pass"] is True
+            assert checks[name]["hard_requirement"] is True
         assert row["submission_authorized"] is False
         assert row["literal_uniqueness"] == "FAIL"
     aliases = {r["site"]: r["exact_in_footprint_aliases"] for r in report["rows"]}
