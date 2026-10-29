@@ -4,6 +4,10 @@
 
 **NO SUBMISSION-AUTHORIZED TIFF · SUBMIT: NO.** Read the [three-pass executive review](docs/repo-review-20261029-fc014f14.md), [run card](evidence/session_fc014f14_run_card.json), [mission prompt](docs/MISSION_PROMPT.md), and AGENTS before continuing. Shared writer/sanitizer/content-ID now reject complex and nonnumeric predictions instead of silently discarding information. Full suite: **601 passed**. Fresh nine-repository ref checks all succeeded, but all differ from the pinned audit: no new scientific or leaderboard validation follows. The method lane and full feature cache remain missing; standard dot budgets fail the retained-lattice gate. No new prediction TIFF, experiment or slot; leaderboard estimates remain **NOT ESTIMABLE**. [Nine-site historical download/estimate/uniqueness table](docs/historical-champions.html).
 
+## Current review — 2026-10-29 (`arena/a7813032-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [current review](docs/repo-review-20261029-a7813032.md), [mission prompt](docs/MISSION_PROMPT.md), and [standing instructions](AGENTS.md). The [nine historical champions table](docs/historical-champions.html) contains research-only downloads; a leaderboard estimate is not established. This session hardened the frozen-count feasibility command to fail with exit 2 for a proved impossible budget and reject an altered threshold. The missing assigned method lane, literal lattice gate, missing feature cache and independent promotion certificate remain blockers. Full suite: 594 passed. [Negative run card](evidence/session_a7813032_20261029.json).
+
 ## Current session — 2026-10-28 (`arena/1f6ab8e3-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [three-pass review](docs/repo-review-20261028-arena-1f6ab8e3.md), [run card](evidence/session_1f6ab8e3_20261028_run_card.json), [mission prompt](docs/MISSION_PROMPT.md), and [AGENTS.md](AGENTS.md) before continuing. The [nine-site table](docs/historical-champions.html) is a pinned historical research snapshot, not a live leaderboard or submission recommendation.
