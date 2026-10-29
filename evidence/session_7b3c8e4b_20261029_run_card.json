@@ -1,7 +1,7 @@
 {
   "schema": "repo-review-run-card-v1",
   "session_id": "7b3c8e4b",
-  "checked_utc": "2026-10-29T17:11:46Z",
+  "checked_utc": "2026-10-29T17:31:17Z",
   "scope": "Repository and documentation integrity review; no geological experiment, new prediction, submission, or leaderboard estimate",
   "verdict": "negative",
   "submission_authorized": false,
@@ -236,8 +236,8 @@
     },
     {
       "pass": 3,
-      "focus": "Rebuild site and run focused/full verification after resolving and integrating upstream conflicts",
-      "status": "pending",
+      "focus": "Rebuild current site and run focused/full verification after integrating origin/main at 946e381; review all changes and record fail-closed gates",
+      "status": "complete",
       "new_experiment": false
     }
   ],
@@ -245,29 +245,34 @@
     "site_build": {
       "command": ".venv/bin/python scripts/build_site.py",
       "exit_code": 0,
+      "generated_utc": "2026-10-29T17:15:54.407066+00:00",
       "generated_pages": [
         "docs/index.html",
         "docs/executive-summary.html",
         "docs/research.html",
         "docs/sources.html"
       ],
+      "root_page": "index.html",
+      "primary_file": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
+      "primary_sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
       "no_scores_fabricated": true,
-      "new_slot_eligible": false
+      "new_slot_eligible": false,
+      "verdict": "negative"
     },
     "focused_tests": {
       "command": ".venv/bin/python -m pytest -q tests/test_unique_submission_section.py tests/test_site_build.py",
-      "passed": 34,
-      "duration_seconds": 107.53
+      "passed": 37,
+      "duration_seconds": 106.38
     },
     "full_tests": {
       "command": ".venv/bin/python -m pytest -q",
-      "passed": 664,
-      "duration_seconds": 223.34
+      "passed": 667,
+      "duration_seconds": 229.5
     },
-    "ruff_check": "PASS",
-    "ruff_format": "PASS — 343 files already formatted",
-    "git_diff_check": "PASS",
-    "full_git_history_check": "PASS — scripts/check_git_history.py",
+    "ruff_check": "PASS — .venv/bin/ruff check .",
+    "ruff_format": "PASS — 345 files already formatted",
+    "git_diff_check": "PASS — final git diff --check after review, page, test, and run-card edits",
+    "full_git_history_check": "PASS — non-shallow repository detected; pinned commits and ancestry remain per-check responsibilities",
     "source_ref_refresh": {
       "command": ".venv/bin/python scripts/refresh_priority_feed.py",
       "exit_code": 0,
@@ -276,6 +281,29 @@
       "changed_refs": 9,
       "failures": 0,
       "scope": "GitHub refs only; no peer TIFF or score audit"
+    },
+    "uniqueness_feasibility": {
+      "command": ".venv/bin/python scripts/check_uniqueness_feasibility.py --dot-budget 37654 --dot-budget 44090",
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "statuses": [
+        "STOP_IMPOSSIBLE_BUDGET",
+        "STOP_IMPOSSIBLE_BUDGET"
+      ],
+      "candidate_surface_generated": false,
+      "candidate_dots_generated": false,
+      "submission_authorized": false
+    },
+    "strict_run_card_json_parse": "PASS — duplicate keys rejected with object_pairs_hook",
+    "upstream_integration": {
+      "origin_main_ref": "946e381936f27d40532ec1f5e8ea44a366faaffc",
+      "origin_main_integrated": true,
+      "merge_commits": [
+        "f8bfa84",
+        "5bd6ca7"
+      ],
+      "active_branch": "arena/7b3c8e4b-gemsdoe24",
+      "branch_pull_request_opened": false
     }
   },
   "resources": {

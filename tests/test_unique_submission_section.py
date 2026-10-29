@@ -173,6 +173,31 @@ def test_geo1_summary_labels_download_as_research_only_not_unique():
     assert "YES (by bytes)" not in html
     assert "Unique TIF Submission" not in html
     assert "unique, freshly computed TIF" not in html
+    assert "Best source-recorded HOLDOUT-DTI" not in html
+
+    from bs4 import BeautifulSoup
+
+    soup = BeautifulSoup(html, "html.parser")
+    section = soup.find("section", id="nine-site-table")
+    assert section is not None
+    table = section.find("table")
+    headers = [th.get_text(" ", strip=True) for th in table.select("thead th")]
+    assert "Leaderboard estimate / score provenance" in headers
+    rows = table.select("tbody tr")
+    assert len(rows) == 9
+    for row in rows:
+        cells = row.find_all(["th", "td"], recursive=False)
+        assert len(cells) == 5
+        score = cells[2].get_text(" ", strip=True)
+        uniqueness = cells[3].get_text(" ", strip=True)
+        assert "LEADERBOARD ESTIMATE: NOT ESTIMABLE" in score
+        assert "FAIL" in uniqueness
+        if "HOLDOUT-DTI" in score:
+            assert "gems-segment-pooled-v1" in score
+            assert "60,988 withheld positives" in score
+            assert "95% CI" in score
+        assert cells[4].get_text(" ", strip=True).startswith("NO")
+
     root_index = (ROOT / "index.html").read_text()
     assert 'href="docs/executive-summary-9sites.html"' in root_index
 
