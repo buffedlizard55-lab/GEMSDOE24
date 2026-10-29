@@ -1,0 +1,112 @@
+{
+  "schema": "gems-continuation-run-card-v1",
+  "branch": "arena/464e7405-gemsdoe24",
+  "date_utc": "2026-10-29",
+  "hypothesis": "No geological hypothesis tested: the parallel-run protocol's single assigned method paragraph is absent, and the full feature stack is unavailable.",
+  "mechanism": "Three-pass repository review; refresh GitHub-only source freshness for the nine pinned focus repositories; restore shallow Git history so frozen evidence verifiers can run; revalidate the retained-lattice necessary condition and one stopped local exact-file artifact.",
+  "named_non_fault_process_that_could_mimic_it": "The retained synthetic space-filling lattice can create high geometric 3-pixel overlap without geological similarity; this is a protocol-control incompatibility, not evidence of copying.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN: no new geological experiment. Historical S3DEP1 receipt separately revalidated (0.1660601364; gems-segment-pooled-v1; 60,988 withheld positives; 95% CI [0.1518583912, 0.1803388646]); not replayed in this review and not a leaderboard score."
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "final_dot_overlap": null,
+    "status": "NOT RUN by this review: no new candidate surface or dots. Concurrent GEO1 measurements are recorded separately below; full current registry not audited.",
+    "one_pinned_lattice_witness": {
+      "footprint_3px_uncovered_pixels": 6649,
+      "coverage_fraction": 0.9987132726822701,
+      "dot_budget_37654_minimum_overlap_fraction": 0.8234184947150369,
+      "dot_budget_44090_minimum_overlap_fraction": 0.8491948287593558,
+      "interpretation": "Universal necessary geometric lower bounds for distinct in-footprint dots against one retained witness; not measurements of a candidate and not evidence of copying."
+    }
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_candidate": "NOT GENERATED",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "NOT RUN on a new raster. Existing S3DEP1 exact-file receipt revalidated: FORMAT true, STRICT_RANGE true, SCIENTIFIC_AUTHORIZATION false, SUBMISSION DO_NOT_SUBMIT.",
+    "submission_authorized": false
+  },
+  "submission_name": null,
+  "submission_note": "No new TIFF; no submission authorized.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "leaderboard_estimate": null,
+  "organizer_confirmed_scores": [],
+  "focus_source_freshness": {
+    "checked_utc": "2026-10-29T17:09:21.742661+00:00",
+    "feed": "docs/data/priority_feed.json",
+    "repos_checked": 9,
+    "changed_since_frozen_artifact_audit": 9,
+    "failures": 0,
+    "scope": "GitHub commit refs only; no current-head artifact or score audit."
+  },
+  "verification": {
+    "first_full_pytest": "6 failed, 657 passed: all six failed because shallow checkout omitted commits required by frozen provenance/ancestry checks.",
+    "history_repair": "git fetch --unshallow origin main; did not change branch or checked-out commit; missing source commits became available.",
+    "focused_retest": "52 passed in affected provenance/integrity test files.",
+    "final_full_pytest": "667 passed after integrating concurrent main, adding the read-only GEO1 receipt verifier, and resolving merge conflicts.",
+    "ruff": "ruff check . passed; ruff format --check . passed (346 files). Frozen hash-pinned GEO1 experiment script excluded without modifying its bytes.",
+    "diff_check": "git diff --check passed.",
+    "priority_feed": "Live GitHub refresh checked all nine refs at 2026-10-29T17:09:21.742661+00:00; offline schema validation passed.",
+    "feasibility": "Shared uniqueness checker returned exit 2 for both standard budgets, as required by the necessary-condition stop.",
+    "s3dep1_receipt": "Historical run-card, selector, exact TIFF, ZIP, note and validator revalidated; selector verdict remains DO_NOT_SUBMIT. Holdout was not replayed."
+  },
+  "limitations": [
+    "No assigned single method paragraph or prospective lattice-policy resolution.",
+    "data/training_features.tif, data/prepared/, and data/geofeat/ are absent; full shared feature stack and provenance are not available in this checkout.",
+    "All nine GitHub main refs changed since frozen artifact audit pins; current site-head rasters and scores remain unaudited.",
+    "Historical 0.2778, 0.3195 and 0.4413 claims are not authenticated organizer receipts; leaderboard estimate is NOT ESTIMABLE.",
+    "No candidate surface/dots: no feature-only leakage test, full-registry novelty check, or new holdout.",
+    "No DrivenData portal/quota/receipt/hidden-label access; reported [0,1] rejection cause remains unknown.",
+    "No independent promotion-selector verification for a new candidate; no submission slot was used.",
+    "Concurrent GEO1 source has a --verify-recorded flag that does not stop execution; a separate read-only verifier was added. GEO1 is format-valid but fails lattice overlap and has an identified duplicated TMI_up150/RTP-proxy weighting caveat."
+  ],
+  "concurrent_main_artifact_review": {
+    "status": "Separate artifact merged from concurrent main session; not generated by this review.",
+    "submission_name": "GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif",
+    "raster_sha256": "ee37d94deb3545af1f814df61ec5acd7addafe01a4833384c2e25d1a5e6b384d",
+    "holdout_dti": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "value": 0.14269491602190398,
+      "withheld_positives": 60988,
+      "ci95": [
+        0.13229313491455882,
+        0.1523670504192869
+      ],
+      "provenance": "Source run card; exact receipt revalidated, not replayed in this review; not an organizer score."
+    },
+    "correlation_overlap_vs_registry": {
+      "preplacement_surface_max_abs_rank_correlation_vs_8_cached_rasters": 0.21073900596297743,
+      "final_surface_max_abs_rank_correlation_vs_8_cached_rasters": 0.12885252823005336,
+      "final_dots_within_3px_of_lattice_fraction": 0.9925377755759227,
+      "thresholds": {
+        "absolute_rank_correlation": 0.9,
+        "dot_overlap": 0.7
+      },
+      "verdict": "FAIL: final dot overlap exceeds the literal stop threshold; eight cached rasters are not a complete current registry audit."
+    },
+    "validator_output": {
+      "shared_exact_file_format_valid": true,
+      "no_nan_inside_footprint": true,
+      "strict_whole_array_values_in_0_1": true,
+      "CRS_shape_transform_match": true,
+      "scientific_authorization": false,
+      "submission_authorized": false
+    },
+    "verdict": "negative",
+    "ok_to_download": "YES for research only",
+    "ok_to_submit": false,
+    "verification_command": "python scripts/verify_geo1_receipt.py (read-only; does not replay experiment or holdout)",
+    "dangerous_original_flag": "scripts/build_unique_geothermal_submission.py --verify-recorded is a no-op flag and falls through to experiment/generation; do not invoke."
+  }
+}

@@ -38,6 +38,8 @@ exclude = [
   ".venv",
   "logs",
   "scripts/build_unique_submission_gapfill.py",
+  # Frozen, source-hashed GEO1 execution script; validate via the separate read-only verifier.
+  "scripts/build_unique_geothermal_submission.py",
 ]
 
 [tool.ruff.lint]
