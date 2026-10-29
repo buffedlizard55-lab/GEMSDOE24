@@ -1,0 +1,15 @@
+{
+  "checked_utc": "2026-10-29T14:22:14.465297+00:00",
+  "ref": "aebe92f7c8a990f0e3443451b7a825d9afd6336b",
+  "source": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/README.md",
+  "readme_sha256": "cfa4d55559c9128313beb9417eae7e0a94c31677132afb1120f9e86222804239",
+  "verified_scope": [
+    "README instructs placing downloaded competition data in data/.",
+    "README provides CPU-only and GPU environment choices."
+  ],
+  "not_verified": [
+    "Current leaderboard, organizer score receipts, account quota or portal behavior",
+    "External USGS, NLR, DrivenData, GDR or Dropbox availability"
+  ],
+  "network_scope": "GitHub API only"
+}

@@ -1,5 +1,8 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current review — 2026-10-29 (`arena/fc014f14-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF · SUBMIT: NO.** Read the [three-pass executive review](docs/repo-review-20261029-fc014f14.md), [run card](evidence/session_fc014f14_run_card.json), [mission prompt](docs/MISSION_PROMPT.md), and AGENTS before continuing. Shared writer/sanitizer/content-ID now reject complex and nonnumeric predictions instead of silently discarding information. Full suite after integrating concurrent main: **603 passed**. Fresh nine-repository ref checks all succeeded, but all differ from the pinned audit: no new scientific or leaderboard validation follows. The method lane and full feature cache remain missing; standard dot budgets fail the retained-lattice gate. No new prediction TIFF, experiment or slot; leaderboard estimates remain **NOT ESTIMABLE**. [Nine-site historical download/estimate/uniqueness table](docs/historical-champions.html).
 ## Current continuation — 2026-10-29 (`arena/a52178c4-gemsdoe24`)
 
 **NO NEW TIFF · NO EXPERIMENT · SUBMIT: NO.** Read the [three-pass review](docs/repo-review-20261029-a52178c4.md), [run card](evidence/session_a52178c4_run_card_20261029.json), [mission prompt](docs/MISSION_PROMPT.md), and [AGENTS.md](AGENTS.md) at session start. The [nine historical champions](docs/historical-champions.html) have now been rechecked with the shared strict validator; all remain research-only and fail the retained lattice novelty rule. The refreshed GitHub source feed is not an audit of the new heads or a leaderboard. The method paragraph is absent, the main feature stack is missing, and the independent selector verifier is not implemented. No score projection or portal acceptance is established.
