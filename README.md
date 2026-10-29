@@ -1,5 +1,9 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## Current session — 2026-10-29 (`arena/1d1bdb94-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · SUBMIT: NO.** Read the [repo review](docs/repo-review-20261029-arena-1d1bdb94.md) and [run card](evidence/session_1d1bdb94_20261029_run_card.json) first. Verified here: full suite **663 passed** on full git history (the shallow clone caused six receipt-test failures), ruff clean, uniqueness gate exit 2 at 37,654 dots (minimum lattice overlap 82.34%). Official text fetched from DrivenData: the metric and format are on the [problem page](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/). Irregularities for owner review: the local `sample_submission.tif` has the same positives as `labels.tif` (not an all-absence template); the owner's 0.4413 and 0.3195 leaderboard figures do not match the official snapshot top of 0.4544. The GEMSDOE32 0.2778 file's SHA-256 matches its GitHub copy, but the score remains owner-reported. The owner decision on the lattice rule is still required.
+
 ## Current session — 2026-10-29 (`arena/3f1f513d-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [current review](docs/repo-review-20261029-arena-3f1f513d.md), [run card](evidence/session_3f1f513d_20261029_run_card.json), [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at session start. The [nine-site historical table](docs/historical-champions.html) is a research-only snapshot, not a current leaderboard or recommendation. This continuation hardens shared single-TIFF ZIP and preflight receipt sidecar handling; format checks cannot authorize a slot. No method lane is assigned, the full feature stack is absent, and the retained lattice blocks the usual dot budgets under the literal uniqueness rule. The full test suite passed 619 tests; no hidden-score forecast, organizer receipt or new TIFF was produced.
