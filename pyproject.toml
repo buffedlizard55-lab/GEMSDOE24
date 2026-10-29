@@ -30,7 +30,7 @@ addopts = "-ra"
 [tool.ruff]
 target-version = "py311"
 line-length = 100
-# Frozen, source-hashed H-UNIQUE runner is quarantined; keep its receipt bytes/code immutable.
+# Frozen, source-hashed experiment runners are quarantined; preserve the exact code tied to their receipts.
 exclude = [
   "archive",
   "data",
@@ -38,6 +38,7 @@ exclude = [
   ".venv",
   "logs",
   "scripts/build_unique_submission_gapfill.py",
+  "scripts/build_unique_geothermal_submission.py",
 ]
 
 [tool.ruff.lint]

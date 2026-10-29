@@ -41,6 +41,32 @@
     }
   },
   "raster_sha256": null,
+  "reviewed_parallel_artifact": {
+    "file": "docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif",
+    "sha256": "ee37d94deb3545af1f814df61ec5acd7addafe01a4833384c2e25d1a5e6b384d",
+    "decision": "DOWNLOAD: research only; SUBMIT: NO",
+    "source_experiment_count": 1,
+    "source_submission_slots_used": 0,
+    "recorded_holdout_dti": {
+      "label": "HOLDOUT-DTI",
+      "value": 0.14269491602190398,
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "ci95": [0.13229313491455882, 0.1523670504192869],
+      "review_status": "COMPROMISED: holdout emission eligibility used the complete labels grid rather than fold.visible; not a valid comparable holdout"
+    },
+    "novelty": {
+      "surface_max_abs_spearman_vs_8_cached_registry_rasters": 0.21073900596297743,
+      "final_dot_overlap_within_3px": 0.9925377755759227,
+      "full_registry_entries": 46,
+      "literal_70_percent_gate": "FAIL"
+    },
+    "source_code_irregularities": [
+      "Holdout emission eligibility is fp & fold.valid & ~full_catalogue, which leaks withheld target locations into placement eligibility.",
+      "rtp_like and tmi_up150 are assigned the same TMI_up150 raster; the same Sobel edge is counted twice instead of supplying independent RTP corroboration."
+    ],
+    "scope": "Read-only source review; no re-run or scientific result asserted. Preserve original run card and TIFF as historical evidence."
+  },
   "validator_output": {
     "new_raster": false,
     "no_nan_inside_footprint": null,
@@ -70,6 +96,8 @@
     "Pinned peer KPL-36 HOLDOUT-DTI is not independently replayed or certified protocol-equivalent; no cross-site promotion follows.",
     "No current site-content or live leaderboard refresh; DrivenData, NLR, USGS, OpenEI and Dropbox hosts were not accessed here.",
     "Portal range-error cause, weekly quota, organizer acceptance and submission receipt remain unknown.",
-    "No independent positive-authorization selector/replay certificate is implemented."
+    "No independent positive-authorization selector/replay certificate is implemented.",
+    "The parallel GEO1 artifact is research-only; its source-recorded HOLDOUT-DTI is compromised by full-label eligibility leakage, and its 99.25% final overlap fails the literal registry rule.",
+    "The frozen GEO1 source-hashed runner contains nine Ruff findings and is excluded from Ruff instead of being modified, preserving the recorded executed-code hash."
   ]
 }
