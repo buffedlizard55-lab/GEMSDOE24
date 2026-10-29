@@ -1,0 +1,50 @@
+{
+  "schema": "gems-continuation-run-card-v1",
+  "branch": "arena/3f1f513d-gemsdoe24",
+  "hypothesis": "No geological hypothesis tested: the required assigned method paragraph is absent.",
+  "mechanism": "Integrity review of single-TIFF packaging and preflight receipt paths; remeasure retained-lattice feasibility.",
+  "named_non_fault_process_that_could_mimic_it": "A space-filling calibration lattice produces high geometric overlap without geological similarity.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN: no geological experiment"
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "candidate_dot_overlap": null,
+    "status": "NOT RUN: no candidate surface or dots",
+    "lattice_necessary_minimum_overlap_for_37654_distinct_in_footprint_dots": 0.8234184947150369,
+    "lattice_necessary_minimum_overlap_for_44090_distinct_in_footprint_dots": 0.8491948287593558,
+    "interpretation": "Remeasured necessary geometric lower bounds against one witness, not candidate measurements or a full registry audit."
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "status": "NOT RUN on a new raster: none generated",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "submission_authorized": false
+  },
+  "submission_name": null,
+  "submission_note": "No new TIFF; no submission authorized.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "leaderboard_estimate": null,
+  "organizer_confirmed_score": null,
+  "verification": {
+    "pass_1": "Reviewed prior work, refreshed nine GitHub source heads, and remeasured the retained-lattice necessary bound.",
+    "pass_2": "Hardened shared TIFF ZIP packaging and receipt sidecar protection; focused regression suite passed 89 tests.",
+    "pass_3": "Full pytest passed 606 tests after restoring git history; Ruff and diff checks passed. A research artifact preflight remained DO_NOT_SUBMIT."
+  },
+  "limitations": [
+    "No assigned method paragraph or prospective lattice policy resolution.",
+    "Full training raster and prepared cache absent; owner mirrors do not authenticate organizer provenance.",
+    "Nine source heads changed since older portfolio pins; GitHub freshness is not a current artifact or score audit.",
+    "Independent selector verifier is not implemented; no portal, account quota, receipt or current leaderboard access.",
+    "Sidecar checks do not protect against concurrent mutation or every possible non-GDAL companion file."
+  ]
+}

@@ -30,12 +30,26 @@ from gems.submission import _same_file  # noqa: E402
 
 def protect_inputs(output: Path | None, *inputs: Path | None) -> None:
     """A receipt must never overwrite the exact bytes it claims to inspect."""
-    if output is not None and any(
-        source is not None and _same_file(output, source) for source in inputs
-    ):
-        raise ValueError(
-            "Receipt output must not overwrite an artifact, template, run card or note"
-        )
+    if output is None:
+        return
+    for source in inputs:
+        if source is None:
+            continue
+        if _same_file(output, source):
+            raise ValueError(
+                "Receipt output must not overwrite an artifact, template, run card or note"
+            )
+        # Creating or replacing a GDAL sidecar can change how the next reader
+        # interprets a TIFF while leaving the TIFF's SHA-256 unchanged. Check
+        # both the supplied path and its resolved target (symlink aliases).
+        if source.suffix.lower() in (".tif", ".tiff"):
+            sidecars = (
+                Path(str(base) + suffix)
+                for base in (source, source.resolve())
+                for suffix in (".msk", ".aux.xml", ".ovr")
+            )
+            if any(_same_file(output, sidecar) for sidecar in sidecars):
+                raise ValueError("Receipt output must not overwrite or create a TIFF sidecar")
 
 
 DEFAULT_TEMPLATE = ROOT / "data/bridge/sample_submission.tif"

@@ -119,6 +119,60 @@ def test_zip_has_one_flat_tif_with_identical_bytes_and_note_is_not_inside(tmp_pa
         )
 
 
+def test_zip_refuses_external_mask_and_preserves_source_and_existing_output(tmp_path):
+    t, fp = template(tmp_path)
+    p = submission.write_submission(np.ones(fp.shape), t, tmp_path / "prediction.tif")
+    with rasterio.Env(GDAL_TIFF_INTERNAL_MASK=False):
+        with rasterio.open(p, "r+") as dst:
+            mask = np.full(fp.shape, 255, dtype=np.uint8)
+            mask[3, 3] = 0
+            dst.write_mask(mask)
+    sidecar = tmp_path / "prediction.tif.msk"
+    assert sidecar.exists()
+    original_tif, original_mask = p.read_bytes(), sidecar.read_bytes()
+    output = tmp_path / "prediction.zip"
+    output.write_bytes(b"existing evidence")
+    with pytest.raises(ValueError, match="self-contained"):
+        submission.zip_single(p, output)
+    assert output.read_bytes() == b"existing evidence"
+    assert p.read_bytes() == original_tif and sidecar.read_bytes() == original_mask
+
+
+@pytest.mark.parametrize("suffix", [".msk", ".aux.xml", ".ovr"])
+def test_zip_never_creates_or_overwrites_a_source_sidecar(tmp_path, suffix):
+    t, fp = template(tmp_path)
+    p = submission.write_submission(np.ones(fp.shape), t, tmp_path / "prediction.tif")
+    sidecar = tmp_path / (p.name + suffix)
+    original = p.read_bytes()
+    with pytest.raises(ValueError, match="source TIFF sidecar"):
+        submission.zip_single(p, sidecar)
+    assert not sidecar.exists() and p.read_bytes() == original
+
+
+@pytest.mark.parametrize("alias_kind", ["symlink", "hardlink"])
+def test_zip_refuses_output_alias_of_existing_source_sidecar(tmp_path, alias_kind):
+    t, fp = template(tmp_path)
+    p = submission.write_submission(np.ones(fp.shape), t, tmp_path / "prediction.tif")
+    sidecar = tmp_path / "prediction.tif.msk"
+    sidecar.write_bytes(b"sidecar evidence")
+    output = tmp_path / "alias.zip"
+    if alias_kind == "symlink":
+        output.symlink_to(sidecar)
+    else:
+        output.hardlink_to(sidecar)
+    with pytest.raises(ValueError, match="source TIFF sidecar"):
+        submission.zip_single(p, output)
+    assert sidecar.read_bytes() == b"sidecar evidence"
+
+
+def test_zip_refuses_nongeotiff_even_if_extension_is_tif(tmp_path):
+    p = tmp_path / "wrong.tif"
+    p.write_bytes(b"not a GeoTIFF")
+    with pytest.raises(rasterio.errors.RasterioIOError):
+        submission.zip_single(p)
+    assert not p.with_suffix(".zip").exists()
+
+
 def test_note_names_reference_and_never_falsely_calls_it_a_new_score():
     note = submission.make_note("reference-h19-5", "x" * 500, "123456789abc", reference=True)
     assert len(note) <= 140 and "reference, no new score" in note

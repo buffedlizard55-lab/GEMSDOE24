@@ -36,6 +36,32 @@ def test_cli_preserves_each_input_before_evaluation(tmp_path, role, alias):
     assert source.read_bytes() == b"immutable evidence, deliberately not a TIFF"
 
 
+@pytest.mark.parametrize("role", ["artifact", "template"])
+@pytest.mark.parametrize("suffix", [".msk", ".aux.xml", ".ovr"])
+def test_receipt_does_not_create_or_overwrite_a_tiff_sidecar(tmp_path, role, suffix):
+    source = tmp_path / "source.tif"
+    source.write_bytes(b"source")
+    output = tmp_path / (source.name + suffix)
+    command = [sys.executable, str(ROOT / "scripts/preflight_submission.py")]
+    command += [str(source if role == "artifact" else tmp_path / "missing.tif")]
+    if role == "template":
+        command += ["--template", str(source)]
+    result = subprocess.run(command + ["--output", str(output)], capture_output=True, text=True)
+    assert result.returncode != 0
+    assert "must not overwrite or create a TIFF sidecar" in result.stderr
+    assert not output.exists() and source.read_bytes() == b"source"
+
+
+def test_sidecar_path_is_checked_against_symlink_target(tmp_path):
+    source = tmp_path / "source.tif"
+    source.write_bytes(b"source")
+    alias = tmp_path / "alias.tif"
+    alias.symlink_to(source)
+    with pytest.raises(ValueError, match="TIFF sidecar"):
+        CLI.protect_inputs(tmp_path / "source.tif.msk", alias)
+    assert source.read_bytes() == b"source"
+
+
 def test_distinct_receipt_and_stdout_are_allowed(tmp_path):
     source = tmp_path / "artifact.tif"
     source.write_bytes(b"source")

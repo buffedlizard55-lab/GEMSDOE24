@@ -120,6 +120,25 @@ def zip_single(tif_path: Path | str, zip_path: Path | str | None = None) -> Path
         raise ValueError("ZIP input must be an existing .tif")
     if _same_file(tif_path, zip_path):
         raise ValueError("ZIP output must not overwrite the source TIFF")
+    # A single-TIFF archive cannot preserve a GDAL sidecar's mask, metadata,
+    # or georeferencing. A byte-identical TIFF inside the archive is not enough
+    # to guarantee the dataset has the same interpretation after extraction.
+    # Also protect sidecar paths before opening/creating the archive, including
+    # aliases and dangling symlinks, so packaging cannot destroy source data.
+    sidecars = [
+        Path(str(base) + suffix)
+        for base in (tif_path, tif_path.resolve())
+        for suffix in (".msk", ".aux.xml", ".ovr")
+    ]
+    if any(_same_file(zip_path, sidecar) for sidecar in sidecars):
+        raise ValueError("ZIP output must not overwrite a source TIFF sidecar")
+    if any(sidecar.exists() or sidecar.is_symlink() for sidecar in sidecars):
+        raise ValueError("ZIP input must be self-contained without sidecars")
+    with rasterio.open(tif_path) as src:
+        if src.driver != "GTiff":
+            raise ValueError("ZIP input must be a GeoTIFF")
+        if len(src.files) != 1 or Path(src.files[0]).resolve() != tif_path.resolve():
+            raise ValueError("ZIP input must be self-contained without sidecars")
     zip_path.parent.mkdir(parents=True, exist_ok=True)
     info = zipfile.ZipInfo(tif_path.name, date_time=(2026, 10, 2, 0, 0, 0))
     info.compress_type = zipfile.ZIP_DEFLATED
