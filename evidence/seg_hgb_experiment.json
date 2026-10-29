@@ -1,0 +1,185 @@
+{
+  "lane": "exploratory-seg-hgb-label-free",
+  "preregistered": false,
+  "submit": "NO",
+  "budget_dots": 37654,
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "dti": 0.068516,
+    "n_withheld_positive_pixels": 60988,
+    "ci95": [
+      0.057983,
+      0.079619
+    ],
+    "ci_method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw"
+  },
+  "folds": [
+    {
+      "fold": "NW",
+      "dti": 0.099895,
+      "TP_w": 969.619,
+      "FP_w": 6902.408,
+      "FN_w": 9195.381
+    },
+    {
+      "fold": "NE_LidarGapHeavy",
+      "dti": 0.071506,
+      "TP_w": 855.846,
+      "FP_w": 8944.693,
+      "FN_w": 11655.154
+    },
+    {
+      "fold": "SW",
+      "dti": 0.04363,
+      "TP_w": 804.859,
+      "FP_w": 9296.916,
+      "FN_w": 19729.141
+    },
+    {
+      "fold": "SE",
+      "dti": 0.076031,
+      "TP_w": 1201.022,
+      "FP_w": 6669.402,
+      "FN_w": 16576.978
+    }
+  ],
+  "fold_budget": [
+    {
+      "fold": "NW",
+      "k_budget": 8414,
+      "emitted": 8414,
+      "withheld_positives": 10165,
+      "n_train_pos": 49014,
+      "n_train_neg": 294084
+    },
+    {
+      "fold": "NE_LidarGapHeavy",
+      "k_budget": 10404,
+      "emitted": 10404,
+      "withheld_positives": 12511,
+      "n_train_pos": 47862,
+      "n_train_neg": 287172
+    },
+    {
+      "fold": "SW",
+      "k_budget": 10410,
+      "emitted": 10410,
+      "withheld_positives": 20534,
+      "n_train_pos": 36233,
+      "n_train_neg": 217398
+    },
+    {
+      "fold": "SE",
+      "k_budget": 8426,
+      "emitted": 8426,
+      "withheld_positives": 17778,
+      "n_train_pos": 41629,
+      "n_train_neg": 249774
+    }
+  ],
+  "leakage_canary": {
+    "rule": "per-feature AUC on holdout quadrant; > 0.90 means leakage until proven otherwise",
+    "worst_single_feature_auc": 0.6306,
+    "per_feature": {
+      "rtp": {
+        "max_auc_over_folds": 0.5193
+      },
+      "tmi_hg": {
+        "max_auc_over_folds": 0.5362
+      },
+      "tmi_vg": {
+        "max_auc_over_folds": 0.5197
+      },
+      "iso_grav_anom": {
+        "max_auc_over_folds": 0.5324
+      },
+      "iso_grav_anom_hg": {
+        "max_auc_over_folds": 0.5779
+      },
+      "iso_grav_anom_vg": {
+        "max_auc_over_folds": 0.5436
+      },
+      "det_elev": {
+        "max_auc_over_folds": 0.5673
+      },
+      "det_elev_slope": {
+        "max_auc_over_folds": 0.6021
+      },
+      "tmi": {
+        "max_auc_over_folds": 0.5247
+      },
+      "cond_surf": {
+        "max_auc_over_folds": 0.5382
+      },
+      "depth_to_base_surf": {
+        "max_auc_over_folds": 0.526
+      },
+      "geod_dilaterate": {
+        "max_auc_over_folds": 0.5382
+      },
+      "geod_shearrate": {
+        "max_auc_over_folds": 0.558
+      },
+      "lidar_1": {
+        "max_auc_over_folds": 0.5754
+      },
+      "lidar_2": {
+        "max_auc_over_folds": 0.5609
+      },
+      "lidar_3": {
+        "max_auc_over_folds": 0.5843
+      },
+      "lidar_4": {
+        "max_auc_over_folds": 0.597
+      },
+      "lidar_5": {
+        "max_auc_over_folds": 0.6029
+      },
+      "lidar_6": {
+        "max_auc_over_folds": 0.5955
+      },
+      "lidar_7": {
+        "max_auc_over_folds": 0.6126
+      },
+      "lidar_8": {
+        "max_auc_over_folds": 0.6054
+      },
+      "lidar_9": {
+        "max_auc_over_folds": 0.626
+      },
+      "lidar_10": {
+        "max_auc_over_folds": 0.5449
+      },
+      "lidar_cos2strike": {
+        "max_auc_over_folds": 0.5472
+      },
+      "lidar_sin2strike": {
+        "max_auc_over_folds": 0.5358
+      },
+      "det_local_relief": {
+        "max_auc_over_folds": 0.6182
+      },
+      "det_gradient": {
+        "max_auc_over_folds": 0.6271
+      },
+      "arc_rtp": {
+        "max_auc_over_folds": 0.5363
+      },
+      "arc_det_elev": {
+        "max_auc_over_folds": 0.6306
+      },
+      "arc_agreement": {
+        "max_auc_over_folds": 0.6153
+      }
+    },
+    "pass": true
+  },
+  "inputs": {
+    "features_sha256": "a4ca25b2a18f6f6637f0247367cc6235a1366eb8475f77b18cd0285e62232dc8",
+    "labels_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+    "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
+  },
+  "seconds": 290.8,
+  "emitted_pixels_full_grid": 37654
+}

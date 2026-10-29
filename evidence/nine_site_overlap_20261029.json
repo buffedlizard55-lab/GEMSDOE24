@@ -1,0 +1,234 @@
+{
+  "generated_by": "scripts/build_nine_site_summary.py",
+  "overlap_definition": "share of row-site dots within 3 px of column-site dots",
+  "footprint_px": 5167373,
+  "nine_site_matrix_row_to_col": {
+    "GEMSDOE24": {
+      "GEMSDOE24": 1.0,
+      "GEMSDOE25": 1.0,
+      "GEMSDOE27": 1.0,
+      "GEMSDOE28": 0.9347916562619654,
+      "GEMSDOE30": 1.0,
+      "GEMSDOE31": 0.9407847641878506,
+      "GEMSDOE32": 0.88476585260284,
+      "GEMSDOE33": 0.9623932477650702,
+      "GEMSDOE36": 0.8856148762256738
+    },
+    "GEMSDOE25": {
+      "GEMSDOE24": 1.0,
+      "GEMSDOE25": 1.0,
+      "GEMSDOE27": 1.0,
+      "GEMSDOE28": 0.9318212746654571,
+      "GEMSDOE30": 1.0,
+      "GEMSDOE31": 0.937151281469721,
+      "GEMSDOE32": 0.8817192107053754,
+      "GEMSDOE33": 0.9605806305284645,
+      "GEMSDOE36": 0.8826491267861193
+    },
+    "GEMSDOE27": {
+      "GEMSDOE24": 0.9801884946517089,
+      "GEMSDOE25": 0.9801558831202714,
+      "GEMSDOE27": 1.0,
+      "GEMSDOE28": 0.9161557526741456,
+      "GEMSDOE30": 0.9801558831202714,
+      "GEMSDOE31": 0.9220910513957735,
+      "GEMSDOE32": 0.8671895382207149,
+      "GEMSDOE33": 0.9432885468301592,
+      "GEMSDOE36": 0.8680374380380903
+    },
+    "GEMSDOE28": {
+      "GEMSDOE24": 1.0,
+      "GEMSDOE25": 1.0,
+      "GEMSDOE27": 1.0,
+      "GEMSDOE28": 1.0,
+      "GEMSDOE30": 1.0,
+      "GEMSDOE31": 0.9975570897503983,
+      "GEMSDOE32": 0.9547265002655337,
+      "GEMSDOE33": 0.9984067976633032,
+      "GEMSDOE36": 0.9552044609665428
+    },
+    "GEMSDOE30": {
+      "GEMSDOE24": 1.0,
+      "GEMSDOE25": 1.0,
+      "GEMSDOE27": 1.0,
+      "GEMSDOE28": 0.9318212746654571,
+      "GEMSDOE30": 1.0,
+      "GEMSDOE31": 0.937151281469721,
+      "GEMSDOE32": 0.8817192107053754,
+      "GEMSDOE33": 0.9605806305284645,
+      "GEMSDOE36": 0.8826491267861193
+    },
+    "GEMSDOE31": {
+      "GEMSDOE24": 1.0,
+      "GEMSDOE25": 1.0,
+      "GEMSDOE27": 1.0,
+      "GEMSDOE28": 0.9956217816363591,
+      "GEMSDOE30": 1.0,
+      "GEMSDOE31": 1.0,
+      "GEMSDOE32": 0.9539043259782581,
+      "GEMSDOE33": 0.9990547028533048,
+      "GEMSDOE36": 0.9544018507923082
+    },
+    "GEMSDOE32": {
+      "GEMSDOE24": 1.0,
+      "GEMSDOE25": 1.0,
+      "GEMSDOE27": 1.0,
+      "GEMSDOE28": 0.9987517926382323,
+      "GEMSDOE30": 1.0,
+      "GEMSDOE31": 1.0,
+      "GEMSDOE32": 1.0,
+      "GEMSDOE33": 0.9998406543793488,
+      "GEMSDOE36": 1.0
+    },
+    "GEMSDOE33": {
+      "GEMSDOE24": 0.9970619849516302,
+      "GEMSDOE25": 0.997038098650424,
+      "GEMSDOE27": 0.9970858712528365,
+      "GEMSDOE28": 0.9705004180102711,
+      "GEMSDOE30": 0.997038098650424,
+      "GEMSDOE31": 0.9747999522273976,
+      "GEMSDOE32": 0.9264301922847247,
+      "GEMSDOE33": 1.0,
+      "GEMSDOE36": 0.9271228950197062
+    },
+    "GEMSDOE36": {
+      "GEMSDOE24": 0.9756781798527822,
+      "GEMSDOE25": 0.9749832707057189,
+      "GEMSDOE27": 0.9757811293560509,
+      "GEMSDOE28": 0.9731301796468832,
+      "GEMSDOE30": 0.9749832707057189,
+      "GEMSDOE31": 0.9745714726926442,
+      "GEMSDOE32": 0.9740309878004839,
+      "GEMSDOE33": 0.9750347454573531,
+      "GEMSDOE36": 1.0
+    }
+  },
+  "max_overlap_with_any_other_focus_site": {
+    "GEMSDOE24": 1.0,
+    "GEMSDOE25": 1.0,
+    "GEMSDOE27": 0.9801884946517089,
+    "GEMSDOE28": 1.0,
+    "GEMSDOE30": 1.0,
+    "GEMSDOE31": 1.0,
+    "GEMSDOE32": 1.0,
+    "GEMSDOE33": 0.9970858712528365,
+    "GEMSDOE36": 0.9757811293560509
+  },
+  "nine_union_within_3px_of_footprint": 0.1957,
+  "champions": {
+    "GEMSDOE24": {
+      "file": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
+      "sha256": "3e0730e8d4f7db095dd80246a98cba3bc0fc9a28f436b91db27ca34df4d0d1ce",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/07345ea0604953d7efb858d9cfbc21e20c7aca0b/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
+      "dots": 60069,
+      "grid_ok": true,
+      "outside_footprint_values": [
+        0.0
+      ]
+    },
+    "GEMSDOE25": {
+      "file": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif",
+      "sha256": "3e78737f0da8dd2ca66cc6caac0ce8eeefcd6715707f8d1bd3091845cd9bcc30",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/04333cc3fbf7486c56e0324fd07aee684be614dc/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif",
+      "dots": 44090,
+      "grid_ok": true,
+      "outside_footprint_values": [
+        0.0
+      ]
+    },
+    "GEMSDOE27": {
+      "file": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif",
+      "sha256": "a9bf76b57453a5b3af74c8eef837df53c29a0931162aa540b8763220b36ba3bb",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/b8dd298e10884afffa05436673ac73aeaf850b8c/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif",
+      "dots": 61328,
+      "grid_ok": true,
+      "outside_footprint_values": [
+        0.0
+      ]
+    },
+    "GEMSDOE28": {
+      "file": "gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif",
+      "sha256": "7c74270ad48fa0b865163853046a6d3815967c5bf37bbda5b74ca7fa22583a32",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/78e724f95337a6528b1248be5c113c6d6d502891/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif",
+      "dots": 37660,
+      "grid_ok": true,
+      "outside_footprint_values": [
+        0.0
+      ]
+    },
+    "GEMSDOE30": {
+      "file": "gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+      "sha256": "8cf893ead5667df21d3288a9968c35fd5385c425b029d82ee71d311715b129fd",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/3d5bec2af5f29291617f97c9e2dfe443be6f55c3/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+      "dots": 44090,
+      "grid_ok": true,
+      "outside_footprint_values": [
+        0.0
+      ]
+    },
+    "GEMSDOE31": {
+      "file": "gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif",
+      "sha256": "acd853936e5a7170b207f23411b1844caa0e7cfdfc303c600e520ccfe75159e6",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/cf13282fcd86290f1539f0a86446c8ba7205a79b/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif",
+      "dots": 40199,
+      "grid_ok": true,
+      "outside_footprint_values": [
+        0.0
+      ]
+    },
+    "GEMSDOE32": {
+      "file": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/012e17b2a115c3c0d5e7885bea625bf9657c99fc/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "dots": 37654,
+      "grid_ok": true,
+      "outside_footprint_values": [
+        0.0
+      ]
+    },
+    "GEMSDOE33": {
+      "file": "GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+      "sha256": "87f857d505e23247e991ccfab2cbe9f49a04df4f9c8028dce7ea261554690757",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f52533110fe62cd03e77f1228e9e5ecac412c463/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+      "dots": 41865,
+      "grid_ok": true,
+      "outside_footprint_values": [
+        0.0
+      ]
+    },
+    "GEMSDOE36": {
+      "file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c9ad59ec6f969ed931d089a03044c1567a633e84/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "dots": 38854,
+      "grid_ok": true,
+      "outside_footprint_values": [
+        0.0
+      ]
+    }
+  },
+  "candidate": {
+    "file": "gems24-nine-complement-seghgb-20261029-zeros.tif",
+    "sha256": "4dfb4a7ce96e85c43bdedcd61ea77da644dfae1efbb199338fbb437ff95a04e9",
+    "dots": 37654,
+    "grid_ok": true,
+    "strict_whole_array_0_1": true,
+    "nan_inside_footprint": 0,
+    "overlap_vs_nine_max": 0.0,
+    "overlap_vs_nine": {
+      "GEMSDOE24": 0.0,
+      "GEMSDOE25": 0.0,
+      "GEMSDOE27": 0.0,
+      "GEMSDOE28": 0.0,
+      "GEMSDOE30": 0.0,
+      "GEMSDOE31": 0.0,
+      "GEMSDOE32": 0.0,
+      "GEMSDOE33": 0.0,
+      "GEMSDOE36": 0.0
+    },
+    "pearson_vs_nine_max": -0.007340363088114877
+  },
+  "uniqueness_rule_user_threshold": 0.7,
+  "unique_vs_nine_sites": true,
+  "note": "Overlap is geometry only; it is not a score and not proof of copying."
+}
