@@ -1,6 +1,6 @@
 # GEMS DOE 24 — Current Mission Prompt (normalized summary)
 
-**Source task context:** `arena/823062f0-gemsdoe24` (historical; not the current branch). **Current branch:** `arena/932e2262-gemsdoe24`. **Date:** 2026-10-28.
+**Source task context:** historical normalized summary, last corrected 2026-10-29; branch references in earlier session notes are historical. Read the actual current request and README as well.
 
 ## Objective
 Place top of the DrivenData GEMS competition leaderboard (https://www.drivendata.org/competitions/306/competition-doe-gems/) by generating a **unique TIF submission** and publishing an executive summary that makes the best submission obvious and downloadable.
@@ -10,7 +10,7 @@ GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31, GEMSDOE32, GEM
 
 ## Hard requirements (must all hold)
 1. **MUST generate a unique TIF submission.** Do not copy a previous submission. It must be obvious whether the generated TIF is OK to download and submit.
-2. Easy-to-download submission TIF (one click). Values must be in [0, 1] — fix the "Predicted values must be in range [0, 1]" portal rejection by writing zeros outside the footprint (strict whole-array [0,1]).
+2. Easy-to-download submission TIF (one click). Investigate the reported "Predicted values must be in range [0, 1]" portal rejection. A zero-outside variant passes a strict whole-array range check locally, but its acceptance and the cause of the rejection are not established; it differs from the sample's NaN-outside convention.
 3. Unique name + short note (<= 140 characters).
 4. Executive summary on every focus site; a table listing: file to download, estimated score, whether unique vs the other GEMSDOE sites.
 5. Executive summary subpage explaining exactly how to make a submission.
@@ -29,7 +29,7 @@ GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31, GEMSDOE32, GEM
 
 ## Known state (verified in this session)
 - Owner-reported historical highs (GEMSDOE32 B2 0.2778, GEMSDOE36 Anderson 0.2750, etc.) are **NOT organizer-confirmed**; no DrivenData auth is available, so live scores are NOT ESTIMABLE.
-- Every dotted budget fails the literal all-entries lattice gate (spacing-5 lattice covers 99.87% of footprint within 3 px -> >= 82.34% overlap). Reported, not evaded.
+- The retained spacing-5 lattice covers approximately 99.87% of the footprint within 3 px. The geometric lower bound exceeds the 70% limit for any set of at least 22,164 distinct in-footprint dots; at 37,654 dots it is about 82.34%. Smaller budgets are not ruled out by this bound alone and are not certified unique. Do not evade the gate by targeting lattice holes.
 - Research-only VENTRAD candidate: `docs/downloads/24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif` (SHA-256 `603d21db…9626`), 37,722 dots, source-recorded HOLDOUT-DTI 0.1223 [0.1111, 0.1337] (`gems-segment-pooled-v1`, 60,988 withheld positives). A narrow 10-method comparison is not the protocol registry test: the required retained-lattice overlap is 0.99817 (>0.70), so protocol uniqueness FAILS. The candidate is format-valid, `ok_to_download: YES`, `ok_to_submit: NO`; no slot was spent. Its measurement was not independently replayed in the current review.
 
 ## Off-limits / do-not
