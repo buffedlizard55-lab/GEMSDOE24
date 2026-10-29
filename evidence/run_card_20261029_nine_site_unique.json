@@ -65,7 +65,7 @@
     "vs_local_registry_max": 0.972752,
     "vs_local_registry_max_file": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
     "vs_local_registry_max_abs_pearson": 0.049959,
-    "registry_files_compared": 82,
+    "registry_files_compared": 84,
     "thresholds": {
       "overlap": 0.7,
       "pearson": 0.9
@@ -91,6 +91,25 @@
       "hash_bound_scientific_promotion",
       "RUN_CARD_REQUIRED"
     ]
+  },
+  "alternate_unique_candidate_geo1": {
+    "file": "GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif",
+    "sha256": "ee37d94deb3545af1f814df61ec5acd7addafe01a4833384c2e25d1a5e6b384d",
+    "dots": 129184,
+    "dti": 0.14269491602190398,
+    "ci": [
+      0.13229313491455882,
+      0.1523670504192869
+    ],
+    "n_withheld": 60988,
+    "max_nine": 0.229053,
+    "max_nine_site": "data/research/nine_site/GEMSDOE27__gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif",
+    "lattice": 0.992538,
+    "max_other_nonlattice": 0.360757,
+    "max_other_file": "docs/downloads/gems24-sahg1-strike-hydro-geomorph-20261025-13d01f28d5db-nan.tif",
+    "verdict": "negative",
+    "ok_to_submit": false,
+    "note": "GEMSDOE24 GEO1 | concealed-conduit radiomag-lidar propensity, no catalogue global features | id 8c9946590ca7 | not yet live-scored"
   },
   "submission_name": "gems24-nine-complement-seghgb-20261029-zeros",
   "submission_note": "GEMS24 nine-complement seg-HGB 37654 dots | 0 overlap vs 9 focus sites | HOLDOUT-DTI 0.0369 | research only; SUBMIT NO",

@@ -1,0 +1,23 @@
+{
+  "file": "GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif",
+  "nan_file": "GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-nan.tif",
+  "sha256": "ee37d94deb3545af1f814df61ec5acd7addafe01a4833384c2e25d1a5e6b384d",
+  "content_id": "8c9946590ca7",
+  "pixel_count": 129184,
+  "note": "GEMSDOE24 GEO1 | concealed-conduit radiomag-lidar propensity, no catalogue global features | id 8c9946590ca7 | not yet live-scored",
+  "note_file": "note-GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.txt",
+  "checks_file": "checks-GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.json",
+  "role": "primary",
+  "format_valid": true,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "recommended_for_new_slot": false,
+  "slot_recommendation": "not_recommended",
+  "verdict": "negative",
+  "holdout_dti": 0.14269491602190398,
+  "holdout_ci95": [
+    0.13229313491455882,
+    0.1523670504192869
+  ],
+  "run_card": "geo1_run_card.json"
+}

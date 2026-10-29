@@ -61,6 +61,12 @@ def main() -> None:
         if not bd.any():
             skipped.append({"file": str(Path(f).relative_to(ROOT)), "reason": "no dots"})
             continue
+        if np.array_equal(bd, cd):
+            # Same dot set, different encoding (e.g. NaN vs zero outside): a twin, not a rival.
+            skipped.append(
+                {"file": str(Path(f).relative_to(ROOT)), "reason": "twin (identical dot set)"}
+            )
+            continue
         d = distance_transform_edt(~bd)
         ov = float(((d <= 3.0) & cd).sum() / n)
         rho = float(np.corrcoef(cv[fp], a[fp])[0, 1]) if a[fp].std() > 0 else 0.0

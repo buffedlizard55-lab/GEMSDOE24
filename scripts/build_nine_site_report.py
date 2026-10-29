@@ -50,6 +50,41 @@ OWNER_REPORTED = {
 }
 
 
+GEO1_REL = (
+    "downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif"
+)
+GEO1_CARD = "geo1_run_card.json"
+
+
+def geo1_facts():
+    """Facts about the concurrent GEO1 raster on main, read from its card and the audit."""
+    card = load(GEO1_CARD)
+    aud = load("geo1_registry_overlap_20261029.json")
+    nine = [r for r in aud["all"] if "data/research/nine_site/" in r["file"]]
+    lattice = [r for r in aud["all"] if "lattice" in r["file"]][0]
+    other = [
+        r
+        for r in aud["all"]
+        if "data/research/nine_site/" not in r["file"] and "lattice" not in r["file"]
+    ]
+    return {
+        "file": card["submission_name"],
+        "sha256": card["validator_output"]["sha256"],
+        "dots": int(card["validator_output"]["in_footprint_positive_pixels"]),
+        "dti": card["holdout"]["dti"],
+        "ci": card["holdout"]["ci95"],
+        "n_withheld": int(card["holdout"]["n_withheld_positive_pixels"]),
+        "max_nine": max(r["overlap_candidate_within_3px"] for r in nine),
+        "max_nine_site": max(nine, key=lambda r: r["overlap_candidate_within_3px"])["file"],
+        "lattice": lattice["overlap_candidate_within_3px"],
+        "max_other_nonlattice": max(r["overlap_candidate_within_3px"] for r in other),
+        "max_other_file": max(other, key=lambda r: r["overlap_candidate_within_3px"])["file"],
+        "verdict": card["verdict"],
+        "ok_to_submit": card["ok_to_submit"],
+        "note": card["note"],
+    }
+
+
 def load(name):
     return json.loads((EV / name).read_text())
 
@@ -59,6 +94,7 @@ def pct(x):
 
 
 def build_html(ov, seg, comp, reg):
+    g = geo1_facts()
     rows_site = []
     b2_row = [
         v for k, v in ov["nine_site_matrix_row_to_col"]["GEMSDOE32"].items() if k != "GEMSDOE32"
@@ -98,6 +134,20 @@ def build_html(ov, seg, comp, reg):
         "<td><b>YES</b> (vs nine)<br><small>registry-lattice test FAILS</small></td>"
         "<td><b>Download: YES (format-valid, research)<br>Submit: NO</b></td></tr>"
     )
+    g = geo1_facts()
+    rows_site.append(
+        "<tr class='ok'><td><b>UNIQUE CANDIDATE 2 (GEO1)</b><br><small>concurrent session, on main</small></td>"
+        f'<td><a href="{GEO1_REL}"><b>{g["file"]}</b></a>'
+        f"<br><small>SHA-256 <code>{g['sha256'][:16]}…</code></small></td>"
+        f"<td>{g['dots']:,}</td><td>NONE</td>"
+        f"<td><b>NOT ESTIMABLE</b><br><small>HOLDOUT-DTI {g['dti']:.4f} "
+        f"[{g['ci'][0]:.4f}, {g['ci'][1]:.4f}], {g['n_withheld']:,} withheld (source-recorded; "
+        "re-verified with --verify-recorded, not retrained here)</small></td>"
+        f"<td>{pct(g['max_nine'])} max vs nine</td>"
+        f"<td><b>YES</b> (vs nine)<br><small>lattice {pct(g['lattice'])} FAILS literal gate</small></td>"
+        "<td><b>Download: research · Submit: NO</b> (card verdict: "
+        f"{g['verdict']}; ok_to_submit={str(g['ok_to_submit']).lower()})</td></tr>"
+    )
     matrix_head = "".join(f"<th>{s[-2:]}</th>" for s in ov["champions"])
     matrix_rows = []
     for a in ov["champions"]:
@@ -127,7 +177,8 @@ code{{font-size:12px}} small{{color:#475467}}
 <ul>
 <li><b>Highest owner-reported file: GEMSDOE32 B2 at 0.2778</b> (OWNER-REPORTED, no organizer receipt). It is <b>NOT unique</b>: {pct_lo}–{pct_hi} of GEMSDOE32's own dots lie within 3 px of dots from each other focus site.</li>
 <li><b>All nine sites are one family.</b> The lowest pairwise overlap is {min_pair:.3f}. The nine files are not nine independent approaches.</li>
-<li><b>The only unique file generated today</b> is <code>{CANDIDATE_NAME}</code>. It is format-valid and downloadable, but its holdout score is <b>HOLDOUT-DTI {comp["holdout_dti"]["dti"]:.4f}</b>, roughly half the unrestricted baseline ({seg["holdout_dti"]["dti"]:.4f}), so it is <b>not competitive</b>. Its verdict is <b>DOWNLOAD: research only · SUBMIT: NO</b>.</li>
+<li><b>Two unique files now exist.</b> GEO1 (on main, concurrent session) has the stronger holdout: HOLDOUT-DTI {g["dti"]:.4f} [{g["ci"][0]:.4f}, {g["ci"][1]:.4f}] (source-recorded), and max overlap {pct(g["max_nine"])} with the nine. Its literal lattice overlap is {pct(g["lattice"])}. Both are research downloads; neither beats the repo-recorded holdout best of 0.166060, so neither is promotable under the owner's rule.</li>
+<li>My complement candidate <code>{CANDIDATE_NAME}</code>. It is format-valid and downloadable, but its holdout score is <b>HOLDOUT-DTI {comp["holdout_dti"]["dti"]:.4f}</b>, roughly half the unrestricted baseline ({seg["holdout_dti"]["dti"]:.4f}), so it is <b>not competitive</b>. Its verdict is <b>DOWNLOAD: research only · SUBMIT: NO</b>.</li>
 </ul></div>
 
 <div class="good"><b>How to make the portal accept a file.</b> Upload a single-band float32 GeoTIFF whose stored values are all finite and in [0, 1]. The <code>-zeros</code> variant satisfies a strict whole-array check. The earlier error &ldquo;Predicted values must be in range [0, 1]&rdquo; is <b>not confirmed</b>. A NaN-outside file is a plausible cause but is untested. See <a href="#howto">how to submit</a>.</div>
@@ -138,7 +189,7 @@ code{{font-size:12px}} small{{color:#475467}}
 <tr><th>Site</th><th>File to download (pinned)</th><th>Dots</th><th>Owner-reported score</th><th>Estimated leaderboard score</th><th>Max 3-px overlap with other 8 focus sites</th><th>Unique vs the other GEMSDOE sites?</th><th>Decision</th></tr>
 {"".join(rows_site)}
 </table>
-<p>Best owner-reported: <b>{best_owner[0]} = {best_owner[1][0]}</b> (not unique). Best unique file: <b>{CANDIDATE_NAME}</b> (not competitive).</p>
+<p>Best owner-reported: <b>{best_owner[0]} = {best_owner[1][0]}</b> (not unique). Best unique file by holdout: <b>{g["file"]}</b> (HOLDOUT-DTI {g["dti"]:.4f}, source-recorded). My complement candidate: <b>{CANDIDATE_NAME}</b> (HOLDOUT-DTI {comp["holdout_dti"]["dti"]:.4f}, replayed here). Neither is promotable.</p>
 
 <h2>2. Pairwise uniqueness matrix (share of row-site dots within 3 px of column-site dots)</h2>
 <table><tr><th></th>{matrix_head}</tr>{"".join(matrix_rows)}</table>
@@ -166,7 +217,7 @@ code{{font-size:12px}} small{{color:#475467}}
 <ul>
 <li>No organizer receipt, leaderboard access or submission quota check. DrivenData pages were not re-read this session (repo policy).</li>
 <li>HOLDOUT-DTI is an internal proxy: withheld catalogue fault segments, not the hidden leaderboard truth.</li>
-<li>The full 2026-10-29 registry comparison covers 82 local binary rasters. It does not cover all live peer submissions.</li>
+<li>The 2026-10-29 registry comparison covers {reg["files_compared"]} local binary rasters (after excluding twins with identical dot sets). It does not cover all live peer submissions.</li>
 </ul>
 
 <h2>6. Sources (official or owner-pinned, for manual review)</h2>
@@ -252,6 +303,7 @@ def build_run_card(ov, seg, comp, reg, pre):
             "preflight_decision": pre["decision"]["submission_status"],
             "preflight_blockers": pre["decision"]["blockers"],
         },
+        "alternate_unique_candidate_geo1": geo1_facts(),
         "submission_name": CANDIDATE_NAME.replace(".tif", ""),
         "submission_note": NOTE,
         "submission_note_chars": len(NOTE),

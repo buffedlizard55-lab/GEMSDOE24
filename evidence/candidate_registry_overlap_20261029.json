@@ -2,7 +2,7 @@
   "candidate": "docs/downloads/gems24-nine-complement-seghgb-20261029-zeros.tif",
   "candidate_sha256": "4dfb4a7ce96e85c43bdedcd61ea77da644dfae1efbb199338fbb437ff95a04e9",
   "candidate_dots": 37654,
-  "files_compared": 82,
+  "files_compared": 84,
   "skipped": [
     {
       "file": "docs/downloads/gems24-nine-complement-seghgb-20261029-zeros.tif",
@@ -20,6 +20,20 @@
       "dots": 206895,
       "overlap_candidate_within_3px": 0.972752,
       "pearson_on_footprint": 0.000376
+    },
+    {
+      "file": "docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-nan.tif",
+      "sha256": "a2083686c07a2cf732c8b472fa2ba2c38a71667c820305d4117b6cda6222f1d1",
+      "dots": 129184,
+      "overlap_candidate_within_3px": 0.57699,
+      "pearson_on_footprint": 0.004892
+    },
+    {
+      "file": "docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif",
+      "sha256": "ee37d94deb3545af1f814df61ec5acd7addafe01a4833384c2e25d1a5e6b384d",
+      "dots": 129184,
+      "overlap_candidate_within_3px": 0.57699,
+      "pearson_on_footprint": 0.004892
     },
     {
       "file": "docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif",
@@ -83,20 +97,6 @@
       "dots": 37722,
       "overlap_candidate_within_3px": 0.407075,
       "pearson_on_footprint": 0.049959
-    },
-    {
-      "file": "docs/downloads/gems24-xvar1-duplicate-semivariogram-20261026-7d909c75458c-nan.tif",
-      "sha256": "9d6f330256fe2ae7c2d6615fcfa9a61312136d7dda3d08aeebb57b854f0cf974",
-      "dots": 37654,
-      "overlap_candidate_within_3px": 0.401949,
-      "pearson_on_footprint": 0.024495
-    },
-    {
-      "file": "docs/downloads/gems24-xvar1-duplicate-semivariogram-20261026-7d909c75458c-zeros.tif",
-      "sha256": "9c7d4ff1d49e322134e6b06e4ec304b98ea03d31420ac58c3803d9f2f57ba4b1",
-      "dots": 37654,
-      "overlap_candidate_within_3px": 0.401949,
-      "pearson_on_footprint": 0.024495
     }
   ],
   "all": [
@@ -106,6 +106,20 @@
       "dots": 206895,
       "overlap_candidate_within_3px": 0.972752,
       "pearson_on_footprint": 0.000376
+    },
+    {
+      "file": "docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-nan.tif",
+      "sha256": "a2083686c07a2cf732c8b472fa2ba2c38a71667c820305d4117b6cda6222f1d1",
+      "dots": 129184,
+      "overlap_candidate_within_3px": 0.57699,
+      "pearson_on_footprint": 0.004892
+    },
+    {
+      "file": "docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif",
+      "sha256": "ee37d94deb3545af1f814df61ec5acd7addafe01a4833384c2e25d1a5e6b384d",
+      "dots": 129184,
+      "overlap_candidate_within_3px": 0.57699,
+      "pearson_on_footprint": 0.004892
     },
     {
       "file": "docs/downloads/gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif",
