@@ -60,6 +60,11 @@ def geometry(values, footprint, lattice_distance):
     }
 
 
+def validate_historical_artifact(path, template):
+    """Use current strict checks for a fresh readback, not legacy receipt mode."""
+    return check_variants(path, template, strict=True)
+
+
 def build(root=ROOT):
     root = Path(root)
     source = root / "evidence/peer_forensics_20261025.json"
@@ -86,7 +91,9 @@ def build(root=ROOT):
             gh_bytes(repo, path, ref, cache)
         if sha256_file(cache) != record["sha256"]:
             raise ValueError("Historical artifact checksum changed")
-        checked = check_variants(cache, root / "data/bridge/sample_submission.tif")
+        # Fresh audits must use strict readback; legacy mode exists only for
+        # comparing frozen receipts and does not bind GDAL sidecars to the TIFF.
+        checked = validate_historical_artifact(cache, root / "data/bridge/sample_submission.tif")
         if not checked["format_valid"]:
             raise ValueError("Historical artifact failed shared format validator")
         with rasterio.open(cache) as ds:
@@ -179,7 +186,7 @@ No new-head, pre-placement-surface or exhaustive registry certification follows.
 <h2>Next action, without spending a slot</h2><p>The method-lane paragraph is missing. Common fixed dot budgets cannot pass the literal retained-lattice rule; do not remove the comparator, shift dots into its holes or retune a stopped method. Resolve the protocol prospectively before training.
 <a href="research-directions-20261027.md">Four ranked research directions, novelty caveats and source availability</a> remain proposals, not validated discoveries. The main training raster and prepared cache are absent in this checkout.</p>
 <p>After a lane is assigned: use the shared buffered whole-segment holdout, visible-only catalogue features, feature canaries, pooled 300 m DTI and paired confidence intervals; check surfaces and final dots against the complete registry. Only a separately authorized selector with verified quota can promote a candidate. A CPU pipeline exists; GPU access is not universally required.</p>
-<h2>Format and upload guide</h2><p>The shared validator checked single-band grid alignment and finite in-footprint values in [0,1]. The separate exterior-NaN check reflects the validator’s recorded interpretation of the official text; it conflicts with a strict whole-array no-NaN check. Portal behavior is not established here. No raster was repaired or rewritten here. A prior portal range error cannot be diagnosed from its text alone; exterior NaNs and out-of-range values must both be checked. Do not assume renaming or clipping establishes scientific eligibility.</p>
+<h2>Format and upload guide</h2><p>The shared strict validator checked single-band grid alignment, self-contained files, unmasked and finite in-footprint values in [0,1]. The separate exterior-NaN check reflects the validator’s recorded interpretation of the official text; it conflicts with a strict whole-array no-NaN check. Portal behavior is not established here. No raster was repaired or rewritten here. A prior portal range error cannot be diagnosed from its text alone; exterior NaNs and out-of-range values must both be checked. Do not assume renaming or clipping establishes scientific eligibility.</p>
 <p>When a future candidate passes every gate, download its exact hash-bound TIFF, use its unique submission name and note (at most 140 characters), and upload it on the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">competition submission page</a>. Save the artifact-linked organizer receipt. For now, do not upload any file from this table.</p>
 <p><a href="data/historical_champions_20261028.json">Full machine-readable validator and overlap receipt</a> ·
 <a href="https://github.com/drivendataorg/gems-prize-reference-solution">Official reference solution</a> ·
