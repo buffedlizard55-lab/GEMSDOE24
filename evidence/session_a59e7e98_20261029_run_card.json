@@ -41,7 +41,7 @@
   "leaderboard_estimate": null,
   "tests": {
     "focused_pytest": "62 passed",
-    "full_pytest": "603 passed across two disjoint test-file groups: 268 and 335. An earlier unsplit attempt timed out after at least 71% progress and is not counted as a completed run.",
+    "full_pytest": "Before integrating main PR #99, 603 passed across two disjoint test-file groups: 268 and 335. An earlier unsplit attempt timed out after at least 71% progress and is not counted as a completed run. After integrating PR #99, 70 impacted protocol and submission tests passed; the complete integrated suite was not rerun.",
     "ruff": "All source, scripts and tests passed lint and formatting checks.",
     "feasibility": "Pinned lattice check exited 2 for both specified budgets; lower bounds do not establish individual-candidate overlap.",
     "limitations": "No new scientific experiment, leakage or full-registry test; no organizer portal acceptance, quota, leaderboard or official training-data provenance verified."
