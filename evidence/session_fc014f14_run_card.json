@@ -38,7 +38,7 @@
   "verification": {
     "pass_1": "Read standing mission and prior next steps; reproduced impossible standard budgets and refreshed nine GitHub refs.",
     "pass_2": "Reproduced complex-to-real prediction loss; fixed the shared writer, sanitizer and content ID with nine parameterized regression cases.",
-    "pass_3": "Full suite 601 passed in 228.80 seconds; final post-build full suite 601 passed in 223.71 seconds. Focused writer suite 41 passed; Ruff and whitespace checks passed; site build succeeded. Integrated concurrent main feasibility hardening, preserved both README continuations, then full suite 603 passed in 225.29 seconds."
+    "pass_3": "Full suite 601 passed in 228.80 seconds; final post-build full suite 601 passed in 223.71 seconds. Focused writer suite 41 passed; Ruff and whitespace checks passed; site build succeeded. Integrated concurrent main feasibility hardening, preserved both README continuations, then full suite 603 passed in 225.29 seconds. Later integrated concurrent main transactional CLI writer; 66 affected writer/preflight/feasibility tests passed in 3.48 seconds; Ruff and whitespace checks passed again. Full 603-test result predates this last integration."
   },
   "limitations": [
     "Missing assigned single-method lane and full feature stack.",
