@@ -28,6 +28,7 @@ from gems.novelty import (  # noqa: E402
     dot_budget_feasibility,
     interior_lattice_coverage,
 )
+from gems.submission import _same_file  # noqa: E402
 from gems.validator import sha256_file  # noqa: E402
 
 REGISTRY = "registry/priority_rasters_20261026_portfolio.json"
@@ -142,12 +143,33 @@ The <a href="executive-summary.html">submission guide</a> distinguishes numeric/
 </main></body></html>\n"""
 
 
+def protect_outputs(root: Path, output: Path | None, html: Path | None) -> None:
+    """Refuse to overwrite evidence or another output, including file aliases.
+
+    Check before the audit starts so neither a successful nor a failed invocation
+    can destroy the input evidence. This guard does not prevent concurrent path
+    replacement by another process while the command is running.
+    """
+    inputs = [root / path for path in (REGISTRY, TEMPLATE, WITNESS, "data/manifest.json")]
+    # A newly written GDAL sidecar can change subsequent raster interpretation,
+    # even when the original TIFF bytes remain intact.
+    for raster in (root / TEMPLATE, root / WITNESS):
+        inputs.extend(Path(str(raster) + suffix) for suffix in (".msk", ".aux.xml", ".ovr"))
+    outputs = [path for path in (output, html) if path is not None]
+    for dest in outputs:
+        if any(_same_file(dest, source) for source in inputs):
+            raise ValueError("Output must not overwrite feasibility input evidence")
+    if len(outputs) == 2 and _same_file(outputs[0], outputs[1]):
+        raise ValueError("JSON and HTML outputs must be distinct files")
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--dot-budget", type=int, action="append", required=True)
     p.add_argument("--output", type=Path)
     p.add_argument("--html", type=Path)
     args = p.parse_args()
+    protect_outputs(ROOT, args.output, args.html)
     report = audit(ROOT, args.dot_budget)
     text = json.dumps(report, indent=2, allow_nan=False) + "\n"
     if args.output:

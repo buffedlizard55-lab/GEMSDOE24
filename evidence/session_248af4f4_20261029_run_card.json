@@ -1,0 +1,49 @@
+{
+  "schema": "gems-continuation-run-card-v1",
+  "branch": "arena/248af4f4-gemsdoe24",
+  "hypothesis": "No geological hypothesis tested: the single assigned method paragraph is absent.",
+  "mechanism": "Protect the feasibility checker evidence and correct unsupported mission-summary claims; independently remeasure the lattice necessary bound.",
+  "named_non_fault_process_that_could_mimic_it": "A space-filling calibration lattice can create high dot overlap without a shared geological signal.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN; no geological experiment"
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "candidate_dot_overlap": null,
+    "status": "NOT RUN; no candidate surface or dots",
+    "necessary_lower_bound_one_lattice_37654_dots": 0.8234184947150369,
+    "necessary_lower_bound_one_lattice_44090_dots": 0.8491948287593558,
+    "scope": "Geometric bounds against one pinned witness, not measured candidate overlap or full-registry audit."
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "status": "NOT RUN on a new raster; no candidate generated",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "submission_authorized": false
+  },
+  "submission_name": null,
+  "submission_note": "No new TIFF; do not submit.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "organizer_confirmed_score": null,
+  "leaderboard_estimate": null,
+  "verification": {
+    "pass_1": "Reviewed standing protocol, previous work, missing data and shared tools; recomputed pinned lattice feasibility and ran strict preflight on a historical research artifact.",
+    "pass_2": "Guarded feasibility outputs against clobbering inputs, their common GDAL sidecars, and each other, including symlink and hardlink aliases; corrected mission summary overclaims.",
+    "pass_3": "Full pytest suite passed 626 tests; Ruff and diff checks passed on modified code. No holdout, portal access or new candidate."
+  },
+  "limitations": [
+    "Assigned method paragraph absent; lattice policy unresolved.",
+    "Full training raster and prepared feature cache absent; local mirrors are not organizer-authenticated.",
+    "No complete current registry audit, organizer receipt, leaderboard, quota, or independent selector implementation.",
+    "Nine peer sites were neither refreshed nor modified."
+  ]
+}
