@@ -12,6 +12,10 @@ Three ranked geological hypotheses in the [current three-pass review](docs/repo-
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · SUBMIT: NO.** Read the [repo review](docs/repo-review-20261029-arena-1d1bdb94.md) and [run card](evidence/session_1d1bdb94_20261029_run_card.json) first. That review recorded 663 tests passed on full Git history and the same necessary lattice budget stops; it also flagged the bridge-template/label irregularity and conflicting owner leaderboard figures. Those checks are not a current-head raster or score re-audit.
 
+## Upstream repository review — 2026-10-29 (`arena/30d63154-gemsdoe24`, PR #105)
+
+**NO NEW TIFF · NO HOLDOUT · NO SCORE ESTIMATE · SUBMIT: NO.** This merged review recorded 663 passing tests after restoring complete Git history, the same fixed-budget lattice blocker, and the missing organizer feature stack and assigned method paragraph. It did not generate a candidate; leaderboard estimates remain **NOT ESTIMABLE**. See its [review](docs/repo-review-20261029-arena-30d63154.md) and [run card](evidence/session_30d63154_run_card_20261029.json). Its full-suite result predates this branch's later merge and verification.
+
 ## Current session — 2026-10-29 (`arena/3f1f513d-gemsdoe24`)
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO NEW EXPERIMENT · DO NOT SUBMIT.** Read the [current review](docs/repo-review-20261029-arena-3f1f513d.md), [run card](evidence/session_3f1f513d_20261029_run_card.json), [mission prompt](docs/MISSION_PROMPT.md) and [standing instructions](AGENTS.md) at session start. The [nine-site historical table](docs/historical-champions.html) is a research-only snapshot, not a current leaderboard or recommendation. This continuation hardens shared single-TIFF ZIP and preflight receipt sidecar handling; format checks cannot authorize a slot. No method lane is assigned, the full feature stack is absent, and the retained lattice blocks the usual dot budgets under the literal uniqueness rule. The full test suite passed 619 tests; no hidden-score forecast, organizer receipt or new TIFF was produced.
