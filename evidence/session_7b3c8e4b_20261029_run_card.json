@@ -303,7 +303,9 @@
         "5bd6ca7"
       ],
       "active_branch": "arena/7b3c8e4b-gemsdoe24",
-      "branch_pull_request_opened": false
+      "branch_pull_request_opened": true,
+      "pull_request_number": 110,
+      "pull_request_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/pull/110"
     }
   },
   "resources": {
