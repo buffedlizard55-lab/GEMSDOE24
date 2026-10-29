@@ -54,7 +54,7 @@
     "history_repair": "git fetch --unshallow origin main; did not change branch or checked-out commit; missing source commits became available.",
     "focused_retest": "52 passed in affected provenance/integrity test files.",
     "final_full_pytest": "667 passed after integrating concurrent main, adding the read-only GEO1 receipt verifier, and resolving merge conflicts.",
-    "ruff": "ruff check . passed; ruff format --check . passed (346 files). Frozen hash-pinned GEO1 experiment script excluded without modifying its bytes.",
+    "ruff": "ruff check . passed; ruff format --check . passed (347 files). Frozen hash-pinned GEO1 experiment script excluded without modifying its bytes.",
     "diff_check": "git diff --check passed.",
     "priority_feed": "Live GitHub refresh checked all nine refs at 2026-10-29T17:09:21.742661+00:00; offline schema validation passed.",
     "feasibility": "Shared uniqueness checker returned exit 2 for both standard budgets, as required by the necessary-condition stop.",

@@ -101,6 +101,7 @@ def test_nine_site_executive_page_has_download_links_that_resolve_and_clear_subm
     text = soup.get_text(" ", strip=True)
     assert "DOWNLOAD: YES · SUBMIT: NO" in text
     assert "NOT submission-authorized" in text
+    assert "official_format_compliant: false" in text
     assert "NOT ESTIMABLE" in text
     assert "GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif" in text
     table = soup.find(id="nine-site-table").find("table")
