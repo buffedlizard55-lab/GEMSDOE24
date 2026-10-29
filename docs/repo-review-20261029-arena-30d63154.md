@@ -25,9 +25,19 @@ The historical nine-site page is useful as a research index, but explicitly cove
 
 The top of `README.md` calls a prior Arena branch the “Current session” and links its review/run card. This review adds a clearly dated top-level continuation for the active session branch and identifies older session records as historical. The full mission prompt is already included later in README; this change does not paste a second copy.
 
-### Environment note — full Git history is required for frozen evidence checks
+### Concurrent main update — negative research raster is not submission-ready
+
+While this PR was open, other sessions merged their work to `main`. Their generated GEO1 TIFF is now part of the repository, but was not generated or selected in this review. It is an **easy-to-download research result; SUBMIT: NO**: the exact file is [`GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif`](downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif), SHA-256 `ee37d94deb3545af1f814df61ec5acd7addafe01a4833384c2e25d1a5e6b384d`. Its recorded **HOLDOUT-DTI** is `0.1426949` (`gems-segment-pooled-v1`, 60,988 withheld positives, 95% CI `[0.1322931, 0.1523671]`); this is not a leaderboard estimate. The run card records 99.2538% final-dot overlap within 3 px against the retained lattice, which fails the 70% gate. Re-running the shared exact-file preflight reproduced `FORMAT: True | STRICT_RANGE: True | SCIENTIFIC_AUTHORIZATION: False | SUBMISSION: DO_NOT_SUBMIT`. Its local range/grid checks pass, but `official_format_compliant` is false because the artifact has zero rather than NaN outside the footprint and no NaN nodata tag. **Do not submit it.** The concurrent branch's evidence is in [`docs/data/geo1_run_card.json`](data/geo1_run_card.json), [`docs/data/geo1_download.json`](data/geo1_download.json), and [`docs/executive-summary-9sites.html`](executive-summary-9sites.html).
+
+This does not change the conclusion that this review ran no experiment and generated no candidate. It shows why format/range validity, a local holdout result, and surface novelty must not be collapsed into an upload recommendation.
+
+## Environment note — full Git history is required for frozen evidence checks
 
 The checkout initially arrived as a shallow clone. Running the complete suite before restoring history produced six failures in tests that intentionally inspect original preregistration commits/source blobs; the failures were missing Git objects, not failed scientific assertions. After `git fetch --unshallow origin main`, those commits were available and the complete suite passed. The CI workflow already requests `fetch-depth: 0` and runs its history precheck, so this is a local checkout prerequisite rather than a proposed CI change.
+
+## Source-hashed runner lint exception
+
+After integrating concurrent `main`, `ruff check .` and `ruff format --check .` reported findings in `scripts/build_unique_geothermal_submission.py`. Its exact source hash is retained in `evidence/geo1_experiment.json`; editing or formatting the file in this review would invalidate that receipt. I left the scientific runner byte-for-byte unchanged and added it to Ruff's exclusions, following the existing treatment of a frozen source-hashed runner. This is a narrowly scoped lint exception, not a claim that the script itself is lint-clean; future development should occur in a new lane/source file with a separate reproducible receipt.
 
 ## Three review passes
 
