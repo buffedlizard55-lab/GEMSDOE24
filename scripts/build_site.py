@@ -67,6 +67,7 @@ def page(title, active, body, prefix=""):
     nav = []
     for name, path in (
         ("Overview", "index.html"),
+        ("Nine-site summary", "executive-summary-9sites.html"),
         ("Submission guide", "executive-summary.html"),
         ("Research", "research.html"),
         ("Sources & audit", "sources.html"),
@@ -77,7 +78,7 @@ def page(title, active, body, prefix=""):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="DOE GEMS fault research: independent GeoTIFF downloads, automated negative submission gates, and reproducible evidence."><meta name="source-feed" content="{prefix}data/source_health.json"><title>{e(title)} · GEMS DOE 24</title><link rel="stylesheet" href="{prefix}assets/style.css"></head>
 <body><header><div class="nav"><a class="brand" href="{prefix}index.html"><span class="mark" aria-hidden="true">∿</span><span>GEMS DOE 24<small>Geologic mapping · evidence first</small></span></a><nav class="navlinks" aria-label="Main navigation">{"".join(nav)}</nav></div></header>
-<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}repo-review-20261029-arena-3f1f513d.md">Packaging review and blockers</a> · <a href="{prefix}repo-review-20261029-fc014f14.md">29 October review: writer integrity, source freshness and blockers</a> · <a href="{prefix}session-review-f7f69bc3-20261028.md">Strict format guard and current blockers</a> · <a href="{prefix}historical-champions.html">Nine historical champions: exact downloads, estimates and uniqueness decisions (2026-10-28)</a> · <a href="{prefix}session-review-a73c5f88-20261027.md">Earlier three-pass review and next-session blockers</a> · <a href="{prefix}repo-review-20261028-freshness.md">Current freshness review</a> · <a href="{prefix}submission-readiness.html">Pre-training feasibility gate: why common dot budgets cannot pass uniqueness</a> · <a href="{prefix}portfolio-review-20261026.md">Current audit &amp; blockers</a> · <a href="{prefix}artifact-audit.html">Earlier Git-object inventory</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone. <a href="{prefix}metric-integrity-20261026.md">Corrected B2 metric explanation</a>.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
+<main><aside class="micro review-notice" aria-label="Current submission review"><strong>Current review: no submission-authorized TIFF.</strong> <a href="{prefix}repo-review-20261029-arena-3f1f513d.md">Packaging review and blockers</a> · <a href="{prefix}repo-review-20261029-fc014f14.md">29 October review: writer integrity, source freshness and blockers</a> · <a href="{prefix}repo-review-20261029-arena-7b3c8e4b.md">29 October three-pass review and current blockers</a> · <a href="{prefix}session-review-f7f69bc3-20261028.md">Strict format guard and current blockers</a> · <a href="{prefix}historical-champions.html">Nine historical champions: exact downloads, estimates and uniqueness decisions (2026-10-28)</a> · <a href="{prefix}session-review-a73c5f88-20261027.md">Earlier three-pass review and next-session blockers</a> · <a href="{prefix}repo-review-20261028-freshness.md">Current freshness review</a> · <a href="{prefix}submission-readiness.html">Pre-training feasibility gate: why common dot budgets cannot pass uniqueness</a> · <a href="{prefix}portfolio-review-20261026.md">Current audit &amp; blockers</a> · <a href="{prefix}artifact-audit.html">Earlier Git-object inventory</a>.<details><summary>Concurrent VENT integrity warning</summary>VENT is quarantined: historical C2ST/novelty fallback values were fabricated. <a href="{prefix}data/vent_run_card.json">Untrusted historical card</a> · <a href="{prefix}downloads/gems24-vent-quat-bridge-20261026-a6e191937e80-zeros.tif" download>Quarantined research TIFF (DO NOT SUBMIT)</a>. No new artifact audit follows from source freshness alone. <a href="{prefix}metric-integrity-20261026.md">Corrected B2 metric explanation</a>.</details></aside>{body}</main><footer class="footer"><p><strong>Maximize P(Win). Own the Outcome.</strong><br>Local validation is not hidden-fault truth. Association is not causation. Scores marked owner-reported are not organizer receipts. No file on this site has a leaderboard score unless it says so.</p><p>AI-assisted development is disclosed here and must be disclosed in the prize narrative (rules §3.2).<br><a href="{prefix}sources.html">Sources, limitations &amp; review</a></p></footer><script src="{prefix}assets/app.js" defer></script></body></html>"""
 
 
 def download_button(row, prefix, label="Download submission .tif", primary=True):
@@ -111,62 +112,59 @@ def pct(x):
     return "n/a" if x is None else f"{100 * x:+.0f}%"
 
 
-UNIQUE_CARD = (
+LATTICE_DIAGNOSTIC_CARD = (
     "evidence/24gems-interior-offlattice-geothermal-20261028T164358Z-e5a3c34b27db_run_card.json"
 )
-UNIQUE_OVERLAP = "evidence/unique_local_overlap_20261028.json"
+LATTICE_DIAGNOSTIC_OVERLAP = "evidence/unique_local_overlap_20261028.json"
 
 
-def render_unique_submission(root: Path) -> str:
-    """Generated featured section for the newest unique GeoTIFF (research download only).
-
-    Replaces a hand-edited block that a rebuild silently erased. Fails closed: any
-    mismatch between the card, the on-disk file and the overlap receipt raises instead
-    of publishing a stale or contradictory download. It never approves submission.
-    """
-    card = json.loads((root / UNIQUE_CARD).read_text())
+def render_lattice_hole_diagnostic(root: Path) -> str:
+    """Render the hash-bound lattice-hole diagnostic as explicitly non-unique."""
+    card = json.loads((root / LATTICE_DIAGNOSTIC_CARD).read_text())
     if (
         card.get("schema") != "interior-offlattice-submission-v1"
         or card.get("ok_to_submit") is not False
         or card.get("submission_authorized") is not False
         or card.get("verdict") != "negative"
     ):
-        raise ValueError("unique-submission card must remain DO NOT SUBMIT")
+        raise ValueError("lattice-hole diagnostic card must remain DO NOT SUBMIT")
     name = card["submission_name"]
-    rel = f"downloads/{name}-zeros.tif"  # page-relative; root page rewrite handles docs/
-    f = root / "docs" / rel  # rel is page-relative to docs/
-    if not f.is_file() or sha256_file(f) != card["raster_sha256"]:
-        raise ValueError("unique-submission GeoTIFF is missing or does not match its run card")
+    rel = f"downloads/{name}-zeros.tif"
+    raster = root / "docs" / rel
+    if not raster.is_file() or sha256_file(raster) != card["raster_sha256"]:
+        raise ValueError("lattice-hole diagnostic GeoTIFF is missing or its hash changed")
     note = card["note"]
     note_file = root / "docs/downloads" / f"{name}-note.txt"
     if len(note) > 140 or not note_file.is_file() or note_file.read_text().strip() != note:
-        raise ValueError("note must be <= 140 characters and match the note file on disk")
-    receipt = json.loads((root / UNIQUE_OVERLAP).read_text())
+        raise ValueError("diagnostic note must be <= 140 characters and match the note file")
+    receipt = json.loads((root / LATTICE_DIAGNOSTIC_OVERLAP).read_text())
     if (
         receipt.get("candidate_sha256") != card["raster_sha256"]
         or receipt.get("schema") != "unique-local-overlap-v1"
     ):
-        raise ValueError("local overlap receipt does not describe this GeoTIFF")
-    h = card["holdout"]
-    lo, hi = h["ci95"]
-    lat = card["novelty_vs_lattice"]
-    mx = receipt.get("max_forward_overlap")
-    local_txt = (
-        f"<strong>{'PASS' if receipt.get('passes_local_rule') else 'FAIL'}</strong> — max candidate-within-3 px "
-        f"<strong>{mx:.4f}</strong> (limit 0.70) over {receipt.get('references_compared')} local same-grid rasters "
-        f"(<code>{e(receipt.get('max_forward_reference', ''))}</code>); "
-        f"{len(receipt.get('encoding_aliases_same_dots', []))} encoding alias (its own NaN twin) excluded. "
-        "<strong>Not a full 167-alias registry or other-repository scan.</strong>"
+        raise ValueError("local comparison receipt does not describe this diagnostic TIFF")
+
+    holdout = card["holdout"]
+    lo, hi = holdout["ci95"]
+    lattice_overlap = card["novelty_vs_lattice"]["lattice_overlap_within_3px"]
+    if lattice_overlap != 0.0:
+        raise ValueError("the lattice-hole diagnostic must retain its by-construction overlap")
+    local_overlap = receipt.get("max_forward_overlap")
+    if not isinstance(local_overlap, (int, float)):
+        raise ValueError("local comparison receipt is missing its recorded overlap")
+    local_text = (
+        f"Source receipt: max candidate-within-3-px overlap <strong>{local_overlap:.4f}</strong> "
+        f"across {receipt.get('references_compared')} local same-grid rasters "
+        f"(<code>{e(receipt.get('max_forward_reference', ''))}</code>). "
+        "Not replayed in this review; not a full registry or other-repository comparison. "
+        "This subset check does not establish protocol uniqueness."
     )
-    return f"""<section class="card" id="unique-submission" aria-label="Unique GeoTIFF — research download, not approved to submit"><h2>Unique GeoTIFF — download for research · SUBMIT: NO</h2><p><strong>Generated by an automated pipeline.</strong> It is <strong>not approved to submit</strong>: the method lane is unassigned, the weekly-slot selector is unverified, and no organizer receipt exists. The estimate is <strong>NOT ESTIMABLE</strong>.</p><p><a class="button primary" href="{e(rel)}" download="{e(name)}-zeros.tif">↓ Download unique GeoTIFF (zeros outside, strict [0,1]) — DO NOT SUBMIT</a></p><div class="tablewrap" tabindex="0" role="region" aria-label="Unique research TIFF validation details"><table><thead><tr><th>Item</th><th>Value</th></tr></thead><tbody><tr><td>File</td><td><code>{e(name)}-zeros.tif</code></td></tr><tr><td>SHA-256</td><td><code>{e(card["raster_sha256"])}</code></td></tr><tr><td>Grid / format</td><td>Single-band float32 GeoTIFF, EPSG:32611, 3730×3292 @100 m; zeros outside footprint; whole-array finite [0,1]. The portal rejection cause is <strong>not established</strong>: this encoding is a hedge, not a fix.</td></tr><tr><td>Dots</td><td>{card["dots_emitted"]:,} binary {{0,1}} dots in lattice-coverage holes. <strong>Placement is confined to the complement of one registry control, so the lattice test passes by construction;</strong> this says nothing about scientific merit.</td></tr><tr><td>Uniqueness — retained lattice</td><td>Directed overlap {lat["lattice_overlap_within_3px"]:.4f} (limit 0.70)</td></tr><tr><td>Uniqueness — local rasters</td><td>{local_txt}</td></tr><tr><td>Holdout (internal)</td><td><strong>HOLDOUT-DTI {h["pooled_dti"]:.4f}</strong>, 95% CI [{lo:.4f}, {hi:.4f}], {e(h["evaluator_version"])}, {h["n_withheld_positive_pixels"]:,} withheld positives — internal validation only, not an organizer score. A value this near zero gives no reason to expect a high leaderboard score.</td></tr><tr><td>Estimate</td><td><strong>NOT ESTIMABLE</strong> — no organizer receipt; no live DrivenData access.</td></tr><tr><td>Submit?</td><td><strong>NO</strong> — DO_NOT_SUBMIT; no competition slot used.</td></tr><tr><td>Note (≤140 chars, {len(note)} used)</td><td><code>{e(note)}</code></td></tr></tbody></table></div><p class="micro">The <code>-nan.tif</code> twin carries the identical 3,165 dots (same prediction, different outside encoding) and is not a second submission. Run card: <a href="data/{e(Path(UNIQUE_CARD).name)}" download>JSON</a> · overlap receipt: <a href="data/{e(Path(UNIQUE_OVERLAP).name)}" download>JSON</a>.</p></section>"""
+    note_chars = len(note)
+    return f"""<section class="card" id="lattice-hole-diagnostic" aria-label="Rejected lattice-hole diagnostic — not protocol-unique and not approved to submit"><h2>Lattice-hole diagnostic — research only · NOT UNIQUE · SUBMIT: NO</h2><p><strong>NOT protocol-unique; do not submit.</strong> Its {card["dots_emitted"]:,} positive pixels were deliberately restricted to the 3-pixel coverage holes of the retained spacing-5 lattice. The measured {lattice_overlap:.4f} overlap is therefore a consequence of placement by construction, not an admissible uniqueness result. The protocol explicitly forbids targeting lattice holes to evade this gate. The full current registry comparison has not been completed.</p><p>This is a historical research diagnostic, not a current submission candidate. Its recorded method lane was not assigned, no independent selector authorized it, and no organizer receipt exists. Leaderboard estimate: <strong>NOT ESTIMABLE</strong>.</p><p><a class="button primary" href="{e(rel)}" download="{e(name)}-zeros.tif">↓ Download research diagnostic GeoTIFF — NOT UNIQUE — DO NOT SUBMIT</a></p><div class="tablewrap" tabindex="0" role="region" aria-label="Lattice-hole diagnostic TIFF details"><table><thead><tr><th>Item</th><th>Value</th></tr></thead><tbody><tr><td>Exact file</td><td><code>{e(name)}-zeros.tif</code></td></tr><tr><td>SHA-256</td><td><code>{e(card["raster_sha256"])}</code></td></tr><tr><td>Recorded grid / encoding</td><td>Single-band float32 GeoTIFF, EPSG:32611, 3730×3292 at 100 m; zeros outside footprint; whole-array finite [0,1]. This matches the pinned local bridge grid, whose organizer provenance is not authenticated; portal acceptance is not established.</td></tr><tr><td>Dots</td><td>{card["dots_emitted"]:,} binary {{0,1}} dots, selected only from retained-lattice coverage holes. Their zero lattice overlap is a design artifact, not independent novelty.</td></tr><tr><td>Retained-lattice uniqueness test</td><td><strong>INVALID AS A UNIQUENESS PASS</strong> — {lattice_overlap:.4f} measured overlap by construction; targeting the comparator is prohibited.</td></tr><tr><td>Other local rasters</td><td>{local_text}</td></tr><tr><td>Prior internal holdout</td><td><strong>HOLDOUT-DTI {holdout["pooled_dti"]:.4f}</strong>, 95% CI [{lo:.4f}, {hi:.4f}], {e(holdout["evaluator_version"])}, {holdout["n_withheld_positive_pixels"]:,} withheld positives. Source-recorded for the historical diagnostic; not replayed in this review and not an organizer score.</td></tr><tr><td>Leaderboard estimate</td><td><strong>NOT ESTIMABLE</strong> — no organizer receipt.</td></tr><tr><td>Download / submit?</td><td><strong>DOWNLOAD: YES, research only. SUBMIT: NO</strong> — DO_NOT_SUBMIT.</td></tr><tr><td>Historical note (≤140 chars, {note_chars} used)</td><td><code>{e(note)}</code></td></tr></tbody></table></div><p class="micro">The <code>-nan.tif</code> twin carries the same {card["dots_emitted"]:,} locations with different outside encoding; it is not a second candidate. Run card: <a href="data/{e(Path(LATTICE_DIAGNOSTIC_CARD).name)}" download>JSON</a> · local comparison receipt: <a href="data/{e(Path(LATTICE_DIAGNOSTIC_OVERLAP).name)}" download>JSON</a>.</p></section>"""
 
 
-def place_unique_section_after_current_best(executive: str, featured: str) -> str:
-    """Keep the recorded point-best download visible before negative experiment cards.
-
-    All featured cards are explicitly research-only. A newer low-DTI negative must
-    not displace the repository's recorded point-best CTA above the fold.
-    """
+def place_research_diagnostic_after_current_best(executive: str, diagnostic: str) -> str:
+    """Keep the recorded point-best download visible before negative experiment cards."""
     marker = 'id="current-best-review"'
     start = executive.find(marker)
     if start < 0:
@@ -175,7 +173,7 @@ def place_unique_section_after_current_best(executive: str, featured: str) -> st
     if end < 0:
         raise ValueError("current point-best section is unterminated")
     end += len("</section>")
-    return executive[:end] + featured + executive[end:]
+    return executive[:end] + diagnostic + executive[end:]
 
 
 def render_parallel_candidate_summary(root: Path) -> str:
@@ -726,9 +724,11 @@ def build_independent_site(primary):
         '<a class="button" href="data/portfolio_source_claims_20261026.json">Official reference quotes and blocked sources</a>'
         '<a class="button" href="data/portfolio_freshness.json">Current audit-pin freshness</a></div></section>'
     ) + source_page
-    (DOCS / "data" / Path(UNIQUE_OVERLAP).name).write_text((ROOT / UNIQUE_OVERLAP).read_text())
-    executive = place_unique_section_after_current_best(
-        executive, render_parallel_candidate_summary(ROOT) + render_unique_submission(ROOT)
+    (DOCS / "data" / Path(LATTICE_DIAGNOSTIC_OVERLAP).name).write_text(
+        (ROOT / LATTICE_DIAGNOSTIC_OVERLAP).read_text()
+    )
+    executive = place_research_diagnostic_after_current_best(
+        executive, render_parallel_candidate_summary(ROOT) + render_lattice_hole_diagnostic(ROOT)
     )
     pages = {
         "index.html": ("Overview", "Overview", overview),
@@ -1571,8 +1571,8 @@ def main():
 <section><div class="grid2"><article class="card"><h3>Limitations and access needs</h3><ul class="prose"><li>I cannot reach the DrivenData portal, the private leaderboard or hidden labels, nor upload or verify scores.</li><li>Hand-labelled lidar scarps are allowed by staff (labels must be saved) and need a geologist.</li><li>Official flight-number → block mapping needs the S3-hosted profile archives (anonymous GET returns 403).</li><li>DrivenData figures are human-read snapshots: re-verify by hand; no job here may access that site automatically.</li></ul></article><article class="card"><h3>Three-pass review</h3><p>{e(review.get("summary", "Review in progress."))}</p><div class="actions"><a class="button" href="data/source_health.json" download>Source feed</a><a class="button" href="data/audit.json" download>Audit receipt</a></div></article></div></section>"""
 
     # ------------------------------------------------------------------ write
-    executive = place_unique_section_after_current_best(
-        executive, render_parallel_candidate_summary(ROOT) + render_unique_submission(ROOT)
+    executive = place_research_diagnostic_after_current_best(
+        executive, render_parallel_candidate_summary(ROOT) + render_lattice_hole_diagnostic(ROOT)
     )
     bodies = {
         "index.html": ("Overview", "Overview", overview),
