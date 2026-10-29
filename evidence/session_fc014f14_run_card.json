@@ -1,0 +1,50 @@
+{
+  "schema": "gems-continuation-run-card-v1",
+  "branch": "arena/fc014f14-gemsdoe24",
+  "hypothesis": "No geological experiment: no assigned method lane. Three prospective operators documented, not executed.",
+  "mechanism": "Shared prediction writer integrity review, nine-source ref refresh and necessary-only uniqueness feasibility check.",
+  "named_non_fault_process_that_could_mimic_it": "Intrusive lithologic contacts can mimic prospective potential-field phase coupling; saline groundwater can mimic conductive corridors.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "ci95": null,
+    "status": "NOT RUN; no candidate"
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_rank_correlation": null,
+    "candidate_dot_overlap": null,
+    "status": "NOT RUN; no candidate surface or dots",
+    "necessary_lattice_bound_37654_dots": 0.8234184947150369,
+    "necessary_lattice_bound_44090_dots": 0.8491948287593558,
+    "scope": "One necessary geometric witness only; not candidate measurements or a complete registry audit"
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "status": "NOT RUN on a new prediction raster; synthetic regression tests only",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "submission_authorized": false
+  },
+  "submission_name": null,
+  "submission_note": "No new prediction TIFF; no submission authorized.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "competition_slots_used": 0,
+  "leaderboard_estimate": null,
+  "organizer_confirmed_score": null,
+  "verification": {
+    "pass_1": "Read standing mission and prior next steps; reproduced impossible standard budgets and refreshed nine GitHub refs.",
+    "pass_2": "Reproduced complex-to-real prediction loss; fixed the shared writer, sanitizer and content ID with nine parameterized regression cases.",
+    "pass_3": "Full suite 601 passed in 228.80 seconds; final post-build full suite 601 passed in 223.71 seconds. Focused writer suite 41 passed; Ruff and whitespace checks passed; site build succeeded."
+  },
+  "limitations": [
+    "Missing assigned single-method lane and full feature stack.",
+    "Standard diagnostic budgets fail the retained lattice rule; no gate evasion permitted.",
+    "All nine main refs changed from the pinned source audit; no current-head artifact census.",
+    "No current leaderboard, organizer receipt, quota or portal acceptance verified.",
+    "Fresh official source verification limited to reference README via GitHub."
+  ]
+}
