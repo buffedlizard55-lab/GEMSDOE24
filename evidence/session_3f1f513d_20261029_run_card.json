@@ -38,7 +38,7 @@
   "verification": {
     "pass_1": "Reviewed prior work, refreshed nine GitHub source heads, and remeasured the retained-lattice necessary bound.",
     "pass_2": "Hardened shared TIFF ZIP packaging and receipt sidecar protection; focused regression suite passed 89 tests.",
-    "pass_3": "Full pytest passed 606 tests after restoring git history; Ruff and diff checks passed. A research artifact preflight remained DO_NOT_SUBMIT."
+    "pass_3": "Full pytest passed 608 tests after restoring git history; Ruff and diff checks passed. A research artifact preflight remained DO_NOT_SUBMIT."
   },
   "limitations": [
     "No assigned method paragraph or prospective lattice policy resolution.",
