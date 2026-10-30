@@ -1,0 +1,86 @@
+{
+  "schema": "gems-focus-source-heads-v1",
+  "checked_utc": "2026-10-30T22:55:57.900903+00:00",
+  "scope": "GitHub source branch freshness only; not a content, raster, score, leaderboard, organizer receipt, or submission audit",
+  "source_feed_snapshot": "docs/data/priority_feed.json",
+  "source_feed_checked_utc": "2026-10-29T14:17:52.254034+00:00",
+  "rows": [
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE24",
+      "pinned_ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+      "latest_main_ref": "63d5885b68f73c19a7746052ccb3e5690f3271b5",
+      "changed_since_pinned_review": true,
+      "status": "checked",
+      "api": "GitHub REST commits/main"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE25",
+      "pinned_ref": "04333cc3fbf7486c56e0324fd07aee684be614dc",
+      "latest_main_ref": "f59a398541f0aa9530879d117993a8dbbad4f1bf",
+      "changed_since_pinned_review": true,
+      "status": "checked",
+      "api": "GitHub REST commits/main"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE27",
+      "pinned_ref": "b8dd298e10884afffa05436673ac73aeaf850b8c",
+      "latest_main_ref": "fe16740fedf901a499df10b219e1f4ef3a9d7347",
+      "changed_since_pinned_review": true,
+      "status": "checked",
+      "api": "GitHub REST commits/main"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE28",
+      "pinned_ref": "78e724f95337a6528b1248be5c113c6d6d502891",
+      "latest_main_ref": "424bf795ed2183000c643d6e30a12ce2d4bf401d",
+      "changed_since_pinned_review": true,
+      "status": "checked",
+      "api": "GitHub REST commits/main"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE30",
+      "pinned_ref": "3d5bec2af5f29291617f97c9e2dfe443be6f55c3",
+      "latest_main_ref": "c5141fb7bb5aefd3f65452f45847aa9f6bc0cd7d",
+      "changed_since_pinned_review": true,
+      "status": "checked",
+      "api": "GitHub REST commits/main"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE31",
+      "pinned_ref": "cf13282fcd86290f1539f0a86446c8ba7205a79b",
+      "latest_main_ref": "f9248200f20def2654af596c1cc13ab2f9d96687",
+      "changed_since_pinned_review": true,
+      "status": "checked",
+      "api": "GitHub REST commits/main"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE32",
+      "pinned_ref": "012e17b2a115c3c0d5e7885bea625bf9657c99fc",
+      "latest_main_ref": "c8e560f1aae650b120dc31c9e7495ced6a587701",
+      "changed_since_pinned_review": true,
+      "status": "checked",
+      "api": "GitHub REST commits/main"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE33",
+      "pinned_ref": "f52533110fe62cd03e77f1228e9e5ecac412c463",
+      "latest_main_ref": "ee2e464b61cb0e0aa604b0525044ad9ff31c9ec7",
+      "changed_since_pinned_review": true,
+      "status": "checked",
+      "api": "GitHub REST commits/main"
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE36",
+      "pinned_ref": "c9ad59ec6f969ed931d089a03044c1567a633e84",
+      "latest_main_ref": "b0824c550c02792897d0ebe3aba1cb0e75583ea1",
+      "changed_since_pinned_review": true,
+      "status": "checked",
+      "api": "GitHub REST commits/main"
+    }
+  ],
+  "all_refs_checked": true,
+  "changed_sources": 9,
+  "failed_sources": 0,
+  "leaderboard_estimate": null,
+  "submission_authorized": false
+}
