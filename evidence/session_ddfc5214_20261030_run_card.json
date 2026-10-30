@@ -2,7 +2,7 @@
   "schema": "gems-negative-review-run-card-v1",
   "review_date": "2026-10-30",
   "branch": "arena/ddfc5214-gemsdoe24",
-  "base_commit_reviewed": "d4d6f1c87b974d7ed74825b1e6a746736877fedc",
+  "base_commit_reviewed": "da4d3194f017a1c72befce090c1b1e2a17c168cd",
   "hypothesis": "No experiment hypothesis was assigned: the request refers to a single method paragraph, but no such paragraph is supplied. Four prior candidate directions are documented and remain unselected; they are not certified globally untried.",
   "mechanism": "No new mechanism was tested. For historical GEMSDOE32 B2, local geometry records a deletion-only subset of the D2.8 dot pattern. Under DTI = T / (T + 0.2 F + 0.8 (G - T)), pruning can help only if weighted false-positive mass removed is sufficient relative to true-credit lost; hidden-label contributions and the owner's reported score mechanism are unknown.",
   "named_non_fault_process_that_could_mimic_it": "An intrusive/lithologic contact, remanent magnetization, survey or gridding seam, radiometric moisture/weathering boundary, or terrace/road cut can mimic structural signatures; no candidate surface was generated to test these.",
@@ -97,7 +97,8 @@
     "site_build": "scripts/build_site.py completed; new_slot_eligible=false; no_scores_fabricated=true; generated tracked site outputs restored",
     "uniqueness_preflight": "exit 2, as expected for both fixed budgets under the retained-witness necessary bound",
     "strict_preflight": "FORMAT=true; STRICT_RANGE=true; SCIENTIFIC_AUTHORIZATION=false; SUBMISSION=DO_NOT_SUBMIT",
-    "diff_check": "passed after documentation changes"
+    "diff_check": "passed after documentation and README-link correction",
+    "local_markdown_links": "passed after correcting README's stale H-BLIND-UPWELL run-card path to docs/data/blind_upwell_run_card.json"
   },
   "limitations": [
     "No assigned method paragraph/lane.",
