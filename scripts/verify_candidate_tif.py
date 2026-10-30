@@ -98,13 +98,19 @@ def main() -> int:
             continue
         overlaps[name] = overlap_3px(cand_dots, other)
     ranked = sorted(overlaps.items(), key=lambda kv: kv[1], reverse=True)
-    nine_max = max(((k, v) for k, v in overlaps.items() if k.startswith("nine:")), key=lambda kv: kv[1])
+    nine_max = max(
+        ((k, v) for k, v in overlaps.items() if k.startswith("nine:")), key=lambda kv: kv[1]
+    )
     lattice = overlaps.get("peer-lattice:GEMSDOE13")
     lattice_rel = str(LATTICE.relative_to(ROOT))
     other_max = max(
-        ((k, v) for k, v in overlaps.items()
-         if not k.startswith("nine:") and k not in ("peer-lattice:GEMSDOE13", lattice_rel)),
-        key=lambda kv: kv[1], default=(None, None),
+        (
+            (k, v)
+            for k, v in overlaps.items()
+            if not k.startswith("nine:") and k not in ("peer-lattice:GEMSDOE13", lattice_rel)
+        ),
+        key=lambda kv: kv[1],
+        default=(None, None),
     )
 
     gate_format = bool(fmt["official_format_pass"])
@@ -122,8 +128,10 @@ def main() -> int:
         "format": fmt,
         "exact_duplicate_of": exact,
         "overlap_3px_max_vs_nine": {"site": nine_max[0], "fraction": round(nine_max[1], 6)},
-        "overlap_3px_max_vs_other_local_tifs": {"file": other_max[0],
-                                                "fraction": None if other_max[1] is None else round(other_max[1], 6)},
+        "overlap_3px_max_vs_other_local_tifs": {
+            "file": other_max[0],
+            "fraction": None if other_max[1] is None else round(other_max[1], 6),
+        },
         "overlap_3px_vs_peer_lattice_GEMSDOE13": None if lattice is None else round(lattice, 6),
         "comparators_checked": len(comparators),
         "top5_overlaps": [[k, round(v, 6)] for k, v in ranked[:5]],
@@ -140,11 +148,24 @@ def main() -> int:
     out = args.receipt or ROOT / f"evidence/candidate_verify_{cand.stem}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(receipt, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({k: receipt[k] for k in ("sha256", "dot_count_in_footprint", "gates",
-                                              "overlap_3px_max_vs_nine",
-                                              "overlap_3px_max_vs_other_local_tifs",
-                                              "overlap_3px_vs_peer_lattice_GEMSDOE13",
-                                              "exact_duplicate_of", "comparators_checked")}, indent=2))
+    print(
+        json.dumps(
+            {
+                k: receipt[k]
+                for k in (
+                    "sha256",
+                    "dot_count_in_footprint",
+                    "gates",
+                    "overlap_3px_max_vs_nine",
+                    "overlap_3px_max_vs_other_local_tifs",
+                    "overlap_3px_vs_peer_lattice_GEMSDOE13",
+                    "exact_duplicate_of",
+                    "comparators_checked",
+                )
+            },
+            indent=2,
+        )
+    )
     return 0
 
 

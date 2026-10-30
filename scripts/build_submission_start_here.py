@@ -84,8 +84,10 @@ def b2_forensics(fp, labels):
         "scope": "Exact set comparison of owner files; no score computed",
         "b2": {"site": "GEMSDOE32", "dots": int(b2.sum())},
         "d28": {"site": "GEMSDOE25", "dots": int(d28.sum())},
-        "gemsdoe30": {"dots": int(d30.sum()),
-                      "dotset_identical_to_gemsdoe25": bool((d30 == d28).all())},
+        "gemsdoe30": {
+            "dots": int(d30.sum()),
+            "dotset_identical_to_gemsdoe25": bool((d30 == d28).all()),
+        },
         "b2_is_subset_of_d28": bool(added.sum() == 0),
         "dots_removed_from_d28": int(removed.sum()),
         "dots_added_in_b2": int(added.sum()),
@@ -98,7 +100,10 @@ def b2_forensics(fp, labels):
             "d28": round(float(((d28 & (dl <= 3)).sum()) / max(int(d28.sum()), 1)), 6),
             "b2": round(float(((b2 & (dl <= 3)).sum()) / max(int(b2.sum()), 1)), 6),
         },
-        "owner_reported_scores_not_organizer_confirmed": {"GEMSDOE25_d28": 0.2600, "GEMSDOE32_b2": 0.2778},
+        "owner_reported_scores_not_organizer_confirmed": {
+            "GEMSDOE25_d28": 0.2600,
+            "GEMSDOE32_b2": 0.2778,
+        },
         "interpretation": (
             "Set facts only: B2 = D2.8 minus the removed dots, all 1-3 px from the catalogue. "
             "Hidden-label credit of those dots is unknown, so causality is not established."
@@ -113,8 +118,7 @@ def phi_stats(fp):
         r = phi(cand, dots_of(NINE_DIR / f"{site}.tif", fp), fp)
         if r > best[1]:
             best = (site, r)
-    return {"max_site": best[0], "max": best[1],
-            "lattice": phi(cand, dots_of(LATTICE, fp), fp)}
+    return {"max_site": best[0], "max": best[1], "lattice": phi(cand, dots_of(LATTICE, fp), fp)}
 
 
 def adjacency(fp, labels):
@@ -174,13 +178,18 @@ def run_card(lane, rz, rn, phis, adj):
         "experiments": {
             "E1_FULL_catalogue_distance": "VOID: catalogue distance is exactly 0 on training positives (leakage by construction). Not evidence.",
             "E2_LABELFREE": {
-                "label": "HOLDOUT-DTI", "holdout_dti": e2["dti"], "ci95": e2["ci95"],
+                "label": "HOLDOUT-DTI",
+                "holdout_dti": e2["dti"],
+                "ci95": e2["ci95"],
                 "evaluator_version": e2["evaluator_version"],
                 "withheld_positive_pixels": e2["n_withheld_positive_pixels"],
-                "folds": e2["folds"], "ci_method": e2["ci_method"],
+                "folds": e2["folds"],
+                "ci_method": e2["ci_method"],
             },
             "E3_PROXIMITY_control": {
-                "label": "HOLDOUT-DTI", "holdout_dti": e3["dti"], "ci95": e3["ci95"],
+                "label": "HOLDOUT-DTI",
+                "holdout_dti": e3["dti"],
+                "ci95": e3["ci95"],
                 "evaluator_version": e3["evaluator_version"],
                 "withheld_positive_pixels": e3["n_withheld_positive_pixels"],
                 "leakage_canary": "NOT COMPUTED for E3 (gap; a proximity-only control has no label-free feature set to test)",
@@ -204,20 +213,34 @@ def run_card(lane, rz, rn, phis, adj):
             "protocol_70pct_rule": "FAILS against the GEMSDOE13 lattice by construction (see the feasibility check)",
         },
         "rasters": {
-            "zeros_outside": {"path": f"docs/downloads/{ZEROS}", "sha256": rz["sha256"], "bytes": rz["bytes"]},
-            "nan_outside": {"path": f"docs/downloads/{NAN}", "sha256": rn["sha256"], "bytes": rn["bytes"],
-                             "note": "same dots as zeros variant; sibling overlap 1.0 so it fails the uniqueness gate against its twin: only ONE of the two may be uploaded"},
+            "zeros_outside": {
+                "path": f"docs/downloads/{ZEROS}",
+                "sha256": rz["sha256"],
+                "bytes": rz["bytes"],
+            },
+            "nan_outside": {
+                "path": f"docs/downloads/{NAN}",
+                "sha256": rn["sha256"],
+                "bytes": rn["bytes"],
+                "note": "same dots as zeros variant; sibling overlap 1.0 so it fails the uniqueness gate against its twin: only ONE of the two may be uploaded",
+            },
             "emitted_path_recorded_by_lane_receipt": lane["emitted"]["path"],
             "emitted_path_note": "the lane receipt records the pre-rename name; the file on disk was renamed to include the sha prefix after emission (not reproducible by the script alone); sha256 verified by verify_candidate_tif.py",
         },
         "validator_output_nan_outside": {
-            "crs": fmt["crs"], "shape": fmt["shape"], "transform": fmt["transform"],
-            "dtype": fmt["dtype"], "count": fmt["count"],
+            "crs": fmt["crs"],
+            "shape": fmt["shape"],
+            "transform": fmt["transform"],
+            "dtype": fmt["dtype"],
+            "count": fmt["count"],
             "nan_inside_footprint": fmt["nan_inside_footprint"],
             "finite_outside_footprint": fmt["finite_outside_footprint"],
-            "min_finite": fmt["min_finite"], "max_finite": fmt["max_finite"],
-            "values_in_0_1": fmt["values_in_0_1"], "binary_values": fmt["binary_values"],
-            "official_format_pass": fmt["official_format_pass"], "gates": rn["gates"],
+            "min_finite": fmt["min_finite"],
+            "max_finite": fmt["max_finite"],
+            "values_in_0_1": fmt["values_in_0_1"],
+            "binary_values": fmt["binary_values"],
+            "official_format_pass": fmt["official_format_pass"],
+            "gates": rn["gates"],
             "all_gates_pass": rn["all_gates_pass"],
         },
         "catalogue_adjacency": adj,
@@ -256,12 +279,12 @@ def build_html(nine, paths, lane, rz, rn, b2, card, adj):
         rows.append(
             "<tr>"
             f"<td><strong>{site}</strong></td>"
-            f"<td><a href=\"{url}\">{html.escape(repo_path.split('/')[-1])}</a><br>"
+            f'<td><a href="{url}">{html.escape(repo_path.split("/")[-1])}</a><br>'
             f"<small>bytes identical to owner repo · sha256 {r['sha256'][:12]}… · {r['dot_count']:,} dots · format {'PASS' if r['official_format_pass'] else 'FAIL'}</small></td>"
             f"<td>{owner[site]:.4f}<br><small>OWNER-REPORTED (not organizer-confirmed)</small></td>"
             "<td>NOT ESTIMABLE</td>"
             f"<td>{pill(unique, 'UNIQUE' if unique else 'NOT UNIQUE')}<br>"
-            f"<small>max 3-px overlap {mp['max_overlap']*100:.2f}% with {mp['max_overlap_vs']}</small></td>"
+            f"<small>max 3-px overlap {mp['max_overlap'] * 100:.2f}% with {mp['max_overlap_vs']}</small></td>"
             f"<td>{pill(False, 'DO NOT SUBMIT')}<br><small>audit download only; already scored (owner report)</small></td>"
             "</tr>"
         )
@@ -290,19 +313,19 @@ th{{background:#eef2ff}} code{{word-break:break-all}} small{{color:#374151}}
 <h2>1 · The file: download yes, submit no</h2>
 <p><strong>Recommended upload variant (if the owner clears submission):</strong>
 <a href="downloads/{NAN}" download><strong>⬇ {NAN}</strong></a><br>
-<code>sha256 {rn['sha256']}</code> · {rn['dot_count_in_footprint']:,} binary dots · float32 · EPSG:32611 · 100 m · 3730×3292 · NaN outside the footprint (same convention as the bridge sample)</p>
-<p>Audit copy, do not upload both: <a href="downloads/{ZEROS}" download>{ZEROS}</a> (identical dots, finite 0.0 outside; sha256 <code>{rz['sha256'][:16]}…</code>).</p>
+<code>sha256 {rn["sha256"]}</code> · {rn["dot_count_in_footprint"]:,} binary dots · float32 · EPSG:32611 · 100 m · 3730×3292 · NaN outside the footprint (same convention as the bridge sample)</p>
+<p>Audit copy, do not upload both: <a href="downloads/{ZEROS}" download>{ZEROS}</a> (identical dots, finite 0.0 outside; sha256 <code>{rz["sha256"][:16]}…</code>).</p>
 <p>
-{pill(True, 'DOWNLOAD: YES (format and audit)')}
-{pill(False, 'SUBMIT: NO (owner decision pending)')}
+{pill(True, "DOWNLOAD: YES (format and audit)")}
+{pill(False, "SUBMIT: NO (owner decision pending)")}
 </p>
 <p>
-{pill(fmt['official_format_pass'], 'Official format PASS (NaN outside)')}
-{pill(g['no_exact_duplicate'], 'No exact duplicate')}
-{pill(g['overlap_le_70pct_vs_nine'], f"Unique vs nine: max {nine_top['fraction']*100:.2f}% (GEMSDOE27)")}
-{pill(g['overlap_le_70pct_vs_all_other_local_tifs'], f"Unique vs other local TIFs: max {other_top['fraction']*100:.2f}% (zeros sibling 100%)")}
-{pill(g['overlap_le_70pct_vs_peer_lattice_GEMSDOE13'], f"GEMSDOE13 lattice: {lattice*100:.2f}% · FAIL by construction")}
-{pill(None, 'Estimated leaderboard score: NOT ESTIMABLE')}
+{pill(fmt["official_format_pass"], "Official format PASS (NaN outside)")}
+{pill(g["no_exact_duplicate"], "No exact duplicate")}
+{pill(g["overlap_le_70pct_vs_nine"], f"Unique vs nine: max {nine_top['fraction'] * 100:.2f}% (GEMSDOE27)")}
+{pill(g["overlap_le_70pct_vs_all_other_local_tifs"], f"Unique vs other local TIFs: max {other_top['fraction'] * 100:.2f}% (zeros sibling 100%)")}
+{pill(g["overlap_le_70pct_vs_peer_lattice_GEMSDOE13"], f"GEMSDOE13 lattice: {lattice * 100:.2f}% · FAIL by construction")}
+{pill(None, "Estimated leaderboard score: NOT ESTIMABLE")}
 </p>
 <p><strong>Why submit is not cleared.</strong> The protocol's 70% test counts the GEMSDOE13 calibration lattice (<code>13gems_20261001_r13-lattice-s5_v2_nan-outside.tif</code>) as a registry comparator. Its 5-px grid covers 99.87% of the footprint, so no dot file above 22,163 dots can pass that test. This is arithmetic, not a defect in this file. <strong>Decision for the owner:</strong> does the GEMSDOE13 lattice count as a registry comparator? If not, every gate that remains passes and the owner may submit this file. If yes, the protocol itself must change before any dot file at this budget can clear it.</p>
 <p><strong>Portal error "Predicted values must be in range [0, 1]".</strong> This file's finite values are all 0 or 1, and it has no NaN inside the footprint. The cause of the earlier rejection is not established. Locally, none of the nine owner files holds an out-of-range finite value (<code>evidence/nine_site_verify_20261030.json</code>). The file the portal rejected is not identified, so send its exact filename to resolve this.</p>
@@ -310,7 +333,7 @@ th{{background:#eef2ff}} code{{word-break:break-all}} small{{color:#374151}}
 
 <h2>2 · How to submit (the one manual step)</h2>
 <ol>
-<li>Download the <code>-nan</code> file above and confirm its sha256 prefix <code>{rn['sha256'][:8]}</code>.</li>
+<li>Download the <code>-nan</code> file above and confirm its sha256 prefix <code>{rn["sha256"][:8]}</code>.</li>
 <li>Only after the owner decision in section 1: log in to DrivenData and submit that single <code>.tif</code>. Only you can do this step; no credentials are used or stored here.</li>
 <li>Paste this note ({len(NOTE)} of 140 characters): <code>{html.escape(NOTE)}</code></li>
 <li>Remember the weekly cap of three submissions (official rules §3.2). This repository cannot see the remaining quota.</li>
@@ -320,29 +343,29 @@ th{{background:#eef2ff}} code{{word-break:break-all}} small{{color:#374151}}
 <p>Each file below is the owner's named best file, located by byte identity (git blob SHA-1) in the owner's public repo. <strong>Unique vs the other focus sites?</strong> compares each file's dots with every other focus file (3-px rule). Every site overlaps another at 97.5% or more, so none is unique.</p>
 <table>
 <tr><th>Site</th><th>File to download</th><th>Owner-reported score</th><th>Estimated leaderboard score</th><th>Unique vs the other focus sites?</th><th>Submit?</th></tr>
-{''.join(rows)}
+{"".join(rows)}
 </table>
 <p><small>Official leaderboard snapshot (DrivenData, fetched 2026-10-30): #1 0.4544, #2 0.3925, #3 0.3915, #10 0.3520. Neither 0.4413 nor 0.3195 appears in its visible rows (#1–#23). The request cites 0.4413 and 0.3195, so both remain unverified.</small></p>
 
 <h2>4 · Why H33-B2 (GEMSDOE32, 0.2778) scored high — evidence-bounded</h2>
 <ol>
 <li><strong>Arithmetic (from the official definition, as implemented in <code>src/gems/metric.py</code>).</strong> With FN_w = N − TP_w, DTI = TP_w / (0.8·N + 0.2·(TP_w + FP_w)). Removing a dot raises the score only if its credit-to-FP-weight ratio is below roughly 0.2·TP/(0.8N + 0.2·FP).</li>
-<li><strong>Verified set fact.</strong> B2 has {b2['b2']['dots']:,} dots and is an exact subset of the {b2['d28']['dots']:,}-dot GEMSDOE25 D2.8 file. The {b2['dots_removed_from_d28']:,} removed dots are all 1–3 px from the catalogue, and none sits on it. B2 keeps {s3['b2']*100:.1f}% of its dots within 3 px of the catalogue; D2.8 has {s3['d28']*100:.1f}% (<code>evidence/b2_subset_forensics_20261030.json</code>).</li>
+<li><strong>Verified set fact.</strong> B2 has {b2["b2"]["dots"]:,} dots and is an exact subset of the {b2["d28"]["dots"]:,}-dot GEMSDOE25 D2.8 file. The {b2["dots_removed_from_d28"]:,} removed dots are all 1–3 px from the catalogue, and none sits on it. B2 keeps {s3["b2"] * 100:.1f}% of its dots within 3 px of the catalogue; D2.8 has {s3["d28"] * 100:.1f}% (<code>evidence/b2_subset_forensics_20261030.json</code>).</li>
 <li><strong>Mechanism (plausible, not proven).</strong> The competition's labels are new faults, so a dot hugging an already-mapped trace plausibly earns little credit yet carries a full penalty. Pruning such dots lowers FP mass with little TP loss. Owner-reported scores move from 0.2600 (D2.8) to 0.2778 (B2), a +0.0178 difference. The repo's own analysis (<code>README.md</code>, H33-B2 section) also says the pruning can hurt when removed cells sit near withheld faults. Hidden credit and the hidden N are unavailable, so causality is not established.</li>
-<li><strong>Can we beat 0.2778?</strong> Not demonstrated. The label-free candidate's HOLDOUT-DTI is {e2['dti']:.4f} (95% CI [{ci[0]:.4f}, {ci[1]:.4f}], {e2['n_withheld_positive_pixels']:,} withheld positives, evaluator {html.escape(e2['evaluator_version'])}). That is below the repo's recorded local point-best of 0.166060 (H24-S3DEP1, a non-unique file, DO_NOT_SUBMIT; <code>docs/data/current_best_review.json</code>). Proxy DTI values are not leaderboard scores, and the candidate's own catalogue-adjacent share is {adj['share_within_3px_of_catalogue']*100:.1f}%, against B2's {s3['b2']*100:.1f}%.</li>
+<li><strong>Can we beat 0.2778?</strong> Not demonstrated. The label-free candidate's HOLDOUT-DTI is {e2["dti"]:.4f} (95% CI [{ci[0]:.4f}, {ci[1]:.4f}], {e2["n_withheld_positive_pixels"]:,} withheld positives, evaluator {html.escape(e2["evaluator_version"])}). That is below the repo's recorded local point-best of 0.166060 (H24-S3DEP1, a non-unique file, DO_NOT_SUBMIT; <code>docs/data/current_best_review.json</code>). Proxy DTI values are not leaderboard scores, and the candidate's own catalogue-adjacent share is {adj["share_within_3px_of_catalogue"] * 100:.1f}%, against B2's {s3["b2"] * 100:.1f}%.</li>
 </ol>
 
 <h2>5 · Candidate validation (receipts)</h2>
 <table>
 <tr><th>Item</th><th>Result</th><th>Label</th></tr>
-<tr><td>Holdout: whole catalogue segments withheld in four quadrants with a 30 px buffer; pooled DTI (α=0.2, β=0.8, 300 m triangular kernel)</td><td>{e2['dti']:.6f} [{ci[0]:.6f}, {ci[1]:.6f}] · evaluator {html.escape(e2['evaluator_version'])} · {e2['n_withheld_positive_pixels']:,} withheld</td><td>HOLDOUT-DTI</td></tr>
-<tr><td>Control: proximity-only (E3)</td><td>{e3['dti']:.6f} [{e3['ci95'][0]:.6f}, {e3['ci95'][1]:.6f}] · {e3['n_withheld_positive_pixels']:,} withheld</td><td>HOLDOUT-DTI</td></tr>
-<tr><td>Leakage canary (E2 only; single-feature AUC, pass ≤ 0.90)</td><td>worst {e2['leakage_canary']['worst_auc']} ({html.escape(e2['leakage_canary']['worst_feature'])}) · PASS. E3 has no canary entry (gap).</td><td>canary</td></tr>
+<tr><td>Holdout: whole catalogue segments withheld in four quadrants with a 30 px buffer; pooled DTI (α=0.2, β=0.8, 300 m triangular kernel)</td><td>{e2["dti"]:.6f} [{ci[0]:.6f}, {ci[1]:.6f}] · evaluator {html.escape(e2["evaluator_version"])} · {e2["n_withheld_positive_pixels"]:,} withheld</td><td>HOLDOUT-DTI</td></tr>
+<tr><td>Control: proximity-only (E3)</td><td>{e3["dti"]:.6f} [{e3["ci95"][0]:.6f}, {e3["ci95"][1]:.6f}] · {e3["n_withheld_positive_pixels"]:,} withheld</td><td>HOLDOUT-DTI</td></tr>
+<tr><td>Leakage canary (E2 only; single-feature AUC, pass ≤ 0.90)</td><td>worst {e2["leakage_canary"]["worst_auc"]} ({html.escape(e2["leakage_canary"]["worst_feature"])}) · PASS. E3 has no canary entry (gap).</td><td>canary</td></tr>
 <tr><td>Official format (EPSG:32611, 3730×3292, float32, values in [0,1], no NaN inside footprint)</td><td>PASS (NaN-outside variant)</td><td>format check</td></tr>
 <tr><td>Byte identity vs all local TIFFs and the nine files</td><td>No exact duplicate. The zeros and NaN variants are twins of each other (overlap 100%).</td><td>sha256</td></tr>
-<tr><td>Phi / Spearman correlation vs nine (max)</td><td>{card['correlation_overlap_vs_registry']['phi_max_vs_nine']['phi']:.4f} ({html.escape(card['correlation_overlap_vs_registry']['phi_max_vs_nine']['site'])}); threshold 0.90 not exceeded</td><td>registry check</td></tr>
+<tr><td>Phi / Spearman correlation vs nine (max)</td><td>{card["correlation_overlap_vs_registry"]["phi_max_vs_nine"]["phi"]:.4f} ({html.escape(card["correlation_overlap_vs_registry"]["phi_max_vs_nine"]["site"])}); threshold 0.90 not exceeded</td><td>registry check</td></tr>
 <tr><td>Surface before placement (protocol)</td><td>NOT RUN (pre-placement posterior not saved)</td><td>gap</td></tr>
-<tr><td>Catalogue-adjacent dots (within 3 px of the catalogue)</td><td>{adj['share_within_3px_of_catalogue']*100:.1f}%, untested pruning lever (H1)</td><td>diagnostic</td></tr>
+<tr><td>Catalogue-adjacent dots (within 3 px of the catalogue)</td><td>{adj["share_within_3px_of_catalogue"] * 100:.1f}%, untested pruning lever (H1)</td><td>diagnostic</td></tr>
 </table>
 <p><small>Budget: the protocol allows three experiments. Run 1 executed E1, E2 and E3; run 2 re-ran E2 and E3 after a selection fix. That is five evaluations, which is over budget and disclosed. E1 is void and is not evidence.</small></p>
 
@@ -377,7 +400,7 @@ th{{background:#eef2ff}} code{{word-break:break-all}} small{{color:#374151}}
 <li>Leaderboard: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">DrivenData leaderboard snapshot</a></li>
 <li>Grid: <a href="https://epsg.io/32611">EPSG:32611</a> (UTM 11N). Data DOIs as recorded in this repo's provenance files (not re-fetched this session): GeoDAWN <a href="https://doi.org/10.5066/P93LGLVQ">10.5066/P93LGLVQ</a> and INGENIOUS <a href="https://doi.org/10.15121/1881483">10.15121/1881483</a> (<code>data/external/geodawn_rad.json</code>).</li>
 <li>Nine focus repositories (owner files, public GitHub):
-{' · '.join(f'<a href="https://github.com/buffedlizard55-lab/{s}">{s}</a>' for s in SITES)}</li>
+{" · ".join(f'<a href="https://github.com/buffedlizard55-lab/{s}">{s}</a>' for s in SITES)}</li>
 <li>Exact owner file links: <code>evidence/nine_site_owner_paths_20261030.json</code></li>
 </ul>
 
@@ -406,9 +429,21 @@ def main() -> int:
     OUT_CARD.write_text(json.dumps(card, indent=2, allow_nan=False) + "\n")
     OUT_HTML.write_text(html_doc)
     print("wrote", OUT_HTML.relative_to(ROOT), OUT_B2.relative_to(ROOT), OUT_CARD.relative_to(ROOT))
-    print("B2 subset:", b2["b2_is_subset_of_d28"], "removed:", b2["dots_removed_from_d28"],
-          "GEMSDOE30 dotset == GEMSDOE25:", b2["gemsdoe30"]["dotset_identical_to_gemsdoe25"])
-    print("phi max vs nine:", round(phis["max"], 4), phis["max_site"], "lattice phi:", round(phis["lattice"], 4))
+    print(
+        "B2 subset:",
+        b2["b2_is_subset_of_d28"],
+        "removed:",
+        b2["dots_removed_from_d28"],
+        "GEMSDOE30 dotset == GEMSDOE25:",
+        b2["gemsdoe30"]["dotset_identical_to_gemsdoe25"],
+    )
+    print(
+        "phi max vs nine:",
+        round(phis["max"], 4),
+        phis["max_site"],
+        "lattice phi:",
+        round(phis["lattice"], 4),
+    )
     return 0
 
 

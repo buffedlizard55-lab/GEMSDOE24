@@ -27,7 +27,10 @@
       "value": 0.16606013635163805,
       "evaluator_version": "gems-segment-pooled-v1",
       "withheld_positive_pixels": 60988,
-      "ci95": [0.15185839118988828, 0.18033886456990444],
+      "ci95": [
+        0.15185839118988828,
+        0.18033886456990444
+      ],
       "lane": "S3DEP1",
       "status": "Recorded local point-best in existing evidence; not replayed in this review; not a leaderboard estimate; selector verdict remains negative."
     },
@@ -36,7 +39,10 @@
       "value": 0.036939,
       "evaluator_version": "gems-segment-pooled-v1",
       "withheld_positive_pixels": 60988,
-      "ci95": [0.030813, 0.043882],
+      "ci95": [
+        0.030813,
+        0.043882
+      ],
       "lane": "nine-site-complement seg-HGB",
       "status": "Recorded in evidence/run_card_20261029_nine_site_unique.json; not replayed in this review; candidate is negative and not promoted."
     }
@@ -72,7 +78,10 @@
       "strict_whole_array_values_in_0_1": true,
       "nan_inside_footprint": 0,
       "crs": "EPSG:32611",
-      "shape": [3730, 3292],
+      "shape": [
+        3730,
+        3292
+      ],
       "transform_matches_pinned_template": true,
       "profile_matches_sample_mirror": false,
       "official_format_compliant": false,
@@ -91,20 +100,53 @@
   "experiments_run": 0,
   "submission_slots_used": 0,
   "verification": {
-    "project_tests": "667 passed; 1 skipped because pinned champion bytes are not restored locally (tests/test_nine_site_candidate.py:60); full history restored",
-    "ruff_check": "passed",
-    "ruff_format": "passed; 351 files already formatted",
-    "site_build": "scripts/build_site.py completed; new_slot_eligible=false; no_scores_fabricated=true; generated tracked site outputs restored",
+    "project_tests": "674 passed; 1 skipped because pinned champion bytes are not restored locally (tests/test_nine_site_candidate.py:60); full history restored; run after syncing cc382df",
+    "ruff_check": "passed on synchronized tree",
+    "ruff_format": "passed; 228 files already formatted after formatting six upstream files",
+    "site_build": "scripts/build_site.py on synchronized main cc382df completed; new_slot_eligible=false; no_scores_fabricated=true; generated tracked site outputs restored",
     "uniqueness_preflight": "exit 2, as expected for both fixed budgets under the retained-witness necessary bound",
     "strict_preflight": "FORMAT=true; STRICT_RANGE=true; SCIENTIFIC_AUTHORIZATION=false; SUBMISSION=DO_NOT_SUBMIT",
-    "diff_check": "passed after documentation and README-link correction",
-    "local_markdown_links": "passed after correcting README's stale H-BLIND-UPWELL run-card path to docs/data/blind_upwell_run_card.json"
+    "diff_check": "passed after synchronized-main format-only cleanup and README-link correction",
+    "local_markdown_links": "passed on synchronized tree after correcting README stale H-BLIND-UPWELL run-card path to docs/data/blind_upwell_run_card.json",
+    "compileall": "python -m compileall -q src scripts: passed",
+    "upstream_ci_diagnostic": "PR #119 and PR #116 pull_request merge check failed only at Ruff format; six unformatted upstream files were format-cleaned here; fresh checks for this updated PR head are still required"
   },
   "limitations": [
     "No assigned method paragraph/lane.",
     "Full training_features.tif, data/labels.tif, and prepared feature cache are absent; bridge mirrors and partial derived inputs are not organizer authentication.",
     "No new holdout or surface/dot novelty test; standard fixed budgets are impossible under the literal retained-lattice rule.",
     "The official portal, live leaderboard, account quota, and artifact-linked score receipt were not accessed; estimates remain NOT ESTIMABLE.",
-    "Official ASTER/OPERA coverage and retrieval were not verified; they are not viable inputs for this run."
-  ]
+    "Official ASTER/OPERA coverage and retrieval were not verified; they are not viable inputs for this run.",
+    "PR #119 added an upstream NS-RATIO1 packet after this review snapshot; it was merged into this working branch for continuity but was not scientifically assessed or authorized by this session."
+  ],
+  "post_review_main_sync": {
+    "review_snapshot_commit": "da4d3194f017a1c72befce090c1b1e2a17c168cd",
+    "latest_main_commit": "cc382dfd3eee2cf4db5272b54ae3ae129fd76be6",
+    "branch_sync_merge_commit": "f5cf57e",
+    "concurrent_merge": "PR #119, merged 2026-10-30T23:39:09Z",
+    "incoming_candidate_artifacts": [
+      "docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-nan.tif",
+      "docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-zeros.tif",
+      "evidence/ns_ratio1_run_card_20261030.json"
+    ],
+    "this_session_disposition": "Concurrent packet was not generated, replayed, selected, or submitted by this session; see its own PR/run card for source-recorded disposition. This is not a scientific review of that candidate.",
+    "upstream_ci_irregularity": {
+      "pr": 119,
+      "failed_runs": [
+        "41145729471",
+        "41145732627"
+      ],
+      "only_failed_step": "ruff format --check src scripts tests",
+      "status": "PR was merged despite both reliability runs failing at that formatter step."
+    },
+    "format_only_cleanup_files": [
+      "scripts/build_submission_start_here.py",
+      "scripts/make_nan_twin.py",
+      "scripts/map_nine_owner_paths.py",
+      "scripts/nine_site_verify.py",
+      "scripts/run_ns_ratio1_lane.py",
+      "scripts/verify_candidate_tif.py"
+    ],
+    "new_tiffs_created_by_this_session": 0
+  }
 }

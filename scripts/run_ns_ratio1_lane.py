@@ -119,8 +119,12 @@ def ratio_select(q_grid, eligible, k, spacing):
     H, W = eligible.shape
     blocked = np.zeros((H, W), bool)
     r = int(np.ceil(spacing))
-    offs = [(dy, dx) for dy in range(-r, r + 1) for dx in range(-r, r + 1)
-            if 0 < dy * dy + dx * dx < spacing * spacing]
+    offs = [
+        (dy, dx)
+        for dy in range(-r, r + 1)
+        for dx in range(-r, r + 1)
+        if 0 < dy * dy + dx * dx < spacing * spacing
+    ]
     out = np.zeros((H, W), bool)
     n = 0
     for flat in order:
@@ -171,7 +175,11 @@ def run_holdout(experiment, fp, labels, static_fp, static_names, use_catalogue, 
         is_pos = visible.ravel()[tr_idx_grid]
         pos_rows = tr_rows[is_pos]
         neg_pool = tr_rows[~is_pos]
-        neg_rows = rng.choice(neg_pool, size=min(len(neg_pool), SETTINGS["neg_per_pos"] * max(len(pos_rows), 1)), replace=False)
+        neg_rows = rng.choice(
+            neg_pool,
+            size=min(len(neg_pool), SETTINGS["neg_per_pos"] * max(len(pos_rows), 1)),
+            replace=False,
+        )
         rows = np.concatenate([pos_rows, neg_rows])
         y = np.concatenate([np.ones(len(pos_rows)), np.zeros(len(neg_rows))])
         eligible_grid = valid & ~visible & fp
@@ -191,10 +199,19 @@ def run_holdout(experiment, fp, labels, static_fp, static_names, use_catalogue, 
         k_fold = int(round(SETTINGS["k_total"] * valid.sum() / fp_total))
         pred = ratio_select(q_grid, eligible_grid, k_fold, SETTINGS["min_spacing_px"])
         fold_preds.append(pred.astype(np.uint8))
-        fold_info.append({"fold": fold["name"], "k_fold": k_fold, "emitted": int(pred.sum()),
-                          "withheld_positives": int(truth.sum()), "n_train_pos": int(len(pos_rows)),
-                          "n_train_neg": int(len(neg_rows))})
-        print(f"[{experiment}] fold {fold['name']} k={k_fold} emitted={int(pred.sum())}", flush=True)
+        fold_info.append(
+            {
+                "fold": fold["name"],
+                "k_fold": k_fold,
+                "emitted": int(pred.sum()),
+                "withheld_positives": int(truth.sum()),
+                "n_train_pos": int(len(pos_rows)),
+                "n_train_neg": int(len(neg_rows)),
+            }
+        )
+        print(
+            f"[{experiment}] fold {fold['name']} k={k_fold} emitted={int(pred.sum())}", flush=True
+        )
     summary = sh.summarize(fold_preds)
     worst = max((max(v) for v in canary.values()), default=None)
     worst_name = max(canary, key=lambda n: max(canary[n])) if canary else None
@@ -279,16 +296,23 @@ def emit(path: Path, fp, labels, static_fp, static_names, profile):
     prof.update(dtype="float32", count=1, nodata=None, compress="deflate")
     with rasterio.open(path, "w", **prof) as dst:
         dst.write(out, 1)
-    return {"path": str(path.relative_to(ROOT)), "dots": int(dots.sum()),
-            "features": names, "n_train_pos": int(len(pos_rows))}
+    return {
+        "path": str(path.relative_to(ROOT)),
+        "dots": int(dots.sum()),
+        "features": names,
+        "n_train_pos": int(len(pos_rows)),
+    }
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--emit", type=Path, default=None, help="write candidate GeoTIFF")
     ap.add_argument("--skip-holdout", action="store_true")
-    ap.add_argument("--experiments", default="E2,E3",
-                    help="E1 is VOID until cross-fitted catalogue features exist; default runs E2,E3")
+    ap.add_argument(
+        "--experiments",
+        default="E2,E3",
+        help="E1 is VOID until cross-fitted catalogue features exist; default runs E2,E3",
+    )
     args = ap.parse_args()
     t0 = time.time()
     rng = np.random.default_rng(SETTINGS["seed"])
@@ -298,18 +322,28 @@ def main() -> int:
     with rasterio.open(LABELS) as lab:
         labels = (lab.read(1) == 1) & fp  # boolean grid; never use bitwise ~ on ints
     static_names, static_fp = static_features(fp, profile["transform"], fp.shape)
-    results = {"settings": SETTINGS, "inputs": {
-        "template_sha256": sha256_file(TEMPLATE), "labels_sha256": sha256_file(LABELS),
-        "lidar_sha256": sha256_file(LIDAR), "rad_sha256": sha256_file(RAD), "ext_sha256": sha256_file(EXT),
-        "lidar_meta_sha256": hashlib.sha256(LIDAR_META.read_bytes()).hexdigest(),
-    }, "footprint_cells": int(fp.sum()), "catalogue_positive_pixels": int(labels.sum()),
+    results = {
+        "settings": SETTINGS,
+        "inputs": {
+            "template_sha256": sha256_file(TEMPLATE),
+            "labels_sha256": sha256_file(LABELS),
+            "lidar_sha256": sha256_file(LIDAR),
+            "rad_sha256": sha256_file(RAD),
+            "ext_sha256": sha256_file(EXT),
+            "lidar_meta_sha256": hashlib.sha256(LIDAR_META.read_bytes()).hexdigest(),
+        },
+        "footprint_cells": int(fp.sum()),
+        "catalogue_positive_pixels": int(labels.sum()),
         "static_features": static_names,
-        "note": "HOLDOUT-DTI only; not a leaderboard estimate; features restricted to label-free channels except catalogue-derived ones computed from visible faults"}
+        "note": "HOLDOUT-DTI only; not a leaderboard estimate; features restricted to label-free channels except catalogue-derived ones computed from visible faults",
+    }
     if not args.skip_holdout:
         sh_probe = holdout.SegmentHoldout(fp, labels, buffer_px=SETTINGS["buffer_px"])
         wanted = {x.strip() for x in args.experiments.split(",") if x.strip()}
         if "E1" in wanted:
-            raise SystemExit("E1 refused: catalogue-distance features are void without cross-fitting")
+            raise SystemExit(
+                "E1 refused: catalogue-distance features are void without cross-fitting"
+            )
         out = []
         if "E2" in wanted:
             e2 = run_holdout("E2_LABELFREE", fp, labels, static_fp, static_names, False, rng)
@@ -319,9 +353,14 @@ def main() -> int:
         if "E3" in wanted:
             out.append(proximity_experiment(fp, labels, sh_probe))
         results["experiments"] = out
-        results["run"] = "run-2: selection bug fixed (all candidates scanned); E1 excluded (void); see run-1 archive"
+        results["run"] = (
+            "run-2: selection bug fixed (all candidates scanned); E1 excluded (void); see run-1 archive"
+        )
         for e in results["experiments"]:
-            print(f"{e['experiment']}: HOLDOUT-DTI={e['dti']} CI={e['ci95']} withheld={e['n_withheld_positive_pixels']}", flush=True)
+            print(
+                f"{e['experiment']}: HOLDOUT-DTI={e['dti']} CI={e['ci95']} withheld={e['n_withheld_positive_pixels']}",
+                flush=True,
+            )
     if args.emit is not None:
         results["emitted"] = emit(args.emit, fp, labels, static_fp, static_names, profile)
         print("emitted", results["emitted"]["path"], "dots", results["emitted"]["dots"], flush=True)
