@@ -1,6 +1,43 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## START HERE — nine-site executive summary (2026-10-29, `arena/6a1fb4d1-gemsdoe24`)
+## START HERE (2026-10-30, `arena/025f58cb-gemsdoe24`) — submission start page
+
+**[Open the submission start page →](docs/submission-start-here.html)** · [run card](evidence/ns_ratio1_run_card_20261030.json) · [B2 forensics](evidence/b2_subset_forensics_20261030.json) · [nine-site receipt](evidence/nine_site_verify_20261030.json) · [owner file paths](evidence/nine_site_owner_paths_20261030.json) · [mission prompt](docs/MISSION_PROMPT.md)
+
+**Maximize P(Win). Own the Outcome.**
+
+- **Best candidate, download yes / submit no:** [`docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-nan.tif`](docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-nan.tif) (sha256 `6768b7ef…`, 37,654 binary dots, NaN outside footprint, format PASS). The zeros-outside twin holds identical dots; upload only one of the two.
+- **Unique?** Max 3-px overlap with the nine focus files is 45.58% (GEMSDOE27). Max with other local TIFs is 59.64%. **Fails** the 70% rule against the GEMSDOE13 calibration lattice (99.29%), which cannot be met by any file above 22,163 dots. This needs an owner decision.
+- **Estimated leaderboard score: NOT ESTIMABLE.** HOLDOUT-DTI 0.129384 [0.117558, 0.142007] (`gems-segment-pooled-v1`, 60,988 withheld positives) is a proxy, not an organizer score.
+- **Nine focus files:** every one is format-valid, and every one overlaps another focus file at 97.6% or more. None is unique. Owner-reported scores (not organizer-confirmed) are in the start page table. The top owner-reported file is GEMSDOE32 B2 (0.2778); it is an exact subset of GEMSDOE25 D2.8 with 6,436 catalogue-adjacent dots removed.
+- **Portal "[0, 1]" error:** not established. No nine-site file holds an out-of-range finite value. Send the exact filename of the rejected upload.
+- **Irregularities flagged:** leaderboard figures conflict; the bridge sample is not the official all-absence sample; GEMSDOE25 and GEMSDOE30 share an identical dot set; GEMSDOE25's file is byte-identical to one hosted in this repo. Full list in the start page.
+- **Experiment budget:** 3 experiments were allowed. Five evaluations were run (run 1: E1–E3; run 2: E2–E3 re-run after a fix). Over budget, disclosed. E1 is void.
+
+### Mission prompt (requirements as recorded in `docs/MISSION_PROMPT.md`)
+
+The full, repeated request is not retained verbatim in this session. The normalized prompt the repo reads each session is in [`docs/MISSION_PROMPT.md`](docs/MISSION_PROMPT.md). Its hard requirements, recorded here as they stood on 2026-10-30:
+
+1. Generate a **unique** TIF submission; do not copy a previous submission; make it obvious whether it is safe to download and submit.
+2. Easy one-click download. Investigate the "Predicted values must be in range [0, 1]" rejection.
+3. Unique file name and a note of at most 140 characters.
+4. Executive summary on every focus site (GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36): file to download, estimated score, unique vs the other sites.
+5. Sub-page explaining exactly how to make a submission.
+6. Automated validation (no human step): no NaN inside the footprint, values in [0, 1], CRS, shape and transform matching the template (EPSG:32611, 3730×3292 at 100 m).
+7. Put this prompt into the README and re-read it each session.
+8. Create a PR and merge it to `main`.
+9. No hallucinations; line-by-line verification; official sources; flag irregularities.
+
+Evidence rules: label every number HOLDOUT-DTI (evaluator version, withheld positives, 95% CI) or ORGANIZER-CONFIRMED; never write a projection as a score; leakage canary (single-feature AUC > 0.90 = leakage until proven otherwise); uniqueness (rank correlation ≤ 0.90 and ≤ 70% of dots within 3 px of any one registry raster); hide-and-recover holdout with buffer; pooled DTI (α 0.2, β 0.8, 300 m triangular kernel); one run card per experiment; stop after 3 experiments or 2 hours; promotion is a separate selector step.
+
+### Ranked next hypotheses (not yet tried; each needs owner approval)
+
+1. **H1 · catalogue-adjacency pruning** (the B2 pattern) tested as E4 on the holdout.
+2. **H2 · cross-fitted catalogue-distance features** (a valid version of E1).
+3. **H3 · radiometric/magnetic-only ablation** against the proximity control.
+4. **H4 · nested dot-budget selection** instead of the fixed 37,654.
+
+## Previous START HERE — nine-site executive summary (2026-10-29, `arena/6a1fb4d1-gemsdoe24`)
 
 **[Open the executive summary →](docs/nine-site-submission-summary.html)** · [run card](evidence/run_card_20261029_nine_site_unique.json) · [mission prompt](docs/MISSION_PROMPT.md)
 

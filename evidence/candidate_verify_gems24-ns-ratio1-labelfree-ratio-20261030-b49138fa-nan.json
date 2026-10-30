@@ -1,0 +1,80 @@
+{
+  "schema": "candidate-tif-verify-v1",
+  "candidate": "docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-nan.tif",
+  "sha256": "6768b7ef9277aab4d9d8371f8d1f1042f02a63bd0b3471b1d07a544e4d2d6dd6",
+  "bytes": 335737,
+  "dot_count_in_footprint": 37654,
+  "format": {
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "dtype": "float32",
+    "count": 1,
+    "nodata": null,
+    "crs_ok": true,
+    "shape_ok": true,
+    "transform_ok": true,
+    "single_band_float32": true,
+    "nan_inside_footprint": 0,
+    "finite_outside_footprint": 0,
+    "min_finite": 0.0,
+    "max_finite": 1.0,
+    "values_in_0_1": true,
+    "binary_values": true,
+    "dots_gt0_in_footprint": 37654,
+    "dots_gt0_outside_footprint": 0,
+    "official_format_pass": true
+  },
+  "exact_duplicate_of": [],
+  "overlap_3px_max_vs_nine": {
+    "site": "nine:GEMSDOE27",
+    "fraction": 0.455755
+  },
+  "overlap_3px_max_vs_other_local_tifs": {
+    "file": "docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-zeros.tif",
+    "fraction": 1.0
+  },
+  "overlap_3px_vs_peer_lattice_GEMSDOE13": 0.992856,
+  "comparators_checked": 86,
+  "top5_overlaps": [
+    [
+      "docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-zeros.tif",
+      1.0
+    ],
+    [
+      "peer-lattice:GEMSDOE13",
+      0.992856
+    ],
+    [
+      "docs/downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-nan.tif",
+      0.596351
+    ],
+    [
+      "docs/downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-zeros.tif",
+      0.596351
+    ],
+    [
+      "inputs/calibration/8GEMSDOE_Hedge-v2_submission.tif",
+      0.558241
+    ]
+  ],
+  "gates": {
+    "official_format": true,
+    "no_exact_duplicate": true,
+    "overlap_le_70pct_vs_nine": true,
+    "overlap_le_70pct_vs_all_other_local_tifs": false,
+    "overlap_le_70pct_vs_peer_lattice_GEMSDOE13": false
+  },
+  "verdict_scope": "format and uniqueness receipt only; NOT an organizer score, NOT upload authorization",
+  "all_gates_pass": false
+}
