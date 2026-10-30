@@ -1,8 +1,12 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Current review — 2026-10-30 (`arena/9b32516e-gemsdoe24`)
+## Current follow-up review — 2026-10-30 (`arena/50bd576c-gemsdoe24`)
 
-**NO NEW TIFF · NO NEW EXPERIMENT · NO SCORE ESTIMATE · SUBMIT: NO.** Read the [current three-pass review](docs/repo-review-20261030-arena-9b32516e.md), its [JSON run card](evidence/session_9b32516e_20261030_run_card.json), and the [normalized mission prompt](docs/MISSION_PROMPT.md) before continuing; the complete owner prompt is preserved later in this README. The GitHub-only feed checked all nine focus repositories and found their `main` refs changed since the pinned historical-artifact audit; this proves freshness only, not current submissions or scores. The pinned historical champions remain audit downloads only, not unique under the literal lattice gate. No submission is authorized. The training-feature raster/cache and a lane-assignment paragraph are absent.
+**REPORT CORRECTION ONLY · NO NEW TIFF · NO EXPERIMENT · NO SLOT · SUBMIT: NO.** Read the [GEO1 holdout-integrity review](docs/geo1-holdout-integrity-review-20261030.md), [updated nine-site summary](docs/nine-site-submission-summary.html), [negative session JSON card](evidence/session_50bd576c_20261030_run_card.json), [mission prompt](docs/MISSION_PROMPT.md), and [standing instructions](AGENTS.md). GEO1's source-recorded HOLDOUT-DTI 0.142695 is compromised by full-catalogue placement leakage and is excluded from ranking; B2's 0.2778 remains OWNER-REPORTED, not organizer-confirmed. All leaderboard estimates remain **NOT ESTIMABLE**. The review installed dependencies in an ignored `.venv`, ran the full suite (**672 passed, 1 skipped**), Ruff, and site/report builds. The method-lane paragraph and authorized competition data remain absent, so no new raster or scientific score was produced. **Maximize P(Win) · Own the Outcome.**
+
+## Parallel GitHub-feed review — 2026-10-30 (`arena/9b32516e-gemsdoe24`)
+
+**NO NEW TIFF · NO NEW EXPERIMENT · NO SCORE ESTIMATE · SUBMIT: NO.** Read the [three-pass review](docs/repo-review-20261030-arena-9b32516e.md), its [JSON run card](evidence/session_9b32516e_20261030_run_card.json), and the [normalized mission prompt](docs/MISSION_PROMPT.md). Its GitHub-only feed found all nine focus repositories' `main` refs changed since the pinned historical-artifact audit; freshness is not a current artifact, score, or leaderboard review. The pinned historical champions remain audit downloads only, not unique under the literal lattice gate. The full training-feature raster/cache and a lane-assignment paragraph remain absent; no submission is authorized.
 
 ## Concurrent main-branch review — 2026-10-30 (`arena/6a29c5b2-gemsdoe24`)
 

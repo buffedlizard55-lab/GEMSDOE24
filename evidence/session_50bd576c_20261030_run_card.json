@@ -1,0 +1,111 @@
+{
+  "schema": "gemsdoe-nonexperimental-audit-run-card-v1",
+  "session_id": "50bd576c",
+  "date": "2026-10-30",
+  "branch": "arena/50bd576c-gemsdoe24",
+  "base_commit": "d4d6f1c87b974d7ed74825b1e6a746736877fedc",
+  "run_type": "non-experimental audit and documentation correction",
+  "hypothesis": "The nine-site summary's prior GEO1 ranking is invalid because its holdout-placement eligibility used complete catalogue labels; correcting the report should exclude that result from candidate ranking while preserving it as labeled source history.",
+  "mechanism": "The frozen GEO1 runner forms holdout emission eligibility with the complete labels grid (`~catalogue`) rather than the fold-visible mask. A withheld target can therefore affect where predictions are emitted. This is a source-level protocol violation, not evidence of organizer score causality.",
+  "named_non_fault_mimic": "Not applicable: no geological surface or prediction was generated. Named mimics for the four prospective, unassigned hypotheses are documented in docs/geo1-holdout-integrity-review-20261030.md.",
+  "method_lane": "UNASSIGNED: the required single method paragraph is absent; no lane was selected.",
+  "experiments_used": 0,
+  "experiment_budget": 3,
+  "new_tiffs": 0,
+  "competition_slots_used": 0,
+  "verdict": "negative",
+  "submission_authorized": false,
+  "leaderboard_estimate": {
+    "label": "NOT ESTIMABLE",
+    "value": null,
+    "reason": "No artifact-linked organizer receipt or hidden-label result was accessed. Owner-reported and internal holdout values are not leaderboard estimates."
+  },
+  "holdout_this_session": {
+    "status": "NOT RUN: no experiment or new candidate",
+    "label": null,
+    "evaluator_version": null,
+    "withheld_positive_count": null,
+    "dti": null,
+    "ci95": null
+  },
+  "prior_geo1_evidence_not_replayed": {
+    "artifact": "docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif",
+    "sha256": "ee37d94deb3545af1f814df61ec5acd7addafe01a4833384c2e25d1a5e6b384d",
+    "score_label": "INVALID SOURCE-RECORDED HOLDOUT-DTI",
+    "dti": 0.14269491602190398,
+    "ci95": [
+      0.13229313491455882,
+      0.1523670504192869
+    ],
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positive_count": 60988,
+    "status": "COMPROMISED: full-catalogue eligibility mask; not a valid comparable holdout",
+    "max_dot_overlap_vs_nine_focus_artifacts": 0.229053,
+    "dot_overlap_vs_retained_spacing5_lattice": 0.992538,
+    "full_registry_novelty_verdict": "FAIL",
+    "source_runner_sha256": "66083b39be1134bddb8248824b7734fd57a1ed8fd78fec51191d52db8d27eea3"
+  },
+  "uniqueness_checks_this_session": {
+    "new_preplacement_surface": "NOT GENERATED; surface rank-correlation vs registry NOT RUN",
+    "new_final_dots": "NOT GENERATED; final-dot overlap vs registry NOT RUN",
+    "feasibility_command": "python scripts/check_uniqueness_feasibility.py --dot-budget 37654 --dot-budget 44090",
+    "feasibility_expected_stop_exit_code": 2,
+    "feasibility_result_scope": "Necessary geometric lower bound for one retained spacing-5 lattice witness only; not a complete registry audit, scientific experiment, or candidate pass.",
+    "budgets": [
+      {
+        "dots": 37654,
+        "minimum_overlap_fraction": 0.8234184947150369,
+        "verdict": "STOP_IMPOSSIBLE_BUDGET"
+      },
+      {
+        "dots": 44090,
+        "minimum_overlap_fraction": 0.8491948287593558,
+        "verdict": "STOP_IMPOSSIBLE_BUDGET"
+      }
+    ],
+    "largest_integer_budget_not_ruled_out_by_this_bound": 22163
+  },
+  "raster": {
+    "new_file": false,
+    "path": null,
+    "sha256": null,
+    "format_range_grid_validation": "NOT APPLICABLE: no new raster",
+    "nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "portal_acceptance": "NOT TESTED; local checks would not establish portal acceptance"
+  },
+  "submission": {
+    "file": null,
+    "note": null,
+    "note_length": null,
+    "verdict": "negative",
+    "ok_to_submit": false,
+    "weekly_slot_used": false
+  },
+  "review_outputs": [
+    "docs/geo1-holdout-integrity-review-20261030.md",
+    "docs/nine-site-submission-summary.html",
+    "evidence/run_card_20261029_nine_site_unique.json",
+    "scripts/build_nine_site_report.py",
+    "tests/test_nine_site_report_integrity.py"
+  ],
+  "verification": {
+    "report_generator": "PASS: python scripts/build_nine_site_report.py",
+    "targeted_integrity_tests": "PASS: 5 passed",
+    "full_test_suite": "PASS: 672 passed, 1 skipped",
+    "ruff_check": "PASS: .venv/bin/ruff check .",
+    "ruff_format_check": "PASS: .venv/bin/ruff format --check .; 354 files already formatted",
+    "site_builder": "PASS: .venv/bin/python scripts/build_site.py; unrelated generated metadata/pages restored after the build check",
+    "git_history_check": "PASS: full history fetched; pinned-history checker passed",
+    "diff_check": "PASS: git diff --check"
+  },
+  "source_and_scope_limits": [
+    "No competition feature raster or prepared feature stack in this checkout.",
+    "No assigned method lane; prospective directions are not assignments and are not certified globally untried.",
+    "No external competition login, leaderboard query, organizer receipt, or portal upload.",
+    "Reported portal [0,1] error cause remains unknown; no causal claim is made.",
+    "Official references and their data products were not freshly fetched or coverage-checked in this follow-up; see the review for links and limitations."
+  ],
+  "pr_status_at_run_card_creation": "No PR for this follow-up had been opened yet."
+}
