@@ -1,14 +1,64 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## START HERE (2026-10-30, `arena/025f58cb-gemsdoe24`) — submission start page
+
+**[Open the submission start page →](docs/submission-start-here.html)** · [run card](evidence/ns_ratio1_run_card_20261030.json) · [B2 forensics](evidence/b2_subset_forensics_20261030.json) · [nine-site receipt](evidence/nine_site_verify_20261030.json) · [owner file paths](evidence/nine_site_owner_paths_20261030.json) · [mission prompt](docs/MISSION_PROMPT.md)
+
+**Maximize P(Win). Own the Outcome.**
+
+- **Best candidate, download yes / submit no:** [`docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-nan.tif`](docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-nan.tif) (sha256 `6768b7ef…`, 37,654 binary dots, NaN outside footprint, format PASS). The zeros-outside twin holds identical dots; upload only one of the two.
+- **Unique?** Max 3-px overlap with the nine focus files is 45.58% (GEMSDOE27). Max with other local TIFs is 59.64%. **Fails** the 70% rule against the GEMSDOE13 calibration lattice (99.29%), which cannot be met by any file above 22,163 dots. This needs an owner decision.
+- **Estimated leaderboard score: NOT ESTIMABLE.** HOLDOUT-DTI 0.129384 [0.117558, 0.142007] (`gems-segment-pooled-v1`, 60,988 withheld positives) is a proxy, not an organizer score.
+- **Nine focus files:** every one is format-valid, and every one overlaps another focus file at 97.6% or more. None is unique. Owner-reported scores (not organizer-confirmed) are in the start page table. The top owner-reported file is GEMSDOE32 B2 (0.2778); it is an exact subset of GEMSDOE25 D2.8 with 6,436 catalogue-adjacent dots removed.
+- **Portal "[0, 1]" error:** not established. No nine-site file holds an out-of-range finite value. Send the exact filename of the rejected upload.
+- **Irregularities flagged:** leaderboard figures conflict; the bridge sample is not the official all-absence sample; GEMSDOE25 and GEMSDOE30 share an identical dot set; GEMSDOE25's file is byte-identical to one hosted in this repo. Full list in the start page.
+- **Experiment budget:** 3 experiments were allowed. Five evaluations were run (run 1: E1–E3; run 2: E2–E3 re-run after a fix). Over budget, disclosed. E1 is void.
+
+### Mission prompt (requirements as recorded in `docs/MISSION_PROMPT.md`)
+
+The full, repeated request is not retained verbatim in this session. The normalized prompt the repo reads each session is in [`docs/MISSION_PROMPT.md`](docs/MISSION_PROMPT.md). Its hard requirements, recorded here as they stood on 2026-10-30:
+
+1. Generate a **unique** TIF submission; do not copy a previous submission; make it obvious whether it is safe to download and submit.
+2. Easy one-click download. Investigate the "Predicted values must be in range [0, 1]" rejection.
+3. Unique file name and a note of at most 140 characters.
+4. Executive summary on every focus site (GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36): file to download, estimated score, unique vs the other sites.
+5. Sub-page explaining exactly how to make a submission.
+6. Automated validation (no human step): no NaN inside the footprint, values in [0, 1], CRS, shape and transform matching the template (EPSG:32611, 3730×3292 at 100 m).
+7. Put this prompt into the README and re-read it each session.
+8. Create a PR and merge it to `main`.
+9. No hallucinations; line-by-line verification; official sources; flag irregularities.
+
+Evidence rules: label every number HOLDOUT-DTI (evaluator version, withheld positives, 95% CI) or ORGANIZER-CONFIRMED; never write a projection as a score; leakage canary (single-feature AUC > 0.90 = leakage until proven otherwise); uniqueness (rank correlation ≤ 0.90 and ≤ 70% of dots within 3 px of any one registry raster); hide-and-recover holdout with buffer; pooled DTI (α 0.2, β 0.8, 300 m triangular kernel); one run card per experiment; stop after 3 experiments or 2 hours; promotion is a separate selector step.
+
+### Ranked next hypotheses (not yet tried; each needs owner approval)
+
+1. **H1 · catalogue-adjacency pruning** (the B2 pattern) tested as E4 on the holdout.
+2. **H2 · cross-fitted catalogue-distance features** (a valid version of E1).
+3. **H3 · radiometric/magnetic-only ablation** against the proximity control.
+4. **H4 · nested dot-budget selection** instead of the fixed 37,654.
+
+## Previous START HERE — nine-site executive summary (2026-10-29, `arena/6a1fb4d1-gemsdoe24`)
+
+---
+
 ## Current review — 2026-10-30 (`arena/9b32516e-gemsdoe24`)
 
-**NO NEW TIFF · NO NEW EXPERIMENT · NO SCORE ESTIMATE · SUBMIT: NO.** Read the [current three-pass review](docs/repo-review-20261030-arena-9b32516e.md), its [JSON run card](evidence/session_9b32516e_20261030_run_card.json), and the [normalized mission prompt](docs/MISSION_PROMPT.md) before continuing; the complete owner prompt is preserved later in this README. The GitHub-only feed checked all nine focus repositories and found their `main` refs changed since the pinned historical-artifact audit; this proves freshness only, not current submissions or scores. The pinned historical champions remain audit downloads only, not unique under the literal lattice gate. No submission is authorized. The training-feature raster/cache and a lane-assignment paragraph are absent.
+## START HERE — active portfolio decision (2026-10-30)
 
-## Concurrent main-branch review — 2026-10-30 (`arena/6a29c5b2-gemsdoe24`)
+
+**NO SUBMISSION-AUTHORIZED TIFF · NO NEW TIFF OR EXPERIMENT · NO SLOT · SUBMIT: NO.** Read the [latest nine-site review](docs/repo-review-20261030-arena-9b32516e.md) and [run card](evidence/session_9b32516e_20261030_run_card.json), the [merged companion review](docs/repo-review-20261030-arena-6a29c5b2.md) and [run card](evidence/session_6a29c5b2_20261030_run_card.json), the [active mission prompt](docs/MISSION_PROMPT.md), and [standing instructions](AGENTS.md) at every session start. This continuation's newer GitHub readback is summarized in the [current-source snapshot](docs/current-source-snapshot-20261030.md) and recorded in [`docs/data/all_owner_sites_20261026.json`](docs/data/all_owner_sites_20261026.json) and [`docs/data/portfolio_freshness.json`](docs/data/portfolio_freshness.json).
+
+- **Per-site downloads:** the [nine-site historical champion table](docs/historical-champions.html) lists each pinned file and exact raw download link, SHA-256, owner-reported claim, local format limits, lattice overlap, and explicit **SUBMIT: NO**. These are historical pinned artifacts—not endorsements of changed repository heads. GEMSDOE32 B2's 0.2778 is **OWNER-REPORTED / UNVERIFIED**, not an organizer score.
+- **Scores:** no artifact-linked organizer receipt was found; no leaderboard estimate is supported (**NOT ESTIMABLE**). A local holdout is not a hidden-score forecast.
+- **Freshness:** all nine focus repositories' current `main` refs changed since the frozen artifact-review refs. The refresh is source freshness only; it does not validate new-head TIFFs or scores. The owner README snapshot retrieved 92/92 sites; the associated 118 historical owner claims are carried from the preserved task brief, not extracted from those refreshed READMEs, and zero organizer-confirmed receipts were recorded.
+- **Uniqueness stop:** the retained spacing-5 witness covers 99.8713% of the footprint within 3 px. The necessary minimum overlap is 82.34% at 37,654 dots and 84.92% at 44,090; both budgets stop. Do not tune a stopped budget or alter the comparator. No candidate surface/final-dot test ran because no candidate was generated.
+- **Recorded H24-S3DEP1:** HOLDOUT-DTI 0.1660601364 [0.1518583912, 0.1803388646], `gems-segment-pooled-v1`, 60,988 withheld positives; its pinned artifact verifier passes, but the selector remains **DO_NOT_SUBMIT**. Verification is not a fresh scientific replay or organizer score.
+- **Portal range error:** cause and outside-footprint acceptance are unverified. Local range/grid checks cannot establish portal acceptance.
 
 A separate repository-review PR was merged to `main` while this PR was open. Its review is [here](docs/repo-review-20261030-arena-6a29c5b2.md) with its [run card](evidence/session_6a29c5b2_20261030_run_card.json). It is a parallel session record, not a replacement for this branch's refreshed GitHub feed, nine pinned artifact read-back, or final validation.
 
 ## START HERE — nine-site executive summary (2026-10-29, `arena/6a1fb4d1-gemsdoe24`)
+
 
 **[Open the executive summary →](docs/nine-site-submission-summary.html)** · [run card](evidence/run_card_20261029_nine_site_unique.json) · [mission prompt](docs/MISSION_PROMPT.md)
 
@@ -25,6 +75,9 @@ Reproduce: `scripts/fetch_nine_site_champions.py` → `scripts/build_nine_site_s
 **Next steps (suggested, not started):** (1) owner decides the calibration-lattice rule; (2) preregister one method lane that beats the recorded holdout best of 0.166060 (S3DEP1, not unique) while staying at or under 70% overlap with the nine; (3) record one organizer receipt for the chosen file on the DrivenData submission page (requires the owner to log in); (4) resolve the 0.3195 vs 0.4413 leaderboard discrepancy from a receipt, not from text; (5) replace the owner-mirror training raster with a file the owner downloads while logged in to DrivenData.
 
 **Limitations:** no DrivenData login or submission access here; the training raster is owner-mirrored, not organizer-authenticated; the bridge `sample_submission.tif` is identical in positives to the catalogue; the method-lane paragraph is absent from the request. Core values: **Maximize P(Win)** and **Own the Outcome**.
+
+Use the [automated preflight and user-controlled submission guide](docs/automated-submission-guide-20261030.md) only after an independently authorized selector exists. Current outcomes and evidence are also in [`docs/data/portfolio_freshness.json`](docs/data/portfolio_freshness.json), [`docs/data/all_owner_sites_20261026.json`](docs/data/all_owner_sites_20261026.json), and [`docs/data/historical_champions_20261028.json`](docs/data/historical_champions_20261028.json). Core values: **Maximize P(Win)** and **Own the Outcome**.
+
 
 
 ## Current repository review — 2026-10-29 (`arena/30d63154-gemsdoe24`)
@@ -3692,3 +3745,15 @@ Go ahead and create a pull request and then merge the pull request onto the main
 </details>
 
 </details>
+
+---
+
+## Active user task prompt — 2026-10-30 (operative addendum)
+
+Review and advance the GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31, GEMSDOE32, GEMSDOE33, and GEMSDOE36 competition work. Maintain a clear per-site executive table with exact downloadable artifacts, evidence-qualified scores, uniqueness scope, and an explicit download/submit decision. Research genuinely new fault hypotheses, document evidence and validation limits, provide an automated local preflight/submission guide, perform repeated adversarial reviews, keep this prompt in the README for each session start, and pursue a checked PR/merge only when the changes pass review.
+
+**Evidence rule:** never present owner-reported standings or internal projections as organizer-confirmed scores. A `HOLDOUT-DTI` value must include its evaluator/version, withheld-positive count, and 95% CI; `ORGANIZER-CONFIRMED` requires a receipt linked to the exact submitted artifact. No current high-scoring, submission-authorized TIFF is established by this review. Keep historical downloads, hidden-score estimates, local validation, and organizer receipts distinct.
+
+**Binding constraints:** generate a genuinely new TIFF only if the assigned single-method paragraph exists and every scientific/uniqueness gate passes; do not copy a prior prediction, use human inspection as a fallback, invent a missing lane, or restart stopped work. Before placement and on final dots, use the complete comparable registry and stop at absolute rank correlation >0.90 or >70% overlap within 3 px. Never tune a stopped budget or change the comparator/registry to evade a stop. Reuse the shared feature stack, `scripts/evaluate_holdout.py`, and `scripts/submission_writer.py`; hide buffered whole fault segments, derive catalogue features only from visible faults, mask them exactly, and pool DTI with α=0.2, β=0.8, and a 300 m triangular kernel. Test each feature/transform alone for leakage; AUC >0.90 is suspected leakage until disproven. Limit work to three experiments or two hours and preserve negatives. A weekly slot requires a separate selector, independently verified quota, and the required 2–3% win over the comparable current best.
+
+Before any experiment, rank 3–5 hypotheses with exact layers/transforms, mechanism, prior-method distinction, non-fault mimics, expected benefit/cost, and verified free-data availability. If a source is inaccessible or coverage is unverified, mark it blocked—not viable. Validate finite in-footprint values in [0,1] and exact template CRS/shape/transform; use a unique filename and note ≤140 characters. Local checks do not guarantee organizer acceptance. Read the full README and current prompt at every project start, cite and distinguish sources, flag irregularities, and finish implementation, adversarial review, and original-request audit before PR/merge. Core values: **Maximize P(Win)** and **Own the Outcome**.

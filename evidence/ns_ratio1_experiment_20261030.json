@@ -1,0 +1,207 @@
+{
+  "settings": {
+    "lane": "NS-RATIO1",
+    "seed": 20261030,
+    "k_total": 37654,
+    "min_spacing_px": 3.0,
+    "buffer_px": 30,
+    "neg_per_pos": 6,
+    "hgb": {
+      "max_iter": 200,
+      "learning_rate": 0.08,
+      "max_leaf_nodes": 31
+    },
+    "catalogue_sigmas_px": [
+      20,
+      50
+    ]
+  },
+  "inputs": {
+    "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "labels_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+    "lidar_sha256": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568",
+    "rad_sha256": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+    "ext_sha256": "a35a9c6d2a14786f4dab85481ee59769213072f5dab5b2535ea82ae4d9bb7d9b",
+    "lidar_meta_sha256": "9ef0df6e87598a8b0cd52fe821661e5fdb3a00568c5d9b1c5d61fd6b242dcd41"
+  },
+  "footprint_cells": 5167373,
+  "catalogue_positive_pixels": 60988,
+  "static_features": [
+    "lidar_ex_max",
+    "lidar_ex_mean",
+    "lidar_step_max",
+    "lidar_lapneg_max",
+    "lidar_lappos_max",
+    "lidar_downface_max",
+    "lidar_upface_max",
+    "lidar_cross_max",
+    "lidar_relief",
+    "lidar_coh100",
+    "rad_K",
+    "rad_Th",
+    "rad_U",
+    "rad_TC",
+    "ext_ThK",
+    "ext_UK",
+    "ext_UTh",
+    "ext_TMI_up150"
+  ],
+  "note": "HOLDOUT-DTI only; not a leaderboard estimate; features restricted to label-free channels except catalogue-derived ones computed from visible faults",
+  "experiments": [
+    {
+      "experiment": "E2_LABELFREE",
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "dti": 0.129384,
+      "tp_w": 7399.765,
+      "fp_w": 34609.3,
+      "fn_w": 53588.235,
+      "n_withheld_positive_pixels": 60988,
+      "ci95": [
+        0.117558,
+        0.142007
+      ],
+      "ci_method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+      "folds": [
+        {
+          "fold": "NW",
+          "dti": 0.133104
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "dti": 0.142446
+        },
+        {
+          "fold": "SW",
+          "dti": 0.104559
+        },
+        {
+          "fold": "SE",
+          "dti": 0.145908
+        }
+      ],
+      "fold_budget": [
+        {
+          "fold": "NW",
+          "k_fold": 8414,
+          "emitted": 8414,
+          "withheld_positives": 10165,
+          "n_train_pos": 49014,
+          "n_train_neg": 294084
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "k_fold": 10404,
+          "emitted": 10404,
+          "withheld_positives": 12511,
+          "n_train_pos": 47862,
+          "n_train_neg": 287172
+        },
+        {
+          "fold": "SW",
+          "k_fold": 10410,
+          "emitted": 10410,
+          "withheld_positives": 20534,
+          "n_train_pos": 36233,
+          "n_train_neg": 217398
+        },
+        {
+          "fold": "SE",
+          "k_fold": 8426,
+          "emitted": 8426,
+          "withheld_positives": 17778,
+          "n_train_pos": 41629,
+          "n_train_neg": 249774
+        }
+      ],
+      "dots_emitted_total": 37654,
+      "leakage_canary": {
+        "rule": "single-feature AUC on withheld quadrant; > 0.90 = leakage until proven otherwise",
+        "worst_feature": "lidar_relief",
+        "worst_auc": 0.6264,
+        "pass": true,
+        "per_feature_max_auc": {
+          "lidar_ex_max": 0.5753,
+          "lidar_ex_mean": 0.5616,
+          "lidar_step_max": 0.5847,
+          "lidar_lapneg_max": 0.5974,
+          "lidar_lappos_max": 0.6039,
+          "lidar_downface_max": 0.5663,
+          "lidar_upface_max": 0.5844,
+          "lidar_cross_max": 0.5796,
+          "lidar_relief": 0.6264,
+          "lidar_coh100": 0.5452,
+          "rad_K": 0.6084,
+          "rad_Th": 0.5974,
+          "rad_U": 0.5484,
+          "rad_TC": 0.5982,
+          "ext_ThK": 0.5476,
+          "ext_UK": 0.5838,
+          "ext_UTh": 0.5894,
+          "ext_TMI_up150": 0.5247
+        }
+      }
+    },
+    {
+      "experiment": "E3_PROXIMITY",
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "dti": 0.052591,
+      "n_withheld_positive_pixels": 60988,
+      "ci95": [
+        0.037454,
+        0.068173
+      ],
+      "fold_budget": [
+        {
+          "fold": "NW",
+          "k_fold": 8414,
+          "emitted": 8414
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "k_fold": 10404,
+          "emitted": 10404
+        },
+        {
+          "fold": "SW",
+          "k_fold": 10410,
+          "emitted": 10410
+        },
+        {
+          "fold": "SE",
+          "k_fold": 8426,
+          "emitted": 8426
+        }
+      ],
+      "dots_emitted_total": 37654
+    }
+  ],
+  "run": "run-2: selection bug fixed (all candidates scanned); E1 excluded (void); see run-1 archive",
+  "emitted": {
+    "path": "docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-zeros.tif",
+    "dots": 37654,
+    "features": [
+      "lidar_ex_max",
+      "lidar_ex_mean",
+      "lidar_step_max",
+      "lidar_lapneg_max",
+      "lidar_lappos_max",
+      "lidar_downface_max",
+      "lidar_upface_max",
+      "lidar_cross_max",
+      "lidar_relief",
+      "lidar_coh100",
+      "rad_K",
+      "rad_Th",
+      "rad_U",
+      "rad_TC",
+      "ext_ThK",
+      "ext_UK",
+      "ext_UTh",
+      "ext_TMI_up150"
+    ],
+    "n_train_pos": 60988
+  },
+  "seconds": 170.3
+}
