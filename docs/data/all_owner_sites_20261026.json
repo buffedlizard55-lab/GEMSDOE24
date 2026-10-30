@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-10-26T01:23:21.764316+00:00",
+  "checked_utc": "2026-10-30T22:59:59.002687+00:00",
   "refresh_status": "checked",
   "scope": "Every owner-listed GitHub repository README retrieved at a pinned commit; programmatic source audit, NOT independent validation of every scientific claim or all downloadable TIFFs",
   "brief_sha256": "af973b59b754c60c2b5d69b3f1c40156e7938d9a12cd6872d0bf3b516449224e",
@@ -17,19 +17,19 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "e9a2d28946d574384dd35dcee2b8ecd1267737b5",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/e9a2d28946d574384dd35dcee2b8ecd1267737b5/README.md",
+      "commit": "c8e560f1aae650b120dc31c9e7495ced6a587701",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/c8e560f1aae650b120dc31c9e7495ced6a587701/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "0f23247876cf2f8d19985bdeeb4c446806e8f299f83cd45d9531c966a90227c2",
-      "readme_blob": "efc7abcef0eb47e9837afe9cd3d3deadae1b1a97",
-      "readme_lines": 94,
-      "header_excerpt": "# GEMSDOE32 \u2014 DOE GEMS Prize research and submission tooling\n\n<!-- SINGLE DECISION: rendered from registry/current_status.json and evidence/current_release_review.json (both must authorize; fail closed). Update those files, never add a second banner. -->\n## \ud83d\udea6 Current decision \u2014 2026-10-26 01:40 UTC\n\n# \ud83d\udd34 DO NOT SUBMIT \u2014 no upload is authorized\n\n| file | status | why |\n|---|---|---|\n| **Round-6 candidate** [`gemsdoe32-r6-stepprofile-b2-37654-20261026T002502Z-23fbbb51-zeros.tif`](docs/downloads/gemsdoe32-r6-stepprofile-b2-37654-20261026T002502Z-23fbbb51-zeros.tif) \u00b7 SHA-256 `c7f094c1\u20263c56547` | \ud83d\udd34 **DO NOT SUBMIT \u2014 audit artifact only** | A real, uniquely named, format-valid GeoTIFF. **Format validity is not enough to authorize a competition upload.** The fail-closed release review (PR #21, [protocol audit](docs/research/protocol-review-20261026.md), [decision](evidence/current_release_revie",
+      "readme_sha256": "6017b6f46119bb825008ae515a914e4b18d9da4d91d6dfc63e77409985e1ef07",
+      "readme_blob": "7c0bc13e2c1cf18595dc4da44cba8bd9bf2de97e",
+      "readme_lines": 506,
+      "header_excerpt": "# GEMSDOE32 \u2014 DOE GEMS Prize Research, Validation & Submission System\n\n## \u2b50 Start here \u2014 2026-10-29 (read at the start of every session)\n\n**Decision: DO NOT SUBMIT any file.** Nothing here is cleared for the live portal. Read the full verified summary first: **[`docs/nine-site-verified-summary.html`](docs/nine-site-verified-summary.html)** (per-site table: file to download \u00b7 estimated score \u00b7 unique? \u00b7 submit?).\n\n- **Parallel summaries on `main`:** [focus9 executive summary](docs/focus9-executive-summary.html), [review-20261029](docs/review-20261029.html) and [nine-site executive summary](docs/research/nine-site-executive-summary-20261029.md). They agree that no file is cleared. Their projections for H51-1 (0.2701) and GEMSDOE32 (0.2752) differ from this branch's (0.2722); see IR-20261029-V09. They also name **UNIQUE-H49-1-CGTD** (projection 0.2861), which this branch did not evaluate (I",
       "protocol_mentions": {
-        "holdout": 4,
-        "do not submit": 4,
-        "organizer-confirmed": 3,
-        "leakage": 3,
-        "tversky": 2
+        "holdout": 84,
+        "do not submit": 32,
+        "organizer-confirmed": 5,
+        "leakage": 22,
+        "tversky": 7
       }
     },
     {
@@ -42,8 +42,8 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "bb2e070a3659f4f5c16ac927e62606f1f7f495a6",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE/blob/bb2e070a3659f4f5c16ac927e62606f1f7f495a6/README.md",
+      "commit": "f60b65557b6c55f313efa0143e471100fb5bc1ad",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE/blob/f60b65557b6c55f313efa0143e471100fb5bc1ad/README.md",
       "source_status": "readme_retrieved",
       "readme_sha256": "556a81825fad6228ef0b7201f0bc2090f4cf476d979651652955a2e94ccfe734",
       "readme_blob": "d73917f6084da413799528dd00c9b13fbd67d7f4",
@@ -127,8 +127,8 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "138a15c98213e70669fb2651f6680e6f66503a15",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE2/blob/138a15c98213e70669fb2651f6680e6f66503a15/README.md",
+      "commit": "13ccff851f1aca8324116de46dd7d0b14612ea3f",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE2/blob/13ccff851f1aca8324116de46dd7d0b14612ea3f/README.md",
       "source_status": "readme_retrieved",
       "readme_sha256": "71c51921aa69b4ab04ff0d401ec4f40d7824d0291cae92d77757058bb42dc555",
       "readme_blob": "b1f013bd0ed211c728fce5de74887555ab16d2ae",
@@ -152,8 +152,8 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "88e69d4c738d5fbcc33f5282bb28fb5fd39c32c1",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE4/blob/88e69d4c738d5fbcc33f5282bb28fb5fd39c32c1/README.md",
+      "commit": "15ccb4d53918c1642eeef3f7e06f429e7dceabc9",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE4/blob/15ccb4d53918c1642eeef3f7e06f429e7dceabc9/README.md",
       "source_status": "readme_retrieved",
       "readme_sha256": "f8b0d247326af4422099acd56376695fa583d84ef308cc8a9c0e4fc5d218ff6c",
       "readme_blob": "f2a486c13208ecae727548832dce04f1cadd6d2f",
@@ -177,8 +177,8 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "61068cbdf9e89bdc7e76a7c2f8040d6fbdbdbc24",
-      "readme_url": "https://github.com/buffedlizard55-lab/5GEMSDOE/blob/61068cbdf9e89bdc7e76a7c2f8040d6fbdbdbc24/README.md",
+      "commit": "dfb74076a3d44b45691c2bcfb82e350b9390457b",
+      "readme_url": "https://github.com/buffedlizard55-lab/5GEMSDOE/blob/dfb74076a3d44b45691c2bcfb82e350b9390457b/README.md",
       "source_status": "readme_retrieved",
       "readme_sha256": "abe5ea44fec52b4df859c18a85377ca556586fbb0170b47121f2ad749d5d2830",
       "readme_blob": "b424ee0d16af12c4ef204f4be6b233e4829c9c55",
@@ -307,8 +307,8 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "5d03b783874ed1a6517e459834401787a7d0c6a1",
-      "readme_url": "https://github.com/buffedlizard55-lab/12GEMSDOE/blob/5d03b783874ed1a6517e459834401787a7d0c6a1/README.md",
+      "commit": "154fe44073de2d8b47134924b02d6081e59498e5",
+      "readme_url": "https://github.com/buffedlizard55-lab/12GEMSDOE/blob/154fe44073de2d8b47134924b02d6081e59498e5/README.md",
       "source_status": "readme_retrieved",
       "readme_sha256": "bec287ec81827688e7e071f438c972a08715ea2955cc87de16f02fdada21a130",
       "readme_blob": "3f083648e72f98bba4b191da6e456103f1c70042",
@@ -537,8 +537,8 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "206e92a619e504a2ae4378904fdbc840ad8429b8",
-      "readme_url": "https://github.com/buffedlizard55-lab/16GEMSDOE/blob/206e92a619e504a2ae4378904fdbc840ad8429b8/README.md",
+      "commit": "932915670eab5606619037bc6b0eb284371a2783",
+      "readme_url": "https://github.com/buffedlizard55-lab/16GEMSDOE/blob/932915670eab5606619037bc6b0eb284371a2783/README.md",
       "source_status": "readme_retrieved",
       "readme_sha256": "6ea6c1f4bb01d081d860cfea515794defa891ed0b6a6b159fa04a3210e30d5cd",
       "readme_blob": "a0d88e42ec2475c1873363f7a9b170c82c0a2904",
@@ -647,8 +647,8 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "9b3dc197a1a7d8f1cdae0e211722ba05d3d43d7d",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE23/blob/9b3dc197a1a7d8f1cdae0e211722ba05d3d43d7d/README.md",
+      "commit": "936395d21c81bc2d8c102736d10bef653fa13104",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE23/blob/936395d21c81bc2d8c102736d10bef653fa13104/README.md",
       "source_status": "readme_retrieved",
       "readme_sha256": "500af1abadd94684e25baef80f7790a8ed002eff23b9fa5e2cc7ac135b609233",
       "readme_blob": "8acdbd64b225a593960238065f293598fa33cb65",
@@ -672,19 +672,19 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "f7b6b0aab6fd0cb2a1b14b02d4b5a614f64b6c50",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/f7b6b0aab6fd0cb2a1b14b02d4b5a614f64b6c50/README.md",
+      "commit": "d4d6f1c87b974d7ed74825b1e6a746736877fedc",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/d4d6f1c87b974d7ed74825b1e6a746736877fedc/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "fcd6bce7b0b9f287319c117513cbb5d2775115fbc92ae66dfa539b33725293a0",
-      "readme_blob": "dab1f91dfa284c467d104551f55edf1406213b87",
-      "readme_lines": 1968,
-      "header_excerpt": "# GEMS DOE 24 \u2014 evidence before a leaderboard slot\n\n## \u2b50 Newest unique TIFF (2026-10-26, H24-CUP1): DOWNLOAD YES / SUBMIT NO\n\n[**Download the CUP1 GeoTIFF \u2014 zeros outside, strict whole-array [0,1]**](docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.tif) \u00b7\n[NaN-outside twin](docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-nan.tif) \u00b7\n[ZIP (single GeoTIFF)](docs/downloads/gems24-cup1-negative-compfront-upcont-submod-20261026-35a808f4514a-zeros.zip) \u00b7\n[JSON run card](evidence/cup1_run_card_20261026.json) \u00b7 [Preregistration](knowledge/20_preregistered_CUP1_2026-10-26.md) \u00b7\n[Findings](knowledge/21_CUP1_findings_2026-10-26.md) \u00b7 [Executive summary](docs/executive-summary.html)\n\n**NOT OK TO SUBMIT (`DO_NOT_SUBMIT`) \u2014 automatic gate, zero human-inspector fallback.**\nGenerated from scratch in this session (zero copied submiss",
+      "readme_sha256": "e4372fc8938d895e8b8ff41f848496053d0c7bb54a24b57ff51ef600e44e2f8f",
+      "readme_blob": "bd84fe78a9371bd713d7f3fa5228e6518094ce37",
+      "readme_lines": 3690,
+      "header_excerpt": "# GEMS DOE 24 \u2014 evidence before a leaderboard slot\n\n## Current session review \u2014 2026-10-30 (`arena/6a29c5b2-gemsdoe24`)\n\n**NO NEW TIFF \u00b7 NO NEW EXPERIMENT \u00b7 SUBMIT: NO.** Read the [three-pass repository review](docs/repo-review-20261030-arena-6a29c5b2.md), [negative JSON run card](evidence/session_6a29c5b2_20261030_run_card.json), [normalized mission prompt](docs/MISSION_PROMPT.md), and [standing instructions](AGENTS.md) first. The prompt's single-method paragraph is absent, and the full training feature raster/prepared stack is not in this checkout; the current Python runtime lacks NumPy/Rasterio and test dependencies. No valid holdout, new TIFF, score estimate, portal validation, or submission authorization was produced. The historic GEMSDOE32 B2 value remains owner-reported/unverified; the hidden leaderboard estimate is **NOT ESTIMABLE**. The 3-pass review preserves four qualitative h",
       "protocol_mentions": {
-        "holdout": 52,
-        "do not submit": 8,
-        "organizer-confirmed": 5,
-        "leakage": 11,
-        "tversky": 3
+        "holdout": 143,
+        "do not submit": 32,
+        "organizer-confirmed": 20,
+        "leakage": 34,
+        "tversky": 8
       }
     },
     {
@@ -697,19 +697,19 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "88a29e094989b0e23916136e593474875d067656",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/88a29e094989b0e23916136e593474875d067656/README.md",
+      "commit": "f59a398541f0aa9530879d117993a8dbbad4f1bf",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/f59a398541f0aa9530879d117993a8dbbad4f1bf/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "b14292d89d5b6548c35255a7836ef64983729a6e4ae22b7760c73dad5fac4c1c",
-      "readme_blob": "4d7abf03952f1c31e2a90611d0e3c4eda6eaf241",
-      "readme_lines": 1555,
-      "header_excerpt": "# GEMSDOE25 \u2014 designed-factorial fault discovery for the DOE GEMS Prize\n\n<!-- CURRENT-REVIEW-2026-10-26 -->\n## Current decision \u2014 2026-10-26\n\n**OK to download: YES \u00b7 OK to spend a weekly slot: NO \u2014 DO NOT SUBMIT.** Featured unique GeoTIFF [`gems25-h71-hgpc-blind-b2-sapd3-k3p5-20261026-9eb0c31e5149-zeros.tif`](docs/downloads/gems25-h71-hgpc-blind-b2-sapd3-k3p5-20261026-9eb0c31e5149-zeros.tif) (content id `9eb0c31e5149`; HOLDOUT-DTI FAIL vs H35). [Nine-site executive review and automated ROD result](docs/current-review.html) \u00b7 [H71 outcomes](knowledge/28_h71_outcomes_2026-10-26.md) \u00b7 [ROD run card](evidence/rod_2026-10-26/run_card.json). GEMSDOE32 B2 is the strongest supplied historical exemplar (**OWNER-REPORTED 0.2778**), not a new submission. Do not reinterpret historical downloads or format-only receipts as authorization. No weekly slot was used.\n\nRead the current owner brief below eve",
+      "readme_sha256": "8a682ecc7e7322f8b0666eb748a4957b4a8a656e20125a24b58ccbf8d84e94f1",
+      "readme_blob": "9c5af468265d8918848940caa88ed369fa0570e6",
+      "readme_lines": 3483,
+      "header_excerpt": "# GEMSDOE25 \u2014 designed-factorial fault discovery for the DOE GEMS Prize\n\n## START HERE \u2014 owner brief 2026-10-29 (session `arena/30397b95-gemsdoe25`)\n\n> Read this section first every session. It is the normalized owner brief (not a verbatim transcript): the requirements below are the operative text, with the full review in [`knowledge/51`](knowledge/51_owner_brief_session_review_2026-10-29_30397b95.md). Maximize **P(Win)** and **Own the Outcome** are the decision rule.\n\n**OK TO DOWNLOAD AND SUBMIT: NO \u2014 for every file on the nine focus sites and in this repository. Estimated competition score: NOT ESTIMATED.** No new TIFF was generated this session, because no candidate passed the holdout gate and the r13 lane gate cannot be met at the competition's dot budget (\u00a7 *Why no file is cleared*). Nothing was uploaded to DrivenData (automation is forbidden; AGENTS.md rule 3).\n\n### Executive summa",
       "protocol_mentions": {
-        "holdout": 107,
-        "do not submit": 74,
-        "organizer-confirmed": 7,
-        "leakage": 15,
-        "tversky": 2
+        "holdout": 92,
+        "do not submit": 17,
+        "organizer-confirmed": 16,
+        "leakage": 21,
+        "tversky": 12
       }
     },
     {
@@ -747,18 +747,18 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "4f37aca7af03a5fc9ebceb9bd6ce9efa108bf56c",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/4f37aca7af03a5fc9ebceb9bd6ce9efa108bf56c/README.md",
+      "commit": "fe16740fedf901a499df10b219e1f4ef3a9d7347",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/fe16740fedf901a499df10b219e1f4ef3a9d7347/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "b28db5b7b68ec580b47190b6009326e4fc38bd3d6eb4c57002849e7c206e6d99",
-      "readme_blob": "e64398f7ec18cb4e4281d6221746fd931ad009be",
-      "readme_lines": 422,
-      "header_excerpt": "# 27GEMSDOE - topology-first research and submission lab for DrivenData #306 (DOE GEMS)\n\n## Current Session Status (2026-10-25 / 2026-10-26; read at every session start)\n**\u2705 APPROVED UNIQUE SUBMISSION TIFF GENERATED & MACHINE-CERTIFIED (`GEMSDOE27-H30-1-UPDIP-HYDROTHERMAL-B2-35K`):**\n- **Primary all-finite submission file (fixes `\"Predicted values must be in range [0, 1]\"` error):**\n  `docs/downloads/gems27-h30-1-updip-hydrothermal-b2-35k-20261025-801dff07541d-allfinite.tif`\n  - **SHA-256:** `85314ccbef774284dc8732c0c784e9396311dffdf84b57bc296a2f3dee24a97a` (`821,530` bytes, `35,200` binary `{0.0, 1.0}` dots: `23,200` core hybrid + `1,137` `T-v2` visible-fault relay bridges + `10,863` sub-alluvial innovation ridges; `nodata=None`, zero NaNs anywhere).\n  - **Single-TIFF ZIP:** `docs/downloads/gems27-h30-1-updip-hydrothermal-b2-35k-20261025-801dff07541d-allfinite.zip`\n  - **NaN-outside twi",
+      "readme_sha256": "6868bb9b45523bf6888fc056de97578b65e7ed0ed8ba567604a5f46e46de0ea7",
+      "readme_blob": "0788b59c35745ff3eba0cb9a3a37ff3a2a79938a",
+      "readme_lines": 156,
+      "header_excerpt": "# GEMSDOE27: fault-discovery research and submission audit\n\n## Current review \u2014 2026-10-30\n\n**No new TIFF is OK to submit.** The required single-method lane paragraph is absent, so no experiment or submission artifact was created. Current local checks: 226 tests passed, 3 skipped; Ruff passed; readiness audit reports zero slot authorizations. `verify_downloads.py` is blocked because the ignored `data_cache/` inputs are absent; do not treat older verification as current. Full audit: [Session 20 review](knowledge/42_session20_repo_review_2026-10-30.md).\n\nKnown unconfirmed items: owner-reported scores are not organizer receipts; current leaderboard high is unknown here. The earlier range-validation error's cause is unknown because the exact uploaded file is unknown. Restore the hash-pinned owner-mirror inputs before claiming any raster validation; those mirrors are not organizer-authenticat",
       "protocol_mentions": {
-        "holdout": 57,
-        "do not submit": 3,
-        "organizer-confirmed": 4,
-        "leakage": 10,
+        "holdout": 21,
+        "do not submit": 2,
+        "organizer-confirmed": 6,
+        "leakage": 4,
         "tversky": 0
       }
     },
@@ -772,19 +772,19 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "f0a49404d7f128682771d98b000a6f506c91aa05",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/f0a49404d7f128682771d98b000a6f506c91aa05/README.md",
+      "commit": "112dcb1727de58323e97acfb5b32b924adb320d3",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/112dcb1727de58323e97acfb5b32b924adb320d3/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "30d4f99ce35d10ec4df59ba2f4e91959f94d9ab95b2e1e79ffc39d81b9d92ac6",
-      "readme_blob": "693e8fc5c9e452a6b507230f05cef7dbf7044d67",
-      "readme_lines": 1736,
-      "header_excerpt": "# GEMSDOE30 \u2014 DOE GEMS Concealed Fault Discovery & Automated Submission Lab\n\n## START HERE \u2014 Unique `G30-TAD` & `PTA-1` GeoTIFFs Validated (`download_ok = true`) \u00b7 **NOT APPROVED FOR SUBMISSION (`verdict = negative`)**\n\n- **`G30-TAD` dual-variant 38,000-dot GeoTIFFs (`verify_tad_run.py`, zero human inspection required):**\n  - Primary range-safe all-finite file: [`docs/downloads/gems30-TAD24-decensored-38000-20261025-ea3669f488ea-zeros.tif`](docs/downloads/gems30-TAD24-decensored-38000-20261025-ea3669f488ea-zeros.tif) (`234.6 KiB`, SHA-256 `3077db43ee72ee526d8b943d1db40f19ce49be9d8ccd3109068ca442964f26cc`; all `12,279,160` cells finite `{0.0, 1.0}` in `[0, 1]`, `nodata=None`) and spec-strict companion [`docs/downloads/gems30-TAD24-decensored-38000-20261025-ea3669f488ea-nan.tif`](docs/downloads/gems30-TAD24-decensored-38000-20261025-ea3669f488ea-nan.tif) (`273.5 KiB`, SHA-256 `54139f2cf86f",
+      "readme_sha256": "6cc9be21f53f1cb8c871af818339ae6dd9ec8574d9da37c2fe29550997ad8b8d",
+      "readme_blob": "eb4a9c2c237fc545f4c1d818f6000fe5e2e4fe96",
+      "readme_lines": 980,
+      "header_excerpt": "# GEMSDOE30 \u2014 GEMS concealed-fault research\n\n## Latest repository review \u00b7 2026-10-30\n\n**Negative: no TIFF approved; no experiment or slot selected.** This review confirms the existing lane/duplicate stop and records that local verification could not run because system Python lacks NumPy and pytest (environment-precondition failure, not a passing test). No scores were estimated. See [the dated review and run card](docs/repository-review-2026-10-30.md) for scope, next steps and official source pointers.\n\n> **SESSION MISSION (read every session):** Place top of the DOE GEMS concealed-fault leaderboard by generating a **unique** single-band `float32` `[0,1]` GeoTIFF submission (EPSG:32611, 3730\u00d73292, 100 m, `sample_submission.tif` grid, `NaN` outside the footprint) that is obvious to download and obvious whether it is OK to submit. Core values: **Maximize P(Win)** and **Own the Outcome**. N",
       "protocol_mentions": {
-        "holdout": 98,
+        "holdout": 24,
         "do not submit": 2,
         "organizer-confirmed": 4,
-        "leakage": 5,
-        "tversky": 7
+        "leakage": 4,
+        "tversky": 1
       }
     },
     {
@@ -797,19 +797,19 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "6ca63b0cf0f7f1db8f49744f485b737e14865047",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/6ca63b0cf0f7f1db8f49744f485b737e14865047/README.md",
+      "commit": "f9248200f20def2654af596c1cc13ab2f9d96687",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/f9248200f20def2654af596c1cc13ab2f9d96687/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "400d77e091506157e6014d1bc854fd48dc04d49546e8a05a55df59476b945b06",
-      "readme_blob": "bc1aba7db5791c5362f739624d859e8ae896e55b",
-      "readme_lines": 1196,
-      "header_excerpt": "> **XFCOH31 (2026-10-26, this lane): unique GeoTIFF generated and validated. OK TO DOWNLOAD FOR RESEARCH \u2014 DO NOT SUBMIT (holdout-negative).**\n> Download: [gems31-xfcoh31-xfield-coherence-37654-20261026-zeros.tif](docs/downloads/gems31-xfcoh31-xfield-coherence-37654-20261026-zeros.tif) \u00b7 [run card](docs/downloads/gems31-xfcoh31-xfield-coherence-37654-20261026-run-card.json) \u00b7 [decision page](docs/xfcoh31.html) \u00b7 [executive summary](knowledge/2026-10-26_xfcoh31_executive_summary.md)\n> HOLDOUT-DTI (gemsdoe31-holdout-v1, 58,625 withheld): candidate 0.04588 vs same-run base-19 control 0.04812, paired \u0394 \u22120.00224 [\u22120.00483, +0.00012] \u2192 verdict **negative**, no weekly slot. Uniqueness vs genuine focus submissions: max \u03c1 0.087, max 3-px overlap 30.7%. Validator: no hard failures, values in [0,1] (fixes the reported range-error class).\n> **2026-10-26 EXECUTIVE SUMMARY (read first):** `knowledge/2",
+      "readme_sha256": "df2c7851e4fa4dcde65f0faaadc52c2d622f8d0c03312ad12c332af27a3055ac",
+      "readme_blob": "1991e699c6c5c0bbcdc3198f57d7dc3364cf85d4",
+      "readme_lines": 2058,
+      "header_excerpt": "# Current review and project charter \u2014 29 October 2026 (`arena/9f242e65-gemsdoe31`)\n\n**Core values: Maximize P(Win) \u00b7 Own the Outcome.**\n\n**Decision: DO NOT SUBMIT.** The current binding release card is `registry/release_status.json` (`ok_to_submit=false`, `slot_approved=false`). `registry/current_run.json` is a historical MAGREST record, not current permission. The active Arena brief is summarized in [`knowledge/owner_prompt_2026-10-29_arena-9f242e65.md`](knowledge/owner_prompt_2026-10-29_arena-9f242e65.md); the full findings are in [`knowledge/repo_review_2026-10-29_arena-9f242e65.md`](knowledge/repo_review_2026-10-29_arena-9f242e65.md).\n\n## Active task and hard limits\n\nCompare GEMSDOE24, 25, 27, 28, 30, 31, 32, 33 and 36; keep the per-site file, evidence-qualified reported value, uniqueness and new-file estimate clear; explain the reported GEMSDOE32 H33-2-B2 0.2778 without asserting p",
       "protocol_mentions": {
-        "holdout": 29,
-        "do not submit": 5,
-        "organizer-confirmed": 4,
-        "leakage": 9,
-        "tversky": 1
+        "holdout": 84,
+        "do not submit": 40,
+        "organizer-confirmed": 14,
+        "leakage": 16,
+        "tversky": 3
       }
     },
     {
@@ -822,19 +822,19 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "7deca206fac94ffcde76e27cae19d7676bda0b53",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/7deca206fac94ffcde76e27cae19d7676bda0b53/README.md",
+      "commit": "ee2e464b61cb0e0aa604b0525044ad9ff31c9ec7",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/ee2e464b61cb0e0aa604b0525044ad9ff31c9ec7/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "2ed018c23206aaf7a4586a5ec6e4ef15efcda4d485a78e7aa78ef497a4fef73f",
-      "readme_blob": "d2f76a47162914d6c0babb37474ecdd08e7b7bd8",
-      "readme_lines": 208,
-      "header_excerpt": "# GEMSDOE33 \u2014 DOE GEMS Fault Discovery Project (DrivenData #306)\n\n> **Current decision (2026-10-25): no candidate is submission-cleared. Existing downloadable TIFFs are research/reference artifacts, not \u201cOK to submit.\u201d** Read \u00a73 before using any file.\n\n## Active-session outcome and starting point (2026-10-25 continuation)\n\nRead this README **and the complete consolidated [standing prompt](standing_prompt.md)** every session. The current parallel protocol, nine-site focus, score-provenance requirements, 3-experiment/2-hour cap, unique-TIFF requirement, automatic inspection requirement, values, and PR/merge request are preserved in its active-request addendum. It is a consolidated specification, not a verbatim transcript of repeated chat text.\n\n**New work:** all 17 pinned owner-mirror inputs restored and audited; 121 cached feature channels prepared (no detector retraining). Twelve histori",
+      "readme_sha256": "40e7c975f6d8e120822fcebc2123460f0c9a2a2b7c36b4acbb250a1c7aec7041",
+      "readme_blob": "6218617ad3dafbfbfc54af1cbd0ca4301d12b0ba",
+      "readme_lines": 434,
+      "header_excerpt": "# GEMSDOE33 \u2014 DOE GEMS Fault Discovery Project (DrivenData #306)\n\n> **Read first, every session:** [`standing_prompt.md`](standing_prompt.md) (the full standing brief with dated addenda) and [`AGENTS.md`](AGENTS.md).\n> **Latest (2026-10-29, H34 lane):** new unique research TIFF, holdout negative, NOT OK TO SUBMIT \u2014 see the \ud83d\udfe2 block below.\n> **Previous (2026-10-29):** nine-site duplicate audit \u2014 NO file is OK TO SUBMIT ([`evidence/nine_site_audit_20261029.json`](evidence/nine_site_audit_20261029.json)).\n> **Newest (2026-10-29, deployment-density audit):** every earlier holdout comparison used 2.5% emission; deployment is 0.7287%. At deployment density the PHCONG candidate is statistically indistinguishable from its matched random control (paired \u0394 +0.0033, 95% CI [\u22120.0010, +0.0077], 3/4 folds; random floor 0.0737 HOLDOUT-DTI). **OK TO SUBMIT: NO for every file. Estimated leaderboard score:",
       "protocol_mentions": {
-        "holdout": 14,
-        "do not submit": 1,
-        "organizer-confirmed": 2,
-        "leakage": 6,
-        "tversky": 1
+        "holdout": 87,
+        "do not submit": 7,
+        "organizer-confirmed": 13,
+        "leakage": 13,
+        "tversky": 0
       }
     },
     {
@@ -897,19 +897,19 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "a4c660a8a429e09ee9b45e32fa56a30b997605fe",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/a4c660a8a429e09ee9b45e32fa56a30b997605fe/README.md",
+      "commit": "b0824c550c02792897d0ebe3aba1cb0e75583ea1",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/b0824c550c02792897d0ebe3aba1cb0e75583ea1/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "47b9adf660c7cd137175774b845d1d1346b1bd5605f0c09e7d5506c1795df0f8",
-      "readme_blob": "0dd2224a11557e4ee8d079949de99e6dc109cb86",
-      "readme_lines": 1012,
-      "header_excerpt": "# GEMSDOE36 \u2014 DOE GEMS Prize (DrivenData #306) fault-discovery research\n\n<!-- STATUS:START -->\n> ## Latest file: `gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif`\n> **DOWNLOAD: YES \u00b7 SUBMIT: NO \u2014 automatic NEGATIVE verdict (`DO_NOT_SUBMIT`)**\n>\n> [Download the GeoTIFF](docs/downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif) \u00b7 [ZIP](docs/downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.zip) \u00b7 [NaN twin](docs/downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-nan.tif) \u00b7 [JSON run card](evidence/h36_run_card.json)\n>\n> * Name: `gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros` \u00b7 SHA-256 `e3800971b44116bca8ef8f996c3b2796b4d316962f797975f17d643abfac379b`\n> * Note (118 chars): `GEMSDOE36 H36-GPS graben-pair | HOLDOUT-DTI 0.1320 [0.1205,0.1443] seg-pooled-v1 60988pos | NEGATIVE | id bb29ce2a4bb4`\n> * Lane H36-GPS: **HOLDO",
+      "readme_sha256": "fbd3fee850d304ebebe1309f1d1c67295e27710e33968d4a0772b27048e44974",
+      "readme_blob": "026fe63cf0e0c6d62194fdf1cc4917611f4c18a2",
+      "readme_lines": 987,
+      "header_excerpt": "# GEMSDOE36 \u2014 current decision & reproducible research\n\n> **Earlier same-day audits:** the 29 October checkout and pre-run reviews are preserved in [`evidence/session_review_20261029.md`](evidence/session_review_20261029.md), [`evidence/repo_review_20261029.md`](evidence/repo_review_20261029.md), and [`docs/research/review-20261029.md`](docs/research/review-20261029.md). They accurately record that no experiment had yet run; the following GSEWC36 result supersedes their current-status statements, not their earlier findings.\n>\n> **Start here (every session):** read this README, the [29 October continuation brief](knowledge/owner_brief_20261029.md), the [current GSEWC36 hypothesis screen and result](docs/research/hypothesis-screen-20261029.md), and the [run card](evidence/gsewc36_run_card_20261029.json). The full standing user protocol is preserved below.\n>\n> **Current status, 29 Oct 2026:",
       "protocol_mentions": {
-        "holdout": 19,
+        "holdout": 31,
         "do not submit": 3,
-        "organizer-confirmed": 1,
-        "leakage": 3,
-        "tversky": 1
+        "organizer-confirmed": 2,
+        "leakage": 5,
+        "tversky": 3
       }
     },
     {
@@ -1087,19 +1087,19 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "94152be64d36073936931d12380fc79a2cebf79c",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/94152be64d36073936931d12380fc79a2cebf79c/README.md",
+      "commit": "424bf795ed2183000c643d6e30a12ce2d4bf401d",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/424bf795ed2183000c643d6e30a12ce2d4bf401d/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "7993bb9c3209d7cfdf8620e4b00af56097f73b3786f235cf3af156f981ee9d10",
-      "readme_blob": "d52d3fd29a143e4b207ac2bee9a44614089f201a",
-      "readme_lines": 1311,
-      "header_excerpt": "# Parallel Session 20V result \u2014 2026-10-26 (vesselness lane; read with Session 20-H43 below)\n\n**A fourth concurrent unique TIFF was generated in parallel and likewise REJECTED. No file is approved.**\n\n[**Download the S20V unique research TIFF (DO NOT SUBMIT)**](docs/downloads/gems28-s20-vesselness-lidarstep-20261026-7a7c5e449fe0-allfinite.tif)\n\u00b7 [S20V full result + nine-site executive summary](knowledge/60_s20v_result.md)\n\u00b7 [S20V JSON run card](evidence/s20v_run_card.json)\n\u00b7 [Preregistration + 5 ranked hypotheses](knowledge/59_s20v_preregistration_and_hypotheses.md)\n\nS20V-H2 (multi-scale Hessian tubularity of the LiDAR scarp-step field; 37,500 dots) declared its lane\nbefore experimenting and ran 3/3 experiments. Automated gates \u2014 no human inspector: canary AUC\n0.5378 PASS; uniqueness PASS; exact-file validation PASS (all-finite {0,1}, no NaN anywhere, template\ngrid). **HOLDOUT-DTI** (LOS",
+      "readme_sha256": "4b25bcd5e7b2c636ad959223773f2ec554d7daf707b9dfcbe5c5b18548407374",
+      "readme_blob": "be20e25e93db9775d5ac161e5f5421c9fb34172b",
+      "readme_lines": 1820,
+      "header_excerpt": "# S29 \u00b7 2026-10-29 UTC \u2014 current checkout review \u00b7 branch arena/fe0ed431-gemsdoe28 \u00b7 READ FIRST EVERY SESSION\n\n## CURRENT DECISION: UNIQUE TIF GENERATED \u00b7 OK TO SUBMIT: NO \u00b7 NO WEEKLY SLOT USED\n\n**Active branch:** `arena/fe0ed431-gemsdoe28`. Automated checks only; no human inspection and no DrivenData access.\n\n- **Unique TIF:** `docs/candidates/gems29-s29-hole-k20000-20261029-b68117a828cc-nan.tif` (SHA-256 `bcc92b8d8c5d81e095b9f4a7b73e2578e22fccf6fddb98c08a170c4089816cb3`, 20,000 dots). It passes the literal 70%/3 px and 0.90 rank gate against 87 references (worst overlap 0.68). It is **NOT OK TO SUBMIT**: HOLDOUT-DTI 0.0295 (CI 0.0234\u20130.0360) is below its random-K baseline (0.0396) and the comparable best (0.0553736).\n- **Dense S29 candidate (37,654 dots):** measured duplicate of registry-039 (overlap 1.00). NOT OK. Kept out of `docs/`.\n- **S29-E1** (preregistered HGB cross-fit): HOLDOU",
       "protocol_mentions": {
-        "holdout": 75,
-        "do not submit": 9,
-        "organizer-confirmed": 5,
-        "leakage": 9,
-        "tversky": 0
+        "holdout": 133,
+        "do not submit": 17,
+        "organizer-confirmed": 12,
+        "leakage": 22,
+        "tversky": 4
       }
     },
     {
@@ -1407,8 +1407,8 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "95349cfc1842fbd81f94cd06af17d2e8ae7b267f",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE52/blob/95349cfc1842fbd81f94cd06af17d2e8ae7b267f/README.md",
+      "commit": "9bedaab99a04a7d09808ed7745e7f726217a3dfd",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE52/blob/9bedaab99a04a7d09808ed7745e7f726217a3dfd/README.md",
       "source_status": "readme_retrieved",
       "readme_sha256": "d938af20c2583372f49c55bb54b37617e285c37f6475c41bdf02e0cb2e7178d0",
       "text_representation_irregularity": "GraphQL text did not reproduce Git-blob bytes; recovered and verified original pinned archive bytes",
@@ -1608,8 +1608,8 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "420366b20dac4870119368b53bbe777a7e1f2f19",
-      "readme_url": "https://github.com/buffedlizard55-lab/60GEMSDOE/blob/420366b20dac4870119368b53bbe777a7e1f2f19/README.md",
+      "commit": "b65ee43aadd657864e5ca4aa1eb400a5a2013ab0",
+      "readme_url": "https://github.com/buffedlizard55-lab/60GEMSDOE/blob/b65ee43aadd657864e5ca4aa1eb400a5a2013ab0/README.md",
       "source_status": "readme_retrieved",
       "readme_sha256": "067aa969b58175db66e7e9c2ea07e6e375ae050d7bed93c5a4ff27c75a97d99c",
       "readme_blob": "7c7b9dafe71b88ff45b0f1d9529dd9a57abea1aa",
@@ -2272,19 +2272,19 @@
       "repo": "buffedlizard55-lab/GEMSDOE86",
       "site_url": "https://buffedlizard55-lab.github.io/GEMSDOE86/",
       "claims": [],
-      "commit": "4fc8ef52a01e1936355c21850f4a8e7b1e7f5057",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE86/blob/4fc8ef52a01e1936355c21850f4a8e7b1e7f5057/README.md",
+      "commit": "55c5a3acad55257cb8b5b02e7db3266a136b9eab",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE86/blob/55c5a3acad55257cb8b5b02e7db3266a136b9eab/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "1ed2dfa47dca608aeb28de3f207df8e898f308151e5f02e8963e03ad1d495da1",
-      "readme_blob": "78c278fd5f3255c3781b13fdb4d7a4fcd01f5924",
-      "readme_lines": 4791,
-      "header_excerpt": "# GEMSDOE86 \u2014 automatically audited fault-prediction research\n\n## \u26d4 NEWEST TIFF (2026-10-26, `H86G` collar-emphasis): **UNIQUE GEOTIFF GENERATED \u2014 NOT OK TO SUBMIT \u2014 AUDIT ONLY** (`0` slots spent)\n\n**IS THIS FILE OK TO DOWNLOAD AND SUBMIT? NO \u2014 `DO NOT SUBMIT` (`verdict = \"negative\"`, `safe_to_submit = false`, `approved_for_weekly_slot = false`, `submission_slots_used = 0`).** It is **safe to download for audit only**.\n\n- **Novel hypothesis (not yet tried in this repo):** `GEMSDOE32` H33 scored `0.2778` (OWNER-REPORTED, not organizer-confirmed) by *pruning* dots at `1 < d_cat <= 2 px` from catalogue faults. No lane has tried *emphasizing* the intermediate collar zone (`2-8 px` = `200-800 m`) where structural relay zones and dilational jogs form around mapped faults \u2014 prime locations for geothermal-related blind faults absent from the USGS/INGENIOUS catalogue. Combined with Poisson-disc s",
+      "readme_sha256": "4239c91439a9bd3236335cd30e79af5075ea5bb403a12a5cc9c5901b32bffa70",
+      "readme_blob": "ff79d0e66dd3d4f3e21a0b484c33fd041f9c4dd3",
+      "readme_lines": 7625,
+      "header_excerpt": "# GEMSDOE86 \u2014 auditable geothermal-fault research\n\n> **CURRENT SESSION \u2014 2026-10-29 UTC \u00b7 branch `arena/6ad5bdd2-gemsdoe86` \u00b7 DECISION: DO NOT SUBMIT.** The current checkout audit found the native training raster missing from both expected locations, 21/21 prepared arrays/masks missing, and the shared feature cache absent. The pinned literal witness covers 5,106,385/5,106,385 allowed pixels, so every nonempty prediction triggers overlap 1.0 > 0.70 under the unchanged rule. No lane was assigned; this session generated no candidate, ran no experiment, and used no slot.\n>\n> - **Highest supplied Focus-9 claim:** GEMSDOE32 H33, **0.2778 OWNER-REPORTED / UNVERIFIED**. The current owner ledger says no submission-page receipt links that score to the exact raster bytes. It is not organizer-confirmed or an all-fleet maximum. The D32 repository-specific HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0; 22,",
       "protocol_mentions": {
-        "holdout": 121,
-        "do not submit": 129,
-        "organizer-confirmed": 12,
-        "leakage": 35,
-        "tversky": 6
+        "holdout": 162,
+        "do not submit": 164,
+        "organizer-confirmed": 17,
+        "leakage": 46,
+        "tversky": 11
       }
     },
     {
@@ -2316,18 +2316,18 @@
       "repo": "buffedlizard55-lab/GEMSDOE88",
       "site_url": "https://buffedlizard55-lab.github.io/GEMSDOE88/",
       "claims": [],
-      "commit": "d892d393cbaab632659f1455f28ed597950cc091",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE88/blob/d892d393cbaab632659f1455f28ed597950cc091/README.md",
+      "commit": "8e0ef39b2867bbf55521704465a86840bebe1b36",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE88/blob/8e0ef39b2867bbf55521704465a86840bebe1b36/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "3b3fd8fb781912faf8f7b6e771b38ae6407bdc1d314177b4e007bb3e139794e9",
-      "readme_blob": "32efc069798ec46a6c5b00e34c1dc101e98b601c",
-      "readme_lines": 1692,
-      "header_excerpt": "# GEMSDOE88 \u2014 audited fault discovery and submission gates\n\n> **Session `d498c1ca` (2026-10-26) standing orders (read first every session):** Maximize P(Win). Own the Outcome. Generate a **unique** GeoTIFF only if `scripts/generation_guard.py` allows it. **DOWNLOAD FOR RESEARCH: YES** on archived `*-DO-NOT-SUBMIT*` files. **SUBMIT: NO.** Values must be in `[0, 1]`. Do not copy H33 (`USER-REPORTED 0.2778`) or any sibling site raster. Holdout = hide-and-recover; label numbers `HOLDOUT-DTI` or `ORGANIZER-CONFIRMED` only. Budget 3 experiments / 2 hours. Full prompt: [PROMPT.md](PROMPT.md) \u00b7 [USER_PROMPT_20261025.md](USER_PROMPT_20261025.md). This session: [review](research/session-d498c1ca-review.md) \u00b7 [hypotheses](research/session-d498c1ca-hypotheses.md) \u00b7 [run card](registry/session_d498c1ca_run_card.json).\n\n## \u26d4 CURRENT DECISION: NO TIFF IS CLEARED TO SUBMIT\n\n**Do not submit any artifact ",
+      "readme_sha256": "1e948906d08b5c8ad19c9204fe2a9eebde05a3a1f0adff427bd14cf884e78704",
+      "readme_blob": "b7cc8b2a25a155a6c2f549595fba80b576408005",
+      "readme_lines": 1940,
+      "header_excerpt": "# GEMSDOE88 \u2014 audited fault discovery and submission gates\n\n> ### CURRENT DECISION (`2026-10-29`, Session `5aeeb70b`): **NO NEW TIFF \u00b7 SUBMIT: NO \u2014 DO NOT SUBMIT** (`DUPLICATE_STOP`, `ok_to_submit: false`, `weekly_slots_used: 0`)\n>\n> - **No candidate or TIFF was generated.** `generation_guard.py` and `preflight_mtas88.py --gate-generation` returned the expected exit `2` before feature construction. The SHA-pinned dense witness directly covers `5,106,385 / 5,106,385` allowed cells; under the literal support rule every nonempty candidate has `REGISTRY-MEASUREMENT: 3-px overlap = 1.0000 > 0.70`. No experiment, holdout, canary, estimate, or weekly slot was spent. Do not evade this stop with a zero-only raster, renamed copy, or private sparse-prior rule.\n>\n> - **Dated full GitHub sample (`2026-10-29 14:34 UTC`; not current):** 9/9 then-observed README TIFFs returned `DUPLICATE_STOP` at 1.0000",
       "protocol_mentions": {
-        "holdout": 210,
-        "do not submit": 68,
-        "organizer-confirmed": 37,
-        "leakage": 25,
+        "holdout": 229,
+        "do not submit": 92,
+        "organizer-confirmed": 42,
+        "leakage": 26,
         "tversky": 3
       }
     },
@@ -2396,19 +2396,19 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "a4a502be6efa2d79791f92061a782e827ad3f70d",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE91/blob/a4a502be6efa2d79791f92061a782e827ad3f70d/README.md",
+      "commit": "8c52ba3c846cc664bc549de0a3bf1bf42da0dcf6",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE91/blob/8c52ba3c846cc664bc549de0a3bf1bf42da0dcf6/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "ecfa2be287edcb574c17714ffb1bc80b6e2b7d58303853b20d51b24f57d4d19b",
-      "readme_blob": "755a2a48968cd04c9b7049596397263f482ca433",
-      "readme_lines": 1173,
-      "header_excerpt": "# GEMSDOE91 \u2014 current checkout status first\n\n> **ACTIVE REVIEW \u2014 2026-10-26 \u00b7 branch `arena/af73263f-gemsdoe91` \u00b7 NO NEW TIFF.** `OK TO DOWNLOAD: NO NEW TIFF FROM THIS REVIEW` \u00b7 `OK TO SUBMIT: NO` \u00b7 experiments `0` \u00b7 weekly slots `0` \u00b7 `ORGANIZER-CONFIRMED: null`. This is a read-only nine-site evidence audit and blocked preflight, not an experiment, score refresh, file validation, or slot selection. Do not relabel, copy, or recommend an older TIFF as this review's output.\n>\n> **Start every project session by reading this current status, this operative update, the [full standing brief](#full-project-brief), the [three-pass review](docs/REVIEW-SITE-AUDIT-20261026.md), and [current limitations](LIMITATIONS_AND_NEXT_STEPS.md).**\n>\n> - [Nine-site executive summary](docs/nine-site-audit-20261026.html) \u00b7 [Claim/source register](docs/research/nine-site-audit-20261026.json) \u00b7 [No-run JSON card](d",
+      "readme_sha256": "b2e7e5ca74bc13cdeeb57c3ddfbb9964b746709178c67d4163b3959a068e5c1a",
+      "readme_blob": "6ebc5ca8c7793d0593579be49ea625daf756932f",
+      "readme_lines": 1764,
+      "header_excerpt": "# GEMSDOE91 \u2014 Current review: blocked, research only \u2014 NO SUBMISSION APPROVED (latest: S27-OSDR, S27-CVDC & S27-FABRIC-FAR 2026-10-29)\n\n> **Active checkout `arena/7de7860e-gemsdoe91` (`S27-OSDR`) \u00b7 2026-10-29: NEW COMPETITIVE-UNIQUE DE NOVO TIF GENERATED \u00b7 `OK TO DOWNLOAD: YES \u2014 AUTOMATED [0, 1] FORMAT CERTIFIED` \u00b7 `OK TO SUBMIT: NO` (research only; 0 weekly slots spent).**\n> - **Download research GeoTIFF:** [`gems91-s27-cvdc-e2-37654dots-20261029T160258Z-7652cef9-zeros.tif`](docs/downloads/gems91-s27-cvdc-e2-37654dots-20261029T160258Z-7652cef9-zeros.tif) (`sha256: 28c610187313bf04\u2026`, 140,275 bytes, 37,654 binary `{0.0, 1.0}` dots, `EPSG:32611`, `3730 \u00d7 3292`, `float32`, `nodata=None`, all 12,279,160 pixels finite in `[0, 1]`) \u00b7 [Single-TIFF `.zip`](docs/downloads/gems91-s27-cvdc-e2-37654dots-20261029T160258Z-7652cef9-zeros.zip) \u00b7 [**S27-OSDR Executive Summary, Nine-Site + GEMSDOE92 Tabl",
       "protocol_mentions": {
-        "holdout": 69,
-        "do not submit": 6,
-        "organizer-confirmed": 9,
-        "leakage": 13,
-        "tversky": 3
+        "holdout": 139,
+        "do not submit": 17,
+        "organizer-confirmed": 26,
+        "leakage": 24,
+        "tversky": 7
       }
     },
     {
@@ -2421,19 +2421,19 @@
           "status": "OWNER-REPORTED / UNVERIFIED; NOT ORGANIZER-CONFIRMED"
         }
       ],
-      "commit": "f1dd2107cde765f00ea3b6b87b0f251ef7713f99",
-      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE92/blob/f1dd2107cde765f00ea3b6b87b0f251ef7713f99/README.md",
+      "commit": "082513e3d2d17eb478b46ff9614936e5a88e2d02",
+      "readme_url": "https://github.com/buffedlizard55-lab/GEMSDOE92/blob/082513e3d2d17eb478b46ff9614936e5a88e2d02/README.md",
       "source_status": "readme_retrieved",
-      "readme_sha256": "b99f2bc01e0797c84f4bdae38d41411d89c911d015d5d406cdab13409fadf3eb",
-      "readme_blob": "f969d23a9de1a3f0bd4bc718b2238536a28b2a8f",
-      "readme_lines": 716,
-      "header_excerpt": "# GEMSDOE92 \u2014 DOE GEMS Prize #306 Auditable Submission Workbench\n\n<!-- VARIO-STATUS:BEGIN -->\n## Current research download \u2014 verified decision, 2026-10-25 (VARIO session)\n\n**\u2705 OK TO DOWNLOAD FOR RESEARCH. \u26d4 DO NOT SUBMIT \u2014 automated promotion gates not met (see run card).**\nA new unique GeoTIFF **was** generated this session by the pre-registered VARIO lane\n([hypotheses](docs/HYPOTHESES_20261025_VARIO.md) \u00b7 [analysis](docs/ANALYSIS_20261025_VARIO.md) \u00b7\n[executive submission guide](docs/vario.html) \u00b7 [run card](docs/downloads/vario_run_card.json) \u00b7\n[machine-readable status](docs/downloads/readiness.json)).\n\n[Download gemsdoe92-vario-full-37654-20261025-3c30a41c-zeros.tif](docs/downloads/gemsdoe92-vario-full-37654-20261025-3c30a41c-zeros.tif) \u00b7 name `GEMSDOE92-VARIO-full-20261025` \u00b7 note (72/140) `VARIO full: 24phys+semivar+MTcp+topo10+ctx LOQO; 37654 dots 2.8px dcat>2` \u00b7 SHA-256 `11f92e38",
+      "readme_sha256": "7eaad87701c7c51aca72dd00d92c996fdbad141ecbb9c2ec3c0d86cdc8867958",
+      "readme_blob": "df937b26fd75298a523ec729ca481f046adbb06e",
+      "readme_lines": 1081,
+      "header_excerpt": "# GEMSDOE92 \u2014 DOE GEMS Prize #306 Auditable Submission Workbench\n\n## \ud83d\udccc Current Status \u2014 2026-10-29 (`DEXP-KOSTROV-KOENDERINK` + `MARUSSI-TRISHEAR` + `ADMITRELAY` + Full `2,262`-SHA 8-Owner Fleet Audit)\n\n- **Gate Indicator: \u2705 OK TO DOWNLOAD FOR RESEARCH ONLY \u00b7 \u26d4 DO NOT SUBMIT (`verdict: \"negative\"`, `submission_eligible: false`, `0` weekly slots spent \u2014 NO TIFF IS CLEARED for portal upload without human selector disposition).**\n- **New `2026-10-29` Unique GeoTIFF (`DEXP-KOSTROV-KOENDERINK` / `E3`):**\n  - **One-Click Download:** [`docs/downloads/gemsdoe92-dexpkostrov1-40000dots-20261029-ffa21c17-zeros.tif`](docs/downloads/gemsdoe92-dexpkostrov1-40000dots-20261029-ffa21c17-zeros.tif) (`150,562` B) \u00b7 [One-TIFF ZIP](docs/downloads/gemsdoe92-dexpkostrov1-40000dots-20261029-ffa21c17-zeros.zip) \u00b7 [Byte-Bound Run Card](docs/downloads/gemsdoe92-dexpkostrov1-40000dots-20261029-ffa21c17_run_card.jso",
       "protocol_mentions": {
-        "holdout": 124,
-        "do not submit": 37,
-        "organizer-confirmed": 10,
-        "leakage": 24,
-        "tversky": 5
+        "holdout": 184,
+        "do not submit": 64,
+        "organizer-confirmed": 22,
+        "leakage": 42,
+        "tversky": 7
       }
     }
   ],

@@ -1,6 +1,6 @@
 {
   "schema": "historical-champion-readback-v1",
-  "checked_utc": "2026-10-29T14:17:13.002126+00:00",
+  "checked_utc": "2026-10-30T22:52:06.095509+00:00",
   "scope": "Nine owner-named historical champions, not latest heads or all files; no scientific replay",
   "source_record_sha256": "f04b77833ee508ca92e15f9297df787fc4b22b368cf116854edc23a4a3a69f69",
   "witness": {
