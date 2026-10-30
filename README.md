@@ -1,23 +1,25 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## START HERE — nine-site executive summary (2026-10-29, `arena/6a1fb4d1-gemsdoe24`)
+## CURRENT MISSION AND STATUS — 2026-10-30 (`arena/5b3e6982-gemsdoe24`)
 
-**[Open the executive summary →](docs/nine-site-submission-summary.html)** · [run card](evidence/run_card_20261029_nine_site_unique.json) · [mission prompt](docs/MISSION_PROMPT.md)
+**[Nine-site decision brief: download / score estimate / uniqueness / submission guide →](docs/nine-site-submission-summary.html)** · [three-pass review](docs/repo-review-20261030-arena-5b3e6982.md) · [mission prompt (read at every project session)](docs/MISSION_PROMPT.md) · [run card](evidence/session_5b3e6982_20261030_run_card.json)
 
-- **Highest owner-reported file:** GEMSDOE32 B2 at **0.2778** (OWNER-REPORTED, not organizer-confirmed). **Not unique:** 99.9–100% of its dots lie within 3 px of dots from every other focus site.
-- **All nine focus sites are one family.** Their pairwise 3-px overlaps run from 0.867 to 1.000.
-- **Unique file generated today:** [`docs/downloads/gems24-nine-complement-seghgb-20261029-zeros.tif`](docs/downloads/gems24-nine-complement-seghgb-20261029-zeros.tif) (SHA-256 `4dfb4a7c…`, 37,654 dots, format-valid, 0 overlap with the nine). **DOWNLOAD: research · SUBMIT: NO.** Holdout is **HOLDOUT-DTI 0.0369** [0.0308, 0.0439] (60,988 withheld), about half the unrestricted baseline 0.0685. It is not competitive.
-- **Second unique file (concurrent session, on main):** `docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif` (129,184 dots). Its source-recorded holdout is HOLDOUT-DTI 0.1427 [0.1323, 0.1524], re-verified with `--verify-recorded` (not retrained here). Max overlap with the nine is 22.9%. Its lattice overlap is 99.3%. Its card verdict is negative and `ok_to_submit` is false.
-- **Estimated leaderboard score: NOT ESTIMABLE for every file.** The holdout is an internal proxy, not the hidden leaderboard.
-- **Portal error "Predicted values must be in range [0, 1]":** the cause is **not confirmed**. Upload the all-finite `-zeros` variant. A NaN-outside file is a plausible cause but is untested.
-- **Blocking decision for the owner:** the literal 70% rule against the calibration lattice `13gems_20261001_r13-lattice-s5` (GEMSDOE13) cannot be met by any dot set above 22,164 dots. The floor is 1 − 6,649/N, however dots are chosen. Decide whether synthetic calibration rasters count in the uniqueness registry.
+**NO NEW TIFF · NO EXPERIMENT · NO SLOT · SUBMIT: NO.** The requested unique, high-scoring TIFF has not been achieved. No new surface, dots, candidate, portal upload, or organizer receipt was produced in this review.
 
-Reproduce: `scripts/fetch_nine_site_champions.py` → `scripts/build_nine_site_summary.py` → `scripts/run_seg_hgb_lane.py` (and `--exclude-nine-champions`) → `scripts/audit_candidate_registry.py` → `scripts/build_nine_site_report.py`. Tests: `tests/test_nine_site_candidate.py`.
+- **Nine focus sites:** GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36. The direct-download summary preserves each pinned filename, SHA prefix, owner-reported value, NOT ESTIMABLE leaderboard estimate, and measured overlap against the other eight. A GitHub-only freshness receipt checked 2026-10-30 found all nine `main` refs changed since their pinned artifact audits; new files and scores were not inspected, so the table is explicitly historical (`docs/data/priority_feed.json`).
+- **GEMSDOE32 B2 = 0.2778** remains **OWNER-REPORTED / UNVERIFIED**. Pinned pixel-forensics receipts show B2 is a deletion-only 37,654-dot subset of a 44,090-dot D2.8 pattern (6,436 dots removed within 200 m) and also record a separate 40,199-dot D2.8-family comparison (2,545 removed); neither adds B2 dots. This is pruning geometry, not a new detector or proof of hidden score causality. Hidden TP/FP mass is unknown; see `evidence/oj1_priority_ancestry_replay.json` and `evidence/priority_review_20261025.json`.
+- **GEO1’s historical HOLDOUT-DTI is invalid.** Its pinned source masks each fold with the full catalogue, including hidden labels, rather than only fold-visible faults. The archived nonzero TP count is inconsistent with that eligibility path. Do not cite its recorded DTI/CI as a score or method comparison; see the [source audit](evidence/geo1_holdout_leakage_audit_20261030.json).
+- **A previous complement TIFF** is a research download only: 37,654 dots and 0% overlap with the nine focus files, but 97.2752% overlap with the retained local calibration lattice. Its source-recorded **HOLDOUT-DTI 0.036939** (evaluator `gems-segment-pooled-v1`, 60,988 withheld positives, 95% CI `[0.030813, 0.043882]`) is not a leaderboard score and was not rerun here. Its 2026-10-30 preflight says `DO_NOT_SUBMIT`.
+- **Feasibility stop:** the spacing-5 lattice covers 99.8713% of the footprint within 3 px. The minimum possible overlap is 82.3418% at 37,654 dots and 84.9195% at 44,090; both budgets are impossible under the stated 70% rule. At most 22,163 dots are merely *not ruled out by this necessary bound*—that is not proof of novelty or promotion.
+- **Data is present, provenance is limited:** `data/training_features.tif` SHA-256 `4371c82e…` was restored from the owner's pinned GitHub mirror, not authenticated by the organizer. `data/prepared/features.npy` is a 5,167,373 × 30 stack, SHA-256 `a4ca25b2…`. Integrity checks do not establish scientific validity or competition provenance.
+- **All leaderboard estimates: NOT ESTIMABLE.** B2 and other site values are owner claims; HOLDOUT-DTI is an internal spatial proxy. No current DrivenData leaderboard or portal was checked.
+- **Next scientific gate:** the assigned single-method paragraph/lane is still missing. Do not select or run a hypothesis. The review proposes three locally executable geological hypotheses and ranks them qualitatively, but they are proposals—not a lane assignment, score forecast, or experiment authorization. No more than 3 experiments or 2 hours; no slot without the independent selector.
 
-**Next steps (suggested, not started):** (1) owner decides the calibration-lattice rule; (2) preregister one method lane that beats the recorded holdout best of 0.166060 (S3DEP1, not unique) while staying at or under 70% overlap with the nine; (3) record one organizer receipt for the chosen file on the DrivenData submission page (requires the owner to log in); (4) resolve the 0.3195 vs 0.4413 leaderboard discrepancy from a receipt, not from text; (5) replace the owner-mirror training raster with a file the owner downloads while logged in to DrivenData.
+Read [the normalized mission and hard constraints](docs/MISSION_PROMPT.md) before work each session. Preserve **Maximize P(Win)** and **Own the Outcome**. The summary generator now defaults to updating HTML only; `--help` is safe, and the archival 2026-10-29 run card is not rewritten unless explicitly requested.
 
-**Limitations:** no DrivenData login or submission access here; the training raster is owner-mirrored, not organizer-authenticated; the bridge `sample_submission.tif` is identical in positives to the catalogue; the method-lane paragraph is absent from the request. Core values: **Maximize P(Win)** and **Own the Outcome**.
+## Archived session notes
 
+The dated branch reviews below are historical records. Where they conflict with the 2026-10-30 review above or the linked integrity audit, the current review and audit take precedence.
 
 ## Current repository review — 2026-10-29 (`arena/30d63154-gemsdoe24`)
 

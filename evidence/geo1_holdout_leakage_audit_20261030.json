@@ -1,0 +1,84 @@
+{
+  "schema": "geo1-holdout-integrity-audit-v1",
+  "audit_date": "2026-10-30",
+  "scope": "Static source/evidence integrity review only; no experiment or holdout replay performed.",
+  "disposition": "INVALID_HOLDOUT_CLAIM",
+  "finding": "The recorded GEO1 HOLDOUT-DTI is not a valid comparable holdout claim. The source masks prediction eligibility with the full catalogue, including the withheld labels, contrary to the shared SegmentHoldout visible-only rule. The nonzero recorded TP_w is inconsistent with the pinned eligibility path, which cannot emit any hidden catalogue pixel.",
+  "sha256": {
+    "scripts/build_unique_geothermal_submission.py": "66083b39be1134bddb8248824b7734fd57a1ed8fd78fec51191d52db8d27eea3",
+    "src/gems/holdout.py": "19bd9c11e50d3d30fdb07b2bdebbaeff0fa3081f05526cd5604eb2e9e2c50c92",
+    "src/gems/emission.py": "8ef12efc95157108fd37af4e47c4b04dacaedcf0207728ffde310736baf33753",
+    "evidence/geo1_experiment.json": "e7f3eef542f1ffa520001d5f93fb06eacebcd74691044a201c792bceadeca3cf",
+    "evidence/geo1_run_card.json": "abd78ac47803da2092977e0915e8140ff5aca13167e7ffa469b399f7208082c1",
+    "data/bridge/labels.tif": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+    "docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif": "ee37d94deb3545af1f814df61ec5acd7addafe01a4833384c2e25d1a5e6b384d"
+  },
+  "experiment_card_code_hashes_match_current_sources": {
+    "scripts/build_unique_geothermal_submission.py": true,
+    "src/gems/holdout.py": true,
+    "src/gems/emission.py": true
+  },
+  "source_findings": [
+    {
+      "file": "scripts/build_unique_geothermal_submission.py",
+      "line": 149,
+      "code": "catalogue = (s.read(1) > 0) & fp",
+      "meaning": "Loads the full labelled catalogue once, before iterating folds."
+    },
+    {
+      "file": "scripts/build_unique_geothermal_submission.py",
+      "line": 250,
+      "code": "eligible = fp & f[\"valid\"] & ~catalogue",
+      "meaning": "Uses the full catalogue, rather than fold-visible f[\"visible\"], to exclude predictions."
+    },
+    {
+      "file": "src/gems/holdout.py",
+      "lines": [
+        450,
+        452
+      ],
+      "code": [
+        "hidden = self.labels & np.isin(self.components, hidden_ids)",
+        "truth = hidden & valid"
+      ],
+      "meaning": "Every withheld truth pixel belongs to the full label raster passed as catalogue."
+    },
+    {
+      "file": "src/gems/holdout.py",
+      "line": 420,
+      "code": "``visible`` is the ONLY catalogue a detector may read.",
+      "meaning": "Shared SegmentHoldout contract; fold-visible labels are provided as f[\"visible\"]."
+    },
+    {
+      "file": "src/gems/emission.py",
+      "line": 243,
+      "code": "ids = np.flatnonzero(eligible & np.isfinite(score) & (score > 0))",
+      "meaning": "The shared priority_poisson emitter cannot emit a pixel excluded by eligible."
+    }
+  ],
+  "rejected_recorded_result": {
+    "status": "SOURCE_RECORDED_BUT_INVALID_AND_NOT_REPRODUCIBLE_FROM_PINNED_ELIGIBILITY",
+    "label": "HOLDOUT-DTI (rejected; do not compare or promote)",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "dti": 0.14269491602190398,
+    "ci95": [
+      0.13229313491455882,
+      0.1523670504192869
+    ],
+    "n_withheld_positive_pixels": 60988,
+    "recorded_TP_w": 10817.97506212046,
+    "reason": "A correct execution of the pinned eligibility path has zero predicted pixels on hidden labels; the archived nonzero TP_w cannot be reproduced from that path. The cause of the discrepancy is not established without a controlled replay, which was not authorized or run."
+  },
+  "controls": {
+    "feature_canary_pass_does_not_clear_eligibility_leakage": true,
+    "verified_by_run_card_only": false,
+    "organizer_confirmed": false,
+    "replay_performed": false,
+    "submission_slot_used": false,
+    "replacement_score_or_projection": null
+  },
+  "limitations": [
+    "Static source analysis is sufficient to reject the reported number as a valid holdout, but does not establish which source bytes were actually executed if the archived result was generated before the recorded hashes were written.",
+    "The source-level fix belongs in a new, explicitly assigned experiment lane; this review does not modify the historical GEO1 runner or generate a replacement result."
+  ]
+}

@@ -1,5 +1,18 @@
 # Standing project instructions
 
+## 2026-10-30 active review — read README and mission before work
+
+At every project session, read the current status at the top of `README.md` and
+`docs/MISSION_PROMPT.md` before acting. The missing assigned single-method
+paragraph remains a hard stop: hypotheses may be documented but not selected or
+run until a lane is assigned. GEO1's archived holdout is invalid because its
+pinned fold eligibility uses the full catalogue; see
+`evidence/geo1_holdout_leakage_audit_20261030.json`. The hash-checked training
+raster is from an owner mirror, not organizer-authenticated. The 37,654- and
+44,090-dot budgets fail the retained-lattice lower bound; do not tune the budget
+or registry to evade it. No new TIFF, experiment, slot, or upload was made in
+this review. All leaderboard estimates remain NOT ESTIMABLE without a receipt.
+
 ## 2026-10-28 historical-champion continuation
 
 Read `docs/session-review-b87d739e-20261028.md` and the existing owner brief with README.
