@@ -10,8 +10,12 @@ pinned fold eligibility uses the full catalogue; see
 `evidence/geo1_holdout_leakage_audit_20261030.json`. The hash-checked training
 raster is from an owner mirror, not organizer-authenticated. The 37,654- and
 44,090-dot budgets fail the retained-lattice lower bound; do not tune the budget
-or registry to evade it. No new TIFF, experiment, slot, or upload was made in
-this review. All leaderboard estimates remain NOT ESTIMABLE without a receipt.
+or registry to evade it. The latest GitHub API commit-ref receipt at
+`docs/data/priority_feed.json` reports all nine focus refs changed as of
+2026-10-30T23:30:42Z; GEMSDOE24 and GEMSDOE30 advanced after the 23:11 README
+snapshot, but no changed-head files or scores were audited. No new TIFF,
+experiment, slot, or upload was made in this review. All leaderboard estimates
+remain NOT ESTIMABLE without an organizer receipt.
 
 ## 2026-10-28 historical-champion continuation
 

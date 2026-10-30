@@ -48,6 +48,9 @@ def test_all_nine_sites_have_downloads_and_no_leaderboard_estimate():
     assert "Submit: NO" in text
     assert "Historical snapshot notice" in text
     assert "data/priority_feed.json" in text
+    assert "23:30:42.691514+00:00" in text
+    assert "GEMSDOE24, GEMSDOE30 advanced after the 23:11" in text
+    assert "no updated README bodies or repository files were fetched" in text
 
 
 def test_champion_downloads_are_immutable_raw_urls_not_blob_pages():

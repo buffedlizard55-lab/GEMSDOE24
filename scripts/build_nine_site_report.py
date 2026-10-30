@@ -207,6 +207,18 @@ def build_html(ov, seg, comp, reg, feasibility, preflight, b2, b2_ancestry, rest
     feed_rows = priority_feed.get("rows", [])
     changed_refs = sum(bool(row.get("changed_since_review")) for row in feed_rows)
     feed_checked = html.escape(priority_feed.get("checked_utc", "unknown"))
+    advanced_after_snapshot = priority_feed.get("ref_check_note", {}).get(
+        "advanced_since_2026_10_30T23_11_snapshot", []
+    )
+    advanced_sites = ", ".join(
+        html.escape(repo.rsplit("/", 1)[-1]) for repo in advanced_after_snapshot
+    )
+    freshness_detail = (
+        f" The later ref-only check found {advanced_sites} advanced after the 23:11 "
+        "owner-README snapshot; no updated README bodies or repository files were fetched."
+        if advanced_sites
+        else ""
+    )
 
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
@@ -242,7 +254,7 @@ footer{{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;color:
 <div class="tablewrap"><table><thead><tr><th>Site / artifact</th><th>One-click pinned download</th><th>Positive dots</th><th>Owner-reported score</th><th>Estimated leaderboard score</th><th>Maximum 3-px overlap vs other eight</th><th>Unique vs other eight?</th><th>Decision</th></tr></thead><tbody>
 {"".join(site_rows)}
 </tbody></table></div>
-<div class="soft"><b>Historical snapshot notice.</b> The GitHub-only source feed checked {feed_checked} reports {changed_refs}/{len(feed_rows)} priority-repository main refs changed since their pinned artifact audits. Those changed heads and files have not been re-audited here; this table is not a current-site winner list. <a href="data/priority_feed.json">Open the commit-freshness receipt</a> (not a score API).</div>
+<div class="soft"><b>Historical snapshot notice.</b> The GitHub-only source feed checked {feed_checked} reports {changed_refs}/{len(feed_rows)} priority-repository main refs changed since their pinned artifact audits.{freshness_detail} The changed heads and files have not been audited here; this table is not a current-site winner list. <a href="data/priority_feed.json">Open the commit-freshness receipt</a> (not a score API).</div>
 <p><b>Best owner-reported value:</b> {best_owner[0]} = {best_owner[1][0]} (unverified; not unique). No score forecast is derived from this rank.</p>
 
 <h2>2. GEMSDOE32 B2 at 0.2778: what the local evidence does and does not show</h2>

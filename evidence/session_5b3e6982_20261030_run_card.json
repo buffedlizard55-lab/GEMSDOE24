@@ -133,12 +133,19 @@
   ],
   "source_freshness": {
     "status": "checked",
+    "feed_path": "docs/data/priority_feed.json",
     "scope": "GitHub source freshness only; not a leaderboard or scoring API",
-    "checked_utc": "2026-10-30T22:48:16.785030+00:00",
+    "checked_utc": "2026-10-30T23:30:42.691514+00:00",
     "repositories_checked": 9,
     "refs_changed_since_pinned_audit": 9,
+    "heads_advanced_since_2026_10_30T23_11_snapshot": [
+      "buffedlizard55-lab/GEMSDOE24",
+      "buffedlizard55-lab/GEMSDOE30"
+    ],
     "new_heads_or_files_audited_this_session": false,
+    "readme_bodies_fetched_in_this_refresh": false,
     "leaderboard_or_organizer_score_checked": false,
-    "interpretation": "GitHub commit-reference freshness only; no current file, score, or official portal audit."
+    "portal_or_submission_receipt_checked": false,
+    "interpretation": "GitHub REST main-commit references only; no current file, score, organizer page, or submission status was audited."
   }
 }
