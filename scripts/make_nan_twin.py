@@ -5,6 +5,7 @@ Same dots, same grid; only the cells outside the template footprint change from
 finite 0.0 to NaN, matching data/bridge/sample_submission.tif and the official
 text ("data outside bounds null or NaN"). Then runs verify_candidate_tif.py on it.
 """
+
 import subprocess
 import sys
 from pathlib import Path
@@ -33,7 +34,9 @@ def main() -> int:
         d.write(out, 1)
     print("wrote", DST.relative_to(ROOT))
     print("dots in footprint:", int((out[fp] == 1).sum()))
-    return subprocess.call([sys.executable, str(ROOT / "scripts/verify_candidate_tif.py"), str(DST.relative_to(ROOT))])
+    return subprocess.call(
+        [sys.executable, str(ROOT / "scripts/verify_candidate_tif.py"), str(DST.relative_to(ROOT))]
+    )
 
 
 if __name__ == "__main__":

@@ -32,8 +32,15 @@ TEMPLATE = ROOT / "data/bridge/sample_submission.tif"
 DEFAULT_DIR = ROOT / "data/research/nine_site_verify"
 OUT = ROOT / "evidence/nine_site_verify_20261030.json"
 SITES = [
-    "GEMSDOE24", "GEMSDOE25", "GEMSDOE27", "GEMSDOE28", "GEMSDOE30",
-    "GEMSDOE31", "GEMSDOE32", "GEMSDOE33", "GEMSDOE36",
+    "GEMSDOE24",
+    "GEMSDOE25",
+    "GEMSDOE27",
+    "GEMSDOE28",
+    "GEMSDOE30",
+    "GEMSDOE31",
+    "GEMSDOE32",
+    "GEMSDOE33",
+    "GEMSDOE36",
 ]
 RADIUS_PX = 3.0
 
@@ -59,9 +66,7 @@ def format_check(path: Path, template_profile: dict, footprint: np.ndarray) -> d
         }
     info["crs_ok"] = info["crs"] == "EPSG:32611"
     info["shape_ok"] = tuple(info["shape"]) == tuple(template_profile["shape"])
-    info["transform_ok"] = np.allclose(
-        info["transform"], list(template_profile["transform"])[:6]
-    )
+    info["transform_ok"] = np.allclose(info["transform"], list(template_profile["transform"])[:6])
     info["single_band_float32"] = info["count"] == 1 and info["dtype"] == "float32"
     finite = np.isfinite(a)
     info["nan_inside_footprint"] = int((~finite & footprint).sum())
@@ -144,12 +149,17 @@ def main() -> int:
         "schema": "nine-site-verify-v1",
         "scope": "Byte, format and 3-px overlap audit of nine focus files; no score computed",
         "owner_reported_scores_not_organizer_confirmed": {
-            "GEMSDOE24": 0.2477, "GEMSDOE25": 0.2600, "GEMSDOE27": 0.2449,
-            "GEMSDOE28": 0.2710, "GEMSDOE30": 0.2600, "GEMSDOE31": 0.2708,
-            "GEMSDOE32": 0.2778, "GEMSDOE33": 0.2632, "GEMSDOE36": 0.2750,
+            "GEMSDOE24": 0.2477,
+            "GEMSDOE25": 0.2600,
+            "GEMSDOE27": 0.2449,
+            "GEMSDOE28": 0.2710,
+            "GEMSDOE30": 0.2600,
+            "GEMSDOE31": 0.2708,
+            "GEMSDOE32": 0.2778,
+            "GEMSDOE33": 0.2632,
+            "GEMSDOE36": 0.2750,
         },
-        "template": {"path": "data/bridge/sample_submission.tif",
-                     "sha256": sha256(TEMPLATE)},
+        "template": {"path": "data/bridge/sample_submission.tif", "sha256": sha256(TEMPLATE)},
         "footprint_cells": int(footprint.sum()),
         "files": results,
         "overlap_3px_A_dots_within_3px_of_B_dots": matrix,
