@@ -10,6 +10,7 @@ Labels: HOLDOUT-DTI (evaluator, count, CI) | OWNER-REPORTED (unverified) | NOT E
 
 from __future__ import annotations
 
+import hashlib
 import html
 import json
 from pathlib import Path
@@ -57,25 +58,93 @@ GEO1_CARD = "geo1_run_card.json"
 
 
 def geo1_facts():
-    """Facts about the concurrent GEO1 raster on main, read from its card and the audit."""
+    """Read GEO1 facts only when its hash-bound integrity review agrees.
+
+    The original run card's DTI fields are retained as source history, but the
+    complete-label eligibility mask makes that number invalid for comparison.
+    Fail closed if the artifact, score or frozen runner hash no longer matches
+    the integrity review; never silently promote stale numbers into the page.
+    """
     card = load(GEO1_CARD)
+    experiment = load("geo1_experiment.json")
+    review = load("session_1ec38571_20261029_run_card.json")["reviewed_parallel_artifact"]
     aud = load("geo1_registry_overlap_20261029.json")
+
+    expected_file = f"docs/{GEO1_REL}"
+    if card["submission_name"] != Path(GEO1_REL).name or review["file"] != expected_file:
+        raise ValueError("GEO1 file identity does not match the integrity review")
+    if card["validator_output"]["sha256"] != review["sha256"]:
+        raise ValueError("GEO1 raster hash does not match its integrity review")
+    script_hash = experiment["code_sha256"]["scripts/build_unique_geothermal_submission.py"]
+    actual_script_hash = hashlib.sha256(
+        (ROOT / "scripts/build_unique_geothermal_submission.py").read_bytes()
+    ).hexdigest()
+    if script_hash != actual_script_hash:
+        raise ValueError("GEO1 source-hashed runner changed; integrity review is stale")
+
+    if card["verdict"] != "negative" or card["ok_to_submit"] is not False:
+        raise ValueError(
+            "GEO1 selector receipt is not negative; refusing to present it as research-only"
+        )
+
+    recorded = card["holdout"]
+    reviewed = review["recorded_holdout_dti"]
+    if (
+        recorded["label"] != reviewed["label"]
+        or recorded["evaluator_version"] != reviewed["evaluator_version"]
+        or int(recorded["n_withheld_positive_pixels"]) != int(reviewed["withheld_positives"])
+        or abs(float(recorded["dti"]) - float(reviewed["value"])) > 1e-12
+        or any(abs(float(a) - float(b)) > 1e-12 for a, b in zip(recorded["ci95"], reviewed["ci95"]))
+    ):
+        raise ValueError("GEO1 holdout record does not match the source-integrity review")
+    holdout_status = str(reviewed["review_status"])
+    if (
+        "COMPROMISED" not in holdout_status
+        or "not a valid comparable holdout" not in holdout_status
+    ):
+        raise ValueError("GEO1 holdout status is not marked invalid; refusing to rank it")
+
     nine = [r for r in aud["all"] if "data/research/nine_site/" in r["file"]]
-    lattice = [r for r in aud["all"] if "lattice" in r["file"]][0]
+    lattice_path = "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+    lattice_rows = [r for r in aud["all"] if r["file"] == lattice_path]
+    if len(nine) != 9 or len(lattice_rows) != 1:
+        raise ValueError(
+            "GEO1 overlap audit must contain nine focus files and the pinned lattice witness"
+        )
+    lattice = lattice_rows[0]
     other = [
         r
         for r in aud["all"]
-        if "data/research/nine_site/" not in r["file"] and "lattice" not in r["file"]
+        if "data/research/nine_site/" not in r["file"] and r["file"] != lattice_path
     ]
+    max_nine = max(r["overlap_candidate_within_3px"] for r in nine)
+    max_nine_row = max(nine, key=lambda r: r["overlap_candidate_within_3px"])
+    if (
+        abs(
+            float(lattice["overlap_candidate_within_3px"])
+            - float(review["novelty"]["final_dot_overlap_within_3px"])
+        )
+        > 1e-6
+    ):
+        raise ValueError("GEO1 lattice overlap does not match the integrity review")
+    if review["novelty"]["literal_70_percent_gate"] != "FAIL":
+        raise ValueError("GEO1 literal registry failure is missing from the integrity review")
+
     return {
         "file": card["submission_name"],
         "sha256": card["validator_output"]["sha256"],
         "dots": int(card["validator_output"]["in_footprint_positive_pixels"]),
-        "dti": card["holdout"]["dti"],
-        "ci": card["holdout"]["ci95"],
-        "n_withheld": int(card["holdout"]["n_withheld_positive_pixels"]),
-        "max_nine": max(r["overlap_candidate_within_3px"] for r in nine),
-        "max_nine_site": max(nine, key=lambda r: r["overlap_candidate_within_3px"])["file"],
+        "holdout": {
+            "label": "INVALID SOURCE-RECORDED HOLDOUT-DTI",
+            "value": float(recorded["dti"]),
+            "ci95": recorded["ci95"],
+            "withheld_positives": int(recorded["n_withheld_positive_pixels"]),
+            "evaluator_version": recorded["evaluator_version"],
+            "valid_for_comparison": False,
+            "status": holdout_status,
+        },
+        "max_nine": max_nine,
+        "max_nine_site": max_nine_row["file"],
         "lattice": lattice["overlap_candidate_within_3px"],
         "max_other_nonlattice": max(r["overlap_candidate_within_3px"] for r in other),
         "max_other_file": max(other, key=lambda r: r["overlap_candidate_within_3px"])["file"],
@@ -122,30 +191,33 @@ def build_html(ov, seg, comp, reg):
         )
     cand = ov["candidate"]
     rows_site.append(
-        "<tr class='ok'><td><b>UNIQUE CANDIDATE</b><br><small>generated 2026-10-29</small></td>"
+        "<tr class='research'><td><b>NINE-COMPLEMENT RESEARCH</b><br><small>generated 2026-10-29; unassigned research experiment</small></td>"
         f'<td><a href="downloads/{CANDIDATE_NAME}"><b>{CANDIDATE_NAME}</b></a>'
         f"<br><small>SHA-256 <code>{cand['sha256'][:16]}…</code></small></td>"
         f"<td>{cand['dots']:,}</td>"
         f"<td>NONE</td>"
         f"<td><b>NOT ESTIMABLE</b><br><small>HOLDOUT-DTI {comp['holdout_dti']['dti']:.4f} "
-        f"[{comp['holdout_dti']['ci95'][0]:.4f}, {comp['holdout_dti']['ci95'][1]:.4f}], "
-        f"{comp['holdout_dti']['n_withheld_positive_pixels']:,} withheld</small></td>"
+        f"(95% CI [{comp['holdout_dti']['ci95'][0]:.4f}, {comp['holdout_dti']['ci95'][1]:.4f}]; "
+        f"{comp['holdout_dti']['evaluator_version']}; "
+        f"{comp['holdout_dti']['n_withheld_positive_pixels']:,} withheld positives)</small></td>"
         f"<td>{pct(cand['overlap_vs_nine_max'])} max</td>"
-        "<td><b>YES</b> (vs nine)<br><small>registry-lattice test FAILS</small></td>"
-        "<td><b>Download: YES (format-valid, research)<br>Submit: NO</b></td></tr>"
+        f"<td><b>YES vs nine only</b><br><small>full-registry overlap {pct(reg['max_overlap'])}; fails literal gate</small></td>"
+        "<td><b>Download: research only<br>Submit: NO</b></td></tr>"
     )
     g = geo1_facts()
     rows_site.append(
-        "<tr class='ok'><td><b>UNIQUE CANDIDATE 2 (GEO1)</b><br><small>concurrent session, on main</small></td>"
+        "<tr class='research'><td><b>GEO1 RESEARCH — INVALID HOLDOUT</b><br><small>concurrent 2026-10-29 artifact</small></td>"
         f'<td><a href="{GEO1_REL}"><b>{g["file"]}</b></a>'
         f"<br><small>SHA-256 <code>{g['sha256'][:16]}…</code></small></td>"
         f"<td>{g['dots']:,}</td><td>NONE</td>"
-        f"<td><b>NOT ESTIMABLE</b><br><small>HOLDOUT-DTI {g['dti']:.4f} "
-        f"[{g['ci'][0]:.4f}, {g['ci'][1]:.4f}], {g['n_withheld']:,} withheld (source-recorded; "
-        "re-verified with --verify-recorded, not retrained here)</small></td>"
+        f"<td><b>NOT ESTIMABLE</b><br><small>{g['holdout']['label']} {g['holdout']['value']:.4f} "
+        f"(95% CI [{g['holdout']['ci95'][0]:.4f}, {g['holdout']['ci95'][1]:.4f}]; "
+        f"{g['holdout']['evaluator_version']}; "
+        f"{g['holdout']['withheld_positives']:,} withheld positives); "
+        f"compromised by full-catalogue eligibility leakage</small></td>"
         f"<td>{pct(g['max_nine'])} max vs nine</td>"
-        f"<td><b>YES</b> (vs nine)<br><small>lattice {pct(g['lattice'])} FAILS literal gate</small></td>"
-        "<td><b>Download: research · Submit: NO</b> (card verdict: "
+        f"<td><b>YES vs nine only</b><br><small>lattice overlap {pct(g['lattice'])}; full-registry gate FAIL</small></td>"
+        "<td><b>Download: research only<br>Submit: NO</b> (selector verdict: "
         f"{g['verdict']}; ok_to_submit={str(g['ok_to_submit']).lower()})</td></tr>"
     )
     matrix_head = "".join(f"<th>{s[-2:]}</th>" for s in ov["champions"])
@@ -165,43 +237,44 @@ def build_html(ov, seg, comp, reg):
 body{{font-family:system-ui,Arial,sans-serif;max-width:1180px;margin:24px auto;padding:0 16px;color:#17202a;line-height:1.45}}
 table{{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}}
 th,td{{border:1px solid #cfd8e3;padding:6px 8px;vertical-align:top;text-align:left}}
-th{{background:#eef3f8}} tr.ok td{{background:#eefaf0}} td.hi{{background:#fde8e8}}
+th{{background:#eef3f8}} tr.research td{{background:#fffaeb}} td.hi{{background:#fde8e8}}
 .verdict{{border:3px solid #b42318;background:#fff4f2;padding:14px 18px;border-radius:8px;margin:14px 0}}
-.good{{border:3px solid #067647;background:#ecfdf3;padding:14px 18px;border-radius:8px;margin:14px 0}}
+.caution{{border:2px solid #b54708;background:#fffaeb;padding:14px 18px;border-radius:8px;margin:14px 0}}
 code{{font-size:12px}} small{{color:#475467}}
 </style></head><body>
 <h1>Nine focus sites: which file to download, and is it unique?</h1>
-<p><b>Date:</b> 2026-10-29 · <b>Branch:</b> arena/6a1fb4d1-gemsdoe24 · <b>Scope:</b> GEMSDOE 24, 25, 27, 28, 30, 31, 32, 33, 36.</p>
+<p><b>Report correction:</b> 2026-10-30 · <b>Pinned artifact snapshot:</b> 2026-10-29 (not a current-head refresh) · <b>Scope:</b> GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36.</p>
 
-<div class="verdict"><b>BOTTOM LINE — SUBMIT NOTHING FROM THIS PAGE YET.</b>
+<div class="verdict"><b>BOTTOM LINE — NO FILE ON THIS PAGE IS CLEARED TO SUBMIT.</b>
 <ul>
 <li><b>Highest owner-reported file: GEMSDOE32 B2 at 0.2778</b> (OWNER-REPORTED, no organizer receipt). It is <b>NOT unique</b>: {pct_lo}–{pct_hi} of GEMSDOE32's own dots lie within 3 px of dots from each other focus site.</li>
-<li><b>All nine sites are one family.</b> The lowest pairwise overlap is {min_pair:.3f}. The nine files are not nine independent approaches.</li>
-<li><b>Two unique files now exist.</b> GEO1 (on main, concurrent session) has the stronger holdout: HOLDOUT-DTI {g["dti"]:.4f} [{g["ci"][0]:.4f}, {g["ci"][1]:.4f}] (source-recorded), and max overlap {pct(g["max_nine"])} with the nine. Its literal lattice overlap is {pct(g["lattice"])}. Both are research downloads; neither beats the repo-recorded holdout best of 0.166060, so neither is promotable under the owner's rule.</li>
-<li>My complement candidate <code>{CANDIDATE_NAME}</code>. It is format-valid and downloadable, but its holdout score is <b>HOLDOUT-DTI {comp["holdout_dti"]["dti"]:.4f}</b>, roughly half the unrestricted baseline ({seg["holdout_dti"]["dti"]:.4f}), so it is <b>not competitive</b>. Its verdict is <b>DOWNLOAD: research only · SUBMIT: NO</b>.</li>
+<li><b>The nine historical files form one highly overlapping family.</b> The lowest directional pairwise 3-px overlap is {min_pair:.3f}. This geometry does not establish that separate authors copied one another.</li>
+<li><b>No protocol-unique, validated candidate is identified.</b> The two research rasters are geometrically distinct from these nine pinned champions, but both fail the full-registry lattice gate. GEO1's {g["holdout"]["label"]} {g["holdout"]["value"]:.4f} (95% CI [{g["holdout"]["ci95"][0]:.4f}, {g["holdout"]["ci95"][1]:.4f}]; {g["holdout"]["evaluator_version"]}; {g["holdout"]["withheld_positives"]:,} withheld positives) is <b>COMPROMISED</b> by full-catalogue holdout-placement leakage; it is not a valid comparison. Its 3-px overlap is {pct(g["lattice"])} against the retained lattice.</li>
+<li>The nine-complement research raster <code>{CANDIDATE_NAME}</code> has HOLDOUT-DTI {comp["holdout_dti"]["dti"]:.4f} (95% CI [{comp["holdout_dti"]["ci95"][0]:.4f}, {comp["holdout_dti"]["ci95"][1]:.4f}]; {comp["holdout_dti"]["evaluator_version"]}; {comp["holdout_dti"]["n_withheld_positive_pixels"]:,} withheld positives); its score is far below its matched unrestricted HOLDOUT-DTI baseline of {seg["holdout_dti"]["dti"]:.4f}. It is research-only and also fails the lattice gate. Leaderboard estimates remain <b>NOT ESTIMABLE</b>.</li>
 </ul></div>
 
-<div class="good"><b>How to make the portal accept a file.</b> Upload a single-band float32 GeoTIFF whose stored values are all finite and in [0, 1]. The <code>-zeros</code> variant satisfies a strict whole-array check. The earlier error &ldquo;Predicted values must be in range [0, 1]&rdquo; is <b>not confirmed</b>. A NaN-outside file is a plausible cause but is untested. See <a href="#howto">how to submit</a>.</div>
+<div class="caution"><b>Local format checks are not portal acceptance.</b> A strict whole-array check can verify that a tested file stores only finite values in [0, 1]. That does not establish that the competition portal accepts its encoding or that it is scientifically eligible. The earlier error &ldquo;Predicted values must be in range [0, 1]&rdquo; is <b>unresolved</b>; the exact rejected bytes and an artifact-linked organizer response are not in this audit. See <a href="#howto">the generic submission procedure</a>; no file here is approved to upload.</div>
 
 <h2>1. Per-site table (download · estimated score · unique?)</h2>
 <p><b>Estimated score:</b> NOT ESTIMABLE for every row. The owner-reported values are shown for reference only and are not organizer-confirmed. Leaderboard values quoted in the request (0.3195, 0.4413) are unverified and conflict with each other.</p>
 <table>
-<tr><th>Site</th><th>File to download (pinned)</th><th>Dots</th><th>Owner-reported score</th><th>Estimated leaderboard score</th><th>Max 3-px overlap with other 8 focus sites</th><th>Unique vs the other GEMSDOE sites?</th><th>Decision</th></tr>
+<tr><th>Site</th><th>File to download (pinned)</th><th>Dots</th><th>Owner-reported score</th><th>Estimated leaderboard score</th><th>Max 3-px overlap with other 8 focus sites</th><th>Unique vs the other 8 focus files?</th><th>Decision</th></tr>
 {"".join(rows_site)}
 </table>
-<p>Best owner-reported: <b>{best_owner[0]} = {best_owner[1][0]}</b> (not unique). Best unique file by holdout: <b>{g["file"]}</b> (HOLDOUT-DTI {g["dti"]:.4f}, source-recorded). My complement candidate: <b>{CANDIDATE_NAME}</b> (HOLDOUT-DTI {comp["holdout_dti"]["dti"]:.4f}, replayed here). Neither is promotable.</p>
+<p><b>Highest owner-reported claim:</b> {best_owner[0]} = {best_owner[1][0]} (GEMSDOE32 B2; not organizer-confirmed). <b>Best protocol-unique submission:</b> none identified. The GEO1 source-recorded HOLDOUT-DTI is compromised and cannot rank candidates; the nine-complement research HOLDOUT-DTI is low and its registry gate fails. All leaderboard estimates are NOT ESTIMABLE.</p>
 
 <h2>2. Pairwise uniqueness matrix (share of row-site dots within 3 px of column-site dots)</h2>
 <table><tr><th></th>{matrix_head}</tr>{"".join(matrix_rows)}</table>
 <p>Cells above 0.70 (red) fail the user's 70% threshold. Geometry only, not proof of copying.</p>
 
-<h2 id="howto">3. How to submit (manual upload, no automation)</h2>
+<h2 id="howto">3. Generic submission procedure — no current candidate is approved</h2>
+<p><b>Do not upload either research raster from this page.</b> The following describes the portal workflow for a future file only, after an independent selector has approved the exact raster and verified the remaining weekly allowance. The process is not automated.</p>
 <ol>
-<li>Download the file in the table. For the unique candidate that is <a href="downloads/{CANDIDATE_NAME}"><code>{CANDIDATE_REL}</code></a>.</li>
-<li>Go to the competition submission form on DrivenData. You must sign in yourself. This project has no organizer credentials and does not submit anything.</li>
-<li>Choose the file under <i>File to submit</i>. Accepted: a single-band GeoTIFF (.tif), or a .zip containing one, matching the template CRS (EPSG:32611), shape (3730 × 3292) and geotransform.</li>
-<li>Enter the note (at most 140 characters): <code>{html.escape(NOTE)}</code> ({len(NOTE)} characters).</li>
-<li><b>Do not spend a weekly slot on the candidate.</b> It fails the rule that a file must beat the current holdout best before a slot is used.</li>
+<li>Use only a specific file whose current selector receipt says <code>promote</code>, whose exact hash matches the receipt, and which passed the current full-registry, holdout, leakage, and format checks. <b>No file in this table meets that condition.</b></li>
+<li>Sign in to the competition submission form. This project has no organizer credentials and does not submit anything.</li>
+<li>Choose the approved file under <i>File to submit</i>. The competition page states that it accepts a single-band GeoTIFF (.tif), or a .zip containing one, matching the submission template's CRS, shape and geotransform. The pinned local template is EPSG:32611, shape 3730 × 3292; local checks do not guarantee portal acceptance.</li>
+<li>Enter a unique short note (maximum 140 characters) from that approved file's selector record. The note <code>{html.escape(NOTE)}</code> belongs to a negative research artifact, not an approved submission.</li>
+<li>Do not spend a weekly slot during validation. Promotion and slot use are separate decisions; this review does not verify the actual account quota.</li>
 </ol>
 
 <h2>4. Irregularities to review</h2>
@@ -210,7 +283,7 @@ code{{font-size:12px}} small{{color:#475467}}
 <li>The training raster was restored from the owner's GitHub mirror (<code>buffedlizard55-lab/GEMSDOE</code>, pinned commit). It matches the pinned SHA-256 but is <b>not organizer-authenticated</b>.</li>
 <li>Owner-listed file names differ from the pinned files for GEMSDOE24, 25, 27, 28 and 31 (owner wrote <code>-nan</code>; pinned files are <code>-allfinite</code> or <code>-zeros</code>). Byte identity with the scored file is not established.</li>
 <li>The protocol's &ldquo;single method paragraph&rdquo; lane assignment is missing from the request. No lane was assigned.</li>
-<li>The 70% rule, applied to the registry calibration lattice <code>13gems_20261001_r13-lattice-s5</code> (GEMSDOE13), is a geometric impossibility above 22,164 dots: any set of N in-footprint dots has at least 1 − 6,649/N of its dots within 3 px of that lattice, so the share exceeds 70% for every N above 22,164, however the dots are chosen. This needs a decision by the owner.</li>
+<li>The 70% rule, applied to the registry calibration lattice <code>13gems_20261001_r13-lattice-s5</code> (GEMSDOE13), is a geometric impossibility at 22,164 or more dots: any set of N in-footprint dots has at least 1 − 6,649/N of its dots within 3 px of that lattice, so the share exceeds 70% when N ≥ 22,164, however the dots are chosen. The largest budget not ruled out by this bound is 22,163; that is not a pass or a recommendation to target lattice holes. This needs a decision by the owner.</li>
 </ul>
 
 <h2>5. Limitations and what is needed</h2>
@@ -322,7 +395,7 @@ def build_run_card(ov, seg, comp, reg, pre):
             "owner-mirror training raster, not organizer-authenticated",
             "owner-listed file names differ from pinned files (nan/allfinite/zeros) for 24, 25, 27, 28, 31",
             "method-lane paragraph absent; no lane assigned",
-            "literal 70% rule incompatible with a 5-px lattice registry raster above ~22,164 dots",
+            "literal 70% rule incompatible with a 5-px lattice registry raster at or above 22,164 dots; 22,163 is merely not ruled out by the bound",
         ],
     }
 
