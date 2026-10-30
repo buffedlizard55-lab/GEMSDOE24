@@ -130,5 +130,15 @@
     "evidence/session_5b3e6982_feasibility_20261030.json",
     "evidence/session_5b3e6982_complement_preflight_20261030.json",
     "docs/nine-site-submission-summary.html"
-  ]
+  ],
+  "source_freshness": {
+    "status": "checked",
+    "scope": "GitHub source freshness only; not a leaderboard or scoring API",
+    "checked_utc": "2026-10-30T22:48:16.785030+00:00",
+    "repositories_checked": 9,
+    "refs_changed_since_pinned_audit": 9,
+    "new_heads_or_files_audited_this_session": false,
+    "leaderboard_or_organizer_score_checked": false,
+    "interpretation": "GitHub commit-reference freshness only; no current file, score, or official portal audit."
+  }
 }

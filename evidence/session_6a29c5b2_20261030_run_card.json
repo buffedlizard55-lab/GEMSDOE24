@@ -1,0 +1,54 @@
+{
+  "schema": "gems-negative-review-run-card-v1",
+  "review_date": "2026-10-30",
+  "branch": "arena/6a29c5b2-gemsdoe24",
+  "hypothesis": "No single experiment hypothesis was assigned: the required single-method paragraph is absent. Four ranked, unexecuted research candidates are documented in docs/repo-review-20261030-arena-6a29c5b2.md; none is an authorized lane.",
+  "mechanism": "Not tested. The historical GEMSDOE32 B2 geometry is a pruning of a predecessor dot pattern, which could trade weighted false-positive mass against lost hidden-fault credit; the hidden TP/FP/FN mechanism is not observed.",
+  "named_non_fault_process_that_could_mimic_it": "Intrusive or lithologic contacts, remanent magnetization, survey/gridding seams, radiometric weathering or moisture effects, and topographic terraces or road cuts can mimic structural signatures; no candidate surface was generated to test these.",
+  "holdout": {
+    "label": "HOLDOUT-DTI NOT RUN",
+    "evaluator_version": null,
+    "withheld_positive_pixels": null,
+    "dti": null,
+    "ci95": null,
+    "reason": "No assigned lane; data/training_features.tif and data/prepared/features.npy plus metadata are absent."
+  },
+  "registry_comparison": {
+    "label": "NOT MEASURED",
+    "preplacement_surface_rank_correlation": null,
+    "final_dot_overlap_within_3px": null,
+    "reason": "No candidate surface or dots were generated. The frozen necessary-condition checker only establishes that its fixed 37,654-dot budget exceeds the literal overlap limit against one retained lattice witness; it is not a full registry audit."
+  },
+  "raster_sha256": null,
+  "validator": {
+    "status": "NOT RUN: no new raster",
+    "nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "reason": "The runtime lacks NumPy and Rasterio; no candidate TIFF exists."
+  },
+  "submission": {
+    "name": null,
+    "note": null,
+    "note_max_chars": 140,
+    "download_decision": "No new file generated",
+    "submit_decision": "NO",
+    "organizer_confirmed_score": null,
+    "leaderboard_estimate": null
+  },
+  "budget": {
+    "new_experiments_used": 0,
+    "maximum_experiments": 3,
+    "elapsed_experiment_hours": 0,
+    "competition_slots_used": 0
+  },
+  "verification": {
+    "pass_1_inventory": "README, mission, standing instructions, data placement, scripts, saved cards, historical table and repository state inspected.",
+    "pass_2_challenge": "Frozen arithmetic feasibility checker executed; B2 explanation checked against local forensic note and metric implementation; no causal inference or score forecast accepted.",
+    "pass_3_closeout": "Negative result retained; no TIFF generated, copied, renamed, uploaded or authorized.",
+    "project_tests": "NOT RUN: pytest and project geospatial/ML dependencies are unavailable in this runtime.",
+    "pages_build": "NOT RUN"
+  },
+  "verdict": "negative",
+  "verdict_reason": "No assigned lane, required prepared feature stack missing, current runtime unable to execute raster validation, and no basis to authorize a submission or estimate a leaderboard score."
+}

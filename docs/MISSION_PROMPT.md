@@ -30,7 +30,7 @@ The user asks for:
 - The standard **37,654**- and **44,090**-dot budgets fail the registry-lattice necessary bound: minimum 3-px overlaps are **82.3418%** and **84.9195%**, exceeding the 70% stop rule. The upper budget not ruled out by this bound is 22,163; that is not a uniqueness pass. No surface or dots were generated.
 - The earlier nine-complement research TIFF is locally format-valid and range-valid inside the footprint, but fails the broader literal uniqueness gate and has a preflight decision of **DO_NOT_SUBMIT**. Its local validation is not organizer acceptance.
 - B2's 0.2778 is **OWNER-REPORTED / UNVERIFIED**. Pinned pixel forensics record B2 as a deletion-only 37,654-dot subset of a 44,090-dot D2.8 pattern after removing 6,436 catalogue-adjacent cells, and also as a subset of a distinct 40,199-dot D2.8-family pattern after removing 2,545; no B2 dots were added. Neither relation reveals hidden TP/FP mass or proves why the reported score changed. See `evidence/oj1_priority_ancestry_replay.json` and `evidence/priority_review_20261025.json`.
-- Every estimated leaderboard score remains **NOT ESTIMABLE** without an organizer receipt. No live leaderboard, portal, quota, or current organizer source was freshly checked.
+- A GitHub-only feed checked at 2026-10-30T22:48:16Z found all 9 priority-repository `main` refs advanced since the pinned historical artifact audit. Those new heads/files were not inspected; see `docs/data/priority_feed.json`. Every estimated leaderboard score remains **NOT ESTIMABLE** without an organizer receipt. No live leaderboard, portal, quota, or current official organizer source was freshly checked.
 
 ## Ranked geological hypotheses — proposals only, not lane assignments
 
