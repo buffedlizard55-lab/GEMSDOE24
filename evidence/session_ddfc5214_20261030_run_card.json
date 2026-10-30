@@ -1,0 +1,109 @@
+{
+  "schema": "gems-negative-review-run-card-v1",
+  "review_date": "2026-10-30",
+  "branch": "arena/ddfc5214-gemsdoe24",
+  "base_commit_reviewed": "d4d6f1c87b974d7ed74825b1e6a746736877fedc",
+  "hypothesis": "No experiment hypothesis was assigned: the request refers to a single method paragraph, but no such paragraph is supplied. Four prior candidate directions are documented and remain unselected; they are not certified globally untried.",
+  "mechanism": "No new mechanism was tested. For historical GEMSDOE32 B2, local geometry records a deletion-only subset of the D2.8 dot pattern. Under DTI = T / (T + 0.2 F + 0.8 (G - T)), pruning can help only if weighted false-positive mass removed is sufficient relative to true-credit lost; hidden-label contributions and the owner's reported score mechanism are unknown.",
+  "named_non_fault_process_that_could_mimic_it": "An intrusive/lithologic contact, remanent magnetization, survey or gridding seam, radiometric moisture/weathering boundary, or terrace/road cut can mimic structural signatures; no candidate surface was generated to test these.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positive_pixels": null,
+    "ci95": null,
+    "status": "NOT RUN in this review: no assigned lane and full organizer training feature raster/prepared stack absent."
+  },
+  "organizer_confirmed_score": null,
+  "leaderboard_estimate": "NOT ESTIMABLE",
+  "owner_reported_score_claim": {
+    "label": "OWNER-REPORTED / UNVERIFIED",
+    "value": 0.2778,
+    "artifact_linked_organizer_receipt": false
+  },
+  "source_recorded_holdout_references_not_replayed": [
+    {
+      "label": "HOLDOUT-DTI",
+      "value": 0.16606013635163805,
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "ci95": [0.15185839118988828, 0.18033886456990444],
+      "lane": "S3DEP1",
+      "status": "Recorded local point-best in existing evidence; not replayed in this review; not a leaderboard estimate; selector verdict remains negative."
+    },
+    {
+      "label": "HOLDOUT-DTI",
+      "value": 0.036939,
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "ci95": [0.030813, 0.043882],
+      "lane": "nine-site-complement seg-HGB",
+      "status": "Recorded in evidence/run_card_20261029_nine_site_unique.json; not replayed in this review; candidate is negative and not promoted."
+    }
+  ],
+  "correlation_overlap_vs_registry": {
+    "new_surface_rank_correlation": null,
+    "new_final_dot_overlap_within_3px": null,
+    "status": "NOT MEASURED: no new surface or dots generated.",
+    "fresh_necessary_geometry_check": {
+      "checker": "scripts/check_uniqueness_feasibility.py",
+      "witness": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "footprint_pixels": 5167373,
+      "uncovered_pixels_within_3px": 6649,
+      "fixed_budget_37654_minimum_overlap_fraction": 0.8234184947150369,
+      "fixed_budget_44090_minimum_overlap_fraction": 0.8491948287593558,
+      "result": "STOP_IMPOSSIBLE_BUDGET for both fixed historical budgets; necessary bound against one witness only, not a candidate measurement or full registry pass."
+    },
+    "existing_negative_reference_artifact_not_reaudited_for_novelty": {
+      "file": "gems24-nine-complement-seghgb-20261029-zeros.tif",
+      "raster_sha256": "4dfb4a7ce96e85c43bdedcd61ea77da644dfae1efbb199338fbb437ff95a04e9",
+      "source_recorded_overlap_with_nine_focus_artifacts": 0.0,
+      "source_recorded_overlap_with_spacing5_lattice": 0.972752,
+      "status": "Historical run-card values; not a full current-registry or surface-rank audit."
+    }
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_candidate": "NOT RUN: no new TIFF generated.",
+    "existing_negative_reference_artifact_preflight": {
+      "file": "gems24-nine-complement-seghgb-20261029-zeros.tif",
+      "sha256": "4dfb4a7ce96e85c43bdedcd61ea77da644dfae1efbb199338fbb437ff95a04e9",
+      "format_valid": true,
+      "strict_whole_array_values_in_0_1": true,
+      "nan_inside_footprint": 0,
+      "crs": "EPSG:32611",
+      "shape": [3730, 3292],
+      "transform_matches_pinned_template": true,
+      "profile_matches_sample_mirror": false,
+      "official_format_compliant": false,
+      "scientific_authorization": false,
+      "submission_status": "DO_NOT_SUBMIT",
+      "note": "GEMS24 nine-complement seg-HGB 37654 dots | 0 overlap vs 9 focus sites | HOLDOUT-DTI 0.0369 | research only; SUBMIT NO",
+      "note_characters": 118,
+      "scope": "Local exact-file preflight only; no portal acceptance or cause of the reported range rejection established."
+    }
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "submission_note_character_limit": 140,
+  "verdict": "negative",
+  "new_tiffs": 0,
+  "experiments_run": 0,
+  "submission_slots_used": 0,
+  "verification": {
+    "project_tests": "667 passed; 1 skipped because pinned champion bytes are not restored locally (tests/test_nine_site_candidate.py:60); full history restored",
+    "ruff_check": "passed",
+    "ruff_format": "passed; 351 files already formatted",
+    "site_build": "scripts/build_site.py completed; new_slot_eligible=false; no_scores_fabricated=true; generated tracked site outputs restored",
+    "uniqueness_preflight": "exit 2, as expected for both fixed budgets under the retained-witness necessary bound",
+    "strict_preflight": "FORMAT=true; STRICT_RANGE=true; SCIENTIFIC_AUTHORIZATION=false; SUBMISSION=DO_NOT_SUBMIT",
+    "diff_check": "passed after documentation changes"
+  },
+  "limitations": [
+    "No assigned method paragraph/lane.",
+    "Full training_features.tif, data/labels.tif, and prepared feature cache are absent; bridge mirrors and partial derived inputs are not organizer authentication.",
+    "No new holdout or surface/dot novelty test; standard fixed budgets are impossible under the literal retained-lattice rule.",
+    "The official portal, live leaderboard, account quota, and artifact-linked score receipt were not accessed; estimates remain NOT ESTIMABLE.",
+    "Official ASTER/OPERA coverage and retrieval were not verified; they are not viable inputs for this run."
+  ]
+}

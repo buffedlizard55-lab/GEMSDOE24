@@ -1,6 +1,10 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## Current session review — 2026-10-30 (`arena/6a29c5b2-gemsdoe24`)
+## Current verification continuation — 2026-10-30 (`arena/ddfc5214-gemsdoe24`)
+
+**NO NEW TIFF · NO GEOLOGICAL EXPERIMENT · NO HOLDOUT · NO SLOT · SUBMIT: NO.** Read the [independent review](docs/repo-review-20261030-arena-ddfc5214.md), [negative run card](evidence/session_ddfc5214_20261030_run_card.json), [mission prompt](docs/MISSION_PROMPT.md), and [standing instructions](AGENTS.md). This follow-up installed the pinned project/dev requirements in the ignored `.venv` and restored full Git history; the complete suite passed **667 tests, 1 skipped**, Ruff lint/format passed, and the site builder completed. These are repository checks, not scientific validation. The full training raster and prepared cache remain absent; no lane was assigned. The fresh uniqueness preflight proves the fixed historical 37,654- and 44,090-dot budgets exceed the literal 70% rule against the retained lattice witness. The exact local research TIFF preflight passes format, strict range and grid checks but returns **DO_NOT_SUBMIT**; the portal rejection cause remains unknown. All leaderboard estimates remain **NOT ESTIMABLE**.
+
+## Prior independent session review — 2026-10-30 (`arena/6a29c5b2-gemsdoe24`)
 
 **NO NEW TIFF · NO NEW EXPERIMENT · SUBMIT: NO.** Read the [three-pass repository review](docs/repo-review-20261030-arena-6a29c5b2.md), [negative JSON run card](evidence/session_6a29c5b2_20261030_run_card.json), [normalized mission prompt](docs/MISSION_PROMPT.md), and [standing instructions](AGENTS.md) first. The prompt's single-method paragraph is absent, and the full training feature raster/prepared stack is not in this checkout; the current Python runtime lacks NumPy/Rasterio and test dependencies. No valid holdout, new TIFF, score estimate, portal validation, or submission authorization was produced. The historic GEMSDOE32 B2 value remains owner-reported/unverified; the hidden leaderboard estimate is **NOT ESTIMABLE**. The 3-pass review preserves four qualitative hypotheses, sources, limitations, and next steps. **Maximize P(Win) · Own the Outcome.**
 
