@@ -3,7 +3,7 @@
   "session_id": "50bd576c",
   "date": "2026-10-30",
   "branch": "arena/50bd576c-gemsdoe24",
-  "base_commit": "d4d6f1c87b974d7ed74825b1e6a746736877fedc",
+  "base_commit": "52fdca93084f6f6e4623bfa904cd6fc41a3abfbe",
   "run_type": "non-experimental audit and documentation correction",
   "hypothesis": "The nine-site summary's prior GEO1 ranking is invalid because its holdout-placement eligibility used complete catalogue labels; correcting the report should exclude that result from candidate ranking while preserving it as labeled source history.",
   "mechanism": "The frozen GEO1 runner forms holdout emission eligibility with the complete labels grid (`~catalogue`) rather than the fold-visible mask. A withheld target can therefore affect where predictions are emitted. This is a source-level protocol violation, not evidence of organizer score causality.",
@@ -95,7 +95,7 @@
     "targeted_integrity_tests": "PASS: 5 passed",
     "full_test_suite": "PASS: 672 passed, 1 skipped",
     "ruff_check": "PASS: .venv/bin/ruff check .",
-    "ruff_format_check": "PASS: .venv/bin/ruff format --check .; 354 files already formatted",
+    "ruff_format_check": "PASS: .venv/bin/ruff format --check .; 355 files already formatted",
     "site_builder": "PASS: .venv/bin/python scripts/build_site.py; unrelated generated metadata/pages restored after the build check",
     "git_history_check": "PASS: full history fetched; pinned-history checker passed",
     "diff_check": "PASS: git diff --check"
@@ -107,5 +107,11 @@
     "Reported portal [0,1] error cause remains unknown; no causal claim is made.",
     "Official references and their data products were not freshly fetched or coverage-checked in this follow-up; see the review for links and limitations."
   ],
-  "pr_status_at_run_card_creation": "No PR for this follow-up had been opened yet."
+  "pr_status_at_run_card_creation": "No PR for this follow-up had been opened yet.",
+  "initial_base_commit": "d4d6f1c87b974d7ed74825b1e6a746736877fedc",
+  "pull_request": {
+    "number": 114,
+    "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/pull/114",
+    "state_at_update": "OPEN after rebasing onto current origin/main; CI/merge pending"
+  }
 }

@@ -90,7 +90,7 @@ These are source links, not claims that their pages or new data products were fe
 
 - `python scripts/build_nine_site_report.py`: passed; regenerated the executive-summary HTML and its linked report run card from pinned evidence. It produced no TIFF.
 - `pytest -q`: **672 passed, 1 skipped** (including five new GEO1/report-integrity regression tests).
-- `ruff check .`, `ruff format --check .` (**354 files already formatted**), and `git diff --check`: passed.
+- `ruff check .`, `ruff format --check .` (**355 files already formatted**), and `git diff --check`: passed.
 - `.venv/bin/python scripts/build_site.py`: passed. Its generated site metadata/pages were restored afterward because they were unrelated to this focused correction.
 - `python scripts/check_git_history.py`: passed after fetching full history.
 - `python scripts/check_uniqueness_feasibility.py --dot-budget 37654 --dot-budget 44090`: returned its expected stop code **2**. Against the one retained spacing-5 lattice witness, the necessary overlap lower bounds are **82.34%** and **84.92%** respectively; the largest integer budget not ruled out by this bound is **22,163**. This is a necessary geometric bound only: no candidate surface or dots were generated, and it is not a full-registry or scientific pass.
