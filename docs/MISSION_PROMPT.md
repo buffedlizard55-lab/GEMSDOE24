@@ -1,6 +1,6 @@
 # GEMSDOE24 — active mission prompt (normalized, 2026-10-30)
 
-**Read this file, the complete root `README.md`, and `AGENTS.md` at the start of every session.** This is the operative summary of the current task and its corrections; it does not replace the user's actual request. The latest merged repository review is [`docs/repo-review-20261030-arena-6a29c5b2.md`](repo-review-20261030-arena-6a29c5b2.md); the current supplemental GitHub readback is summarized in [`docs/current-source-snapshot-20261030.md`](current-source-snapshot-20261030.md) and recorded in [`docs/data/all_owner_sites_20261026.json`](data/all_owner_sites_20261026.json) and [`docs/data/portfolio_freshness.json`](data/portfolio_freshness.json).
+**Read this file, the complete root `README.md`, and `AGENTS.md` at the start of every session.** This is the operative summary of the current task and its corrections; it does not replace the user's actual request. Read the [latest nine-site review](repo-review-20261030-arena-9b32516e.md) and [run card](../evidence/session_9b32516e_20261030_run_card.json), the [merged companion review](repo-review-20261030-arena-6a29c5b2.md) and [run card](../evidence/session_6a29c5b2_20261030_run_card.json), and the [current-source snapshot](current-source-snapshot-20261030.md) as well. Earlier branch references are historical.
 
 ## Objective and scope
 
