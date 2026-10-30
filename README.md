@@ -39,6 +39,19 @@ Evidence rules: label every number HOLDOUT-DTI (evaluator version, withheld posi
 
 ## Previous START HERE — nine-site executive summary (2026-10-29, `arena/6a1fb4d1-gemsdoe24`)
 
+---
+
+## Current review — 2026-10-30 (`arena/9b32516e-gemsdoe24`)
+
+**NO NEW TIFF · NO NEW EXPERIMENT · NO SCORE ESTIMATE · SUBMIT: NO.** Read the [current three-pass review](docs/repo-review-20261030-arena-9b32516e.md), its [JSON run card](evidence/session_9b32516e_20261030_run_card.json), and the [normalized mission prompt](docs/MISSION_PROMPT.md) before continuing; the complete owner prompt is preserved later in this README. The GitHub-only feed checked all nine focus repositories and found their `main` refs changed since the pinned historical-artifact audit; this proves freshness only, not current submissions or scores. The pinned historical champions remain audit downloads only, not unique under the literal lattice gate. No submission is authorized. The training-feature raster/cache and a lane-assignment paragraph are absent.
+
+## Concurrent main-branch review — 2026-10-30 (`arena/6a29c5b2-gemsdoe24`)
+
+A separate repository-review PR was merged to `main` while this PR was open. Its review is [here](docs/repo-review-20261030-arena-6a29c5b2.md) with its [run card](evidence/session_6a29c5b2_20261030_run_card.json). It is a parallel session record, not a replacement for this branch's refreshed GitHub feed, nine pinned artifact read-back, or final validation.
+
+## START HERE — nine-site executive summary (2026-10-29, `arena/6a1fb4d1-gemsdoe24`)
+
+
 **[Open the executive summary →](docs/nine-site-submission-summary.html)** · [run card](evidence/run_card_20261029_nine_site_unique.json) · [mission prompt](docs/MISSION_PROMPT.md)
 
 - **Highest owner-reported file:** GEMSDOE32 B2 at **0.2778** (OWNER-REPORTED, not organizer-confirmed). **Not unique:** 99.9–100% of its dots lie within 3 px of dots from every other focus site.
