@@ -1,5 +1,7 @@
 # GEMS DOE 24 — Current Mission Prompt (normalized summary)
 
+**Current state (2026-10-30):** Read the [current three-pass review](repo-review-20261030-arena-9b32516e.md) and [machine run card](../evidence/session_9b32516e_20261030_run_card.json) first. No new TIF or experiment is authorized by the parallel-run protocol: no single-method paragraph was supplied, full training raster/cache are absent, and the two documented standard dot budgets fail the retained-lattice gate. The 9-site table is a historical snapshot; a 2026-10-30 GitHub ref check found all nine main refs advanced since the pinned artifact audit, without auditing any new files or scores. Estimated leaderboard scores remain NOT ESTIMABLE; SUBMIT: NO.
+
 **Source task context:** historical normalized summary, last corrected 2026-10-29; branch references in earlier session notes are historical. Read the actual current request and README as well.
 
 ## Objective
