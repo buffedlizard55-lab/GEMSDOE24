@@ -1,0 +1,91 @@
+# Follow-up verification — 2026-10-30 (`arena/1b86ce61-gemsdoe24`)
+
+**Decision: NO new TIFF · NO new geological experiment · SUBMIT: NO.** This report supplements the merged [2026-10-30 three-pass review](repo-review-20261030-arena-6a29c5b2.md) (PR #112). It does not replace the immutable historical receipts, select a lane, or authorize a weekly slot.
+
+## Executive answer
+
+- **Highest claim among the nine supplied site records:** GEMSDOE32 H33-B2, **0.2778 — OWNER-REPORTED / UNVERIFIED**, not ORGANIZER-CONFIRMED. The two overall leaderboard claims in the prompt, 0.3195 and 0.4413, conflict and neither has an artifact-linked organizer receipt here. **Estimated leaderboard score: NOT ESTIMABLE** for every file.
+- **Best file to submit now: NONE.** The pinned historical entries all fail the project's literal three-pixel novelty test against the retained spacing-5 registry raster. They are research references, not recommendations. The exact pinned downloads, per-file hashes, owner claims and archived validator output are in the [historical-champion table](historical-champions.html).
+- **No new TIFF was generated.** There is no assigned single-method paragraph, the full training raster and prepared feature cache are missing, and the standard historical dot budgets cannot pass the retained-lattice overlap gate. Creating a raster without the requested holdout, leakage, novelty and promotion checks would violate the prompt's own parallel-run protocol.
+
+## Nine-site executive table — historical pinned audit, not current HEAD
+
+Owner claims below are from the 2026-10-26 owner-supplied score registry. Download links point to exact, immutable **pinned audit files**; where the owner-reported name has a different `-nan`, `-allfinite` or `-zeros` suffix, it is not the same byte-for-byte file. All pinned audit rows had a 3-pixel overlap above 70% with the retained lattice. The leaderboard estimate is unknown, not an extrapolation from an internal holdout.
+
+**Download / submit status:** **YES**, the listed public, pinned GitHub TIFFs are available for research download and inspection; they are not independently organizer-authenticated. **NO**, none is authorized for submission. The table repeats both decisions for each site.
+
+| Site | Owner-reported highest name | Reported value | Exact pinned audit download | Safe research download? | Estimated leaderboard score | Unique / submit decision |
+|---|---|---:|---|---|---|---|
+| GEMSDOE24 | `h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan` | 0.2477 — OWNER-REPORTED / UNVERIFIED | [`gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif`](https://github.com/buffedlizard55-lab/GEMSDOE24/raw/07345ea0604953d7efb858d9cfbc21e20c7aca0b/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif) | YES — research only | NOT ESTIMABLE | NO — 99.9218% lattice overlap in the pinned audit; SUBMIT: NO |
+| GEMSDOE25 | `dotted-h19-5-d2-8-20261002-e56ea318af89-nan` | 0.2600 — OWNER-REPORTED / UNVERIFIED | [`gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif`](https://github.com/buffedlizard55-lab/GEMSDOE25/raw/04333cc3fbf7486c56e0324fd07aee684be614dc/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif) | YES — research only | NOT ESTIMABLE | NO — 99.9161% lattice overlap; same in-footprint dots as the pinned GEMSDOE30 D2.8 file; SUBMIT: NO |
+| GEMSDOE27 | `topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan` | 0.2449 — OWNER-REPORTED / UNVERIFIED | [`gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif`](https://github.com/buffedlizard55-lab/GEMSDOE27/raw/b8dd298e10884afffa05436673ac73aeaf850b8c/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif) | YES — research only | NOT ESTIMABLE | NO — 99.9234% lattice overlap; SUBMIT: NO |
+| GEMSDOE28 | `h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan` | 0.2710 — OWNER-REPORTED / UNVERIFIED | [`gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif`](https://github.com/buffedlizard55-lab/GEMSDOE28/raw/78e724f95337a6528b1248be5c113c6d6d502891/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif) | YES — research only | NOT ESTIMABLE | NO — 99.9097% lattice overlap; SUBMIT: NO |
+| GEMSDOE30 | `d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca` | 0.2600 — OWNER-REPORTED / UNVERIFIED | [`gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif`](https://github.com/buffedlizard55-lab/GEMSDOE30/raw/3d5bec2af5f29291617f97c9e2dfe443be6f55c3/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif) | YES — research only | NOT ESTIMABLE | NO — 99.9161% lattice overlap; same in-footprint dots as the pinned GEMSDOE25 D2.8 file; SUBMIT: NO |
+| GEMSDOE31 | `h27-4-solo-d28-20261004-8acb75e1-nan` | 0.2708 — OWNER-REPORTED / UNVERIFIED | [`gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif`](https://github.com/buffedlizard55-lab/GEMSDOE31/raw/cf13282fcd86290f1539f0a86446c8ba7205a79b/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif) | YES — research only | NOT ESTIMABLE | NO — 99.9179% lattice overlap; SUBMIT: NO |
+| GEMSDOE32 | `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros` | 0.2778 — OWNER-REPORTED / UNVERIFIED | [`gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif`](https://github.com/buffedlizard55-lab/GEMSDOE32/raw/012e17b2a115c3c0d5e7885bea625bf9657c99fc/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif) | YES — research only | NOT ESTIMABLE | NO — 99.9150% lattice overlap; exact deletion-only subset of D2.8; SUBMIT: NO |
+| GEMSDOE33 | `h33d-analog-tip-stepover-r30-20261004-cb490425926e` | 0.2632 — OWNER-REPORTED / UNVERIFIED | [`GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif`](https://github.com/buffedlizard55-lab/GEMSDOE33/raw/f52533110fe62cd03e77f1228e9e5ecac412c463/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif) | YES — research only | NOT ESTIMABLE | NO — 99.9140% lattice overlap; SUBMIT: NO |
+| GEMSDOE36 | `anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros` | 0.2750 — OWNER-REPORTED / UNVERIFIED | [`gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif`](https://github.com/buffedlizard55-lab/GEMSDOE36/raw/c9ad59ec6f969ed931d089a03044c1567a633e84/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif) | YES — research only | NOT ESTIMABLE | NO — 99.9176% lattice overlap; exact superset of B2; SUBMIT: NO |
+
+**Freshness qualification:** this is a frozen audit of historical artifacts, not each site's latest content. At **2026-10-30 22:55:57 UTC**, a GitHub REST check found that all **9/9** focus repositories had a `main` commit different from the audit pins. The immutable receipt is [`evidence/current_focus_source_heads_20261030.json`](../evidence/current_focus_source_heads_20261030.json). Changed HEAD means “re-audit needed,” not “new score” or “new unique file.” The [latest website/source-snapshots workflow](https://github.com/buffedlizard55-lab/GEMSDOE24/actions/runs/41141371573) completed successfully after PR #112; its scope refreshes source feeds, not organizer scores or hidden-label validation.
+
+## GEMSDOE32 B2: what the evidence supports
+
+The pinned pixel forensics report that B2 contains **37,654 dots**, compared with **44,090** in D2.8, and removes **6,436** D2.8 dots within 200 m of the public catalogue. B2 is also H27-4 minus **2,545** additional dots. These are computed geometry facts for the pinned rasters, not score components; they establish pruning, not new detections.
+
+The shared evaluator uses a 300 m triangular distance kernel and asymmetric weights `alpha=0.2`, `beta=0.8`. Let `G` be withheld positive pixels, `T` recovered weighted true-positive credit, and `F` false-positive mass. Ignoring its small numerical epsilon:
+
+```text
+DTI = T / (T + 0.2 F + 0.8 (G - T))
+    = T / (0.2 T + 0.2 F + 0.8 G)
+```
+
+Deleting predictions can improve this objective only when reduced false-positive mass outweighs lost true-positive credit. For a change that loses `t` units of `T` and removes `f` units of `F`, the exact condition is:
+
+```text
+t * (0.2 F + 0.8 G) < 0.2 T * f
+```
+
+This makes conservative emission a plausible explanation for a higher **reported** score. It does **not** show the deleted pixels were false positives, does not identify hidden `T`, `F`, or `G`, and does not establish why the owner-reported 0.2778 occurred. The older `knowledge/22_phd_analysis...` narrative is explicitly quarantined; use the [corrected metric-integrity explanation](metric-integrity-20261026.md), not its invalid algebra or unsupported geology. No evidence here supports predicting a score above 0.2778, 0.3195, or 0.4413.
+
+## Current source/score feed
+
+The repo's scheduled [website workflow](../.github/workflows/website.yml) refreshes GitHub source freshness and owner README snapshots. The successful workflow run is recorded above; its feed is **not** a DrivenData leaderboard API. The local snapshot [`docs/data/priority_feed.json`](data/priority_feed.json) was last timestamped 2026-10-29; the fresh 2026-10-30 ref receipt is separate and does not audit changed TIFFs. No DrivenData submission portal, live score, hidden labels, weekly quota or artifact-linked score receipt was accessed. The conflicting user-supplied overall leader values remain unresolved.
+
+## Hypotheses already queued — not certified globally untried
+
+The merged review's [four-candidate queue](repo-review-20261030-arena-6a29c5b2.md#candidate-hypotheses--ranked-research-queue-not-lane-assignments) contains the required layers, signatures, missing-fault rationale, mimics and qualitative cost/benefit ranks. Qualitative expected DTI-improvement potential is ranked: **1 moderate but unquantified; 2 low-to-moderate but unquantified; 3 moderate with high uncertainty; 4 uncertain**. Relative implementation cost is **medium, medium, high, very high**. These are research-priority judgments, not numeric DTI forecasts or measured improvements. The signed gravity–magnetic and conditional-potassium proposals overlap open PR #70 and are not safely described as new until reconciled. ASTER and OPERA data are not locally staged; exact footprint coverage and obtainable product files were not verified, so they are not viable experiments today. The current training-feature raster and prepared feature cache are absent. Consequently the top candidate was **not** run through a holdout; no result can be compared with the recorded `HOLDOUT-DTI` best.
+
+**External-data availability gate:** the official USGS ASTER release and NASA OPERA collection links below are retained as source pointers only. In this session, their license/no-cost terms, downloadable products, AOI coverage and access conditions were **not** verified; do not assume that a public landing page means a usable free raster is available. The locally cached GeoDAWN-derived bands needed by ranks 1–2 are incomplete without the missing feature stack, and their original-source identity is not independently authenticated here. Therefore no hypothesis requiring an unverified external product has been promoted or presented as currently executable.
+
+For comparison only, the repo records local S3DEP1 **HOLDOUT-DTI = 0.166060**, 95% CI **[0.151858, 0.180339]**, `gems-segment-pooled-v1`, **60,988 withheld positives**; it was not replayed in this follow-up and its selector is negative. A separate GEMSDOE36 KPL-36 receipt records **HOLDOUT-DTI = 0.170100**, 95% CI **[0.155089, 0.186138]**, the same named evaluator and withheld count; that receipt is not independently replayed or certified protocol-equivalent. Neither is a leaderboard score, and neither authorizes submission.
+
+## Automated TIFF range and grid checks
+
+I ran the shared `scripts/preflight_submission.py` against the existing S3DEP1 twins, using the pinned bridge sample as template. The full outputs are [`preflight_s3dep1_20261030.json`](../evidence/preflight_s3dep1_20261030.json) and [`preflight_s3dep1_nan_20261030.json`](../evidence/preflight_s3dep1_nan_20261030.json). This is a format diagnostic of existing research files, not a new prediction or portal test.
+
+- The `-zeros.tif` twin is single-band float32, EPSG:32611, 3730×3292, with the exact template geotransform. It has no NaN/Inf inside the 5,167,373-cell footprint, and values inside the footprint are in [0,1]. The strict all-array range diagnostic passes. But it has 0 NaNs among the 7,111,787 outside-footprint cells, no NaN nodata tag, and does not match the sample's nodata/profile convention. **Download for research: YES** (`ok_to_download` in its prior run card); **SUBMIT: NO** (scientific selector negative).
+- The `-nan.tif` twin also has finite in-footprint values in [0,1] and matches the sample's outside-NaN convention, but its whole-array strict range diagnostic fails because the 7,111,787 outside cells are NaN. **Download for research: YES** (format-valid research download); **SUBMIT: NO**. Neither encoding is organizer-authenticated or authorized.
+- These mutually different local diagnostics do not identify the cause of the reported portal error. We do not have the exact rejected bytes or organizer response. Do not infer that either encoding will be accepted; the error remains unresolved.
+
+## Retained-lattice lower bound — before spending another experiment
+
+The fresh raster-opening check `scripts/check_uniqueness_feasibility.py --dot-budget 37654 --dot-budget 44090` returned the expected **exit 2**. The pinned lattice covers 5,160,724 of 5,167,373 footprint pixels within 3 px, leaving only 6,649 uncovered. Therefore any 37,654 distinct in-footprint dots have a necessary minimum overlap of 31,005 / 37,654 = **82.3418%**; any 44,090-dot set has a minimum of 37,441 / 44,090 = **84.9195%**. These are mathematical lower bounds against one registry witness, not observed overlap for a newly generated candidate, not score, and not a full registry pass. Do not retune a stopped lane or place dots into lattice holes to evade the protocol.
+
+## Three verification passes
+
+1. **Reproduce the state:** restored full Git history, synced this fixed Arena branch to merged main, checked the merged review/run card, inspected data placement and score/geometry receipts, and fetched nine public GitHub `main` refs into the immutable freshness receipt. No DrivenData or restricted geological-source host was accessed.
+2. **Adversarial checks:** installed the pinned Python requirements into the ignored `.venv`; ran exact-file preflight on both already-existing S3DEP1 encodings; reran the shared raster-based lattice feasibility check; verified the hypotheses' unresolved PR/data dependencies. No training, features, holdout, candidate surface, TIFF write or slot.
+3. **Final check:** after syncing merged PR #112, the full suite passed **667 tests, 1 skipped**; `ruff check .`, `ruff format --check .`, `git diff --check`, and JavaScript syntax checks passed. Offline `refresh_priority_feed.py` and `refresh_source_feed.py` schema checks passed with the pinned virtual environment and made no freshness claim. `check_git_history.py` confirmed full history but warned that pinned commits and ancestry still require verification. The successful GitHub Pages workflow after PR #112 is linked above. These checks verify code and feed plumbing, not scientific promotion or official portal acceptance.
+
+## Remaining work and limitations
+
+1. Obtain the missing organizer training raster and restore the documented, provenance-pinned prepared stack through an authorized route; the current sandbox cannot access DrivenData's login-gated data page.
+2. Reconcile open parallel method work, especially PR #70, then obtain a single explicit method paragraph. No new experiment is authorized until the lane and novelty policy are resolved.
+3. For an authorized lane, preregister; canary every feature alone; use visible-fault-only catalogue features, buffered whole-segment hide-and-recover, pixel-exact masking, pooled DTI and paired uncertainty; compare surface correlation before placement and final-dot overlap after placement. Stop at the 3-experiment / 2-hour budget.
+4. Refresh and audit current-head TIFFs from the nine peer repositories; commit freshness alone is not artifact or score evidence.
+5. Keep every current file marked **SUBMIT: NO** until the independent selector exists and passes all gates. No human inspection is a substitute. Check the exact portal response only against the exact bytes if organizer access becomes available.
+6. Keep the executive page's historical score labels and exact suffix variants explicit; do not call a pinned 2026 audit the latest state or call a format pass a submission approval.
+
+Official review links: [DrivenData problem](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/), [competition data page](https://www.drivendata.org/competitions/306/competition-doe-gems/data/), [pinned organizer reference solution](https://github.com/drivendataorg/gems-prize-reference-solution/tree/aebe92f7c8a990f0e3443451b7a825d9afd6336b), [USGS GeoDAWN](https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and), [OpenEI INGENIOUS GDR #1391](https://gdr.openei.org/submissions/1391), [USGS ASTER alteration release](https://www.usgs.gov/data/digital-maps-hydrothermal-alteration-type-key-mineral-groups-and-green-vegetation-western), [NASA OPERA DISP-S1 collection pointer](https://cmr.earthdata.nasa.gov/search/collections.json?short_name=OPERA_L3_DISP-S1_V1), and the [NLR rules PDF](https://docs.nlr.gov/docs/fy26osti/96647.pdf). The non-GitHub sources are manual-review links; this session did not fetch them through the restricted sandbox.
+
+**Run card:** [`evidence/session_1b86ce61_20261030_run_card.json`](../evidence/session_1b86ce61_20261030_run_card.json) — verdict `negative`.
