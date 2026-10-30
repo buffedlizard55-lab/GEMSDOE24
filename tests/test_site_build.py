@@ -73,6 +73,49 @@ def test_pages_state_the_unscored_status_and_never_invent_a_score(built):
     assert "not a leaderboard result" in status and "No weekly slot has been spent" in status
 
 
+@pytest.mark.parametrize(
+    ("page", "href"),
+    [
+        ("index.html", "docs/executive-summary-9sites.html"),
+        ("docs/index.html", "executive-summary-9sites.html"),
+        ("docs/executive-summary.html", "executive-summary-9sites.html"),
+        ("docs/research.html", "executive-summary-9sites.html"),
+        ("docs/sources.html", "executive-summary-9sites.html"),
+    ],
+)
+def test_nine_site_executive_summary_is_in_global_navigation(built, page, href):
+    from bs4 import BeautifulSoup
+
+    soup = BeautifulSoup((built / page).read_text(), "html.parser")
+    nav = soup.find("nav", attrs={"aria-label": "Main navigation"})
+    assert nav is not None
+    link = nav.find("a", href=href, string="Nine-site summary")
+    assert link is not None
+    assert (built / page).parent.joinpath(href).is_file()
+
+
+@pytest.mark.parametrize(("page", "prefix"), [("index.html", "docs/"), ("docs/index.html", "")])
+def test_current_submission_reviews_are_linked_from_review_notice(built, page, prefix):
+    from bs4 import BeautifulSoup
+
+    soup = BeautifulSoup((built / page).read_text(), "html.parser")
+    notice = soup.find("aside", attrs={"aria-label": "Current submission review"})
+    assert notice is not None
+    for filename, label in (
+        (
+            "repo-review-20261030-arena-9b32516e.md",
+            "30 October review: nine-site evidence and source status",
+        ),
+        (
+            "repo-review-20261030-arena-6a29c5b2.md",
+            "30 October review: negative submission findings",
+        ),
+    ):
+        href = f"{prefix}{filename}"
+        assert notice.find("a", href=href, string=label) is not None
+        assert (built / page).parent.joinpath(href).is_file()
+
+
 def test_contradictory_hunique_packet_is_quarantined_without_tiff_link(built):
     from bs4 import BeautifulSoup
 

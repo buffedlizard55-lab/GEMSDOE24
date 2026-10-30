@@ -1,0 +1,33 @@
+{
+  "schema": "b2-subset-forensics-v1",
+  "scope": "Exact set comparison of owner files; no score computed",
+  "b2": {
+    "site": "GEMSDOE32",
+    "dots": 37654
+  },
+  "d28": {
+    "site": "GEMSDOE25",
+    "dots": 44090
+  },
+  "gemsdoe30": {
+    "dots": 44090,
+    "dotset_identical_to_gemsdoe25": true
+  },
+  "b2_is_subset_of_d28": true,
+  "dots_removed_from_d28": 6436,
+  "dots_added_in_b2": 0,
+  "removed_dots_distance_to_catalogue_px": {
+    "exactly_on_catalogue": 0,
+    "within_1_to_3_px": 6436,
+    "beyond_3_px": 0
+  },
+  "share_of_dots_within_3px_of_catalogue": {
+    "d28": 0.195214,
+    "b2": 0.057657
+  },
+  "owner_reported_scores_not_organizer_confirmed": {
+    "GEMSDOE25_d28": 0.26,
+    "GEMSDOE32_b2": 0.2778
+  },
+  "interpretation": "Set facts only: B2 = D2.8 minus the removed dots, all 1-3 px from the catalogue. Hidden-label credit of those dots is unknown, so causality is not established."
+}

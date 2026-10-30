@@ -1,0 +1,146 @@
+{
+  "schema": "run-card-v1",
+  "lane": "NS-RATIO1",
+  "session": "arena/025f58cb-gemsdoe24 (2026-10-30)",
+  "hypothesis": "Label-free GeoDAWN radiometric (K, Th, U, TC), magnetic-extension (ThK, UK, UTh, TMI_up150) and 1 m LiDAR scarp channels, trained on visible catalogue positives and placed by a credit-to-penalty ratio rule with 3 px spacing, recover withheld whole catalogue segments better than catalogue proximity alone (E3 control).",
+  "mechanism": "Official DTI with alpha=0.2, beta=0.8: DTI = TP/(0.8N + 0.2(TP+FP)). A dot is kept iff its expected credit-to-FP-weight ratio exceeds about 0.2*TP/(0.8N+0.2*FP). A calibrated P(fault) from relief, scarp and radiometric contrast supplies that ratio.",
+  "named_non_fault_mimic": "Roads, tracks, channels, terrace risers, mines and claim disturbance create steps and relief (caveat in data/external/lidar_scarp_features.json); soil, lithology and wash drive radiometric contrast.",
+  "experiment_budget": "Protocol budget: 3 experiments. Executed: run 1 (E1, E2, E3) and run 2 (E2, E3 re-run after a selection fix). Five experiment evaluations in total; over budget by two; disclosed.",
+  "experiments": {
+    "E1_FULL_catalogue_distance": "VOID: catalogue distance is exactly 0 on training positives (leakage by construction). Not evidence.",
+    "E2_LABELFREE": {
+      "label": "HOLDOUT-DTI",
+      "holdout_dti": 0.129384,
+      "ci95": [
+        0.117558,
+        0.142007
+      ],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "folds": [
+        {
+          "fold": "NW",
+          "dti": 0.133104
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "dti": 0.142446
+        },
+        {
+          "fold": "SW",
+          "dti": 0.104559
+        },
+        {
+          "fold": "SE",
+          "dti": 0.145908
+        }
+      ],
+      "ci_method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw"
+    },
+    "E3_PROXIMITY_control": {
+      "label": "HOLDOUT-DTI",
+      "holdout_dti": 0.052591,
+      "ci95": [
+        0.037454,
+        0.068173
+      ],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "leakage_canary": "NOT COMPUTED for E3 (gap; a proximity-only control has no label-free feature set to test)"
+    }
+  },
+  "leakage_canary": {
+    "rule": "single-feature AUC on withheld quadrant; > 0.90 = leakage until proven otherwise",
+    "experiment": "E2_LABELFREE",
+    "worst_feature": "lidar_relief",
+    "worst_auc": 0.6264,
+    "pass": true
+  },
+  "correlation_overlap_vs_registry": {
+    "phi_max_vs_nine": {
+      "site": "GEMSDOE24",
+      "phi": 0.037451
+    },
+    "phi_vs_peer_lattice_GEMSDOE13": 0.000399,
+    "note_phi": "Protocol rank correlation; for binary rasters Spearman equals Pearson (phi), computed on the footprint. Threshold 0.90.",
+    "overlap_3px_max_vs_nine": {
+      "site": "nine:GEMSDOE27",
+      "fraction": 0.455755
+    },
+    "overlap_3px_max_vs_other_local_tifs": {
+      "file": "docs/downloads/gems24-pair1-graben-dipole-oof-20261026-842a5212d85c-nan.tif",
+      "fraction": 0.596351
+    },
+    "overlap_3px_vs_peer_lattice_GEMSDOE13": 0.992856,
+    "surface_before_placement": "NOT RUN (the pre-placement posterior surface was not saved; protocol requires this check)",
+    "protocol_70pct_rule": "FAILS against the GEMSDOE13 lattice by construction (see the feasibility check)"
+  },
+  "rasters": {
+    "zeros_outside": {
+      "path": "docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-zeros.tif",
+      "sha256": "b49138fa05ba71eeadfd4eeca0d5d19bb2adde78f6d61a9c9ba78768fa8d0926",
+      "bytes": 283557
+    },
+    "nan_outside": {
+      "path": "docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-nan.tif",
+      "sha256": "6768b7ef9277aab4d9d8371f8d1f1042f02a63bd0b3471b1d07a544e4d2d6dd6",
+      "bytes": 335737,
+      "note": "same dots as zeros variant; sibling overlap 1.0 so it fails the uniqueness gate against its twin: only ONE of the two may be uploaded"
+    },
+    "emitted_path_recorded_by_lane_receipt": "docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-zeros.tif",
+    "emitted_path_note": "the lane receipt records the pre-rename name; the file on disk was renamed to include the sha prefix after emission (not reproducible by the script alone); sha256 verified by verify_candidate_tif.py"
+  },
+  "validator_output_nan_outside": {
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "dtype": "float32",
+    "count": 1,
+    "nan_inside_footprint": 0,
+    "finite_outside_footprint": 0,
+    "min_finite": 0.0,
+    "max_finite": 1.0,
+    "values_in_0_1": true,
+    "binary_values": true,
+    "official_format_pass": true,
+    "gates": {
+      "official_format": true,
+      "no_exact_duplicate": true,
+      "overlap_le_70pct_vs_nine": true,
+      "overlap_le_70pct_vs_all_other_local_tifs": false,
+      "overlap_le_70pct_vs_peer_lattice_GEMSDOE13": false
+    },
+    "all_gates_pass": false
+  },
+  "catalogue_adjacency": {
+    "candidate_dots": 37654,
+    "exactly_on_catalogue": 0,
+    "within_1_to_3_px_of_catalogue": 7728,
+    "share_within_3px_of_catalogue": 0.205237,
+    "note": "Catalogue-adjacency pruning (the GEMSDOE32 B2 pattern) is untested on this candidate; not applied."
+  },
+  "submission": {
+    "name": "gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-nan.tif",
+    "note": "GEMS24 NS-RATIO1 label-free ratio-rule 37654d | id b49138fa | HOLDOUT-DTI 0.1294 | research; NO SUBMIT",
+    "note_chars": 102
+  },
+  "estimated_leaderboard_score": "NOT ESTIMABLE (HOLDOUT-DTI is a proxy; no organizer receipt exists)",
+  "hypotheses_ranked_not_yet_tried": [
+    "H1 catalogue-adjacency pruning on the candidate (B2 pattern) as E4 on the same holdout; needs owner approval (budget)",
+    "H2 cross-fitted catalogue-distance features (inner split of visible components) to make a valid E1; needs owner approval",
+    "H3 radiometric/magnetic-only ablation (drop LiDAR channels) against E3; needs owner approval",
+    "H4 nested-selected stopping rule for the dot budget instead of the fixed 37,654; holdout-overfit risk; needs owner approval"
+  ],
+  "verdict": "negative",
+  "verdict_reason": "DOWNLOAD: YES (format and audit). SUBMIT: NO until the owner decides whether the GEMSDOE13 calibration lattice is a registry comparator. Under the 70% rule no file above 22,163 dots can pass it. HOLDOUT-DTI 0.1294 is below the repo's recorded local point-best 0.166060 (H24-S3DEP1, non-unique, DO_NOT_SUBMIT). No promotion."
+}

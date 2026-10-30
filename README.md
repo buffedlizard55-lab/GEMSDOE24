@@ -1,6 +1,50 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
+## START HERE (2026-10-30, `arena/025f58cb-gemsdoe24`) — submission start page
+
+**[Open the submission start page →](docs/submission-start-here.html)** · [run card](evidence/ns_ratio1_run_card_20261030.json) · [B2 forensics](evidence/b2_subset_forensics_20261030.json) · [nine-site receipt](evidence/nine_site_verify_20261030.json) · [owner file paths](evidence/nine_site_owner_paths_20261030.json) · [mission prompt](docs/MISSION_PROMPT.md)
+
+**Maximize P(Win). Own the Outcome.**
+
+- **Best candidate, download yes / submit no:** [`docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-nan.tif`](docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-nan.tif) (sha256 `6768b7ef…`, 37,654 binary dots, NaN outside footprint, format PASS). The zeros-outside twin holds identical dots; upload only one of the two.
+- **Unique?** Max 3-px overlap with the nine focus files is 45.58% (GEMSDOE27). Max with other local TIFs is 59.64%. **Fails** the 70% rule against the GEMSDOE13 calibration lattice (99.29%), which cannot be met by any file above 22,163 dots. This needs an owner decision.
+- **Estimated leaderboard score: NOT ESTIMABLE.** HOLDOUT-DTI 0.129384 [0.117558, 0.142007] (`gems-segment-pooled-v1`, 60,988 withheld positives) is a proxy, not an organizer score.
+- **Nine focus files:** every one is format-valid, and every one overlaps another focus file at 97.6% or more. None is unique. Owner-reported scores (not organizer-confirmed) are in the start page table. The top owner-reported file is GEMSDOE32 B2 (0.2778); it is an exact subset of GEMSDOE25 D2.8 with 6,436 catalogue-adjacent dots removed.
+- **Portal "[0, 1]" error:** not established. No nine-site file holds an out-of-range finite value. Send the exact filename of the rejected upload.
+- **Irregularities flagged:** leaderboard figures conflict; the bridge sample is not the official all-absence sample; GEMSDOE25 and GEMSDOE30 share an identical dot set; GEMSDOE25's file is byte-identical to one hosted in this repo. Full list in the start page.
+- **Experiment budget:** 3 experiments were allowed. Five evaluations were run (run 1: E1–E3; run 2: E2–E3 re-run after a fix). Over budget, disclosed. E1 is void.
+
+### Mission prompt (requirements as recorded in `docs/MISSION_PROMPT.md`)
+
+The full, repeated request is not retained verbatim in this session. The normalized prompt the repo reads each session is in [`docs/MISSION_PROMPT.md`](docs/MISSION_PROMPT.md). Its hard requirements, recorded here as they stood on 2026-10-30:
+
+1. Generate a **unique** TIF submission; do not copy a previous submission; make it obvious whether it is safe to download and submit.
+2. Easy one-click download. Investigate the "Predicted values must be in range [0, 1]" rejection.
+3. Unique file name and a note of at most 140 characters.
+4. Executive summary on every focus site (GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36): file to download, estimated score, unique vs the other sites.
+5. Sub-page explaining exactly how to make a submission.
+6. Automated validation (no human step): no NaN inside the footprint, values in [0, 1], CRS, shape and transform matching the template (EPSG:32611, 3730×3292 at 100 m).
+7. Put this prompt into the README and re-read it each session.
+8. Create a PR and merge it to `main`.
+9. No hallucinations; line-by-line verification; official sources; flag irregularities.
+
+Evidence rules: label every number HOLDOUT-DTI (evaluator version, withheld positives, 95% CI) or ORGANIZER-CONFIRMED; never write a projection as a score; leakage canary (single-feature AUC > 0.90 = leakage until proven otherwise); uniqueness (rank correlation ≤ 0.90 and ≤ 70% of dots within 3 px of any one registry raster); hide-and-recover holdout with buffer; pooled DTI (α 0.2, β 0.8, 300 m triangular kernel); one run card per experiment; stop after 3 experiments or 2 hours; promotion is a separate selector step.
+
+### Ranked next hypotheses (not yet tried; each needs owner approval)
+
+1. **H1 · catalogue-adjacency pruning** (the B2 pattern) tested as E4 on the holdout.
+2. **H2 · cross-fitted catalogue-distance features** (a valid version of E1).
+3. **H3 · radiometric/magnetic-only ablation** against the proximity control.
+4. **H4 · nested dot-budget selection** instead of the fixed 37,654.
+
+## Previous START HERE — nine-site executive summary (2026-10-29, `arena/6a1fb4d1-gemsdoe24`)
+
+---
+
+## Current review — 2026-10-30 (`arena/9b32516e-gemsdoe24`)
+
 ## START HERE — active portfolio decision (2026-10-30)
+
 
 **NO SUBMISSION-AUTHORIZED TIFF · NO NEW TIFF OR EXPERIMENT · NO SLOT · SUBMIT: NO.** Read the [latest nine-site review](docs/repo-review-20261030-arena-9b32516e.md) and [run card](evidence/session_9b32516e_20261030_run_card.json), the [merged companion review](docs/repo-review-20261030-arena-6a29c5b2.md) and [run card](evidence/session_6a29c5b2_20261030_run_card.json), the [active mission prompt](docs/MISSION_PROMPT.md), and [standing instructions](AGENTS.md) at every session start. This continuation's newer GitHub readback is summarized in the [current-source snapshot](docs/current-source-snapshot-20261030.md) and recorded in [`docs/data/all_owner_sites_20261026.json`](docs/data/all_owner_sites_20261026.json) and [`docs/data/portfolio_freshness.json`](docs/data/portfolio_freshness.json).
 
@@ -11,7 +55,29 @@
 - **Recorded H24-S3DEP1:** HOLDOUT-DTI 0.1660601364 [0.1518583912, 0.1803388646], `gems-segment-pooled-v1`, 60,988 withheld positives; its pinned artifact verifier passes, but the selector remains **DO_NOT_SUBMIT**. Verification is not a fresh scientific replay or organizer score.
 - **Portal range error:** cause and outside-footprint acceptance are unverified. Local range/grid checks cannot establish portal acceptance.
 
+A separate repository-review PR was merged to `main` while this PR was open. Its review is [here](docs/repo-review-20261030-arena-6a29c5b2.md) with its [run card](evidence/session_6a29c5b2_20261030_run_card.json). It is a parallel session record, not a replacement for this branch's refreshed GitHub feed, nine pinned artifact read-back, or final validation.
+
+## START HERE — nine-site executive summary (2026-10-29, `arena/6a1fb4d1-gemsdoe24`)
+
+
+**[Open the executive summary →](docs/nine-site-submission-summary.html)** · [run card](evidence/run_card_20261029_nine_site_unique.json) · [mission prompt](docs/MISSION_PROMPT.md)
+
+- **Highest owner-reported file:** GEMSDOE32 B2 at **0.2778** (OWNER-REPORTED, not organizer-confirmed). **Not unique:** 99.9–100% of its dots lie within 3 px of dots from every other focus site.
+- **All nine focus sites are one family.** Their pairwise 3-px overlaps run from 0.867 to 1.000.
+- **Unique file generated today:** [`docs/downloads/gems24-nine-complement-seghgb-20261029-zeros.tif`](docs/downloads/gems24-nine-complement-seghgb-20261029-zeros.tif) (SHA-256 `4dfb4a7c…`, 37,654 dots, format-valid, 0 overlap with the nine). **DOWNLOAD: research · SUBMIT: NO.** Holdout is **HOLDOUT-DTI 0.0369** [0.0308, 0.0439] (60,988 withheld), about half the unrestricted baseline 0.0685. It is not competitive.
+- **Second unique file (concurrent session, on main):** `docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif` (129,184 dots). Its source-recorded holdout is HOLDOUT-DTI 0.1427 [0.1323, 0.1524], re-verified with `--verify-recorded` (not retrained here). Max overlap with the nine is 22.9%. Its lattice overlap is 99.3%. Its card verdict is negative and `ok_to_submit` is false.
+- **Estimated leaderboard score: NOT ESTIMABLE for every file.** The holdout is an internal proxy, not the hidden leaderboard.
+- **Portal error "Predicted values must be in range [0, 1]":** the cause is **not confirmed**. Upload the all-finite `-zeros` variant. A NaN-outside file is a plausible cause but is untested.
+- **Blocking decision for the owner:** the literal 70% rule against the calibration lattice `13gems_20261001_r13-lattice-s5` (GEMSDOE13) cannot be met by any dot set above 22,164 dots. The floor is 1 − 6,649/N, however dots are chosen. Decide whether synthetic calibration rasters count in the uniqueness registry.
+
+Reproduce: `scripts/fetch_nine_site_champions.py` → `scripts/build_nine_site_summary.py` → `scripts/run_seg_hgb_lane.py` (and `--exclude-nine-champions`) → `scripts/audit_candidate_registry.py` → `scripts/build_nine_site_report.py`. Tests: `tests/test_nine_site_candidate.py`.
+
+**Next steps (suggested, not started):** (1) owner decides the calibration-lattice rule; (2) preregister one method lane that beats the recorded holdout best of 0.166060 (S3DEP1, not unique) while staying at or under 70% overlap with the nine; (3) record one organizer receipt for the chosen file on the DrivenData submission page (requires the owner to log in); (4) resolve the 0.3195 vs 0.4413 leaderboard discrepancy from a receipt, not from text; (5) replace the owner-mirror training raster with a file the owner downloads while logged in to DrivenData.
+
+**Limitations:** no DrivenData login or submission access here; the training raster is owner-mirrored, not organizer-authenticated; the bridge `sample_submission.tif` is identical in positives to the catalogue; the method-lane paragraph is absent from the request. Core values: **Maximize P(Win)** and **Own the Outcome**.
+
 Use the [automated preflight and user-controlled submission guide](docs/automated-submission-guide-20261030.md) only after an independently authorized selector exists. Current outcomes and evidence are also in [`docs/data/portfolio_freshness.json`](docs/data/portfolio_freshness.json), [`docs/data/all_owner_sites_20261026.json`](docs/data/all_owner_sites_20261026.json), and [`docs/data/historical_champions_20261028.json`](docs/data/historical_champions_20261028.json). Core values: **Maximize P(Win)** and **Own the Outcome**.
+
 
 
 ## Current repository review — 2026-10-29 (`arena/30d63154-gemsdoe24`)
