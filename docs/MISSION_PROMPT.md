@@ -1,41 +1,42 @@
-# GEMS DOE 24 — Current Mission Prompt (normalized summary)
+# GEMSDOE24 — active mission prompt (normalized, 2026-10-30)
 
-**Current state (2026-10-30):** Read the [current three-pass review](repo-review-20261030-arena-9b32516e.md) and [machine run card](../evidence/session_9b32516e_20261030_run_card.json) first. No new TIF or experiment is authorized by the parallel-run protocol: no single-method paragraph was supplied, full training raster/cache are absent, and the two documented standard dot budgets fail the retained-lattice gate. The 9-site table is a historical snapshot; a 2026-10-30 GitHub ref check found all nine main refs advanced since the pinned artifact audit, without auditing any new files or scores. Estimated leaderboard scores remain NOT ESTIMABLE; SUBMIT: NO.
+**Read this file, the complete root `README.md`, and `AGENTS.md` at the start of every session.** This is the operative summary of the current task and its corrections; it does not replace the user's actual request. Read the [latest nine-site review](repo-review-20261030-arena-9b32516e.md) and [run card](../evidence/session_9b32516e_20261030_run_card.json), the [merged companion review](repo-review-20261030-arena-6a29c5b2.md) and [run card](../evidence/session_6a29c5b2_20261030_run_card.json), and the [current-source snapshot](current-source-snapshot-20261030.md) as well. Earlier branch references are historical.
 
-**Source task context:** historical normalized summary, last corrected 2026-10-29; branch references in earlier session notes are historical. Read the actual current request and README as well.
+## Objective and scope
 
-## Objective
-Place top of the DrivenData GEMS competition leaderboard (https://www.drivendata.org/competitions/306/competition-doe-gems/) by generating a **unique TIF submission** and publishing an executive summary that makes the best submission obvious and downloadable.
+Review GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31, GEMSDOE32, GEMSDOE33, and GEMSDOE36. Keep a clear per-site executive table of exact historical downloads, evidence class, uniqueness status, and explicit download/submit decisions. The goal is a genuinely novel, scientifically defensible high-performing GeoTIFF, but **generation is conditional on the assigned method lane and every prospective gate passing**. A forced output, copied raster, or weakened comparator is not success. Keep the site's downloadable research/review guide easy to use and describe the safe submission workflow.
 
-## Focus sites
-GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31, GEMSDOE32, GEMSDOE33, GEMSDOE36.
+## Evidence and score language
 
-## Hard requirements (must all hold)
-1. **MUST generate a unique TIF submission.** Do not copy a previous submission. It must be obvious whether the generated TIF is OK to download and submit.
-2. Easy-to-download submission TIF (one click). Investigate the reported "Predicted values must be in range [0, 1]" portal rejection. A zero-outside variant passes a strict whole-array range check locally, but its acceptance and the cause of the rejection are not established; it differs from the sample's NaN-outside convention.
-3. Unique name + short note (<= 140 characters).
-4. Executive summary on every focus site; a table listing: file to download, estimated score, whether unique vs the other GEMSDOE sites.
-5. Executive summary subpage explaining exactly how to make a submission.
-6. Validation through the project, no human intervention: no NaN inside footprint, values in [0,1], CRS/shape/transform match template (EPSG:32611, 3730x3292 @100 m).
-7. Put this prompt into the repo README and re-read it each session.
-8. Create a PR and merge onto main.
-9. No hallucinations; work line by line; official verified sources; flag irregularities.
+- A scientific result is labeled **HOLDOUT-DTI** only with its evaluator/version, withheld-positive count, and 95% confidence interval. State whether it is a recorded artifact verification or a fresh replay.
+- A competition result is **ORGANIZER-CONFIRMED** only when an artifact-linked submission receipt from the organizer is present.
+- Owner-reported standings, source README text, internal projections, holdout values, and file-format checks are **not** organizer scores. If no admissible estimate exists, write **NOT ESTIMABLE**.
+- Preserve source links, immutable refs, hashes, limitations, and negative decisions. Do not infer current score or artifact status from a changed GitHub commit.
 
-## Evidence rules (parallel-run protocol)
-- Label every number HOLDOUT-DTI (evaluator version, # withheld positives, 95% CI) or ORGANIZER-CONFIRMED (organizer receipt). A projection is never written as a score.
-- Leakage canary: any feature alone with AUC > 0.90 = leakage until proven otherwise.
-- Uniqueness: raster rank-correlation <= 0.90 with any registry raster AND <= 70% of dots within 3 px of any one registry raster's dots (surface before placement AND final dots).
-- Holdout = hide-and-recover: withhold whole fault segments with buffer, catalogue features from visible faults only, pixel-exact masking, pooled DTI (alpha 0.2, beta 0.8, 300 m triangular kernel).
-- End with one JSON run card: hypothesis; mechanism; named non-fault mimic; holdout DTI + CI; correlation/overlap vs registry; raster sha256; validator output; submission name + <=140-char note; verdict promote/negative.
-- Budget: stop after 3 experiments or 2 hours. No submission slot spent without a selector step.
+## Lane, validation, and novelty gates
 
-## Historical state (2026-10-28; source-recorded; recheck before use)
-- Owner-reported historical highs (GEMSDOE32 B2 0.2778, GEMSDOE36 Anderson 0.2750, etc.) are **NOT organizer-confirmed**; no DrivenData auth is available, so live scores are NOT ESTIMABLE.
-- The retained spacing-5 lattice covers approximately 99.87% of the footprint within 3 px. The geometric lower bound exceeds the 70% limit for any set of at least 22,164 distinct in-footprint dots; at 37,654 dots it is about 82.34%. Smaller budgets are not ruled out by this bound alone and are not certified unique. Do not evade the gate by targeting lattice holes.
-- Research-only VENTRAD candidate: `docs/downloads/24GEMSDOE-ventrad-blind-geothermal-20261028-34b558b554fb-zero.tif` (SHA-256 `603d21db…9626`), 37,722 dots, source-recorded HOLDOUT-DTI 0.1223 [0.1111, 0.1337] (`gems-segment-pooled-v1`, 60,988 withheld positives). A narrow 10-method comparison is not the protocol registry test: the required retained-lattice overlap is 0.99817 (>0.70), so protocol uniqueness FAILS. The candidate is format-valid, `ok_to_download: YES`, `ok_to_submit: NO`; no slot was spent. Its measurement was not independently replayed in the current review.
+- Stay within the single assigned method paragraph. If it is absent, do not invent a lane or restart stopped work.
+- Reuse the shared feature stack, `scripts/evaluate_holdout.py`, and `scripts/submission_writer.py`. Hold out buffered whole fault segments; derive catalogue features only from visible faults; apply the visible-fault mask exactly; pool DTI with α=0.2, β=0.8, and the 300 m triangular kernel.
+- Test each actual feature and transform alone for leakage. Treat AUC >0.90 as suspected leakage until disproven.
+- Check the pre-placement surface and final dots against the complete comparable registry. Stop if absolute rank correlation >0.90 or >70% of candidate dots are within 3 px of any registry raster. Do not tune a stopped budget, move dots to evade the rule, or alter/remove the registry or comparator.
+- Limit work to three experiments or two hours. Preserve negative results. A weekly slot requires a separate selector, independently verified quota, and a comparable current-best improvement meeting the requested 2–3% threshold; no slot or upload is authorized by this prompt.
+- Rank 3–5 hypotheses before implementation. For each, name the exact data layers and transform, fault-recovery mechanism, distinction from prior methods, non-fault mimics, qualitative expected benefit/cost, and verified free-data availability. If source access is not verified, mark the idea blocked—not viable.
 
-## Off-limits / do-not
-- Do not claim an unverified score is organizer-confirmed.
-- Do not restart stopped lanes or retune dots to evade the literal overlap gate.
-- Do not spend a weekly submission slot; no organizer auth is available in this environment.
-- No new TIFF is "submission-authorized" by a format pass alone.
+## Artifact requirements (only after all science and novelty gates pass)
+
+- Produce a genuinely new single-band GeoTIFF, never a copied earlier prediction. Validate finite, in-footprint values in [0,1], and exact template CRS, shape, and transform (expected template: EPSG:32611, 3730×3292, 100 m). Record a unique filename, exact SHA-256, and a note of at most 140 characters.
+- State **DOWNLOAD: research only** or **DOWNLOAD: submission candidate** and **SUBMIT: YES/NO** separately. A local validator does not guarantee organizer acceptance; explain exterior-footprint encoding uncertainty rather than guessing the cause of a portal error.
+- Do not use human inspection as a fallback. The project agent never automates DrivenData access or uploads; keep portal steps user-controlled and require an artifact-linked receipt for any claimed score.
+
+## Current evidence snapshot — 2026-10-30
+
+- The refreshed owner-site scan retrieved 92/92 GitHub READMEs at immutable refs. The 118 historical owner-reported claims carried in the inventory are parsed from the preserved 2026-10-26 brief, not extracted from those refreshed README bodies; zero organizer-confirmed receipts were recorded. This is not an artifact audit or score verification.
+- The nine-repository priority feed checked all nine current `main` refs; all nine changed since its pinned artifact-review refs. This is GitHub freshness only.
+- The nine pinned historical champions were reopened and locally checked. None is authorized for submission; their per-site filenames, raw download links, owner-claim labels, hashes, format limits, and lattice overlaps are in [`docs/historical-champions.html`](historical-champions.html) and [`docs/data/historical_champions_20261028.json`](data/historical_champions_20261028.json). These are historical artifacts, not latest-head endorsements.
+- The fixed retained-lattice necessary bound returns `STOP_IMPOSSIBLE_BUDGET` at 37,654 and 44,090 dots. This is a stop, not a target for budget tuning. No candidate TIFF, experiment, or submission slot was created/used in this review.
+- Recorded `H24-S3DEP1` HOLDOUT-DTI is 0.1660601364 [0.1518583912, 0.1803388646], evaluator `gems-segment-pooled-v1`, 60,988 withheld positives. `--verify-recorded` verifies its pinned artifact and selector receipt, not a fresh scientific replay; its decision remains `DO_NOT_SUBMIT`.
+- No artifact-linked organizer receipt or current official leaderboard snapshot was obtained. Leaderboard estimates remain **NOT ESTIMABLE**. No TIFF is approved to submit.
+
+## Session-start and closeout
+
+Read the README, this prompt, `AGENTS.md`, the latest review, and its run card before work. Inspect `git status` before editing. Run three adversarial review passes (implementation/evidence review, bug-and-assumption review, then original-request audit); test and lint relevant changes. Open and merge a PR only after checks pass. Core values: **Maximize P(Win)** and **Own the Outcome**.
