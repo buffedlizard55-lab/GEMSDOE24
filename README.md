@@ -1,6 +1,10 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## START HERE — nine-site executive summary (2026-10-29, `arena/6a1fb4d1-gemsdoe24`)
+## Current session review — 2026-10-30 (`arena/6a29c5b2-gemsdoe24`)
+
+**NO NEW TIFF · NO NEW EXPERIMENT · SUBMIT: NO.** Read the [three-pass repository review](docs/repo-review-20261030-arena-6a29c5b2.md), [negative JSON run card](evidence/session_6a29c5b2_20261030_run_card.json), [normalized mission prompt](docs/MISSION_PROMPT.md), and [standing instructions](AGENTS.md) first. The prompt's single-method paragraph is absent, and the full training feature raster/prepared stack is not in this checkout; the current Python runtime lacks NumPy/Rasterio and test dependencies. No valid holdout, new TIFF, score estimate, portal validation, or submission authorization was produced. The historic GEMSDOE32 B2 value remains owner-reported/unverified; the hidden leaderboard estimate is **NOT ESTIMABLE**. The 3-pass review preserves four qualitative hypotheses, sources, limitations, and next steps. **Maximize P(Win) · Own the Outcome.**
+
+## START HERE — nine-site executive summary (historical snapshot from 2026-10-29; `arena/6a1fb4d1-gemsdoe24`)
 
 **[Open the executive summary →](docs/nine-site-submission-summary.html)** · [run card](evidence/run_card_20261029_nine_site_unique.json) · [mission prompt](docs/MISSION_PROMPT.md)
 
@@ -560,7 +564,7 @@ The following historical point-best section is not a new cross-site promotion de
 
 **One experiment run (1 of 3 budget; ~80 s).** Generated a new unique GeoTIFF from the preregistered H1 blind-upwelling hypothesis (LiDAR `ex_mean` flexure × GeoDAWN K × low Th/K × INGENIOUS vent/spring thermal field; catalogue-independent scoring; catalogue pixels excluded from dots), validated end-to-end with zero human inspection.
 
-[**Download H24-BLIND-UPWELL research .tif (zeros outside, strict [0,1])**](docs/downloads/24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.tif) · [Validator JSON](docs/downloads/checks-24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.json) · [Preflight JSON](docs/downloads/preflight-24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.json) · [JSON run card](data/blind_upwell_run_card.json) · [Executive submission guide](docs/executive-summary.html#blind-upwell-gates).
+[**Download H24-BLIND-UPWELL research .tif (zeros outside, strict [0,1])**](docs/downloads/24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.tif) · [Validator JSON](docs/downloads/checks-24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.json) · [Preflight JSON](docs/downloads/preflight-24gems-blind-upwelling-20261026T162611Z-a23f2207f2c0-zeros.json) · [JSON run card](docs/data/blind_upwell_run_card.json) · [Executive submission guide](docs/executive-summary.html#blind-upwell-gates).
 
 **DOWNLOAD: YES · SUBMIT: NO.** Automated NEGATIVE verdict: HOLDOUT-DTI 0.06448, 95% CI [0.05575, 0.07400] (`gems-segment-pooled-v1`, 60,988 withheld positives), does **not** beat current comparable best 0.13000 — no current-best win. Leakage canary PASS (all feature/surface pooled AUCs ≤ 0.5538, threshold 0.90). Novelty vs competing methods PASS (surface max |ρ| = 0.2962 ≤ 0.90; final-dot max 3-px overlap vs 46 competing/peer rasters ≤ 0.238 ≤ 0.70 → unique vs other methods / method-lane pass). Literal all-entry novelty FAILS on the spacing-5 calibration lattice (registry-039, 99.87% footprint coverage; overlap 0.9986) — the same lattice incompatibility as DPRF1. Selector v2 remains fail-closed on unknown quota and replay certificate. Zero competition slots spent. All numbers are HOLDOUT-DTI unless marked ORGANIZER-CONFIRMED (none exist); the agent performed no DrivenData upload.
 
