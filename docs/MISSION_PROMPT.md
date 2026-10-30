@@ -1,6 +1,8 @@
 # GEMS DOE 24 — Current Mission Prompt (normalized summary)
 
-**Source task context:** historical normalized summary, last corrected 2026-10-29; branch references in earlier session notes are historical. Read the actual current request and README as well.
+**Current checkout status — 2026-10-30:** No new TIFF or experiment was produced. The single-method paragraph required to assign the parallel-run lane is absent; the full competition feature raster/prepared cache is also absent. Do not invent a lane, bypass the stop gates, or label any file safe to submit. See [this session's three-pass review](repo-review-20261030-arena-6a29c5b2.md) and [negative run card](../evidence/session_6a29c5b2_20261030_run_card.json). The runtime lacks NumPy/Rasterio and project test dependencies, so fresh GeoTIFF validation and holdout execution were not possible. The historical nine-site table and all old score claims remain historical, not current leaderboard estimates.
+
+**Source task context:** historical normalized summary, last corrected 2026-10-29; branch references in earlier session notes are historical. Read the actual current request, README, and the current checkout status above.
 
 ## Objective
 Place top of the DrivenData GEMS competition leaderboard (https://www.drivendata.org/competitions/306/competition-doe-gems/) by generating a **unique TIF submission** and publishing an executive summary that makes the best submission obvious and downloadable.
