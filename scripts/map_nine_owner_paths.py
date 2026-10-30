@@ -5,6 +5,7 @@ Matches by git blob SHA-1 (sha1(b"blob <n>\\0" + bytes)), so a link is only writ
 when the local bytes are identical to a blob in the owner's default branch.
 Read-only against GitHub (gh api). Output: evidence/nine_site_owner_paths_20261030.json.
 """
+
 import hashlib
 import json
 import subprocess
@@ -13,8 +14,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "data/research/nine_site_verify"
 OUT = ROOT / "evidence/nine_site_owner_paths_20261030.json"
-SITES = ["GEMSDOE24", "GEMSDOE25", "GEMSDOE27", "GEMSDOE28", "GEMSDOE30",
-         "GEMSDOE31", "GEMSDOE32", "GEMSDOE33", "GEMSDOE36"]
+SITES = [
+    "GEMSDOE24",
+    "GEMSDOE25",
+    "GEMSDOE27",
+    "GEMSDOE28",
+    "GEMSDOE30",
+    "GEMSDOE31",
+    "GEMSDOE32",
+    "GEMSDOE33",
+    "GEMSDOE36",
+]
 
 
 def blob_sha(path: Path) -> str:
@@ -24,7 +34,8 @@ def blob_sha(path: Path) -> str:
 
 def tree(site: str) -> list:
     raw = subprocess.check_output(
-        ["gh", "api", f"repos/buffedlizard55-lab/{site}/git/trees/main?recursive=1"], text=True)
+        ["gh", "api", f"repos/buffedlizard55-lab/{site}/git/trees/main?recursive=1"], text=True
+    )
     return json.loads(raw)["tree"]
 
 
@@ -33,13 +44,19 @@ def main() -> int:
     for site in SITES:
         local = SRC / f"{site}.tif"
         sha = blob_sha(local)
-        matches = [t["path"] for t in tree(site)
-                   if t.get("sha") == sha and t["path"].lower().endswith(".tif")]
+        matches = [
+            t["path"]
+            for t in tree(site)
+            if t.get("sha") == sha and t["path"].lower().endswith(".tif")
+        ]
         result["sites"][site] = {
             "local_blob_sha1": sha,
             "repo_paths_with_identical_bytes": matches,
-            "url": (f"https://github.com/buffedlizard55-lab/{site}/blob/main/{matches[0]}"
-                    if matches else None),
+            "url": (
+                f"https://github.com/buffedlizard55-lab/{site}/blob/main/{matches[0]}"
+                if matches
+                else None
+            ),
         }
         print(site, matches or "NO MATCH")
     OUT.write_text(json.dumps(result, indent=2) + "\n")
