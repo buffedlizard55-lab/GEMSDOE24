@@ -1,0 +1,132 @@
+{
+  "schema": "gems-negative-review-run-card-v1",
+  "review_date": "2026-10-30",
+  "branch": "arena/1b86ce61-gemsdoe24",
+  "hypothesis": "No geological hypothesis tested: no single method paragraph was assigned. The four existing hypotheses remain proposals, and the first two overlap open parallel work; none is certified globally untried.",
+  "mechanism": "Read-only repository follow-up: refresh nine public GitHub main refs, execute the shared raster-based necessary uniqueness bound, run the exact-file submission preflight on already-existing S3DEP1 zero/NaN encodings, and run the repository test/lint checks. No prediction surface or dots were produced.",
+  "named_non_fault_process_that_could_mimic_it": "No new candidate was generated. For the proposed signed gravity-magnetic direction, intrusive contacts, remanent magnetization and survey/gridding seams are named non-fault mimics; these were not tested in this review.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positive_pixels": null,
+    "ci95": null,
+    "status": "NOT RUN: no assigned lane and the full training-feature raster and prepared feature cache are absent."
+  },
+  "recorded_holdout_references_not_replayed": [
+    {
+      "label": "HOLDOUT-DTI",
+      "method": "GEMSDOE24 S3DEP1",
+      "value": 0.16606013635163805,
+      "ci95": [0.15185839118988828, 0.18033886456990444],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "status": "SOURCE-RECORDED LOCAL RESULT; not replayed in this follow-up; selector is negative. Not a leaderboard score."
+    },
+    {
+      "label": "HOLDOUT-DTI",
+      "method": "GEMSDOE36 KPL-36 EXP-3",
+      "value": 0.17010000946379217,
+      "ci95": [0.1550890600301938, 0.18613752547087836],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "status": "SOURCE-RECORDED EXTERNAL RESULT; not independently replayed or proven protocol-equivalent. Not a leaderboard score or authorization."
+    }
+  ],
+  "correlation_overlap_vs_registry": {
+    "preplacement_surface_rank_correlation": null,
+    "final_dot_overlap_within_3px": null,
+    "status": "NOT RUN: no new candidate surface or final dots.",
+    "necessary_bounds_against_one_retained_lattice_witness": [
+      {
+        "candidate_dot_budget": 37654,
+        "minimum_overlapping_dots": 31005,
+        "minimum_overlap_fraction": 0.8234184947150369,
+        "classification": "GEOMETRIC LOWER BOUND; exceeds the 0.70 gate; not an observed candidate overlap or score."
+      },
+      {
+        "candidate_dot_budget": 44090,
+        "minimum_overlapping_dots": 37441,
+        "minimum_overlap_fraction": 0.8491948287593558,
+        "classification": "GEOMETRIC LOWER BOUND; exceeds the 0.70 gate; not an observed candidate overlap or score."
+      }
+    ],
+    "source_head_freshness": {
+      "receipt": "evidence/current_focus_source_heads_20261030.json",
+      "checked_utc": "2026-10-30T22:55:57.900903+00:00",
+      "focus_repositories_checked": 9,
+      "changed_since_pinned_review": 9,
+      "failed_checks": 0,
+      "scope": "GitHub branch freshness only; no raster content, score, leaderboard or uniqueness result."
+    }
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_raster_generated": false,
+    "new_raster_sha256": null,
+    "existing_s3dep1_zeros_preflight": {
+      "receipt": "evidence/preflight_s3dep1_20261030.json",
+      "file": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-zeros.tif",
+      "sha256": "86516533fb525ebce792152ae4ed852e88ae4feda0bd596710c7319a238b8071",
+      "format_valid_as_research_download": true,
+      "strict_whole_array_values_in_0_1": true,
+      "nan_or_inf_inside_footprint": 0,
+      "finite_footprint_pixels": 5167373,
+      "footprint_value_range": [0.0, 1.0],
+      "outside_nan_pixels": 0,
+      "outside_footprint_pixels": 7111787,
+      "matches_template_crs_shape_transform": true,
+      "crs": "EPSG:32611",
+      "shape": [3730, 3292],
+      "transform": [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0],
+      "matches_sample_nodata_profile": false,
+      "scientific_authorization": false,
+      "submission_decision": "DO_NOT_SUBMIT"
+    },
+    "existing_s3dep1_nan_twin_preflight": {
+      "receipt": "evidence/preflight_s3dep1_nan_20261030.json",
+      "file": "gems24-s3dep1-negative-10m-monoclinal-20261026-464fa34b4091-nan.tif",
+      "sha256": "039678640909e8965582e31833bd785a2b62b4c2a776682ad49c50529b8daa6e",
+      "format_valid_as_research_download": true,
+      "strict_whole_array_values_in_0_1": false,
+      "nan_or_inf_inside_footprint": 0,
+      "finite_footprint_pixels": 5167373,
+      "footprint_value_range": [0.0, 1.0],
+      "outside_nan_pixels": 7111787,
+      "outside_footprint_pixels": 7111787,
+      "matches_template_crs_shape_transform": true,
+      "matches_sample_nodata_profile": true,
+      "scientific_authorization": false,
+      "submission_decision": "DO_NOT_SUBMIT"
+    },
+    "interpretation": "The two outside-footprint encodings pass different local checks. Neither demonstrates portal acceptance or diagnoses the prior range error."
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "note_limit_characters": 140,
+  "leaderboard_estimate": null,
+  "organizer_confirmed_score": null,
+  "experiments_used": 0,
+  "experiment_budget_max": 3,
+  "competition_slots_used": 0,
+  "data_availability": {
+    "data/training_features.tif": false,
+    "data/prepared/features.npy": false,
+    "data/prepared/features.json": false,
+    "bridge_sample_template_present": true,
+    "external_training_data_access": "Not available in this checkout; no DrivenData authentication or external host access was used."
+  },
+  "verification": {
+    "pass_1": "Reviewed the merged 2026-10-30 report, README, mission prompt, AGENTS, historical nine-site table, B2 geometry receipts, source feed, data placement and open parallel work.",
+    "pass_2": "Installed pinned requirements in the ignored .venv; re-opened exact existing TIFFs with the shared preflight; compared strict-range versus sample outside-NaN handling; freshly checked all nine GitHub main refs; reran the raster-based uniqueness feasibility check.",
+    "pass_3": "After syncing merged PR #112, pytest reported 667 passed and 1 skipped; Ruff lint/format, diff check, JavaScript syntax, history guard and offline feed schema checks passed. No training, new scientific holdout, candidate TIF, organizer receipt, or upload.",
+    "website_workflow": {
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/actions/runs/41141371573",
+      "result": "success",
+      "completed_utc": "2026-10-30T22:57:57Z",
+      "scope": "Website/source-snapshot workflow; not a leaderboard or organizer-score check."
+    }
+  },
+  "verdict": "negative",
+  "verdict_reason": "The highest supplied nine-site value is an unverified owner claim, all historical pinned entries fail the literal lattice-overlap gate, current peer HEADs need artifact re-audit, no method lane or prepared training stack is available, and neither existing output encoding is both proven portal-accepted and scientifically authorized."
+}
