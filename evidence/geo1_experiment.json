@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-29T16:48:45.009290+00:00",
+  "generated_utc": "2026-10-31T00:49:44.292595+00:00",
   "hypothesis": "Concealed geothermal conduits not in the USGS/INGENIOUS catalogue produce a joint aeromagnetic edge + radiometric alteration-front + LiDAR scarp signature; dots placed away from mapped catalogue faults.",
   "mechanism": "Sobel edge magnitude of TMI_up150 + RTP proxy + K/Th/U ranks, Th/K depletion, total-count enrichment, LiDAR step/upface/downface/cross scarp expression; normalized to [0,1] on the footprint.",
   "non_fault_mimic": "Alluvial fan / terrace riser / paleoshoreline step that also sharpens K/Th/U and magnetic gradients; road cut/fill corridors.",
@@ -834,5 +834,5 @@
       }
     }
   },
-  "elapsed_seconds": 40.98371302800001
+  "elapsed_seconds": 33.703677508
 }

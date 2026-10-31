@@ -1,0 +1,23 @@
+{
+  "file": "GEMSDOE24-unique-complement-10000dots-20261031-651590c233c9-zeros.tif",
+  "nan_file": "GEMSDOE24-unique-complement-10000dots-20261031-651590c233c9-nan.tif",
+  "sha256": "5ba57d84e88b6094a6a251bda08c5b07e214c7564de3079c030759bc57933f0b",
+  "content_id": "651590c233c9",
+  "pixel_count": 10000,
+  "note": "GEMSDOE24 UNIQUE-COMPLEMENT | 10000 dots outside all nine focus-site 3px neighborhoods; geophysics-s | id 651590c233c9 | not yet live-scored",
+  "note_file": "note-GEMSDOE24-unique-complement-10000dots-20261031-651590c233c9-zeros.txt",
+  "checks_file": "checks-GEMSDOE24-unique-complement-10000dots-20261031-651590c233c9-zeros.json",
+  "role": "unique-research",
+  "format_valid": true,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "recommended_for_new_slot": false,
+  "slot_recommendation": "not_recommended",
+  "verdict": "negative",
+  "holdout_dti": 0.014737334193611977,
+  "holdout_ci95": [
+    0.011851977685867534,
+    0.017881166302615752
+  ],
+  "run_card": "unique_complement_run_card.json"
+}
