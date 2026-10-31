@@ -254,10 +254,12 @@ def run_card(lane, rz, rn, phis, adj):
         ],
         "verdict": "negative",
         "verdict_reason": (
-            "DOWNLOAD: YES (format and audit). SUBMIT: NO until the owner decides whether the GEMSDOE13 "
-            "calibration lattice is a registry comparator. Under the 70% rule no file above 22,163 dots can "
-            "pass it. HOLDOUT-DTI 0.1294 is below the repo's recorded local point-best 0.166060 (H24-S3DEP1, "
-            "non-unique, DO_NOT_SUBMIT). No promotion."
+            "DOWNLOAD: YES (research/audit only). SUBMIT: NO. The literal 70% registry rule includes the "
+            "GEMSDOE13 calibration lattice; both dot-identical encodings overlap it by 99.2856% and fail. "
+            "Do not waive the gate by excluding this comparator, changing the threshold or selecting lattice "
+            "holes. The run also exceeds the 3-evaluation budget and omits required pre-placement surface "
+            "validation. HOLDOUT-DTI 0.1294 is below the repo's recorded local point-best 0.166060 "
+            "(H24-S3DEP1, non-unique, DO_NOT_SUBMIT). No promotion."
         ),
     }
 
@@ -310,33 +312,36 @@ th{{background:#eef2ff}} code{{word-break:break-all}} small{{color:#374151}}
 <p><strong>Maximize P(Win). Own the Outcome.</strong> Generated 2026-10-30 by <code>scripts/build_submission_start_here.py</code> from the receipts in <code>evidence/</code>. Every number carries a label: <em>OWNER-REPORTED</em> (copied from the request or the repo README), <em>HOLDOUT-DTI</em> (our internal proxy, with evaluator version, withheld count and 95% CI), or <em>format/geometry check</em>. No organizer score exists in this repository.</p>
 
 <div class="box">
-<h2>1 · The file: download yes, submit no</h2>
-<p><strong>Recommended upload variant (if the owner clears submission):</strong>
+<h2>1 · Research file: download yes, submit no</h2>
+<p><strong>Research/audit download only — not authorized for upload:</strong>
 <a href="downloads/{NAN}" download><strong>⬇ {NAN}</strong></a><br>
 <code>sha256 {rn["sha256"]}</code> · {rn["dot_count_in_footprint"]:,} binary dots · float32 · EPSG:32611 · 100 m · 3730×3292 · NaN outside the footprint (same convention as the bridge sample)</p>
 <p>Audit copy, do not upload both: <a href="downloads/{ZEROS}" download>{ZEROS}</a> (identical dots, finite 0.0 outside; sha256 <code>{rz["sha256"][:16]}…</code>).</p>
+<p><strong>Recorded note ({len(NOTE)}/140; provenance only, not for upload):</strong> <code>{html.escape(NOTE)}</code></p>
 <p>
-{pill(True, "DOWNLOAD: YES (format and audit)")}
-{pill(False, "SUBMIT: NO (owner decision pending)")}
+{pill(True, "DOWNLOAD: YES (research/audit only)")}
+{pill(False, "SUBMIT: NO (registry uniqueness gate fails)")}
 </p>
 <p>
-{pill(fmt["official_format_pass"], "Official format PASS (NaN outside)")}
+{pill(fmt["official_format_pass"], "Local format check PASS (NaN outside)")}
 {pill(g["no_exact_duplicate"], "No exact duplicate")}
 {pill(g["overlap_le_70pct_vs_nine"], f"Unique vs nine: max {nine_top['fraction'] * 100:.2f}% (GEMSDOE27)")}
 {pill(g["overlap_le_70pct_vs_all_other_local_tifs"], f"Unique vs other local TIFs: max {other_top['fraction'] * 100:.2f}% (zeros sibling 100%)")}
 {pill(g["overlap_le_70pct_vs_peer_lattice_GEMSDOE13"], f"GEMSDOE13 lattice: {lattice * 100:.2f}% · FAIL by construction")}
 {pill(None, "Estimated leaderboard score: NOT ESTIMABLE")}
 </p>
-<p><strong>Why submit is not cleared.</strong> The protocol's 70% test counts the GEMSDOE13 calibration lattice (<code>13gems_20261001_r13-lattice-s5_v2_nan-outside.tif</code>) as a registry comparator. Its 5-px grid covers 99.87% of the footprint, so no dot file above 22,163 dots can pass that test. This is arithmetic, not a defect in this file. <strong>Decision for the owner:</strong> does the GEMSDOE13 lattice count as a registry comparator? If not, every gate that remains passes and the owner may submit this file. If yes, the protocol itself must change before any dot file at this budget can clear it.</p>
+<p><strong>Why this candidate is not cleared.</strong> The literal 70% uniqueness rule includes the GEMSDOE13 calibration lattice (<code>13gems_20261001_r13-lattice-s5_v2_nan-outside.tif</code>) as a registry comparator. Both encodings share the same 37,654 dots and overlap this lattice by 99.2856%, so both fail. The lattice covers 99.87% of the footprint; the 22,163-dot feasibility bound is only a necessary upper bound, not a pass or submission authorization. Do not exclude the comparator, change the threshold, or select lattice holes to evade the gate. The run also exceeded the three-evaluation budget and omitted the required pre-placement surface check. These files remain research-only; no owner override is available.</p>
 <p><strong>Portal error "Predicted values must be in range [0, 1]".</strong> This file's finite values are all 0 or 1, and it has no NaN inside the footprint. The cause of the earlier rejection is not established. Locally, none of the nine owner files holds an out-of-range finite value (<code>evidence/nine_site_verify_20261030.json</code>). The file the portal rejected is not identified, so send its exact filename to resolve this.</p>
 </div>
 
-<h2>2 · How to submit (the one manual step)</h2>
+<h2>2 · Portal steps (for a future cleared file only)</h2>
+<p><strong>No file in this repository is authorized for submission now.</strong> Do not upload either NS-RATIO1 encoding or reuse its research-only note.</p>
 <ol>
-<li>Download the <code>-nan</code> file above and confirm its sha256 prefix <code>{rn["sha256"][:8]}</code>.</li>
-<li>Only after the owner decision in section 1: log in to DrivenData and submit that single <code>.tif</code>. Only you can do this step; no credentials are used or stored here.</li>
-<li>Paste this note ({len(NOTE)} of 140 characters): <code>{html.escape(NOTE)}</code></li>
-<li>Remember the weekly cap of three submissions (official rules §3.2). This repository cannot see the remaining quota.</li>
+<li>First, generate a <em>new</em> candidate in an assigned method lane; do not copy an earlier submission. Verify its hash, CRS, shape, transform, no-NaN footprint, [0,1] values, holdout/CI, and selector decision.</li>
+<li>Check each registry raster both before placement and on the final dots; stop and log a duplicate/STOP if rank correlation exceeds 0.90 or more than 70% of dots fall within 3 px of any one raster. Include the GEMSDOE13 lattice; do not change thresholds or choose lattice holes.</li>
+<li>Only after all gates pass, log in to DrivenData, open the GEMS DOE competition's submission page, upload exactly one validated <code>.tif</code>, and enter a unique note tied to that file (≤140 characters). Only the owner can perform this step; no credentials are used or stored here.</li>
+<li>Review the competition, filename and note before submitting; save the portal receipt with the exact file/hash and any organizer-confirmed score. A local HOLDOUT-DTI is not an organizer score.</li>
+<li>Check the weekly cap of three submissions (official rules §3.2) and the remaining quota before using a slot. This repository cannot see the quota; no slot is spent by this guide.</li>
 </ol>
 
 <h2>3 · Nine focus sites: best file, estimate, uniqueness</h2>
@@ -386,7 +391,7 @@ th{{background:#eef2ff}} code{{word-break:break-all}} small{{color:#374151}}
 <li><strong>Dot-set duplicate across sites.</strong> GEMSDOE30's file bytes differ from GEMSDOE25's (different sha256), but its dot set is identical to GEMSDOE25's (44,090 dots, checked cell by cell; <code>evidence/b2_subset_forensics_20261030.json</code>). The two owner files are the same submission in different encodings.</li>
 <li><strong>GEMSDOE32 B2 is a subset, not a discovery.</strong> It is an exact subset of GEMSDOE25 D2.8, so its uniqueness against that file is zero by construction.</li>
 <li><strong>Range error cause unknown.</strong> No owner file holds an out-of-range finite value. The uploaded filename is needed.</li>
-<li><strong>The 70% rule is structurally blocked</strong> by the GEMSDOE13 lattice (99.87% footprint coverage). Owner decision required.</li>
+<li><strong>The 70% uniqueness rule is hard fail-closed</strong> against the GEMSDOE13 lattice (99.87% footprint coverage). Do not exclude the comparator, change the threshold, or choose lattice holes; no current candidate is eligible.</li>
 <li><strong>Feature stack absent.</strong> <code>data/training_features.tif</code> (about 419 MB, the organizer training raster) is in neither this checkout nor its git history. The peer-level lanes cannot be reproduced here.</li>
 <li><strong>Owner-reported scores are unverified.</strong> There is no organizer receipt for any file. The leaderboard was checked only in its visible rows.</li>
 <li><strong>Our own errors.</strong> Run 1's selection cap under-filled budgets (fixed in run 2). E1 is void. E3 has no canary. The surface-before-placement check was not run. The lane receipt's <code>emitted.path</code> records a name that was renamed after emission.</li>

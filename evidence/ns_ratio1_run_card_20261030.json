@@ -142,5 +142,5 @@
     "H4 nested-selected stopping rule for the dot budget instead of the fixed 37,654; holdout-overfit risk; needs owner approval"
   ],
   "verdict": "negative",
-  "verdict_reason": "DOWNLOAD: YES (format and audit). SUBMIT: NO until the owner decides whether the GEMSDOE13 calibration lattice is a registry comparator. Under the 70% rule no file above 22,163 dots can pass it. HOLDOUT-DTI 0.1294 is below the repo's recorded local point-best 0.166060 (H24-S3DEP1, non-unique, DO_NOT_SUBMIT). No promotion."
+  "verdict_reason": "DOWNLOAD: YES (research/audit only). SUBMIT: NO. The literal 70% registry rule includes the GEMSDOE13 calibration lattice; both dot-identical encodings overlap it by 99.2856% and fail. Do not waive the gate by excluding this comparator, changing the threshold or selecting lattice holes. The run also exceeds the 3-evaluation budget and omits required pre-placement surface validation. HOLDOUT-DTI 0.1294 is below the repo's recorded local point-best 0.166060 (H24-S3DEP1, non-unique, DO_NOT_SUBMIT). No promotion."
 }
