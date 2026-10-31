@@ -1,5 +1,25 @@
 # Standing project instructions
 
+## 2026-10-30 independent verification continuation — current branch `arena/ddfc5214-gemsdoe24`
+
+Read the current README and `docs/repo-review-20261030-arena-ddfc5214.md` with its
+run card before continuing. This branch produced **no new TIFF, experiment,
+holdout, score estimate, or slot**; `SUBMIT: NO`. The single-method paragraph
+is absent and the full organizer training raster/prepared cache remains absent.
+The pinned dependencies are now available in ignored `.venv`; after restoring
+full Git history, the full suite passed **667 tests, 1 skipped**, Ruff passed,
+and the site builder completed. This verifies repository code only. The fresh
+uniqueness checker returns exit 2 for the fixed 37,654/44,090-dot budgets against
+one retained witness; do not tune a stopped lane to evade it. A historical local
+research TIFF passes format/range/grid validation but remains DO_NOT_SUBMIT.
+
+The earlier same-day `arena/6a29c5b2-gemsdoe24` review truthfully lacked Python
+dependencies at that time; this follow-up installed them from the permitted
+package index. No competition data was downloaded. In fresh/shallow clones,
+run `python scripts/check_git_history.py` before relying on source ancestry;
+full history alone does not prove a receipt valid. The historical champion page
+remains a pinned snapshot, not a live leaderboard or current-head audit.
+
 ## 2026-10-28 historical-champion continuation
 
 Read `docs/session-review-b87d739e-20261028.md` and the existing owner brief with README.
