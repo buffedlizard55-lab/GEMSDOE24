@@ -1,0 +1,80 @@
+{
+  "schema": "candidate-tif-verify-v1",
+  "candidate": "docs/downloads/GEMSDOE24-unique-complement-10000dots-20261031-651590c233c9-zeros.tif",
+  "sha256": "5ba57d84e88b6094a6a251bda08c5b07e214c7564de3079c030759bc57933f0b",
+  "bytes": 773460,
+  "dot_count_in_footprint": 10000,
+  "format": {
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "dtype": "float32",
+    "count": 1,
+    "nodata": null,
+    "crs_ok": true,
+    "shape_ok": true,
+    "transform_ok": true,
+    "single_band_float32": true,
+    "nan_inside_footprint": 0,
+    "finite_outside_footprint": 7111787,
+    "min_finite": 0.0,
+    "max_finite": 1.0,
+    "values_in_0_1": true,
+    "binary_values": true,
+    "dots_gt0_in_footprint": 10000,
+    "dots_gt0_outside_footprint": 0,
+    "official_format_pass": true
+  },
+  "exact_duplicate_of": [],
+  "overlap_3px_max_vs_nine": {
+    "site": "nine:GEMSDOE24",
+    "fraction": 0.0
+  },
+  "overlap_3px_max_vs_other_local_tifs": {
+    "file": "docs/downloads/GEMSDOE24-unique-complement-10000dots-20261031-651590c233c9-nan.tif",
+    "fraction": 1.0
+  },
+  "overlap_3px_vs_peer_lattice_GEMSDOE13": 0.9128,
+  "comparators_checked": 88,
+  "top5_overlaps": [
+    [
+      "docs/downloads/GEMSDOE24-unique-complement-10000dots-20261031-651590c233c9-nan.tif",
+      1.0
+    ],
+    [
+      "docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-nan.tif",
+      0.9749
+    ],
+    [
+      "docs/downloads/GEMSDOE24-geo1-concealed-conduit-rad-mag-lidar-20261029-8c9946590ca7-zeros.tif",
+      0.9749
+    ],
+    [
+      "peer-lattice:GEMSDOE13",
+      0.9128
+    ],
+    [
+      "docs/downloads/gems24-oj1-3eef450351de-RESEARCH-NOT-SUBMISSION-zeros.tif",
+      0.4715
+    ]
+  ],
+  "gates": {
+    "official_format": true,
+    "no_exact_duplicate": true,
+    "overlap_le_70pct_vs_nine": true,
+    "overlap_le_70pct_vs_all_other_local_tifs": false,
+    "overlap_le_70pct_vs_peer_lattice_GEMSDOE13": false
+  },
+  "verdict_scope": "format and uniqueness receipt only; NOT an organizer score, NOT upload authorization",
+  "all_gates_pass": false
+}
