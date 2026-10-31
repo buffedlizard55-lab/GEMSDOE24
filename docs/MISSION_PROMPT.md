@@ -1,6 +1,16 @@
-# GEMSDOE24 — active mission prompt (normalized, 2026-10-30)
+# GEMSDOE24 — active mission prompt (normalized, 2026-10-30; addendum 2026-10-31)
 
 **Read this file, the complete root `README.md`, and `AGENTS.md` at the start of every session.** This is the operative summary of the current task and its corrections; it does not replace the user's actual request. Read the [latest nine-site review](repo-review-20261030-arena-9b32516e.md) and [run card](../evidence/session_9b32516e_20261030_run_card.json), the [merged companion review](repo-review-20261030-arena-6a29c5b2.md) and [run card](../evidence/session_6a29c5b2_20261030_run_card.json), and the [current-source snapshot](current-source-snapshot-20261030.md) as well. Earlier branch references are historical.
+
+## 2026-10-31 addendum (operative directive, highest urgency)
+
+1. **Generate a unique competition TIF.** Do not copy any previous submission (studying them is allowed and encouraged). The file must make it obvious whether it is safe to download and submit: every number labeled HOLDOUT-DTI (evaluator, withheld positives, 95% CI) or ORGANIZER-CONFIRMED (submission-page receipt); a projection is never written as a score.
+2. **Parallel-run protocol lane discipline.** One method paragraph per session. If the candidate's rank correlation with any registry raster exceeds 0.90, or more than 70% of its dots fall within 3 px of one registry raster's dots, the lane has drifted: log it as a duplicate and stop. Check on the pre-placement surface AND the final dots.
+3. **Reuse the shared tools** (`scripts/evaluate_holdout.py` stack, `scripts/submission_writer.py`, `gems.holdout`, `gems.metric`, `gems.novelty`): hide-and-recover holdout with buffered whole withheld segments, catalogue features from visible faults only, pixel-exact visible-fault mask, pooled DTI with α=0.2, β=0.8, 300 m triangular kernel. Leakage canary: any single feature with AUC > 0.90 on the holdout is leakage until proven otherwise.
+4. **Run card JSON at the end of every session**: hypothesis; mechanism; named non-fault mimic; holdout DTI + CI; correlation/overlap vs registry; raster SHA-256; validator output (no NaN inside footprint, values in [0,1], CRS/shape/transform match); submission name + note ≤140 chars; verdict. Negative results are deliverables. Stop after 3 experiments or 2 hours.
+5. **Executive summary per focus site** (GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36) with a table: file to download, estimated score (evidence class labeled), and whether it is unique vs the other listed sites. Reference scores: GEMSDOE32 `h33-h33-2-b2` 0.2778 (owner-reported) is the best of the nine; the group claims 0.3195, later 0.4413, as competition best — both unverified, no receipt.
+6. **Submission mechanics** (portal): single-band GeoTIFF or zipped GeoTIFF matching the format CRS/shape/geotransform; values must be in [0,1] (a prior upload was rejected with "Predicted values must be in range [0, 1]"); a unique file name and a ≤140-character note are required. The all-finite `-zeros` encoding is the safe default until the rejection cause is established.
+7. Validate top candidates on the spatially-blocked holdout **before** any weekly slot is spent. Rank 3–5 untried hypotheses (layers, transform, why it catches off-catalogue faults, difference from prior work, expected DTI vs cost, free-source availability) before implementing.
 
 ## Objective and scope
 

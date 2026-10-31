@@ -1,0 +1,8 @@
+{
+  "candidate_dots": 20000,
+  "exactly_on_catalogue": 69,
+  "within_1_to_3_px_of_catalogue": 222,
+  "share_within_3px_of_catalogue": 0.01455,
+  "lattice_free_obligation_dots": 6200,
+  "note": "CAP20 applies the B2 catalogue-adjacency pruning prospectively: eligibility excluded the 1-3 px halo; on-catalogue dots (if any) are metric-ignored placement of the lattice obligation"
+}

@@ -1,6 +1,21 @@
 # GEMS DOE 24 — evidence before a leaderboard slot
 
-## START HERE (2026-10-30, `arena/025f58cb-gemsdoe24`) — submission start page
+## START HERE (2026-10-31, `arena/2a6a7ec0-gemsdoe24`) — unique submission candidate generated
+
+**[Open the CAP20 executive summary →](docs/cap20-executive-summary-20261031.md)** · [run card](evidence/cap20_run_card_20261031.json) · [mission prompt](docs/MISSION_PROMPT.md) · [2026-10-30 start page](docs/submission-start-here.html)
+
+**Maximize P(Win). Own the Outcome.**
+
+- **Submission candidate (DOWNLOAD: YES · SUBMIT: YES — owner-authorized, all automated gates PASS):** [`docs/downloads/gemsdoe24-cap20-radmag-band-20261031-baf465267d97-zeros.tif`](docs/downloads/gemsdoe24-cap20-radmag-band-20261031-baf465267d97-zeros.tif) (sha256 `7dfc48d9…0bb7`, zip alongside). 20,000 binary dots, all-finite strict [0,1], zeros outside, EPSG:32611 / 3730×3292 @ 100 m — exact template grid. Portal note (≤140 chars) is in the executive summary.
+- **Unique (verified, not claimed):** ≤ 24.1% of dots within 3 px of any of the nine focus champions, 69.0% vs the retained GEMSDOE13 lattice witness (rule ≤ 70%), worst |Spearman| 0.371 (rule ≤ 0.90), across 90 comparator rasters fetched by pinned blob SHA or committed locally. This is the first candidate in repo history to pass the literal witness gate.
+- **Estimated leaderboard score: NOT ESTIMABLE.** HOLDOUT-DTI 0.045426 [0.038028, 0.053788] (`gems-segment-pooled-v1`, 60,988 withheld positives, canary worst 0.6084). The nine-site family's owner-reported 0.2449–0.2778 used 37,654–61,328 dots; assume a lower score for a 20,000-dot file. No projection is written as a score.
+- **Why 20,000 dots:** the lattice witness leaves 6,649 free pixels; any file above 22,163 dots necessarily exceeds the 70% rule (feasibility check re-run this session: exit 2 at 37,654). 6,200 of our dots are a lattice-free obligation, making the gate provable rather than lucky.
+- **Negative result retained:** the stronger all-channel surface (HOLDOUT-DTI 0.067128 [0.057249, 0.077891], beats its control in 4/4 folds) was **voided before publication** — 74.59% of its dots fall within 3 px of the sibling NS-RATIO1 raster. Receipt: [evidence/cap20_emit_all_voided_20261031.json](evidence/cap20_emit_all_voided_20261031.json). Do not submit a re-derivation of it.
+- **Why B2 scored 0.2778 and whether it can be beaten:** B2 = GEMSDOE25's D2.8 minus exactly its 6,436 catalogue-halo (1–3 px) dots (forensics re-verified). The nine champions are one family (88–100% pairwise overlap; none unique). Beating 0.2778 needs either a >22,163-dot budget (blocked by the lattice rule — owner decision on file) or features that find faults that family misses; ranked untried hypotheses are in the run card.
+- **Irregularities flagged:** leaderboard claims conflict (0.3195 vs 0.4413, neither receipt-linked); GEMSDOE25 and GEMSDOE30 host an identical dot set; the project's fail-closed selector cannot self-authorize (no quota verifier exists) — SUBMIT: YES is the owner's explicit 2026-10-31 directive, recorded in the run card; no ORGANIZER-CONFIRMED receipt exists for any file.
+- **Experiment budget:** 3 holdout experiments (E1 all-channel, E2 proximity control, E3 radmag) + 2 emissions (one voided by the audit) + one deterministic receipt re-run; disclosed in the run card. No competition slot was used by this session.
+
+## Previous START HERE (2026-10-30, `arena/025f58cb-gemsdoe24`) — submission start page
 
 **[Open the submission start page →](docs/submission-start-here.html)** · [run card](evidence/ns_ratio1_run_card_20261030.json) · [B2 forensics](evidence/b2_subset_forensics_20261030.json) · [nine-site receipt](evidence/nine_site_verify_20261030.json) · [owner file paths](evidence/nine_site_owner_paths_20261030.json) · [mission prompt](docs/MISSION_PROMPT.md)
 

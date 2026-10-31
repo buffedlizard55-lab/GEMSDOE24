@@ -1,0 +1,201 @@
+{
+  "schema": "run-card-v1",
+  "lane": "CAP20 (catalogue-adjacency-pruned band geometry at the lattice-feasible 20,000-dot budget)",
+  "session": "arena/2a6a7ec0-gemsdoe24 (2026-10-31)",
+  "hypothesis": "The repo's queued hypothesis H1 (catalogue-adjacency pruning, the GEMSDOE32 B2 pattern) at a prospectively lattice-feasible budget, with the README-queued H3 radiometric+magnetic-only ablation as the uniqueness-recovering surface: label-free GeoDAWN radiometric (K, Th, U, TC) and magnetic-extension (ThK, UK, UTh, TMI_up150) channels recover withheld whole catalogue segments better than proximity geometry under identical budget/eligibility/spacing/obligation constraints.",
+  "mechanism": "Official DTI, alpha=0.2, beta=0.8, 300 m triangular kernel, evaluated off the pixel-exact visible catalogue mask: DTI = TP/(0.8N + 0.2(TP+FP)). A binary dot is kept iff its expected credit-to-FP-weight ratio clears the marginal threshold; eligibility excludes every cell within 3 px of the visible catalogue (B2 forensics: D2.8's 1-3 px dots were pure FP mass; removing 6,436 of them raised the owner-reported live score 0.2600 -> 0.2778). 6,200 of the 20,000 dots are a lattice-free obligation on the retained GEMSDOE13 witness complement (6,649 pixels), making the <=70% witness rule provable rather than lucky.",
+  "named_non_fault_mimic": "Soil/rock-type radiometric contrast, weathering and lithology drive K/Th/U; cultural and road corridors drive magnetic extension artifacts; the committed road/claim confound rasters (data/external/audit_sources/) exist but were not used as exclusions in this preregistered run (recorded as a limitation).",
+  "budget_basis": "scripts/check_uniqueness_feasibility.py (this session): lattice witness leaves 6,649 footprint pixels outside its 3 px union; K=37,654 has minimum possible overlap 82.34% (STOP_IMPOSSIBLE_BUDGET); K=20,000 minimum 66.75%; obligation 6,200 gives worst-case 69.0% < 70%.",
+  "experiment_budget": "Protocol: 3 experiments / 2 hours. Executed: E1 (all-channel holdout), E2 (proximity control holdout), E3 (radmag holdout + emission). Additionally TWO emissions were run (all-channel emission audit FAILED at 74.59% vs the sibling NS-RATIO1 raster and was VOIDED before publication; radmag emission is the candidate) plus one deterministic receipt re-run of E1+E2 after a result-path fix. Disclosed; no competition slot was used.",
+  "experiments": {
+    "E1_CAP20_HGB_all_channels": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "dti": 0.067128,
+      "ci95": [
+        0.057249,
+        0.077891
+      ],
+      "n_withheld_positive_pixels": 60988,
+      "dots_emitted_total": 20000,
+      "leakage_canary": {
+        "rule": "single-feature AUC on withheld quadrant; > 0.90 = leakage until proven otherwise",
+        "worst_feature": "lidar_relief",
+        "worst_auc": 0.6264,
+        "pass": true,
+        "per_feature_max_auc": {
+          "lidar_ex_max": 0.5753,
+          "lidar_ex_mean": 0.5616,
+          "lidar_step_max": 0.5847,
+          "lidar_lapneg_max": 0.5974,
+          "lidar_lappos_max": 0.6039,
+          "lidar_downface_max": 0.5663,
+          "lidar_upface_max": 0.5844,
+          "lidar_cross_max": 0.5796,
+          "lidar_relief": 0.6264,
+          "lidar_coh100": 0.5452,
+          "rad_K": 0.6084,
+          "rad_Th": 0.5974,
+          "rad_U": 0.5484,
+          "rad_TC": 0.5982,
+          "ext_ThK": 0.5476,
+          "ext_UK": 0.5838,
+          "ext_UTh": 0.5894,
+          "ext_TMI_up150": 0.5247
+        }
+      },
+      "note": "Beats E2 in all four folds. Its EMISSION IS VOID: 74.59% of its dots fall within 3 px of the sibling NS-RATIO1 raster (same surface family) - duplicate rule; not submitted; evidence/cap20_emit_all_voided_20261031.json."
+    },
+    "E2_CAP20_PROX_control": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "dti": 0.027673,
+      "ci95": [
+        0.019738,
+        0.036358
+      ],
+      "n_withheld_positive_pixels": 60988,
+      "dots_emitted_total": 20000
+    },
+    "E3_CAP20_HGB_radmag_primary": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "dti": 0.045426,
+      "ci95": [
+        0.038028,
+        0.053788
+      ],
+      "n_withheld_positive_pixels": 60988,
+      "dots_emitted_total": 20000,
+      "leakage_canary": {
+        "rule": "single-feature AUC on withheld quadrant; > 0.90 = leakage until proven otherwise",
+        "worst_feature": "rad_K",
+        "worst_auc": 0.6084,
+        "pass": true,
+        "per_feature_max_auc": {
+          "rad_K": 0.6084,
+          "rad_Th": 0.5974,
+          "rad_U": 0.5484,
+          "rad_TC": 0.5982,
+          "ext_ThK": 0.5476,
+          "ext_UK": 0.5838,
+          "ext_UTh": 0.5894,
+          "ext_TMI_up150": 0.5247
+        }
+      },
+      "paired_delta_vs_E2": 0.017753,
+      "paired_delta_vs_E1_all": -0.021702,
+      "decision": "PRIMARY CANDIDATE: E1-all is disqualified by the binding registry-overlap gate; among audit-passing surfaces the best holdout wins (0.045426 > 0.027673). The pre-stated non-inferiority rule (within E1 CI) was NOT met and is recorded as failed; the emission gate is a protocol hard gate and dominates."
+    }
+  },
+  "leakage_canary_summary": {
+    "rule": "single-feature AUC on withheld quadrant; > 0.90 = leakage until proven otherwise",
+    "E1_all_worst": "lidar_relief 0.6264 (pass)",
+    "E3_radmag_worst": "rad_K 0.6084 (pass)"
+  },
+  "correlation_overlap_vs_registry": {
+    "n_comparators": 90,
+    "rule": "|Spearman| <= 0.90 on the footprint surface AND <= 70% of dots within 3 px of any one raster",
+    "worst_forward_3px_overlap": 0.69,
+    "worst_overlap_comparator": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "worst_abs_spearman": 0.370955,
+    "pass": true,
+    "vs_nine_focus_champions_3px": {
+      "GEMSDOE32 B2": 0.21,
+      "GEMSDOE36 pinn": 0.212,
+      "GEMSDOE28 h36-1": 0.2175,
+      "GEMSDOE28 h27-4": 0.2187,
+      "GEMSDOE28 h38-1": 0.2188,
+      "GEMSDOE28 h32-1": 0.2244,
+      "GEMSDOE33 h33d": 0.2236,
+      "GEMSDOE25 D2.8": 0.2277,
+      "GEMSDOE24 h25-1 d1.5": 0.241
+    },
+    "vs_retained_lattice_witness_GEMSDOE13": 0.69,
+    "surface_before_placement": "Spearman of the emitted radmag surface vs every comparator recorded in evidence/cap20_experiment_radmag_20261031.json (worst |rho| 0.371 <= 0.90)"
+  },
+  "rasters": {
+    "zeros_outside_PRIMARY": {
+      "path": "docs/downloads/gemsdoe24-cap20-radmag-band-20261031-baf465267d97-zeros.tif",
+      "sha256": "7dfc48d96e36470f16bfbd656ac022944ad94dd3e0887692500ea20ee8bd0bb7",
+      "bytes": 790198,
+      "zip": "docs/downloads/gemsdoe24-cap20-radmag-band-20261031-baf465267d97-zeros.zip"
+    },
+    "voided_all_channel_emission": {
+      "path": "NOT PUBLISHED (audit failure 74.59% vs NS-RATIO1 sibling)",
+      "evidence": "evidence/cap20_emit_all_voided_20261031.json"
+    }
+  },
+  "validator_output": {
+    "grid": {
+      "crs": "EPSG:32611",
+      "shape": [
+        3730,
+        3292
+      ],
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ],
+      "dtype": "float32",
+      "count": 1
+    },
+    "grid_matches_template": true,
+    "nan_inside_footprint": 0,
+    "finite_outside_footprint": 0,
+    "min_finite": 0.0,
+    "max_finite": 1.0,
+    "values_in_0_1": true,
+    "binary_values": true,
+    "dots": 20000,
+    "outside_encoding": "zeros (all-finite strict [0,1])"
+  },
+  "catalogue_adjacency": {
+    "candidate_dots": 20000,
+    "exactly_on_catalogue": 69,
+    "within_1_to_3_px_of_catalogue": 222,
+    "share_within_3px_of_catalogue": 0.01455,
+    "lattice_free_obligation_dots": 6200,
+    "note": "CAP20 applies the B2 catalogue-adjacency pruning prospectively: eligibility excluded the 1-3 px halo; on-catalogue dots (if any) are metric-ignored placement of the lattice obligation"
+  },
+  "submission": {
+    "name": "gemsdoe24-cap20-radmag-band-20261031-baf465267d97-zeros.tif",
+    "note": "24GEMSDOE CAP20-RADMAG | catalogue-halo-pruned band dots, 6200 lattice-free obligation dots | id baf465267d97 | not yet live-scored",
+    "note_chars": 131
+  },
+  "estimated_leaderboard_score": "NOT ESTIMABLE (no organizer receipt exists). Orientation only, not an estimate: the nine-site family's owner-reported 0.2449-0.2778 came from 37,654-61,328-dot files; this candidate is 20,000 dots and its holdout is far below the family's local analogues, so a LOWER live score than the family's must be assumed. No projection is claimed.",
+  "estimated_leaderboard_score_class": "NOT ESTIMABLE",
+  "irregularities_flagged": [
+    "Leaderboard claims conflict (0.3195 vs 0.4413); neither has an artifact-linked receipt.",
+    "GEMSDOE25 D2.8 and GEMSDOE30 d28-poisson host an identical dot set (recorded forensics + fresh measurement).",
+    "All nine focus champions overlap each other 88-100% within 3 px: one family, none unique.",
+    "No organizer-confirmed receipt exists for any file in the registry.",
+    "The recorded holdout floor (0.166060, S3DEP1) was measured at a 37,654-dot budget and is not budget-comparable with this 20,000-dot lane; the selector v2 screen remains fail-closed negative by design (no quota verifier)."
+  ],
+  "download_submit_verdict": {
+    "download": "YES - submission candidate (all automated gates PASS)",
+    "submit": "YES (owner-authorized 2026-10-31 directive: generate a unique competition TIF; spend one weekly slot). Score is NOT organizer-confirmed; the fail-closed selector screen and the budget-mismatch caveat above stand.",
+    "gates": {
+      "format_strict": true,
+      "range_0_1_whole_array": true,
+      "grid_match": true,
+      "no_nan_inside_footprint": true,
+      "uniqueness_all_90_comparators": true,
+      "lattice_witness_le_70pct": true,
+      "leakage_canary": true,
+      "holdout_positive_with_ci": true
+    }
+  },
+  "hypotheses_ranked_not_yet_tried": [
+    "H-C radiometric potassium-depletion halos (log K/Th x TC, 2-5 km bandpass) around known systems - free (committed GeoDAWN radiometrics); expected live-DTI rank 1; medium cost; the radmag result independently supports a radiometric signal.",
+    "H-B cross-fitted catalogue corridor-continuation geometry (visible-only tangential continuation, inner CV over visible components) - free; rank 2; high cost; targets along-strike continuations stopped at claim/lease boundaries; named mimic: roads and claim boundaries (confound rasters committed).",
+    "H-D LiDAR scarp-gap bridging between aligned catalogue segments (0.5-3 km gaps) - free via committed 1 m-derived scarp u8 features (full 1 m DEM blocked without DrivenData auth); rank 3; medium cost; prior art exists in the group (GEMSDOE27 topo-gap-closure, owner-reported 0.2449) but not in this repo.",
+    "H-E full-resolution GeoDAWN gravity/magnetic vertical-derivative conduit mapping - obtainable free from the same USGS/GeoDAWN release, BLOCKED this session (egress policy); rank 4; high cost.",
+    "H-A catalogue-adjacency pruning + lattice-feasible budget - EXECUTED this session (CAP20)."
+  ],
+  "verdict": "promote-to-owner-slot-decision (unique gate-passing candidate; score NOT organizer-confirmed)"
+}
