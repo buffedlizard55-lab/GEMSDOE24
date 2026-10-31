@@ -1,0 +1,31 @@
+{
+  "file": "gemsdoe24-cap20-radmag-band-20261031-baf465267d97-zeros.tif",
+  "sha256": "7dfc48d96e36470f16bfbd656ac022944ad94dd3e0887692500ea20ee8bd0bb7",
+  "bytes": 790198,
+  "grid": {
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "dtype": "float32",
+    "count": 1
+  },
+  "grid_matches_template": true,
+  "nan_inside_footprint": 0,
+  "finite_outside_footprint": 0,
+  "min_finite": 0.0,
+  "max_finite": 1.0,
+  "values_in_0_1": true,
+  "binary_values": true,
+  "dots": 20000,
+  "outside_encoding": "zeros (all-finite strict [0,1])"
+}

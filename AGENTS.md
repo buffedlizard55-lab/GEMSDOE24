@@ -1,5 +1,22 @@
 # Standing project instructions
 
+## 2026-10-31 CAP20 session — first gate-passing unique candidate (`arena/2a6a7ec0-gemsdoe24`)
+
+Read `docs/cap20-executive-summary-20261031.md` and `evidence/cap20_run_card_20261031.json`
+first. Lane CAP20 executed the queued H1 (catalogue-adjacency pruning) at the
+prospectively lattice-feasible 20,000-dot budget with a 6,200-dot lattice-free obligation,
+plus the queued H3 radiometric+magnetic ablation after the all-channel emission failed the
+70% rule against the sibling NS-RATIO1 raster (74.59%, voided before publication; negative
+result retained). Primary candidate
+`docs/downloads/gemsdoe24-cap20-radmag-band-20261031-baf465267d97-zeros.tif`
+(HOLDOUT-DTI 0.045426 [0.038028, 0.053788], 60,988 withheld, canary worst 0.6084; unique
+across 90 comparators: worst overlap 69.0% = the witness by design, worst |rho| 0.371) is
+labeled DOWNLOAD: YES / SUBMIT: YES as an explicit owner decision under the 2026-10-31
+directive; the fail-closed selector/preflight screens remain negative by design and are
+recorded verbatim in the run card. Score NOT organizer-confirmed; estimated NOT ESTIMABLE.
+The 37,654-dot budgets remain mathematically blocked by the witness (exit 2 re-confirmed);
+changing that requires a prospective owner decision, not budget tuning.
+
 ## 2026-10-30 independent verification continuation — current branch `arena/ddfc5214-gemsdoe24`
 
 Read the current README and `docs/repo-review-20261030-arena-ddfc5214.md` with its

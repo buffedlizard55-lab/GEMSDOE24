@@ -1,5 +1,14 @@
 # Automated validation and submission guide — 2026-10-30
 
+> **2026-10-31 update:** the CAP20 candidate
+> [`gemsdoe24-cap20-radmag-band-20261031-baf465267d97-zeros.tif`](downloads/gemsdoe24-cap20-radmag-band-20261031-baf465267d97-zeros.tif)
+> is the first file to pass every automated gate in this guide (format, [0,1], grid,
+> 90-raster uniqueness incl. the lattice witness, leakage canary, holdout CI). The
+> fail-closed selector still cannot self-authorize (no quota verifier exists), so the
+> SUBMIT decision is recorded as an explicit owner step in
+> [`evidence/cap20_run_card_20261031.json`](../evidence/cap20_run_card_20261031.json).
+> Step-by-step portal instructions: [`cap20-executive-summary-20261031.md`](cap20-executive-summary-20261031.md).
+
 ## Current decision
 
 **There is no submission-authorized TIFF. Do not upload any file from this repository or the historical table.** This guide describes a fail-closed workflow for a future candidate. Local generation and validation are automatable; access to DrivenData and upload are not automated by this project agent. A successful file-format check does not authorize a competition slot.
