@@ -1,0 +1,175 @@
+{
+  "schema": "gems-negative-review-run-card-v1",
+  "review_date": "2026-10-30",
+  "branch": "arena/ddfc5214-gemsdoe24",
+  "base_commit_reviewed": "da4d3194f017a1c72befce090c1b1e2a17c168cd",
+  "hypothesis": "No experiment hypothesis was assigned: the request refers to a single method paragraph, but no such paragraph is supplied. Four prior candidate directions are documented and remain unselected; they are not certified globally untried.",
+  "mechanism": "No new mechanism was tested. For historical GEMSDOE32 B2, local geometry records a deletion-only subset of the D2.8 dot pattern. Under DTI = T / (T + 0.2 F + 0.8 (G - T)), pruning can help only if weighted false-positive mass removed is sufficient relative to true-credit lost; hidden-label contributions and the owner's reported score mechanism are unknown.",
+  "named_non_fault_process_that_could_mimic_it": "An intrusive/lithologic contact, remanent magnetization, survey or gridding seam, radiometric moisture/weathering boundary, or terrace/road cut can mimic structural signatures; no candidate surface was generated to test these.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "value": null,
+    "evaluator_version": null,
+    "withheld_positive_pixels": null,
+    "ci95": null,
+    "status": "NOT RUN in this review: no assigned lane and full organizer training feature raster/prepared stack absent."
+  },
+  "organizer_confirmed_score": null,
+  "leaderboard_estimate": "NOT ESTIMABLE",
+  "owner_reported_score_claim": {
+    "label": "OWNER-REPORTED / UNVERIFIED",
+    "value": 0.2778,
+    "artifact_linked_organizer_receipt": false
+  },
+  "source_recorded_holdout_references_not_replayed": [
+    {
+      "label": "HOLDOUT-DTI",
+      "value": 0.16606013635163805,
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "ci95": [
+        0.15185839118988828,
+        0.18033886456990444
+      ],
+      "lane": "S3DEP1",
+      "status": "Recorded local point-best in existing evidence; not replayed in this review; not a leaderboard estimate; selector verdict remains negative."
+    },
+    {
+      "label": "HOLDOUT-DTI",
+      "value": 0.036939,
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "ci95": [
+        0.030813,
+        0.043882
+      ],
+      "lane": "nine-site-complement seg-HGB",
+      "status": "Recorded in evidence/run_card_20261029_nine_site_unique.json; not replayed in this review; candidate is negative and not promoted."
+    }
+  ],
+  "correlation_overlap_vs_registry": {
+    "new_surface_rank_correlation": null,
+    "new_final_dot_overlap_within_3px": null,
+    "status": "NOT MEASURED: no new surface or dots generated.",
+    "fresh_necessary_geometry_check": {
+      "checker": "scripts/check_uniqueness_feasibility.py",
+      "witness": "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "footprint_pixels": 5167373,
+      "uncovered_pixels_within_3px": 6649,
+      "fixed_budget_37654_minimum_overlap_fraction": 0.8234184947150369,
+      "fixed_budget_44090_minimum_overlap_fraction": 0.8491948287593558,
+      "result": "STOP_IMPOSSIBLE_BUDGET for both fixed historical budgets; necessary bound against one witness only, not a candidate measurement or full registry pass."
+    },
+    "existing_negative_reference_artifact_not_reaudited_for_novelty": {
+      "file": "gems24-nine-complement-seghgb-20261029-zeros.tif",
+      "raster_sha256": "4dfb4a7ce96e85c43bdedcd61ea77da644dfae1efbb199338fbb437ff95a04e9",
+      "source_recorded_overlap_with_nine_focus_artifacts": 0.0,
+      "source_recorded_overlap_with_spacing5_lattice": 0.972752,
+      "status": "Historical run-card values; not a full current-registry or surface-rank audit."
+    }
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_candidate": "NOT RUN: no new TIFF generated.",
+    "existing_negative_reference_artifact_preflight": {
+      "file": "gems24-nine-complement-seghgb-20261029-zeros.tif",
+      "sha256": "4dfb4a7ce96e85c43bdedcd61ea77da644dfae1efbb199338fbb437ff95a04e9",
+      "format_valid": true,
+      "strict_whole_array_values_in_0_1": true,
+      "nan_inside_footprint": 0,
+      "crs": "EPSG:32611",
+      "shape": [
+        3730,
+        3292
+      ],
+      "transform_matches_pinned_template": true,
+      "profile_matches_sample_mirror": false,
+      "official_format_compliant": false,
+      "scientific_authorization": false,
+      "submission_status": "DO_NOT_SUBMIT",
+      "note": "GEMS24 nine-complement seg-HGB 37654 dots | 0 overlap vs 9 focus sites | HOLDOUT-DTI 0.0369 | research only; SUBMIT NO",
+      "note_characters": 118,
+      "scope": "Local exact-file preflight only; no portal acceptance or cause of the reported range rejection established."
+    }
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "submission_note_character_limit": 140,
+  "verdict": "negative",
+  "new_tiffs": 0,
+  "experiments_run": 0,
+  "submission_slots_used": 0,
+  "verification": {
+    "project_tests": "674 passed; 1 skipped because pinned champion bytes are not restored locally (tests/test_nine_site_candidate.py:60); full history restored; run after syncing cc382df",
+    "ruff_check": "passed on synchronized tree",
+    "ruff_format": "passed; 228 files already formatted after formatting six upstream files",
+    "site_build": "scripts/build_site.py on synchronized main cc382df completed; new_slot_eligible=false; no_scores_fabricated=true; generated tracked site outputs restored",
+    "uniqueness_preflight": "exit 2, as expected for both fixed budgets under the retained-witness necessary bound",
+    "strict_preflight": "FORMAT=true; STRICT_RANGE=true; SCIENTIFIC_AUTHORIZATION=false; SUBMISSION=DO_NOT_SUBMIT",
+    "diff_check": "passed after synchronized-main format-only cleanup and README-link correction",
+    "local_markdown_links": "passed on synchronized tree after correcting README stale H-BLIND-UPWELL run-card path to docs/data/blind_upwell_run_card.json",
+    "compileall": "python -m compileall -q src scripts: passed",
+    "upstream_ci_diagnostic": "PR #119 and the first PR #116 pull_request merge check failed only at Ruff format; format-only cleanup was pushed. PR #122 later merged the same cleanup at 5379dbf. Both PR #116 test checks passed on prior head 311059e; subsequent changes are a branch-sync merge and documentation/run-card refresh. Check the PR for the newest head status."
+  },
+  "limitations": [
+    "No assigned method paragraph/lane.",
+    "Full training_features.tif, data/labels.tif, and prepared feature cache are absent; bridge mirrors and partial derived inputs are not organizer authentication.",
+    "No new holdout or surface/dot novelty test; standard fixed budgets are impossible under the literal retained-lattice rule.",
+    "The official portal, live leaderboard, account quota, and artifact-linked score receipt were not accessed; estimates remain NOT ESTIMABLE.",
+    "Official ASTER/OPERA coverage and retrieval were not verified; they are not viable inputs for this run.",
+    "PR #119 added an upstream NS-RATIO1 packet after this review snapshot; it was merged into this working branch for continuity but was not scientifically assessed or authorized by this session."
+  ],
+  "post_review_main_sync": {
+    "review_snapshot_commit": "da4d3194f017a1c72befce090c1b1e2a17c168cd",
+    "latest_main_commit": "5379dbf68826a0c1a0673f83a4e683441c97970d",
+    "branch_sync_merge_commit": "2691cf78c312e2ae3afa845e2dfd9f60c7a22c06",
+    "concurrent_merge": "PR #119, merged 2026-10-30T23:39:09Z",
+    "incoming_candidate_artifacts": [
+      "docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-nan.tif",
+      "docs/downloads/gems24-ns-ratio1-labelfree-ratio-20261030-b49138fa-zeros.tif",
+      "evidence/ns_ratio1_run_card_20261030.json"
+    ],
+    "this_session_disposition": "Concurrent packet was not generated, replayed, selected, or submitted by this session; see its own PR/run card for source-recorded disposition. This is not a scientific review of that candidate.",
+    "upstream_ci_irregularity": {
+      "pr": 119,
+      "failed_runs": [
+        "41145729471",
+        "41145732627"
+      ],
+      "only_failed_step": "ruff format --check src scripts tests",
+      "status": "PR was merged despite both reliability runs failing at that formatter step.",
+      "resolution": "PR #122 merged the same format-only correction; both updated PR #116 checks passed after the synchronized push."
+    },
+    "format_only_cleanup_files": [
+      "scripts/build_submission_start_here.py",
+      "scripts/make_nan_twin.py",
+      "scripts/map_nine_owner_paths.py",
+      "scripts/nine_site_verify.py",
+      "scripts/run_ns_ratio1_lane.py",
+      "scripts/verify_candidate_tif.py"
+    ],
+    "new_tiffs_created_by_this_session": 0,
+    "branch_sync_main_commit": "5379dbf68826a0c1a0673f83a4e683441c97970d",
+    "subsequent_main_merge": "PR #122 merged 2026-10-30T23:54:16Z at 5379dbf; it applied the same six-file Ruff formatting repair already present in this branch.",
+    "pr116_check_recheck": {
+      "head_commit": "311059e8f8ba8e028aeaad145871f8c7f33f5262",
+      "current_main_commit": "5379dbf68826a0c1a0673f83a4e683441c97970d",
+      "checks": [
+        {
+          "run": "41147283223",
+          "conclusion": "success"
+        },
+        {
+          "run": "41147287671",
+          "conclusion": "success"
+        }
+      ],
+      "mergeability": "MERGEABLE / CLEAN against current main 5379dbf at recheck; subsequent branch sync and review-card refresh require the latest PR status link for current checks",
+      "checked_before_latest_doc_refresh_and_branch_sync": "2691cf7"
+    },
+    "earlier_branch_sync": {
+      "main_commit": "cc382dfd3eee2cf4db5272b54ae3ae129fd76be6",
+      "merge_commit": "f5cf57e"
+    }
+  }
+}
